@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.31 1999/11/20 22:49:18 philip Exp $
+ * Version:     $Id: netstat.c,v 1.32 2000/02/20 17:50:01 philip Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -1393,11 +1393,13 @@ void ife_print(struct interface *ptr)
 
 static int iface_info(void)
 {
-    if ((skfd = sockets_open(0)) < 0) {
-	perror("socket");
-	exit(1);
+    if (skfd < 0) {
+	if ((skfd = sockets_open(0)) < 0) {
+	    perror("socket");
+	    exit(1);
+	}
+	printf(_("Kernel Interface table\n"));
     }
-    printf(_("Kernel Interface table\n"));
     printf(_("Iface   MTU Met    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR Flg\n"));
 
     if (for_all_interfaces(do_if_print, &flag_all) < 0) {
@@ -1406,8 +1408,10 @@ static int iface_info(void)
     }
     if (flag_cnt)
 	free_interface_list();
-    close(skfd);
-    skfd = -1;
+    else {
+	close(skfd);
+	skfd = -1;
+    }
 
     return 0;
 }

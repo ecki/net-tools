@@ -4,7 +4,7 @@
    10/1998 partly rewriten by Andi Kleen to support an interface list.   
    I don't claim that the list operations are efficient @).  
 
-   $Id: interface.c,v 1.7 1999/12/11 13:35:59 freitag Exp $
+   $Id: interface.c,v 1.8 2000/02/20 17:50:08 philip Exp $
  */
 
 #include "config.h"
@@ -322,6 +322,7 @@ int if_readlist(void)
 #if 0
     free(fmt);
 #endif
+    fclose(fh);
     return err;
 }
 
