@@ -1,4 +1,4 @@
-.TH IFCONFIG 8 "29 June 2001" "net-tools" "Linux Programmer's Manual"
+.TH IFCONFIG 8 "11 Nov 2001" "net-tools" "Linux Programmer's Manual"
 .SH NAME
 ifconfig \- configure a network interface
 .SH SYNOPSIS
@@ -176,6 +176,11 @@ rules for the address using the
 .BR ipchains(8)
 command.
 .LP
+Since net-tools 1.61 ifconfig is printing byte counters with SI units. So
+1 KiB are 2^10 byte. Note, the numbers are truncated to one decimal (which can
+by quite a large error if you consider 0.1 PiB is 112.589.990.684.262
+bytes :)
+.LP
 Interrupt problems with Ethernet device drivers fail with EAGAIN
 .I (SIOCSIIFLAGS: Resource temporarily unavailable)
 it is most likely a interrupt conflict. See
@@ -192,6 +197,8 @@ While appletalk DDP and IPX addresses will be displayed they cannot be
 altered by this command.
 .SH SEE ALSO
 route(8), netstat(8), arp(8), rarp(8), ipchains(8)
+.br
+http://physics.nist.gov/cuu/Units/binary.html - Prefixes for binary multiples
 .SH AUTHORS
 Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
 .br
@@ -199,4 +206,6 @@ Alan Cox, <Alan.Cox@linux.org>
 .br
 Phil Blundell, <Philip.Blundell@pobox.com>
 .br
-Andi Kleen; Bernd Eckenfels, <net-tools@lina.inka.de>
+Andi Kleen; 
+.br
+Bernd Eckenfels, <net-tools@lina.inka.de>
