@@ -14,7 +14,7 @@ struct sockaddr_ipx {
     short sipx_family;
 #endif
     unsigned short sipx_port;
-    unsigned long sipx_network;
+    unsigned int sipx_network;
     unsigned char sipx_node[IPX_NODE_LEN];
     unsigned char sipx_type;
     unsigned char sipx_zero;	/* 16 byte fill */

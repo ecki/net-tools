@@ -1,6 +1,6 @@
 Summary: Basic Networking Tools
 Name: net-tools
-Version: 1.48
+Version: 1.49
 Release: 1
 Copyright: GPL
 Group: Networking/Admin
