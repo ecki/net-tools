@@ -111,7 +111,8 @@ arp_del(char **args)
 	fprintf(stderr, NLS_CATGETS(catfd, arpSet, arp_hostname, "arp: need host name\n"));
 	return(-1);
   }
-  strcpy(host, *args);
+  host[(sizeof host)-1] = 0;
+  strncpy(host, *args, (sizeof host)-1);
   if (ap->input(0, host, &sa) < 0) {
 	ap->herror(host);
 	return(-1);
@@ -306,7 +307,8 @@ arp_set(char **args)
 	fprintf(stderr, NLS_CATGETS(catfd, arpSet, arp_hostname, "arp: need host name\n"));
 	return(-1);
   }
-  strcpy(host, *args++);
+  host[(sizeof host)-1] = 0; 
+  strncpy(host, *args++, (sizeof host)-1);
   if (ap->input(0, host, &sa) < 0) {
 	ap->herror(host);
 	return(-1);
@@ -589,7 +591,8 @@ arp_show(char *name)
   
   if (name != NULL) {
   	/* Resolve the host name. */
-  	strcpy(host, name);
+	  host[(sizeof host)-1] = 0;
+  	strncpy(host, name, (sizeof host)-1);
   	if (ap->input(0, host, &sa) < 0) {
 		ap->herror(host);
 		return(-1);
@@ -610,7 +613,7 @@ arp_show(char *name)
 	/* Read the ARP cache entries. */
 	for(;fgets(line,sizeof(line),fp);)
 	{
-		num=sscanf(line,"%s 0x%x 0x%x %s %s %s\n",
+		num=sscanf(line,"%s 0x%x 0x%x %100s %100s %100s\n",
 		                               ip,&type,&flags,hwa,mask,dev);
 		if(num<4)
 			break;

@@ -47,7 +47,7 @@ getargs(char *string, char *arguments[])
    * Look for delimiters ("); if present whatever
    * they enclose will be considered one argument.
    */
-  while (*ptr != '\0' && i < 32) {
+  while (*ptr != '\0' && i < 31) {
 	/* Ignore leading whitespace on input string. */
 	while (*ptr == ' ' || *ptr == '\t') ptr++;
 
