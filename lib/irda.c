@@ -1,13 +1,15 @@
 /*********************************************************************
  *                
  * Filename:      irda.c
- * Version:       0.1
- * Description:   A first attempt to make ifconfig understand IrDA
+ * Version:       0.2
+ * Description:   A second attempt to make ifconfig understand IrDA
  * Status:        Experimental.
  * Author:        Dag Brattli <dagb@cs.uit.no>
  * Created at:    Wed Apr 21 09:03:09 1999
  * Modified at:   Wed Apr 21 09:17:05 1999
  * Modified by:   Dag Brattli <dagb@cs.uit.no>
+ * Modified at:   Wed May  1 11:51:44 CEST 2002
+ * Modified by:   Christoph Bartelmus <christoph@bartelmus.de>
  * 
  *     This program is free software; you can redistribute it and/or 
  *     modify it under the terms of the GNU General Public License as 
@@ -59,9 +61,9 @@
  */
 static char *irda_print(unsigned char *ptr)
 {
-    static char buff[8];
+    static char buff[12];
 
-    sprintf(&buff[strlen(buff)], "%02x:%02x:%02x:%02x", ptr[3], ptr[2], 
+    snprintf(buff, 12, "%02x:%02x:%02x:%02x", ptr[3], ptr[2], 
 	    ptr[1], ptr[0]);
 
     return (buff);
