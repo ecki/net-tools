@@ -27,12 +27,6 @@ static char *pr_tunnel(unsigned char *ptr)
 }
 
 
-static char *pr_stunnel(struct sockaddr *sap)
-{
-    return ("");
-}
-
-
 static int in_tunnel(char *bufp, struct sockaddr *sap)
 {
     return (-1);
@@ -42,7 +36,7 @@ static int in_tunnel(char *bufp, struct sockaddr *sap)
 struct hwtype tunnel_hwtype =
 {
     "tunnel", NULL, /*"IPIP Tunnel", */ ARPHRD_TUNNEL, 0,
-    pr_tunnel, pr_stunnel, in_tunnel, NULL
+    pr_tunnel, in_tunnel, NULL, 0
 };
 
 

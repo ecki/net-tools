@@ -1,7 +1,7 @@
 /*
  * lib/frame.c        This file contains the Frame Relay support.
  *
- * Version:     $Id: frame.c,v 1.3 1998/11/15 20:09:39 freitag Exp $
+ * Version:     $Id: frame.c,v 1.4 2000/03/05 11:26:02 philip Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -48,12 +48,12 @@ char *pr_dlci(unsigned char *ptr)
 struct hwtype dlci_hwtype =
 {
     "dlci", NULL, /*"Frame Relay DLCI", */ ARPHRD_DLCI, 3,
-    pr_dlci, NULL, NULL, NULL
+    pr_dlci, NULL, NULL, 0
 };
 
 struct hwtype frad_hwtype =
 {
     "frad", NULL, /*"Frame Relay Access Device", */ ARPHRD_FRAD, 0,
-    NULL, NULL, NULL, NULL
+    NULL, NULL, NULL, 0
 };
 #endif				/* HAVE_HWFR */

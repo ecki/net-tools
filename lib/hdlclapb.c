@@ -3,7 +3,7 @@
  *              This file contains the HDLC/LAPB support for the NET-2 base
  *              distribution.
  *
- * Version:    $Id: hdlclapb.c,v 1.4 1999/01/05 20:53:26 philip Exp $
+ * Version:    $Id: hdlclapb.c,v 1.5 2000/03/05 11:26:02 philip Exp $
  *
  * Original Author:     
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -49,12 +49,12 @@
 struct hwtype hdlc_hwtype =
 {
     "hdlc", NULL, /*"(Cisco) HDLC", */ ARPHRD_HDLC, 0,
-    NULL, NULL, NULL, NULL,
+    NULL, NULL, NULL, 0
 };
 struct hwtype lapb_hwtype =
 {
     "lapb", NULL, /*"LAPB", */ ARPHRD_LAPB, 0,
-    NULL, NULL, NULL, NULL,
+    NULL, NULL, NULL, 0
 };
 
 #endif				/* HAVE_HWHDLCLAPB */

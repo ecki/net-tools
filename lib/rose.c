@@ -2,7 +2,7 @@
  * lib/rose.c This file contains an implementation of the "ROSE"
  *              support functions for the NET-2 base distribution.
  *
- * Version:     $Id: rose.c,v 1.6 1999/01/05 20:54:04 philip Exp $
+ * Version:     $Id: rose.c,v 1.7 2000/03/05 11:26:03 philip Exp $
  *
  * Author:      Terry Dawson, VK2KTJ, <terry@perf.no.itg.telstra.com.au>
  *              based on ax25.c by:
@@ -119,16 +119,6 @@ static void ROSE_herror(char *text)
 }
 
 
-static char *
- ROSE_hprint(struct sockaddr *sap)
-{
-    if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-	return _("[NONE SET]");
-
-    return (ROSE_print(((struct sockaddr_rose *) sap)->srose_addr.rose_addr));
-}
-
-
 static int ROSE_hinput(char *bufp, struct sockaddr *sap)
 {
     if (ROSE_input(0, bufp, sap) < 0)
@@ -140,7 +130,7 @@ static int ROSE_hinput(char *bufp, struct sockaddr *sap)
 struct hwtype rose_hwtype =
 {
     "rose", NULL, /*"AMPR ROSE", */ ARPHRD_ROSE, 10,
-    ROSE_print, ROSE_hprint, ROSE_hinput, NULL
+    ROSE_print, ROSE_hinput, NULL
 };
 
 struct aftype rose_aftype =

@@ -58,18 +58,6 @@ static char *pr_hippi(unsigned char *ptr)
 }
 
 
-/* Display an HIPPI socket address. */
-static char *
- pr_shippi(struct sockaddr *sap)
-{
-    static char buf[64];
-
-    if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-	return (safe_strncpy(buf, _("[NONE SET]"), 64));
-    return (pr_hippi(sap->sa_data));
-}
-
-
 /* Input an HIPPI address and convert to binary. */
 static int in_hippi(char *bufp, struct sockaddr *sap)
 {
@@ -147,7 +135,7 @@ static int in_hippi(char *bufp, struct sockaddr *sap)
 struct hwtype hippi_hwtype =
 {
     "hippi", NULL, /*"HIPPI", */ ARPHRD_HIPPI, HIPPI_ALEN,
-    pr_hippi, pr_shippi, in_hippi, NULL
+    pr_hippi, in_hippi, NULL, 0
 };
 
 

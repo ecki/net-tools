@@ -2,7 +2,7 @@
  * lib/ppp.c  This file contains the SLIP support for the NET-2 base
  *              distribution.
  *
- * Version:     $Id: ppp.c,v 1.3 1998/11/15 20:11:45 freitag Exp $
+ * Version:     $Id: ppp.c,v 1.4 2000/03/05 11:26:03 philip Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -46,12 +46,10 @@ static int do_ppp(int fd)
 }
 
 
-
-
 struct hwtype ppp_hwtype =
 {
     "ppp", NULL, /*"Point-Point Protocol", */ ARPHRD_PPP, 0,
-    NULL, NULL, NULL, do_ppp
+    NULL, NULL, do_ppp, 0
 };
 
 

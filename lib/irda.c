@@ -67,22 +67,10 @@ static char *irda_print(unsigned char *ptr)
     return (buff);
 }
 
-/*
- * Function irda_sprint (sap)
- *
- *    Print IrDA socket address
- *
- */
-static char *irda_sprint(struct sockaddr *sap)
-{
-	/* NOP */
-	return NULL;
-}
-
 struct hwtype irda_hwtype =
 {
      "irda", NULL, ARPHRD_IRDA, 2,
-     irda_print, irda_sprint, NULL, NULL
+     irda_print, NULL, NULL, 0
 };
 
 #endif				/* HAVE_xxIRDA */

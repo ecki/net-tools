@@ -2,7 +2,7 @@
  * lib/arcnet.c       This file contains an implementation of the "ARCnet"
  *              support functions for the NET-2 base distribution.
  *
- * Version:     $Id: arcnet.c,v 1.5 1998/11/19 13:01:53 philip Exp $
+ * Version:     $Id: arcnet.c,v 1.6 2000/03/05 11:26:02 philip Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -41,17 +41,6 @@ static char *pr_arcnet(unsigned char *ptr)
 
     snprintf(buff, sizeof(buff), "%02X", (ptr[0] & 0377));
     return (buff);
-}
-
-
-/* Display an ARCnet socket address. */
-static char *pr_sarcnet(struct sockaddr *sap)
-{
-    static char buf[64];
-
-    if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-	return safe_strncpy(buf, _("[NONE SET]"), sizeof(buf));
-    return (pr_arcnet(sap->sa_data));
 }
 
 
@@ -133,7 +122,7 @@ static int in_arcnet(char *bufp, struct sockaddr *sap)
 struct hwtype arcnet_hwtype =
 {
     "arcnet", NULL, /*"2.5Mbps ARCnet", */ ARPHRD_ARCNET, 1,
-    pr_arcnet, pr_sarcnet, in_arcnet, NULL
+    pr_arcnet, in_arcnet, NULL
 };
 
 

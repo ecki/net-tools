@@ -2,7 +2,7 @@
  * lib/fddi.c This file contains an implementation of the "FDDI"
  *              support functions.
  *
- * Version:     $Id: fddi.c,v 1.6 1998/11/26 10:16:39 philip Exp $
+ * Version:     $Id: fddi.c,v 1.7 2000/03/05 11:26:02 philip Exp $
  *
  * Author:      Lawrence V. Stefani, <stefani@lkg.dec.com>
  *
@@ -55,17 +55,6 @@ static char *pr_fddi(unsigned char *ptr)
 	     (ptr[3] & 0377), (ptr[4] & 0377), (ptr[5] & 0377)
 	);
     return (buff);
-}
-
-
-/* Display an FDDI socket address. */
-static char *pr_sfddi(struct sockaddr *sap)
-{
-    static char buf[64];
-
-    if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-	return safe_strncpy(buf, _("[NONE SET]"), sizeof(buf));
-    return (pr_fddi(sap->sa_data));
 }
 
 
@@ -147,7 +136,7 @@ static int in_fddi(char *bufp, struct sockaddr *sap)
 struct hwtype fddi_hwtype =
 {
     "fddi", NULL, /*"Fiber Distributed Data Interface (FDDI)", */ ARPHRD_FDDI, FDDI_K_ALEN,
-    pr_fddi, pr_sfddi, in_fddi, NULL
+    pr_fddi, in_fddi, NULL
 };
 
 

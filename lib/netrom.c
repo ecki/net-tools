@@ -2,7 +2,7 @@
  * lib/netrom.c       This file contains an implementation of the "NET/ROM"
  *              support functions for the NET-2 base distribution.
  *
- * Version:     $Id: netrom.c,v 1.7 1998/11/19 13:02:03 philip Exp $
+ * Version:     $Id: netrom.c,v 1.8 2000/03/05 11:26:03 philip Exp $
  *
  * NOTE:        I will redo this module as soon as I got the libax25.a
  *              library sorted out.  This library contains some useful
@@ -152,14 +152,6 @@ static void NETROM_herror(char *text)
 }
 
 
-static char *NETROM_hprint(struct sockaddr *sap)
-{
-    if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-	return ("[NONE SET]");
-    return (NETROM_print(((struct sockaddr_ax25 *) sap)->sax25_call.ax25_call));
-}
-
-
 static int NETROM_hinput(char *bufp, struct sockaddr *sap)
 {
     if (NETROM_input(0, bufp, sap) < 0)
@@ -194,7 +186,7 @@ static int KISS_init(int fd)
 struct hwtype netrom_hwtype =
 {
     "netrom", NULL, /* "AMPR NET/ROM", */ ARPHRD_NETROM, 7,
-    NETROM_print, NETROM_hprint, NETROM_hinput, NULL
+    NETROM_print, NETROM_hinput, NULL, 0
 };
 
 struct aftype netrom_aftype =
