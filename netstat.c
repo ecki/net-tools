@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.45 2001/11/25 06:48:50 ecki Exp $
+ * Version:     $Id: netstat.c,v 1.46 2002/02/19 00:55:35 ecki Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -216,7 +216,7 @@ FILE *procinfo;
 
 static struct prg_node {
     struct prg_node *next;
-    int inode;
+    unsigned long inode;
     char name[PROGNAME_WIDTH];
 } *prg_hash[PRG_HASH_SIZE];
 
@@ -249,7 +249,7 @@ static char prg_cache_loaded = 0;
 /* NOT working as of glibc-2.0.7: */
 #undef  DIRENT_HAVE_D_TYPE_WORKS
 
-static void prg_cache_add(int inode, char *name)
+static void prg_cache_add(unsigned long inode, char *name)
 {
     unsigned hi = PRG_HASHIT(inode);
     struct prg_node **pnp,*pn;
@@ -272,7 +272,7 @@ static void prg_cache_add(int inode, char *name)
     strcpy(pn->name,name);
 }
 
-static const char *prg_cache_get(int inode)
+static const char *prg_cache_get(unsigned long inode)
 {
     unsigned hi=PRG_HASHIT(inode);
     struct prg_node *pn;
@@ -295,16 +295,18 @@ static void prg_cache_clear(void)
     prg_cache_loaded=0;
 }
 
-static void extract_type_1_socket_inode(const char lname[], long * inode_p) {
+static int extract_type_1_socket_inode(const char lname[], unsigned long * inode_p) {
 
     /* If lname is of the form "socket:[12345]", extract the "12345"
        as *inode_p.  Otherwise, return -1 as *inode_p.
        */
 
-    if (strlen(lname) < PRG_SOCKET_PFXl+3) *inode_p = -1;
-    else if (memcmp(lname, PRG_SOCKET_PFX, PRG_SOCKET_PFXl)) *inode_p = -1;
-    else if (lname[strlen(lname)-1] != ']') *inode_p = -1;
-    else {
+    if (strlen(lname) < PRG_SOCKET_PFXl+3) return(-1);
+    
+    if (memcmp(lname, PRG_SOCKET_PFX, PRG_SOCKET_PFXl)) return(-1);
+    if (lname[strlen(lname)-1] != ']') return(-1);
+
+    {
         char inode_str[strlen(lname + 1)];  /* e.g. "12345" */
         const int inode_str_len = strlen(lname) - PRG_SOCKET_PFXl - 1;
         char *serr;
@@ -313,28 +315,32 @@ static void extract_type_1_socket_inode(const char lname[], long * inode_p) {
         inode_str[inode_str_len] = '\0';
         *inode_p = strtol(inode_str,&serr,0);
         if (!serr || *serr || *inode_p < 0 || *inode_p >= INT_MAX) 
-            *inode_p = -1;
+            return(-1);
     }
+    return(0);
 }
 
 
 
-static void extract_type_2_socket_inode(const char lname[], long * inode_p) {
+static int extract_type_2_socket_inode(const char lname[], unsigned long * inode_p) {
 
     /* If lname is of the form "[0000]:12345", extract the "12345"
        as *inode_p.  Otherwise, return -1 as *inode_p.
        */
 
-    if (strlen(lname) < PRG_SOCKET_PFX2l+1) *inode_p = -1;
-    else if (memcmp(lname, PRG_SOCKET_PFX2, PRG_SOCKET_PFX2l)) *inode_p = -1;
-    else {
+    if (strlen(lname) < PRG_SOCKET_PFX2l+1) return(-1);
+    if (memcmp(lname, PRG_SOCKET_PFX2, PRG_SOCKET_PFX2l)) return(-1);
+
+    {
         char *serr;
 
         *inode_p=strtol(lname + PRG_SOCKET_PFX2l,&serr,0);
         if (!serr || *serr || *inode_p < 0 || *inode_p >= INT_MAX) 
-            *inode_p = -1;
+            return(-1);
     }
+    return(0);
 }
+
 
 
 
@@ -343,7 +349,7 @@ static void prg_cache_load(void)
     char line[LINE_MAX],eacces=0;
     int procfdlen,fd,cmdllen,lnamelen;
     char lname[30],cmdlbuf[512],finbuf[PROGNAME_WIDTH];
-    long inode;
+    unsigned long inode;
     const char *cs,*cmdlp;
     DIR *dirproc=NULL,*dirfd=NULL;
     struct dirent *direproc,*direfd;
@@ -386,11 +392,9 @@ static void prg_cache_load(void)
 	    lnamelen=readlink(line,lname,sizeof(lname)-1);
             lname[lnamelen] = '\0';  /*make it a null-terminated string*/
 
-            extract_type_1_socket_inode(lname, &inode);
-
-            if (inode < 0) extract_type_2_socket_inode(lname, &inode);
-
-            if (inode < 0) continue;
+            if (extract_type_1_socket_inode(lname, &inode) < 0)
+              if (extract_type_2_socket_inode(lname, &inode) < 0)
+                continue;
 
 	    if (!cmdlp) {
 		if (procfdlen - PATH_FD_SUFFl + PATH_CMDLINEl >= 
@@ -530,7 +534,7 @@ static void finish_this_one(int uid, unsigned long inode, const char *timers)
 	    printf("%-10s ", pw->pw_name);
 	else
 	    printf("%-10d ", uid);
-	printf("%-10ld ",inode);
+	printf("%-10lu ",inode);
     }
     if (flag_prg)
 	printf("%-" PROGNAME_WIDTHs "s",prg_cache_get(inode));
@@ -719,7 +723,7 @@ static void tcp_do_one(int lnr, const char *line)
 	return;
 
     num = sscanf(line,
-    "%d: %64[0-9A-Fa-f]:%X %64[0-9A-Fa-f]:%X %X %lX:%lX %X:%lX %lX %d %d %ld %512s\n",
+    "%d: %64[0-9A-Fa-f]:%X %64[0-9A-Fa-f]:%X %X %lX:%lX %X:%lX %lX %d %d %lu %512s\n",
 		 &d, local_addr, &local_port, rem_addr, &rem_port, &state,
 		 &txq, &rxq, &timer_run, &time_len, &retr, &uid, &timeout, &inode, more);
 
@@ -847,7 +851,7 @@ static void udp_do_one(int lnr, const char *line)
 
     more[0] = '\0';
     num = sscanf(line,
-		 "%d: %64[0-9A-Fa-f]:%X %64[0-9A-Fa-f]:%X %X %lX:%lX %X:%lX %lX %d %d %ld %512s\n",
+		 "%d: %64[0-9A-Fa-f]:%X %64[0-9A-Fa-f]:%X %X %lX:%lX %X:%lX %lX %d %d %lu %512s\n",
 		 &d, local_addr, &local_port,
 		 rem_addr, &rem_port, &state,
 	  &txq, &rxq, &timer_run, &time_len, &retr, &uid, &timeout, &inode, more);
@@ -987,7 +991,7 @@ static void raw_do_one(int lnr, const char *line)
 
     more[0] = '\0';
     num = sscanf(line,
-		 "%d: %64[0-9A-Fa-f]:%X %64[0-9A-Fa-f]:%X %X %lX:%lX %X:%lX %lX %d %d %ld %512s\n",
+		 "%d: %64[0-9A-Fa-f]:%X %64[0-9A-Fa-f]:%X %X %lX:%lX %X:%lX %lX %d %d %lu %512s\n",
 		 &d, local_addr, &local_port, rem_addr, &rem_port, &state,
 	  &txq, &rxq, &timer_run, &time_len, &retr, &uid, &timeout, &inode, more);
 
@@ -1099,9 +1103,9 @@ static void unix_do_one(int nr, const char *line)
     static int has = 0;
     char path[MAXPATHLEN], ss_flags[32];
     char *ss_proto, *ss_state, *ss_type;
-    int num, state, type, inode;
+    int num, state, type;
     void *d;
-    unsigned long refcnt, proto, flags;
+    unsigned long refcnt, proto, flags, inode;
 
     if (nr == 0) {
 	if (strstr(line, "Inode"))
@@ -1109,14 +1113,14 @@ static void unix_do_one(int nr, const char *line)
 	return;
     }
     path[0] = '\0';
-    num = sscanf(line, "%p: %lX %lX %lX %X %X %d %s",
+    num = sscanf(line, "%p: %lX %lX %lX %X %X %lu %s",
 		 &d, &refcnt, &proto, &flags, &type, &state, &inode, path);
     if (num < 6) {
 	fprintf(stderr, _("warning, got bogus unix line.\n"));
 	return;
     }
     if (!(has & HAS_INODE))
-	snprintf(path,sizeof(path),"%d",inode);
+	snprintf(path,sizeof(path),"%lu",inode);
 
     if (!flag_all) {
     	if ((state == SS_UNCONNECTED) && (flags & SO_ACCEPTCON)) {
@@ -1208,7 +1212,7 @@ static void unix_do_one(int nr, const char *line)
     printf("%-5s %-6ld %-11s %-10s %-13s ",
 	   ss_proto, refcnt, ss_flags, ss_type, ss_state);
     if (has & HAS_INODE)
-	printf("%-6d ",inode);
+	printf("%-6lu ",inode);
     else
 	printf("-      ");
     if (flag_prg)
