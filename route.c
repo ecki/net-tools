@@ -2,7 +2,7 @@
  * route        This file contains an implementation of the command
  *              that manages the IP routing table in the kernel.
  *
- * Version:     $Id: route.c,v 1.4 1999/01/05 20:53:04 philip Exp $
+ * Version:     $Id: route.c,v 1.5 1999/01/09 15:37:35 philip Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -65,7 +65,7 @@
 #define FEATURE_ROUTE
 #include "lib/net-features.h"	/* needs some of the system includes above! */
 
-char *Release = RELEASE, *Version = "route 1.96 (1999-01-01-)";
+char *Release = RELEASE, *Version = "route 1.96 (1999-01-01)";
 
 int opt_n = 0;			/* numerical output flag        */
 int opt_v = 0;			/* debugging output flag        */

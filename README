@@ -34,7 +34,9 @@ This is net-tools 1.50.  Notable changes since 1.49 include:
    sockets.
  - netstat -s is improved.
  - route/netstat -r display the routing cache correctly.
- - plipconfig and slattach are included in the distribution.
+ - plipconfig and slattach are included
+ - ipaddr and iptunnel are included (courtesy of Alexey Kuznetsov)
+ - as ever, various bugs have been fixed
 
 Notable changes since 1.48 include:
 
