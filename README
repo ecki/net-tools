@@ -32,10 +32,11 @@ Contents:
                           Notes
                           -----
 
-This is net-tools 1.54.  Notable changes since 1.53 include:
+This is net-tools 1.55.  Since 1.54, various bugs have been fixed.
+
+Notable changes since 1.53 include:
 
  - Jiri Pavlovsky supplied a Czech translation
- - various small bugs have been fixed
 
 Notable changes since 1.52 include:
 
@@ -43,13 +44,11 @@ Notable changes since 1.52 include:
    David Wagner)
  - Meelis Roos contributed an Estonian translation
  - netstat recognizes ESP and GRE protocols, courtesy John D. Hardin.
- - various other bugs have been fixed
 
 Notable changes since 1.51 include:
 
  - Jean-Michel Vansteene updated the French translation.
  - Dag Brattli contributed support for IrDA
- - some bugs have been fixed
 
 Notable changes since 1.50 include:
 
@@ -58,7 +57,6 @@ Notable changes since 1.50 include:
  - Jan Kratochvil added support to netstat for displaying details of
    the process owning a socket (option --programs)
  - Steve Whitehouse contributed support for DECnet
- - some bugs and compilation problems have been fixed
  - Ralf Bächle provided a translation to German
 
 You need kernel 2.0 or later to use these programs.  These programs

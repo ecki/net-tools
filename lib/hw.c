@@ -2,7 +2,7 @@
  * lib/hw.c   This file contains the top-level part of the hardware
  *              support functions module.
  *
- * Version:     $Id: hw.c,v 1.15 1999/12/11 12:09:23 philip Exp $
+ * Version:     $Id: hw.c,v 1.16 2000/04/02 12:56:44 philip Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -39,6 +39,7 @@ extern struct hwtype cslip_hwtype;
 extern struct hwtype slip6_hwtype;
 extern struct hwtype cslip6_hwtype;
 extern struct hwtype adaptive_hwtype;
+extern struct hwtype strip_hwtype;
 
 extern struct hwtype ether_hwtype;
 extern struct hwtype fddi_hwtype;
@@ -82,6 +83,9 @@ static struct hwtype *hwtypes[] =
     &slip6_hwtype,
     &cslip6_hwtype,
     &adaptive_hwtype,
+#endif
+#if HAVE_HWSTRIP
+    &strip_hwtype,
 #endif
 #if HAVE_HWASH
     &ash_hwtype,
