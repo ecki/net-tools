@@ -28,8 +28,7 @@ struct user_net_device_stats {
 };
 
 struct interface {
-    struct interface *next;
-
+    struct interface *next, *prev; 
     char name[IFNAMSIZ];	/* interface name        */
     short type;			/* if type               */
     short flags;		/* various flags         */
@@ -66,7 +65,7 @@ extern int if_fetch(struct interface *ife);
 
 extern int for_all_interfaces(int (*)(struct interface *, void *), void *);
 extern int free_interface_list(void);
-extern struct interface *lookup_interface(char *name, int readlist);
+extern struct interface *lookup_interface(char *name);
 extern int if_readlist(void);
 
 extern int do_if_fetch(struct interface *ife);

@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.40 2000/07/31 01:13:33 ecki Exp $
+ * Version:     $Id: ifconfig.c,v 1.41 2000/08/14 07:57:19 ak Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -112,7 +112,7 @@ static int if_print(char *ifname)
     } else {
 	struct interface *ife;
 
-	ife = lookup_interface(ifname,1);
+	ife = lookup_interface(ifname);
 	res = do_if_fetch(ife); 
 	if (res >= 0) 
 	    ife_print(ife);
@@ -1037,7 +1037,7 @@ static int get_nmbc_parent(char *parent,
 	struct interface *i;
 	struct sockaddr_in *sin;
 
-	i = lookup_interface(parent, 1);
+	i = lookup_interface(parent);
 	if (!i)
 		return -1;
 	if (do_if_fetch(i) < 0)

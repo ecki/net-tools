@@ -4,7 +4,10 @@
    10/1998 partly rewriten by Andi Kleen to support an interface list.   
    I don't claim that the list operations are efficient @).  
 
-   $Id: interface.c,v 1.9 2000/05/21 19:35:34 pb Exp $
+   8/2000  Andi Kleen make the list operations a bit more efficient.
+   People are crazy enough to use thousands of aliases now.
+
+   $Id: interface.c,v 1.10 2000/08/14 07:57:19 ak Exp $
  */
 
 #include "config.h"
@@ -84,38 +87,41 @@ int procnetdev_vsn = 1;
 
 int ife_short;
 
-static struct interface *int_list;
+static struct interface *int_list, *int_last;
 
-void add_interface(struct interface *n)
+static int if_readlist_proc(char *);
+
+static struct interface *add_interface(char *name)
 {
-    struct interface *ife, **pp;
+    struct interface *ife, **nextp, *new;
 
-    pp = &int_list;
-    for (ife = int_list; ife; pp = &ife->next, ife = ife->next) {
-	if (nstrcmp(ife->name, n->name) > 0)
-	    break;
+    for (ife = int_last; ife; ife = ife->prev) {
+	    int n = nstrcmp(ife->name, name); 
+	    if (n == 0) 
+		    return ife; 
+	    if (n < 0) 
+		    break; 
     }
-    n->next = (*pp);
-    (*pp) = n;
+    new(new); 
+    safe_strncpy(new->name, name, IFNAMSIZ); 
+    nextp = ife ? &ife->next : &int_list;
+    new->prev = ife;
+    new->next = *nextp; 
+    if (new->next) 
+	    new->next->prev = new; 
+    else
+	    int_last = new; 
+    *nextp = new; 
+    return new; 
 }
 
-struct interface *lookup_interface(char *name, int readlist)
+struct interface *lookup_interface(char *name)
 {
     struct interface *ife = NULL;
 
-    if (int_list || (readlist && if_readlist() >= 0)) {
-		for (ife = int_list; ife; ife = ife->next) {
-	    	if (!strcmp(ife->name, name))
-			break;
-		}
-    }
-
-    if (!ife) { 
-	new(ife);
-	safe_strncpy(ife->name, name, IFNAMSIZ);  
-	add_interface(ife);
-    }
-
+    if (if_readlist_proc(name) < 0) 
+	    return NULL; 
+    ife = add_interface(name); 
     return ife;
 }
 
@@ -182,7 +188,7 @@ static int if_readconf(void)
 
     ifr = ifc.ifc_req;
     for (n = 0; n < ifc.ifc_len; n += sizeof(struct ifreq)) {
-	lookup_interface(ifr->ifr_name,0);
+	add_interface(ifr->ifr_name);
 	ifr++;
     }
     err = 0;
@@ -292,12 +298,18 @@ static int get_dev_fields(char *bp, struct interface *ife)
     return 0;
 }
 
-int if_readlist(void)
+static int if_readlist_proc(char *target)
 {
+    static int proc_read; 
     FILE *fh;
     char buf[512];
     struct interface *ife;
     int err;
+
+    if (proc_read) 
+	    return 0; 
+    if (!target) 
+	    proc_read = 1;
 
     fh = fopen(_PATH_PROCNET_DEV, "r");
     if (!fh) {
@@ -336,22 +348,19 @@ int if_readlist(void)
 
     err = 0;
     while (fgets(buf, sizeof buf, fh)) {
-	char *s;
-
-	new(ife);
-
-	s = get_name(ife->name, buf);
+	char *s, name[IFNAMSIZ];
+	s = get_name(name, buf);    
+	ife = add_interface(name);
 	get_dev_fields(s, ife);
 	ife->statistics_valid = 1;
-
-	add_interface(ife);
+	if (target && !strcmp(target,name))
+		break;
     }
     if (ferror(fh)) {
 	perror(_PATH_PROCNET_DEV);
 	err = -1;
+	proc_read = 0; 
     }
-    if (!err)
-	err = if_readconf();
 
 #if 0
     free(fmt);
@@ -359,6 +368,14 @@ int if_readlist(void)
     fclose(fh);
     return err;
 }
+
+int if_readlist(void) 
+{ 
+    int err = if_readlist_proc(NULL); 
+    if (!err)
+	    err = if_readconf();
+    return err;
+} 
 
 /* Support for fetching an IPX address */
 
