@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.20 1998/11/18 13:46:11 philip Exp $
+ * Version:     $Id: ifconfig.c,v 1.21 1998/11/19 06:36:57 freitag Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -380,7 +380,8 @@ static int set_flag(char *ifname, short flag)
 
     strcpy(ifr.ifr_name, ifname);
     if (ioctl(skfd, SIOCGIFFLAGS, &ifr) < 0) {
-	fprintf(stderr, _("%s: unknown interface.\n"), ifname);
+	fprintf(stderr, _("%s: unknown interface: %s\n"), 
+		ifname,	strerror(errno));
 	return (-1);
     }
     strcpy(ifr.ifr_name, ifname);
@@ -400,7 +401,8 @@ static int clr_flag(char *ifname, short flag)
 
     strcpy(ifr.ifr_name, ifname);
     if (ioctl(skfd, SIOCGIFFLAGS, &ifr) < 0) {
-	fprintf(stderr, _("%s: unknown interface.\n"), ifname);
+	fprintf(stderr, _("%s: unknown interface: %s\n"), 
+		ifname, strerror(errno));
 	return -1;
     }
     strcpy(ifr.ifr_name, ifname);
@@ -447,7 +449,7 @@ static void usage(void)
     fprintf(stderr, _("                [txqueuelen len]\n"));
 #endif
 #ifdef HAVE_DYNAMIC
-    fprintf(stderr, _("				 [[-]dynamic]\n"));
+    fprintf(stderr, _("                [[-]dynamic]\n"));
 #endif
     fprintf(stderr, _("                [up] [down] ...\n"));
     exit(1);
@@ -501,6 +503,7 @@ int main(int argc, char **argv)
 	perror("socket");
 	exit(1);
     }
+
     /* Find any options. */
     argc--;
     argv++;
@@ -1077,7 +1080,7 @@ int main(int argc, char **argv)
 #endif
 	    default:
 		fprintf(stderr,
-		_("Don't know how to set addresses for this family.\n"));
+		_("Don't know how to set addresses for family %d.\n"), ap->af);
 		exit(1);
 	    }
 	    if (r < 0) {
