@@ -7,7 +7,7 @@
    8/2000  Andi Kleen make the list operations a bit more efficient.
    People are crazy enough to use thousands of aliases now.
 
-   $Id: interface.c,v 1.16 2001/07/17 07:24:36 pb Exp $
+   $Id: interface.c,v 1.17 2001/08/09 15:52:39 ak Exp $
  */
 
 #include "config.h"
@@ -180,7 +180,7 @@ static int if_readconf(void)
 	}
 	if (ifc.ifc_len == sizeof(struct ifreq) * numreqs) {
 	    /* assume it overflowed and try again */
-	    numreqs += 10;
+	    numreqs *= 2;
 	    continue;
 	}
 	break;
