@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.39 2000/06/11 15:44:21 pb Exp $
+ * Version:     $Id: ifconfig.c,v 1.40 2000/07/31 01:13:33 ecki Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -636,6 +636,12 @@ int main(int argc, char **argv)
 		usage();
 	    if ((hw = get_hwtype(*spp)) == NULL)
 		usage();
+	    if (hw->input == NULL) {
+	    	fprintf(stderr, _("hw address type `%s' has no handler to set address. failed.\n"), *spp);
+	    	spp+=2;
+	    	goterr = 1;
+	    	continue;
+	    }
 	    if (*++spp == NULL)
 		usage();
 	    safe_strncpy(host, *spp, (sizeof host));
