@@ -18,7 +18,7 @@
 
 int DDP_rprint(int options)
 {
-	fprintf(stderr, _("Routing table for `ddp' not yet supported.\n"));
-	return(1);
+    fprintf(stderr, _("Routing table for `ddp' not yet supported.\n"));
+    return (1);
 }
 #endif

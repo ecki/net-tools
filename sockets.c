@@ -16,40 +16,40 @@
 #include "util.h"
 #include "net-support.h"
 
-int skfd = -1; 	/* generic raw socket desc.	*/
+int skfd = -1;			/* generic raw socket desc.     */
 
 int sockets_open(int family)
 {
-	struct aftype **aft;
-	int sfd = -1; 
-	static int force = -1; 
+    struct aftype **aft;
+    int sfd = -1;
+    static int force = -1;
 
-	if (force < 0) {
-		force = 0;   
-		if (kernel_version() < KRELEASE(2,1,0))
-			force = 1;  
-		if (access("/proc/net",R_OK))
-			force = 1;
+    if (force < 0) {
+	force = 0;
+	if (kernel_version() < KRELEASE(2, 1, 0))
+	    force = 1;
+	if (access("/proc/net", R_OK))
+	    force = 1;
+    }
+    for (aft = aftypes; *aft; aft++) {
+	struct aftype *af = *aft;
+	if (af->af == AF_UNSPEC)
+	    continue;
+	if (family && family != af->af)
+	    continue;
+	if (af->fd != -1) {
+	    sfd = af->fd;
+	    continue;
 	}
-	for (aft = aftypes; *aft; aft++) {
-		struct aftype *af = *aft;
-		if (af->af == AF_UNSPEC)
-			continue;
-		if (family && family != af->af)
-			continue; 
-		if (af->fd != -1) {
-			sfd = af->fd;
-			continue;
-		}
-		/* Check some /proc file first to not stress kmod */ 
-		if (!force && af->flag_file) { 
-			if (access(af->flag_file, R_OK))
-				continue; 
-		}
-		sfd = socket(af->af, SOCK_DGRAM, 0);
-		af->fd = sfd; 
-	} 
-	if (sfd < 0)  
-		fprintf(stderr, _("No usable address families found.\n"));
-	return sfd;
+	/* Check some /proc file first to not stress kmod */
+	if (!force && af->flag_file) {
+	    if (access(af->flag_file, R_OK))
+		continue;
+	}
+	sfd = socket(af->af, SOCK_DGRAM, 0);
+	af->fd = sfd;
+    }
+    if (sfd < 0)
+	fprintf(stderr, _("No usable address families found.\n"));
+    return sfd;
 }

@@ -23,7 +23,7 @@
 #include "intl.h"
 #include "net-features.h"
 
-extern     struct aftype   netrom_aftype;
+extern struct aftype netrom_aftype;
 
 /* static int skfd = -1; */
 
@@ -31,17 +31,17 @@ extern     struct aftype   netrom_aftype;
 #if 0
 static int usage(void)
 {
-  fprintf(stderr,_("netrom usage\n"));
+    fprintf(stderr, _("netrom usage\n"));
 
-  return(E_USAGE);
+    return (E_USAGE);
 }
 #endif
 
 
 int NETROM_rinput(int action, int ext, char **args)
 {
-  
-  fprintf(stderr,_("NET/ROM: this needs to be written\n"));
-  return(0);
+
+    fprintf(stderr, _("NET/ROM: this needs to be written\n"));
+    return (0);
 }
-#endif	/* HAVE_AFNETROM */
+#endif				/* HAVE_AFNETROM */

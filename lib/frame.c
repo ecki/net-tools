@@ -1,22 +1,22 @@
 /*
- * lib/frame.c	This file contains the Frame Relay support.
+ * lib/frame.c        This file contains the Frame Relay support.
  *
- * Version:	lib/frame.c 0.01 (1996-03-23)
+ * Version:     $Id: frame.c,v 1.3 1998/11/15 20:09:39 freitag Exp $
  *
- * Maintainer:	Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
+ * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
- * Author:	Mike McLagan <mike.mclagan@linux.org>
+ * Author:      Mike McLagan <mike.mclagan@linux.org>
  *
  * Changes:
  *
- *962303 {0.01}	Mike McLagan :		creation
- *960413 {0.02} Bernd Eckenfels :	included in net-lib
+ *962303 {0.01} Mike McLagan :          creation
+ *960413 {0.02} Bernd Eckenfels :       included in net-lib
  *
- *		This program is free software; you can redistribute it
- *		and/or  modify it under  the terms of  the GNU General
- *		Public  License as  published  by  the  Free  Software
- *		Foundation;  either  version 2 of the License, or  (at
- *		your option) any later version.
+ *              This program is free software; you can redistribute it
+ *              and/or  modify it under  the terms of  the GNU General
+ *              Public  License as  published  by  the  Free  Software
+ *              Foundation;  either  version 2 of the License, or  (at
+ *              your option) any later version.
  */
 #include "config.h"
 
@@ -39,19 +39,21 @@
 
 char *pr_dlci(unsigned char *ptr)
 {
-   static char buf[12];
+    static char buf[12];
 
-   snprintf(buf, sizeof(buf), "%i", *(short *)ptr);
-   return(buf);
+    snprintf(buf, sizeof(buf), "%i", *(short *) ptr);
+    return (buf);
 }
 
-struct hwtype dlci_hwtype = {
-  "dlci",	NULL, /*"Frame Relay DLCI",*/		ARPHRD_DLCI,	3,
-  pr_dlci,	NULL,		NULL,		NULL
+struct hwtype dlci_hwtype =
+{
+    "dlci", NULL, /*"Frame Relay DLCI", */ ARPHRD_DLCI, 3,
+    pr_dlci, NULL, NULL, NULL
 };
 
-struct hwtype frad_hwtype = {
-  "frad",	NULL, /*"Frame Relay Access Device",*/		ARPHRD_FRAD,	0,
-  NULL,		NULL,		NULL,		NULL
+struct hwtype frad_hwtype =
+{
+    "frad", NULL, /*"Frame Relay Access Device", */ ARPHRD_FRAD, 0,
+    NULL, NULL, NULL, NULL
 };
-#endif	/* HAVE_HWFR */
+#endif				/* HAVE_HWFR */

@@ -1,22 +1,22 @@
 /*
- * lib/ppp.c	This file contains the SLIP support for the NET-2 base
- *		distribution.
+ * lib/ppp.c  This file contains the SLIP support for the NET-2 base
+ *              distribution.
  *
- * Version:	@(#)slip.c	1.12	01/07/98
+ * Version:     $Id: ppp.c,v 1.3 1998/11/15 20:11:45 freitag Exp $
  *
- * Author:	Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
- *		Copyright 1993 MicroWalt Corporation
+ * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
+ *              Copyright 1993 MicroWalt Corporation
  *
- *		Modified by Alan Cox, May 94 to cover NET-3
+ *              Modified by Alan Cox, May 94 to cover NET-3
  *                       
  * Changes:
  * 980701 {1.12} Arnaldo Carvalho de Melo - GNU gettext instead of catgets
  *
- *		This program is free software; you can redistribute it
- *		and/or  modify it under  the terms of  the GNU General
- *		Public  License as  published  by  the  Free  Software
- *		Foundation;  either  version 2 of the License, or  (at
- *		your option) any later version.
+ *              This program is free software; you can redistribute it
+ *              and/or  modify it under  the terms of  the GNU General
+ *              Public  License as  published  by  the  Free  Software
+ *              Foundation;  either  version 2 of the License, or  (at
+ *              your option) any later version.
  */
 #include "config.h"
 
@@ -39,20 +39,20 @@
 #include "intl.h"
 
 /* Start the PPP encapsulation on the file descriptor. */
-static int
-do_ppp(int fd)
+static int do_ppp(int fd)
 {
-	fprintf(stderr,_("You cannot start PPP with this program.\n"));
-        return -1;
+    fprintf(stderr, _("You cannot start PPP with this program.\n"));
+    return -1;
 }
 
 
 
 
-struct hwtype ppp_hwtype = {
-  "ppp",	NULL, /*"Point-Point Protocol",*/		ARPHRD_PPP,	0,
-  NULL,		NULL,		NULL,		do_ppp
+struct hwtype ppp_hwtype =
+{
+    "ppp", NULL, /*"Point-Point Protocol", */ ARPHRD_PPP, 0,
+    NULL, NULL, NULL, do_ppp
 };
 
 
-#endif	/* HAVE_PPP */
+#endif				/* HAVE_PPP */

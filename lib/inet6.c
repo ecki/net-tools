@@ -1,22 +1,22 @@
 /*
- * lib/inet6.c	This file contains an implementation of the "INET6"
- *		support functions for the net-tools.
- *		(most of it copied from lib/inet.c 1.26).
+ * lib/inet6.c        This file contains an implementation of the "INET6"
+ *              support functions for the net-tools.
+ *              (most of it copied from lib/inet.c 1.26).
  *
- * Version:	lib/inet6.c 0.02 1998-07-01
+ * Version:     $Id: inet6.c,v 1.4 1998/11/15 20:10:37 freitag Exp $
  *
- * Author:	Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
- *		Copyright 1993 MicroWalt Corporation
+ * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
+ *              Copyright 1993 MicroWalt Corporation
  *
  * Modified:
- *960808 {0.01}	Frank Strauss :         adapted for IPv6 support
+ *960808 {0.01} Frank Strauss :         adapted for IPv6 support
  *980701 {0.02} Arnaldo C. Melo:        GNU gettext instead of catgets
  *
- *		This program is free software; you can redistribute it
- *		and/or  modify it under  the terms of  the GNU General
- *		Public  License as  published  by  the  Free  Software
- *		Foundation;  either  version 2 of the License, or  (at
- *		your option) any later version.
+ *              This program is free software; you can redistribute it
+ *              and/or  modify it under  the terms of  the GNU General
+ *              Public  License as  published  by  the  Free  Software
+ *              Foundation;  either  version 2 of the License, or  (at
+ *              your option) any later version.
  */
 #include "config.h"
 
@@ -40,126 +40,116 @@
 #include "pathnames.h"
 #include "intl.h"
 
-extern int h_errno;  /* some netdb.h versions don't export this */
+extern int h_errno;		/* some netdb.h versions don't export this */
 
-static int
-INET6_resolve(char *name, struct sockaddr_in6 *sin6)
+static int INET6_resolve(char *name, struct sockaddr_in6 *sin6)
 {
-  struct addrinfo req, *ai; 
-  int s; 
+    struct addrinfo req, *ai;
+    int s;
 
-  req.ai_family = AF_INET6;
-  if ((s = getaddrinfo(name, NULL, &req, &ai))) {
-    fprintf(stderr, "getaddrinfo: %s: %s\n", name, gai_strerror(s));
-    return -1;
-  }
+    req.ai_family = AF_INET6;
+    if ((s = getaddrinfo(name, NULL, &req, &ai))) {
+	fprintf(stderr, "getaddrinfo: %s: %s\n", name, gai_strerror(s));
+	return -1;
+    }
+    memcpy(sin6, ai->ai_addr, sizeof(struct sockaddr_in6));
 
-  memcpy(sin6, ai->ai_addr, sizeof(struct sockaddr_in6));
+    freeaddrinfo(ai);
 
-  freeaddrinfo(ai);
-
-  return(0);
+    return (0);
 }
 
 
-static int
-INET6_rresolve(char *name, struct sockaddr_in6 *sin6, int numeric)
+static int INET6_rresolve(char *name, struct sockaddr_in6 *sin6, int numeric)
 {
-  int s;
+    int s;
 
-  /* Grmpf. -FvK */
-  if (sin6->sin6_family != AF_INET6) {
+    /* Grmpf. -FvK */
+    if (sin6->sin6_family != AF_INET6) {
 #ifdef DEBUG
 	fprintf(stderr, _("rresolve: unsupport address family %d !\n"),
-							sin6->sin6_family);
+		sin6->sin6_family);
 #endif
 	errno = EAFNOSUPPORT;
-	return(-1);
-  }
-
-  if (numeric & 0x7FFF) {
-        inet_ntop(AF_INET6, &sin6->sin6_addr, name, 80);
-	return(0);
-  }
-
-  if ((s = getnameinfo((struct sockaddr *)sin6, sizeof(struct sockaddr_in6),
-		      name, 255 /* !! */, NULL, 0, 0))) {
-    fprintf(stderr, "getnameinfo: %s\n", gai_strerror(s));
-    return -1;
-  }
-
-  return(0);
+	return (-1);
+    }
+    if (numeric & 0x7FFF) {
+	inet_ntop(AF_INET6, &sin6->sin6_addr, name, 80);
+	return (0);
+    }
+    if ((s = getnameinfo((struct sockaddr *) sin6, sizeof(struct sockaddr_in6),
+			 name, 255 /* !! */ , NULL, 0, 0))) {
+	fprintf(stderr, "getnameinfo: %s\n", gai_strerror(s));
+	return -1;
+    }
+    return (0);
 }
 
 
-static void
-INET6_reserror(char *text)
+static void INET6_reserror(char *text)
 {
-  herror(text);
+    herror(text);
 }
 
 
 /* Display an Internet socket address. */
-static char *
-INET6_print(unsigned char *ptr)
+static char *INET6_print(unsigned char *ptr)
 {
-  static char name[80];
+    static char name[80];
 
-  inet_ntop(AF_INET6, (struct in6_addr *)ptr, name, 80);
-  return name;
+    inet_ntop(AF_INET6, (struct in6_addr *) ptr, name, 80);
+    return name;
 }
 
 
 /* Display an Internet socket address. */
 /* dirty! struct sockaddr usually doesn't suffer for inet6 addresses, fst. */
-static char *
-INET6_sprint(struct sockaddr *sap, int numeric)
+static char *INET6_sprint(struct sockaddr *sap, int numeric)
 {
-  static char buff[128];
+    static char buff[128];
 
-  if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-	return strncpy (buff, _("[NONE SET]"), sizeof (buff));
-  if (INET6_rresolve(buff, (struct sockaddr_in6 *) sap, numeric) != 0)
-							return(NULL);
-  return(buff);
+    if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
+	return strncpy(buff, _("[NONE SET]"), sizeof(buff));
+    if (INET6_rresolve(buff, (struct sockaddr_in6 *) sap, numeric) != 0)
+	return (NULL);
+    return (buff);
 }
 
 
-static int
-INET6_getsock(char *bufp, struct sockaddr *sap)
+static int INET6_getsock(char *bufp, struct sockaddr *sap)
 {
-  struct sockaddr_in6 *sin6;
-  
-  sin6              = (struct sockaddr_in6 *) sap;
-  sin6->sin6_family = AF_INET6;
-  sin6->sin6_port   = 0;
+    struct sockaddr_in6 *sin6;
 
-  if (inet_pton(AF_INET6, bufp, sin6->sin6_addr.s6_addr) <= 0)
-    return(-1);
+    sin6 = (struct sockaddr_in6 *) sap;
+    sin6->sin6_family = AF_INET6;
+    sin6->sin6_port = 0;
 
-  return 16; /* ?;) */
+    if (inet_pton(AF_INET6, bufp, sin6->sin6_addr.s6_addr) <= 0)
+	return (-1);
+
+    return 16;			/* ?;) */
 }
 
-static int
-INET6_input(int type, char *bufp, struct sockaddr *sap)
+static int INET6_input(int type, char *bufp, struct sockaddr *sap)
 {
-  switch(type) {
-  	case 1:
-		return(INET6_getsock(bufp, sap));
-	default:
-		return(INET6_resolve(bufp, (struct sockaddr_in6 *) sap));
-  }
+    switch (type) {
+    case 1:
+	return (INET6_getsock(bufp, sap));
+    default:
+	return (INET6_resolve(bufp, (struct sockaddr_in6 *) sap));
+    }
 }
 
 
-struct aftype inet6_aftype = {
-  "inet6",	NULL, /*"IPv6",*/	AF_INET6,	sizeof(struct in6_addr),
-  INET6_print,	INET6_sprint,		INET6_input,	INET6_reserror,	
-  INET6_rprint,	INET6_rinput,		NULL,
+struct aftype inet6_aftype =
+{
+    "inet6", NULL, /*"IPv6", */ AF_INET6, sizeof(struct in6_addr),
+    INET6_print, INET6_sprint, INET6_input, INET6_reserror,
+    INET6_rprint, INET6_rinput, NULL,
 
-  -1,
-  "/proc/net/if_inet6"
+    -1,
+    "/proc/net/if_inet6"
 };
 
 
-#endif	/* HAVE_AFINET6 */
+#endif				/* HAVE_AFINET6 */

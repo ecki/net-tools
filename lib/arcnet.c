@@ -1,17 +1,17 @@
 /*
- * lib/arcnet.c	This file contains an implementation of the "ARCnet"
- *		support functions for the NET-2 base distribution.
+ * lib/arcnet.c       This file contains an implementation of the "ARCnet"
+ *              support functions for the NET-2 base distribution.
  *
- * Version:	@(#)arcnet.c	1.10	10/07/93
+ * Version:     $Id: arcnet.c,v 1.3 1998/11/15 20:09:06 freitag Exp $
  *
- * Author:	Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
- *		Copyright 1993 MicroWalt Corporation
+ * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
+ *              Copyright 1993 MicroWalt Corporation
  *
- *		This program is free software; you can redistribute it
- *		and/or  modify it under  the terms of  the GNU General
- *		Public  License as  published  by  the  Free  Software
- *		Foundation;  either  version 2 of the License, or  (at
- *		your option) any later version.
+ *              This program is free software; you can redistribute it
+ *              and/or  modify it under  the terms of  the GNU General
+ *              Public  License as  published  by  the  Free  Software
+ *              Foundation;  either  version 2 of the License, or  (at
+ *              your option) any later version.
  */
 #include "config.h"
 
@@ -34,103 +34,106 @@ extern struct hwtype arcnet_hwtype;
 
 
 /* Display an ARCnet address in readable format. */
-static char *
-pr_arcnet(unsigned char *ptr)
+static char *pr_arcnet(unsigned char *ptr)
 {
-  static char buff[64];
+    static char buff[64];
 
-  snprintf(buff, sizeof(buff), "%02X",(ptr[0] & 0377));
-  return(buff);
+    snprintf(buff, sizeof(buff), "%02X", (ptr[0] & 0377));
+    return (buff);
 }
 
 
 /* Display an ARCnet socket address. */
-static char *
-pr_sarcnet(struct sockaddr *sap)
+static char *pr_sarcnet(struct sockaddr *sap)
 {
-  static char buf[64];
+    static char buf[64];
 
-  if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-	return strncpy (buf, _("[NONE SET]"), sizeof (buf));
-  return(pr_arcnet(sap->sa_data));
+    if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
+	return strncpy(buf, _("[NONE SET]"), sizeof(buf));
+    return (pr_arcnet(sap->sa_data));
 }
 
 
 /* Input an ARCnet address and convert to binary. */
-static int
-in_arcnet(char *bufp, struct sockaddr *sap)
+static int in_arcnet(char *bufp, struct sockaddr *sap)
 {
-  unsigned char *ptr;
-  char c, *orig;
-  int i, val;
+    unsigned char *ptr;
+    char c, *orig;
+    int i, val;
 
-  sap->sa_family = arcnet_hwtype.type;
-  ptr = sap->sa_data;
+    sap->sa_family = arcnet_hwtype.type;
+    ptr = sap->sa_data;
 
-  i = 0;
-  orig = bufp;
-  while((*bufp != '\0') && (i < 1)) {
+    i = 0;
+    orig = bufp;
+    while ((*bufp != '\0') && (i < 1)) {
 	val = 0;
 	c = *bufp++;
-	if (isdigit(c)) val = c - '0';
-	  else if (c >= 'a' && c <= 'f') val = c - 'a' + 10;
-	  else if (c >= 'A' && c <= 'F') val = c - 'A' + 10;
-	  else {
+	if (isdigit(c))
+	    val = c - '0';
+	else if (c >= 'a' && c <= 'f')
+	    val = c - 'a' + 10;
+	else if (c >= 'A' && c <= 'F')
+	    val = c - 'A' + 10;
+	else {
 #ifdef DEBUG
-		fprintf(stderr, _("in_arcnet(%s): invalid arcnet address!\n"), orig);
+	    fprintf(stderr, _("in_arcnet(%s): invalid arcnet address!\n"), orig);
 #endif
-		errno = EINVAL;
-		return(-1);
+	    errno = EINVAL;
+	    return (-1);
 	}
 	val <<= 4;
 	c = *bufp++;
-	if (isdigit(c)) val |= c - '0';
-	  else if (c >= 'a' && c <= 'f') val |= c - 'a' + 10;
-	  else if (c >= 'A' && c <= 'F') val |= c - 'A' + 10;
-	  else {
+	if (isdigit(c))
+	    val |= c - '0';
+	else if (c >= 'a' && c <= 'f')
+	    val |= c - 'a' + 10;
+	else if (c >= 'A' && c <= 'F')
+	    val |= c - 'A' + 10;
+	else {
 #ifdef DEBUG
-		fprintf(stderr, _("in_arcnet(%s): invalid arcnet address!\n"), orig);
+	    fprintf(stderr, _("in_arcnet(%s): invalid arcnet address!\n"), orig);
 #endif
-		errno = EINVAL;
-		return(-1);
+	    errno = EINVAL;
+	    return (-1);
 	}
 	*ptr++ = (unsigned char) (val & 0377);
 	i++;
 
 	/* We might get a semicolon here - not required. */
 	if (*bufp == ':') {
-		if (i == ETH_ALEN) {
+	    if (i == ETH_ALEN) {
 #ifdef DEBUG
-			fprintf(stderr, _("in_arcnet(%s): trailing : ignored!\n"),
-									orig)
+		fprintf(stderr, _("in_arcnet(%s): trailing : ignored!\n"),
+			orig)
 #endif
-						; /* nothing */
-		}
-		bufp++;
+		    ;		/* nothing */
+	    }
+	    bufp++;
 	}
-  }
+    }
 
-  /* That's it.  Any trailing junk? */
-  if ((i == ETH_ALEN) && (*bufp != '\0')) {
+    /* That's it.  Any trailing junk? */
+    if ((i == ETH_ALEN) && (*bufp != '\0')) {
 #ifdef DEBUG
 	fprintf(stderr, _("in_arcnet(%s): trailing junk!\n"), orig);
 	errno = EINVAL;
-	return(-1);
+	return (-1);
 #endif
-  }
-
+    }
 #ifdef DEBUG
-  fprintf(stderr, "in_arcnet(%s): %s\n", orig, pr_arcnet(sap->sa_data));
+    fprintf(stderr, "in_arcnet(%s): %s\n", orig, pr_arcnet(sap->sa_data));
 #endif
 
-  return(0);
+    return (0);
 }
 
 
-struct hwtype arcnet_hwtype = {
-  "arcnet",	NULL, /*"2.5Mbps ARCnet",*/		ARPHRD_ARCNET,	1,
-  pr_arcnet,	pr_sarcnet,	in_arcnet,	NULL
+struct hwtype arcnet_hwtype =
+{
+    "arcnet", NULL, /*"2.5Mbps ARCnet", */ ARPHRD_ARCNET, 1,
+    pr_arcnet, pr_sarcnet, in_arcnet, NULL
 };
 
 
-#endif	/* HAVE_HWARC */
+#endif				/* HAVE_HWARC */

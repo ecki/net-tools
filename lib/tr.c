@@ -1,17 +1,17 @@
 /*
- * lib/tr.c	This file contains an implementation of the "Ethernet"
- *		support functions for the NET-2 base distribution.
+ * lib/tr.c   This file contains an implementation of the "Tokenring"
+ *              support functions.
  *
- * Version:	@(#)tr.c	1.10	10/07/93
+ * Version:     $Id: tr.c,v 1.3 1998/11/15 20:12:25 freitag Exp $
  *
- * Author:	Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
- *		Copyright 1993 MicroWalt Corporation
+ * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
+ *              Copyright 1993 MicroWalt Corporation
  *
- *		This program is free software; you can redistribute it
- *		and/or  modify it under  the terms of  the GNU General
- *		Public  License as  published  by  the  Free  Software
- *		Foundation;  either  version 2 of the License, or  (at
- *		your option) any later version.
+ *              This program is free software; you can redistribute it
+ *              and/or  modify it under  the terms of  the GNU General
+ *              Public  License as  published  by  the  Free  Software
+ *              Foundation;  either  version 2 of the License, or  (at
+ *              your option) any later version.
  */
 #include "config.h"
 
@@ -33,105 +33,105 @@
 
 extern struct hwtype tr_hwtype;
 
-
-/* Display an Ethernet address in readable format. */
-static char *
-pr_tr(unsigned char *ptr)
+static char *pr_tr(unsigned char *ptr)
 {
-  static char buff[64];
+    static char buff[64];
 
-  snprintf(buff, sizeof(buff), "%02X:%02X:%02X:%02X:%02X:%02X",
-	(ptr[0] & 0377), (ptr[1] & 0377), (ptr[2] & 0377),
-	(ptr[3] & 0377), (ptr[4] & 0377), (ptr[5] & 0377)
-  );
-  return(buff);
+    snprintf(buff, sizeof(buff), "%02X:%02X:%02X:%02X:%02X:%02X",
+	     (ptr[0] & 0377), (ptr[1] & 0377), (ptr[2] & 0377),
+	     (ptr[3] & 0377), (ptr[4] & 0377), (ptr[5] & 0377)
+	);
+    return (buff);
 }
 
 
-/* Display an Ethernet socket address. */
-static char *
-pr_str(struct sockaddr *sap)
+static char *pr_str(struct sockaddr *sap)
 {
-  if (sap->sa_family == 0xFFFF || sap->sa_family == 0) return("[NONE SET]");
-  return(pr_tr(sap->sa_data));
+    if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
+	return ("[NONE SET]");
+    return (pr_tr(sap->sa_data));
 }
 
 
-/* Input an Ethernet address and convert to binary. */
-static int
-in_tr(char *bufp, struct sockaddr *sap)
+static int in_tr(char *bufp, struct sockaddr *sap)
 {
-  unsigned char *ptr;
-  char c, *orig;
-  int i, val;
+    unsigned char *ptr;
+    char c, *orig;
+    int i, val;
 
-  sap->sa_family = tr_hwtype.type;
-  ptr = sap->sa_data;
+    sap->sa_family = tr_hwtype.type;
+    ptr = sap->sa_data;
 
-  i = 0;
-  orig = bufp;
-  while((*bufp != '\0') && (i < TR_ALEN)) {
+    i = 0;
+    orig = bufp;
+    while ((*bufp != '\0') && (i < TR_ALEN)) {
 	val = 0;
 	c = *bufp++;
-	if (isdigit(c)) val = c - '0';
-	  else if (c >= 'a' && c <= 'f') val = c - 'a' + 10;
-	  else if (c >= 'A' && c <= 'F') val = c - 'A' + 10;
-	  else {
+	if (isdigit(c))
+	    val = c - '0';
+	else if (c >= 'a' && c <= 'f')
+	    val = c - 'a' + 10;
+	else if (c >= 'A' && c <= 'F')
+	    val = c - 'A' + 10;
+	else {
 #ifdef DEBUG
-		fprintf(stderr, _("in_tr(%s): invalid token ring address!\n"), orig);
+	    fprintf(stderr, _("in_tr(%s): invalid token ring address!\n"), orig);
 #endif
-		errno = EINVAL;
-		return(-1);
+	    errno = EINVAL;
+	    return (-1);
 	}
 	val <<= 4;
 	c = *bufp++;
-	if (isdigit(c)) val |= c - '0';
-	  else if (c >= 'a' && c <= 'f') val |= c - 'a' + 10;
-	  else if (c >= 'A' && c <= 'F') val |= c - 'A' + 10;
-	  else {
+	if (isdigit(c))
+	    val |= c - '0';
+	else if (c >= 'a' && c <= 'f')
+	    val |= c - 'a' + 10;
+	else if (c >= 'A' && c <= 'F')
+	    val |= c - 'A' + 10;
+	else {
 #ifdef DEBUG
-		fprintf(stderr, _("in_tr(%s): invalid token ring address!\n"), orig);
+	    fprintf(stderr, _("in_tr(%s): invalid token ring address!\n"), orig);
 #endif
-		errno = EINVAL;
-		return(-1);
+	    errno = EINVAL;
+	    return (-1);
 	}
 	*ptr++ = (unsigned char) (val & 0377);
 	i++;
 
 	/* We might get a semicolon here - not required. */
 	if (*bufp == ':') {
-		if (i == TR_ALEN) {
+	    if (i == TR_ALEN) {
 #ifdef DEBUG
-			fprintf(stderr, _("in_tr(%s): trailing : ignored!\n"),
-									orig)
+		fprintf(stderr, _("in_tr(%s): trailing : ignored!\n"),
+			orig)
 #endif
-						; /* nothing */
-		}
-		bufp++;
+		    ;		/* nothing */
+	    }
+	    bufp++;
 	}
-  }
+    }
 
-  /* That's it.  Any trailing junk? */
-  if ((i == TR_ALEN) && (*bufp != '\0')) {
+    /* That's it.  Any trailing junk? */
+    if ((i == TR_ALEN) && (*bufp != '\0')) {
 #ifdef DEBUG
 	fprintf(stderr, _("in_tr(%s): trailing junk!\n"), orig);
 	errno = EINVAL;
-	return(-1);
+	return (-1);
 #endif
-  }
-
+    }
 #ifdef DEBUG
-  fprintf(stderr, "in_tr(%s): %s\n", orig, pr_tr(sap->sa_data));
+    fprintf(stderr, "in_tr(%s): %s\n", orig, pr_tr(sap->sa_data));
 #endif
 
-  return(0);
+    return (0);
 }
 
 
-struct hwtype tr_hwtype = {
-  "tr",	"16/4 Mbps TR",		ARPHRD_IEEE802,	TR_ALEN,
-  pr_tr,	pr_str,	in_tr,	NULL
+struct hwtype tr_hwtype =
+{
+    "tr", "16/4 Mbps TR", ARPHRD_IEEE802, TR_ALEN,
+    pr_tr, pr_str, in_tr, NULL
 };
 
 
-#endif	/* HAVE_HWTR */
+#endif				/* HAVE_HWTR */

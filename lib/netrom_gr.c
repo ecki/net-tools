@@ -1,22 +1,22 @@
 /*
- * lib/netrom_gr.c	This file contains an implementation of the NET/ROM
- *			route support functions.
+ * lib/netrom_gr.c    This file contains an implementation of the NET/ROM
+ *                      route support functions.
  *
- * Version:	lib/netrom_gr.c 0.02 (1998-07-01)
+ * Version:     $Id: netrom_gr.c,v 1.3 1998/11/15 20:11:29 freitag Exp $
  *
- * Author:	Bernd Eckenfels, <ecki@lina.inka.de>
- *		Copyright 1999 Bernd Eckenfels, Germany
- *		base on Code from Jonathan Naylor <jsn@Cs.Nott.AC.UK>
+ * Author:      Bernd Eckenfels, <ecki@lina.inka.de>
+ *              Copyright 1999 Bernd Eckenfels, Germany
+ *              base on Code from Jonathan Naylor <jsn@Cs.Nott.AC.UK>
  *
  * Changes:
  * 980701 {0.02} Arnaldo Carvalho de Melo   GNU gettext instead of catgets
  * 
  *
- *		This program is free software; you can redistribute it
- *		and/or  modify it under  the terms of  the GNU General
- *		Public  License as  published  by  the  Free  Software
- *		Foundation;  either  version 2 of the License, or  (at
- *		your option) any later version.
+ *              This program is free software; you can redistribute it
+ *              and/or  modify it under  the terms of  the GNU General
+ *              Public  License as  published  by  the  Free  Software
+ *              Foundation;  either  version 2 of the License, or  (at
+ *              your option) any later version.
  */
 #include "config.h"
 
@@ -32,47 +32,43 @@
 
 int NETROM_rprint(int options)
 {
-	FILE *f1=fopen(_PATH_PROCNET_NR_NODES, "r");
-	FILE *f2=fopen(_PATH_PROCNET_NR_NEIGH, "r");
-	char buffer[256];
-	int qual,n,w;
-	/*int ext = options & FLAG_EXT;
-	int numeric = options & FLAG_NUM;*/
+    FILE *f1 = fopen(_PATH_PROCNET_NR_NODES, "r");
+    FILE *f2 = fopen(_PATH_PROCNET_NR_NEIGH, "r");
+    char buffer[256];
+    int qual, n, w;
+    /*int ext = options & FLAG_EXT;
+       int numeric = options & FLAG_NUM; */
 
-	if(f1==NULL||f2==NULL)
-	{
-		printf(_("NET/ROM not configured in this system.\n")); /* xxx */
-		return 1;
+    if (f1 == NULL || f2 == NULL) {
+	printf(_("NET/ROM not configured in this system.\n"));	/* xxx */
+	return 1;
+    }
+    printf(_("Kernel NET/ROM routing table\n"));	/* xxx */
+    printf(_("Destination  Mnemonic  Quality  Neighbour  Iface\n"));	/* xxx */
+    fgets(buffer, 256, f1);
+    while (fgets(buffer, 256, f1)) {
+	buffer[9] = 0;
+	buffer[17] = 0;
+	w = atoi(buffer + 19) - 1;
+	printf("%-9s    %-7s   ",
+	       buffer, buffer + 10);
+	qual = atoi(buffer + 24 + 15 * w);
+	n = atoi(buffer + 32 + 15 * w);
+	rewind(f2);
+	fgets(buffer, 256, f2);
+	while (fgets(buffer, 256, f2)) {
+	    if (atoi(buffer) == n) {
+		buffer[15] = 0;
+		buffer[20] = 0;
+		printf("%3d      %-9s  %s\n",
+		       qual, buffer + 6, buffer + 16);
+		break;
+	    }
 	}
-	printf(_("Kernel NET/ROM routing table\n")); /* xxx */
-	printf(_("Destination  Mnemonic  Quality  Neighbour  Iface\n")); /* xxx */
-	fgets(buffer,256,f1);
-	while(fgets(buffer,256,f1))
-	{
-		buffer[9]=0;
-		buffer[17]=0;
-		w=atoi(buffer+19)-1;
-		printf("%-9s    %-7s   ",
-			buffer,buffer+10);
-		qual=atoi(buffer+24+15*w);
-		n=atoi(buffer+32+15*w);
-		rewind(f2);
-		fgets(buffer,256,f2);
-		while(fgets(buffer,256,f2))
-		{
-			if(atoi(buffer)==n)
-			{
-				buffer[15]=0;
-				buffer[20]=0;
-				printf("%3d      %-9s  %s\n",
-					qual,buffer+6,buffer+16);
-				break;
-			}
-		}
-	}
-	fclose(f1);
-	fclose(f2);
-	return 0;
+    }
+    fclose(f1);
+    fclose(f2);
+    return 0;
 }
 
-#endif	/* HAVE_AFNETROM */
+#endif				/* HAVE_AFNETROM */

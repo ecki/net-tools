@@ -1,19 +1,19 @@
 /*
- * lib/hippi.c	This file contains an implementation of the "HIPPI"
- *		support functions for the NET-2 base distribution.
+ * lib/hippi.c        This file contains an implementation of the "HIPPI"
+ *              support functions for the NET-2 base distribution.
  *
- * Version:	@(#)hippi.c	1.0	06/06/97
+ * Version:     $Id$
  *
- * Author:	Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
- *		Copyright 1993 MicroWalt Corporation
+ * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
+ *              Copyright 1993 MicroWalt Corporation
  *
- *		Modified for HIPPI by Jes Sorensen, <Jes.Sorensen@cern.ch>
+ *              Modified for HIPPI by Jes Sorensen, <Jes.Sorensen@cern.ch>
  *
- *		This program is free software; you can redistribute it
- *		and/or  modify it under  the terms of  the GNU General
- *		Public  License as  published  by  the  Free  Software
- *		Foundation;  either  version 2 of the License, or  (at
- *		your option) any later version.
+ *              This program is free software; you can redistribute it
+ *              and/or  modify it under  the terms of  the GNU General
+ *              Public  License as  published  by  the  Free  Software
+ *              Foundation;  either  version 2 of the License, or  (at
+ *              your option) any later version.
  */
 #include "config.h"
 
@@ -36,114 +36,118 @@
 #include "intl.h"
 
 /*
- *	HIPPI magic constants.
+ *    HIPPI magic constants.
  */
 
-#define HIPPI_ALEN	6		/* Bytes in one HIPPI hw-addr	   */
+#define HIPPI_ALEN	6	/* Bytes in one HIPPI hw-addr        */
 
 extern struct hwtype hippi_hwtype;
 
 
 /* Display an HIPPI address in readable format. */
-static char *
-pr_hippi(unsigned char *ptr)
+static char *pr_hippi(unsigned char *ptr)
 {
-  static char buff[64];
+    static char buff[64];
 
-  sprintf(buff, "%02X:%02X:%02X:%02X:%02X:%02X",
-	(ptr[0] & 0377), (ptr[1] & 0377), (ptr[2] & 0377),
-	(ptr[3] & 0377), (ptr[4] & 0377), (ptr[5] & 0377)
-  );
-  return(buff);
+    sprintf(buff, "%02X:%02X:%02X:%02X:%02X:%02X",
+	    (ptr[0] & 0377), (ptr[1] & 0377), (ptr[2] & 0377),
+	    (ptr[3] & 0377), (ptr[4] & 0377), (ptr[5] & 0377)
+	);
+    return (buff);
 }
 
 
 /* Display an HIPPI socket address. */
 static char *
-pr_shippi(struct sockaddr *sap)
+ pr_shippi(struct sockaddr *sap)
 {
-  static char buf[64];
+    static char buf[64];
 
-  if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-    return(strncpy(buf, _("[NONE SET]"), 64));
-  return(pr_hippi(sap->sa_data));
+    if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
+	return (strncpy(buf, _("[NONE SET]"), 64));
+    return (pr_hippi(sap->sa_data));
 }
 
 
 /* Input an HIPPI address and convert to binary. */
-static int
-in_hippi(char *bufp, struct sockaddr *sap)
+static int in_hippi(char *bufp, struct sockaddr *sap)
 {
-  unsigned char *ptr;
-  char c, *orig;
-  int i, val;
+    unsigned char *ptr;
+    char c, *orig;
+    int i, val;
 
-  sap->sa_family = hippi_hwtype.type;
-  ptr = sap->sa_data;
+    sap->sa_family = hippi_hwtype.type;
+    ptr = sap->sa_data;
 
-  i = 0;
-  orig = bufp;
-  while((*bufp != '\0') && (i < HIPPI_ALEN)) {
+    i = 0;
+    orig = bufp;
+    while ((*bufp != '\0') && (i < HIPPI_ALEN)) {
 	val = 0;
 	c = *bufp++;
-	if (isdigit(c)) val = c - '0';
-	  else if (c >= 'a' && c <= 'f') val = c - 'a' + 10;
-	  else if (c >= 'A' && c <= 'F') val = c - 'A' + 10;
-	  else {
+	if (isdigit(c))
+	    val = c - '0';
+	else if (c >= 'a' && c <= 'f')
+	    val = c - 'a' + 10;
+	else if (c >= 'A' && c <= 'F')
+	    val = c - 'A' + 10;
+	else {
 #ifdef DEBUG
-		fprintf(stderr, _("in_hippi(%s): invalid hippi address!\n"), orig);
+	    fprintf(stderr, _("in_hippi(%s): invalid hippi address!\n"), orig);
 #endif
-		errno = EINVAL;
-		return(-1);
+	    errno = EINVAL;
+	    return (-1);
 	}
 	val <<= 4;
 	c = *bufp++;
-	if (isdigit(c)) val |= c - '0';
-	  else if (c >= 'a' && c <= 'f') val |= c - 'a' + 10;
-	  else if (c >= 'A' && c <= 'F') val |= c - 'A' + 10;
-	  else {
+	if (isdigit(c))
+	    val |= c - '0';
+	else if (c >= 'a' && c <= 'f')
+	    val |= c - 'a' + 10;
+	else if (c >= 'A' && c <= 'F')
+	    val |= c - 'A' + 10;
+	else {
 #ifdef DEBUG
-		fprintf(stderr, _("in_hippi(%s): invalid hippi address!\n"), orig);
+	    fprintf(stderr, _("in_hippi(%s): invalid hippi address!\n"), orig);
 #endif
-		errno = EINVAL;
-		return(-1);
+	    errno = EINVAL;
+	    return (-1);
 	}
 	*ptr++ = (unsigned char) (val & 0377);
 	i++;
 
 	/* We might get a semicolon here - not required. */
 	if (*bufp == ':') {
-		if (i == HIPPI_ALEN) {
+	    if (i == HIPPI_ALEN) {
 #ifdef DEBUG
-			fprintf(stderr, _("in_hippi(%s): trailing : ignored!\n"), orig)
+		fprintf(stderr, _("in_hippi(%s): trailing : ignored!\n"), orig)
 #endif
-						; /* nothing */
-		}
-		bufp++;
+		    ;		/* nothing */
+	    }
+	    bufp++;
 	}
-  }
+    }
 
-  /* That's it.  Any trailing junk? */
-  if ((i == HIPPI_ALEN) && (*bufp != '\0')) {
+    /* That's it.  Any trailing junk? */
+    if ((i == HIPPI_ALEN) && (*bufp != '\0')) {
 #ifdef DEBUG
 	fprintf(stderr, _("in_hippi(%s): trailing junk!\n"), orig);
 	errno = EINVAL;
-	return(-1);
+	return (-1);
 #endif
-  }
-
+    }
 #ifdef DEBUG
-  fprintf(stderr, "in_hippi(%s): %s\n", orig, pr_hippi(sap->sa_data));
+    fprintf(stderr, "in_hippi(%s): %s\n", orig, pr_hippi(sap->sa_data));
 #endif
 
-  return(0);
+    return (0);
 }
 
 
-struct hwtype hippi_hwtype = {
-  "hippi",	NULL, /*"HIPPI",*/		ARPHRD_HIPPI,	HIPPI_ALEN,
-  pr_hippi,	pr_shippi,	in_hippi,	NULL
+struct hwtype hippi_hwtype =
+{
+    "hippi", NULL, /*"HIPPI", */ ARPHRD_HIPPI, HIPPI_ALEN,
+    pr_hippi, pr_shippi, in_hippi, NULL
 };
 
 
-#endif	/* HAVE_HWHIPPI */
+#endif				/* HAVE_HWHIPPI */

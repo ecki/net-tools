@@ -23,23 +23,14 @@
 
 #include "net-features.h"
 
-extern     struct aftype   ipx_aftype;
+extern struct aftype ipx_aftype;
 
 /* static int skfd = -1; */
 
-/*
-static int usage(void)
-{
-  fprintf(stderr,"IPX usage\n");
-
-  return(E_USAGE);
-}
-*/
-
 int IPX_rinput(int action, int ext, char **args)
 {
-  
-  fprintf(stderr,_("IPX: this needs to be written\n"));
-  return(0);
+
+    fprintf(stderr, _("IPX: this needs to be written\n"));
+    return (0);
 }
-#endif	/* HAVE_AFIPX */
+#endif				/* HAVE_AFIPX */

@@ -1,18 +1,18 @@
 /*
- * lib/sit.c	This file contains the SIT HW-type support.
+ * lib/sit.c  This file contains the SIT HW-type support.
  *
- * Version:	sit.c	0.01 (1996-08-08)
+ * Version:    $Id: sit.c,v 1.3 1998/11/15 20:12:12 freitag Exp $
  *
- * Author:	Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
- *		Copyright 1993 MicroWalt Corporation
+ * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
+ *              Copyright 1993 MicroWalt Corporation
  *
- *		Based on slip.c, modified by Frank Strauss, Aug 1996
+ *              Based on slip.c, modified by Frank Strauss, Aug 1996
  *
- *		This program is free software; you can redistribute it
- *		and/or  modify it under  the terms of  the GNU General
- *		Public  License as  published  by  the  Free  Software
- *		Foundation;  either  version 2 of the License, or  (at
- *		your option) any later version.
+ *              This program is free software; you can redistribute it
+ *              and/or  modify it under  the terms of  the GNU General
+ *              Public  License as  published  by  the  Free  Software
+ *              Foundation;  either  version 2 of the License, or  (at
+ *              your option) any later version.
  */
 #include "config.h"
 
@@ -33,9 +33,10 @@
 #include "net-support.h"
 #include "pathnames.h"
 
-struct hwtype sit_hwtype = {
-  "sit",	NULL, /*"IPv6-in-IPv4",*/		ARPHRD_SIT,	0,
-  NULL,		NULL,		NULL,		NULL
+struct hwtype sit_hwtype =
+{
+    "sit", NULL, /*"IPv6-in-IPv4", */ ARPHRD_SIT, 0,
+    NULL, NULL, NULL, NULL
 };
 
-#endif	/* HAVE_HWSIT */
+#endif				/* HAVE_HWSIT */

@@ -1,19 +1,19 @@
 /*
- * lib/loopback.c	This file contains the general hardware types.
+ * lib/loopback.c     This file contains the general hardware types.
  *
- * Version:	@(#)loopback.c	1.10	10/07/93
+ * Version:     $Id: loopback.c,v 1.3 1998/11/15 20:11:06 freitag Exp $
  *
- * Author:	Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
- *		Copyright 1993 MicroWalt Corporation
+ * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
+ *              Copyright 1993 MicroWalt Corporation
  *
  * Modifications:
  * 1998-07-01 - Arnaldo Carvalho de Melo - GNU gettext instead of catgets
  *
- *		This program is free software; you can redistribute it
- *		and/or  modify it under  the terms of  the GNU General
- *		Public  License as  published  by  the  Free  Software
- *		Foundation;  either  version 2 of the License, or  (at
- *		your option) any later version.
+ *              This program is free software; you can redistribute it
+ *              and/or  modify it under  the terms of  the GNU General
+ *              Public  License as  published  by  the  Free  Software
+ *              Foundation;  either  version 2 of the License, or  (at
+ *              your option) any later version.
  */
 #include "config.h"
 
@@ -31,40 +31,40 @@
 #include "intl.h"
 
 /* Display an UNSPEC address. */
-static char *
-pr_unspec(unsigned char *ptr)
+static char *pr_unspec(unsigned char *ptr)
 {
-  static char buff[64];
-  char *pos;
-  unsigned int i;
+    static char buff[64];
+    char *pos;
+    unsigned int i;
 
-  pos = buff;
-  for(i = 0; i < sizeof(struct sockaddr); i++) {
+    pos = buff;
+    for (i = 0; i < sizeof(struct sockaddr); i++) {
 	pos += sprintf(pos, "%02X-", (*ptr++ & 0377));
-  }
-  buff[strlen(buff) - 1] = '\0';
-  return(buff);
+    }
+    buff[strlen(buff) - 1] = '\0';
+    return (buff);
 }
 
 
 /* Display an UNSPEC socket address. */
-static char *
-pr_sunspec(struct sockaddr *sap)
+static char *pr_sunspec(struct sockaddr *sap)
 {
-  static char buf[64];
+    static char buf[64];
 
-  if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-	return strncpy (buf, _("[NONE SET]"), sizeof (buf));
-  return(pr_unspec(sap->sa_data));
+    if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
+	return strncpy(buf, _("[NONE SET]"), sizeof(buf));
+    return (pr_unspec(sap->sa_data));
 }
 
 
-struct hwtype unspec_hwtype = {
-  "unspec",	NULL, /*"UNSPEC",*/		-1,		0,
-  pr_unspec,	pr_sunspec,		NULL,		NULL
+struct hwtype unspec_hwtype =
+{
+    "unspec", NULL, /*"UNSPEC", */ -1, 0,
+    pr_unspec, pr_sunspec, NULL, NULL
 };
 
-struct hwtype loop_hwtype = {
-  "loop",	NULL, /*"Local Loopback",*/	255/*ARPHRD_LOOPBACK*/,	0,
-  NULL,		NULL,			NULL,		NULL
+struct hwtype loop_hwtype =
+{
+    "loop", NULL, /*"Local Loopback", */ 255 /*ARPHRD_LOOPBACK */ , 0,
+    NULL, NULL, NULL, NULL
 };

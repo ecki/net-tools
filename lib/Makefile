@@ -22,9 +22,8 @@ AFGROBJS = inet_gr.o inet6_gr.o ipx_gr.o ddp_gr.o netrom_gr.o ax25_gr.o rose_gr.
 AFSROBJS = inet_sr.o inet6_sr.o netrom_sr.o ipx_sr.o setroute.o
 ACTOBJS  = slip_ac.o ppp_ac.o activate.o
 VARIA	 = getargs.o masq_info.o proc.o util.o nstrcmp.o
-NLSMISC  = net-string.o
 
-OBJS	= $(NLSMISC) $(VARIA) $(AFOBJS) $(HWOBJS) \
+OBJS	= $(VARIA) $(AFOBJS) $(HWOBJS) \
 		$(AFGROBJS) $(AFSROBJS) $(ACTOBJS)
 
 

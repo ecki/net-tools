@@ -1,8 +1,8 @@
 /*
- *	Tunnel.c, Alan Cox 1995.
+ *    Tunnel.c, Alan Cox 1995.
  *
  */
- 
+
 #include "config.h"
 
 #if HAVE_HWTUNNEL
@@ -21,31 +21,29 @@
 
 extern struct hwtype ether_hwtype;
 
-
-static char *
-pr_tunnel(unsigned char *ptr)
+static char *pr_tunnel(unsigned char *ptr)
 {
-  return("");
+    return ("");
 }
 
 
 static char *pr_stunnel(struct sockaddr *sap)
 {
-  return("");
+    return ("");
 }
 
 
-static int
-in_tunnel(char *bufp, struct sockaddr *sap)
+static int in_tunnel(char *bufp, struct sockaddr *sap)
 {
-  return(-1);
+    return (-1);
 }
 
 
-struct hwtype tunnel_hwtype = {
-  "tunnel",	NULL, /*"IPIP Tunnel",*/	ARPHRD_TUNNEL,	0,
-  pr_tunnel,	pr_stunnel,	in_tunnel,	NULL
+struct hwtype tunnel_hwtype =
+{
+    "tunnel", NULL, /*"IPIP Tunnel", */ ARPHRD_TUNNEL, 0,
+    pr_tunnel, pr_stunnel, in_tunnel, NULL
 };
 
 
-#endif	/* HAVE_HWTUNNEL */
+#endif				/* HAVE_HWTUNNEL */
