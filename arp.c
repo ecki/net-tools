@@ -8,7 +8,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: arp.c,v 1.14 1999/09/27 11:00:42 philip Exp $
+ * Version:     $Id: arp.c,v 1.15 1999/11/21 00:40:27 ecki Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -43,6 +43,7 @@
  *980629 (1.84) Arnaldo Carvalho de Melo: gettext instead of catgets
  *990101 {1.85} Bernd Eckenfels		fixed usage and return codes
  *990105 (1.86) Phil Blundell:		don't ignore EINVAL in arp_set
+ *991121 (1.87) Bernd Eckenfels:	yes --device has a mandatory arg
  *
  *              This program is free software; you can redistribute it
  *              and/or  modify it under  the terms of  the GNU General
@@ -78,7 +79,7 @@
 #define FEATURE_ARP
 #include "lib/net-features.h"
 
-char *Release = RELEASE, *Version = "arp 1.85 (1999-01-05)";
+char *Release = RELEASE, *Version = "arp 1.87 (1999-11-21)";
 
 int opt_n = 0;			/* do not resolve addresses     */
 int opt_N = 0;			/* use symbolic names           */
@@ -638,7 +639,7 @@ int main(int argc, char **argv)
 	{"set", 0, 0, 's'},
 	{"protocol", 1, 0, 'A'},
 	{"hw-type", 1, 0, 'H'},
-	{"device", 0, 0, 'i'},
+	{"device", 1, 0, 'i'},
 	{"help", 0, 0, 'h'},
 	{"use-device", 0, 0, 'D'},
 	{"symbolic", 0, 0, 'N'},
