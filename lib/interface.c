@@ -7,7 +7,7 @@
    8/2000  Andi Kleen make the list operations a bit more efficient.
    People are crazy enough to use thousands of aliases now.
 
-   $Id: interface.c,v 1.14 2001/02/10 19:31:15 pb Exp $
+   $Id: interface.c,v 1.15 2001/07/17 07:21:57 pb Exp $
  */
 
 #include "config.h"
@@ -636,8 +636,8 @@ void ife_print_long(struct interface *ptr)
     int hf;
     int can_compress = 0;
     unsigned long long rx, tx, short_rx, short_tx;
-    char Rext[5]="b";
-    char Text[5]="b";
+    const char *Rext = "b";
+    const char *Text = "b";
 
 #if HAVE_AFIPX
     static struct aftype *ipxtype = NULL;
@@ -843,10 +843,21 @@ void ife_print_long(struct interface *ptr)
 	tx = ptr->stats.tx_bytes;
 	short_rx = rx * 10;  
 	short_tx = tx * 10;
-	if (rx > 1048576) { short_rx /= 1048576;  strcpy(Rext, "Mb"); }
-	else if (rx > 1024) { short_rx /= 1024;  strcpy(Rext, "Kb"); }
-	if (tx > 1048576) { short_tx /= 1048576;  strcpy(Text, "Mb"); }
-	else if (tx > 1024) { short_tx /= 1024;  strcpy(Text, "Kb"); }
+	if (rx > 1048576) {
+	    short_rx /= 1048576;
+	    Rext = "MB";
+	} else if (rx > 1024) {
+	    short_rx /= 1024;
+	    Rext = "KB";
+	}
+	if (tx > 1048576) {
+	    short_tx /= 1048576;
+	    Text = "MB";
+	}
+	else if (tx > 1024) {
+	    short_tx /= 1024;
+	    Text = "KB";
+	}
 
 	printf("          ");
 	printf(_("TX packets:%llu errors:%lu dropped:%lu overruns:%lu carrier:%lu\n"),
