@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.47 2002/02/19 01:12:49 ecki Exp $
+ * Version:     $Id: netstat.c,v 1.48 2002/06/27 18:04:02 ecki Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -817,8 +817,8 @@ static void tcp_do_one(int lnr, const char *line)
 			 timer_run, (double) time_len / HZ, retr, timeout);
 		break;
 	    }
-	printf("tcp   %6ld %6ld %-*s %-*s %-12s",
-	       rxq, txq, max(23,strlen(local_addr)+1), local_addr, max(23,strlen(rem_addr)), rem_addr, _(tcp_state[state]));
+	printf("tcp   %6ld %6ld %-*s %-*s %-11s",
+	       rxq, txq, max(23,strlen(local_addr)), local_addr, max(23,strlen(rem_addr)), rem_addr, _(tcp_state[state]));
 
 	finish_this_one(uid,inode,timers);
     }
@@ -957,7 +957,7 @@ static void udp_do_one(int lnr, const char *line)
 			 retr, timeout);
 		break;
 	    }
-	printf("udp   %6ld %6ld %-23s %-23s %-12s",
+	printf("udp   %6ld %6ld %-23s %-23s %-11s",
 	       rxq, txq, local_addr, rem_addr, udp_state);
 
 	finish_this_one(uid,inode,timers);
@@ -1078,7 +1078,7 @@ static void raw_do_one(int lnr, const char *line)
 			 retr, timeout);
 		break;
 	    }
-	printf("raw   %6ld %6ld %-23s %-23s %-12d",
+	printf("raw   %6ld %6ld %-23s %-23s %-11d",
 	       rxq, txq, local_addr, rem_addr, state);
 
 	finish_this_one(uid,inode,timers);
