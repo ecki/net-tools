@@ -1,7 +1,7 @@
 /*
  * lib/ash.c  This file contains an implementation of the Ash
  *              support functions for the NET-2 base distribution.
- * $Id: ash.c,v 1.6 1998/11/15 20:09:16 freitag Exp $
+ * $Id: ash.c,v 1.7 1998/11/17 15:16:31 freitag Exp $
  */
 
 #include "config.h"
@@ -52,7 +52,7 @@ static char *pr_sash(struct sockaddr *sap)
     static char buf[64];
 
     if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-	return strncpy(buf, "[NONE SET]", 64);
+	return safe_strncpy(buf, "[NONE SET]", 64);
     return pr_ash(sap->sa_data);
 }
 

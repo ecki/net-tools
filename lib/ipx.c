@@ -77,7 +77,7 @@ static char *IPX_sprint(struct sockaddr *sap, int numeric)
     static char buf[64];
 
     if (sap->sa_family != AF_IPX)
-	return strncpy(buf, _("[NONE SET]"), sizeof(buf));
+	return safe_strncpy(buf, _("[NONE SET]"), sizeof(buf));
     return (IPX_print(sap->sa_data));
 }
 

@@ -2,7 +2,7 @@
  * lib/ax25.c This file contains an implementation of the "AX.25"
  *              support functions.
  *
- * Version:     $Id: ax25.c,v 1.6 1998/11/15 20:09:19 freitag Exp $
+ * Version:     $Id: ax25.c,v 1.7 1998/11/17 15:16:32 freitag Exp $
  *
  * NOTE:        I will redo this module as soon as I got the libax25.a
  *              library sorted out.  This library contains some useful
@@ -71,7 +71,7 @@ static char *
     static char buf[64];
 
     if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-	return strncpy(buf, _("[NONE SET]"), sizeof(buf));
+	return safe_strncpy(buf, _("[NONE SET]"), sizeof(buf));
     return (AX25_print(((struct sockaddr_ax25 *) sap)->sax25_call.ax25_call));
 }
 
@@ -93,8 +93,7 @@ static int AX25_input(int type, char *bufp, struct sockaddr *sap)
 	if (islower(c))
 	    c = toupper(c);
 	if (!(isupper(c) || isdigit(c))) {
-	    strncpy(AX25_errmsg, _("Invalid callsign"), sizeof(AX25_errmsg)-2);
-	    AX25_errmsg[sizeof(AX25_errmsg)-1]=0;
+	    safe_strncpy(AX25_errmsg, _("Invalid callsign"), sizeof(AX25_errmsg));
 #ifdef DEBUG
 	    fprintf(stderr, "ax25_input(%s): %s !\n", AX25_errmsg, orig);
 #endif
@@ -154,7 +153,7 @@ static char *AX25_hprint(struct sockaddr *sap)
     static char buf[64];
 
     if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-	return strncpy(buf, _("[NONE SET]"), sizeof(buf));
+	return safe_strncpy(buf, _("[NONE SET]"), sizeof(buf));
     return (AX25_print(((struct sockaddr_ax25 *) sap)->sax25_call.ax25_call));
 }
 

@@ -2,7 +2,7 @@
  * lib/netrom.c       This file contains an implementation of the "NET/ROM"
  *              support functions for the NET-2 base distribution.
  *
- * Version:     $Id: netrom.c,v 1.5 1998/11/15 20:11:25 freitag Exp $
+ * Version:     $Id: netrom.c,v 1.6 1998/11/17 15:16:56 freitag Exp $
  *
  * NOTE:        I will redo this module as soon as I got the libax25.a
  *              library sorted out.  This library contains some useful
@@ -74,7 +74,7 @@ static char *NETROM_sprint(struct sockaddr *sap, int numeric)
 {
     char buf[64];
     if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-	return strncpy(buf, _("[NONE SET]"), sizeof(buf));
+	return safe_strncpy(buf, _("[NONE SET]"), sizeof(buf));
     return (NETROM_print(((struct sockaddr_ax25 *) sap)->sax25_call.ax25_call));
 }
 
@@ -96,7 +96,7 @@ static int NETROM_input(int type, char *bufp, struct sockaddr *sap)
 	if (islower(c))
 	    c = toupper(c);
 	if (!(isupper(c) || isdigit(c))) {
-	    strncpy(netrom_errmsg, _("Invalid callsign"), sizeof(netrom_errmsg));
+	    safe_strncpy(netrom_errmsg, _("Invalid callsign"), sizeof(netrom_errmsg));
 #ifdef DEBUG
 	    fprintf(stderr, "netrom_input(%s): %s !\n", netrom_errmsg, orig);
 #endif
@@ -109,7 +109,7 @@ static int NETROM_input(int type, char *bufp, struct sockaddr *sap)
 
     /* Callsign too long? */
     if ((i == 6) && (*bufp != '-') && (*bufp != '\0')) {
-	strncpy(netrom_errmsg, _("Callsign too long"), sizeof(netrom_errmsg));
+	safe_strncpy(netrom_errmsg, _("Callsign too long"), sizeof(netrom_errmsg));
 #ifdef DEBUG
 	fprintf(stderr, "netrom_input(%s): %s !\n", netrom_errmsg, orig);
 #endif

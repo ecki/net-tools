@@ -8,7 +8,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: arp.c,v 1.9 1998/11/15 20:07:31 freitag Exp $
+ * Version:     $Id: arp.c,v 1.10 1998/11/17 15:16:09 freitag Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -69,6 +69,7 @@
 #include "version.h"
 #include "config.h"
 #include "intl.h"
+#include "util.h"
 
 #define DFLT_AF	"inet"
 #define DFLT_HW	"ether"
@@ -107,8 +108,7 @@ static int arp_del(char **args)
 	fprintf(stderr, _("arp: need host name\n"));
 	return (-1);
     }
-    host[(sizeof host) - 1] = 0;
-    strncpy(host, *args, (sizeof host) - 1);
+    safe_strncpy(host, *args, (sizeof host));
     if (ap->input(0, host, &sa) < 0) {
 	ap->herror(host);
 	return (-1);
@@ -165,8 +165,7 @@ static int arp_del(char **args)
 	if (!strcmp(*args, "dev")) {
 	    if (*++args == NULL)
 		usage();
-	    strncpy(device, *args, sizeof(device) - 1);
-	    device[sizeof(device) - 1] = '\0';
+	    safe_strncpy(device, *args, sizeof(device));
 	    args++;
 	    continue;
 	}
@@ -268,8 +267,7 @@ static int arp_set(char **args)
 	fprintf(stderr, _("arp: need host name\n"));
 	return (-1);
     }
-    host[(sizeof host) - 1] = 0;
-    strncpy(host, *args++, (sizeof host) - 1);
+    safe_strncpy(host, *args++, (sizeof host));
     if (ap->input(0, host, &sa) < 0) {
 	ap->herror(host);
 	return (-1);
@@ -336,8 +334,7 @@ static int arp_set(char **args)
 	if (!strcmp(*args, "dev")) {
 	    if (*++args == NULL)
 		usage();
-	    strncpy(device, *args, sizeof(device) - 1);
-	    device[sizeof(device) - 1] = '\0';
+	    safe_strncpy(device, *args, sizeof(device));
 	    args++;
 	    continue;
 	}
@@ -528,8 +525,7 @@ static int arp_show(char *name)
 
     if (name != NULL) {
 	/* Resolve the host name. */
-	host[(sizeof host) - 1] = 0;
-	strncpy(host, name, (sizeof host) - 1);
+	safe_strncpy(host, name, (sizeof host));
 	if (ap->input(0, host, &sa) < 0) {
 	    ap->herror(host);
 	    return (-1);
@@ -708,8 +704,7 @@ int main(int argc, char **argv)
 	    hw_set = 1;
 	    break;
 	case 'i':
-	    strncpy(device, optarg, sizeof(device) - 1);
-	    device[sizeof(device) - 1] = '\0';
+	    safe_strncpy(device, optarg, sizeof(device));
 	    break;
 
 	case 'V':

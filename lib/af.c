@@ -2,7 +2,7 @@
  * lib/af.c   This file contains the top-level part of the protocol
  *              support functions module for the NET-2 base distribution.
  *
- * Version:     $Id: af.c,v 1.6 1998/11/15 20:08:59 freitag Exp $
+ * Version:     $Id: af.c,v 1.7 1998/11/17 15:16:26 freitag Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -256,8 +256,7 @@ int aftrans_opt(const char *arg)
     char *tmp1, *tmp2;
     char buf[256];
 
-    strncpy(buf, arg, sizeof(buf));
-    buf[sizeof(buf) - 1] = '\0';
+    safe_strncpy(buf, arg, sizeof(buf));
 
     tmp1 = buf;
 

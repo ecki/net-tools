@@ -3,7 +3,7 @@
  *              support functions for the net-tools.
  *              (most of it copied from lib/inet.c 1.26).
  *
- * Version:     $Id: inet6.c,v 1.4 1998/11/15 20:10:37 freitag Exp $
+ * Version:     $Id: inet6.c,v 1.5 1998/11/17 15:16:49 freitag Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -109,7 +109,7 @@ static char *INET6_sprint(struct sockaddr *sap, int numeric)
     static char buff[128];
 
     if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-	return strncpy(buff, _("[NONE SET]"), sizeof(buff));
+	return safe_strncpy(buff, _("[NONE SET]"), sizeof(buff));
     if (INET6_rresolve(buff, (struct sockaddr_in6 *) sap, numeric) != 0)
 	return (NULL);
     return (buff);

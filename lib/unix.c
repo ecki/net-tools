@@ -1,7 +1,7 @@
 /*
  * lib/unix.c This file contains the general hardware types.
  *
- * Version:     $Id: unix.c,v 1.4 1998/11/15 20:12:31 freitag Exp $
+ * Version:     $Id: unix.c,v 1.5 1998/11/17 15:16:58 freitag Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -52,7 +52,7 @@ static char *UNSPEC_sprint(struct sockaddr *sap, int numeric)
     static char buf[64];
 
     if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-	return strncpy(buf, _("[NONE SET]"), sizeof(buf));
+	return safe_strncpy(buf, _("[NONE SET]"), sizeof(buf));
     return (UNSPEC_print(sap->sa_data));
 }
 
@@ -72,7 +72,7 @@ static char *UNIX_sprint(struct sockaddr *sap, int numeric)
     static char buf[64];
 
     if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-	return strncpy(buf, _("[NONE SET]"), sizeof(buf));
+	return safe_strncpy(buf, _("[NONE SET]"), sizeof(buf));
     return (UNIX_print(sap->sa_data));
 }
 

@@ -4,7 +4,7 @@
    10/1998 partly rewriten by Andi Kleen to support an interface list.   
    I don't claim that the list operations are efficient @).  
 
-   $Id: interface.c,v 1.10 1998/11/15 20:07:52 freitag Exp $
+   $Id: interface.c,v 1.11 1998/11/17 15:16:20 freitag Exp $
  */
 
 #include "config.h"
@@ -67,13 +67,21 @@ void add_interface(struct interface *n)
 
 struct interface *lookup_interface(char *name)
 {
-    struct interface *ife;
-    if (!int_list && (if_readlist()) < 0)
-	return NULL;
-    for (ife = int_list; ife; ife = ife->next) {
-	if (!strcmp(ife->name, name))
-	    break;
+    struct interface *ife = NULL;
+
+    if (int_list || if_readlist() >= 0) { 
+	for (ife = int_list; ife; ife = ife->next) {
+	    if (!strcmp(ife->name, name))
+		break;
+	}
     }
+
+    if (!ife) { 
+	new(ife);
+	safe_strncpy(ife->name, name, IFNAMSIZ-1);  
+	add_interface(ife);
+    }
+
     return ife;
 }
 
@@ -99,14 +107,15 @@ static int if_readconf(void)
     int n, err = -1;
     int skfd;
 
-    /* SIOCGIFCONF seems to only work properly on AF_INET sockets
-       currently */
+    /* SIOCGIFCONF currently seems to only work properly on AF_INET sockets
+       (as of 2.1.128) */ 
     skfd = get_socket_for_af(AF_INET);
     if (skfd < 0) {
 	fprintf(stderr, _("warning: no inet socket available: %s\n"),
 		strerror(errno));
 	return -1;
     }
+
     ifc.ifc_buf = NULL;
     for (;;) {
 	ifc.ifc_len = sizeof(struct ifreq) * numreqs;
@@ -124,21 +133,14 @@ static int if_readconf(void)
 	break;
     }
 
-    for (ifr = ifc.ifc_req, n = 0; n < ifc.ifc_len;
-	 n += sizeof(struct ifreq), ifr++) {
-	struct interface *ife;
-
-	ife = lookup_interface(ifr->ifr_name);
-	if (ife)
-	    continue;
-
-	new(ife);
-	strcpy(ife->name, ifr->ifr_name);
-	add_interface(ife);
+    ifr = ifc.ifc_req;
+    for (n = 0; n < ifc.ifc_len; n += sizeof(struct ifreq)) {
+	lookup_interface(ifr->ifr_name);
+	ifr++;
     }
     err = 0;
 
-  out:
+out:
     free(ifc.ifc_buf);
     return err;
 }
@@ -320,10 +322,11 @@ static int ipx_getaddr(int sock, int ft, struct ifreq *ifr)
 #endif
 
 /* Fetch the interface configuration from the kernel. */
-int if_fetch(char *ifname, struct interface *ife)
+int if_fetch(struct interface *ife)
 {
     struct ifreq ifr;
     int fd;
+    char *ifname = ife->name; 
 
     strcpy(ifr.ifr_name, ifname);
     if (ioctl(skfd, SIOCGIFFLAGS, &ifr) < 0)

@@ -2,7 +2,7 @@
  * lib/ether.c        This file contains an implementation of the "Ethernet"
  *              support functions.
  *
- * Version:     $Id: ether.c,v 1.4 1998/11/15 20:09:33 freitag Exp $
+ * Version:     $Id: ether.c,v 1.5 1998/11/17 15:16:37 freitag Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -52,7 +52,7 @@ static char *pr_sether(struct sockaddr *sap)
     static char buf[64];
 
     if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-	return strncpy(buf, _("[NONE SET]"), sizeof(buf));
+	return safe_strncpy(buf, _("[NONE SET]"), sizeof(buf));
     return (pr_ether(sap->sa_data));
 }
 

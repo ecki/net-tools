@@ -64,7 +64,7 @@ static char *
     static char buf[64];
 
     if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-	return (strncpy(buf, _("[NONE SET]"), 64));
+	return (safe_strncpy(buf, _("[NONE SET]"), 64));
     return (pr_hippi(sap->sa_data));
 }
 

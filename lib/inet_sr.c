@@ -71,8 +71,7 @@ static int INET_setroute(int action, int options, char **args)
     if (*args == NULL)
 	return (usage());
 
-    target[(sizeof target) - 1] = 0;
-    strncpy(target, *args++, (sizeof target) - 1);
+    safe_strncpy(target, *args++, (sizeof target));
 
     /* Clean out the RTREQ structure. */
     memset((char *) &rt, 0, sizeof(struct rtentry));
@@ -136,8 +135,7 @@ static int INET_setroute(int action, int options, char **args)
 	    args++;
 	    if (!*args || mask_in_addr(rt))
 		return (usage());
-	    netmask[(sizeof netmask) - 1] = 0;
-	    strncpy(netmask, *args, (sizeof netmask) - 1);
+	    safe_strncpy(netmask, *args, (sizeof netmask));
 	    if ((isnet = inet_aftype.input(0, netmask, &mask)) < 0) {
 		inet_aftype.herror(netmask);
 		return (E_LOOKUP);
@@ -152,8 +150,7 @@ static int INET_setroute(int action, int options, char **args)
 		return (usage());
 	    if (rt.rt_flags & RTF_GATEWAY)
 		return (usage());
-	    gateway[(sizeof gateway) - 1] = 0;
-	    strncpy(gateway, *args, (sizeof gateway) - 1);
+	    safe_strncpy(gateway, *args, (sizeof gateway));
 	    if ((isnet = inet_aftype.input(0, gateway, &rt.rt_gateway)) < 0) {
 		inet_aftype.herror(gateway);
 		return (E_LOOKUP);

@@ -3,7 +3,7 @@
  *              support functions for the net-tools.
  *              (NET-3 base distribution).
  *
- * Version:    $Id: inet.c,v 1.5 1998/11/15 20:10:27 freitag Exp $
+ * Version:    $Id: inet.c,v 1.6 1998/11/17 15:16:47 freitag Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -189,7 +189,7 @@ static char *INET_sprint(struct sockaddr *sap, int numeric)
     static char buff[128];
 
     if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-	return strncpy(buff, _("[NONE SET]"), sizeof(buff));
+	return safe_strncpy(buff, _("[NONE SET]"), sizeof(buff));
     if (INET_rresolve(buff, (struct sockaddr_in *) sap, numeric) != 0)
 	return (NULL);
     return (buff);

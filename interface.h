@@ -62,7 +62,7 @@ struct interface {
     int outfill;		/* outfill value for SLIP */
 };
 
-extern int if_fetch(char *ifname, struct interface *ife);
+extern int if_fetch(struct interface *ife);
 
 extern int for_all_interfaces(int (*)(struct interface *, void *), void *);
 extern struct interface *lookup_interface(char *name);

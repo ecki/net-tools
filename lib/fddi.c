@@ -2,7 +2,7 @@
  * lib/fddi.c This file contains an implementation of the "FDDI"
  *              support functions.
  *
- * Version:     $Id: fddi.c,v 1.4 1998/11/15 20:09:35 freitag Exp $
+ * Version:     $Id: fddi.c,v 1.5 1998/11/17 15:16:39 freitag Exp $
  *
  * Author:      Lawrence V. Stefani, <stefani@lkg.dec.com>
  *
@@ -63,7 +63,7 @@ static char *pr_sfddi(struct sockaddr *sap)
     static char buf[64];
 
     if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-	return strncpy(buf, _("[NONE SET]"), sizeof(buf));
+	return safe_strncpy(buf, _("[NONE SET]"), sizeof(buf));
     return (pr_fddi(sap->sa_data));
 }
 

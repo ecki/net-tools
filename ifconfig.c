@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.18 1998/11/15 20:07:42 freitag Exp $
+ * Version:     $Id: ifconfig.c,v 1.19 1998/11/17 15:16:14 freitag Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -310,8 +310,8 @@ static void ife_print(struct interface *ptr)
     /* If needed, display the interface statistics. */
 
     if (ptr->statistics_valid) {
-	/* XXX: statistics are currently only printed for the original address,
-	 *    not for the aliases, although strictly speaking they're shared
+	/* XXX: statistics are currently only printed for the primary address,
+	 *      not for the aliases, although strictly speaking they're shared
 	 *      by all addresses.
 	 */
 	printf("          ");
@@ -336,6 +336,7 @@ static void ife_print(struct interface *ptr)
 	    printf(_("txqueuelen:%d "), ptr->tx_queue_len);
 	printf("\n");
     }
+
     if ((ptr->map.irq || ptr->map.mem_start || ptr->map.dma ||
 	 ptr->map.base_addr)) {
 	printf("          ");
@@ -354,37 +355,51 @@ static void ife_print(struct interface *ptr)
     printf("\n");
 }
 
+static int do_if_fetch(struct interface *ife)
+{ 
+    if (if_fetch(ife) < 0) {
+	char *errmsg; 
+	if (errno == ENODEV) { 
+	    /* Give better error message for this case. */ 
+	    errmsg = _("Device not found"); 
+	} else { 
+	    errmsg = strerror(errno); 
+	}
+  	fprintf(stderr, _("%s: error fetching interface information: %s\n"),
+		ife->name, errmsg);
+	return -1;
+    }
+    return 0; 
+}
+
 static int do_if_print(struct interface *ife, void *cookie)
 {
     int *opt_a = (int *) cookie;
+    int res; 
 
-    if (if_fetch(ife->name, ife) < 0) {
-	fprintf(stderr, _("%s: error fetching interface information: %s\n\n"),
-		ife->name, strerror(errno));
-	return -1;
-    }
-    if (!(ife->flags & IFF_UP) && !(*opt_a))
-	return 0;
-    ife_print(ife);
-    return 0;
-}
-
-static void if_print(char *ifname)
-{
-    struct interface *ife;
-
-    if (!ifname) {
-	for_all_interfaces(do_if_print, &opt_a);
-    } else {
-	ife = lookup_interface(ifname);
-	if (!ife)
-	    fprintf(stderr, _("%s: interface not found.\n"), ifname);
-	else if (if_fetch(ifname, ife) < 0)
-	    fprintf(stderr, _("%s: error fetching interface information: %s"),
-		    ifname, strerror(errno));
-	else
+    res = do_if_fetch(ife); 
+    if (res >= 0) {   
+	if ((ife->flags & IFF_UP) || *opt_a)
 	    ife_print(ife);
     }
+    return res;
+}
+
+static int if_print(char *ifname)
+{
+    int res; 
+
+    if (!ifname) {
+	res = for_all_interfaces(do_if_print, &opt_a);
+    } else {
+	struct interface *ife;
+
+	ife = lookup_interface(ifname);
+	res = do_if_fetch(ife); 
+	if (res >= 0) 
+	    ife_print(ife);
+    }
+    return res; 
 }
 
 
@@ -540,17 +555,17 @@ int main(int argc, char **argv)
 
     /* Do we have to show the current setup? */
     if (argc == 0) {
-	if_print((char *) NULL);
+	int err = if_print((char *) NULL);
 	(void) close(skfd);
-	exit(0);
+	exit(err < 0);
     }
     /* No. Fetch the interface name. */
     spp = argv;
-    strncpy(ifr.ifr_name, *spp++, IFNAMSIZ);
+    safe_strncpy(ifr.ifr_name, *spp++, IFNAMSIZ);
     if (*spp == (char *) NULL) {
-	if_print(ifr.ifr_name);
+	int err = if_print(ifr.ifr_name);
 	(void) close(skfd);
-	exit(0);
+	exit(err < 0);
     }
     /* The next argument is either an address family name, or an option. */
     if ((ap = get_aftype(*spp)) == NULL)
@@ -739,8 +754,7 @@ int main(int argc, char **argv)
 	}
 	if (!strcmp(*spp, "broadcast")) {
 	    if (*++spp != NULL) {
-		host[(sizeof host) - 1] = 0;
-		strncpy(host, *spp, (sizeof host) - 1);
+		safe_strncpy(host, *spp, (sizeof host));
 		if (ap->input(0, host, &sa) < 0) {
 		    ap->herror(host);
 		    goterr = 1;
@@ -762,8 +776,7 @@ int main(int argc, char **argv)
 	if (!strcmp(*spp, "dstaddr")) {
 	    if (*++spp == NULL)
 		usage();
-	    host[(sizeof host) - 1] = 0;
-	    strncpy(host, *spp, (sizeof host) - 1);
+	    safe_strncpy(host, *spp, (sizeof host));
 	    if (ap->input(0, host, &sa) < 0) {
 		ap->herror(host);
 		goterr = 1;
@@ -783,8 +796,7 @@ int main(int argc, char **argv)
 	if (!strcmp(*spp, "netmask")) {
 	    if (*++spp == NULL || didnetmask)
 		usage();
-	    host[(sizeof host) - 1] = 0;
-	    strncpy(host, *spp, (sizeof host) - 1);
+	    safe_strncpy(host, *spp, (sizeof host));
 	    if (ap->input(0, host, &sa) < 0) {
 		ap->herror(host);
 		goterr = 1;
@@ -863,8 +875,7 @@ int main(int argc, char **argv)
 	if (!strcmp(*spp, "pointopoint")) {
 	    if (*(spp + 1) != NULL) {
 		spp++;
-		host[(sizeof host) - 1] = 0;
-		strncpy(host, *spp, (sizeof host) - 1);
+		safe_strncpy(host, *spp, (sizeof host));
 		if (ap->input(0, host, &sa)) {
 		    ap->herror(host);
 		    goterr = 1;
@@ -891,8 +902,7 @@ int main(int argc, char **argv)
 		usage();
 	    if (*++spp == NULL)
 		usage();
-	    host[(sizeof host) - 1] = 0;
-	    strncpy(host, *spp, (sizeof host) - 1);
+	    safe_strncpy(host, *spp, (sizeof host));
 	    if (hw->input(host, &sa) < 0) {
 		fprintf(stderr, _("%s: invalid %s address.\n"), host, hw->name);
 		goterr = 1;
@@ -921,8 +931,7 @@ int main(int argc, char **argv)
 	    } else {
 		prefix_len = 0;
 	    }
-	    host[(sizeof host) - 1] = 0;
-	    strncpy(host, *spp, (sizeof host) - 1);
+	    safe_strncpy(host, *spp, (sizeof host));
 	    if (inet6_aftype.input(1, host, (struct sockaddr *) &sa6) < 0) {
 		inet6_aftype.herror(host);
 		goterr = 1;
@@ -965,8 +974,7 @@ int main(int argc, char **argv)
 	    } else {
 		prefix_len = 0;
 	    }
-	    host[(sizeof host) - 1] = 0;
-	    strncpy(host, *spp, (sizeof host) - 1);
+	    safe_strncpy(host, *spp, (sizeof host));
 	    if (inet6_aftype.input(1, host, (struct sockaddr *) &sa6) < 0) {
 		inet6_aftype.herror(host);
 		goterr = 1;
@@ -1014,8 +1022,7 @@ int main(int argc, char **argv)
 	    } else {
 		prefix_len = 0;
 	    }
-	    host[(sizeof host) - 1] = 0;
-	    strncpy(host, *spp, (sizeof host) - 1);
+	    safe_strncpy(host, *spp, (sizeof host));
 	    if (inet6_aftype.input(1, host, (struct sockaddr *) &sa6) < 0) {
 		inet6_aftype.herror(host);
 		goterr = 1;
@@ -1052,8 +1059,7 @@ int main(int argc, char **argv)
 #endif
 
 	/* If the next argument is a valid hostname, assume OK. */
-	host[(sizeof host) - 1] = '\0';
-	strncpy(host, *spp, (sizeof host) - 1);
+	safe_strncpy(host, *spp, (sizeof host));
 
 	/* FIXME: sa is too small for INET6 addresses, inet6 should use that too, 
 	   broadcast is unexpected */

@@ -1,9 +1,12 @@
 /* Copyright 1998 by Andi Kleen. Subject to the GPL. */ 
-/* $Id: util.c,v 1.3 1998/11/15 20:12:35 freitag Exp $ */
+/* $Id: util.c,v 1.4 1998/11/17 15:17:02 freitag Exp $ */
 #include <stdio.h>
 #include <stdlib.h>
-#include "util.h"
+#include <string.h>
 #include <sys/utsname.h>
+
+#include "util.h"
+
 
 static void oom(void)
 {
@@ -37,4 +40,12 @@ int kernel_version(void)
     if (sscanf(uts.release, "%d.%d.%d", &major, &minor, &patch) != 3)
 	return -1;
     return KRELEASE(major, minor, patch);
+}
+
+
+/* Like strncpy but make sure the resulting string is always 0 terminated. */  
+char *safe_strncpy(char *dst, const char *src, size_t size)
+{   
+    dst[size-1] = '\0';
+    return strncpy(dst,src,size-1);   
 }

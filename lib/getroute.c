@@ -7,7 +7,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system. (net-tools, net-drivers)
  *
- * Version:     $Id: getroute.c,v 1.3 1998/11/15 20:09:47 freitag Exp $
+ * Version:     $Id: getroute.c,v 1.4 1998/11/17 15:16:42 freitag Exp $
  *
  * Author:      Bernd 'eckes' Eckenfels <net-tools@lina.inka.de>
  *              Copyright 1999 Bernd Eckenfels, Germany
@@ -75,8 +75,7 @@ int route_info(const char *afname, int options)
     int found = E_NOTFOUND, rc;
     char buf[256];
 
-    strncpy(buf, afname, sizeof(buf));
-    buf[sizeof(buf) - 1] = '\0';
+    safe_strncpy(buf, afname, sizeof(buf));
 
     tmp1 = buf;
 
