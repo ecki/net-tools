@@ -116,8 +116,6 @@ extern void aftrans_def(char *tool, char *argv0, char *dflt);
 
 extern char *get_sname(int socknumber, char *proto, int numeric);
 
-extern char *safe_strncpy(char *dst, const char *src, size_t size);
-
 extern int flag_unx;
 extern int flag_ipx;
 extern int flag_ax25;
