@@ -32,33 +32,25 @@
 #include "intl.h"
 #include "net-features.h"
 
-/* this is from linux/include/net/ndisc.h */
-/*
- *    Neighbor Cache Entry States (7.3.2.)
- */
+/* neighbour discovery from linux-2.4.0/include/net/neighbour.h */
 
-/*
- *    The lsb is set for states that have a timer associated
- */
+#define NUD_INCOMPLETE  0x01
+#define NUD_REACHABLE   0x02
+#define NUD_STALE       0x04
+#define NUD_DELAY       0x08
+#define NUD_PROBE       0x10
+#define NUD_FAILED      0x20
 
-#define NUD_NONE	0x00
-#define NUD_INCOMPLETE	0x11
-#define NUD_REACHABLE	0x20
-#define NUD_STALE	0x30
-#define NUD_DELAY	0x41
-#define NUD_PROBE	0x51
-#define NUD_FAILED	0x60	/* neighbour discovery failed     */
+#define NUD_NOARP       0x40
+#define NUD_PERMANENT   0x80
+#define NUD_NONE        0x00
 
-#define NUD_IN_TIMER	0x01
+#define NTF_PROXY       0x08    /* == ATF_PUBL */
+#define NTF_ROUTER      0x80
+#define NTF_02          0x02  /* waiting for answer of Alexey -eckes */
+#define NTF_04          0x04  /* waiting for answer of Alexey -eckes */
 
-#define NDISC_QUEUE_LEN	3
-
-#define NCF_NOARP		0x0100	/* no ARP needed on this device */
-#define NCF_SUBNET		0x0200	/* NC entry for subnet            */
-#define NCF_INVALID		0x0400
-#define NCF_DELAY_EXPIRED	0x0800	/* time to move to PROBE  */
-#define NCF_ROUTER		0x1000	/* neighbour is a router  */
-#define NCF_HHVALID		0x2000	/* Hardware header is valid       */
+/* */
 
 
 extern struct aftype inet6_aftype;
@@ -190,18 +182,14 @@ int rprint_cache6(int ext, int numeric)
 
 	/* Decode the flags. */
 	flags[0] = '\0';
-	if (ndflags & NCF_NOARP)
-	    strcat(flags, "N");
-	if (ndflags & NCF_SUBNET)
-	    strcat(flags, "S");
-	if (ndflags & NCF_INVALID)
-	    strcat(flags, "I");
-	if (ndflags & NCF_DELAY_EXPIRED)
-	    strcat(flags, "D");
-	if (ndflags & NCF_ROUTER)
+	if (ndflags & NTF_ROUTER)
 	    strcat(flags, "R");
-	if (ndflags & NCF_HHVALID)
-	    strcat(flags, "H");
+	if (ndflags & NTF_04)
+	    strcat(flags, "x");
+	if (ndflags & NTF_02)
+	    strcat(flags, "h");
+	if (ndflags & NTF_PROXY)
+	    strcat(flags, "P");
 
 	/* Decode the state */
 	switch (state) {
@@ -226,11 +214,14 @@ int rprint_cache6(int ext, int numeric)
 	case NUD_FAILED:
 	    strcpy(statestr, "FAILED");
 	    break;
-	case NUD_IN_TIMER:
-	    strcpy(statestr, "IN TIMER");
+	case NUD_NOARP:
+	    strcpy(statestr, "NOARP");
+	    break;
+	case NUD_PERMANENT:
+	    strcpy(statestr, "PERM");
 	    break;
 	default:
-	    snprintf(statestr, sizeof(statestr), "UNKNOWN %02x", state);
+	    snprintf(statestr, sizeof(statestr), "UNKNOWN(%02x)", state);
 	    break;
 	}
 
