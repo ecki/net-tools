@@ -1,6 +1,8 @@
 /*
    Modifications:
    1998-07-01 - Arnaldo Carvalho de Melo - GNU gettext instead of catgets
+   1999-10-07 - Kurt Garloff		 - for -host and gws: prefer host names
+						over networks (or even reject)
  */
 
 #include "config.h"
@@ -92,21 +94,17 @@ static int INET_setroute(int action, int options, char **args)
 	    rt.rt_genmask = full_mask(mask.d);
     }
 
-    if ((isnet = inet_aftype.input(0, target, &rt.rt_dst)) < 0) {
+    /* Prefer hostname lookup is -host flag was given */
+    if ((isnet = inet_aftype.input((xflag!=2? 0: 256), target, &rt.rt_dst)) < 0) {
 	inet_aftype.herror(target);
 	return (1);
     }
     switch (xflag) {
     case 1:
-	isnet = 1;
-	break;
-
+       isnet = 1; break;
     case 2:
-	isnet = 0;
-	break;
-
+       isnet = 0; break;
     default:
-	break;
     }
 
     /* Fill in the other fields. */
@@ -152,7 +150,7 @@ static int INET_setroute(int action, int options, char **args)
 	    if (rt.rt_flags & RTF_GATEWAY)
 		return (usage());
 	    safe_strncpy(gateway, *args, (sizeof gateway));
-	    if ((isnet = inet_aftype.input(0, gateway, &rt.rt_gateway)) < 0) {
+	    if ((isnet = inet_aftype.input(256, gateway, &rt.rt_gateway)) < 0) {
 		inet_aftype.herror(gateway);
 		return (E_LOOKUP);
 	    }

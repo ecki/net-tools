@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.32 1999/09/28 09:01:49 philip Exp $
+ * Version:     $Id: ifconfig.c,v 1.33 1999/12/11 13:35:53 freitag Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -40,6 +40,7 @@
 
 /* Ugh.  But libc5 doesn't provide POSIX types.  */
 #include <asm/types.h>
+
 
 #ifdef HAVE_HWSLIP
 #include <linux/if_slip.h>
@@ -364,7 +365,7 @@ static int if_print(char *ifname)
     } else {
 	struct interface *ife;
 
-	ife = lookup_interface(ifname);
+	ife = lookup_interface(ifname,1);
 	res = do_if_fetch(ife); 
 	if (res >= 0) 
 	    ife_print(ife);

@@ -34,6 +34,8 @@
 #include "intl.h"
 #include "net-features.h"
 
+
+
 extern struct aftype inet6_aftype;
 
 static int skfd = -1;

@@ -4,7 +4,7 @@
    10/1998 partly rewriten by Andi Kleen to support an interface list.   
    I don't claim that the list operations are efficient @).  
 
-   $Id: interface.c,v 1.6 1999/09/27 00:36:16 freitag Exp $
+   $Id: interface.c,v 1.7 1999/12/11 13:35:59 freitag Exp $
  */
 
 #include "config.h"
@@ -65,15 +65,15 @@ void add_interface(struct interface *n)
     (*pp) = n;
 }
 
-struct interface *lookup_interface(char *name)
+struct interface *lookup_interface(char *name, int readlist)
 {
     struct interface *ife = NULL;
 
-    if (int_list || if_readlist() >= 0) { 
-	for (ife = int_list; ife; ife = ife->next) {
-	    if (!strcmp(ife->name, name))
-		break;
-	}
+    if (int_list || (readlist && if_readlist() >= 0)) {
+		for (ife = int_list; ife; ife = ife->next) {
+	    	if (!strcmp(ife->name, name))
+			break;
+		}
     }
 
     if (!ife) { 
@@ -148,7 +148,7 @@ static int if_readconf(void)
 
     ifr = ifc.ifc_req;
     for (n = 0; n < ifc.ifc_len; n += sizeof(struct ifreq)) {
-	lookup_interface(ifr->ifr_name);
+	lookup_interface(ifr->ifr_name,0);
 	ifr++;
     }
     err = 0;
@@ -267,9 +267,10 @@ int if_readlist(void)
 
     fh = fopen(_PATH_PROCNET_DEV, "r");
     if (!fh) {
-	perror(_PATH_PROCNET_DEV);
-	return -1;
-    }
+		fprintf(stderr, _("Warning: cannot open %s (%s). Limited output.\n"),
+			_PATH_PROCNET_DEV, strerror(errno)); 
+		return if_readconf();
+	}	
     fgets(buf, sizeof buf, fh);	/* eat line */
     fgets(buf, sizeof buf, fh);
 

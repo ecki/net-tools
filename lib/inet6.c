@@ -3,7 +3,7 @@
  *              support functions for the net-tools.
  *              (most of it copied from lib/inet.c 1.26).
  *
- * Version:     $Id: inet6.c,v 1.8 1999/08/24 16:47:24 ecki Exp $
+ * Version:     $Id: inet6.c,v 1.9 1999/12/11 13:35:57 freitag Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -52,7 +52,7 @@ static int INET6_resolve(char *name, struct sockaddr_in6 *sin6)
     memset (&req, '\0', sizeof req);
     req.ai_family = AF_INET6;
     if ((s = getaddrinfo(name, NULL, &req, &ai))) {
-	fprintf(stderr, "getaddrinfo: %s: %s\n", name, gai_strerror(s));
+	fprintf(stderr, "getaddrinfo: %s: %d\n", name, s);
 	return -1;
     }
     memcpy(sin6, ai->ai_addr, sizeof(struct sockaddr_in6));
@@ -61,6 +61,12 @@ static int INET6_resolve(char *name, struct sockaddr_in6 *sin6)
 
     return (0);
 }
+
+#ifndef IN6_IS_ADDR_UNSPECIFIED
+#define IN6_IS_ADDR_UNSPECIFIED(a) \
+        (((__u32 *) (a))[0] == 0 && ((__u32 *) (a))[1] == 0 && \
+         ((__u32 *) (a))[2] == 0 && ((__u32 *) (a))[3] == 0)
+#endif
 
 
 static int INET6_rresolve(char *name, struct sockaddr_in6 *sin6, int numeric)

@@ -1,9 +1,11 @@
 /*
-   $Id: inet_gr.c,v 1.11 1999/03/02 21:09:15 philip Exp $
+   $Id: inet_gr.c,v 1.12 1999/12/11 13:35:58 freitag Exp $
 
    Modifications:
    1998-07-01 - Arnaldo Carvalho de Melo - GNU gettext instead of catgets
    1999-01-01 - Bernd Eckenfels          - fixed the routing cache printouts
+   1999-10-07 - Kurt Garloff <garloff@suse.de> - do host (instead of network) name
+						lookup for gws and hosts
  */
 
 #include "config.h"
@@ -105,11 +107,11 @@ int rprint_fib(int ext, int numeric)
 	
 	sin_netmask = (struct sockaddr_in *)&snet_mask;
 	strcpy(net_addr, INET_sprintmask(&snet_target, 
-					 (numeric | 0x8000),
+					 (numeric | 0x8000 | (iflags & RTF_HOST? 0x4000: 0)),
 					 sin_netmask->sin_addr.s_addr));
 	net_addr[15] = '\0';
 
-	strcpy(gate_addr, inet_aftype.sprint(&snet_gateway, numeric));
+	strcpy(gate_addr, inet_aftype.sprint(&snet_gateway, numeric | 0x4000));
 	gate_addr[15] = '\0';
 
 	strcpy(mask_addr, inet_aftype.sprint(&snet_mask, 1));
