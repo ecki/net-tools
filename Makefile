@@ -77,7 +77,7 @@ PROGS	= ifconfig hostname arp netstat route rarp
 
 # Compiler and Linker Options
 # You may need to uncomment and edit these if you are using libc5.
-COPTS = -O2 -Wall -g # -I/usr/inet6/include
+COPTS = -D_GNU_SOURCE -O2 -Wall -g # -I/usr/inet6/include
 LOPTS = 
 RESLIB = # -L/usr/inet6/lib -linet6
 
