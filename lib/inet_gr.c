@@ -65,7 +65,7 @@ int rprint_fib(int ext, int numeric)
 		iface, net_addr, gate_addr,
 		&iflags, &refcnt, &use, &metric, mask_addr,
  		&mss,&window,&irtt);
-	if (num < 10) continue;
+	if (num < 10 || !(iflags & RTF_UP)) continue;
 
 	/* Fetch and resolve the target address. */
 	(void)inet_aftype.input(1, net_addr, &snet);
@@ -84,7 +84,6 @@ int rprint_fib(int ext, int numeric)
 
 	/* Decode the flags. */
 	flags[0] = '\0';
-	if (iflags & RTF_UP) strcat(flags, "U");
 	if (iflags & RTF_GATEWAY) strcat(flags, "G");
 #if HAVE_RTF_REJECT
 	if (iflags & RTF_REJECT) strcpy(flags,"!");

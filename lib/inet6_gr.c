@@ -97,6 +97,7 @@ int rprint_fib6(int ext, int numeric)
 #if 0
 	if (num < 23) continue;
 #endif
+	if (!(iflags & RTF_UP)) continue;
 	/* Fetch and resolve the target address. */
 	sprintf(addr6, "%s:%s:%s:%s:%s:%s:%s:%s",
 		addr6p[0], addr6p[1], addr6p[2], addr6p[3],
@@ -116,7 +117,6 @@ int rprint_fib6(int ext, int numeric)
 	
 	/* Decode the flags. */
 	flags[0] = '\0';
-	if (iflags & RTF_UP) strcat(flags, "U");
 	if (iflags & RTF_GATEWAY) strcat(flags, "G");
 	if (iflags & RTF_HOST) strcat(flags, "H");
 	if (iflags & RTF_DEFAULT) strcat(flags, "D");

@@ -2,15 +2,12 @@
  * lib/hw.c	This file contains the top-level part of the hardware
  *		support functions module for the NET-2 base distribution.
  *
- * Version:	lib/hw.c 1.13 (1996-04-13)
+ * Version:	lib/hw.c 1.20 (1998-01-25)
  *
  * Maintainer:	Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
  * Author:	Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *		Copyright 1993 MicroWalt Corporation
- *
- * Changes:
- *960413 {1.13}	Mike Mclagan    :       DLCI/FRAD support
  *
  *		This program is free software; you can redistribute it
  *		and/or  modify it under  the terms of  the GNU General
@@ -43,21 +40,24 @@ extern	struct hwtype	cslip6_hwtype;
 extern	struct hwtype	adaptive_hwtype;
 
 extern	struct hwtype	ether_hwtype;
+extern	struct hwtype	fddi_hwtype;
 extern	struct hwtype	tr_hwtype;
 
 extern	struct hwtype	ax25_hwtype;
+extern	struct hwtype	rose_hwtype;
 extern  struct hwtype   netrom_hwtype;
 extern  struct hwtype   tunnel_hwtype;
+
 extern	struct hwtype	ash_hwtype;
 
-extern struct hwtype	ppp_hwtype;
+extern	struct hwtype	ppp_hwtype;
 
-extern struct hwtype	arcnet_hwtype;
+extern	struct hwtype	arcnet_hwtype;
 
-extern struct hwtype   dlci_hwtype;
-extern struct hwtype   frad_hwtype;
+extern	struct hwtype	dlci_hwtype;
+extern	struct hwtype	frad_hwtype;
 
-extern struct hwtype   sit_hwtype;
+extern	struct hwtype	sit_hwtype;
 
 static struct hwtype *hwtypes[] = {
 
@@ -101,6 +101,12 @@ static struct hwtype *hwtypes[] = {
 #if HAVE_HWSIT
   &sit_hwtype,
 #endif
+#if HAVE_HWROSE
+  &rose_hwtype,
+#endif
+#if HAVE_HWFDDI
+  &fddi_hwtype,
+#endif
   &unspec_hwtype,
   NULL
 };
@@ -110,6 +116,7 @@ static short sVhwinit = 0;
 void hwinit ()
 {
   loop_hwtype.title = NLS_CATSAVE (catfd, loopbackSet, loopback_loop, "Local Loopback");
+  unspec_hwtype.title = NLS_CATSAVE (catfd, loopbackSet, loopback_unspec, "UNSPEC");
 #if HAVE_HWSLIP
   slip_hwtype.title = NLS_CATSAVE (catfd, slipSet, slip_slip, "Serial Line IP");
   cslip_hwtype.title = NLS_CATSAVE (catfd, slipSet, slip_cslip, "VJ Serial Line IP");
@@ -117,15 +124,20 @@ void hwinit ()
   cslip6_hwtype.title = NLS_CATSAVE (catfd, slipSet, slip_cslip6, "VJ 6-bit Serial Line IP");
   adaptive_hwtype.title = NLS_CATSAVE (catfd, slipSet, slip_adaptive, "Adaptive Serial Line IP");
 #endif
-  unspec_hwtype.title = NLS_CATSAVE (catfd, loopbackSet, loopback_unspec, "UNSPEC");
 #if HAVE_HWETHER
   ether_hwtype.title = NLS_CATSAVE (catfd, etherSet, ether_ether, "Ethernet");
 #endif
 #if HAVE_HWASH
-  ash_hwtype.title = NLS_CATSAVE (catfd, ashSet, ash_hw, "64Mbps ASH");
+  ash_hwtype.title = NLS_CATSAVE (catfd, ashSet, ash_hw, "64Mbps Ash");
+#endif
+#if HAVE_HWFDDI
+  fddi_hwtype.title = NLS_CATSAVE (catfd, fddiSet, fddi_fddi, "Fiber Distributed Data Interface");
 #endif
 #if HAVE_HWAX25
   ax25_hwtype.title = NLS_CATSAVE (catfd, ax25Set, ax25_hw, "AMPR AX.25");
+#endif
+#if HAVE_HWROSE
+  rose_hwtype.title = NLS_CATSAVE (catfd, roseSet, rose_hw, "AMPR ROSE");
 #endif
 #if HAVE_HWNETROM
   netrom_hwtype.title = NLS_CATSAVE (catfd, netromSet, netrom_hw, "AMPR NET/ROM");
@@ -140,13 +152,13 @@ void hwinit ()
   arcnet_hwtype.title = NLS_CATSAVE (catfd, arcnetSet, arcnet_arcnet, "1.5Mbps ARCnet");
 #endif
 #if HAVE_HWFR
-   dlci_hwtype.title = NLS_CATSAVE(catfd, dlciSet, dlci_hw, "Frame Relay DLCI");
-   frad_hwtype.title = NLS_CATSAVE(catfd, fradSet, frad_hw, "Frame Relay Access Device");
+  dlci_hwtype.title = NLS_CATSAVE(catfd, dlciSet, dlci_hw, "Frame Relay DLCI");
+  frad_hwtype.title = NLS_CATSAVE(catfd, fradSet, frad_hw, "Frame Relay Access Device");
 #endif
 #if HAVE_HWSIT
-   sit_hwtype.title = NLS_CATSAVE(catfd, sitSet, sit_hw, "IPv6-in-IPv4");
+  sit_hwtype.title = NLS_CATSAVE(catfd, sitSet, sit_hw, "IPv6-in-IPv4");
 #endif
-    sVhwinit = 1;
+  sVhwinit = 1;
 }
 
 /* Check our hardware type table for this type. */

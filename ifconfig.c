@@ -3,7 +3,7 @@
  *		that either displays or sets the characteristics of
  *		one or more of the system's networking interfaces.
  *
- * Version:	ifconfig 1.30 (1998-01-02)
+ * Version:	ifconfig 1.31 (1998-01-25)
  *
  * Author:	Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -155,9 +155,6 @@ static const char *if_port_text[][4] = {
 #ifndef SIOGIFNAME
 #define SIOGIFNAME	0x8934		/* if_index -> name mapping	*/
 #endif
-#ifndef SIOCGIFCOUNT
-#define SIOCGIFCOUNT	0x8935		/* get number of interfaces	*/
-#endif
 #ifndef SIOCDIFADDR
 #define SIOCDIFADDR	0x8936		/* delete PA address		*/
 #endif
@@ -183,6 +180,9 @@ int ipx_sock = -1;			/* IPX socket			*/
 #endif
 #if HAVE_AFAX25
 int ax25_sock = -1;			/* AX.25 socket			*/
+#endif
+#if HAVE_AFROSE
+int rose_sock = -1;			/* Rose socket			*/
 #endif
 #if HAVE_AFINET
 int inet_sock = -1;			/* INET socket			*/
@@ -591,7 +591,10 @@ if_print(char *ifname)
     int i;
     struct ifconf ifc;
     struct ifreq *ifr;
-    if (ioctl(skfd, SIOCGIFCOUNT, &i) < 0) {
+    ifc.ifc_buf = NULL;
+    ifc.ifc_len = 0;
+    if (ioctl(skfd, SIOCGIFCONF, &ifc) < 0) {
+      /* Can this ever happen? */
       int n = 2, s;
       ifc.ifc_buf = NULL;
       do {
@@ -609,7 +612,7 @@ if_print(char *ifname)
 	}
       } while (ifc.ifc_len == s);
     } else {
-      ifc.ifc_buf = malloc(ifc.ifc_len = i*sizeof(struct ifreq));
+      ifc.ifc_buf = malloc(ifc.ifc_len);
       if (ifc.ifc_buf == NULL) {
 	fprintf(stderr, "Out of memory.\n");
 	exit(1);
@@ -740,6 +743,10 @@ static int sockets_open()
   ax25_sock = socket(AF_AX25, SOCK_DGRAM, 0);
 #endif
 
+#if HAVE_ROSE
+  rose_sock = socket(AF_ROSE, SOCK_DGRAM, 0);
+#endif
+
 #if HAVE_AFATALK
   ddp_sock = socket(AF_APPLETALK, SOCK_DGRAM, 0);
 #endif
@@ -762,6 +769,10 @@ static int sockets_open()
 
 #if HAVE_AFAX25 
   if (ax25_sock != -1) return ax25_sock;
+#endif
+
+#if HAVE_AFROSE 
+  if (rose_sock != -1) return rose_sock;
 #endif
 
 #if HAVE_AFATALK

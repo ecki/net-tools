@@ -1,3 +1,21 @@
+Sun Jan 25 13:00:00 1998  Philip Blundell  <Philip.Blundell@pobox.com>
+
+	* lib/inet6_gr.c, lib/inet_gr.c: Don't display inactive routes
+	(ie those without RTF_UP).
+
+	* rarp.c: Add support for /etc/ethers.  Patch from haardt@gmd.de
+ 	(Michael Haardt).
+
+	* config.in, lib/hw.c: Tidy up.  Add support for Rose and FDDI.
+	* lib/fddi.c, lib/rose.c, lib/rose_gr.c: New files, copied from
+	Bernd's net-tools-pre-1.34.
+
+	* ifconfig.c: Try to use AF_ROSE sockets.
+
+	* ifconfig.c: Don't use SIOCGIFCOUNT to work out how many
+ 	interfaces to display; use SIOCGIFCONF with a null buffer
+ 	instead.
+
 Tue Sep 23 20:58:27 1997  Philip Blundell  <Philip.Blundell@pobox.com>
 
 	* ifconfig.c (if_getstats): use _PATH_PROCNET_DEV rather than

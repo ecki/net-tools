@@ -8,18 +8,12 @@
 #		NET-3 Networking Distribution for the LINUX operating
 #		system.
 #
-# Version:	config.in 1.04	(96-04-24)
+# Version:	config.in 1.20	(98-01-25)
 #
 # Author:	Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
 #		Copyright 1988-1993 MicroWalt Corporation
 #
 #		Bernd 'eckes' Eckenfels <net-tools@lina.inka.de>
-#
-# Modified:
-#	{1.01}	Bernd Eckenfels:	generates more verbose config.h file
-#960125	{1.02}	Bernd Eckenfels:	reordered
-#960215 {1.03}	Bernd Eckenfels:	NET/ROM (Jonathan)
-#960424 {1.04}	Bernd Eckenfels:	NLS disabled, FR added
 #
 #		This program is free software; you can redistribute it
 #		and/or  modify it under  the terms of  the GNU General
@@ -36,7 +30,6 @@
 =  *
 =  *		DO  NOT  EDIT  DIRECTLY
 =  *
-=  * Version:	Generated from "config.in 1.04 (96-04-24)"
 =  */
 #*
 #*
@@ -67,6 +60,7 @@ bool 'Novell IPX/SPX protocol family' HAVE_AFIPX y
 bool 'Appletalk DDP protocol family' HAVE_AFATALK y
 bool 'AX25 (Packet Radio) protocol family' HAVE_AFAX25 y
 bool 'NET/ROM (Packet Radio) protocol family' HAVE_AFNETROM y
+bool 'Rose (packet radio) protocol family' HAVE_AFROSE n
 *
 *
 *            Device Hardware types.
@@ -81,5 +75,7 @@ bool 'AX25 (Packet Radio) support' HAVE_HWAX25 y
 bool 'NET/ROM (Packet Radio) support' HAVE_HWNETROM y
 bool 'DLCI/FRAD (Frame Relay) support' HAVE_HWFR y
 bool 'SIT (IPv6-in-IPv4) support' HAVE_HWSIT n
+bool 'FDDI (generic) support' HAVE_HWFDDI n
+bool 'Rose (packet radio) support' HAVE_HWROSE n
 bool 'Ash support' HAVE_HWASH y
 
