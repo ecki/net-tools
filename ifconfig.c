@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.47 2001/04/08 17:05:05 pb Exp $
+ * Version:     $Id: ifconfig.c,v 1.48 2001/04/13 18:16:53 pb Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -919,9 +919,14 @@ int main(int argc, char **argv)
 		break;
 	    }
 	}
+	if (ap->input == NULL) {
+	   fprintf(stderr, _("ifconfig: Cannot set address for this protocol family.\n"));
+	   exit(1);
+	}
 	if (ap->input(0, host, &sa) < 0) {
 	    ap->herror(host);
 	    fprintf(stderr, _("ifconfig: `--help' gives usage information.\n"));
+	    exit(1);
 	}
 	memcpy((char *) &ifr.ifr_addr, (char *) &sa, sizeof(struct sockaddr));
 	{
@@ -957,6 +962,7 @@ int main(int argc, char **argv)
 		goterr = 1;
 	    }
 	}
+
        /*
         * Don't do the set_flag() if the address is an alias with a - at the
         * end, since it's deleted already! - Roman
@@ -979,12 +985,14 @@ int main(int argc, char **argv)
 
     return (goterr);
 }
+
 struct ifcmd {
 	int flag;
 	unsigned long addr;
 	char *base;
 	int baselen;
 };
+
 static unsigned char searcher[256];
 
 static int set_ip_using(const char *name, int c, unsigned long ip)
