@@ -1,6 +1,6 @@
 /*
  * Copyright 1997,1999,2000 Andi Kleen. Subject to the GPL. 
- * $Id: statistics.c,v 1.17 2002/04/28 15:41:01 ak Exp $
+ * $Id: statistics.c,v 1.18 2003/02/12 03:30:57 ak Exp $
  * 19980630 - i18n - Arnaldo Carvalho de Melo <acme@conectiva.com.br> 
  * 19981113 - i18n fixes - Arnaldo Carvalho de Melo <acme@conectiva.com.br> 
  * 19990101 - added net/netstat, -t, -u, -w supprt - Bernd Eckenfels 
@@ -172,32 +172,31 @@ struct entry Tcpexttab[] =
     { "DelayedACKLost", N_("Quick ack mode was activated %u times"), opt_number },
     { "ListenOverflows", N_("%u times the listen queue of a socket overflowed"),
       opt_number },
-    { "ListenDrops", N_("%u SYNs to LISTEN sockets ignored"), opt_number },
+    { "ListenDrops", N_("%u SYNs to LISTEN sockets dropped"), opt_number },
     { "TCPPrequeued", N_("%u packets directly queued to recvmsg prequeue."), 
       opt_number },
-    { "TCPDirectCopyFromBacklog", N_("%u of bytes directly received"
-				     " from backlog"), opt_number },
-    { "TCPDirectCopyFromPrequeue", N_("%u of bytes directly received"
-				      " from prequeue"), opt_number },
+    { "TCPDirectCopyFromBacklog", N_("%u bytes directly in process context from backlog"), opt_number },
+    { "TCPDirectCopyFromPrequeue", N_("%u bytes directly received in process context from prequeue"),
+				      opt_number },
     { "TCPPrequeueDropped", N_("%u packets dropped from prequeue"), opt_number },
     { "TCPHPHits", N_("%u packet headers predicted"), number },
     { "TCPHPHitsToUser", N_("%u packets header predicted and "
 			    "directly queued to user"), opt_number },
     { "SockMallocOOM", N_("Ran %u times out of system memory during " 
 			  "packet sending"), opt_number }, 
-    { "TCPPureAcks", N_("%u acknowledgments not containing data received"), opt_number },
+    { "TCPPureAcks", N_("%u acknowledgments not containing data payload received"), opt_number },
     { "TCPHPAcks", N_("%u predicted acknowledgments"), opt_number },
     { "TCPRenoRecovery", N_("%u times recovered from packet loss due to fast retransmit"), opt_number },
-    { "TCPSackRecovery", N_("%u times recovered from packet loss due to SACK data"), opt_number },
-    { "TCPSACKReneging", N_("%u bad SACKs received"), opt_number },
+    { "TCPSackRecovery", N_("%u times recovered from packet loss by selective acknowledgements"), opt_number },
+    { "TCPSACKReneging", N_("%u bad SACK blocks received"), opt_number },
     { "TCPFACKReorder", N_("Detected reordering %u times using FACK"), opt_number },
     { "TCPSACKReorder", N_("Detected reordering %u times using SACK"), opt_number },
     { "TCPTSReorder", N_("Detected reordering %u times using time stamp"), opt_number },
     { "TCPRenoReorder", N_("Detected reordering %u times using reno fast retransmit"), opt_number },
-    { "TCPFullUndo", N_("%u congestion windows fully recovered"), opt_number }, 
+    { "TCPFullUndo", N_("%u congestion windows fully recovered without slow start"), opt_number }, 
     { "TCPPartialUndo", N_("%u congestion windows partially recovered using Hoe heuristic"), opt_number },
-    { "TCPDSackUndo", N_("%u congestion window recovered using DSACK"), opt_number },
-    { "TCPLossUndo", N_("%u congestion windows recovered after partial ack"), opt_number },
+    { "TCPDSackUndo", N_("%u congestion window recovered without slow start using DSACK"), opt_number },
+    { "TCPLossUndo", N_("%u congestion windows recovered without slow start after partial ack"), opt_number },
     { "TCPLostRetransmits", N_("%u retransmits lost"), opt_number },
     { "TCPRenoFailures",  N_("%u timeouts after reno fast retransmit"), opt_number },
     { "TCPSackFailures",  N_("%u timeouts after SACK recovery"), opt_number },
@@ -207,7 +206,7 @@ struct entry Tcpexttab[] =
     { "TCPSlowStartRetrans", N_("%u retransmits in slow start"), opt_number },
     { "TCPTimeouts", N_("%u other TCP timeouts"), opt_number },
     { "TCPRenoRecoveryFailed", N_("%u reno fast retransmits failed"), opt_number },
-    { "TCPSackRecoveryFail", N_("%u sack retransmits failed"), opt_number },
+    { "TCPSackRecoveryFail", N_("%u SACK retransmits failed"), opt_number },
     { "TCPSchedulerFailed", N_("%u times receiver scheduled too late for direct processing"), opt_number },
     { "TCPRcvCollapsed", N_("%u packets collapsed in receive queue due to low socket buffer"), opt_number },
     { "TCPDSACKOldSent", N_("%u DSACKs sent for old packets"), opt_number },
@@ -222,7 +221,10 @@ struct entry Tcpexttab[] =
     { "TCPAbortOnLinger", N_("%u connections aborted after user close in linger timeout"), opt_number },
     { "TCPAbortFailed", N_("%u times unabled to send RST due to no memory"), opt_number }, 
     { "TCPMemoryPressures", N_("TCP ran low on memory %u times"), opt_number }, 
-    { "TCPLoss", N_("%u TCP data loss events") },
+    { "TCPLoss", N_("%u TCP data loss events"), opt_number },
+    { "TCPDSACKUndo", N_("%u congestion windows recovered without slow start by DSACK"), 
+	opt_number },
+    { "TCPRenoRecoveryFail", N_("%u classic Reno fast retransmits failed"), opt_number },
 };
 
 struct tabtab {
