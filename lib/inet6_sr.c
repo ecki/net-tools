@@ -64,22 +64,28 @@ static int INET6_setroute(int action, int options, char **args)
 	return (usage());
 
     strcpy(target, *args++);
-    if ((cp = strchr(target, '/'))) {
-	prefix_len = atol(cp + 1);
-	if ((prefix_len < 0) || (prefix_len > 128))
-	    usage();
-	*cp = 0;
+    if (!strcmp(target, "default")) {
+        prefix_len = 0;
+	memset(&sa6, 0, sizeof(sa6));
     } else {
-	prefix_len = 128;
+        if ((cp = strchr(target, '/'))) {
+	    prefix_len = atol(cp + 1);
+	    if ((prefix_len < 0) || (prefix_len > 128))
+		usage();
+	    *cp = 0;
+	} else {
+	    prefix_len = 128;
+	}
+	if (inet6_aftype.input(1, target, (struct sockaddr *) &sa6) < 0
+	    && inet6_aftype.input(0, target, (struct sockaddr *) &sa6) < 0) {
+	    inet6_aftype.herror(target);
+	    return (1);
+	}
     }
 
     /* Clean out the RTREQ structure. */
     memset((char *) &rt, 0, sizeof(struct in6_rtmsg));
 
-    if (inet6_aftype.input(1, target, (struct sockaddr *) &sa6) < 0) {
-	inet6_aftype.herror(target);
-	return (1);
-    }
     memcpy(&rt.rtmsg_dst, sa6.sin6_addr.s6_addr, sizeof(struct in6_addr));
 
     /* Fill in the other fields. */
