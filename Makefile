@@ -197,12 +197,16 @@ ipmaddr:	$(NET-LIB) ipmaddr.o
 installbin:
 	install -m 0755 -d ${BASEDIR}/sbin
 	install -m 0755 -d ${BASEDIR}/bin
-	install -m 0755 arp      ${BASEDIR}/sbin
-	install -m 0755 ifconfig ${BASEDIR}/sbin
-	install -m 0755 netstat  ${BASEDIR}/bin
-	install -m 0755 rarp     ${BASEDIR}/sbin
-	install -m 0755 route    ${BASEDIR}/sbin
-	install -m 0755 hostname ${BASEDIR}/bin
+	install -m 0755 arp        ${BASEDIR}/sbin
+	install -m 0755 ifconfig   ${BASEDIR}/sbin
+	install -m 0755 netstat    ${BASEDIR}/bin
+	install -m 0755 rarp       ${BASEDIR}/sbin
+	install -m 0755 route      ${BASEDIR}/sbin
+	install -m 0755 hostname   ${BASEDIR}/bin
+	install -m 0755 slattach   $(BASEDIR)/sbin
+	install -m 0755 plipconfig $(BASEDIR)/sbin
+	install -m 0755 ipmaddr    $(BASEDIR)/sbin
+	install -m 0755 iptunnel   $(BASEDIR)/sbin
 	ln -fs hostname $(BASEDIR)/bin/dnsdomainname
 	ln -fs hostname $(BASEDIR)/bin/ypdomainname
 	ln -fs hostname $(BASEDIR)/bin/nisdomainname

@@ -13,7 +13,6 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <arpa/nameser.h>
-/* #include <net/route.h> realy broken */
 #include <net/if.h>
 #include <sys/ioctl.h>
 #include <ctype.h>
@@ -24,7 +23,9 @@
 #include <string.h>
 #include <stdio.h>
 #include <unistd.h>
-#ifndef __GLIBC__
+#ifdef __GLIBC__
+#include <net/route.h>
+#else
 #include <netinet6/ipv6_route.h>	/* glibc does not have this */
 #endif
 #include "version.h"

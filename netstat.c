@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.16 1999/01/05 20:53:00 philip Exp $
+ * Version:     $Id: netstat.c,v 1.17 1999/01/10 18:05:06 philip Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -494,7 +494,7 @@ static void udp_do_one(int lnr, const char *line)
     }
 
 #if HAVE_AFINET6
-#define notnull(A) ((A.sin6_family == AF_INET6) && \
+#define notnull(A) (((A.sin6_family == AF_INET6) && \
 	 ((A.sin6_addr.s6_addr32[0]) ||            \
 	  (A.sin6_addr.s6_addr32[1]) ||            \
 	  (A.sin6_addr.s6_addr32[2]) ||            \
@@ -1088,7 +1088,8 @@ static int iface_info(void)
 	perror(_("missing interface information"));
 	exit(1);
     }
-    close(skfd);
+    if (!flag_cnt)
+        close(skfd);
     skfd = -1;
 
     return 0;

@@ -1,6 +1,6 @@
 Summary: Basic Networking Tools
 Name: net-tools
-Version: 1.49
+Version: 1.50
 Release: 1
 Copyright: GPL
 Group: Networking/Admin
@@ -11,7 +11,7 @@ BuildRoot: /var/tmp/%{name}-root
 %description
 This is a collection of the basic tools necessary for setting up networking
 on a Linux machine. It includes ifconfig, route, netstat, rarp, and
-some other minor tools.
+various other tools.
 
 %prep
 %setup  -q
@@ -31,7 +31,7 @@ mkdir -p $RPM_BUILD_ROOT/usr/man/man8
 make BASEDIR=$RPM_BUILD_ROOT install
 
 ( cd $RPM_BUILD_ROOT/sbin
-  strip arp ifconfig rarp route
+  strip arp ifconfig rarp route slattach plipconfig ipmaddr iptunnel
   cd ../bin
   strip hostname netstat
 ) 
@@ -45,6 +45,10 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/ifconfig
 /sbin/rarp
 /sbin/route
+/sbin/slattach
+/sbin/plipconfig
+/sbin/ipmaddr
+/sbin/iptunnel
 /bin/domainname
 /bin/dnsdomainname
 /bin/hostname
@@ -57,6 +61,10 @@ rm -rf $RPM_BUILD_ROOT
 /usr/share/locale/*/LC_MESSAGES/net-tools.mo
 
 %changelog
+* Sun Jan 10 1999 Phil Blundell <philb@gnu.org>
+- update to 1.50
+- add new stuff to %files and strip it in %install
+
 * Thu Nov 26 1998 Phil Blundell <pb@nexus.co.uk>
 - update to 1.48.
 
