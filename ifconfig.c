@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.56 2002/07/05 17:36:02 ecki Exp $
+ * Version:     $Id: ifconfig.c,v 1.57 2002/12/10 00:56:41 ecki Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -104,7 +104,7 @@ static int if_print(char *ifname)
     int res;
 
     if (ife_short)
-	printf(_("Iface   MTU Met    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR Flg\n"));
+	printf(_("Iface   MTU Met   RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR Flg\n"));
 
     if (!ifname) {
 	res = for_all_interfaces(do_if_print, &opt_a);
@@ -529,7 +529,10 @@ int main(int argc, char **argv)
 	    if (*++spp != NULL) {
 		safe_strncpy(host, *spp, (sizeof host));
 		if (ap->input(0, host, &sa) < 0) {
-		    ap->herror(host);
+		    if (ap->herror)
+		    	ap->herror(host);
+		    else
+		    	fprintf(stderr, _("ifconfig: Error resolving '%s' for broadcast\n"), host);
 		    goterr = 1;
 		    spp++;
 		    continue;
@@ -551,7 +554,10 @@ int main(int argc, char **argv)
 		usage();
 	    safe_strncpy(host, *spp, (sizeof host));
 	    if (ap->input(0, host, &sa) < 0) {
-		ap->herror(host);
+		    if (ap->herror)
+		    	ap->herror(host);
+		    else
+		    	fprintf(stderr, _("ifconfig: Error resolving '%s' for dstaddr\n"), host);
 		goterr = 1;
 		spp++;
 		continue;
@@ -571,7 +577,10 @@ int main(int argc, char **argv)
 		usage();
 	    safe_strncpy(host, *spp, (sizeof host));
 	    if (ap->input(0, host, &sa) < 0) {
-		ap->herror(host);
+		    if (ap->herror)
+		    	ap->herror(host);
+		    else
+		    	fprintf(stderr, _("ifconfig: Error resolving '%s' for netmask\n"), host);
 		goterr = 1;
 		spp++;
 		continue;
@@ -658,7 +667,10 @@ int main(int argc, char **argv)
 		spp++;
 		safe_strncpy(host, *spp, (sizeof host));
 		if (ap->input(0, host, &sa)) {
-		    ap->herror(host);
+		    if (ap->herror)
+		    	ap->herror(host);
+		    else
+		    	fprintf(stderr, _("ifconfig: Error resolving '%s' for pointopoint\n"), host);
 		    goterr = 1;
 		    spp++;
 		    continue;
@@ -723,12 +735,15 @@ int main(int argc, char **argv)
 			usage();
 		    *cp = 0;
 		} else {
-		    prefix_len = 0;
+		    prefix_len = 128;
 		}
 		safe_strncpy(host, *spp, (sizeof host));
 		if (inet6_aftype.input(1, host, 
 				       (struct sockaddr *) &sa6) < 0) {
-		    inet6_aftype.herror(host);
+		    if (inet6_aftype.herror)
+		    	inet6_aftype.herror(host);
+		    else
+		    	fprintf(stderr, _("ifconfig: Error resolving '%s' for add\n"), host);
 		    goterr = 1;
 		    spp++;
 		    continue;
@@ -813,7 +828,7 @@ int main(int argc, char **argv)
 			usage();
 		    *cp = 0;
 		} else {
-		    prefix_len = 0;
+		    prefix_len = 128;
 		}
 		safe_strncpy(host, *spp, (sizeof host));
 		if (inet6_aftype.input(1, host, 
@@ -842,6 +857,8 @@ int main(int argc, char **argv)
 		}
 		ifr6.ifr6_ifindex = ifr.ifr_ifindex;
 		ifr6.ifr6_prefixlen = prefix_len;
+		if (opt_v)
+			fprintf(stderr, "now deleting: ioctl(SIOCDIFADDR,{ifindex=%d,prefixlen=%ld})\n",ifr.ifr_ifindex,prefix_len);
 		if (ioctl(fd, SIOCDIFADDR, &ifr6) < 0) {
 		    fprintf(stderr, "SIOCDIFADDR: %s\n",
 			    strerror(errno));
@@ -901,7 +918,7 @@ int main(int argc, char **argv)
 		    usage();
 		*cp = 0;
 	    } else {
-		prefix_len = 0;
+		prefix_len = 128;
 	    }
 	    safe_strncpy(host, *spp, (sizeof host));
 	    if (inet6_aftype.input(1, host, (struct sockaddr *) &sa6) < 0) {
@@ -963,9 +980,11 @@ int main(int argc, char **argv)
 	   exit(1);
 	}
 	if (ap->input(0, host, &sa) < 0) {
-	    ap->herror(host);
-	    fprintf(stderr, _("ifconfig: `--help' gives usage information.\n"));
-	    exit(1);
+	    if (ap->herror)
+	    	ap->herror(host);
+	    else
+	    	fprintf(stderr,_("ifconfig: error resolving '%s' to set address for af=%s\n"), host, ap->name); fprintf(stderr,
+	    _("ifconfig: `--help' gives usage information.\n")); exit(1);
 	}
 	memcpy((char *) &ifr.ifr_addr, (char *) &sa, sizeof(struct sockaddr));
 	{

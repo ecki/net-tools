@@ -7,7 +7,7 @@
    8/2000  Andi Kleen make the list operations a bit more efficient.
    People are crazy enough to use thousands of aliases now.
 
-   $Id: interface.c,v 1.26 2002/12/05 22:10:32 ecki Exp $
+   $Id: interface.c,v 1.27 2002/12/10 00:56:41 ecki Exp $
  */
 
 #include "config.h"
@@ -594,13 +594,13 @@ int do_if_print(struct interface *ife, void *cookie)
 void ife_print_short(struct interface *ptr)
 {
     printf("%-5.5s ", ptr->name);
-    printf("%5d %-2d", ptr->mtu, ptr->metric);
+    printf("%5d %-2d ", ptr->mtu, ptr->metric);
     /* If needed, display the interface statistics. */
     if (ptr->statistics_valid) {
-	printf("%9llu %6lu %6lu %-5lu",
+	printf("%8llu %6lu %6lu %-6lu ",
 	       ptr->stats.rx_packets, ptr->stats.rx_errors,
 	       ptr->stats.rx_dropped, ptr->stats.rx_fifo_errors);
-	printf("%9llu %6lu %6lu %6lu ",
+	printf("%8llu %6lu %6lu %6lu ",
 	       ptr->stats.tx_packets, ptr->stats.tx_errors,
 	       ptr->stats.tx_dropped, ptr->stats.tx_fifo_errors);
     } else {

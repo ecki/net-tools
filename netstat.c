@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.49 2002/07/23 21:08:16 ecki Exp $
+ * Version:     $Id: netstat.c,v 1.50 2002/12/10 00:56:41 ecki Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -1462,7 +1462,7 @@ static int iface_info(void)
     }
     if (flag_exp < 2) {
 	ife_short = 1;
-	printf(_("Iface   MTU Met   RX-OK RX-ERR RX-DRP RX-OVR   TX-OK TX-ERR TX-DRP TX-OVR Flg\n"));
+	printf(_("Iface   MTU Met   RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR Flg\n"));
     }
 
     if (for_all_interfaces(do_if_print, &flag_all) < 0) {
