@@ -8,7 +8,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: arp.c,v 1.22 2002/12/10 01:01:24 ecki Exp $
+ * Version:     $Id: arp.c,v 1.23 2003/02/08 19:56:25 ecki Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -102,7 +102,7 @@ static int arp_del(char **args)
     struct arpreq req;
     struct sockaddr sa;
     int flags = 0;
-    int err;
+    int deleted = 0;
 
     memset((char *) &req, 0, sizeof(req));
 
@@ -190,35 +190,41 @@ static int arp_del(char **args)
 	}
 	usage();
     }
+
+    // if neighter priv nor pub is given, work on both
     if (flags == 0)
 	flags = 3;
 
     strcpy(req.arp_dev, device);
 
-    err = -1;
+    /* unfortuatelly the kernel interface does not allow us to
+       delete private entries anlone, so we need this hack
+       to avoid "not found" errors if we try both. */
+    deleted = 0;
 
     /* Call the kernel. */
     if (flags & 2) {
 	if (opt_v)
 	    fprintf(stderr, "arp: SIOCDARP(nopub)\n");
-	if ((err = ioctl(sockfd, SIOCDARP, &req) < 0)) {
-	    if (errno == ENXIO) {
+	if (ioctl(sockfd, SIOCDARP, &req) < 0) {
+	    if ((errno == ENXIO) || (errno == ENOENT)) {
 		if (flags & 1)
 		    goto nopub;
 		printf(_("No ARP entry for %s\n"), host);
 		return (-1);
 	    }
-	    perror("SIOCDARP(priv)");
+	    perror("SIOCDARP(nopub)");
 	    return (-1);
-	}
+	} else
+	  deleted = 1;
     }
-    if ((flags & 1) && (err)) {
+    if (!deleted && (flags & 1)) {
       nopub:
 	req.arp_flags |= ATF_PUBL;
 	if (opt_v)
 	    fprintf(stderr, "arp: SIOCDARP(pub)\n");
 	if (ioctl(sockfd, SIOCDARP, &req) < 0) {
-	    if (errno == ENXIO) {
+	    if ((errno == ENXIO) || (errno == ENOENT)) {
 		printf(_("No ARP entry for %s\n"), host);
 		return (-1);
 	    }
