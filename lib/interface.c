@@ -7,7 +7,7 @@
    8/2000  Andi Kleen make the list operations a bit more efficient.
    People are crazy enough to use thousands of aliases now.
 
-   $Id: interface.c,v 1.23 2002/03/05 00:47:36 ecki Exp $
+   $Id: interface.c,v 1.24 2002/06/14 01:33:50 ecki Exp $
  */
 
 #include "config.h"
@@ -210,16 +210,19 @@ char *get_name(char *name, char *p)
 	if (isspace(*p))
 	    break;
 	if (*p == ':') {	/* could be an alias */
-	    char *dot = p, *dotname = name;
-	    *name++ = *p++;
-	    while (isdigit(*p))
-		*name++ = *p++;
-	    if (*p != ':') {	/* it wasn't, backup */
-		p = dot;
-		name = dotname;
+		char *dot = p++;
+ 		while (*p && isdigit(*p)) p++;
+		if (*p == ':') {
+			/* Yes it is, backup and copy it. */
+			p = dot;
+			*name++ = *p++;
+			while (*p && isdigit(*p)) {
+				*name++ = *p++;
+			}
+		} else {
+			/* No, it isn't */
+			p = dot;
 	    }
-	    if (*p == '\0')
-		return NULL;
 	    p++;
 	    break;
 	}
