@@ -163,15 +163,15 @@ static int INET_setroute(int action, int options, char **args)
 	    args++;
 	    continue;
 	}
-	if (!strcmp(*args, "mss")) {
+	if (!strcmp(*args, "mss") || !strcmp(*args,"mtu")) {
 	    args++;
 	    rt.rt_flags |= RTF_MSS;
 	    if (!*args)
 		return (usage());
 	    rt.rt_mss = atoi(*args);
 	    args++;
-	    if (rt.rt_mss < 64 || rt.rt_mss > 32768) {
-		fprintf(stderr, _("route: Invalid MSS.\n"));
+	    if (rt.rt_mss < 64 || rt.rt_mss > 65536) {
+		fprintf(stderr, _("route: Invalid MSS/MTU.\n"));
 		return (E_OPTERR);
 	    }
 	    continue;
