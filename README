@@ -32,32 +32,7 @@ Contents:
                           Notes
                           -----
 
-This is net-tools 1.55.  Since 1.54, various bugs have been fixed.
-
-Notable changes since 1.53 include:
-
- - Jiri Pavlovsky supplied a Czech translation
-
-Notable changes since 1.52 include:
-
- - a bunch of buffer overrun vulnerabilities are fixed (thanks to 
-   David Wagner)
- - Meelis Roos contributed an Estonian translation
- - netstat recognizes ESP and GRE protocols, courtesy John D. Hardin.
-
-Notable changes since 1.51 include:
-
- - Jean-Michel Vansteene updated the French translation.
- - Dag Brattli contributed support for IrDA
-
-Notable changes since 1.50 include:
-
- - Tuan Hoang added support to netstat for printing multicast group 
-   information (option --groups)
- - Jan Kratochvil added support to netstat for displaying details of
-   the process owning a socket (option --programs)
- - Steve Whitehouse contributed support for DECnet
- - Ralf Bächle provided a translation to German
+This is net-tools 1.56.
 
 You need kernel 2.0 or later to use these programs.  These programs
 should compile cleanly with both glibc (version 2.0 or 2.1) and libc5,
@@ -66,7 +41,8 @@ though support for libc5 is not well tested.
 The NLS support was changed from catgets to GNU gettext by Arnaldo
 Carvalho de Melo <acme@conectiva.com.br> in June, 1998, to make the
 source more readable. Translations to brazilian portuguese (pt_BR),
-German (de) and French (fr) are available and others are welcome!
+German (de), Estonian (ee), Czech (cz) and French (fr) are available.
+Others are welcome!
 
 route/netstat -r do not yet support different address families
 cleanly.  IPX/DDP/AX25 people, please feel free to add the code.

@@ -9,6 +9,12 @@ rarp \- manipulate the system RARP table
 .B "rarp [-v] -d hostname ..."
 .br
 .B "rarp [-v] [-t type] -s hostname hw_addr"
+.SH NOTE
+.P
+This program is obsolete.  From version 2.3, the Linux kernel 
+no longer contains RARP support.  For a replacement RARP daemon, see
+.I
+ftp://ftp.dementia.org/pub/net-tools
 .SH DESCRIPTION
 .B Rarp
 manipulates the kernel's RARP table in various ways.  The primary options
