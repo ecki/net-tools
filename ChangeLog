@@ -1,7 +1,11 @@
 Sun Jan 25 13:00:00 1998  Philip Blundell  <Philip.Blundell@pobox.com>
 
+	* lib/net-string.c (str_in_buff): Avoid compiler warning.
+
 	* lib/inet6_gr.c, lib/inet_gr.c: Don't display inactive routes
 	(ie those without RTF_UP).
+
+	* lib/Makefile: Add support for Rose, FDDI and Ash.
 
 	* rarp.c: Add support for /etc/ethers.  Patch from haardt@gmd.de
  	(Michael Haardt).
@@ -16,6 +20,9 @@ Sun Jan 25 13:00:00 1998  Philip Blundell  <Philip.Blundell@pobox.com>
  	interfaces to display; use SIOCGIFCONF with a null buffer
  	instead.
 
+	* ifconfig.c: Don't assume ifr_qlen is defined if SIOCSIFTXQLEN
+	is.
+	
 Tue Sep 23 20:58:27 1997  Philip Blundell  <Philip.Blundell@pobox.com>
 
 	* ifconfig.c (if_getstats): use _PATH_PROCNET_DEV rather than

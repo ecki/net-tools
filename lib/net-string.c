@@ -75,7 +75,9 @@ char *str_in_buff (char *buff, int len, char *string)
 	buff[len] = '\0';
       }
     else
-      strcpy (buff, string);
+      {
+	strcpy (buff, string);
+      }
   else
     strcpy (buff, "");
 

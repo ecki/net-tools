@@ -58,8 +58,8 @@ bool 'INET (TCP/IP) protocol family' HAVE_AFINET y
 bool 'INET6 (IPv6) protocol family' HAVE_AFINET6 n
 bool 'Novell IPX/SPX protocol family' HAVE_AFIPX y
 bool 'Appletalk DDP protocol family' HAVE_AFATALK y
-bool 'AX25 (Packet Radio) protocol family' HAVE_AFAX25 y
-bool 'NET/ROM (Packet Radio) protocol family' HAVE_AFNETROM y
+bool 'AX25 (packet radio) protocol family' HAVE_AFAX25 y
+bool 'NET/ROM (packet radio) protocol family' HAVE_AFNETROM y
 bool 'Rose (packet radio) protocol family' HAVE_AFROSE n
 *
 *
@@ -71,11 +71,10 @@ bool 'SLIP (serial line) support' HAVE_HWSLIP y
 bool 'PPP (serial line) support' HAVE_HWPPP y
 bool 'IPIP Tunnel support' HAVE_HWTUNNEL y
 bool 'Token ring (generic) support' HAVE_HWTR y
-bool 'AX25 (Packet Radio) support' HAVE_HWAX25 y
-bool 'NET/ROM (Packet Radio) support' HAVE_HWNETROM y
-bool 'DLCI/FRAD (Frame Relay) support' HAVE_HWFR y
+bool 'AX25 (packet radio) support' HAVE_HWAX25 y
+bool 'Rose (packet radio) support' HAVE_HWROSE n
+bool 'NET/ROM (packet radio) support' HAVE_HWNETROM y
+bool 'DLCI/FRAD (frame relay) support' HAVE_HWFR y
 bool 'SIT (IPv6-in-IPv4) support' HAVE_HWSIT n
 bool 'FDDI (generic) support' HAVE_HWFDDI n
-bool 'Rose (packet radio) support' HAVE_HWROSE n
-bool 'Ash support' HAVE_HWASH y
-
+bool 'Ash hardware support' HAVE_HWASH n

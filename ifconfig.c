@@ -78,6 +78,9 @@ struct in6_ifreq {
 #ifndef SIOCSIFTXQLEN /* 2.1.77+ option */
 #define SIOCGIFTXQLEN	0x8942		/* Get the tx queue length	*/
 #define SIOCSIFTXQLEN	0x8943		/* Set the tx queue length 	*/
+#endif
+
+#ifndef ifr_qlen
 #define ifr_qlen	ifr_ifru.ifru_ivalue	/* Queue length 	*/
 #endif
 
