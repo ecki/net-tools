@@ -33,6 +33,7 @@ int sockets_open(int family)
     }
     for (aft = aftypes; *aft; aft++) {
 	struct aftype *af = *aft;
+	int type = SOCK_DGRAM;
 	if (af->af == AF_UNSPEC)
 	    continue;
 	if (family && family != af->af)
@@ -46,7 +47,11 @@ int sockets_open(int family)
 	    if (access(af->flag_file, R_OK))
 		continue;
 	}
-	af->fd = socket(af->af, SOCK_DGRAM, 0);
+#if HAVE_AFNETROM
+	if (af->af == AF_NETROM)
+	    type = SOCK_SEQPACKET;
+#endif
+	af->fd = socket(af->af, type, 0);
 	if (af->fd >= 0)
 	  sfd = af->fd;
     }
