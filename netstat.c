@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.32 2000/02/20 17:50:01 philip Exp $
+ * Version:     $Id: netstat.c,v 1.33 2000/03/19 12:36:39 philip Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -229,6 +229,9 @@ static char prg_cache_loaded = 0;
 #define PRG_INODE	 "inode"
 #define PRG_SOCKET_PFX    "socket:["
 #define PRG_SOCKET_PFXl (strlen(PRG_SOCKET_PFX))
+#define PRG_SOCKET_PFX2   "[0000]:"
+#define PRG_SOCKET_PFX2l  (strlen(PRG_SOCKET_PFX2))
+
 
 #ifndef LINE_MAX
 #define LINE_MAX 4096
@@ -289,9 +292,52 @@ static void prg_cache_clear(void)
     prg_cache_loaded=0;
 }
 
+static void extract_type_1_socket_inode(const char lname[], long * inode_p) {
+
+    /* If lname is of the form "socket:[12345]", extract the "12345"
+       as *inode_p.  Otherwise, return -1 as *inode_p.
+       */
+
+    if (strlen(lname) < PRG_SOCKET_PFXl+3) *inode_p = -1;
+    else if (memcmp(lname, PRG_SOCKET_PFX, PRG_SOCKET_PFXl)) *inode_p = -1;
+    else if (lname[strlen(lname)-1] != ']') *inode_p = -1;
+    else {
+        char inode_str[strlen(lname + 1)];  /* e.g. "12345" */
+        const int inode_str_len = strlen(lname) - PRG_SOCKET_PFXl - 1;
+        char *serr;
+
+        strncpy(inode_str, lname+PRG_SOCKET_PFXl, inode_str_len);
+        inode_str[inode_str_len] = '\0';
+        *inode_p = strtol(inode_str,&serr,0);
+        if (!serr || *serr || *inode_p < 0 || *inode_p >= INT_MAX) 
+            *inode_p = -1;
+    }
+}
+
+
+
+static void extract_type_2_socket_inode(const char lname[], long * inode_p) {
+
+    /* If lname is of the form "[0000]:12345", extract the "12345"
+       as *inode_p.  Otherwise, return -1 as *inode_p.
+       */
+
+    if (strlen(lname) < PRG_SOCKET_PFX2l+1) *inode_p = -1;
+    else if (memcmp(lname, PRG_SOCKET_PFX2, PRG_SOCKET_PFX2l)) *inode_p = -1;
+    else {
+        char *serr;
+
+        *inode_p=strtol(lname + PRG_SOCKET_PFX2l,&serr,0);
+        if (!serr || *serr || *inode_p < 0 || *inode_p >= INT_MAX) 
+            *inode_p = -1;
+    }
+}
+
+
+
 static void prg_cache_load(void)
 {
-    char line[LINE_MAX],*serr,eacces=0;
+    char line[LINE_MAX],eacces=0;
     int procfdlen,fd,cmdllen,lnamelen;
     char lname[30],cmdlbuf[512],finbuf[PROGNAME_WIDTH];
     long inode;
@@ -334,16 +380,14 @@ static void prg_cache_load(void)
 	    memcpy(line + procfdlen - PATH_FD_SUFFl, PATH_FD_SUFF "/",
 		   PATH_FD_SUFFl+1);
 	    strcpy(line + procfdlen + 1, direfd->d_name);
-	    lnamelen=readlink(line,lname,sizeof(lname));
-	    if (lnamelen < strlen(PRG_SOCKET_PFX+2)) 
-		continue;
-	    if (memcmp(lname, PRG_SOCKET_PFX, PRG_SOCKET_PFXl)
-		|| lname[lnamelen-1]!=']') 
-		continue;
-	    lname[lnamelen-1]='\0';
-	    inode = strtol(lname+PRG_SOCKET_PFXl,&serr,0);
-	    if (!serr || *serr || inode < 0 || inode >= INT_MAX) 
-		continue;
+	    lnamelen=readlink(line,lname,sizeof(lname)-1);
+            lname[lnamelen] = '\0';  /*make it a null-terminated string*/
+
+            extract_type_1_socket_inode(lname, &inode);
+
+            if (inode < 0) extract_type_2_socket_inode(lname, &inode);
+
+            if (inode < 0) continue;
 
 	    if (!cmdlp) {
 		if (procfdlen - PATH_FD_SUFFl + PATH_CMDLINEl >= 
