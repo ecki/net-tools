@@ -7,7 +7,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system. (net-tools, net-drivers)
  *
- * Version:     $Id: getroute.c,v 1.4 1998/11/17 15:16:42 freitag Exp $
+ * Version:     $Id: getroute.c,v 1.5 1998/11/19 13:01:57 philip Exp $
  *
  * Author:      Bernd 'eckes' Eckenfels <net-tools@lina.inka.de>
  *              Copyright 1999 Bernd Eckenfels, Germany
@@ -36,6 +36,7 @@
 #include "version.h"
 #include "config.h"
 #include "intl.h"
+#include "util.h"
 
 extern struct aftype unspec_aftype;
 extern struct aftype unix_aftype;

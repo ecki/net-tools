@@ -1,7 +1,7 @@
 /*
  * lib/loopback.c     This file contains the general hardware types.
  *
- * Version:     $Id: loopback.c,v 1.4 1998/11/17 15:16:54 freitag Exp $
+ * Version:     $Id: loopback.c,v 1.5 1998/11/19 13:02:02 philip Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -29,6 +29,7 @@
 #include "net-support.h"
 #include "pathnames.h"
 #include "intl.h"
+#include "util.h"
 
 /* Display an UNSPEC address. */
 static char *pr_unspec(unsigned char *ptr)

@@ -2,7 +2,7 @@
  * lib/ax25.c This file contains an implementation of the "AX.25"
  *              support functions.
  *
- * Version:     $Id: ax25.c,v 1.7 1998/11/17 15:16:32 freitag Exp $
+ * Version:     $Id: ax25.c,v 1.8 1998/11/19 13:01:54 philip Exp $
  *
  * NOTE:        I will redo this module as soon as I got the libax25.a
  *              library sorted out.  This library contains some useful
@@ -41,6 +41,7 @@
 #include "net-support.h"
 #include "pathnames.h"
 #include "intl.h"
+#include "util.h"
 
 static char AX25_errmsg[128];
 

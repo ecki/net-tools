@@ -4,7 +4,7 @@
  *
  *                      Alan Cox  <Alan.Cox@linux.org>
  *
- *		$Id: ddp.c,v 1.5 1998/11/17 15:16:35 freitag Exp $
+ *		$Id: ddp.c,v 1.6 1998/11/19 13:01:55 philip Exp $
  *
  *              This program is free software; you can redistribute it
  *              and/or  modify it under  the terms of  the GNU General
@@ -29,6 +29,7 @@
 #include "net-support.h"
 #include "pathnames.h"
 #include "intl.h"
+#include "util.h"
 
 /* Display a ddp domain address. */
 static char *ddp_print(unsigned char *ptr)

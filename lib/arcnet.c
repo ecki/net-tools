@@ -2,7 +2,7 @@
  * lib/arcnet.c       This file contains an implementation of the "ARCnet"
  *              support functions for the NET-2 base distribution.
  *
- * Version:     $Id: arcnet.c,v 1.4 1998/11/17 15:16:29 freitag Exp $
+ * Version:     $Id: arcnet.c,v 1.5 1998/11/19 13:01:53 philip Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -29,6 +29,7 @@
 #include "net-support.h"
 #include "pathnames.h"
 #include "intl.h"
+#include "util.h"
 
 extern struct hwtype arcnet_hwtype;
 

@@ -2,7 +2,7 @@
  * lib/ether.c        This file contains an implementation of the "Ethernet"
  *              support functions.
  *
- * Version:     $Id: ether.c,v 1.5 1998/11/17 15:16:37 freitag Exp $
+ * Version:     $Id: ether.c,v 1.6 1998/11/19 13:01:56 philip Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -29,6 +29,7 @@
 #include "net-support.h"
 #include "pathnames.h"
 #include "intl.h"
+#include "util.h"
 
 extern struct hwtype ether_hwtype;
 

@@ -28,6 +28,7 @@
 #include "pathnames.h"
 #include "intl.h"
 #include "net-features.h"
+#include "util.h"
 
 #if HAVE_NEW_ADDRT
 #define mask_in_addr(x) (((struct sockaddr_in *)&((x).rt_genmask))->sin_addr.s_addr)

@@ -2,7 +2,7 @@
  * lib/netrom.c       This file contains an implementation of the "NET/ROM"
  *              support functions for the NET-2 base distribution.
  *
- * Version:     $Id: netrom.c,v 1.6 1998/11/17 15:16:56 freitag Exp $
+ * Version:     $Id: netrom.c,v 1.7 1998/11/19 13:02:03 philip Exp $
  *
  * NOTE:        I will redo this module as soon as I got the libax25.a
  *              library sorted out.  This library contains some useful
@@ -46,6 +46,7 @@
 #include "net-support.h"
 #include "pathnames.h"
 #include "intl.h"
+#include "util.h"
 
 static char netrom_errmsg[128];
 

@@ -35,6 +35,7 @@
 #include "net-support.h"
 #include "pathnames.h"
 #include "intl.h"
+#include "util.h"
 
 #if (IPX_NODE_LEN != 6)
 #error "IPX_NODE_LEN != 6"

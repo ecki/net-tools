@@ -3,7 +3,7 @@
  *              support functions for the net-tools.
  *              (NET-3 base distribution).
  *
- * Version:    $Id: inet.c,v 1.6 1998/11/17 15:16:47 freitag Exp $
+ * Version:    $Id: inet.c,v 1.7 1998/11/19 13:01:58 philip Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -42,6 +42,7 @@
 #include "net-support.h"
 #include "pathnames.h"
 #include "intl.h"
+#include "util.h"
 
 extern int h_errno;		/* some netdb.h versions don't export this */
 
