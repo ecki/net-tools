@@ -101,7 +101,7 @@ endif
 # -------- end of user definitions --------
 
 MAINTAINER = Philip.Blundell@pobox.com
-RELEASE	   = 1.59
+RELEASE	   = 1.60
 
 .EXPORT_ALL_VARIABLES:
 
