@@ -9,7 +9,7 @@ NLSPACKAGE = net-tools
 
 -include ../config.make
 ifeq ($(I18N),1)
-CATALOGS = de.mo fr.mo pt_BR.mo
+CATALOGS = de.mo fr.mo pt_BR.mo et_EE.mo
 else
 CATALOGS =
 endif
