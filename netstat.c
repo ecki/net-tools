@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.40 2000/12/19 01:28:34 ecki Exp $
+ * Version:     $Id: netstat.c,v 1.41 2001/04/01 15:04:43 pb Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -121,7 +121,7 @@ typedef enum {
 #define FEATURE_NETSTAT
 #include "lib/net-features.h"
 
-char *Release = RELEASE, *Version = "netstat 1.39 (2000-05-21)", *Signature = "Fred Baumgarten, Alan Cox, Bernd Eckenfels, Phil Blundell, Tuan Hoang and others";
+char *Release = RELEASE, *Version = "netstat 1.40 (2001-04-01)", *Signature = "Fred Baumgarten, Alan Cox, Bernd Eckenfels, Phil Blundell, Tuan Hoang and others";
 
 
 #define E_READ  -1
@@ -580,6 +580,10 @@ static void igmp_do_one(int lnr, const char *line)
 	    sscanf(mcast_addr, "%08X%08X%08X%08X",
 		   &in6.s6_addr32[0], &in6.s6_addr32[1],
            &in6.s6_addr32[2], &in6.s6_addr32[3]);
+	    in6.s6_addr32[0] = htonl(in6.s6_addr32[0]);
+	    in6.s6_addr32[1] = htonl(in6.s6_addr32[1]);
+	    in6.s6_addr32[2] = htonl(in6.s6_addr32[2]);
+	    in6.s6_addr32[3] = htonl(in6.s6_addr32[3]);
         inet_ntop(AF_INET6, &in6, addr6, sizeof(addr6));
 	    inet6_aftype.input(1, addr6, (struct sockaddr *) &mcastaddr);
 	    mcastaddr.sin6_family = AF_INET6;
