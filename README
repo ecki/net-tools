@@ -47,6 +47,10 @@ a recent 2.1.x kernel, and many devices do not support it yet.
 The documentation is slimmed down.  I think most of it was out of
 date.
 
+Some configuration options require recent 2.1.x kernels.  The defaults should
+be safe for both 2.0 and 2.1.  Some of this code may also have problems with
+glibc 2.0.
+
 
 Phil Blundell
 philb@gnu.ai.mit.edu

@@ -14,6 +14,8 @@
  */
 #include "config.h"
 
+#include <features.h>
+
 #if HAVE_HWFDDI
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -22,7 +24,11 @@
 #error "No FDDI Support in your current Kernelsource Tree."
 #error "Disable HW Type FDDI"
 #endif
+#if __GLIBC__ >= 2
+#include <netinet/if_fddi.h>
+#else
 #include <linux/if_fddi.h>
+#endif
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>

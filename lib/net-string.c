@@ -38,14 +38,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <strings.h>
-#ifndef FREEBSD
-#include <malloc.h>
-#endif
-
-#ifdef xmalloc
-#undef xmalloc
-#endif
-#define xmalloc    malloc
 
 char   *
 strsave(s)
@@ -58,7 +50,7 @@ strsave(s)
 	s = (const char *) "";
     for (p = (char *) s; *p++ != '\0';)
 	continue;
-    n = p = (char *) xmalloc((size_t)
+    n = p = (char *) malloc((size_t)
 			     ((((const char *) p) - s) * sizeof(char)));
     while ((*p++ = *s++) != '\0')
 	continue;
@@ -69,17 +61,17 @@ strsave(s)
 char *str_in_buff (char *buff, int len, char *string)
 {
   if (string)
-    if (strlen (string) >= len) /* does not include \0 */
-      {
-	strncpy (buff, string, len-1);
-	buff[len] = '\0';
-      }
-    else
-      {
+    {
+      if (strlen (string) >= len) /* does not include \0 */
+	{
+	  strncpy (buff, string, len-1);
+	  buff[len] = '\0';
+	}
+      else
 	strcpy (buff, string);
-      }
+    }
   else
-    strcpy (buff, "");
+    buff[0] = '\0';
 
   return (buff);
 }

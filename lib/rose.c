@@ -18,6 +18,7 @@
 #include "config.h"
 
 #if HAVE_AFROSE || HAVE_HWROSE
+#include <features.h>
 #include <sys/types.h>
 #include <sys/ioctl.h>
 #include <sys/socket.h>
@@ -34,6 +35,10 @@
 #include "pathnames.h"
 #define  EXTERN
 #include "net-locale.h"
+
+#if __GLIBC__ >= 2
+#include <netrose/rose.h>
+#endif
 
 static char ROSE_errmsg[128];
 

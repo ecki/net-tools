@@ -1,6 +1,7 @@
 Sun Jan 25 13:00:00 1998  Philip Blundell  <Philip.Blundell@pobox.com>
 
-	* lib/net-string.c (str_in_buff): Avoid compiler warning.
+	* lib/net-string.c (str_in_buff): Avoid compiler warning.  Remove
+ 	BSD-isms.  Tidy up.
 
 	* lib/inet6_gr.c, lib/inet_gr.c: Don't display inactive routes
 	(ie those without RTF_UP).
@@ -9,6 +10,7 @@ Sun Jan 25 13:00:00 1998  Philip Blundell  <Philip.Blundell@pobox.com>
 
 	* rarp.c: Add support for /etc/ethers.  Patch from haardt@gmd.de
  	(Michael Haardt).
+	* lib/pathnames.h: Likewise.
 
 	* config.in, lib/hw.c: Tidy up.  Add support for Rose and FDDI.
 	* lib/fddi.c, lib/rose.c, lib/rose_gr.c: New files, copied from
@@ -22,6 +24,10 @@ Sun Jan 25 13:00:00 1998  Philip Blundell  <Philip.Blundell@pobox.com>
 
 	* ifconfig.c: Don't assume ifr_qlen is defined if SIOCSIFTXQLEN
 	is.
+
+	* lib/fddi.c: Use <netinet/if_fddi.h> not <linux/if_fddi.h> for
+	glibc.
+	* lib/rose.c: Include <netrose/rose.h> for glibc.
 	
 Tue Sep 23 20:58:27 1997  Philip Blundell  <Philip.Blundell@pobox.com>
 
