@@ -206,7 +206,7 @@ static void setfilename(char *name, int what)
 	(void) fclose(fd);
     } else {
 	fprintf(stderr, _("%s: can't open `%s'\n"),
-		program_name, optarg);
+		program_name, name);
 	exit(1);
     }
 }
