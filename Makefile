@@ -130,6 +130,7 @@ update: 	all installbin installdata
 clean:
 		rm -f *.o DEADJOE config.new *~ *.orig lib/*.o
 		@for i in $(SUBDIRS); do (cd $$i && make clean) ; done
+		@cd po && make clean
 
 cleanconfig:
 		rm -f config.h
