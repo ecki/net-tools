@@ -39,7 +39,7 @@ netstat \- Display network connections, routing tables, interface statistics, ma
 .PP
 
 .B netstat
-.RB [ \-veenac ]
+.RB [ \-veenpac ]
 .RB { \-\-interfaces | \-i }
 .RI [ iface ]
 
@@ -77,7 +77,9 @@ you get some additional informations (userid). With the
 switch you can make netstat complain about known address families which are
 not supported by the kernel. The
 .B -o
-option displays some additional information on networking timers. 
+option displays some additional information on networking timers. Enabling the
+.B -p
+will show you the process PID and name of the program holding the socket.
 .B -a
 print all sockets, including the listening server sockets. The address
 family
@@ -142,6 +144,13 @@ usefull informations about unconfigured address families.
 .SS "\-n, \-\-numeric"
 shows numerical addresses instead of trying to determine symbolic host, port
 or user names.
+
+.SS "\-p, \-\-programs"
+displays process name and PID of the owner of each socket it dumps. You
+have to be the owner of such process to have all it's sockets matched to it
+or generally
+.B root
+user will see all the necessary information in place.
 
 .SS "\-A, \-\-af \fIfamily\fI"
 use a different method to set the address families.
@@ -260,6 +269,16 @@ The state of the socket is unknown.
 .SS "User"
 The name or the UID of the owner of the socket.
 
+.SS "PID/Program name"
+Slash-separated pair of the PID and process name of the program holding
+this socket. Option
+.B -p
+enables display of this column. You will also need
+.B root
+privileges as you have to have access rights to process to be able to see
+the program's sockets matched up to it. This identification information
+is not yet available for IPX sockets.
+
 .SS "Timer"
 (this needs to be written)
 
@@ -351,6 +370,11 @@ The socket is not connected to another one.
 .I
 UNKNOWN
 This state should never happen.
+
+.SS "PID/Program name"
+PID and process name of the program holding this socket. More info available in
+.B "Active Internet connections"
+section written above.
 
 .SS "Path"
 This displays the path name as which the corresponding processes attached

@@ -28,7 +28,15 @@ Contents:
                           Notes
                           -----
 
-This is net-tools 1.50.  Notable changes since 1.49 include:
+This is net-tools 1.51.  Notable changes since 1.50 include:
+
+ - a compilation problem with 2.0 kernels has been fixed
+ - Tuan Hoang added support to netstat for printing multicast group 
+   information (option --groups)
+ - Jan Kratochvil added support to netstat for displaying details of
+   the process owning a socket (option --programs)
+
+Notable changes since 1.49 include:
 
  - netstat supports a new option `--listening' to show only listening
    sockets.

@@ -67,7 +67,8 @@
 
 
 char *Release = RELEASE,
-     *Version = "@(#) slattach 1.1.91 (12-Feb-95)";
+     *Version = "@(#) slattach 1.1.91 (12-Feb-95)",
+     *Signature = "Fred N. van Kempen et al.";
 
 
 struct {
@@ -541,10 +542,19 @@ usage(void)
 #ifdef SIOCSOUTFILL
 	  "[-o outfill] "
 #endif
-	  "[-c cmd] [-s speed] [-p protocol] tty | -\n";
+	  "[-c cmd] [-s speed] [-p protocol] tty | -\n"
+	  "       slattach -V\n";
 
   fprintf(stderr, usage_msg);
   exit(1);
+}
+
+
+static void 
+version(void)
+{
+    printf("%s\n%s\n%s\n", Release, Version, Signature);
+    exit(E_VERSION);
 }
 
 
@@ -564,7 +574,7 @@ main(int argc, char *argv[])
 
   /* Scan command line for any arguments. */
   opterr = 0;
-  while ((s = getopt(argc, argv, "c:ehlLmnp:qs:vd"
+  while ((s = getopt(argc, argv, "c:ehlLmnp:qs:vdV"
 #ifdef SIOCSKEEPALIVE
 		     "k:"
 #endif
@@ -632,8 +642,13 @@ main(int argc, char *argv[])
 		opt_v = 1 - opt_v;
 		break;
 
+        case 'V':
+		version();
+		/*NOTREACHED*/
+
 	default:
 		usage();
+		/*NOTREACHED*/
   }
   
   activate_init();

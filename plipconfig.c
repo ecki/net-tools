@@ -40,6 +40,9 @@
 #include "config.h"
 #include "intl.h"
 
+#include "net-support.h"
+#include "version.h"
+
 int opt_a = 0;
 int opt_i = 0;
 int opt_v = 0;
@@ -48,10 +51,21 @@ int skfd = -1;
 struct ifreq ifr;
 struct plipconf *plip;
 
+char *Release = RELEASE,
+     *Version = "plipconfig 0.2",
+     *Signature = "John Paul Morrison, Alan Cox et al.";
+
+static void version(void)
+{
+    printf("%s\n%s\n%s\n", Release, Version, Signature);
+    exit(E_VERSION);
+}
+
 void usage(void)
 {
     fprintf(stderr, _("Usage: plipconfig [-a] [-i] [-v] interface\n"));
     fprintf(stderr, _("                  [nibble NN] [trigger NN]\n"));
+    fprintf(stderr, _("       plipconfig -V\n"));
     exit(-1);
 }
 
@@ -77,6 +91,8 @@ int main(int argc, char **argv)
 	    opt_a = 1;
 	if (!strcmp(*argv, "-v"))
 	    opt_v = 1;
+	if (!strcmp(*argv, "-V"))
+	    version();
 	argv++;
 	argc--;
     }

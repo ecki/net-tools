@@ -11,6 +11,8 @@
  */
 
 /* pathnames of the procfs files used by NET. */
+#define _PATH_PROCNET_IGMP		"/proc/net/igmp"
+#define _PATH_PROCNET_IGMP6		"/proc/net/igmp6"
 #define _PATH_PROCNET_TCP		"/proc/net/tcp"
 #define _PATH_PROCNET_TCP6		"/proc/net/tcp6"
 #define _PATH_PROCNET_UDP		"/proc/net/udp"
