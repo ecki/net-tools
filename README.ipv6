@@ -8,11 +8,6 @@ If you use glibc, you should get the latest 2.1 snapshot.  In this
 case you do not need to edit the Makefile or apply any patches.
 Version 2.0 of glibc has no support for IPv6.
 
-Not all the IPv6 functionality is implemented in the kernel.  As of
-2.1.51, the code to delete IPv6 routes is still missing, and these
-operations will fail silently.  The code to delete IPv6 interface
-addresses has been written, but not yet (again, as of 2.1.51) merged
-with the mainstream kernel distribution.
-
 You may find that you are missing files such as <netinet/ip6.h>.  This is
 not a bug in net-tools; you should find some newer include files.
+
