@@ -1,3 +1,8 @@
+1998-04-15  Phil Blundell  <philb@gnu.org>
+
+	* lib/ash.c (pr_ash): Fix typo.
+	(in_ash): Hamming-encode the hops.
+
 Fri Apr 10 22:26:48 1998  Philip Blundell  <Philip.Blundell@pobox.com>
 
 	* ifconfig.c (ife_print): Bracket Appletalk stuff in #if

@@ -39,7 +39,7 @@ pr_ash(unsigned char *ptr)
 
   p[0] = '['; p++;
   while (ptr[i] != 0xc9 && ptr[i] != 0xff && (i < ASH_ALEN))
-	  sprintf (p++, "%01", ptr[i++]);
+	  sprintf (p++, "%1x", ptr[i++]);
   *(p++) = ']';
   *p = 0;
 
@@ -57,6 +57,12 @@ pr_sash(struct sockaddr *sap)
   return pr_ash (sap->sa_data);
 }
 
+static unsigned char hamming[16] = 
+{ 
+  0x15, 0x02, 0x49, 0x5e, 0x64, 0x73, 0x38, 0x2f,
+  0xd0, 0xc7, 0x8c, 0x9b, 0xa1, 0xb6, 0xfd, 0xea 
+};
+
 
 static int
 in_ash(char *bufp, struct sockaddr *sap)
@@ -70,7 +76,7 @@ in_ash(char *bufp, struct sockaddr *sap)
   while (bufp && i < ASH_ALEN) {
     char *next;
     int hop = strtol (bufp, &next, 16);
-    ptr[i++] = hop;
+    ptr[i++] = hamming[hop];
     switch (*next) {
     case ':':
       bufp = next + 1;
