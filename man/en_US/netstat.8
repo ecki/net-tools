@@ -5,12 +5,13 @@
 .\"
 .\" Modified: Bernd.Eckenfels@inka.de
 .\" Modified: Andi Kleen ak@muc.de 
+.\" Modified: Tuan Hoang tuan@optimus.mitre.org 
 .\"
 .\"
-.TH NETSTAT 8 "20 Feb 1999" "net-tools" "Linux Programmer's Manual"
+.TH NETSTAT 8 "25 Feb 1999" "net-tools" "Linux Programmer's Manual"
 
 .SH NAME
-netstat \- Display network connections, routing tables, interface statistics, masquerade connections and netlink messages
+netstat \- Display network connections, routing tables, interface statistics, masquerade connections, netlink messages, and multicast memberships
 
 .SH SYNOPSIS
 
@@ -19,6 +20,7 @@ netstat \- Display network connections, routing tables, interface statistics, ma
 .RB [ \-\-tcp | \-t ]
 .RB [ \-\-udp | \-u ]
 .RB [ \-\-raw | \-w ]
+.RB [ \-\-groups | \-g ]
 .RB [ \-\-unix | \-x ] 
 .RB [ \-\-inet | \-\-ip ]
 .RB [ \-\-ax25 ]
@@ -420,6 +422,9 @@ command.
 
 .I /proc/net/udp
 -- UDP socket information
+
+.I /proc/net/igmp
+-- IGMP multicast information
 
 .I /proc/net/unix
 -- Unix domain socket information
