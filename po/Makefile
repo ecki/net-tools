@@ -9,18 +9,21 @@ NLSPACKAGE = net-tools
 
 CATALOGS = de.mo pt_BR.mo
 
-POTFILES=../arp.c ../hostname.c ../ifconfig.c ../rarp.c \
-	../lib/ax25.c ../lib/activate.c ../lib/af.c \
-	../lib/arcnet.c ../lib/econet.c ../lib/ax25_gr.c \
-	../lib/ddp.c ../lib/ddp_gr.c ../lib/ether.c \
-	../lib/fddi.c ../lib/getroute.c ../lib/hw.c ../lib/inet.c \
-	../lib/inet6.c ../lib/inet6_gr.c ../lib/inet6_sr.c \
-	../lib/inet_gr.c ../lib/inet_sr.c ../lib/ipx.c \
-	../lib/ipx_gr.c ../lib/loopback.c ../lib/masq_info.c \
-	../lib/netrom.c ../lib/netrom_gr.c ../lib/netrom_sr.c \
-	../lib/ppp.c ../lib/ppp_ac.c ../lib/rose.c ../lib/rose_gr.c \
-	../lib/setroute.c ../lib/tr.c ../lib/unix.c ../netstat.c \
-	../route.c ../sockets.c ../statistics.c
+POTFILES=../arp.c ../hostname.c ../ifconfig.c ../netstat.c ../rarp.c \
+	../route.c ../plipconfig.c ../iptunnel.c ../statistics.c \
+	../lib/activate.c ../lib/af.c ../lib/arcnet.c ../lib/ash.c \
+	../lib/ax25.c ../lib/ax25_gr.c ../lib/ddp.c ../lib/ddp_gr.c \
+	../lib/econet.c ../lib/ether.c ../lib/fddi.c ../lib/frame.c \
+	../lib/getargs.c ../lib/getroute.c ../lib/hdlclapb.c ../lib/hippi.c \
+	../lib/hw.c ../lib/inet.c ../lib/inet6.c ../lib/inet6_gr.c \
+	../lib/inet6_sr.c ../lib/inet_gr.c ../lib/inet_sr.c ../lib/ipx.c \
+	../lib/ipx_gr.c ../lib/ipx_sr.c ../lib/loopback.c ../lib/masq_info.c \
+	../lib/nstrcmp.c ../lib/netrom.c ../lib/netrom_gr.c ../lib/netrom_sr.c \
+	../lib/ppp.c ../lib/ppp_ac.c ../lib/proc.c ../lib/rose.c \
+	../lib/rose_gr.c ../lib/setroute.c ../lib/sit.c ../lib/slip.c \
+	../lib/slip_ac.c ../lib/tr.c ../lib/tunnel.c ../lib/unix.c \
+	../lib/util.c ../lib/interface.c ../lib/sockets.c ../lib/util-ank.c \
+	../ipmaddr.c ../slattach.c
 
 all: $(NLSPACKAGE).pot $(CATALOGS)
 
