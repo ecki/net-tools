@@ -1,8 +1,10 @@
-/* Copyright 1997,1999 by Andi Kleen. Subject to the GPL. */
-/* $Id: statistics.c,v 1.11 1999/01/06 12:05:49 freitag Exp $ */ 
-/* 19980630 - i18n - Arnaldo Carvalho de Melo <acme@conectiva.com.br> */
-/* 19981113 - i18n fixes - Arnaldo Carvalho de Melo <acme@conectiva.com.br> */
-/* 19990101 - added net/netstat, -t, -u, -w supprt - Bernd Eckenfels */
+/*
+ * Copyright 1997,1999,2000 Andi Kleen. Subject to the GPL. 
+ * $Id: statistics.c,v 1.12 2000/06/21 23:48:53 ak Exp $
+ * 19980630 - i18n - Arnaldo Carvalho de Melo <acme@conectiva.com.br> 
+ * 19981113 - i18n fixes - Arnaldo Carvalho de Melo <acme@conectiva.com.br> 
+ * 19990101 - added net/netstat, -t, -u, -w supprt - Bernd Eckenfels 
+ */
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -61,54 +63,54 @@ static enum State state;
 struct entry Iptab[] =
 {
     {"Forwarding", N_("Forwarding is %s"), i_forward | I_STATIC},
-    {"DefaultTTL", N_("Default TTL is %d"), number | I_STATIC},
-    {"InReceives", N_("%d total packets received"), number},
-    {"InHdrErrors", N_("%d with invalid headers"), opt_number},
-    {"InAddrErrors", N_("%d with invalid addresses"), opt_number},
-    {"ForwDatagrams", N_("%d forwarded"), number},
-    {"InUnknownProtos", N_("%d with unknown protocol"), opt_number},
-    {"InDiscards", N_("%d incoming packets discarded"), number},
-    {"InDelivers", N_("%d incoming packets delivered"), number},
-    {"OutRequests", N_("%d requests sent out"), number},	/*? */
-    {"OutDiscards", N_("%d outgoing packets dropped"), opt_number},
-    {"OutNoRoutes", N_("%d dropped because of missing route"), opt_number},
-    {"ReasmTimeout", N_("%d fragments dropped after timeout"), opt_number},
-    {"ReasmReqds", N_("%d reassemblies required"), opt_number},	/* ? */
-    {"ReasmOKs", N_("%d packets reassembled ok"), opt_number},
-    {"ReasmFails", N_("%d packet reassembles failed"), opt_number},
-    {"FragOKs", N_("%d fragments received ok"), opt_number},
-    {"FragFails", N_("%d fragments failed"), opt_number},
-    {"FragCreates", N_("%d fragments created"), opt_number}
+    {"DefaultTTL", N_("Default TTL is %u"), number | I_STATIC},
+    {"InReceives", N_("%u total packets received"), number},
+    {"InHdrErrors", N_("%u with invalid headers"), opt_number},
+    {"InAddrErrors", N_("%u with invalid addresses"), opt_number},
+    {"ForwDatagrams", N_("%u forwarded"), number},
+    {"InUnknownProtos", N_("%u with unknown protocol"), opt_number},
+    {"InDiscards", N_("%u incoming packets discarded"), number},
+    {"InDelivers", N_("%u incoming packets delivered"), number},
+    {"OutRequests", N_("%u requests sent out"), number},	/*? */
+    {"OutDiscards", N_("%u outgoing packets dropped"), opt_number},
+    {"OutNoRoutes", N_("%u dropped because of missing route"), opt_number},
+    {"ReasmTimeout", N_("%u fragments dropped after timeout"), opt_number},
+    {"ReasmReqds", N_("%u reassemblies required"), opt_number},	/* ? */
+    {"ReasmOKs", N_("%u packets reassembled ok"), opt_number},
+    {"ReasmFails", N_("%u packet reassembles failed"), opt_number},
+    {"FragOKs", N_("%u fragments received ok"), opt_number},
+    {"FragFails", N_("%u fragments failed"), opt_number},
+    {"FragCreates", N_("%u fragments created"), opt_number}
 };
 
 struct entry Icmptab[] =
 {
-    {"InMsgs", N_("%d ICMP messages received"), number},
-    {"InErrors", N_("%d input ICMP message failed."), number},
-    {"InDestUnreachs", N_("destination unreachable: %d"), i_inp_icmp | I_TITLE},
-    {"InTimeExcds", N_("timeout in transit: %d"), i_inp_icmp | I_TITLE},
-    {"InParmProbs", N_("wrong parameters: %d"), i_inp_icmp | I_TITLE},	/*? */
-    {"InSrcQuenchs", N_("source quenchs: %d"), i_inp_icmp | I_TITLE},
-    {"InRedirects", N_("redirects: %d"), i_inp_icmp | I_TITLE},
-    {"InEchos", N_("echo requests: %d"), i_inp_icmp | I_TITLE},
-    {"InEchoReps", N_("echo replies: %d"), i_inp_icmp | I_TITLE},
-    {"InTimestamps", N_("timestamp request: %d"), i_inp_icmp | I_TITLE},
-    {"InTimestampReps", N_("timestamp reply: %d"), i_inp_icmp | I_TITLE},
-    {"InAddrMasks", N_("address mask request: %d"), i_inp_icmp | I_TITLE},	/*? */
-    {"InAddrMaskReps", N_("address mask replies"), i_inp_icmp | I_TITLE},	/*? */
-    {"OutMsgs", N_("%d ICMP messages sent"), number},
-    {"OutErrors", N_("%d ICMP messages failed"), number},
-    {"OutDestUnreachs", N_("destination unreachable: %d"), i_outp_icmp | I_TITLE},
-    {"OutTimeExcds", N_("time exceeded: %d"), i_outp_icmp | I_TITLE},
-    {"OutParmProbs", N_("wrong parameters: %d"), i_outp_icmp | I_TITLE},	/*? */
-    {"OutSrcQuenchs", N_("source quench: %d"), i_outp_icmp | I_TITLE},
-    {"OutRedirects", N_("redirect: %d"), i_outp_icmp | I_TITLE},
-    {"OutEchos", N_("echo request: %d"), i_outp_icmp | I_TITLE},
-    {"OutEchoReps", N_("echo replies: %d"), i_outp_icmp | I_TITLE},
-    {"OutTimestamps", N_("timestamp requests: %d"), i_outp_icmp | I_TITLE},
-    {"OutTimestampReps", N_("timestamp replies: %d"), i_outp_icmp | I_TITLE},
-    {"OutAddrMasks", N_("address mask requests: %d"), i_outp_icmp | I_TITLE},
-    {"OutAddrMaskReps", N_("address mask replies: %d"), i_outp_icmp | I_TITLE},
+    {"InMsgs", N_("%u ICMP messages received"), number},
+    {"InErrors", N_("%u input ICMP message failed."), number},
+    {"InDestUnreachs", N_("destination unreachable: %u"), i_inp_icmp | I_TITLE},
+    {"InTimeExcds", N_("timeout in transit: %u"), i_inp_icmp | I_TITLE},
+    {"InParmProbs", N_("wrong parameters: %u"), i_inp_icmp | I_TITLE},	/*? */
+    {"InSrcQuenchs", N_("source quenches: %u"), i_inp_icmp | I_TITLE},
+    {"InRedirects", N_("redirects: %u"), i_inp_icmp | I_TITLE},
+    {"InEchos", N_("echo requests: %u"), i_inp_icmp | I_TITLE},
+    {"InEchoReps", N_("echo replies: %u"), i_inp_icmp | I_TITLE},
+    {"InTimestamps", N_("timestamp request: %u"), i_inp_icmp | I_TITLE},
+    {"InTimestampReps", N_("timestamp reply: %u"), i_inp_icmp | I_TITLE},
+    {"InAddrMasks", N_("address mask request: %u"), i_inp_icmp | I_TITLE},	/*? */
+    {"InAddrMaskReps", N_("address mask replies: %u"), i_inp_icmp | I_TITLE},	/*? */
+    {"OutMsgs", N_("%u ICMP messages sent"), number},
+    {"OutErrors", N_("%u ICMP messages failed"), number},
+    {"OutDestUnreachs", N_("destination unreachable: %u"), i_outp_icmp | I_TITLE},
+    {"OutTimeExcds", N_("time exceeded: %u"), i_outp_icmp | I_TITLE},
+    {"OutParmProbs", N_("wrong parameters: %u"), i_outp_icmp | I_TITLE},	/*? */
+    {"OutSrcQuenchs", N_("source quench: %u"), i_outp_icmp | I_TITLE},
+    {"OutRedirects", N_("redirect: %u"), i_outp_icmp | I_TITLE},
+    {"OutEchos", N_("echo request: %u"), i_outp_icmp | I_TITLE},
+    {"OutEchoReps", N_("echo replies: %u"), i_outp_icmp | I_TITLE},
+    {"OutTimestamps", N_("timestamp requests: %u"), i_outp_icmp | I_TITLE},
+    {"OutTimestampReps", N_("timestamp replies: %u"), i_outp_icmp | I_TITLE},
+    {"OutAddrMasks", N_("address mask requests: %u"), i_outp_icmp | I_TITLE},
+    {"OutAddrMaskReps", N_("address mask replies: %u"), i_outp_icmp | I_TITLE},
 };
 
 struct entry Tcptab[] =
@@ -117,44 +119,72 @@ struct entry Tcptab[] =
     {"RtoMin", "", number},
     {"RtoMax", "", number},
     {"MaxConn", "", number},
-    {"ActiveOpens", N_("%d active connections openings"), number},
-    {"PassiveOpens", N_("%d passive connection openings"), number},
-    {"AttemptFails", N_("%d failed connection attempts"), number},
-    {"EstabResets", N_("%d connection resets received"), number},
-    {"CurrEstab", N_("%d connections established"), number},
-    {"InSegs", N_("%d segments received"), number},
-    {"OutSegs", N_("%d segments send out"), number},
-    {"RetransSegs", N_("%d segments retransmited"), number},
-    {"InErrs", N_("%d bad segments received."), number},
-    {"OutRsts", N_("%d resets sent"), number},
+    {"ActiveOpens", N_("%u active connections openings"), number},
+    {"PassiveOpens", N_("%u passive connection openings"), number},
+    {"AttemptFails", N_("%u failed connection attempts"), number},
+    {"EstabResets", N_("%u connection resets received"), number},
+    {"CurrEstab", N_("%u connections established"), number},
+    {"InSegs", N_("%u segments received"), number},
+    {"OutSegs", N_("%u segments send out"), number},
+    {"RetransSegs", N_("%u segments retransmited"), number},
+    {"InErrs", N_("%u bad segments received."), number},
+    {"OutRsts", N_("%u resets sent"), number},
 };
 
 struct entry Udptab[] =
 {
-    {"InDatagrams", N_("%d packets received"), number},
-    {"NoPorts", N_("%d packets to unknown port received."), number},
-    {"InErrors", N_("%d packet receive errors"), number},
-    {"OutDatagrams", N_("%d packets sent"), number},
+    {"InDatagrams", N_("%u packets received"), number},
+    {"NoPorts", N_("%u packets to unknown port received."), number},
+    {"InErrors", N_("%u packet receive errors"), number},
+    {"OutDatagrams", N_("%u packets sent"), number},
 };
 
 struct entry Tcpexttab[] =
 {
-    {"SyncookiesSent", N_("%d SYN cookies sent"), opt_number},
-    {"SyncookiesRecv", N_("%d SYN cookies received"), opt_number},
-    {"SyncookiesFailed", N_("%d invalid SYN cookies received"), opt_number},
+    {"SyncookiesSent", N_("%u SYN cookies sent"), opt_number},
+    {"SyncookiesRecv", N_("%u SYN cookies received"), opt_number},
+    {"SyncookiesFailed", N_("%u invalid SYN cookies received"), opt_number},
 
-    { "EmbryonicRsts", N_("%d resets received for embryonic SYN_RECV sockets"),
+    { "EmbryonicRsts", N_("%u resets received for embryonic SYN_RECV sockets"),
       opt_number },  
-    { "PruneCalled", N_("%d packets pruned from receive queue because of socket"
+    { "PruneCalled", N_("%u packets pruned from receive queue because of socket"
 			" buffer overrun"), opt_number },  
     /* obsolete: 2.2.0 doesn't do that anymore */
-    { "RcvPruned", N_("%d packets pruned from out-of-order queue"), opt_number },
-    { "OfoPruned", N_("%d packets dropped from out-of-order queue because of"
+    { "RcvPruned", N_("%u packets pruned from receive queue"), opt_number },
+    { "OfoPruned", N_("%u packets dropped from out-of-order queue because of"
 		      " socket buffer overrun"), opt_number }, 
-    { "OutOfWindowIcmps", N_("%d ICMP packets dropped because they were "
+    { "OutOfWindowIcmps", N_("%u ICMP packets dropped because they were "
 			     "out-of-window"), opt_number }, 
-    { "LockDroppedIcmps", N_("%d ICMP packets dropped because socket was locked"),
-      opt_number }, 
+    { "LockDroppedIcmps", N_("%u ICMP packets dropped because"
+			     " socket was locked"), opt_number },
+    { "TW", N_("%u TCP sockets finished time wait in fast timer"), opt_number },
+    { "TWRecycled", N_("%u time wait sockets recycled by time stamp"), opt_number }, 
+    { "TWKilled", N_("%u TCP sockets finished time wait in slow timer"), opt_number },
+    { "PAWSPassive", N_("%u passive connections rejected because of"
+			" time stamp"), opt_number },
+    { "PAWSActive", N_("%u active connections rejected because of "
+		       "time stamp"), opt_number },
+    { "PAWSEstab", N_("%u packets rejects in established connections because of"
+		      " timestamp"), opt_number },
+    { "DelayedACKs", N_("%u delayed acks sent"), opt_number },
+    { "DelayedACKLocked", N_("%u delayed acks further delayed because of"
+			     " locked socket"), opt_number },
+    { "DelayedACKLost", N_("Quick ack mode was activated %u times"), opt_number },
+    { "ListenOverflows", N_("%u times the listen queue of a socket overflowed"),
+      opt_number },
+    { "ListenDrops", N_("%u SYNs to LISTEN sockets ignored"), opt_number },
+    { "TCPPrequeued", N_("%u packets directly queued to recvmsg prequeue."), 
+      opt_number },
+    { "TCPDirectCopyFromBacklog", N_("%u packets directly received"
+				     " from backlog"), opt_number },
+    { "TCPDirectCopyFromPrequeue", N_("%u packets directly received"
+				      " from prequeue"), opt_number },
+    { "TCPPrequeueDropped", N_("%u packets dropped from prequeue"), opt_number },
+    { "TCPHPHits", N_("%u packets header predicted"), number },
+    { "TCPHPHitsToUser", N_("%u packets header predicted and "
+			    "directly queued to user"), opt_number },
+    { "SockMallocOOM", N_("Ran %u times out of system memory during " 
+			  "packet sending"), opt_number }, 
 };
 
 struct tabtab {
