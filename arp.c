@@ -8,7 +8,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: arp.c,v 1.15 1999/11/21 00:40:27 ecki Exp $
+ * Version:     $Id: arp.c,v 1.16 1999/12/06 16:57:27 freitag Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -404,6 +404,14 @@ static int arp_file(char *name)
 		    linenr, name);
 	    continue;
 	}
+	if (strchr (args[0], ':') != NULL) {
+	    /* We have a correct ethers file, switch hw adress and hostname
+	       for arp */
+	    char *cp;
+	    cp = args[1];
+	    args[1] = args[0];
+	    args[0] = cp;
+	}
 	if (arp_set(args) != 0)
 	    fprintf(stderr, _("arp: cannot set entry on line %u of etherfile %s !\n"),
 		    linenr, name);
@@ -604,7 +612,7 @@ static void usage(void)
 {
     fprintf(stderr, _("Usage:\n  arp [-vn]  [<HW>] [-i <if>] [-a] [<hostname>]             <-Display ARP cache\n"));
     fprintf(stderr, _("  arp [-v]          [-i <if>] -d  <hostname> [pub][nopub]    <-Delete ARP entry\n"));
-    fprintf(stderr, _("  arp [-vnD] [<HW>] [-i <if>] -f  <filename>              <-Add entry from file\n"));
+    fprintf(stderr, _("  arp [-vnD] [<HW>] [-i <if>] -f  [<filename>]              <-Add entry from file\n"));
     fprintf(stderr, _("  arp [-v]   [<HW>] [-i <if>] -s  <hostname> <hwaddr> [temp][nopub] <-Add entry\n"));
     fprintf(stderr, _("  arp [-v]   [<HW>] [-i <if>] -s  <hostname> <hwaddr> [netmask <nm>] pub  <-''-\n"));
     fprintf(stderr, _("  arp [-v]   [<HW>] [-i <if>] -Ds <hostname> <if> [netmask <nm>] pub      <-''-\n\n"));
@@ -617,7 +625,7 @@ static void usage(void)
     fprintf(stderr, _("        -i, --device             specify network interface (e.g. eth0)\n"));
     fprintf(stderr, _("        -D, --use-device         read <hwaddr> from given device\n"));
     fprintf(stderr, _("        -A, -p, --protocol       specify protocol family\n"));
-    fprintf(stderr, _("        -f, --file               read new entries from file\n\n"));
+    fprintf(stderr, _("        -f, --file               read new entries from file or from /etc/ethers\n\n"));
 
     fprintf(stderr, _("  <HW>=Use '-H <hw>' to specify hardware address type. Default: %s\n"), DFLT_HW);
     fprintf(stderr, _("  List of possible hardware types (which support ARP):\n"));
@@ -755,7 +763,7 @@ int main(int argc, char **argv)
 	break;
 
     case 2:			/* process an EtherFile */
-	what = arp_file(argv[optind]);
+	what = arp_file(argv[optind] ? argv[optind] : "/etc/ethers");
 	break;
 
     case 3:			/* delete an ARP entry from the cache */

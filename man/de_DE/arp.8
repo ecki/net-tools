@@ -42,7 +42,7 @@ arp \- Manipulation des ARP-Caches
 .RB [ \-vnD ]
 .RB [ "\-H Typ" ] 
 .RB [ "-i Schnittstelle" ]
-.B -f Dateiname
+.B -f [Dateiname]
 
 .SH BESCHREIBUNG
 .B Arp
@@ -128,7 +128,12 @@ in den ARP-Cache eingetragen.
 .br
 .B ANMERKUNG:
 Ab der Kernelversion 2.2.0 ist es nicht mehr m\(:oglich ARP-Eintr\(:age f\(:ur
-ganze Teilnetze zu erzeugen.
+ganze Teilnetze zu erzeugen. Statt dessen wird automatisches Proxy ARP
+durchgef\(:uhrt, d.h. wenn eine Route existiert und Forwarding eingeschaltet
+ist wird automatisch ein tempor\(:arer Proxyarpeintrag erzeugt. 
+Siehe auch
+.BR arp (7)
+f\(:ur mehr Details.
 .TP
 .B "\-f Dateiname, \-\-file Dateiname"
 \(:Ahnlich der
@@ -138,7 +143,8 @@ Option, au\(sser, da\(ss diesmal die Adressinformation aus der Datei
 verwendet wird.  Dies kann verwendet werden, wenn ARP-Eintr\(:age f\(:ur
 etliche Rechner erzeugt werden m\(:ussen.  Der Name dieser Datei ist oft
 .IR /etc/ethers , 
-aber dies ist nicht offiziel standardisiert.
+aber dies ist nicht offizieil standardisiert. Wenn kein Dateinamen 
+angeben ist wird /etc/ethers benutzt.
 .sp 1
 Das Format der Datei ist einfach; es enth\(:alt nur ASCII-Textzeilen, die
 aus einem Rechnernamen und einer Hardwareadresse getrennt von einem
@@ -151,6 +157,9 @@ angegeben werden.
 erwartet wird, kann auch eine
 .B "IP-Adresse"
 in Form eines durch Punkte getrennten Dezimalquadrupels angegeben werden.
+.P
+Aus Kompatiblit\(:atsgr\(:unden k\(:onnen Rechnername und die 
+Hardwareadresse auch vertauscht werden.
 .LP 
 Jeder vollst\(:andige Eintrag wird im ARP-Cache mit der
 .B C

@@ -42,7 +42,7 @@ arp \- manipulate the system ARP cache
 .RB [ \-vnD ]
 .RB [ "\-H type" ] 
 .RB [ "-i if" ]
-.B -f filename
+.B -f [filename]
 
 .SH DESCRIPTION
 .B Arp
@@ -129,7 +129,10 @@ cache.
 .br
 .B NOTE:
 As of kernel 2.2.0 it is no longer possible to set an ARP entry for an 
-entire subnet.
+entire subnet. Linux instead does automagic proxy arp when a route
+exists and it is forwarding. See 
+.BR arp (7)
+for details.
 .TP
 .B "\-f filename, \-\-file filename"
 Similar to the
@@ -139,7 +142,8 @@ option, only this time the address info is taken from file
 .  This can be used if ARP entries for a lot of hosts have to be
 set up.  The name of the data file is very often
 .IR /etc/ethers , 
-but this is not official.
+but this is not official. If no filename is specified /etc/ethers
+is used as default.
 .sp 1
 The format of the file is simple; it
 only contains ASCII text lines with a hostname, and a hardware
@@ -152,6 +156,9 @@ In all places where a
 is expected, one can also enter an
 .B "IP address"
 in dotted-decimal notation.
+.P
+As a special case for compatibility the order of the hostname and 
+the hardware address can be exchanged.
 .LP 
 Each complete entry in the ARP cache will be marked with the
 .B C
