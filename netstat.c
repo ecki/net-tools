@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.22 1999/03/03 21:43:06 philip Exp $
+ * Version:     $Id: netstat.c,v 1.23 1999/03/17 13:04:57 philip Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -1139,7 +1139,7 @@ static int unix_info(void)
 #if HAVE_AFAX25
 static int ax25_info(void)
 {
-    FILE *f = fopen(_PATH_PROCNET_AX25, "r");
+    FILE *f;
     char buffer[256], buf[16];
     char *src, *dst, *dev, *p;
     int st, vs, vr, sendq, recvq, ret;

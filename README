@@ -45,7 +45,7 @@ Notable changes since 1.49 include:
  - netstat -s is improved.
  - route/netstat -r display the routing cache correctly.
  - plipconfig and slattach are included
- - ipaddr and iptunnel are included (courtesy of Alexey Kuznetsov)
+ - ipmaddr and iptunnel are included (courtesy of Alexey Kuznetsov)
  - as ever, various bugs have been fixed
 
 Notable changes since 1.48 include:
