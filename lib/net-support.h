@@ -111,10 +111,12 @@ extern int IPX_rinput(int action, int flags, char **argv);
 extern int NETROM_rinput(int action, int flags, char **argv);
 extern int AX25_rinput(int action, int flags, char **argv);
 
-int aftrans_opt(const char *arg);
-void aftrans_def(char *tool, char *argv0, char *dflt);
+extern int aftrans_opt(const char *arg);
+extern void aftrans_def(char *tool, char *argv0, char *dflt);
 
-char *get_sname(int socknumber, char *proto, int numeric);
+extern char *get_sname(int socknumber, char *proto, int numeric);
+
+extern char *safe_strncpy(char *dst, const char *src, size_t size);
 
 extern int flag_unx;
 extern int flag_ipx;

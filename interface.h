@@ -68,6 +68,11 @@ extern int for_all_interfaces(int (*)(struct interface *, void *), void *);
 extern struct interface *lookup_interface(char *name);
 extern int if_readlist(void);
 
+extern int do_if_fetch(struct interface *ife);
+extern int do_if_print(struct interface *ife, void *cookie);
+
+extern void ife_print(struct interface *ptr);
+
 /* Defines for poor glibc2.0 users, the feature check is done at runtime */
 #if !defined(SIOCSIFTXQLEN)
 #define SIOCSIFTXQLEN      0x8943

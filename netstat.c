@@ -7,7 +7,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.10 1998/11/16 10:13:27 philip Exp $
+ * Version:     $Id: netstat.c,v 1.11 1998/11/18 13:46:16 philip Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -1060,16 +1060,16 @@ static int ipx_info(void)
 }
 #endif
 
-static void ife_print(struct interface *ptr)
+void ife_print(struct interface *ptr)
 {
-    printf("%-7.7s ", ptr->name);
+    printf("%-5.5s ", ptr->name);
     printf("%5d %3d ", ptr->mtu, ptr->metric);
     /* If needed, display the interface statistics. */
     if (ptr->statistics_valid) {
-	printf("%6lu %6lu %6lu %6lu ",
+	printf("%8lu %6lu %6lu %6lu ",
 	       ptr->stats.rx_packets, ptr->stats.rx_errors,
 	       ptr->stats.rx_dropped, ptr->stats.rx_fifo_errors);
-	printf("%6lu %6lu %6lu %6lu ",
+	printf("%8lu %6lu %6lu %6lu ",
 	       ptr->stats.tx_packets, ptr->stats.tx_errors,
 	       ptr->stats.tx_dropped, ptr->stats.tx_fifo_errors);
     } else {
@@ -1100,19 +1100,6 @@ static void ife_print(struct interface *ptr)
     printf("\n");
 }
 
-static int do_if_print(struct interface *ife, void *cookie)
-{
-    int *opt_a = (int *) cookie;
-    if (if_fetch(ife->name, ife) < 0) {
-	fprintf(stderr, _("%s: unknown interface.\n"), ife->name);
-	return -1;
-    }
-    if (!(ife->flags & IFF_UP) && !(*opt_a))
-	return 0;
-    ife_print(ife);
-    return 0;
-}
-
 static int iface_info(void)
 {
     if ((skfd = sockets_open(0)) < 0) {
@@ -1120,7 +1107,7 @@ static int iface_info(void)
 	exit(1);
     }
     printf(_("Kernel Interface table\n"));
-    printf(_("Iface     MTU Met  RX-OK RX-ERR RX-DRP RX-OVR  TX-OK TX-ERR TX-DRP TX-OVR Flags\n"));
+    printf(_("Iface   MTU Met    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR Flg\n"));
 
     if (for_all_interfaces(do_if_print, &flag_all) < 0) {
 	perror(_("missing interface information"));

@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.19 1998/11/17 15:16:14 freitag Exp $
+ * Version:     $Id: ifconfig.c,v 1.20 1998/11/18 13:46:11 philip Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -115,7 +115,7 @@ int opt_v = 0;			/* debugging output flag        */
 int addr_family = 0;		/* currently selected AF        */
 
 
-static void ife_print(struct interface *ptr)
+void ife_print(struct interface *ptr)
 {
     struct aftype *ap;
     struct hwtype *hw;
@@ -353,36 +353,6 @@ static void ife_print(struct interface *ptr)
 	printf("\n");
     }
     printf("\n");
-}
-
-static int do_if_fetch(struct interface *ife)
-{ 
-    if (if_fetch(ife) < 0) {
-	char *errmsg; 
-	if (errno == ENODEV) { 
-	    /* Give better error message for this case. */ 
-	    errmsg = _("Device not found"); 
-	} else { 
-	    errmsg = strerror(errno); 
-	}
-  	fprintf(stderr, _("%s: error fetching interface information: %s\n"),
-		ife->name, errmsg);
-	return -1;
-    }
-    return 0; 
-}
-
-static int do_if_print(struct interface *ife, void *cookie)
-{
-    int *opt_a = (int *) cookie;
-    int res; 
-
-    res = do_if_fetch(ife); 
-    if (res >= 0) {   
-	if ((ife->flags & IFF_UP) || *opt_a)
-	    ife_print(ife);
-    }
-    return res;
 }
 
 static int if_print(char *ifname)

@@ -4,7 +4,7 @@
    10/1998 partly rewriten by Andi Kleen to support an interface list.   
    I don't claim that the list operations are efficient @).  
 
-   $Id: interface.c,v 1.12 1998/11/18 10:31:58 philip Exp $
+   $Id: interface.c,v 1.13 1998/11/18 13:46:12 philip Exp $
  */
 
 #include "config.h"
@@ -474,4 +474,34 @@ int if_fetch(struct interface *ife)
 #endif
 
     return 0;
+}
+
+int do_if_fetch(struct interface *ife)
+{ 
+    if (if_fetch(ife) < 0) {
+	char *errmsg; 
+	if (errno == ENODEV) { 
+	    /* Give better error message for this case. */ 
+	    errmsg = _("Device not found"); 
+	} else { 
+	    errmsg = strerror(errno); 
+	}
+  	fprintf(stderr, _("%s: error fetching interface information: %s\n"),
+		ife->name, errmsg);
+	return -1;
+    }
+    return 0; 
+}
+
+int do_if_print(struct interface *ife, void *cookie)
+{
+    int *opt_a = (int *) cookie;
+    int res; 
+
+    res = do_if_fetch(ife); 
+    if (res >= 0) {   
+	if ((ife->flags & IFF_UP) || *opt_a)
+	    ife_print(ife);
+    }
+    return res;
 }

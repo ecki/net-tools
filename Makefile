@@ -87,7 +87,7 @@ RESLIB = # -L/usr/inet6/lib -linet6
 # -------- end of user definitions --------
 
 MAINTAINER = Philip.Blundell@pobox.com
-RELEASE	   = 981031
+RELEASE	   = 981118
 
 .EXPORT_ALL_VARIABLES:
 
