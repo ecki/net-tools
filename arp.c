@@ -8,7 +8,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: arp.c,v 1.17 2000/03/23 01:14:03 ecki Exp $
+ * Version:     $Id: arp.c,v 1.18 2000/11/06 19:48:49 pb Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -621,7 +621,7 @@ static void usage(void)
     fprintf(stderr, _("        -s, --set                set a new ARP entry\n"));
     fprintf(stderr, _("        -d, --delete             delete a specified entry\n"));
     fprintf(stderr, _("        -v, --verbose            be verbose\n"));
-    fprintf(stderr, _("        -n, --numeric            dont resolve names\n"));
+    fprintf(stderr, _("        -n, --numeric            don't resolve names\n"));
     fprintf(stderr, _("        -i, --device             specify network interface (e.g. eth0)\n"));
     fprintf(stderr, _("        -D, --use-device         read <hwaddr> from given device\n"));
     fprintf(stderr, _("        -A, -p, --protocol       specify protocol family\n"));
