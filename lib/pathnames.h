@@ -30,7 +30,7 @@
 #define _PATH_PROCNET_ARP		"/proc/net/arp"
 #define _PATH_PROCNET_AX25		"/proc/net/ax25"
 #define _PATH_PROCNET_IPX		"/proc/net/ipx"
-#define _PATH_PROCNET_IPX_ROUTE	"/proc/net/ipx_route"
+#define _PATH_PROCNET_IPX_ROUTE		"/proc/net/ipx_route"
 #define _PATH_PROCNET_ATALK		"/proc/net/appletalk"
 #define _PATH_PROCNET_IP_BLK		"/proc/net/ip_block"
 #define _PATH_PROCNET_IP_FWD		"/proc/net/ip_forward"
@@ -42,6 +42,7 @@
 #define _PATH_PROCNET_RARP		"/proc/net/rarp"
 #define _PATH_ETHERS			"/etc/ethers"
 #define _PATH_PROCNET_ROSE_ROUTE	"/proc/net/rose_routes"
+#define _PATH_PROCNET_DEV_MCAST		"/proc/net/dev_mcast"
 
 /* pathname for the netlink device */
 #define _PATH_DEV_ROUTE	"/dev/route"

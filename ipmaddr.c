@@ -25,7 +25,11 @@
 #include <arpa/inet.h>
 #include <string.h>
 
+#include "intl.h"
 #include "utils.h"
+#include "net-support.h"
+#include "version.h"
+#include "pathnames.h"
 
 char filter_dev[16];
 int  filter_family;
@@ -34,12 +38,22 @@ int  filter_family;
 #define NEWADDR		1
 #define DELADDR		2
 
+char *Release = RELEASE,
+     *Version = "ipmaddr 1.0",
+     *Signature = "Alexey Kuznetsov, <kuznet@ms2.inr.ac.ru>";
+
+static void version(void)
+{
+    printf("%s\n%s\n%s\n", Release, Version, Signature);
+    exit(E_VERSION);
+}
+
 static void usage(void) __attribute__((noreturn));
 
 static void usage(void)
 {
-	fprintf(stderr, "Usage: ipmaddr [ add | del ] MULTIADDR dev STRING\n");
-	fprintf(stderr, "       ipmaddr show [ dev STRING ] [ ipv4 | ipv6 | link | all ]\n");
+	fprintf(stderr, _("Usage: ipmaddr [ add | del ] MULTIADDR dev STRING\n"));
+	fprintf(stderr, _("       ipmaddr show [ dev STRING ] [ ipv4 | ipv6 | link | all ]\n"));
 	exit(-1);
 }
 
@@ -117,7 +131,7 @@ void maddr_ins(struct ma_info **lst, struct ma_info *m)
 void read_dev_mcast(struct ma_info **result_p)
 {
 	char buf[256];
-	FILE *fp = fopen("/proc/net/dev_mcast", "r");
+	FILE *fp = fopen(_PATH_PROCNET_DEV_MCAST, "r");
 
 	if (!fp)
 		return;
@@ -155,7 +169,7 @@ void read_igmp(struct ma_info **result_p)
 {
 	struct ma_info m;
 	char buf[256];
-	FILE *fp = fopen("/proc/net/igmp", "r");
+	FILE *fp = fopen(_PATH_PROCNET_IGMP, "r");
 
 	if (!fp)
 		return;
@@ -190,7 +204,7 @@ void read_igmp(struct ma_info **result_p)
 void read_igmp6(struct ma_info **result_p)
 {
 	char buf[256];
-	FILE *fp = fopen("/proc/net/igmp6", "r");
+	FILE *fp = fopen(_PATH_PROCNET_IGMP6, "r");
 
 	if (!fp)
 		return;
@@ -334,7 +348,7 @@ int multiaddr_modify(int cmd, int argc, char **argv)
 
 	fd = socket(AF_INET, SOCK_DGRAM, 0);
 	if (fd < 0) {
-		perror("Cannot create socket");
+		perror(_("Cannot create socket"));
 		exit(1);
 	}
 	if (ioctl(fd, cmd, (char*)&ifr) != 0) {
@@ -394,6 +408,8 @@ int main(int argc, char **argv)
 			++show_stats;
 		} else if (matches(argv[1], "-resolve") == 0) {
 			++resolve_hosts;
+		} else if (matches(argv[1], "-V") == 0) {
+			version();
 		} else
 			usage();
 		argc--;	argv++;
