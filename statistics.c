@@ -1,6 +1,6 @@
 /*
  * Copyright 1997,1999,2000 Andi Kleen. Subject to the GPL. 
- * $Id: statistics.c,v 1.12 2000/06/21 23:48:53 ak Exp $
+ * $Id: statistics.c,v 1.13 2000/07/03 23:39:27 ak Exp $
  * 19980630 - i18n - Arnaldo Carvalho de Melo <acme@conectiva.com.br> 
  * 19981113 - i18n fixes - Arnaldo Carvalho de Melo <acme@conectiva.com.br> 
  * 19990101 - added net/netstat, -t, -u, -w supprt - Bernd Eckenfels 
@@ -20,7 +20,7 @@
 #define UFWARN(x)
 #endif
 
-int print_static,f_raw,f_tcp,f_udp;
+int print_static,f_raw,f_tcp,f_udp,f_unknown = 1;
 
 enum State {
     number = 0, opt_number, i_forward, i_inp_icmp, i_outp_icmp, i_rto_alg,
@@ -213,13 +213,14 @@ int cmpentries(const void *a, const void *b)
 
 void printval(struct tabtab *tab, char *title, int val)
 {
-    struct entry *ent, key;
+    struct entry *ent = NULL, key;
     int type;
     char buf[512];
 
     key.title = title;
-    ent = bsearch(&key, tab->tab, tab->size / sizeof(struct entry),
-		  sizeof(struct entry), cmpentries);
+	if (tab->tab) 
+	    ent = bsearch(&key, tab->tab, tab->size / sizeof(struct entry),
+			  sizeof(struct entry), cmpentries);
     if (!ent) {			/* try our best */
 	printf("%*s%s: %d\n", states[state].indent, "", title, val);
 	return;
@@ -270,17 +271,23 @@ void printval(struct tabtab *tab, char *title, int val)
 struct tabtab *newtable(struct tabtab *tabs, char *title)
 {
     struct tabtab *t;
-
-    for (t = tabs; t->title; t++)
-	if (!strcmp(title, t->title)) {
-	    if (*(t->flag))
-		printf("%s:\n", _(title));
-	    state = normal;
-	    return t;
+	static struct tabtab dummytab;
+	
+    for (t = tabs; t->title; t++) {
+		if (!strcmp(title, t->title)) {
+	    	if (*(t->flag))
+				printf("%s:\n", _(title));
+		    state = normal;
+	   		return t;
+		}
 	}
-    return NULL;
+	if (!f_unknown) 
+		return NULL; 
+	printf("%s:\n", _(title));
+	dummytab.title = title;
+	dummytab.flag = &f_unknown; 
+	return &dummytab;
 }
-
 
 void process_fd(FILE *f)
 {
@@ -297,10 +304,11 @@ void process_fd(FILE *f)
 	if (!np || !sp)
 	    goto formaterr;
 	*sp = '\0';
+
 	tab = newtable(snmptabs, buf1);
 	if (tab == NULL) {
-	    UFWARN((printf(_("unknown title %s\n"), buf1)));
-	    continue;
+		printf("unknown %s\n", buf1);
+		continue;
 	}
 	np++;
 	sp++;
