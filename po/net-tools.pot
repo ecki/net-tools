@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 1999-03-23 20:34+0200\n"
+"POT-Creation-Date: 1999-04-06 10:34+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -404,335 +404,335 @@ msgstr ""
 msgid "getnodename()=`%s'\n"
 msgstr ""
 
-#: ../ifconfig.c:161
+#: ../ifconfig.c:158
 #, c-format
 msgid "%-9.9s Link encap:%s  "
 msgstr ""
 
-#: ../ifconfig.c:167
+#: ../ifconfig.c:163
 #, c-format
 msgid "HWaddr %s  "
 msgstr ""
 
-#: ../ifconfig.c:170
+#: ../ifconfig.c:166
 #, c-format
 msgid "Media:%s"
 msgstr ""
 
-#: ../ifconfig.c:172
+#: ../ifconfig.c:168
 msgid "(auto)"
 msgstr ""
 
-#: ../ifconfig.c:179
+#: ../ifconfig.c:175
 #, c-format
 msgid "          %s addr:%s "
 msgstr ""
 
-#: ../ifconfig.c:182
+#: ../ifconfig.c:178
 #, c-format
 msgid " P-t-P:%s "
 msgstr ""
 
-#: ../ifconfig.c:185
+#: ../ifconfig.c:181
 #, c-format
 msgid " Bcast:%s "
 msgstr ""
 
-#: ../ifconfig.c:187
+#: ../ifconfig.c:183
 #, c-format
 msgid " Mask:%s\n"
 msgstr ""
 
-#: ../ifconfig.c:204
+#: ../ifconfig.c:200
 #, c-format
 msgid "          inet6 addr: %s/%d"
 msgstr ""
 
-#: ../ifconfig.c:206
+#: ../ifconfig.c:202
 msgid " Scope:"
 msgstr ""
 
-#: ../ifconfig.c:209
+#: ../ifconfig.c:205
 msgid "Global"
 msgstr ""
 
-#: ../ifconfig.c:212
+#: ../ifconfig.c:208
 msgid "Link"
 msgstr ""
 
-#: ../ifconfig.c:215
+#: ../ifconfig.c:211
 msgid "Site"
 msgstr ""
 
-#: ../ifconfig.c:218
+#: ../ifconfig.c:214
 msgid "Compat"
 msgstr ""
 
-#: ../ifconfig.c:221
+#: ../ifconfig.c:217
 msgid "Host"
 msgstr ""
 
-#: ../ifconfig.c:224
+#: ../ifconfig.c:220
 msgid "Unknown"
 msgstr ""
 
-#: ../ifconfig.c:239
+#: ../ifconfig.c:235
 #, c-format
 msgid "          IPX/Ethernet II addr:%s\n"
 msgstr ""
 
-#: ../ifconfig.c:242
+#: ../ifconfig.c:238
 #, c-format
 msgid "          IPX/Ethernet SNAP addr:%s\n"
 msgstr ""
 
-#: ../ifconfig.c:245
+#: ../ifconfig.c:241
 #, c-format
 msgid "          IPX/Ethernet 802.2 addr:%s\n"
 msgstr ""
 
-#: ../ifconfig.c:248
+#: ../ifconfig.c:244
 #, c-format
 msgid "          IPX/Ethernet 802.3 addr:%s\n"
 msgstr ""
 
-#: ../ifconfig.c:258
+#: ../ifconfig.c:254
 #, c-format
 msgid "          EtherTalk Phase 2 addr:%s\n"
 msgstr ""
 
-#: ../ifconfig.c:267
+#: ../ifconfig.c:263
 #, c-format
 msgid "          econet addr:%s\n"
 msgstr ""
 
-#: ../ifconfig.c:273
+#: ../ifconfig.c:269
 msgid "[NO FLAGS] "
 msgstr ""
 
-#: ../ifconfig.c:275
+#: ../ifconfig.c:271
 msgid "UP "
 msgstr ""
 
-#: ../ifconfig.c:277
+#: ../ifconfig.c:273
 msgid "BROADCAST "
 msgstr ""
 
-#: ../ifconfig.c:279
+#: ../ifconfig.c:275
 msgid "DEBUG "
 msgstr ""
 
-#: ../ifconfig.c:281
+#: ../ifconfig.c:277
 msgid "LOOPBACK "
 msgstr ""
 
-#: ../ifconfig.c:283
+#: ../ifconfig.c:279
 msgid "POINTOPOINT "
 msgstr ""
 
-#: ../ifconfig.c:285
+#: ../ifconfig.c:281
 msgid "NOTRAILERS "
 msgstr ""
 
-#: ../ifconfig.c:287
+#: ../ifconfig.c:283
 msgid "RUNNING "
 msgstr ""
 
-#: ../ifconfig.c:289
+#: ../ifconfig.c:285
 msgid "NOARP "
 msgstr ""
 
-#: ../ifconfig.c:291
+#: ../ifconfig.c:287
 msgid "PROMISC "
 msgstr ""
 
-#: ../ifconfig.c:293
+#: ../ifconfig.c:289
 msgid "ALLMULTI "
 msgstr ""
 
-#: ../ifconfig.c:295
+#: ../ifconfig.c:291
 msgid "SLAVE "
 msgstr ""
 
-#: ../ifconfig.c:297
+#: ../ifconfig.c:293
 msgid "MASTER "
 msgstr ""
 
-#: ../ifconfig.c:299
+#: ../ifconfig.c:295
 msgid "MULTICAST "
 msgstr ""
 
-#: ../ifconfig.c:302
+#: ../ifconfig.c:298
 msgid "DYNAMIC "
 msgstr ""
 
-#: ../ifconfig.c:305
+#: ../ifconfig.c:301
 #, c-format
 msgid " MTU:%d  Metric:%d"
 msgstr ""
 
-#: ../ifconfig.c:309
+#: ../ifconfig.c:305
 #, c-format
 msgid "  Outfill:%d  Keepalive:%d"
 msgstr ""
 
-#: ../ifconfig.c:323
+#: ../ifconfig.c:319
 #, c-format
 msgid "RX packets:%lu errors:%lu dropped:%lu overruns:%lu frame:%lu\n"
 msgstr ""
 
-#: ../ifconfig.c:328
+#: ../ifconfig.c:324
 #, c-format
 msgid "             compressed:%lu\n"
 msgstr ""
 
-#: ../ifconfig.c:332
+#: ../ifconfig.c:328
 #, c-format
 msgid "TX packets:%lu errors:%lu dropped:%lu overruns:%lu carrier:%lu\n"
 msgstr ""
 
-#: ../ifconfig.c:336
+#: ../ifconfig.c:332
 #, c-format
 msgid "          collisions:%lu "
 msgstr ""
 
-#: ../ifconfig.c:338
+#: ../ifconfig.c:334
 #, c-format
 msgid "compressed:%lu "
 msgstr ""
 
-#: ../ifconfig.c:340
+#: ../ifconfig.c:336
 #, c-format
 msgid "txqueuelen:%d "
 msgstr ""
 
-#: ../ifconfig.c:348
+#: ../ifconfig.c:344
 #, c-format
 msgid "Interrupt:%d "
 msgstr ""
 
 #. Only print devices using it for
 #. I/O maps
-#: ../ifconfig.c:351
+#: ../ifconfig.c:347
 #, c-format
 msgid "Base address:0x%x "
 msgstr ""
 
-#: ../ifconfig.c:353
+#: ../ifconfig.c:349
 #, c-format
 msgid "Memory:%lx-%lx "
 msgstr ""
 
-#: ../ifconfig.c:356
+#: ../ifconfig.c:352
 #, c-format
 msgid "DMA chan:%x "
 msgstr ""
 
-#: ../ifconfig.c:387 ../ifconfig.c:408
+#: ../ifconfig.c:383 ../ifconfig.c:404
 #, c-format
 msgid "%s: unknown interface: %s\n"
 msgstr ""
 
-#: ../ifconfig.c:424
+#: ../ifconfig.c:420
 msgid ""
 "Usage:\n"
 "  ifconfig [-a] [-i] [-v] <interface> [[<AF>] <address>]\n"
 msgstr ""
 
-#: ../ifconfig.c:428
+#: ../ifconfig.c:424
 msgid "  [add <address>[/<prefixlen>]]\n"
 msgstr ""
 
-#: ../ifconfig.c:430
+#: ../ifconfig.c:426
 msgid "  [del <address>[/<prefixlen>]]\n"
 msgstr ""
 
-#: ../ifconfig.c:435
+#: ../ifconfig.c:431
 msgid "  [[-]broadcast [<address>]]  [[-]pointopoint [<address>]]\n"
 msgstr ""
 
-#: ../ifconfig.c:436
+#: ../ifconfig.c:432
 msgid "  [netmask <address>]  [dstaddr <address>]  [tunnel <adress>]\n"
 msgstr ""
 
-#: ../ifconfig.c:439
+#: ../ifconfig.c:435
 msgid "  [outfill <NN>] [keepalive <NN>]\n"
 msgstr ""
 
-#: ../ifconfig.c:441
+#: ../ifconfig.c:437
 msgid "  [hw <HW> <address>]  [metric <NN>]  [mtu <NN>]\n"
 msgstr ""
 
-#: ../ifconfig.c:442
+#: ../ifconfig.c:438
 msgid "  [[-]trailers]  [[-]arp]  [[-]allmulti]\n"
 msgstr ""
 
-#: ../ifconfig.c:443
+#: ../ifconfig.c:439
 msgid "  [multicast]  [[-]promisc]\n"
 msgstr ""
 
-#: ../ifconfig.c:444
+#: ../ifconfig.c:440
 msgid "  [mem_start <NN>]  [io_addr <NN>]  [irq <NN>]  [media <type>]\n"
 msgstr ""
 
-#: ../ifconfig.c:446
+#: ../ifconfig.c:442
 msgid "  [txqueuelen len]\n"
 msgstr ""
 
-#: ../ifconfig.c:449
+#: ../ifconfig.c:445
 msgid "  [[-]dynamic]\n"
 msgstr ""
 
-#: ../ifconfig.c:451
+#: ../ifconfig.c:447
 msgid ""
 "  [up|down] ...\n"
 "\n"
 msgstr ""
 
-#: ../ifconfig.c:453
+#: ../ifconfig.c:449
 msgid "  <HW>=Hardware Type.\n"
 msgstr ""
 
-#: ../ifconfig.c:454
+#: ../ifconfig.c:450
 msgid "  List of possible hardware types:\n"
 msgstr ""
 
 #. 1 = ARPable
-#: ../ifconfig.c:456
+#: ../ifconfig.c:452
 #, c-format
 msgid "  <AF>=Address family. Default: %s\n"
 msgstr ""
 
-#: ../ifconfig.c:457
+#: ../ifconfig.c:453
 msgid "  List of possible address families:\n"
 msgstr ""
 
-#: ../ifconfig.c:596
+#: ../ifconfig.c:592
 msgid "Unknown media type.\n"
 msgstr ""
 
-#: ../ifconfig.c:884
+#: ../ifconfig.c:880
 #, c-format
 msgid "%s: invalid %s address.\n"
 msgstr ""
 
-#: ../ifconfig.c:923 ../ifconfig.c:966 ../ifconfig.c:1014
+#: ../ifconfig.c:919 ../ifconfig.c:962 ../ifconfig.c:1010
 msgid "No support for INET6 on this system.\n"
 msgstr ""
 
-#: ../ifconfig.c:986
+#: ../ifconfig.c:982
 msgid "Address deletion not supported on this system.\n"
 msgstr ""
 
-#: ../ifconfig.c:1069
+#: ../ifconfig.c:1065
 msgid "No support for INET on this system.\n"
 msgstr ""
 
-#: ../ifconfig.c:1079
+#: ../ifconfig.c:1075
 msgid "No support for ECONET on this system.\n"
 msgstr ""
 
-#: ../ifconfig.c:1087
+#: ../ifconfig.c:1083
 #, c-format
 msgid "Don't know how to set addresses for family %d.\n"
 msgstr ""
@@ -1227,100 +1227,100 @@ msgstr ""
 msgid "%s\tnibble %lu  trigger %lu\n"
 msgstr ""
 
-#: ../iptunnel.c:61
+#: ../iptunnel.c:63
 msgid "Usage: iptunnel { add | change | del | show } [ NAME ]\n"
 msgstr ""
 
-#: ../iptunnel.c:62
+#: ../iptunnel.c:64
 msgid ""
 "          [ mode { ipip | gre | sit } ] [ remote ADDR ] [ local ADDR ]\n"
 msgstr ""
 
-#: ../iptunnel.c:63
+#: ../iptunnel.c:65
 msgid "          [ [i|o]seq ] [ [i|o]key KEY ] [ [i|o]csum ]\n"
 msgstr ""
 
-#: ../iptunnel.c:64
+#: ../iptunnel.c:66
 msgid ""
 "          [ ttl TTL ] [ tos TOS ] [ nopmtudisc ] [ dev PHYS_DEV ]\n"
 "\n"
 msgstr ""
 
-#: ../iptunnel.c:65
+#: ../iptunnel.c:67
 msgid "Where: NAME := STRING\n"
 msgstr ""
 
-#: ../iptunnel.c:66
+#: ../iptunnel.c:68
 msgid "       ADDR := { IP_ADDRESS | any }\n"
 msgstr ""
 
-#: ../iptunnel.c:67
+#: ../iptunnel.c:69
 msgid "       TOS  := { NUMBER | inherit }\n"
 msgstr ""
 
-#: ../iptunnel.c:68
+#: ../iptunnel.c:70
 msgid "       TTL  := { 1..255 | inherit }\n"
 msgstr ""
 
-#: ../iptunnel.c:69
+#: ../iptunnel.c:71
 msgid "       KEY  := { DOTTED_QUAD | NUMBER }\n"
 msgstr ""
 
-#: ../iptunnel.c:307
+#: ../iptunnel.c:309
 msgid "Keys are not allowed with ipip and sit.\n"
 msgstr ""
 
-#: ../iptunnel.c:327
+#: ../iptunnel.c:329
 msgid "Broadcast tunnel requires a source address.\n"
 msgstr ""
 
-#: ../iptunnel.c:342
+#: ../iptunnel.c:344
 msgid "ttl != 0 and noptmudisc are incompatible\n"
 msgstr ""
 
-#: ../iptunnel.c:354
+#: ../iptunnel.c:356
 msgid "cannot determine tunnel mode (ipip, gre or sit)\n"
 msgstr ""
 
-#: ../iptunnel.c:392
+#: ../iptunnel.c:394
 #, c-format
 msgid "%s: %s/ip  remote %s  local %s "
 msgstr ""
 
-#: ../iptunnel.c:396
+#: ../iptunnel.c:398
 msgid "unknown"
 msgstr ""
 
-#: ../iptunnel.c:428
+#: ../iptunnel.c:430
 msgid "  Drop packets out of sequence.\n"
 msgstr ""
 
-#: ../iptunnel.c:430
+#: ../iptunnel.c:432
 msgid "  Checksum in received packet is required.\n"
 msgstr ""
 
-#: ../iptunnel.c:432
+#: ../iptunnel.c:434
 msgid "  Sequence packets on output.\n"
 msgstr ""
 
-#: ../iptunnel.c:434
+#: ../iptunnel.c:436
 msgid "  Checksum output packets.\n"
 msgstr ""
 
-#: ../iptunnel.c:462
+#: ../iptunnel.c:464
 msgid "Wrong format of /proc/net/dev. Sorry.\n"
 msgstr ""
 
-#: ../iptunnel.c:475
+#: ../iptunnel.c:477
 #, c-format
 msgid "Failed to get type of [%s]\n"
 msgstr ""
 
-#: ../iptunnel.c:491
+#: ../iptunnel.c:493
 msgid "RX: Packets    Bytes        Errors CsumErrs OutOfSeq Mcasts\n"
 msgstr ""
 
-#: ../iptunnel.c:494
+#: ../iptunnel.c:496
 msgid "TX: Packets    Bytes        Errors DeadLoop NoRoute  NoBufs\n"
 msgstr ""
 
@@ -2210,22 +2210,22 @@ msgstr ""
 msgid "No usable address families found.\n"
 msgstr ""
 
-#: ../lib/util-ank.c:226
+#: ../lib/util-ank.c:225
 #, c-format
 msgid "ip: %s is invalid inet address\n"
 msgstr ""
 
-#: ../lib/util-ank.c:235
+#: ../lib/util-ank.c:234
 #, c-format
 msgid "ip: %s is invalid inet prefix\n"
 msgstr ""
 
-#: ../lib/util-ank.c:245
+#: ../lib/util-ank.c:244
 #, c-format
 msgid "ip: %s is invalid IPv4 address\n"
 msgstr ""
 
-#: ../lib/util-ank.c:253
+#: ../lib/util-ank.c:252
 #, c-format
 msgid "ip: argument is wrong: %s\n"
 msgstr ""

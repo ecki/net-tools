@@ -9,7 +9,7 @@ NLSPACKAGE = net-tools
 
 -include ../config.make
 ifeq ($(I18N),1)
-CATALOGS = de.mo pt_BR.mo
+CATALOGS = de.mo fr.mo pt_BR.mo
 else
 CATALOGS =
 endif
@@ -34,7 +34,7 @@ all: $(NLSPACKAGE).pot $(CATALOGS)
 
 $(NLSPACKAGE).pot: $(POTFILES)
 	xgettext --default-domain=$(NLSPACKAGE) \
-       	  --add-comments --keyword=_ --keyword=N_ $(POTFILES)
+	  --add-comments --keyword=_ --keyword=N_ $(POTFILES)
 	if cmp -s $(NLSPACKAGE).po $(NLSPACKAGE).pot; then \
 	    rm -f $(NLSPACKAGE).po; \
 	else \
@@ -52,7 +52,7 @@ update-po: Makefile
 		if $(TUPDATE) $(NLSPACKAGE).pot $$lang.old.po > $$lang.po; then \
 		rm -f $$lang.old.po; \
 	else \
-    		echo "tupdate for $$cat failed!"; \
+	 	echo "tupdate for $$cat failed!"; \
 		rm -f $$lang.po; \
 		mv $$lang.old.po $$lang.po; \
 	fi; \

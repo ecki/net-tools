@@ -28,6 +28,10 @@ Contents:
                           Notes
                           -----
 
+Notable changes since 1.52 include:
+
+ - Jean-Michel Vansteene updated the French translation.
+
 This is net-tools 1.51.  Notable changes since 1.50 include:
 
  - Tuan Hoang added support to netstat for printing multicast group 

@@ -35,7 +35,7 @@ Opère en mode silencieux - pas de messages du tout.
 .TP
 .B "[-l]"
 Crée un fichier de vérouillage pour le périphérique comme
-pour UUCP dans /var/spool/uucp.
+pour UUCP dans /var/lock.
 .TP
 .B "[-n]"
 Equivalent à la commande "mesg n".
@@ -53,9 +53,9 @@ la surveillance de porteuse est invalidée.
 .TP
 .B "[-p proto]"
 Définit le protocole spécifique à utiliser sur la ligne.
-La valeur par défaut est positionnée à
+La valeur par défaut est 
 .B "cslip"
-, i.e. SLIP compressé.  Les autres valeurs possibles sont :
+, c'est-à-dire SLIP compressé.  Les autres valeurs possibles sont :
 .B "slip"
 (SLIP normal), 
 .B "adaptive"
@@ -64,12 +64,12 @@ La valeur par défaut est positionnée à
 (Protocole Point-à-Point)
 et
 .B "kiss"
-(protocole AX.25 TNC).
+(un protocole utilisé pour communiquer avec des controleurs AX.25 paquets radios).
 L'argument spécifique
 .B "tty"
 peut être utilisé pour refaire passer le périphérique en
 fonctionnement série normal. L'utilisation du mode 'ppp' n'est en
-principe pas utilise puisque ppp nécessite un démon additionnel
+principe pas utile puisque ppp nécessite le démon additionnel
 .B pppd
 pour être actif sur la ligne. Pour les connexions `kiss', le programme 
 .B axattach
@@ -83,7 +83,7 @@ Si aucun argument n'est donné, la ligne courante du terminal
 est effectuée pour obtenir le port du terminal indiqué, puis il est
 vérouillé et ouvert.
 .SH FICHIERS
-.I /dev/cua* /var/spool/uucp/LCK.*
+.I /dev/cua* /var/lock/LCK.*
 .SH BUGS
 Aucun connu.
 .SH VOIR AUSSI
@@ -100,4 +100,4 @@ George Shearer, <gshearer@one.net>
 Yossi Gottlieb, <yogo@math.tau.ac.il>
 .br
 .SH TRADUCTION
-Jean-Michel VANSTEENE (J.M.Vansteene@frcl.bull.fr)
+Jean-Michel VANSTEENE (vanstee@worldnet.fr)
