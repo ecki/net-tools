@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.38 2000/05/27 17:36:16 pb Exp $
+ * Version:     $Id: ifconfig.c,v 1.39 2000/06/11 15:44:21 pb Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -738,10 +738,10 @@ int main(int argc, char **argv)
 	    }
 	    spp++;
 	    continue;
-	}
 #else
-	fprintf(stderr, _("Bad address.\n"));
+	    fprintf(stderr, _("Bad address.\n"));
 #endif
+	}
 #endif
 
 #if HAVE_AFINET || HAVE_AFINET6
@@ -828,13 +828,13 @@ int main(int argc, char **argv)
 	    }
 	    spp++;
 	    continue;
+#else
+	    fprintf(stderr, _("Bad address.\n"));
+#endif
+#else
+	    fprintf(stderr, _("Address deletion not supported on this system.\n"));
+#endif
 	}
-#else
-	fprintf(stderr, _("Bad address.\n"));
-#endif
-#else
-	fprintf(stderr, _("Address deletion not supported on this system.\n"));
-#endif
 #endif
 #if HAVE_AFINET6
 	if (!strcmp(*spp, "tunnel")) {
