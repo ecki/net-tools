@@ -152,8 +152,8 @@ void printval(struct tabtab *tab, char *title, int val)
 	key.title = title; 
 	ent = bsearch(&key, tab->tab, tab->size/sizeof(struct entry),
 				  sizeof(struct entry), cmpentries); 
-	if (!ent)  {
-		UFWARN((printf("unknown field %s\n", title)));
+	if (!ent)  { /* try our best */ 
+		printf("%*s%s: %d\n", indent[state], "", title, val);
 		return;
 	}
 	type = ent->type; 
