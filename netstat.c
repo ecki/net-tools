@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.48 2002/06/27 18:04:02 ecki Exp $
+ * Version:     $Id: netstat.c,v 1.49 2002/07/23 21:08:16 ecki Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -709,6 +709,7 @@ static void tcp_do_one(int lnr, const char *line)
     unsigned long rxq, txq, time_len, retr, inode;
     int num, local_port, rem_port, d, state, uid, timer_run, timeout;
     char rem_addr[128], local_addr[128], timers[64], buffer[1024], more[512];
+    char *protname;
     struct aftype *ap;
 #if HAVE_AFINET6
     struct sockaddr_in6 localaddr, remaddr;
@@ -729,6 +730,7 @@ static void tcp_do_one(int lnr, const char *line)
 
     if (strlen(local_addr) > 8) {
 #if HAVE_AFINET6
+	protname = "tcp6";
 	/* Demangle what the kernel gives us */
 	sscanf(local_addr, "%08X%08X%08X%08X",
 	       &in6.s6_addr32[0], &in6.s6_addr32[1],
@@ -744,6 +746,7 @@ static void tcp_do_one(int lnr, const char *line)
 	remaddr.sin6_family = AF_INET6;
 #endif
     } else {
+	protname = "tcp";
 	sscanf(local_addr, "%X",
 	       &((struct sockaddr_in *) &localaddr)->sin_addr.s_addr);
 	sscanf(rem_addr, "%X",
@@ -817,8 +820,8 @@ static void tcp_do_one(int lnr, const char *line)
 			 timer_run, (double) time_len / HZ, retr, timeout);
 		break;
 	    }
-	printf("tcp   %6ld %6ld %-*s %-*s %-11s",
-	       rxq, txq, max(23,strlen(local_addr)), local_addr, max(23,strlen(rem_addr)), rem_addr, _(tcp_state[state]));
+	printf("%-4s  %6ld %6ld %-*s %-*s %-11s",
+	       protname, rxq, txq, max(23,strlen(local_addr)), local_addr, max(23,strlen(rem_addr)), rem_addr, _(tcp_state[state]));
 
 	finish_this_one(uid,inode,timers);
     }
@@ -835,6 +838,7 @@ static void udp_do_one(int lnr, const char *line)
     char buffer[8192], local_addr[64], rem_addr[64];
     char *udp_state, timers[64], more[512];
     int num, local_port, rem_port, d, state, timer_run, uid, timeout;
+    char *protname;
 #if HAVE_AFINET6
     struct sockaddr_in6 localaddr, remaddr;
     char addr6[INET6_ADDRSTRLEN];
@@ -858,6 +862,7 @@ static void udp_do_one(int lnr, const char *line)
 
     if (strlen(local_addr) > 8) {
 #if HAVE_AFINET6
+	protname="udp6";
 	sscanf(local_addr, "%08X%08X%08X%08X",
 	       &in6.s6_addr32[0], &in6.s6_addr32[1],
 	       &in6.s6_addr32[2], &in6.s6_addr32[3]);
@@ -872,6 +877,7 @@ static void udp_do_one(int lnr, const char *line)
 	remaddr.sin6_family = AF_INET6;
 #endif
     } else {
+        protname="udp";
 	sscanf(local_addr, "%X",
 	       &((struct sockaddr_in *) &localaddr)->sin_addr.s_addr);
 	sscanf(rem_addr, "%X",
@@ -957,8 +963,8 @@ static void udp_do_one(int lnr, const char *line)
 			 retr, timeout);
 		break;
 	    }
-	printf("udp   %6ld %6ld %-23s %-23s %-11s",
-	       rxq, txq, local_addr, rem_addr, udp_state);
+	printf("%-4s  %6ld %6ld %-23s %-23s %-11s",
+	       protname, rxq, txq, local_addr, rem_addr, udp_state);
 
 	finish_this_one(uid,inode,timers);
     }
@@ -975,6 +981,7 @@ static void raw_do_one(int lnr, const char *line)
     char buffer[8192], local_addr[64], rem_addr[64];
     char timers[64], more[512];
     int num, local_port, rem_port, d, state, timer_run, uid, timeout;
+    char *protname;
 #if HAVE_AFINET6
     struct sockaddr_in6 localaddr, remaddr;
     char addr6[INET6_ADDRSTRLEN];
@@ -997,6 +1004,7 @@ static void raw_do_one(int lnr, const char *line)
 
     if (strlen(local_addr) > 8) {
 #if HAVE_AFINET6
+	protname = "raw6";
 	sscanf(local_addr, "%08X%08X%08X%08X",
 	       &in6.s6_addr32[0], &in6.s6_addr32[1],
            &in6.s6_addr32[2], &in6.s6_addr32[3]);
@@ -1011,6 +1019,7 @@ static void raw_do_one(int lnr, const char *line)
 	remaddr.sin6_family = AF_INET6;
 #endif
     } else {
+        protname = "raw";
 	sscanf(local_addr, "%X",
 	       &((struct sockaddr_in *) &localaddr)->sin_addr.s_addr);
 	sscanf(rem_addr, "%X",
@@ -1078,8 +1087,8 @@ static void raw_do_one(int lnr, const char *line)
 			 retr, timeout);
 		break;
 	    }
-	printf("raw   %6ld %6ld %-23s %-23s %-11d",
-	       rxq, txq, local_addr, rem_addr, state);
+	printf("%-4s  %6ld %6ld %-23s %-23s %-11d",
+	       protname, rxq, txq, local_addr, rem_addr, state);
 
 	finish_this_one(uid,inode,timers);
     }
@@ -1507,7 +1516,7 @@ static void usage(void)
     fprintf(stderr, _("        -C, --cache              display routing cache instead of FIB\n\n"));
 
     fprintf(stderr, _("  <Socket>={-t|--tcp} {-u|--udp} {-w|--raw} {-x|--unix} --ax25 --ipx --netrom\n"));
-    fprintf(stderr, _("  <AF>=Use '-A <af>' or '--<af>'; default: %s\n"), DFLT_AF);
+    fprintf(stderr, _("  <AF>=Use '-6|-4' or '-A <af>' or '--<af>'; default: %s\n"), DFLT_AF);
     fprintf(stderr, _("  List of possible address families (which support routing):\n"));
     print_aflist(1); /* 1 = routeable */
     exit(E_USAGE);
@@ -1560,7 +1569,7 @@ int main
     getroute_init();		/* Set up AF routing support */
 
     afname[0] = '\0';
-    while ((i = getopt_long(argc, argv, "MCFA:acdegphinNorstuVv?wxl", longopts, &lop)) != EOF)
+    while ((i = getopt_long(argc, argv, "MCFA:acdegphinNorstuVv?wxl64", longopts, &lop)) != EOF)
 	switch (i) {
 	case -1:
 	    break;
@@ -1627,6 +1636,14 @@ int main
 	    break;
 	case 'o':
 	    flag_opt++;
+	    break;
+	case '6':
+	    if (aftrans_opt("inet6"))
+		exit(1);
+	    break;
+	case '4':
+	    if (aftrans_opt("inet"))
+		exit(1);
 	    break;
 	case 'V':
 	    version();
