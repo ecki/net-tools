@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.46 2002/02/19 00:55:35 ecki Exp $
+ * Version:     $Id: netstat.c,v 1.47 2002/02/19 01:12:49 ecki Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -1212,9 +1212,9 @@ static void unix_do_one(int nr, const char *line)
     printf("%-5s %-6ld %-11s %-10s %-13s ",
 	   ss_proto, refcnt, ss_flags, ss_type, ss_state);
     if (has & HAS_INODE)
-	printf("%-6lu ",inode);
+	printf("%-8lu ",inode);
     else
-	printf("-      ");
+	printf("-        ");
     if (flag_prg)
 	printf("%-" PROGNAME_WIDTHs "s",(has & HAS_INODE?prg_cache_get(inode):"-"));
     puts(path);
