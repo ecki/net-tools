@@ -1,7 +1,7 @@
 /*
  * lib/sit.c  This file contains the SIT HW-type support.
  *
- * Version:    $Id: sit.c,v 1.4 1999/01/05 20:54:08 philip Exp $
+ * Version:    $Id: sit.c,v 1.5 2000/03/05 16:14:08 ecki Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -41,7 +41,7 @@
 struct hwtype sit_hwtype =
 {
     "sit", NULL, /*"IPv6-in-IPv4", */ ARPHRD_SIT, 0,
-    NULL, NULL, NULL, NULL
+    NULL, NULL, NULL, 0
 };
 
 #endif				/* HAVE_HWSIT */
