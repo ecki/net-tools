@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 1999-04-06 10:34+0200\n"
+"POT-Creation-Date: 1999-04-18 20:58+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1219,7 +1219,7 @@ msgid "                  [nibble NN] [trigger NN]\n"
 msgstr ""
 
 #: ../plipconfig.c:68
-msgid "       plipconfig -V\n"
+msgid "       plipconfig -V | --version\n"
 msgstr ""
 
 #: ../plipconfig.c:74
@@ -1227,100 +1227,104 @@ msgstr ""
 msgid "%s\tnibble %lu  trigger %lu\n"
 msgstr ""
 
-#: ../iptunnel.c:63
+#: ../iptunnel.c:75
 msgid "Usage: iptunnel { add | change | del | show } [ NAME ]\n"
 msgstr ""
 
-#: ../iptunnel.c:64
+#: ../iptunnel.c:76
 msgid ""
 "          [ mode { ipip | gre | sit } ] [ remote ADDR ] [ local ADDR ]\n"
 msgstr ""
 
-#: ../iptunnel.c:65
+#: ../iptunnel.c:77
 msgid "          [ [i|o]seq ] [ [i|o]key KEY ] [ [i|o]csum ]\n"
 msgstr ""
 
-#: ../iptunnel.c:66
+#: ../iptunnel.c:78
+msgid "          [ ttl TTL ] [ tos TOS ] [ nopmtudisc ] [ dev PHYS_DEV ]\n"
+msgstr ""
+
+#: ../iptunnel.c:79
 msgid ""
-"          [ ttl TTL ] [ tos TOS ] [ nopmtudisc ] [ dev PHYS_DEV ]\n"
+"       iptunnel -V | --version\n"
 "\n"
 msgstr ""
 
-#: ../iptunnel.c:67
+#: ../iptunnel.c:80
 msgid "Where: NAME := STRING\n"
 msgstr ""
 
-#: ../iptunnel.c:68
+#: ../iptunnel.c:81
 msgid "       ADDR := { IP_ADDRESS | any }\n"
 msgstr ""
 
-#: ../iptunnel.c:69
+#: ../iptunnel.c:82
 msgid "       TOS  := { NUMBER | inherit }\n"
 msgstr ""
 
-#: ../iptunnel.c:70
+#: ../iptunnel.c:83
 msgid "       TTL  := { 1..255 | inherit }\n"
 msgstr ""
 
-#: ../iptunnel.c:71
+#: ../iptunnel.c:84
 msgid "       KEY  := { DOTTED_QUAD | NUMBER }\n"
 msgstr ""
 
-#: ../iptunnel.c:309
+#: ../iptunnel.c:322
 msgid "Keys are not allowed with ipip and sit.\n"
 msgstr ""
 
-#: ../iptunnel.c:329
+#: ../iptunnel.c:342
 msgid "Broadcast tunnel requires a source address.\n"
 msgstr ""
 
-#: ../iptunnel.c:344
+#: ../iptunnel.c:357
 msgid "ttl != 0 and noptmudisc are incompatible\n"
 msgstr ""
 
-#: ../iptunnel.c:356
+#: ../iptunnel.c:369
 msgid "cannot determine tunnel mode (ipip, gre or sit)\n"
 msgstr ""
 
-#: ../iptunnel.c:394
+#: ../iptunnel.c:407
 #, c-format
 msgid "%s: %s/ip  remote %s  local %s "
 msgstr ""
 
-#: ../iptunnel.c:398
+#: ../iptunnel.c:411
 msgid "unknown"
 msgstr ""
 
-#: ../iptunnel.c:430
+#: ../iptunnel.c:443
 msgid "  Drop packets out of sequence.\n"
 msgstr ""
 
-#: ../iptunnel.c:432
+#: ../iptunnel.c:445
 msgid "  Checksum in received packet is required.\n"
 msgstr ""
 
-#: ../iptunnel.c:434
+#: ../iptunnel.c:447
 msgid "  Sequence packets on output.\n"
 msgstr ""
 
-#: ../iptunnel.c:436
+#: ../iptunnel.c:449
 msgid "  Checksum output packets.\n"
 msgstr ""
 
-#: ../iptunnel.c:464
+#: ../iptunnel.c:477
 msgid "Wrong format of /proc/net/dev. Sorry.\n"
 msgstr ""
 
-#: ../iptunnel.c:477
+#: ../iptunnel.c:490
 #, c-format
 msgid "Failed to get type of [%s]\n"
 msgstr ""
 
-#: ../iptunnel.c:493
+#: ../iptunnel.c:506
 msgid "RX: Packets    Bytes        Errors CsumErrs OutOfSeq Mcasts\n"
 msgstr ""
 
-#: ../iptunnel.c:496
+#: ../iptunnel.c:509
 msgid "TX: Packets    Bytes        Errors DeadLoop NoRoute  NoBufs\n"
 msgstr ""
 
@@ -2238,86 +2242,90 @@ msgstr ""
 msgid "       ipmaddr show [ dev STRING ] [ ipv4 | ipv6 | link | all ]\n"
 msgstr ""
 
-#: ../ipmaddr.c:256
+#: ../ipmaddr.c:57
+msgid "       ipmaddr -V | -version\n"
+msgstr ""
+
+#: ../ipmaddr.c:257
 #, c-format
 msgid "family %d "
 msgstr ""
 
-#: ../ipmaddr.c:265
+#: ../ipmaddr.c:266
 #, c-format
 msgid " users %d"
 msgstr ""
 
-#: ../ipmaddr.c:351
+#: ../ipmaddr.c:352
 msgid "Cannot create socket"
 msgstr ""
 
-#: ../slattach.c:174
+#: ../slattach.c:175
 #, c-format
 msgid "slattach: /dev/%s already locked!\n"
 msgstr ""
 
-#: ../slattach.c:180
+#: ../slattach.c:181
 #, c-format
 msgid "slattach: tty_lock: (%s): %s\n"
 msgstr ""
 
-#: ../slattach.c:186
+#: ../slattach.c:187
 msgid "slattach: cannot write PID file\n"
 msgstr ""
 
-#: ../slattach.c:196
+#: ../slattach.c:197
 #, c-format
 msgid "slattach: tty_lock: UUCP user %s unknown!\n"
 msgstr ""
 
-#: ../slattach.c:424
+#: ../slattach.c:425
 #, c-format
 msgid "slattach: tty_hangup(DROP): %s\n"
 msgstr ""
 
-#: ../slattach.c:431
+#: ../slattach.c:432
 #, c-format
 msgid "slattach: tty_hangup(RAISE): %s\n"
 msgstr ""
 
-#: ../slattach.c:478
+#: ../slattach.c:479
 msgid "slattach: tty_open: cannot get current state!\n"
 msgstr ""
 
-#: ../slattach.c:485
+#: ../slattach.c:486
 msgid "slattach: tty_open: cannot get current line disc!\n"
 msgstr ""
 
-#: ../slattach.c:493
+#: ../slattach.c:494
 msgid "slattach: tty_open: cannot set RAW mode!\n"
 msgstr ""
 
-#: ../slattach.c:500
+#: ../slattach.c:501
 #, c-format
 msgid "slattach: tty_open: cannot set %s bps!\n"
 msgstr ""
 
-#: ../slattach.c:510
+#: ../slattach.c:511
 msgid "slattach: tty_open: cannot set 8N1 mode!\n"
 msgstr ""
 
-#: ../slattach.c:658
+#: ../slattach.c:656
 #, c-format
 msgid "slattach: unsupported protocol %s\n"
 msgstr ""
 
-#: ../slattach.c:685
+#: ../slattach.c:683
 #, c-format
 msgid "%s started"
 msgstr ""
 
-#: ../slattach.c:686
+#: ../slattach.c:684
 #, c-format
 msgid " on %s"
 msgstr ""
 
-#: ../slattach.c:687
+#: ../slattach.c:685
 #, c-format
 msgid " interface %s\n"
 msgstr ""

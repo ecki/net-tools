@@ -7,7 +7,10 @@ NET-TOOLS	A collection of programs that form the base set of the
 
 This package includes the important tools for controlling the network
 subsystem of the Linux kernel.  This includes arp, hostname, ifconfig,
-netstat, rarp and route.
+netstat, rarp and route.  Additionally, this package contains
+utilities relating to particular network hardware types (plipconfig,
+slattach) and advanced aspects of IP configuration (iptunnel,
+ipmaddr).
 
 Please include the output of "program --version" when reporting bugs.
 
@@ -28,11 +31,11 @@ Contents:
                           Notes
                           -----
 
-Notable changes since 1.52 include:
+This is net-tools 1.52.  Notable changes since 1.51 include:
 
  - Jean-Michel Vansteene updated the French translation.
 
-This is net-tools 1.51.  Notable changes since 1.50 include:
+Notable changes since 1.50 include:
 
  - Tuan Hoang added support to netstat for printing multicast group 
    information (option --groups)
@@ -42,73 +45,36 @@ This is net-tools 1.51.  Notable changes since 1.50 include:
  - some bugs and compilation problems have been fixed
  - Ralf Bächle provided a translation to German
 
-Notable changes since 1.49 include:
-
- - netstat supports a new option `--listening' to show only listening
-   sockets.
- - netstat -s is improved.
- - route/netstat -r display the routing cache correctly.
- - plipconfig and slattach are included
- - ipmaddr and iptunnel are included (courtesy of Alexey Kuznetsov)
- - as ever, various bugs have been fixed
-
-Notable changes since 1.48 include:
-
- - IP masquerading support is now selectable.
- - The -t and -u switches to netstat now work as expected.
- - AX.25 support in netstat has been improved.
- - Various other bugs have been fixed.
-
-Notable changes since 1.47 include:
-
- - Many bugs have been fixed.
-
-Notable changes since 1.46 include:
-
- - Support for interface aliases with recent kernels is improved.
- - Ifconfig et al can now auto-detect which address families are supported
-   on your system.  This avoids triggering kmod requests for all missing
-   protocols whenever ifconfig runs.
- - Support for extended SLIP options has been added
-
-Notable changes since 1.45 include:
-
- - The internationalisation support has been reworked (see below)
- - Support for extra hardware types has been added.
- - Various bugs have been fixed.
-
 You need kernel 2.0 or later to use these programs.  These programs
-should compile cleanly with either glibc or libc5.  The `iptunnel' and
-`ipmaddr' programs require kernel version 2.2 or later.
+should compile cleanly with both glibc (version 2.0 or 2.1) and libc5.
+The `iptunnel' and `ipmaddr' programs require kernel version 2.2 or
+later.
 
 The NLS support was changed from catgets to GNU gettext by Arnaldo
 Carvalho de Melo <acme@conectiva.com.br> in June, 1998, to make the
-source more readable. A translation to brazilian portuguese (pt_BR) is
-available and others are welcome!
-
-If your system has no support for GNU gettext then `make install' will
-probably fail in the po directory.  This is harmless and can be ignored;
-all the tools and manual pages are already installed at this point.
+source more readable. Translations to brazilian portuguese (pt_BR),
+German (de) and French (fr) are available and others are welcome!
 
 ipfw has been removed from the distribution.  Use ipfwadm instead; get
 it at <ftp://ftp.xos.nl/pub/linux/ipfwadm/>.
 
-route/netstat -r do not yet support different AF cleanly.  IPX/DDP/AX25
-people, please feel free to add the code.
+route/netstat -r do not yet support different address families
+cleanly.  IPX/DDP/AX25 people, please feel free to add the code.
 
 ifconfig now supports changing media types for interfaces.  This requires
-a recent 2.1.x or 2.2.x kernel, and many devices do not support it yet.
+a version 2.2 kernel, and many devices do not support it yet.
 
 The documentation is slimmed down.  I think most of it was out of
 date.
 
-The tools now support the layout of the 2.2.0 /proc files (Bernd Eckenfels).
+The tools now support the layout of the 2.2 kernel /proc files (Bernd
+Eckenfels).
 
-Some configuration options require recent 2.1.x or 2.2.x kernels
-and/or particular versions of the C library.  The defaults should be
-safe for all common environments but some of the more esoteric
-hardware and protocol families may be more touchy.  Feel free to send
-patches if you have problems.
+Some configuration options require kernel version 2.2 and/or
+particular versions of the C library.  The defaults should be safe for
+all common environments but some of the more esoteric hardware and
+protocol families may be more touchy.  Feel free to send patches if
+you have problems.
 
 Phil Blundell
 philb@gnu.org

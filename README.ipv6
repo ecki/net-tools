@@ -11,14 +11,15 @@ a patch I would be happy to add a pointer to it here.)  If you have the
 option you might consider changing to glibc instead (see below) in which
 case you can use the header files supplied with the C library.
 
-If you use glibc, you should get the latest 2.1 release (or pre-release)
-that you can find; look in sourceware.cygnus.com:/pub/glibc.  2.1 prereleases
-have version numbers 2.0.x where x is greater than 90.  With such a libc
-installed there should be no need to edit the Makefile or patch net-tools.
+If you use glibc, you should ensure that you have version 2.1 or later
+installed.  The 2.1 release is available from
+<ftp://sourceware.cygnus.com/pub/glibc among> other places.  With this
+version of the C library there should be no need to edit the Makefile
+or apply any patches to net-tools.
 
-Version 2.0 of glibc has no support for IPv6.  Patches did exist at one
-point but they are now seriously outdated.  Consider upgrading to glibc 2.1
-instead.
+Version 2.0 of glibc has no support for IPv6; patches did exist at one
+point but they are now seriously outdated.  Instead you should upgrade
+to glibc 2.1.
 
 BUGS
 ----
