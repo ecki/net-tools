@@ -100,9 +100,6 @@ arp_del(char **args)
   struct arpreq req;
   struct sockaddr sa;
   int flags=0;
-#if HAVE_NEW_SIOCSARP
-  struct arpreq_old old_req;
-#endif
 
   memset((char *) &req, 0, sizeof(req));
 
@@ -261,9 +258,6 @@ arp_set(char **args)
 {
   char host[128];
   struct arpreq req;
-#if HAVE_NEW_SIOCSARP
-  struct arpreq_old old_req;
-#endif
   struct sockaddr sa;
   int flags;
 
@@ -371,9 +365,7 @@ arp_set(char **args)
   /* Fill in the remainder of the request. */
   req.arp_flags = flags;
 
-#if HAVE_NEW_SIOCSARP
   strcpy(req.arp_dev,device);
-  memcpy((char *)&old_req,(char *)&req,sizeof(old_req));
 
   /* Call the kernel. */
   if (opt_v)  fprintf(stderr,"arp: SIOCSARP()\n");
@@ -382,30 +374,7 @@ arp_set(char **args)
 		perror("SIOCSARP");
 		return(-1);
 	}
-	if (opt_v)  fprintf(stderr,"arp: OLD_SIOCSARP()\n");
-	if (ioctl(sockfd, OLD_SIOCSARP, &old_req) < 0) {
-		if (errno != EINVAL) {
-			perror("OLD_SIOCSARP");
-			return(-1);
-		}
-		perror("SIOCSARP and OLD_SIOCSARP");
-		if (flags & ATF_PUBL)
-			fprintf(stderr, NLS_CATGETS(catfd, arpSet, arp_einv_pub, 
-					"Probably route to destination points to interface. See arp(8)\n"));
-		else
-			fprintf(stderr, NLS_CATGETS(catfd, arpSet, arp_einv_nopub, 
-					"No ARP Support or route to destination points to other interface. See arp(8)\n"));
-		return(-1);
-	}
   }
-#else
-  /* Call the kernel. */
-  if (opt_v)  fprintf(stderr,"arp: old_SIOCSARP()\n");
-  if (ioctl(sockfd, SIOCSARP, &req) < 0) {
-	perror("SIOCSARP");
-	return(-1);
-  }
-#endif
 
   return(0);
 }
