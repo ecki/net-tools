@@ -8,7 +8,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: arp.c,v 1.20 2001/04/08 17:05:05 pb Exp $
+ * Version:     $Id: arp.c,v 1.21 2001/05/06 02:14:07 ecki Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -499,7 +499,7 @@ static void arp_disp(char *name, char *ip, int type, int arp_flags, char *hwa, c
     if (arp_flags & ATF_PERM)
 	printf("PERM ");
     if (arp_flags & ATF_PUBL)
-	printf("PUP ");
+	printf("PUB ");
 #ifdef HAVE_ATF_MAGIC
     if (arp_flags & ATF_MAGIC)
 	printf("AUTO ");
