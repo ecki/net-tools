@@ -7,7 +7,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.12 1998/11/29 13:29:11 philip Exp $
+ * Version:     $Id: netstat.c,v 1.13 1998/12/01 09:28:09 philip Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -293,7 +293,7 @@ static int netrom_info(void)
 {
     FILE *f;
     char buffer[256], dev[16];
-    int st, vs, vr, sendq, recvq;
+    int st, vs, vr, sendq, recvq, ret;
 
     f = fopen(_PATH_PROCNET_NR, "r");
     if (f == NULL) {
@@ -309,16 +309,20 @@ static int netrom_info(void)
 	    return (0);
     }
     printf(_("Active NET/ROM sockets\n"));
-    printf(_("User       Dest       Source     Device  State        Vr/Vs  Send-Q  Recv-Q\n"));
+    printf(_("User       Dest       Source     Device  State        Vr/Vs    Send-Q  Recv-Q\n"));
     fgets(buffer, 256, f);
 
     while (fgets(buffer, 256, f)) {
 	buffer[9] = 0;
 	buffer[19] = 0;
 	buffer[29] = 0;
-	sscanf(buffer + 30, "%s %*d/%*d %*d/%*d %d %d %d %*d %*d/%*d %*d/%*d %*d/%*d %*d %*d %d %d",
+	ret = sscanf(buffer + 30, "%s %*x/%*x %*x/%*x %d %d %d %*d %*d/%*d %*d/%*d %*d/%*d %*d/%*d %*d/%*d %*d %d %d %*d",
 	       dev, &st, &vs, &vr, &sendq, &recvq);
-	printf("%-9s  %-9s  %-9s  %-6s  %-11s  %02d/%02d  %-6d  %-6d\n",
+	if (ret != 6) {
+	    printf("Problem reading data from %s\n", _PATH_PROCNET_NR);
+	    continue;
+	}
+	printf("%-9s  %-9s  %-9s  %-6s  %-11s  %03d/%03d  %-6d  %-6d\n",
 	       buffer, buffer + 10, buffer + 20,
 	       dev,
 	       _(netrom_state[st]),
@@ -915,8 +919,10 @@ static int unix_info(void)
 static int ax25_info(void)
 {
     FILE *f = fopen(_PATH_PROCNET_AX25, "r");
-    char buffer[256], dev[16];
-    int st, vs, vr, sendq, recvq;
+    char buffer[256], buf[16];
+    char *src, *dst, *dev, *p;
+    int st, vs, vr, sendq, recvq, ret;
+    int new = -1;		/* flag for new (2.1.x) kernels */
     static char *ax25_state[5] =
     {
 	N_("LISTENING"),
@@ -938,15 +944,62 @@ static int ax25_info(void)
 	    return (0);
     }
     printf(_("Active AX.25 sockets\n"));
-    printf(_("Dest       Source     Device  State        Vr/Vs  Send-Q  Recv-Q\n"));
-    fgets(buffer, 256, f);
+    printf(_("Dest       Source     Device  State        Vr/Vs    Send-Q  Recv-Q\n"));
     while (fgets(buffer, 256, f)) {
-	buffer[9] = 0;
-	buffer[19] = 0;
-	sscanf(buffer + 20, "%s %d %d %d %*d %*d/%*d %*d/%*d %*d/%*d %*d/%*d %*d %*d %d %d",
-	       dev, &st, &vs, &vr, &sendq, &recvq);
-	printf("%-9s  %-9s  %-6s  %-11s  %02d/%02d  %-6d  %-6d\n",
-	       buffer, buffer + 10,
+	if (new == -1) {
+	    if (!strncmp(buffer, "dest_addr", 9)) {
+		new = 0;
+		continue;	/* old kernels have a header line */
+	    } else
+		new = 1;
+	}
+	/*
+	 * In a network connection with no user socket the Snd-Q, Rcv-Q
+	 * and Inode fields are empty in 2.0.x and '*' in 2.1.x
+	 */
+	sendq = 0;
+	recvq = 0;
+	if (new == 0) {
+	    dst = buffer;
+	    src = buffer + 10;
+	    dst[9] = 0;
+	    src[9] = 0;
+	    ret = sscanf(buffer + 20, "%s %d %d %d %*d %*d/%*d %*d/%*d %*d/%*d %*d/%*d %*d/%*d %*d %*d %*d %d %d %*d",
+		   buf, &st, &vs, &vr, &sendq, &recvq);
+	    if (ret != 4 && ret != 6) {
+		printf("Problem reading data from %s\n", _PATH_PROCNET_AX25);
+		continue;
+	    }
+	    dev = buf;
+	} else {
+	    p = buffer;
+	    while (*p != ' ') p++;
+	    p++;
+	    dev = p;
+	    while (*p != ' ') p++;
+	    *p++ = 0;
+	    src = p;
+	    while (*p != ' ') p++;
+	    *p++ = 0;
+	    dst = p;
+	    while (*p != ' ') p++;
+	    *p++ = 0;
+	    ret = sscanf(p, "%d %d %d %*d %*d %*d %*d %*d %*d %*d %*d %*d %*d %*d %*d %*d %*d %d %d %*d",
+		   &st, &vs, &vr, &sendq, &recvq);
+	    if (ret != 3 && ret != 5) {
+		    printf("problem reading data from %s\n", _PATH_PROCNET_AX25);
+		    continue;
+	    }
+	    /*
+	     * FIXME: digipeaters should be handled somehow.
+	     * For now we just strip them.
+	     */
+	    p = dst;
+	    while (*p && *p != ',') p++;
+	    *p = 0;
+	}
+	printf("%-9s  %-9s  %-6s  %-11s  %03d/%03d  %-6d  %-6d\n",
+	       dst, src,
 	       dev,
 	       _(ax25_state[st]),
 	       vr, vs, sendq, recvq);
