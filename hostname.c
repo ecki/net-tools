@@ -32,6 +32,7 @@
  */
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include <getopt.h>
 #include <string.h>
 #include <netdb.h>
@@ -97,7 +98,6 @@ static void sethname(char *hname)
 	case EINVAL:
 	    fprintf(stderr, _("%s: name too long\n"), program_name);
 	    break;
-	default:
 	}
 	exit(1);
     };
@@ -116,7 +116,6 @@ static void setdname(char *dname)
 	case EINVAL:
 	    fprintf(stderr, _("%s: name too long\n"), program_name);
 	    break;
-	default:
 	}
 	exit(1);
     };
@@ -173,7 +172,6 @@ static void showhname(char *hname, int c)
 	    *p = '\0';
 	printf("%s\n", hp->h_name);
 	break;
-    default:
     }
 }
 
