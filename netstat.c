@@ -7,7 +7,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.9 1998/11/15 20:08:03 freitag Exp $
+ * Version:     $Id: netstat.c,v 1.10 1998/11/16 10:13:27 philip Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -129,8 +129,6 @@ int flag_ver = 0;
 FILE *procinfo;
 
 #define INFO_GUTS1(file,name,proc)			\
-  char buffer[8192];					\
-  int lnr = 0;						\
 							\
   procinfo = fopen((file), "r");			\
   if (procinfo == NULL) {				\
@@ -157,7 +155,6 @@ FILE *procinfo;
   lnr = 0;						\
   procinfo = fopen((file), "r");		       	\
   if (procinfo != NULL) {				\
-    fgets(buffer, sizeof(buffer), procinfo);		\
     do {						\
       if (fgets(buffer, sizeof(buffer), procinfo))	\
 	(proc)(lnr++, buffer);				\
@@ -172,11 +169,19 @@ FILE *procinfo;
  return(0);
 
 #define INFO_GUTS6(file,file6,name,proc)		\
- INFO_GUTS1(file,name,proc)				\
- INFO_GUTS2(file6,proc)					\
+ char buffer[8192];					\
+ int lnr = 0;						\
+ if (!flag_arg || flag_inet) {				\
+    INFO_GUTS1(file,name,proc)				\
+ }							\
+ if (!flag_arg || flag_inet6) {				\
+    INFO_GUTS2(file6,proc)				\
+ }							\
  INFO_GUTS3
 
 #define INFO_GUTS(file,name,proc)			\
+ char buffer[8192];					\
+ int lnr = 0;						\
  INFO_GUTS1(file,name,proc)				\
  INFO_GUTS3
 
@@ -303,7 +308,7 @@ static int netrom_info(void)
 	else
 	    return (0);
     }
-    printf(_("Activate NET/ROM sockets\n"));
+    printf(_("Active NET/ROM sockets\n"));
     printf(_("User       Dest       Source     Device  State        Vr/Vs  Send-Q  Recv-Q\n"));
     fgets(buffer, 256, f);
 
@@ -932,7 +937,7 @@ static int ax25_info(void)
 	else
 	    return (0);
     }
-    printf(_("Activate AX.25 sockets\n"));
+    printf(_("Active AX.25 sockets\n"));
     printf(_("Dest       Source     Device  State        Vr/Vs  Send-Q  Recv-Q\n"));
     fgets(buffer, 256, f);
     while (fgets(buffer, 256, f)) {
@@ -1289,7 +1294,7 @@ int main
     if (flag_int + flag_rou + flag_nlp + flag_mas > 1)
 	usage();
 
-    if (flag_inet)
+    if (flag_inet || flag_inet6)
 	flag_tcp = flag_udp = flag_raw = 1;
 
     flag_arg = flag_tcp + flag_udp + flag_raw + flag_unx + flag_ipx

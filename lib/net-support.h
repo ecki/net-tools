@@ -133,10 +133,11 @@ extern char afname[];
 	{"appletalk",	0,	0,	1}, \
 	{"netrom",	0,	0,	1}, \
 	{"inet",	0,	0,	1}, \
+	{"inet6",	0,	0,	1}, \
 	{"ddp",		0,	0,	1}, \
 	{"unix",	0,	0,	1}, \
 	{"tcpip",	0,	0,	1}
-#define AFTRANS_CNT 9
+#define AFTRANS_CNT 10
 
 #define EINTERN(file, text) fprintf(stderr, \
 	"%s: Internal Error `%s'.\n",file,text);
