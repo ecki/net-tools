@@ -149,6 +149,7 @@ int rprint_fib(int ext, int numeric)
 	}
   }
 
+  free(fmt); 
   (void) fclose(fp);
   return(0);
 }
@@ -160,6 +161,7 @@ int rprint_cache(int ext, int numeric)
   char mask_addr[128];
   struct sockaddr snet, sgate, smask;
   int num, iflags, metric, refcnt, use, mss, window, irtt, hh, arp;
+  char *fmt; 
 
   FILE *fp=fopen(_PATH_PROCNET_RTCACHE, "r");
 
@@ -182,6 +184,21 @@ int rprint_cache(int ext, int numeric)
 		"Flags Metric Ref    Use Iface    "
 		"MSS   Window irtt   HH  Arp\n"));
 
+  fmt = proc_gen_fmt(_PATH_PROCNET_ROUTE, fp,
+					 "Iface", "%16s",
+					 "Destination", "%128s",
+					 "Gateway", "%128s",
+					 "Flags", "%X",
+					 "RefCnt", "%d", 
+					 "Use",  "%d", 
+					 "Metric", "%d", 
+					 "Mask", "%128s",
+					 "MTU", "%d", 
+					 "Window", "%d",
+					 "IRTT", "%d", 
+					 NULL); 
+  /* "%16s %128s %128s %X %d %d %d %128s %d %d %d %d %d\n" */ 
+
   irtt=0;
   window=0;
   mss=0;
@@ -189,7 +206,7 @@ int rprint_cache(int ext, int numeric)
   arp=0;
   while (fgets(buff, 1023, fp))
   {
-	num = sscanf(buff, "%16s %128s %128s %X %d %d %d %128s %d %d %d %d %d\n",
+	num = sscanf(buff, fmt,
 		iface, net_addr, gate_addr,
 		&iflags, &refcnt, &use, &metric, mask_addr,
 		&mss,&window,&irtt,&hh,&arp);
@@ -257,6 +274,7 @@ int rprint_cache(int ext, int numeric)
 	}
   }
 
+  free(fmt); 
   (void) fclose(fp);
   return(0);
 }
