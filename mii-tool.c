@@ -208,8 +208,8 @@ int show_basic_mii(int sock, int phy_id)
     mdio_read(sock, MII_BMSR);
     for (i = 0; i < ((verbose > 1) ? 32 : 8); i++)
 	mii_val[i] = mdio_read(sock, i);
-
-    if (mii_val[MII_BMCR] == 0xffff) {
+    
+    if (mii_val[MII_BMCR] == 0xffff  || mii_val[MII_BMSR] == 0x0000) {
 	fprintf(stderr, "  No MII transceiver present!.\n");
 	return -1;
     }
