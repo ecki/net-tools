@@ -7,7 +7,7 @@
    8/2000  Andi Kleen make the list operations a bit more efficient.
    People are crazy enough to use thousands of aliases now.
 
-   $Id: interface.c,v 1.18 2001/11/10 17:10:01 ecki Exp $
+   $Id: interface.c,v 1.19 2001/11/12 01:36:48 ecki Exp $
  */
 
 #include "config.h"
@@ -843,20 +843,37 @@ void ife_print_long(struct interface *ptr)
 	tx = ptr->stats.tx_bytes;
 	short_rx = rx * 10;  
 	short_tx = tx * 10;
-	if (rx > 1048576) {
+	if (rx > 1125899906842624) {
+	    short_rx /= 1125899906842624;
+	    Rext = "PiB";
+	} else if (rx > 1099511627776) {
+	    short_rx /= 1099511627776;
+	    Rext = "TiB";
+	} else if (rx > 1073741824) {
+	    short_rx /= 1073741824;
+	    Rext = "GiB";
+	} else if (rx > 1048576) {
 	    short_rx /= 1048576;
-	    Rext = "MB";
+	    Rext = "MiB";
 	} else if (rx > 1024) {
 	    short_rx /= 1024;
-	    Rext = "kB";
+	    Rext = "KiB";
 	}
-	if (tx > 1048576) {
+	if (tx > 1125899906842624) {
+	    short_tx /= 1125899906842624;
+	    Text = "PiB";
+	} else 	if (tx > 1099511627776) {
+	    short_tx /= 1099511627776;
+	    Text = "TiB";
+	} else if (tx > 1073741824) {
+	    short_tx /= 1073741824;
+	    Text = "GiB";
+	} else if (tx > 1048576) {
 	    short_tx /= 1048576;
-	    Text = "MB";
-	}
-	else if (tx > 1024) {
+	    Text = "MiB";
+	} else if (tx > 1024) {
 	    short_tx /= 1024;
-	    Text = "kB";
+	    Text = "KiB";
 	}
 
 	printf("          ");
