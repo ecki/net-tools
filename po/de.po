@@ -1,4 +1,4 @@
-# $Id: de.po,v 1.9 2000/02/13 22:28:05 ralf Exp $
+# $Id: de.po,v 1.10 2000/08/01 03:19:48 ecki Exp $
 # German translation for net-tools 1.51
 # Copyright (C) 1999 Ralf Bächle <ralf@gnu.org>
 msgid ""
@@ -424,12 +424,12 @@ msgstr "getnodename()=,,%s''\n"
 #: ../ifconfig.c:159
 #, c-format
 msgid "%-9.9s Link encap:%s  "
-msgstr "%-9.9s  Linkverkapselung:%s  "
+msgstr "%-9.9s Protokoll:%s  "
 
 #: ../ifconfig.c:164
 #, c-format
 msgid "HWaddr %s  "
-msgstr "HWaddr %s  "
+msgstr "Hardware Adresse %s  "
 
 #: ../ifconfig.c:167
 #, c-format
@@ -443,12 +443,12 @@ msgstr "(auto)"
 #: ../ifconfig.c:176
 #, c-format
 msgid "          %s addr:%s "
-msgstr "          %s addr:%s "
+msgstr "          %s Adresse:%s "
 
 #: ../ifconfig.c:179
 #, c-format
 msgid " P-t-P:%s "
-msgstr " P-t-P:%s "
+msgstr " P-z-P:%s "
 
 #: ../ifconfig.c:182
 #, c-format
@@ -463,11 +463,11 @@ msgstr " Maske:%s\n"
 #: ../ifconfig.c:201
 #, c-format
 msgid "          inet6 addr: %s/%d"
-msgstr "          inet6 Adr: %s/%d"
+msgstr "          inet6 Adresse: %s/%d"
 
 #: ../ifconfig.c:203
 msgid " Scope:"
-msgstr " Gültigkeit:"
+msgstr " Gültigkeitsbereich:"
 
 #: ../ifconfig.c:206
 msgid "Global"
@@ -496,32 +496,32 @@ msgstr "Unbekannt"
 #: ../ifconfig.c:236
 #, c-format
 msgid "          IPX/Ethernet II addr:%s\n"
-msgstr "          IPX/Ethernet II Adr:%s\n"
+msgstr "          IPX/Ethernet II Adresse:%s\n"
 
 #: ../ifconfig.c:239
 #, c-format
 msgid "          IPX/Ethernet SNAP addr:%s\n"
-msgstr "          IPX/Ethernet SNAP Adr:%s\n"
+msgstr "          IPX/Ethernet SNAP Adresse:%s\n"
 
 #: ../ifconfig.c:242
 #, c-format
 msgid "          IPX/Ethernet 802.2 addr:%s\n"
-msgstr "          IPX/Ethernet 802.2 Adr:%s\n"
+msgstr "          IPX/Ethernet 802.2 Adresse:%s\n"
 
 #: ../ifconfig.c:245
 #, c-format
 msgid "          IPX/Ethernet 802.3 addr:%s\n"
-msgstr "          IPX/Ethernet 802.3 Adr:%s\n"
+msgstr "          IPX/Ethernet 802.3 Adresse:%s\n"
 
 #: ../ifconfig.c:255
 #, c-format
 msgid "          EtherTalk Phase 2 addr:%s\n"
-msgstr "          EtherTalk Phase 2 Adr:%s\n"
+msgstr "          EtherTalk Phase 2 Adresse:%s\n"
 
 #: ../ifconfig.c:264
 #, c-format
 msgid "          econet addr:%s\n"
-msgstr "          econet Adr:%s\n"
+msgstr "          econet Adresse:%s\n"
 
 #: ../ifconfig.c:270
 msgid "[NO FLAGS] "
@@ -608,7 +608,7 @@ msgstr "             komprimiert:%lu\n"
 #, c-format
 msgid "TX packets:%lu errors:%lu dropped:%lu overruns:%lu carrier:%lu\n"
 msgstr ""
-"Verschickte Packete:%lu Fehler:%lu Weggeworfen:%lu Überlauf:%lu Rahmen:%lu\n"
+"Verschickte Pakete:%lu Fehler:%lu Weggeworfen:%lu Überlauf:%lu Träger:%lu\n"
 
 #: ../ifconfig.c:333
 #, c-format
@@ -657,8 +657,8 @@ msgid ""
 "Usage:\n"
 "  ifconfig [-a] [-i] [-v] <interface> [[<AF>] <address>]\n"
 msgstr ""
-"Benutzung:\n"
-"  ifconfig [-a] [-i] [-v] <Interface> [[<AF>] <Adresse>]\n"
+"Syntax:\n"
+"  ifconfig [-a] [-i] [-v] <Schnittstelle> [[<AF>] <Adresse>]\n"
 
 #: ../ifconfig.c:425
 msgid "  [add <address>[/<prefixlen>]]\n"
@@ -758,7 +758,7 @@ msgstr "ECONET wird auf diesem System nicht unterstützt.\n"
 #: ../ifconfig.c:1084
 #, c-format
 msgid "Don't know how to set addresses for family %d.\n"
-msgstr "Weis nicht wie man Adressen der Familie %d setzt.\n"
+msgstr "Kann die Adressen der Familie %d nicht setzen.\n"
 
 #: ../netstat.c:383
 #, c-format
@@ -1971,7 +1971,7 @@ msgstr "in_hippi(%s): Nachfolgender Müll!\n"
 
 #: ../lib/hw.c:147
 msgid "Local Loopback"
-msgstr "Locale Schleife"
+msgstr "Lokale Schleife"
 
 #: ../lib/hw.c:150
 msgid "Serial Line IP"
@@ -2268,7 +2268,7 @@ msgstr "IPX: dies muß noch geschrieben werden\n"
 
 #: ../lib/masq_info.c:197
 msgid "IP masquerading entries\n"
-msgstr "IP-Maskeradeeinträge\n"
+msgstr "IP-Maskierungseinträge\n"
 
 #: ../lib/masq_info.c:200
 msgid "prot   expire source               destination          ports\n"
