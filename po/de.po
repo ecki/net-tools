@@ -1,4 +1,4 @@
-# $Id: de.po,v 1.10 2000/08/01 03:19:48 ecki Exp $
+# $Id: de.po,v 1.11 2003/10/25 21:15:09 ecki Exp $
 # German translation for net-tools 1.51
 # Copyright (C) 1999 Ralf Bächle <ralf@gnu.org>
 msgid ""
@@ -64,7 +64,7 @@ msgstr "Adresse\t\t\tHWTyp\tHWAdresse\t    Flags   Maske\t\t  Iface\n"
 
 #: ../arp.c:467
 msgid "(incomplete)"
-msgstr "(unvollsändig)"
+msgstr "(unvollständig)"
 
 #: ../arp.c:484
 #, c-format
