@@ -36,6 +36,7 @@ This is net-tools 1.51.  Notable changes since 1.50 include:
    the process owning a socket (option --programs)
  - Steve Whitehouse contributed support for DECnet
  - some bugs and compilation problems have been fixed
+ - Ralf Bächle provided a translation to German
 
 Notable changes since 1.49 include:
 
