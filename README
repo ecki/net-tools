@@ -1,0 +1,53 @@
+                                README
+
+                Information about the net-tools package                                
+NET-TOOLS	A collection of programs that form the base set of the
+		NET-3 networking distribution for the Linux operating
+		system.
+
+This package includes the important tools for controlling the network
+subsystem of the Linux kernel.  This includes arp, hostname, ifconfig,
+netstat, rarp and route.
+
+Please include the output of "program --version" when reporting bugs.
+
+
+Contents:
+  
+   README		This file.
+
+   README.ipv6		Notes for people hacking IPv6.
+
+   INSTALLING		Installation instructions.
+
+   COPYING		Your free copy of the GNU Public License.
+
+   TODO			Some things that need to be done.
+
+
+                          Notes
+                          -----
+
+This is net-tools 1.432.  You need kernel 2.0 or later to use these programs.
+These programs should compile cleanly with either glibc or libc5.
+
+There is no NLS support in this distribution.  The files are out of date.
+Unless a volunteer is found soon to maintain the translations, NLS will be
+dropped altogether.
+
+ipfw has been removed from the distribution.  Use ipfwadm instead; get
+it at <ftp://ftp.xos.nl/pub/linux/ipfwadm/>.
+
+route/netstat -r do not yet support different AF cleanly.  IPX/DDP/AX25
+people, please feel free to add the code.
+
+ifconfig now supports changing media types for interfaces.  This requires
+a recent 2.1.x kernel, and many devices do not support it yet.
+
+The documentation is slimmed down.  I think most of it was out of
+date.
+
+
+Phil Blundell
+philb@gnu.ai.mit.edu
+21st September 1997

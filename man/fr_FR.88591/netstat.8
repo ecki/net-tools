@@ -1,0 +1,402 @@
+.\"
+.\" netstat.8 (mdw@tc.cornell.edu & dc6iq@insu1.etec.uni-karlsruhe.de)
+.\"
+.\" I believe mdw should look up this manual page again for bad
+.\" grammar, bad spelling etc... -FB
+.\"
+.\" This man page is for Version 1.1.79 of netstat - compatible to
+.\" NET3.019
+.\"
+.TH NETSTAT 8 "9 Jan 1995" "net-tools" "Linux Programmer's Manual"
+.SH NOM
+netstat \- Affiche les connexions réseau actives
+.SH SYNOPSIS
+netstat [[-a | [-t | -u | -w]] [-n | -o] | -x] [-c]
+
+netstat -i [-a] [-c]
+
+netstat -r [-c] [-n]
+
+netstat -v
+.SH DESCRIPTION
+.B Netstat
+affiche l'état des connexions réseau concernant les prises TCP, UDP,
+RAW, ou UNIX liées au système. Par défaut,
+.B netstat
+affiche l'état des prises actives qui ne sont pas dans l'état
+"LISTEN" (i.e. connexions aux processus actifs). Pour obtenir des
+informations concernant les tables de routage du noyau,
+.B netstat
+peut être invoqué avec l'option
+.B -r
+.
+.sp
+L'affichage de Netstat comprend les informations suivantes pour
+chaque prise :
+.SS "Proto" 
+Le protocole (soit TCP, soit UDP) utilisé par la prise. 
+
+.SS "Recv-Q"
+Le nombre d'octets pas encore lu par le programme utilisateur connecté
+à cette prise.
+
+.SS "Send-Q"
+Le nombre d'octets pas encore acquittés par l'hôte distant.
+
+.SS "Local Address" 
+L'adresse locale (nom d'hôte local) et numéro de port de la
+prise. Sauf si l'option
+.B -n
+est donnée, l'adresse de la prise est traduite en nom d'hôte,
+et le numéro de port est traduit en nom de service correspondant.
+
+.SS "Adresse distante"
+L'adresse distante (nom d'hôte distant) et le numéro de port de
+la prise. Comme pour l'adresse locale et le numéro de port, l'option
+.B -n
+invalide la traduction du nom d'hôte et de service.
+
+.SS "(Etat)"
+L'état de la prise. Puisqu'il n'y a pas d'état dans le mode RAW
+et généralement pas d'état utilisé en UDP, cette colonne
+peut se trouver vierge. Normalement, on trouvera une des valeur suivante:
+.TP
+.I
+ESTABLISHED
+La prise a une connexion établie.
+.TP
+.I
+SYN_SENT
+La prise attend activement d'établir une connexion.
+.TP
+.I
+SYN_RECV
+La connexion est en cours d'initialisation.
+.TP
+.I
+FIN_WAIT1
+La prise est fermée, et la connexion est en cours de terminaison.
+.TP
+.I
+FIN_WAIT2
+La connexion est fermée, et la prise attend une terminaison du distant.
+.TP
+.I
+TIME_WAIT
+La prise attend une retransmission de terminaison de la part du distant
+après fermeture de connexion.
+.TP
+.I
+CLOSED
+La prise n'est pas utilisée.
+.TP
+.I
+CLOSE_WAIT
+Le distant a arrêté, attendant la fermeture de la prise.
+.TP
+.I
+LAST_ACK
+Le distant arrête, et la prise est fermée. Attente d'acquittement.
+.TP
+.I
+LISTEN
+La prise est à l'écoute de connexions entrantes.
+.TP
+.I
+CLOSING
+Les deux prises sont arrêtées mais toutes les données locales n'ont
+pas encore été envoyées.
+.TP
+.I
+UNKNOWN
+L'état de la prise est inconnue.
+.PP
+.sp
+Si
+.B netstat
+est invoqué avec l'option
+.B -o
+, des informations supplémentaires seront affichées après l'état.
+Ces informations sont fournies comme suit : "nb octets rx-retransmission"
+"nb octets tx-retransmission" "état timer" "(temps/recul)". L'état du
+Timer peut maintenant être soit `on', soit `off'.  Le temps (en secondes)
+affiché correspond à la durée avant expiration. Toutes ces
+options sont sujettes à suppresion dans les version ultérieures du
+paquetage `NET'.
+.sp
+Invoqué avec l'option
+.B -x
+,
+.B netstat affiche une liste de toutes les prises de communication actives
+de la famille UNIX.
+.sp
+L'affichage de netstat inclut les informations suivantes pour chaque prise :
+.SS "Proto" 
+Le protocole (habituellement UNIX) utilisé par la prise.
+\"
+\" To mdw, FvK: I don't believe there are other protocols than "0", right ?
+\" >>>FVK>>> Correct.
+\"
+.SS "CptRef"
+Le nombre de références (i.e. processus attachés via cette prise).
+
+.SS "Options"
+La seule option affichée est SO_ACCEPTON (affichée ACC) autrement
+laissé vierge. SO_ACCECPTON est utilisé pour les prises
+non-connectées si les processus correspondant sont en attente de
+demande de connexion. Les autres options sont d'un intérêt limité
+et ne sont pas affichées.
+
+.SS "Type"
+Il y a différents types d'accès aux prises :
+.TP
+.I
+SOCK_DGRAM
+La prises est utilisée en mode Datagram (sans connexion).
+.TP
+.I
+SOCK_STREAM
+C'est une prise `stream' (connexion).
+.TP
+.I
+SOCK_RAW
+La prises utilisée est une prise en mode `raw'.
+.TP
+.I
+SOCK_RDM
+Celle-ci est utilisée pour les messages délivrée de manière fiable.
+.TP
+.I
+SOCK_SEQPACKET
+C'est une prises en mode paquets séquentiels.
+.TP
+.I
+SOCK_PACKET
+Prise d'accès à l'interface RAW.
+.TP
+.I
+UNKNOWN
+Qui sait ce que l'avenir nous réserve - Juste à remplir ici :-)
+.PP
+.SS "Etat"
+Ce champ contient un des mots clés suivants :
+.TP
+.I
+FREE
+La prises n'est pas allouée
+.TP
+.I
+LISTENING
+La prises est à l'écoute de demandes de connexions.
+.TP
+.I
+UNCONNECTED
+La prise n'est pas connctée à une autre.
+.TP
+.I
+CONNECTING
+La prise est en cours d'établissement de connexion.
+.TP
+.I
+CONNECTED
+La prise est connectée.
+.TP
+.I
+DISCONNECTING
+La prise est en cours de déconnexion.
+.TP
+.I
+UNKNOWN
+Cet état ne devrait jamais arriver.
+.SS "Chemin"
+Ceci affiche le chemin du processus attaché à la prises.
+.PP
+.sp
+La table de routage réseau (invoqué avec
+.B netstat -r
+) montre les informations suivantes :
+.SS Destination réseau/adresse
+Affiche l'adresse destination d'un hôte ou d'un réseau saisi
+manuellement.  Sauf si l'option
+.B -n
+est donnée, les hôtes ou réseaux sont traduits en noms. une entrée
+nommée "default" décrit la route par défaut pour le noyau.
+.SS Passerelle
+S'il n'y a pas d'étoile ('*') - toute donnée sera routée
+vers la passerelle concernée.
+.SS Opts
+Lest options de routage possibles sont :
+.TP
+.I
+U
+Cette route est utilisable
+.TP
+.I
+G
+La destination est une passerelle
+.TP
+.I
+H
+La destination est un hôte
+.TP
+.I
+R
+La route sera rétablie après time-out
+.TP
+.I
+D
+Route créée dynamiquement (par redirection)
+.TP
+.I
+M
+Route modifiée dynamiquement (par redirection)
+.SS CptRef
+Nombre de références pour cette route
+.SS Use
+Nombre de fois que cette route a été utilisée
+.SS Iface
+Nom de l'interface, à laquelle la route appartient
+.PP
+.sp
+La table de statistiques des périphériques (invoquée avec
+.B netstat -i
+) affiche des informations sur les interfaces :
+.SS Iface
+Le nom de cette interface.
+.SS MTU
+Taille maximum pour transmission sur cette interface. Ce devrait être
+la taille des données transférées sur cette interface sans
+l'en-tête spécifique.
+.SS RX-OK
+paquets reçus sans erreur par cette interface.
+.SS RX-ERR
+paquets erronés.
+.SS RX-DRP
+paquets reçus, abandonnés (du à un manque mémoire ?).
+.SS RX-OVR
+paquets impossible à recevoir si rapidement.
+.SS TX-OK
+paquets transmis sans erreur via cette interface.
+.SS TX-ERR
+paquets transmis erronés.
+.SS TX-DRP
+paquets transmis abandonnés.
+.SS TX-OVR
+paquets impossibles à transmettre.
+.SS Flags
+On pourra trouver aussi les options suivantes :
+.TP
+.I
+A
+Cette interface recevra toutes les adresses Multicast.
+.TP
+.I
+B
+Broadcasts acceptés.
+.TP
+.I
+D
+Le débogage est validé.
+.TP
+.I
+L
+L'interface est une boucle.
+.TP
+.I
+M
+Tous les paquets sont reçus (mode promiscuité).
+.TP
+.I
+N
+Pas de d'encapsulation des trames (Trailers).
+.TP
+.I
+O
+Pas de Protocole de Résolution d'Adresse (ARP) sur cette interface.
+.TP
+.I
+P
+L'interface est une connexion point-à-point.
+.TP
+.I
+R
+L'interface fonctionne.
+.TP
+.I
+U
+L'interface est montée (UP).
+.PP
+.SS Options
+.PP
+.TP
+\fB-a\fP
+Affiche des informations sur toutes les prises internet, i.e. TCP, UDP, RAW
+et UNIX y compris les prises qui sont seulement à l'écoute.
+.TP
+.B -i
+Affiche des statistiques sur les périphériques réseau.
+.TP
+.B -c
+Génère un listage continu de l'état du réseau: l'affichage
+est répété toutes les secondes jusqu'à interruption du programme.
+.TP
+.B -n
+invite netstat à ne pas traduire les adresses locales et distantes
+en noms d'hôtes, ni les numéros de ports en noms de services.
+.TP
+.B -o
+Affiche les états des timers, temps avant expiration et état de recul.
+.TP
+.B -r
+Affiche les tables de routage du noyau.
+.TP
+.B -t
+Affiche des informations sur les prises TCP uniquement, y comprises celles
+en écoute.
+.TP
+.B -u
+Affiche des informations sur les prises UDP uniquement.
+.TP
+.B -v
+Affiche les informations sur la version.
+.TP
+.B -w
+Affiche des informations sur les prises RAW.
+.TP
+.B -x
+Affiche des informations sur les prises du domaine UNIX.
+.PP
+.SH FICHIERS
+.ta
+.I /etc/services
+-- Le fichier de correspondance des services
+
+.I /proc/net/socket
+-- informations périphériques
+
+.I /proc/net/raw
+-- informations prises RAW
+
+.I /proc/net/route
+-- information routage noyau
+
+.I /proc/net/tcp
+-- informations prises TCP
+
+.I /proc/net/udp
+-- informations prises UDP
+
+.I /proc/net/unix
+-- informations prises domaine UNIX
+.fi
+.SH BUGS
+Des informations étranges peuvent apparaitre occasionnellement
+si une prises change d'état au moment ou elle est visualisée.
+Ceci est peut probable.
+.SH AUTEURS
+L'interface utilisateur de netstat a été développée par
+Fred Baumgarten <dc6iq@insu1.etec.uni-karlsruhe.de>. Les pages du
+manuel essentiellement écrites par Matt Welsh
+<mdw@tc.cornell.edu>. Mis à jour par Alan Cox <Alan.Cox@linux.org>.
+.SH TRADUCTION
+Jean Michel VANSTEENE (J.M.Vansteenefrcl.bull.fr)

@@ -1,0 +1,101 @@
+.TH ARP 8 "05 Feb 1995" "net-tools" "Linux Programmer's Manual"
+.SH NOM
+arp \- manipule la table ARP du système
+.SH SYNOPSIS
+.B "arp [-vn] [-H type] -a [nom_d_hôte]"
+.br
+.B "arp [-v] -d nom_d_hôte ..."
+.br
+.B "arp [-v] [-H type] -s nom_d_hôte hw_addr [temp] [netmask aa.bb.cc.dd] [pub]"
+.br
+.B "arp [-v] -f nom_de_fichier"
+.SH DESCRIPTION
+.B Arp
+manipule la table ARP du noyau de différentes façons.  Les options principales
+permettent d'effacer une correspondance d'adresses   et d'en définir
+une manuellement.
+Pour les besoins de débogage, le programme
+.B arp
+permet aussi d'effectuer un dump complet de la table ARP.
+.SH OPTIONS
+.TP
+.B \-v
+Dit à l'utilisateur ce qui se passe en étant verbeux.
+.TP
+.B \-n
+shows numerical addresses instead of trying to determine symbolic host names.
+.TP
+.B "\-H type"
+En positionnant ou lisant les entrées ARP, ce paramètre optionnel dit
+à 
+.B arp
+quel type d'entrées il doit contrôler.  La valeur par défaut de
+ce paramètre est
+.B ether
+(i.e. code de matériel
+.B 0x01
+pour
+.B "IEEE 802.3 10Mbps Ethernet".
+D'autres valeurs doivent correspondre à des technologies réseaux telles que
+.B ARCnet (arcnet)
+,
+.B PROnet (pronet)
+et
+.B AX.25 (ax25).
+.TP
+.B "\-a [nom_d_hôte]"
+Montre les entrées concernant l'hôte spécifié.  Si le paramètre
+.B nom_d_hôte
+n'est pas utilisé,
+.B toutes
+les entrées seront affichées.
+.TP
+.B "\-d nom_d_hôte"
+Enlève une entrée pour l'hôte spécifié.  Ceci peut être
+utilisé si l'hôte concerné ne fonctionne plus, par exemple.
+.TP
+.B "\-s hostname adr_mat"
+Crée manuellement une correspondance d'adresses ARP pour l'hôte
+.B nom_d_hôte
+avec l'adresse matérielle positionnée à
+.B adr_mat.
+Le format de l'adresse matérielle est dépendant du matériel,
+mais pour la plupart on peut considérer que la présentation classique
+peut être utilisée.  Pour la classe Ethernet, c'est 6 octets en hexadécimal,
+séparés par des double-points. Pour ajouter des entrées proxy-arp
+(Ce sont celles avec le drapeau [pub]lish positionné)
+un masque réseau peut être spécifié au proxy-arp pour le
+sous-réseau entier. Proxy arp pour le routage de réseaux entiers
+n'est pas un bon protocole, mais c'est parfois intéressant de le supporter.
+.TP
+.B "\-f nom_de_fichier"
+Similaire à l'option 
+.B \-s
+, mais cette fois les informations d'adresses sont prises dans le fichier
+.B nom_de_fichier.
+Ceci peut être utilisé si les entrées ARP à configurer sont
+nombreuses.  Le nom du fichier de données est très souvent nommé
+.B /etc/ethers
+, mais ce n'est pas officiel.
+.sp 1
+Le format du fichier est simple; Il contient
+seulement des lignes de texte ASCII avec un nom d'hôte, et une adresse
+matérielle, le tout séparés par des espaces.
+.LP
+A tous les endroits où un
+.B nom d'hôte
+est attendu, on peut aussi entrer une
+.B "addresse IP"
+en notation décimale séparée par des points.
+.SH FICHIERS
+.I /proc/net/arp,
+.br
+.I /etc/ethers
+.SH AUTEUR
+Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
+.br
+Maintainer of the net-tools Bernd Eckenfels <net-tools@lina.inka.de>
+.SH BUGS
+Support for non-ether hardware addresses is not yet tested/implemented.
+.SH TRADUCTION
+Jean Michel VANSTEENE (vansteen@frcl.bull.fr)

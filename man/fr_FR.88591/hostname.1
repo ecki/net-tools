@@ -1,0 +1,85 @@
+.TH HOSTNAME 1 "28 July 1994" "net-tools" "Linux Programmer's Manual"
+.SH NOM
+hostname \- affiche ou définit le nom d'hôte du système
+.br
+dnsdomainname \- affiche le nom de domaine du système
+.SH SYNOPSIS
+.B hostname
+.RB [ \-d ]
+.RB [ \-\-domain ]
+.RB [ \-F\ nom_de_fichier ]
+.RB [ \-\-file\ nom_de_fichier ]
+.RB [ \-f ]
+.RB [ \-\-fqdn ]
+.RB [ \-h ]
+.RB [ \-\-help ]
+.RB [ \-\-long ]
+.RB [ \-s ]
+.RB [ \-\-short ]
+.RB [ \-v ]
+.RB [ \-\-version ]
+.RB [ nom ]
+.br
+.B dnsdomainname
+.SH DESCRIPTION
+.B Hostname
+est le programme utilisé soit pour définir le nom d'hôte, soit
+pour visualiser le nom d'hôte ou de domaine du système. Ce nom est
+utilisé par différents programmes réseaux pour identifier la machine.
+.LP
+Appelé sans argument, le programme affiche le nom courant, tel que
+définit à l'aide de la commande
+.B hostname.
+Vous pouvez changer le format de sortie pour afficher soit la forme
+courte, soit la forme longue du nom d'hôte (FQDN). Appelé avec un
+argument, le programme définit la valeur du nom d'hôte à la
+valeur fournie. C'est généralement fait une seule fois, au
+démarrage du système, par le script de configuration
+.I /etc/rc.d/rc.inet1.
+.LP
+Notez que seul le super-utilisateur peut changer le nom d'hôte.
+.LP
+Si c'est le programme
+.B dnsdomainname
+qui est appelé, il affichera le nom de domaine DNS. Vous ne pouvez pas
+changer le nom de domaine DNS avec
+.B dnsdomainname
+(voir après).
+.SH OPTIONS
+.TP
+.I "\-a, \-\-alias"
+Display the alias name of the host (if used).
+.TP
+.I "\-d, \-\-domain"
+Affiche le nom de domaine DNS. N'utilisez pas la commande
+.B domainname
+pour récupérer le nom de domaine DNS parce qu'elle affichera en fait
+le nom de domaine NIS et non pas le non DNS.
+.TP
+.I "\-F, \-\-file nom_de_fichier"
+Lit le nom d'hôte dans le fichier spécifié. Les commentaires
+(lignes commençant avec un `#') sont ignorés.
+.TP
+.I "\-f, \-\-fqdn, \-\-long"
+Affiche le nom complet FQDN (Fully Qualified Domain Name). Un FQDN consite
+en un nom d'hôte court et un nom de domaine DNS. Sauf si vous
+utilisez "bind" ou NIS pour la recherche des hôtes vous pouvez changer
+le FQDN et le nom de domaine DNS (qui fait partie du FQDN) dans le fichier \fI/etc/hosts\fR.
+.TP
+.I "\-h, \-\-help"
+Affiche un message d'utilisation sur la sortie standard et termine.
+.TP
+.I "\-i, \-\-ip-address"
+Display the IP address(es) of the host.
+.TP
+.I "\-s, \-\-short"
+Affiche le nom d'hôte en format court.
+.TP
+.I "\-v, \-\-version"
+Affiche les informations sur la version sur la sortie standard et termine.
+.SH FICHIERS
+.B /etc/hosts
+.SH AUTHOR
+Peter Tobias, <tobias@et-inf.fho-emden.de>
+.SH TRADUCTION
+Jean Michel VANSTEENE (vansteen@frcl.bull.fr)

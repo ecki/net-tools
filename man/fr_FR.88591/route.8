@@ -1,0 +1,164 @@
+.TH ROUTE 8 "14 Jun 1994" "net-tools" "Linux Programmer's Manual"
+.SH NAME
+route \- affiche / manipule la table de routage IP
+.SH SYNOPSIS
+.B "route [ -vn ]"
+.TP
+.B "route [ -v ] add [ -net | -host ] XXXX [gw GGGG] [metric MMMM] [netmask NNNN] [mss NNNN] [window NNNN] [dev DDDD]"
+.LP
+.B "route [ -v ] del XXXX"
+.SH DESCRIPTION
+.B Route
+manipule la table de routage IP du noyau.  Son utilisation première
+consiste à configurer des routes statiques vers des hôtes ou des réseaux
+via une interface, après sa configuration par le programme
+.B ifconfig(8).
+Cette version de
+.B route
+est prévue seulement pour fonctionner avec les noyaux à partir de la
+version 0.99pl14n.
+.SH OPTIONS
+.TP
+.B (aucun)
+Affiche la table de routage du noyau, en listant successivement l'adresse
+destination, la passerelle, le masque réseau pour la route ("Masque"), les
+options (U = Up, H = Host (Hôte), G = Gateway (Passerelle), D = dynamic,
+M = Modified), la métrique (pas encore supportée), Ref, Use et Iface
+(i.e. à quel périphérique la route correspond). 
+.TP
+.B -n
+comme précédemment, mais affiche les adresses numériques, au lieu
+d'essayer de déterminer les noms d'hôtes. C'est utile si vous essayer de
+savoir pourquoi la route vers votre serveur de nom a disparu.
+.TP
+.B -v
+est une option pour le mode
+.BR verbeux 
+(pas vraiment utilisée). 
+.TP
+.B del XXXX
+efface la route associée à l'adresse destination XXXX. 
+.TP 
+.B add [ -net | -host ] XXXX [gw GGGG] [metric MMMM] [netmask NNNN] [window WWWW] [dev DDDD]
+ajoute une route vers l'adresse IP XXXX. La route est une route réseau si
+(a) le modificateur 
+.B -net
+est utilisé ou (b) XXXX est trouvé dans
+.B /etc/networks
+par la function 
+.B getnetbyname() 
+et si le modificateur 
+.B -host
+n'est pas utilisé. 
+
+L'argument 
+.B gw GGGG
+signifie que tout paquet IP envoyé à cette adresse  sera routé par
+la passerelle spécifiée.
+.B NOTE:
+La passerelle concernée doit pouvoir être atteinte. Ceci signifie
+qu'une route statique vers cette passerelle doit préalablement exister.
+
+Le modificateur 
+.B metric MMMM
+n'est pas encore implémenté (et avec l'option 
+.B -v
+émet un message d'avertissement).
+
+Le modificateur 
+.B netmask NNNN
+spécifie le masque réseau de la route à ajouter. Ceci n'a de sens que
+pour une route réseau, et lorsque l'adresse XXXX elle-même permet un tel
+masque. Si aucun masque n'est donné,
+.B route
+en crée un par défaut, donc, pour la plupart des configurations, vous n'avez
+pas besoin d'en donner. 
+
+Le modificateur 
+.B mss NNNN
+spécifie le MSS (Maximum Segment Size, Taille maximum de segment) de TCP,
+pour la route à ajouter. Ce n'est normalement utilisé que pour des
+optimisations fines des configurations de routage.
+
+Le modificateur 
+.B window NNNN
+spécifie la fenêtre TCP pour la route à ajouter. C'est typiquement
+utilisé sur les réseaux AX.25 et avec les pilotes incapables de manipuler
+les adossements de trames.
+
+Le modificateur 
+.B dev DDDD
+permet de forcer l'association entre la route et le périphérique
+spécifié, sans quoi le noyau essaierait de le déterminer seul, par
+un contrôle des routes existantes et des associations déjà effectuées.
+Dans la plupart des réseaux, ceci n'est pas nécessaire.
+
+Si 
+.B dev DDDD
+est la dernière option de la ligne de commande, le mot clé 
+.B dev
+peut être omis, puisque c'est sa position par défaut.
+Autrement, l'ordre dans lequel sont donnés les modificateurs
+(metric - netmask - gw - dev) n'a pas d'importance.
+
+.SH EXEMPLES
+.TP
+.B route add -net 127.0.0.0
+ajoute l'entrée pour la boucle locale, en utilisant le masque 255.0.0.0
+(Réseau de classe A,
+déterminé à partir de l'adresse destination) et associée avec le
+périphérique 
+.B lo
+(considérant que ce périphérique a été préalablement configuré
+correctement avec
+.B ifconfig(8)
+). 
+.TP 
+.B route add -net 192.56.76.0 netmask 255.255.255.0 dev eth0
+ajoute une route vers le réseau 192.56.76.x via 
+.B eth0.
+Le modificateur de masque réseau pour la classe C n'est pas vraiment
+nécessaire, puisque 192.* est une adresse IP de classe C. Le mot
+.B dev
+peut être omis. 
+.TP
+.B route add default gw mango-gw
+ajoute une route par défaut (qui sera utilisée si aucune autre route ne
+correspond).
+Tous les paquets empruntant cette route passeront à travers la passerelle
+"mango-gw". Le périphérique qui sera utilisé pour cette route
+dépend de la façon d'atteindre "mango-gw" - La route statique vers "mango-gw"
+devra être configurée avant.
+.TP
+.B route add ipx4 sl0
+.TP 
+.B route add -net 192.57.66.0 netmask 255.255.255.0 gw ipx4
+Cette séquence de commandes ajoute une route vers l'hôte "ipx4" via
+l'interface SLIP (considérant que "ipx4" est un hôte SLIP), puis ajoute
+une route vers le réseau 192.57.66.0 dont la passerelle sera cet hôte.
+.TP
+.B route add 224.0.0.0 netmask 240.0.0.0 dev eth0
+Cette commande étrange permet de configurer toutes les routes IP de classe D
+(multicast) via eth0. C'est la configuration normale et correcte pour un noyau
+multicast. 
+.LP
+.SH FICHIERS
+.I /proc/net/route
+.br
+.I /etc/networks
+.br
+.I /etc/hosts
+.SH VOIR AUSSI
+.I ifconfig(8)
+.SH HISTORIQUE
+.B Route
+pour Linux a été originellement écrit par Fred N.  van Kempen,
+<waltje@uwalt.nl.mugnet.org> puis modifié par Johannes Stille et
+Linus Torvalds pour pl15. Alan Cox a ajouté les options concernant la gestion
+des fenêtres et MSS pour Linux 1.1.22.
+.SH BUGS
+Alan devra ajouter l'option 'irtt' (initial round trip time, c.a.d le
+temps d'aller et retour initial) pour des liens (AX.25/NetROM). Malheureusement
+la modification doit d'abord être faite dans le noyau.
+.SH TRADUCTION
+Jean-Michel VANSTEENE (J.M.Vansteene@frcl.bull.fr)

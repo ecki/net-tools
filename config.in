@@ -1,0 +1,83 @@
+#
+# config.in	Configure.sh source for the net-tools.
+#		This file contains the definition of what the support
+#		library contains.  Most of all, it defines which types
+#		of address families and hardware we know of.
+#
+# NET-TOOLS	A collection of programs that form the base set of the
+#		NET-3 Networking Distribution for the LINUX operating
+#		system.
+#
+# Version:	config.in 1.04	(96-04-24)
+#
+# Author:	Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
+#		Copyright 1988-1993 MicroWalt Corporation
+#
+#		Bernd 'eckes' Eckenfels <net-tools@lina.inka.de>
+#
+# Modified:
+#	{1.01}	Bernd Eckenfels:	generates more verbose config.h file
+#960125	{1.02}	Bernd Eckenfels:	reordered
+#960215 {1.03}	Bernd Eckenfels:	NET/ROM (Jonathan)
+#960424 {1.04}	Bernd Eckenfels:	NLS disabled, FR added
+#
+#		This program is free software; you can redistribute it
+#		and/or  modify it under  the terms of  the GNU General
+#		Public  License as  published  by  the  Free  Software
+#		Foundation;  either  version 2 of the License, or  (at
+#		your option) any later version.
+#
+= /*
+=  * config.h	Automatically generated configuration includefile
+=  *
+=  * NET-TOOLS	A collection of programs that form the base set of the
+=  *		NET-3 Networking Distribution for the LINUX operating
+=  *		system.
+=  *
+=  *		DO  NOT  EDIT  DIRECTLY
+=  *
+=  * Version:	Generated from "config.in 1.04 (96-04-24)"
+=  */
+#*
+#*
+#*                     NLS
+#*
+#*           (National Language Support)
+#*
+#* In this BETA Release the NLS is disabled, cause the catalougs
+#* are completely outdated.
+#*
+#
+#
+#= #define NLS 0
+#
+#
+# * (answer 'n' if you haye no system with national language support)
+# *
+# bool 'Does your system support NLS?' NLS n
+#: Does your system support NLS? (NLS) [n] NO
+*
+*
+*             Protocol Families.
+* 
+bool 'UNIX protocol family' HAVE_AFUNIX y
+bool 'INET (TCP/IP) protocol family' HAVE_AFINET y
+bool 'INET6 (IPv6) protocol family' HAVE_AFINET6 n
+bool 'Novell IPX/SPX protocol family' HAVE_AFIPX y
+bool 'Appletalk DDP protocol family' HAVE_AFATALK y
+bool 'AX25 (Packet Radio) protocol family' HAVE_AFAX25 y
+bool 'NET/ROM (Packet Radio) protocol family' HAVE_AFNETROM y
+*
+*
+*            Device Hardware types.
+*
+bool 'Ethernet (generic) support' HAVE_HWETHER y
+bool 'ARCnet support' HAVE_HWARC y
+bool 'SLIP (serial line) support' HAVE_HWSLIP y
+bool 'PPP (serial line) support' HAVE_HWPPP y
+bool 'IPIP Tunnel support' HAVE_HWTUNNEL y
+bool 'Token ring (generic) support' HAVE_HWTR y
+bool 'AX25 (Packet Radio) support' HAVE_HWAX25 y
+bool 'NET/ROM (Packet Radio) support' HAVE_HWNETROM y
+bool 'DLCI/FRAD (Frame Relay) support' HAVE_HWFR y
+bool 'SIT (IPv6-in-IPv4) support' HAVE_HWSIT n

@@ -1,0 +1,26 @@
+Tue Sep 23 20:58:27 1997  Philip Blundell  <Philip.Blundell@pobox.com>
+
+	* ifconfig.c (if_getstats): use _PATH_PROCNET_DEV rather than
+ 	hardcoding.
+	* lib/pathnames.h (_PATH_PROCNET_DEV): define.
+
+	* ifconfig.c (set_flag): tidy up.
+	(clr_flag): likewise.
+
+Sun Sep 21 18:26:24 1997  Philip Blundell  <Philip.Blundell@pobox.com>
+
+	* Makefile (RELEASE): set to 1.432
+	* version.h (RELEASE): likewise.
+
+	* TODO: updated.
+	* README: likewise.
+
+	* ifconfig.c (set_flag): print error message if no such interface.
+	(clr_flag): likewise.
+
+	* lib/net-features.h: remove ipfw stuff, add INET6
+	
+	* netstat.c: include <net/route.h> for net-features.  Patch by
+ 	Roderich Schupp <rsch@ExperTeam.de> 
+	* route.c: likewise.
+	

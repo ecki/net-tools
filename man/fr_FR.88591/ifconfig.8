@@ -1,0 +1,152 @@
+.TH IFCONFIG 8 "17 February 1995" "net-tools" "Linux Programmer's Manual"
+.SH NOM
+ifconfig \- configure une interface réseau
+.SH SYNOPSIS
+.B "ifconfig [interface]"
+.br
+.B "ifconfig interface [aftype] options | adresse ..."
+.SH DESCRIPTION
+.B Ifconfig
+est utilisé pour configurer (et maintenir ensuite) les interfaces
+réseau résidentes dans le noyau.  Il est utilisé lors du boot pour
+configurer la plupart d'entre-elles et ainsi rendre le système
+opérationnel.  Après, ce n'est quasiment plus utilisé que pour
+le débogage ou pour des réglages si nécessaire.
+.LP
+Si aucun argument n'est donné,
+.B ifconfig
+affiche simplement l'état des interfaces actuellement définies. Si
+seul le paramètre
+.B interface
+est donné, il affiche seulement l'état de l'interface correspondante.
+Autrement, il considère qu'il faut positionner de nouvelles valeurs.
+.SH Familles d'adresses
+Si le premier argument après le nom de l'interface est reconnu comme
+étant un nom de famille d'adresses supporté, cette famille d'adresses
+est utilisée pour décoder et afficher toutes les adresses
+protocolaires.  Les familles d'adresses actuellement supportées comprennent
+.B inet
+(TCP/IP, default) 
+.B ax25
+(AMPR Packet Radio.) 
+.B ddp
+(Appletalk Phase 2) and
+.B ipx
+(Novell IPX).
+.SH OPTIONS
+.TP
+.B interface
+Le nom de l'interface réseau.  C'est généralement un nom comme
+.B eth0
+,
+.B sl3
+ou quelque chose comme cela: un nom de pilote de périphérique suivi
+par un numéro d'unité.
+.TP
+.B up
+Cette option active l'interface.  Elle est implicitement spécifiée
+si une nouvelle adresse est affectée à l'interface (voir plus loin).
+.TP
+.B down
+Cette option arrête le fonctionnement du pilote pour cette interface, et
+est utilisée lorsque les choses commencent à aller mal.
+.TP
+.B "[\-]arp"
+Valide ou invalide l'utilisation du protocole ARP sur cette interface. Si
+le signe moins (\-) est présent, l'option est invalidée.
+.TP
+.B "[\-]trailers"
+Valide ou invalide l'utilisation d'infos complémémentaires (pistage) sur les
+trames Ethernet.  Ceci n'est pas utilisé dans l'implémentation actuelle.
+.TP
+.B "[\-]allmulti"
+Valide ou invalide le fonctionnement de l'interface en mode
+.B promiscuité
+.  Ceci signifie que toutes les trames entrantes sont envoyées à la
+couche réseau du noyau, permettant la surveillance du réseau.
+.TP
+.B "metric N"
+Ce paramètre définit la métrique de l'interface. Il n'est pour
+l'instant pas implémenté, mais le sera prochainement.
+.TP
+.B "mtu N"
+Ce     paramètre  définit le  MTU     (Maximum  Transfer Unit)  d'une
+interface. Pour  Ethernet, c'est un nombre  compris entre 1000 et 2000 (par
+défaut 1500).  Pour SLIP,  utilisez une  valeur  comprise entre  200  et
+4096. Notez que l'implémentation actuelle  ne gère pas les  fragments
+au niveau  IP, donc il est mieux  de mettre le  MTU à  la valeur la plus
+grande.
+.TP
+.B "dstaddr adr"
+Définit l'adresse IP de "l'autre bout" dans le cas d'un lien
+point-à-point, comme PPP. Ce mot clé est rendu obsolète par le mot
+clé pointopoint.
+.TP
+.B "netmask adr"
+Définit le masque de réseau IP pour cette interface. La valeur par
+défaut de cette valeur correspond au masque réseau usuel pour les
+classes A, B ou C (déduite de l'adresse IP), mais toute autre valeur peut
+être définie selon les besoins en sous-réseaux.
+.TP
+.B "irq adr"
+Définit la ligne d'interruption utilisée par ce
+périphérique. Certains périphériques ne supportent pas le
+changement dynamique de l'IRQ.
+.TP
+.B "[-]broadcast [adr]"
+Si l'adresse est également donnée, définit l'adresse broadcast
+protocolaire pour cette interface. Autrement, if définit seulement
+l'option
+.B IFF_BROADCAST
+de l'interface. Si le mot clé est précédé d'un signe moins
+.B (-)
+, l'option est retirée.
+.TP
+.B "[-]pointopoint [adr]"
+Ce mot clé valide le mode
+.B point-à-point
+d'une interface, signifiant qu'il existe un lien direct entre 2 machines,
+sans personne d'autre n'écoutant (en tout cas, je souhaite que ce
+soit le cas, :-) )
+.br
+Si l'argument d'adresse est également donné, il définit l'adresse
+de l'autre machine, de la même manière que le paramètre
+obsolète
+.B dstaddr.
+Autrement il définit seulement l'option
+.B IFF_POINTOPOINT
+de l'interface.  Si le mot clé est précédé d'un signe moins
+.B (-)
+l'option est retirée.
+.TP
+.B hw
+Définit l'adresse matérielle de l'interface, si le pilote du
+périphérique supporte cette opération. Le mot clé doit être
+suivi du nom de la classe matérielle et de l'adresse matérielle en
+caractères imprimables ASCII. Les classes matérielles actuellement
+supportées comprennent 
+.B ether
+(Ethernet),
+.B ax25
+(AMPR AX.25), et
+.B ARCnet.
+.TP
+.B multicast
+Définit l'option multicast sur l'interface. Elle n'est
+généralement pas nécessaire puisque les pilotes positionnent
+l'option correcte eux même.
+.TP
+.B adresse
+Le nom d'hôte ou l'adresse IP (le nom d'hôte correspond à une
+adresse IP) de cette interface.  Ce paramètre est nécessaire,
+bien que la syntaxe ne la demande pas.
+.SH FICHIERS
+.I /proc/net/socket /proc/net/dev
+.SH BUGS
+Même si les adresses appletalk DDP et IPX peuvent être affichées,
+elles ne peuvent être modifiées avec cette commande.
+.SH AUTHORS
+Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
+Alan Cox, <Alan.Cox@linux.org>
+.SH TRADUCTION
+Jean-Michel VANSTEENE (J.M.Vansteene@frcl.bull.fr)
