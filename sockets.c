@@ -28,7 +28,7 @@ int sockets_open(int family)
 		force = 0;   
 		if (kernel_version() < KRELEASE(2,1,0))
 			force = 1;  
-		if (access("/proc",R_OK))
+		if (access("/proc/net",R_OK))
 			force = 1;
 	}
 	for (aft = aftypes; *aft; aft++) {
