@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.43 2000/10/26 03:19:06 ak Exp $
+ * Version:     $Id: ifconfig.c,v 1.44 2001/02/12 21:06:47 pb Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -312,13 +312,13 @@ int main(int argc, char **argv)
     else 
 	ap = get_aftype(DFLT_AF);
 	
-    if(ap) {
+    if (ap) {
 	addr_family = ap->af;
     	if ((fd=sockets_open(addr_family)) < 0) {
 		perror("family socket");
 		exit(1);
     	} else {
-    		if (skfd) close(skfd);
+    		if (skfd > 0 && skfd != fd) close(skfd);
     		skfd = fd;
     	}
     }

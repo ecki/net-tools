@@ -32,7 +32,7 @@ Contents:
                           Notes
                           -----
 
-This is net-tools 1.58.
+This is net-tools 1.59.
 
 You need kernel 2.0 or later to use these programs.  These programs
 should compile cleanly with both glibc (version 2.0 or 2.1) and libc5,
