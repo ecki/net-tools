@@ -7,7 +7,7 @@
    8/2000  Andi Kleen make the list operations a bit more efficient.
    People are crazy enough to use thousands of aliases now.
 
-   $Id: interface.c,v 1.13 2000/12/19 01:36:27 ecki Exp $
+   $Id: interface.c,v 1.14 2001/02/10 19:31:15 pb Exp $
  */
 
 #include "config.h"
@@ -239,7 +239,7 @@ static int get_dev_fields(char *bp, struct interface *ife)
     switch (procnetdev_vsn) {
     case 3:
 	sscanf(bp,
-	"%lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu",
+	"%llu %llu %lu %lu %lu %lu %lu %lu %llu %llu %lu %lu %lu %lu %lu %lu",
 	       &ife->stats.rx_bytes,
 	       &ife->stats.rx_packets,
 	       &ife->stats.rx_errors,
@@ -259,7 +259,7 @@ static int get_dev_fields(char *bp, struct interface *ife)
 	       &ife->stats.tx_compressed);
 	break;
     case 2:
-	sscanf(bp, "%lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu",
+	sscanf(bp, "%llu %llu %lu %lu %lu %lu %llu %llu %lu %lu %lu %lu %lu",
 	       &ife->stats.rx_bytes,
 	       &ife->stats.rx_packets,
 	       &ife->stats.rx_errors,
@@ -277,7 +277,7 @@ static int get_dev_fields(char *bp, struct interface *ife)
 	ife->stats.rx_multicast = 0;
 	break;
     case 1:
-	sscanf(bp, "%lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu",
+	sscanf(bp, "%llu %lu %lu %lu %lu %llu %lu %lu %lu %lu %lu",
 	       &ife->stats.rx_packets,
 	       &ife->stats.rx_errors,
 	       &ife->stats.rx_dropped,
@@ -583,10 +583,10 @@ void ife_print_short(struct interface *ptr)
     printf("%5d %3d", ptr->mtu, ptr->metric);
     /* If needed, display the interface statistics. */
     if (ptr->statistics_valid) {
-	printf("%8lu %6lu %6lu %6lu",
+	printf("%8llu %6lu %6lu %6lu",
 	       ptr->stats.rx_packets, ptr->stats.rx_errors,
 	       ptr->stats.rx_dropped, ptr->stats.rx_fifo_errors);
-	printf("%8lu %6lu %6lu %6lu ",
+	printf("%8llu %6lu %6lu %6lu ",
 	       ptr->stats.tx_packets, ptr->stats.tx_errors,
 	       ptr->stats.tx_dropped, ptr->stats.tx_fifo_errors);
     } else {
@@ -635,7 +635,7 @@ void ife_print_long(struct interface *ptr)
     struct hwtype *hw;
     int hf;
     int can_compress = 0;
-    unsigned long rx, tx, short_rx, short_tx;
+    unsigned long long rx, tx, short_rx, short_tx;
     char Rext[5]="b";
     char Text[5]="b";
 
@@ -832,7 +832,7 @@ void ife_print_long(struct interface *ptr)
 	 */
 	printf("          ");
 
-	printf(_("RX packets:%lu errors:%lu dropped:%lu overruns:%lu frame:%lu\n"),
+	printf(_("RX packets:%llu errors:%lu dropped:%lu overruns:%lu frame:%lu\n"),
 	       ptr->stats.rx_packets, ptr->stats.rx_errors,
 	       ptr->stats.rx_dropped, ptr->stats.rx_fifo_errors,
 	       ptr->stats.rx_frame_errors);
@@ -849,7 +849,7 @@ void ife_print_long(struct interface *ptr)
 	else if (tx > 1024) { short_tx /= 1024;  strcpy(Text, "Kb"); }
 
 	printf("          ");
-	printf(_("TX packets:%lu errors:%lu dropped:%lu overruns:%lu carrier:%lu\n"),
+	printf(_("TX packets:%llu errors:%lu dropped:%lu overruns:%lu carrier:%lu\n"),
 	       ptr->stats.tx_packets, ptr->stats.tx_errors,
 	       ptr->stats.tx_dropped, ptr->stats.tx_fifo_errors,
 	       ptr->stats.tx_carrier_errors);
@@ -859,9 +859,11 @@ void ife_print_long(struct interface *ptr)
 	if (ptr->tx_queue_len != -1)
 	    printf(_("txqueuelen:%d "), ptr->tx_queue_len);
 	printf("\n          ");
-	printf(_("RX bytes:%lu (%lu.%lu %s)  TX bytes:%lu (%lu.%lu %s)\n"),
-		rx, short_rx / 10, short_rx % 10, Rext, 
-		tx, short_tx / 10, short_tx % 10, Text);
+	printf(_("RX bytes:%llu (%lu.%lu %s)  TX bytes:%llu (%lu.%lu %s)\n"),
+	       rx, (unsigned long)(short_rx / 10), 
+	       (unsigned long)(short_rx % 10), Rext, 
+	       tx, (unsigned long)(short_tx / 10), 
+	       (unsigned long)(short_tx % 10), Text);
     }
 
     if ((ptr->map.irq || ptr->map.mem_start || ptr->map.dma ||

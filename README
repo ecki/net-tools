@@ -32,11 +32,7 @@ Contents:
                           Notes
                           -----
 
-This is net-tools 1.57.  Notable changes since 1.55 include:
-
- - A bug relating to IPv4 alias interfaces has been fixed.
- - Support for X.25 and STRIP has been added.
- - A tool for configuring MII transceivers has been added.
+This is net-tools 1.58.
 
 You need kernel 2.0 or later to use these programs.  These programs
 should compile cleanly with both glibc (version 2.0 or 2.1) and libc5,

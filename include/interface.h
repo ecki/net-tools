@@ -1,8 +1,8 @@
 struct user_net_device_stats {
-    unsigned long rx_packets;	/* total packets received       */
-    unsigned long tx_packets;	/* total packets transmitted    */
-    unsigned long rx_bytes;	/* total bytes received         */
-    unsigned long tx_bytes;	/* total bytes transmitted      */
+    unsigned long long rx_packets;	/* total packets received       */
+    unsigned long long tx_packets;	/* total packets transmitted    */
+    unsigned long long rx_bytes;	/* total bytes received         */
+    unsigned long long tx_bytes;	/* total bytes transmitted      */
     unsigned long rx_errors;	/* bad packets received         */
     unsigned long tx_errors;	/* packet transmit problems     */
     unsigned long rx_dropped;	/* no space in linux buffers    */
