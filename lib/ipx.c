@@ -133,6 +133,9 @@ static int IPX_input(int type, char *bufp, struct sockaddr *sap)
     char *ep;
     int nbo;
 
+    if (!sai)
+    	return (-1);
+    	
     sai->sipx_family = AF_IPX;
     sai->sipx_network = htonl(0);
     sai->sipx_node[0] = sai->sipx_node[1] = sai->sipx_node[2] =
