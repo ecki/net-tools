@@ -17,13 +17,15 @@
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <sys/socket.h>
-#include <linux/netdevice.h>
-#include <linux/if.h>
-#include <linux/if_arp.h>
-#include <linux/sockios.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <string.h>
+
+#if defined(__GLIBC__) && (__GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 1))
+#include <net/if.h>
+#else
+#include <linux/if.h>
+#endif
 
 #include "config.h"
 #include "intl.h"
