@@ -4,7 +4,7 @@
    10/1998 partly rewriten by Andi Kleen to support an interface list.   
    I don't claim that the list operations are efficient @).  
 
-   $Id: interface.c,v 1.13 1998/11/18 13:46:12 philip Exp $
+   $Id: interface.c,v 1.14 1998/11/19 05:06:04 freitag Exp $
  */
 
 #include "config.h"
@@ -78,7 +78,7 @@ struct interface *lookup_interface(char *name)
 
     if (!ife) { 
 	new(ife);
-	safe_strncpy(ife->name, name, IFNAMSIZ-1);  
+	safe_strncpy(ife->name, name, IFNAMSIZ);  
 	add_interface(ife);
     }
 
