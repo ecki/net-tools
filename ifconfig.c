@@ -38,6 +38,7 @@
 
 #if HAVE_AFINET6
 
+#ifndef _LINUX_IN6_H
 /*
  *	This is in linux/include/net/ipv6.h.
  */
@@ -47,6 +48,8 @@ struct in6_ifreq {
   __u32 ifr6_prefixlen;
   unsigned int ifr6_ifindex;
 };
+
+#endif
  
 #define IPV6_ADDR_ANY		0x0000U
 
@@ -70,6 +73,12 @@ struct in6_ifreq {
 #ifndef IFF_PORTSEL
 #define IFF_PORTSEL	0x2000
 #define IFF_AUTOMEDIA	0x4000
+#endif
+
+#ifndef SIOCSIFTXQLEN /* 2.1.77+ option */
+#define SIOCGIFTXQLEN	0x8942		/* Get the tx queue length	*/
+#define SIOCSIFTXQLEN	0x8943		/* Set the tx queue length 	*/
+#define ifr_qlen	ifr_ifru.ifru_ivalue	/* Queue length 	*/
 #endif
 
 /* This is from <linux/netdevice.h>. */
@@ -108,6 +117,7 @@ struct interface {
   short			flags;			/* various flags	 */
   int			metric;			/* routing metric	 */
   int			mtu;			/* MTU value		 */
+  int			tx_queue_len;		/* transmit queue length */
   struct ifmap		map;			/* hardware setup	 */
   struct sockaddr	addr;			/* IP address		 */
   struct sockaddr	dstaddr;		/* P-P IP address	 */
@@ -161,7 +171,7 @@ static const char *if_port_text[][4] = {
 #include "net-locale.h"
 
 char *Release = RELEASE,
-     *Version = "ifconfig 1.30 (1998-01-02)";
+     *Version = "ifconfig 1.30 ($Id)";
 
 int opt_a = 0;				/* show all interfaces		*/
 int opt_i = 0;				/* show the statistics		*/
@@ -333,7 +343,10 @@ ife_print(struct interface *ptr)
   if (ptr->flags & IFF_MULTICAST) printf("MULTICAST ");
   printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_mtu, " MTU:%d  Metric:%d\n"),
 	 ptr->mtu, ptr->metric?ptr->metric:1);
-
+  /* XXX: Merge this with the previous line, but I don't want to touch the
+   * NLS stuff yet. */
+  if (ptr->tx_queue_len != -1)
+    printf("TXQUEUELEN: %d\n", ptr->tx_queue_len);
 
   /* If needed, display the interface statistics. */
   printf("          ");
@@ -496,7 +509,13 @@ if_fetch(char *ifname, struct interface *ife)
     memset(&ife->map, 0, sizeof(struct ifmap));
   else 
     ife->map = ifr.ifr_map;
-  
+
+  strcpy(ifr.ifr_name, ifname);
+  if (ioctl(skfd, SIOCGIFTXQLEN, &ifr) < 0)
+    ife->tx_queue_len = -1; /* unknown value */
+  else 
+    ife->tx_queue_len = ifr.ifr_qlen;
+
 #if HAVE_AFINET
   strcpy(ifr.ifr_name, ifname);
   if (inet_sock < 0 || ioctl(inet_sock, SIOCGIFDSTADDR, &ifr) < 0)
@@ -689,6 +708,7 @@ usage(void)
   fprintf(stderr, "                [multicast]\n");
   fprintf(stderr, "                [mem_start NN] [io_addr NN] [irq NN]\n");
   fprintf(stderr, "                [media type]\n");
+  fprintf(stderr, "                [txqueuelen len]\n");
   fprintf(stderr, "                [up] [down] ...\n");
   NLS_CATCLOSE(catfd)
   exit(1);
@@ -930,7 +950,7 @@ main(int argc, char **argv)
       spp++;
       continue;
     }
-    
+
     if (!strcmp(*spp, "down")) {
       goterr |= clr_flag(ifr.ifr_name, IFF_UP);
       spp++;
@@ -1026,7 +1046,18 @@ main(int argc, char **argv)
       spp++;
       continue;
     }
-    
+
+    if (!strcmp(*spp, "txqueuelen")) {
+      if (*++spp == NULL) usage();
+      ifr.ifr_qlen = strtoul(*spp, NULL, 0);
+      if (ioctl(skfd, SIOCSIFTXQLEN, &ifr) < 0) {
+	fprintf(stderr, "SIOCSIFTXQLEN: %s\n", strerror(errno));
+	goterr = 1;
+      }
+      spp++;
+      continue;
+    }
+
     if (!strcmp(*spp, "mem_start")) {
       if (*++spp == NULL) usage();
       if (ioctl(skfd, SIOCGIFMAP, &ifr) < 0) {

@@ -161,6 +161,12 @@ as the drivers set the flag correctly themselves.
 .TP
 .B address
 The IP address to be assigned to this interface.
+.TP
+.B txqueuelen length
+Set the length of the transmit queue of the device. It is useful to set this
+to small values for slower devices with a high latency (modem links, ISDN)
+to prevent fast bulk transfers from disturbing interactive traffic like
+telnet too much. 
 .SH FILES
 .I /proc/net/socket 
 .br
