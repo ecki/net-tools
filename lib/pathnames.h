@@ -1,4 +1,3 @@
-
 /*
  * lib/pathnames.h    This file contains the definitions of the path 
  *                      names used by the NET-LIB.
@@ -45,6 +44,7 @@
 #define _PATH_PROCNET_X25              "/proc/net/x25"
 #define _PATH_PROCNET_X25_ROUTE                "/proc/net/x25_routes"
 #define _PATH_PROCNET_DEV_MCAST		"/proc/net/dev_mcast"
+#define _PATH_PROCNET_ATALK_ROUTE	"/proc/net/atalk_route"
 
 /* pathname for the netlink device */
 #define _PATH_DEV_ROUTE	"/dev/route"
