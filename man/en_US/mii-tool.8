@@ -1,7 +1,7 @@
 .\" Copyright (C) 2000 David A. Hinds -- dhinds@pcmcia.sourceforge.org
 .\" mii-tool.8 1.5 2000/04/25 22:58:19
 .\"
-.TH MII-TOOL 8 "2000/04/25 22:58:19" "net-tools"
+.TH MII-TOOL 8 "2004/03/28 23:30:00" "net-tools"
 
 .SH NAME
 mii-tool \- view, manipulate media-independent interface status
@@ -72,7 +72,24 @@ media technologies.  Multiple technologies should be separated by
 commas.  Valid media are \fB100baseT4\fR, \fB100baseTx-FD\fR,
 \fB100baseTx-HD\fR, \fB10baseT-FD\fR, and \fB10baseT-HD\fR.
 
+.SH DIAGNOSTICS
+.TP
+SIOCGMIIPHY on 'eth?' failed: Invalid argument
+If the interface is not running (up), kernel will refuse to report its link state.
+.TP
+SIOCGMIIPHY on 'eth?' failed: Operation not permitted
+Most kernels restrict access to root.
+.TP
+SIOCGMIIPHY on 'eth?' failed: No such device
+This error is shown, if the kernel does not know about the named device.
+.TP
+SIOCGMIIPHY on 'eth?' failed: Operation not supported 
+The interface in question does not support MII queries. Most likely, it does not have 
+MII tranceivers, at all.
+
 .SH AUTHORS
 David Hinds \- dhinds@pcmcia.sourceforge.org
 .br
 Donald Becker \- becker@scyld.com
+.br
+Bernd Eckenfels \- ecki@debian.org
