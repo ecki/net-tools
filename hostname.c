@@ -21,6 +21,7 @@
  *                                      setdomainname added 
  *960218 {1.96} Bernd Eckenfels :       netinet/in.h added
  *980629 {1.97} Arnaldo Carvalho de Melo : gettext instead of catgets for i18n
+ *20000213 {1.99} Arnaldo Carvalho de Melo : fixed some i18n strings
  *
  *              This program is free software; you can redistribute it
  *              and/or  modify it under  the terms of  the GNU General
@@ -45,7 +46,7 @@
 #include <netdnet/dn.h>
 #endif
 
-char *Release = RELEASE, *Version = "hostname 1.98 (1998-02-27)";
+char *Release = RELEASE, *Version = "hostname 1.99 (2000-02-13)";
 
 static char *program_name;
 static int opt_v;
@@ -238,11 +239,13 @@ static void usage(void)
     fprintf(stderr, _("    -n, --node            DECnet node name\n"));
 #endif /* HAVE_AFDECnet */
     fprintf(stderr, _("    -F, --file            read hostname or NIS domainname from given file\n\n"));
-    fprintf(stderr, _("   This comand can read or set the hostname or the NIS domainname. You can\n"));
-    fprintf(stderr, _("   also read the DNS domain or the FQDN (fully qualified domain name).\n"));
-    fprintf(stderr, _("   Unless you are using bind or NIS for host lookups you can change the\n"));
-    fprintf(stderr, _("   FQDN (Fully Qualified Domain Name) and the DNS domain name (which is\n"));
-    fprintf(stderr, _("   part of the FQDN) in the /etc/hosts file.\n"));
+    fprintf(stderr, _(
+"   This command can read or set the hostname or the NIS domainname. You can\n"
+"   also read the DNS domain or the FQDN (fully qualified domain name).\n"
+"   Unless you are using bind or NIS for host lookups you can change the\n"
+"   FQDN (Fully Qualified Domain Name) and the DNS domain name (which is\n"
+"   part of the FQDN) in the /etc/hosts file.\n"));
+
     exit(4); /* E_USAGE */
 }
 
