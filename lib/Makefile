@@ -5,21 +5,8 @@
 #		NET-2 Networking Distribution for the LINUX operating
 #		system.  (net-tools, net-drivers)
 #
-# Version:	lib/Makefile 1.27 (1996-04-13)
-#
 # Author:	Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
 #		Copyright 1993 MicroWalt Corporation
-#
-# Modification:
-#960125	{1.21}	Bernd Eckenfels:	reformated, layout
-#960203 {1.22}	Bernd Eckenfels:	afrt.o will include all the 
-#					routing support into the binaries.
-#960206 {1.23}	Bernd Eckenfels:	better solution wit route_init
-#960215 {1.24}	Bernd Eckenfels:	ax25_rt.o added
-#960221 {1.25}	Bernd Eckenfels:	getroute/setroute.o
-#960322 {1.26}	Bernd Eckenfels:	ACTOBJS support
-#960413 {1.27}	Bernd Eckenfels:	Mike McLagan FRAD Support (frame.c)
-#960809 {1.xx}	Frank Strauss:		inet6.c inet6_gr.c
 #
 #		This program is free software; you can redistribute it
 #		and/or  modify it under  the terms of  the GNU General
@@ -29,7 +16,7 @@
 #
 
 
-HWOBJS	 = hw.o loopback.o slip.o ether.o ax25.o ppp.o arcnet.o tr.o tunnel.o frame.o sit.o rose.o ash.o fddi.o hippi.o
+HWOBJS	 = hw.o loopback.o slip.o ether.o ax25.o ppp.o arcnet.o tr.o tunnel.o frame.o sit.o rose.o ash.o fddi.o hippi.o hdlclapb.o
 AFOBJS	 = unix.o inet.o inet6.o ax25.o ipx.o ddp.o ipx.o netrom.o af.o rose.o econet.o
 AFGROBJS = inet_gr.o inet6_gr.o ipx_gr.o ddp_gr.o netrom_gr.o ax25_gr.o rose_gr.o getroute.o
 AFSROBJS = inet_sr.o inet6_sr.o netrom_sr.o ipx_sr.o setroute.o

@@ -58,6 +58,9 @@ extern	struct hwtype	arcnet_hwtype;
 extern	struct hwtype	dlci_hwtype;
 extern	struct hwtype	frad_hwtype;
 
+extern	struct hwtype	hdlc_hwtype;
+extern	struct hwtype	lapb_hwtype;
+
 extern	struct hwtype	sit_hwtype;
 
 static struct hwtype *hwtypes[] = {
@@ -92,6 +95,10 @@ static struct hwtype *hwtypes[] = {
 #if HAVE_HWPPP
   &ppp_hwtype,
 #endif  
+#if HAVE_HWHDLCLAPB
+  &hdlc_hwtype,
+  &lapb_hwtype,
+#endif
 #if HAVE_HWARC
   &arcnet_hwtype,
 #endif  
@@ -155,6 +162,10 @@ void hwinit ()
 #if HAVE_HWPPP
   ppp_hwtype.title = NLS_CATSAVE (catfd, pppSet, ppp_ppp, "Point-to-Point Protocol");
 #endif  
+#if HAVE_HWHDLCLAPB
+  hdlc_hwtype.title = NLS_CATSAVE (catfd, hdlcSet, hdlc_hw, "(Cisco)-HDLC");
+  lapb_hwtype.title = NLS_CATSAVE (catfd, lapbSet, lapb_hw, "LAPB");
+#endif
 #if HAVE_HWARC
   arcnet_hwtype.title = NLS_CATSAVE (catfd, arcnetSet, arcnet_arcnet, "1.5Mbps ARCnet");
 #endif
