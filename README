@@ -30,11 +30,12 @@ Contents:
 
 This is net-tools 1.51.  Notable changes since 1.50 include:
 
- - a compilation problem with 2.0 kernels has been fixed
  - Tuan Hoang added support to netstat for printing multicast group 
    information (option --groups)
  - Jan Kratochvil added support to netstat for displaying details of
    the process owning a socket (option --programs)
+ - Steve Whitehouse contributed support for DECnet
+ - some bugs and compilation problems have been fixed
 
 Notable changes since 1.49 include:
 
@@ -73,7 +74,7 @@ Notable changes since 1.45 include:
 
 You need kernel 2.0 or later to use these programs.  These programs
 should compile cleanly with either glibc or libc5.  The `iptunnel' and
-`ipmaddr' programs require kernel 2.1 or later.
+`ipmaddr' programs require kernel version 2.2 or later.
 
 The NLS support was changed from catgets to GNU gettext by Arnaldo
 Carvalho de Melo <acme@conectiva.com.br> in June, 1998, to make the

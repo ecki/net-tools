@@ -89,6 +89,10 @@ COPTS = -D_GNU_SOURCE -O2 -Wall -g # -I/usr/inet6/include
 LOPTS = 
 RESLIB = # -L/usr/inet6/lib -linet6
 
+ifeq ($(HAVE_AFDECnet),1)
+DNLIB = -ldnet
+endif
+
 # -------- end of user definitions --------
 
 MAINTAINER = Philip.Blundell@pobox.com
@@ -174,7 +178,7 @@ ifconfig:	$(NET-LIB) ifconfig.o
 		$(CC) $(LDFLAGS) -o ifconfig ifconfig.o $(NLIB) $(RESLIB)
 
 hostname:	hostname.o
-		$(CC) $(LDFLAGS) -o hostname hostname.o
+		$(CC) $(LDFLAGS) -o hostname hostname.o $(DNLIB)
 
 route:		$(NET-LIB) route.o
 		$(CC) $(LDFLAGS) -o route route.o $(NLIB) $(RESLIB)
@@ -217,7 +221,9 @@ installbin:
 	ln -fs hostname $(BASEDIR)/bin/ypdomainname
 	ln -fs hostname $(BASEDIR)/bin/nisdomainname
 	ln -fs hostname $(BASEDIR)/bin/domainname
-
+ifeq ($(HAVE_AFDECnet),1)
+	ln -fs hostname $(BASEDIR)/bin/nodename
+endif
 
 savebin:
 	@for i in ${BASEDIR}/sbin/arp ${BASEDIR}/sbin/ifconfig \

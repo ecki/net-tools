@@ -3,7 +3,7 @@
  *              that maintains the hostname and the domainname. It
  *              is also used to show the FQDN and the IP-Addresses.
  *
- * Usage:       hostname [-d|-f|-s|-a|-i|-y]
+ * Usage:       hostname [-d|-f|-s|-a|-i|-y|-n]
  *              hostname [-h|-V]
  *              hostname {name|-F file}
  *              dnsdmoainname   
@@ -41,7 +41,11 @@
 #include "version.h"
 #include "../intl.h"
 
-char *Release = RELEASE, *Version = "hostname 1.97 (1998-06-29)";
+#if HAVE_AFDECnet
+#include <netdnet/dn.h>
+#endif
+
+char *Release = RELEASE, *Version = "hostname 1.98 (1998-02-27)";
 
 static char *program_name;
 static int opt_v;
@@ -55,6 +59,28 @@ static void setfilename(char *, int);
 
 #define SETHOST		1
 #define SETDOMAIN	2
+#define SETNODE		3
+
+#if HAVE_AFDECnet
+static void setnname(char *nname)
+{
+    if (opt_v)
+        fprintf(stderr, _("Setting nodename to `%s'\n"),
+                nname);
+    if (setnodename(nname, strlen(nname))) {
+        switch(errno) {
+        case EPERM:
+            fprintf(stderr, _("%s: you must be root to change the node name\n"), program_name);
+            break;
+        case EINVAL:
+            fprintf(stderr, _("%s: name too long\n"), program_name);
+            break;
+        default:
+        }
+	exit(1);
+    }
+}
+#endif /* HAVE_AFDECnet */
 
 static void sethname(char *hname)
 {
@@ -163,11 +189,19 @@ static void setfilename(char *name, int what)
 		fprintf(stderr, ">> %s\n", fline);
 	    if (fline[0] == '#')
 		continue;
-	    if (what == SETHOST) {
-		sethname(fline);
-	    } else {
-		setdname(fline);
-	    }
+            switch(what) {
+            case SETHOST:
+                sethname(fline);
+                break;
+            case SETDOMAIN:
+                setdname(fline);
+                break;
+#if HAVE_AFDECnet
+            case SETNODE:
+                setnname(fline);
+                break;
+#endif /* HAVE_AFDECnet */
+            }
 	}
 	(void) fclose(fd);
     } else {
@@ -187,7 +221,10 @@ static void usage(void)
 {
     fprintf(stderr, _("Usage: hostname [-v] {hostname|-F file}      set hostname (from file)\n"));
     fprintf(stderr, _("       domainname [-v] {nisdomain|-F file}   set NIS domainname (from file)\n"));
-    fprintf(stderr, _("       hostname [-v] [-d|-f|-s|-a|-i|-y]     display formated name\n"));
+#if HAVE_AFDECnet
+    fprintf(stderr, _("       nodename [-v] {nodename|-F file}      set DECnet node name (from file)\n"));
+#endif
+    fprintf(stderr, _("       hostname [-v] [-d|-f|-s|-a|-i|-y|-n]  display formatted name\n"));
     fprintf(stderr, _("       hostname [-v]                         display hostname\n\n"));
     fprintf(stderr, _("       hostname -V|--version|-h|--help       print info and exit\n\n"));
     fprintf(stderr, _("    dnsdomainname=hostname -d, {yp,nis,}domainname=hostname -y\n\n"));
@@ -197,6 +234,9 @@ static void usage(void)
     fprintf(stderr, _("    -f, --fqdn, --long    long host name (FQDN)\n"));
     fprintf(stderr, _("    -d, --domain          DNS domain name\n"));
     fprintf(stderr, _("    -y, --yp, --nis       NIS/YP domainname\n"));
+#if HAVE_AFDECnet
+    fprintf(stderr, _("    -n, --node            DECnet node name\n"));
+#endif /* HAVE_AFDECnet */
     fprintf(stderr, _("    -F, --file            read hostname or nis domainname from given File\n\n"));
     fprintf(stderr, _("   This comand can get or set the hostname or the NIS domainname. You can\n"));
     fprintf(stderr, _("   also get the DNS domain or the FQDN (fully qualified domain name).\n"));
@@ -231,6 +271,9 @@ int main(int argc, char **argv)
 	{"ip-address", no_argument, 0, 'i'},
 	{"nis", no_argument, 0, 'y'},
 	{"yp", no_argument, 0, 'y'},
+#if HAVE_AFDECnet
+	{"node", no_argument, 0, 'n'},
+#endif /* HAVE_AFDECnet */
 	{0, 0, 0, 0}
     };
 #if I18N
@@ -245,8 +288,12 @@ int main(int argc, char **argv)
 	what = 3;
     if (!strcmp(program_name, "dnsdomainname"))
 	what = 2;
+#if HAVE_AFDECnet
+    if (!strcmp(program_name, "nodename"))
+        what = 4;
+#endif /* HAVE_AFDECnet */
 
-    while ((c = getopt_long(argc, argv, "adfF:h?isVvy", long_options, &option_index)) != EOF)
+    while ((c = getopt_long(argc, argv, "adfF:h?isVvyn", long_options, &option_index)) != EOF)
 	switch (c) {
 	case 'd':
 	    what = 2;
@@ -261,6 +308,11 @@ int main(int argc, char **argv)
 	case 'y':
 	    what = 3;
 	    break;
+#if HAVE_AFDECnet
+	case 'n':
+            what = 4;
+            break;
+#endif /* HAVE_AFDECnet */
 	case 'F':
 	    file = optarg;
 	    break;
@@ -319,6 +371,22 @@ int main(int argc, char **argv)
 	    fprintf(stderr, _("getdomainname()=`%s'\n"), myname);
 	printf("%s\n", myname);
 	break;
+#if HAVE_AFDECnet
+    case 4:
+        if (file) {
+            setfilename(file, SETNODE);
+            break;
+        }
+        if (optind < argc) {
+            setnname(argv[optind]);
+            break;
+        }
+        getnodename(myname, sizeof(myname));
+        if (opt_v)
+            fprintf(stderr, _("getnodename()=`%s'\n"), myname);
+        printf("%s\n", myname);
+        break;
+#endif /* HAVE_AFDECnet */
     }
     exit(0);
 }
