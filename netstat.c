@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.28 1999/06/12 23:04:15 philip Exp $
+ * Version:     $Id: netstat.c,v 1.29 1999/07/28 21:53:34 philip Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -1394,8 +1394,9 @@ static int iface_info(void)
 	perror(_("missing interface information"));
 	exit(1);
     }
-    if (!flag_cnt)
-        close(skfd);
+    if (flag_cnt)
+	free_interface_list();
+    close(skfd);
     skfd = -1;
 
     return 0;

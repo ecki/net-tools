@@ -65,6 +65,7 @@ struct interface {
 extern int if_fetch(struct interface *ife);
 
 extern int for_all_interfaces(int (*)(struct interface *, void *), void *);
+extern int free_interface_list(void);
 extern struct interface *lookup_interface(char *name);
 extern int if_readlist(void);
 

@@ -4,7 +4,7 @@
    10/1998 partly rewriten by Andi Kleen to support an interface list.   
    I don't claim that the list operations are efficient @).  
 
-   $Id: interface.c,v 1.4 1999/04/21 09:30:32 philip Exp $
+   $Id: interface.c,v 1.5 1999/07/28 21:53:44 philip Exp $
  */
 
 #include "config.h"
@@ -95,6 +95,16 @@ int for_all_interfaces(int (*doit) (struct interface *, void *), void *cookie)
 	int err = doit(ife, cookie);
 	if (err)
 	    return err;
+    }
+    return 0;
+}
+
+int free_interface_list(void)
+{
+    struct interface *ife;
+    while ((ife = int_list) != NULL) {
+	int_list = ife->next;
+	free(ife);
     }
     return 0;
 }
