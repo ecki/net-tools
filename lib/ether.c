@@ -2,7 +2,7 @@
  * lib/ether.c        This file contains an implementation of the "Ethernet"
  *              support functions.
  *
- * Version:     $Id: ether.c,v 1.7 1999/09/27 11:00:47 philip Exp $
+ * Version:     $Id: ether.c,v 1.8 2002/07/30 05:17:29 ecki Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -39,7 +39,7 @@ static char *pr_ether(unsigned char *ptr)
 {
     static char buff[64];
 
-    snprintf(buff, sizeof(buff), "%02X:%02X:%02X:%02X:%02X:%02X",
+    snprintf(buff, sizeof(buff), "%02x:%02x:%02x:%02x:%02x:%02x",
 	     (ptr[0] & 0377), (ptr[1] & 0377), (ptr[2] & 0377),
 	     (ptr[3] & 0377), (ptr[4] & 0377), (ptr[5] & 0377)
 	);
