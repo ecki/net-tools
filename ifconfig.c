@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.55 2002/07/03 23:40:47 ecki Exp $
+ * Version:     $Id: ifconfig.c,v 1.56 2002/07/05 17:36:02 ecki Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -699,8 +699,12 @@ int main(int argc, char **argv)
 	    memcpy((char *) &ifr.ifr_hwaddr, (char *) &sa,
 		   sizeof(struct sockaddr));
 	    if (ioctl(skfd, SIOCSIFHWADDR, &ifr) < 0) {
-		fprintf(stderr, "SIOCSIFHWADDR: %s\n",
-			strerror(errno));
+		if (errno == EBUSY)
+			fprintf(stderr, "SIOCSIFHWADDR: %s - you may need to down the interface\n",
+				strerror(errno));
+		else
+			fprintf(stderr, "SIOCSIFHWADDR: %s\n",
+				strerror(errno));
 		goterr = 1;
 	    }
 	    spp++;
