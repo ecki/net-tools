@@ -34,6 +34,7 @@
 #include "net-support.h"
 #include "pathnames.h"
 #include "intl.h"
+#include "util.h"
 
 /*
  *    HIPPI magic constants.

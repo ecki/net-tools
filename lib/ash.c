@@ -1,7 +1,7 @@
 /*
  * lib/ash.c  This file contains an implementation of the Ash
  *              support functions for the NET-2 base distribution.
- * $Id: ash.c,v 1.7 1998/11/17 15:16:31 freitag Exp $
+ * $Id: ash.c,v 1.8 1998/11/26 10:16:38 philip Exp $
  */
 
 #include "config.h"
@@ -20,6 +20,7 @@
 #include "net-support.h"
 #include "pathnames.h"
 #include "intl.h"
+#include "util.h"
 
 #ifndef ARPHRD_ASH
 #error No support for Ash on this system

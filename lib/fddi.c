@@ -2,7 +2,7 @@
  * lib/fddi.c This file contains an implementation of the "FDDI"
  *              support functions.
  *
- * Version:     $Id: fddi.c,v 1.5 1998/11/17 15:16:39 freitag Exp $
+ * Version:     $Id: fddi.c,v 1.6 1998/11/26 10:16:39 philip Exp $
  *
  * Author:      Lawrence V. Stefani, <stefani@lkg.dec.com>
  *
@@ -40,6 +40,7 @@
 #include "net-support.h"
 #include "pathnames.h"
 #include "intl.h"
+#include "util.h"
 
 extern struct hwtype fddi_hwtype;
 
