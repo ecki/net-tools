@@ -2,7 +2,7 @@
  * lib/hw.c   This file contains the top-level part of the hardware
  *              support functions module.
  *
- * Version:     $Id: hw.c,v 1.8 1998/11/15 20:10:13 freitag Exp $
+ * Version:     $Id: hw.c,v 1.9 1998/11/16 15:13:48 philip Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -168,7 +168,7 @@ void hwinit()
     lapb_hwtype.title = _("LAPB");
 #endif
 #if HAVE_HWARC
-    arcnet_hwtype.title = _("1.5Mbps ARCnet");
+    arcnet_hwtype.title = _("ARCnet");
 #endif
 #if HAVE_HWFR
     dlci_hwtype.title = _("Frame Relay DLCI");
