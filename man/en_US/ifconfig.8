@@ -1,4 +1,4 @@
-.TH IFCONFIG 8 "2003-02-08" "net-tools" "Linux Programmer's Manual"
+.TH IFCONFIG 8 "2003-05-25" "net-tools" "Linux Programmer's Manual"
 .SH NAME
 ifconfig \- configure a network interface
 .SH SYNOPSIS
@@ -192,10 +192,10 @@ rules for the address using the
 .BR ipchains(8)
 command.
 .LP
-Since net-tools 1.61 ifconfig is printing byte counters with IEC 60027-2 units. So
-1 KiB are 2^10 byte. Note, the numbers are truncated to one decimal (which can
-by quite a large error if you consider 0.1 PiB is 112.589.990.684.262
-bytes :)
+Since net-tools 1.61 ifconfig is printing byte counters and human readable
+counters with IEC 60027-2 units. So 1 KiB are 2^10 byte. Note, the numbers 
+are truncated to one decimal (which can by quite a large error if you 
+consider 0.1 PiB is 112.589.990.684.262 bytes :)
 .LP
 Interrupt problems with Ethernet device drivers fail with EAGAIN
 .I (SIOCSIIFLAGS: Resource temporarily unavailable)
