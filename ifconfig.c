@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.22 1998/11/19 13:01:47 philip Exp $
+ * Version:     $Id: ifconfig.c,v 1.23 1998/12/01 20:48:41 philip Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -159,7 +159,7 @@ void ife_print(struct interface *ptr)
     if (hw == NULL)
 	hw = get_hwntype(-1);
 
-    printf(_("%-8.8s  Link encap:%s  "), ptr->name, hw->title);
+    printf(_("%-9.9s Link encap:%s  "), ptr->name, hw->title);
     /* Don't print the hardware address for ATM or Ash if it's null. */
     if (hw->sprint != NULL && ((strncmp(ptr->name, "atm", 3) &&
 				strncmp(ptr->name, "ash", 3)) ||
