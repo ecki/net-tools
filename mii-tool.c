@@ -12,6 +12,8 @@
 
     Copyright (C) 2000 David A. Hinds -- dhinds@pcmcia.sourceforge.org
 
+    mii-tool.c 1.9 2000/04/28 00:56:08 (David Hinds)
+
     mii-diag is written/copyright 1997-2000 by Donald Becker
         <becker@scyld.com>
 
@@ -29,8 +31,7 @@
 	http://www.national.com/pf/DP/DP83840.html
 */
 
-static char version[] =
-"mii-tool.c 1.9 2000/04/28 00:56:08 (David Hinds)\n";
+static char version[] = "$Id: mii-tool.c,v 1.7 2003/10/20 22:22:22 ecki Exp $ (Author: David Hinds based on Donald Becker's mii-diag)";
 
 #include <unistd.h>
 #include <stdlib.h>
@@ -51,6 +52,7 @@ static char version[] =
 #include <linux/if_ether.h>
 #endif
 #include "mii.h"
+#include "version.h"
 
 #define MAX_ETH		8		/* Maximum # of interfaces */
 
@@ -422,7 +424,7 @@ int main(int argc, char **argv)
     }
 
     if (opt_version)
-	printf(version);
+	printf("%s\n%s\n", version, RELEASE);
 
     /* Open a basic socket. */
     if ((skfd = socket(AF_INET, SOCK_DGRAM,0)) < 0) {
