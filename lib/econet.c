@@ -3,7 +3,7 @@
  *              support functions for the net-tools.
  *              (NET-3 base distribution).
  *
- * Version:     $Id: econet.c,v 1.10 2000/05/20 13:38:10 pb Exp $
+ * Version:     $Id: econet.c,v 1.11 2000/05/27 17:36:16 pb Exp $
  *
  * Author:      Philip Blundell <philb@gnu.org>
  *
@@ -80,7 +80,7 @@ struct aftype ec_aftype =
     ec_print, ec_sprint, ec_input, NULL,
     NULL, NULL, NULL,
     -1,
-    NULL /*"/proc/sys/net/econet"*/
+    "/proc/sys/net/econet"
 };
 
 #endif				/* HAVE_AFECONET */

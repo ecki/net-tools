@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.37 2000/05/21 19:35:34 pb Exp $
+ * Version:     $Id: ifconfig.c,v 1.38 2000/05/27 17:36:16 pb Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -144,16 +144,28 @@ static int set_flag(char *ifname, short flag)
 static int clr_flag(char *ifname, short flag)
 {
     struct ifreq ifr;
+    int fd;
+
+    if (strchr(ifname, ':')) {
+        /* This is a v4 alias interface.  Downing it via a socket for
+	   another AF may have bad consequences. */
+        fd = get_socket_for_af(AF_INET);
+	if (fd < 0) {
+	    fprintf(stderr, _("No support for INET on this system.\n"));
+	    return -1;
+	}
+    } else
+        fd = skfd;
 
     strcpy(ifr.ifr_name, ifname);
-    if (ioctl(skfd, SIOCGIFFLAGS, &ifr) < 0) {
+    if (ioctl(fd, SIOCGIFFLAGS, &ifr) < 0) {
 	fprintf(stderr, _("%s: unknown interface: %s\n"), 
 		ifname, strerror(errno));
 	return -1;
     }
     strcpy(ifr.ifr_name, ifname);
     ifr.ifr_flags &= ~flag;
-    if (ioctl(skfd, SIOCSIFFLAGS, &ifr) < 0) {
+    if (ioctl(fd, SIOCSIFFLAGS, &ifr) < 0) {
 	perror("SIOCSIFFLAGS");
 	return -1;
     }
