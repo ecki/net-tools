@@ -70,11 +70,6 @@ struct in6_ifreq {
 
 #endif  /* HAVE_AFINET6 */
 
-/* Check for supported features */
-
-#if defined(SIOCSIFTXQLEN) && defined(ifr_qlen)
-#define HAVE_TXQUEUELEN
-#endif
 
 static const char *if_port_text[][4] = {
   /* Keep in step with <linux/netdevice.h> */
@@ -279,6 +274,10 @@ ife_print(struct interface *ptr)
 	 ptr->mtu, ptr->metric?ptr->metric:1);
   if (ptr->tx_queue_len != -1)
     printf("          txqueuelen:%d\n", ptr->tx_queue_len);
+#if 0
+  else
+    printf("          txqueuelen not available\n");
+#endif
 
   /* If needed, display the interface statistics. */
   printf("          ");

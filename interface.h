@@ -62,3 +62,8 @@ extern int procnetdev_vsn;
 
 extern int if_fetch(char *ifname, struct interface *ife);
 
+/* Check for supported features */
+
+#if defined(SIOCSIFTXQLEN) && defined(ifr_qlen)
+#define HAVE_TXQUEUELEN
+#endif
