@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.42 2001/04/08 17:05:05 pb Exp $
+ * Version:     $Id: netstat.c,v 1.43 2001/04/15 14:41:17 pb Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -122,7 +122,7 @@ typedef enum {
 #define FEATURE_NETSTAT
 #include "lib/net-features.h"
 
-char *Release = RELEASE, *Version = "netstat 1.41 (2001-04-08)", *Signature = "Fred Baumgarten, Alan Cox, Bernd Eckenfels, Phil Blundell, Tuan Hoang and others";
+char *Release = RELEASE, *Version = "netstat 1.42 (2001-04-15)", *Signature = "Fred Baumgarten, Alan Cox, Bernd Eckenfels, Phil Blundell, Tuan Hoang and others";
 
 
 #define E_READ  -1
@@ -1488,10 +1488,10 @@ static void usage(void)
     fprintf(stderr, _("        -M, --masquerade         display masqueraded connections\n\n"));
 #endif
     fprintf(stderr, _("        -v, --verbose            be verbose\n"));
-    fprintf(stderr, _("        -n, --numeric            dont resolve names\n"));
-    fprintf(stderr, _("        --numeric-hosts          dont resolve host names\n"));
-    fprintf(stderr, _("        --numeric-ports          dont resolve port names\n"));
-    fprintf(stderr, _("        --numeric-users          dont resolve user names\n"));
+    fprintf(stderr, _("        -n, --numeric            don't resolve names\n"));
+    fprintf(stderr, _("        --numeric-hosts          don't resolve host names\n"));
+    fprintf(stderr, _("        --numeric-ports          don't resolve port names\n"));
+    fprintf(stderr, _("        --numeric-users          don't resolve user names\n"));
     fprintf(stderr, _("        -N, --symbolic           resolve hardware names\n"));
     fprintf(stderr, _("        -e, --extend             display other/more information\n"));
     fprintf(stderr, _("        -p, --programs           display PID/Program name for sockets\n"));
@@ -1503,7 +1503,7 @@ static void usage(void)
     fprintf(stderr, _("        -C, --cache              display routing cache instead of FIB\n\n"));
 
     fprintf(stderr, _("  <Socket>={-t|--tcp} {-u|--udp} {-w|--raw} {-x|--unix} --ax25 --ipx --netrom\n"));
-    fprintf(stderr, _("  <AF>=Use '-A <af>' or '--<af>' Default: %s\n"), DFLT_AF);
+    fprintf(stderr, _("  <AF>=Use '-A <af>' or '--<af>'; default: %s\n"), DFLT_AF);
     fprintf(stderr, _("  List of possible address families (which support routing):\n"));
     print_aflist(1); /* 1 = routeable */
     exit(E_USAGE);

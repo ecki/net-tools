@@ -2,7 +2,7 @@
  * route        This file contains an implementation of the command
  *              that manages the IP routing table in the kernel.
  *
- * Version:     $Id: route.c,v 1.8 2001/04/08 17:05:05 pb Exp $
+ * Version:     $Id: route.c,v 1.9 2001/04/15 14:41:17 pb Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -66,7 +66,7 @@
 #define FEATURE_ROUTE
 #include "lib/net-features.h"	/* needs some of the system includes above! */
 
-char *Release = RELEASE, *Version = "route 1.97 (2001-04-04)";
+char *Release = RELEASE, *Version = "route 1.98 (2001-04-15)";
 
 int opt_n = 0;			/* numerical output flag        */
 int opt_v = 0;			/* debugging output flag        */
@@ -84,12 +84,12 @@ static void usage(void)
     fprintf(stderr, _("       route {-V|--version}                  Display version/author and exit.\n\n"));
 
     fprintf(stderr, _("        -v, --verbose            be verbose\n"));
-    fprintf(stderr, _("        -n, --numeric            dont resolve names\n"));
+    fprintf(stderr, _("        -n, --numeric            don't resolve names\n"));
     fprintf(stderr, _("        -e, --extend             display other/more information\n"));
     fprintf(stderr, _("        -F, --fib                display Forwarding Information Base (default)\n"));
     fprintf(stderr, _("        -C, --cache              display routing cache instead of FIB\n\n"));
 
-    fprintf(stderr, _("  <AF>=Use '-A <af>' or '--<af>' Default: %s\n"), DFLT_AF);
+    fprintf(stderr, _("  <AF>=Use '-A <af>' or '--<af>'; default: %s\n"), DFLT_AF);
     fprintf(stderr, _("  List of possible address families (which support routing):\n"));
     print_aflist(1); /* 1 = routeable */
     exit(E_USAGE);
