@@ -23,6 +23,9 @@ AFSROBJS = inet_sr.o inet6_sr.o netrom_sr.o ipx_sr.o setroute.o x25_sr.o
 ACTOBJS  = slip_ac.o ppp_ac.o activate.o
 VARIA	 = getargs.o masq_info.o proc.o util.o nstrcmp.o interface.o sockets.o
 
+# Default Name
+NET_LIB_NAME = net-tools
+
 ifeq ($(HAVE_IP_TOOLS),1)
 VARIA	+= util-ank.o
 endif
