@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.44 2001/02/12 21:06:47 pb Exp $
+ * Version:     $Id: ifconfig.c,v 1.45 2001/02/19 21:42:43 ecki Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -318,7 +318,7 @@ int main(int argc, char **argv)
 		perror("family socket");
 		exit(1);
     	} else {
-    		if (skfd > 0 && skfd != fd) close(skfd);
+    		if (skfd >= 0 && skfd != fd) close(skfd);
     		skfd = fd;
     	}
     }
