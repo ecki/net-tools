@@ -1,6 +1,7 @@
                                 README
 
-                Information about the net-tools package                                
+                Information about the net-tools package
+
 NET-TOOLS	A collection of programs that form the base set of the
 		NET-3 networking distribution for the Linux operating
 		system.
@@ -31,7 +32,14 @@ Contents:
                           Notes
                           -----
 
-This is net-tools 1.52.  Notable changes since 1.51 include:
+This is net-tools 1.53.  Notable changes since 1.52 include:
+
+ - a bunch of buffer overrun vulnerabilities are fixed (thanks to 
+   David Wagner)
+ - Meelis Roos contributed an Estonian translation
+ - netstat recognizes ESP and GRE protocols, courtesy John D. Hardin.
+
+Notable changes since 1.51 include:
 
  - Jean-Michel Vansteene updated the French translation.
  - Dag Brattli contributed support for IrDA

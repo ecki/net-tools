@@ -3,7 +3,7 @@
  *              support functions for the net-tools.
  *              (NET-3 base distribution).
  *
- * Version:    $Id: inet.c,v 1.11 1999/03/03 21:43:08 philip Exp $
+ * Version:    $Id: inet.c,v 1.12 1999/06/12 23:04:18 philip Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -91,7 +91,6 @@ static int INET_resolve(char *name, struct sockaddr_in *sin)
     /* Try the NETWORKS database to see if this is a known network. */
     if ((np = getnetbyname(name)) != (struct netent *) NULL) {
 	sin->sin_addr.s_addr = htonl(np->n_net);
-	strcpy(name, np->n_name);
 	return 1;
     }
 #ifdef DEBUG
@@ -103,14 +102,15 @@ static int INET_resolve(char *name, struct sockaddr_in *sin)
 	errno = h_errno;
 	return -1;
     }
-    memcpy((char *) &sin->sin_addr, (char *) hp->h_addr_list[0], hp->h_length);
-    strcpy(name, hp->h_name);
+    memcpy((char *) &sin->sin_addr, (char *) hp->h_addr_list[0], 
+	   sizeof(struct in_addr));
+
     return 0;
 }
 
 
-static int INET_rresolve(char *name, struct sockaddr_in *sin, int numeric,
-			 unsigned int netmask)
+static int INET_rresolve(char *name, size_t len, struct sockaddr_in *sin, 
+			 int numeric, unsigned int netmask)
 {
     struct hostent *ent;
     struct netent *np;
@@ -129,14 +129,14 @@ static int INET_rresolve(char *name, struct sockaddr_in *sin, int numeric,
     if (ad == INADDR_ANY) {
 	if ((numeric & 0x7FFF) == 0) {
 	    if (numeric & 0x8000)
-		strcpy(name, "default");
+		safe_strncpy(name, "default", len);
 	    else
-		strcpy(name, "*");
+	        safe_strncpy(name, "*", len);
 	    return (0);
 	}
     }
     if (numeric & 0x7FFF) {
-	strcpy(name, inet_ntoa(sin->sin_addr));
+        safe_strncpy(name, inet_ntoa(sin->sin_addr), len);
 	return (0);
     }
 #if 0
@@ -145,7 +145,7 @@ static int INET_rresolve(char *name, struct sockaddr_in *sin, int numeric,
     pn = INET_nn;
     while (pn != NULL) {
 	if (pn->addr.sin_addr.s_addr == ad) {
-	    strcpy(name, pn->name);
+	    safe_strncpy(name, pn->name, len);
 	    return (0);
 	}
 	pn = pn->next;
@@ -157,16 +157,14 @@ static int INET_rresolve(char *name, struct sockaddr_in *sin, int numeric,
     if ((ad & (~ netmask)) != 0) {
 	ent = gethostbyaddr((char *) &ad, 4, AF_INET);
 	if (ent != NULL)
-	    strcpy(name, ent->h_name);
+	    safe_strncpy(name, ent->h_name, len);
     } else {
 	np = getnetbyaddr(host_ad, AF_INET);
-	if (np != NULL) {
-	    strcpy(name, np->n_name);
-	}
+	if (np != NULL)
+	    safe_strncpy(name, np->n_name, len);
     }
-    if ((ent == NULL) && (np == NULL)) {
-	strcpy(name, inet_ntoa(sin->sin_addr));
-    }
+    if ((ent == NULL) && (np == NULL))
+	safe_strncpy(name, inet_ntoa(sin->sin_addr), len);
     pn = (struct addr *) malloc(sizeof(struct addr));
     pn->addr = *sin;
     pn->next = INET_nn;
@@ -198,9 +196,11 @@ static char *INET_sprint(struct sockaddr *sap, int numeric)
 
     if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
 	return safe_strncpy(buff, _("[NONE SET]"), sizeof(buff));
-    if (INET_rresolve(buff, (struct sockaddr_in *) sap, numeric, 
-		      0xffffff00) != 0)
+
+    if (INET_rresolve(buff, sizeof(buff), (struct sockaddr_in *) sap, 
+		      numeric, 0xffffff00) != 0)
 	return (NULL);
+
     return (buff);
 }
 
@@ -211,8 +211,8 @@ char *INET_sprintmask(struct sockaddr *sap, int numeric,
 
     if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
 	return safe_strncpy(buff, _("[NONE SET]"), sizeof(buff));
-    if (INET_rresolve(buff, (struct sockaddr_in *) sap, numeric,
-		      netmask) != 0)
+    if (INET_rresolve(buff, sizeof(buff), (struct sockaddr_in *) sap, 
+		      numeric, netmask) != 0)
 	return (NULL);
     return (buff);
 }

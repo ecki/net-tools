@@ -8,7 +8,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: arp.c,v 1.12 1999/03/24 09:49:43 philip Exp $
+ * Version:     $Id: arp.c,v 1.13 1999/06/12 23:04:14 philip Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -529,7 +529,7 @@ static int arp_show(char *name)
 	    ap->herror(host);
 	    return (-1);
 	}
-	strcpy(host, ap->sprint(&sa, 1));
+	safe_strncpy(host, ap->sprint(&sa, 1), sizeof(host));
     }
     /* Open the PROCps kernel table. */
     if ((fp = fopen(_PATH_PROCNET_ARP, "r")) == NULL) {

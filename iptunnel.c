@@ -34,6 +34,7 @@
 #include "intl.h"
 #include "net-support.h"
 #include "version.h"
+#include "util.h"
 
 #undef GRE_CSUM
 #define GRE_CSUM	htons(0x8000)
@@ -279,7 +280,7 @@ static int parse_args(int argc, char **argv, struct ip_tunnel_parm *p)
 				p->iph.saddr = get_addr32(*argv);
 		} else if (strcmp(*argv, "dev") == 0) {
 			NEXT_ARG();
-			strncpy(medium, *argv, IFNAMSIZ-1);
+			safe_strncpy(medium, *argv, IFNAMSIZ-1);
 		} else if (strcmp(*argv, "ttl") == 0) {
 			unsigned uval;
 			NEXT_ARG();
@@ -304,7 +305,7 @@ static int parse_args(int argc, char **argv, struct ip_tunnel_parm *p)
 		} else {
 			if (p->name[0])
 				usage();
-			strncpy(p->name, *argv, IFNAMSIZ);
+			safe_strncpy(p->name, *argv, IFNAMSIZ);
 		}
 		argc--; argv++;
 	}

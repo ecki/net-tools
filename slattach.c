@@ -58,6 +58,7 @@
 #include "version.h"
 #include "config.h"
 #include "intl.h"
+#include "util.h"
 
 #ifndef _PATH_LOCKD
 #define _PATH_LOCKD		"/var/lock"		/* lock files   */
@@ -665,7 +666,7 @@ main(int argc, char *argv[])
 
   /* Is a terminal given? */
   if (optind != (argc - 1)) usage();
-  strncpy(path, argv[optind], 128);
+  safe_strncpy(path, argv[optind], sizeof(path));
   if (!strcmp(path, "-")) {
 	opt_e = 1;
 	sp = NULL;

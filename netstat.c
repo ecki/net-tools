@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.27 1999/04/20 14:28:14 philip Exp $
+ * Version:     $Id: netstat.c,v 1.28 1999/06/12 23:04:15 philip Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -549,8 +549,8 @@ static void igmp_do_one(int lnr, const char *line)
 		    ((struct sockaddr *) &mcastaddr)->sa_family);
 	    return;
 	}
-	strcpy(mcast_addr, ap->sprint((struct sockaddr *) &mcastaddr, 
-				      flag_not));
+	safe_strncpy(mcast_addr, ap->sprint((struct sockaddr *) &mcastaddr, 
+				      flag_not), sizeof(mcast_addr));
 	printf("%-15s %-6d %s\n", device, refcnt, mcast_addr);
 #endif
     } else {    /* IPV4 */
@@ -587,8 +587,8 @@ static void igmp_do_one(int lnr, const char *line)
 		    ((struct sockaddr *) &mcastaddr)->sa_family);
 	    return;
 	}
-	strcpy(mcast_addr, ap->sprint((struct sockaddr *) &mcastaddr, 
-				      flag_not) );
+	safe_strncpy(mcast_addr, ap->sprint((struct sockaddr *) &mcastaddr, 
+				      flag_not), sizeof(mcast_addr));
 	printf("%-15s %-6d %s\n", device, refcnt, mcast_addr );
 #endif
     }    /* IPV4 */
@@ -676,8 +676,10 @@ static void tcp_do_one(int lnr, const char *line)
 	rxq = 0L;
 	txq = 0L;
     }
-    strcpy(local_addr, ap->sprint((struct sockaddr *) &localaddr, flag_not));
-    strcpy(rem_addr, ap->sprint((struct sockaddr *) &remaddr, flag_not));
+    safe_strncpy(local_addr, ap->sprint((struct sockaddr *) &localaddr, 
+					flag_not), sizeof(local_addr));
+    safe_strncpy(rem_addr, ap->sprint((struct sockaddr *) &remaddr, flag_not),
+		 sizeof(rem_addr));
     if (flag_all || (flag_lst && !rem_port) || (!flag_lst && rem_port)) {
 	snprintf(buffer, sizeof(buffer), "%s", get_sname(htons(local_port), "tcp", flag_not));
 
@@ -820,7 +822,8 @@ static void udp_do_one(int lnr, const char *line)
 
     if (flag_all || (notnull(remaddr) && !flag_lst) || (!notnull(remaddr) && flag_lst))
     {
-        strcpy(local_addr, ap->sprint((struct sockaddr *) &localaddr, flag_not));
+        safe_strncpy(local_addr, ap->sprint((struct sockaddr *) &localaddr, 
+					    flag_not), sizeof(local_addr));
 	snprintf(buffer, sizeof(buffer), "%s", get_sname(htons(local_port), "udp", flag_not));
 	if ((strlen(local_addr) + strlen(buffer)) > 22)
 	    local_addr[22 - strlen(buffer)] = '\0';
@@ -828,7 +831,8 @@ static void udp_do_one(int lnr, const char *line)
 	strcat(local_addr, buffer);
 
 	snprintf(buffer, sizeof(buffer), "%s", get_sname(htons(rem_port), "udp", flag_not));
-        strcpy(rem_addr, ap->sprint((struct sockaddr *) &remaddr, flag_not));
+        safe_strncpy(rem_addr, ap->sprint((struct sockaddr *) &remaddr, 
+					  flag_not), sizeof(rem_addr));
 	if ((strlen(rem_addr) + strlen(buffer)) > 22)
 	    rem_addr[22 - strlen(buffer)] = '\0';
 	strcat(rem_addr, ":");
@@ -939,14 +943,16 @@ static void raw_do_one(int lnr, const char *line)
     if (flag_all || (notnull(remaddr) && !flag_lst) || (!notnull(remaddr) && flag_lst))
     {
 	snprintf(buffer, sizeof(buffer), "%s", get_sname(htons(local_port), "raw", flag_not));
-        strcpy(local_addr, ap->sprint((struct sockaddr *) &localaddr, flag_not));
+        safe_strncpy(local_addr, ap->sprint((struct sockaddr *) &localaddr, 
+					    flag_not), sizeof(local_addr));
 	if ((strlen(local_addr) + strlen(buffer)) > 22)
 	    local_addr[22 - strlen(buffer)] = '\0';
 	strcat(local_addr, ":");
 	strcat(local_addr, buffer);
 
 	snprintf(buffer, sizeof(buffer), "%s", get_sname(htons(rem_port), "raw", flag_not));
-        strcpy(rem_addr, ap->sprint((struct sockaddr *) &remaddr, flag_not));
+        safe_strncpy(rem_addr, ap->sprint((struct sockaddr *) &remaddr, 
+					  flag_not), sizeof(rem_addr));
 	if ((strlen(rem_addr) + strlen(buffer)) > 22)
 	    rem_addr[22 - strlen(buffer)] = '\0';
 	strcat(rem_addr, ":");
@@ -1310,13 +1316,13 @@ static int ipx_info(void)
 
 	/* Fetch and resolve the Source */
 	(void) ap->input(4, sad, &sa);
-	strcpy(buf, ap->sprint(&sa, flag_not));
+	safe_strncpy(buf, ap->sprint(&sa, flag_not), sizeof(buf));
 	snprintf(sad, sizeof(sad), "%s:%04X", buf, sport);
 
 	if (!nc) {
 	    /* Fetch and resolve the Destination */
 	    (void) ap->input(4, dad, &sa);
-	    strcpy(buf, ap->sprint(&sa, flag_not));
+	    safe_strncpy(buf, ap->sprint(&sa, flag_not), sizeof(buf));
 	    snprintf(dad, sizeof(dad), "%s:%04X", buf, dport);
 	} else
 	    strcpy(dad, "-");
