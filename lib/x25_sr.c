@@ -77,7 +77,7 @@ static int X25_setroute(int action, int options, char **args)
   rt.sigdigits=sigdigits;
 
   /* x25_route_struct.address isn't type struct sockaddr_x25, Why? */
-  memcpy(&rt.address, &sx25.sx25_addr, sizeof(x25_address));
+  memcpy(&rt.address, &sx25.sx25_addr, sizeof(struct x25_address));
 
   while (*args) {
 	if (!strcmp(*args,"device") || !strcmp(*args,"dev")) {
