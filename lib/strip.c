@@ -42,8 +42,11 @@ static char *
 pr_strip(unsigned char *ptr)
 {
   static char buff[64];
-
-  sprintf(buff, "%02x%02x-%02x%02x", *(ptr+2), *(ptr+3), *(ptr+4),
+  if(ptr[1])
+      sprintf(buff, "%02x-%02x%02x-%02x%02x", *(ptr+1), *(ptr+2), *(ptr+3),
+          *(ptr+4), *(ptr+5));
+   else
+      sprintf(buff, "%02x%02x-%02x%02x", *(ptr+2), *(ptr+3), *(ptr+4),
 	  *(ptr+5));
   return buff;
 }
@@ -51,14 +54,30 @@ pr_strip(unsigned char *ptr)
 static int
 in_strip(char *bufp, struct sockaddr *sap)
 {
-  int i;
+  int i,i0;
   MetricomAddress *haddr = (MetricomAddress *) (sap->sa_data);
 
 
   sap->sa_family = strip_hwtype.type;
 
   /* figure out what the device-address should be */
-  i = (bufp[0] == '*') ? 1 : 0;
+  i0 = i = (bufp[0] == '*') ? 1 : 0;
+
+  while (bufp[i] && (bufp[i] != '-'))
+    i++;
+
+  if (bufp[i] != '-')
+    return -1;
+
+  if(i-i0 == 2)
+  {
+     haddr->c[1] = strtol(&bufp[i0], 0, 16);
+     i++;
+     if(bufp[i] == 0) return -1;
+  }else{
+     haddr->c[1] = 0;
+     i=i0;
+  }
   haddr->c[2] = strtol(&bufp[i], 0, 16) >> 8;
   haddr->c[3] = strtol(&bufp[i], 0, 16) & 0xFF;
 
@@ -71,7 +90,6 @@ in_strip(char *bufp, struct sockaddr *sap)
   haddr->c[4] = strtol(&bufp[i+1], 0, 16) >> 8;
   haddr->c[5] = strtol(&bufp[i+1], 0, 16) & 0xFF;
   haddr->c[0] = 0;
-  haddr->c[1] = 0;
 
   return 0;
 }
