@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.26 1999/04/18 20:28:40 philip Exp $
+ * Version:     $Id: netstat.c,v 1.27 1999/04/20 14:28:14 philip Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -14,7 +14,7 @@
  *              Johannes Stille, <johannes@titan.os.open.de>
  *              Bernd Eckenfels, <net-tools@lina.inka.de>
  *              Phil Blundell <philb@gnu.org>
- *              Tuan Hoang <tuan@optimus.mitre.org>
+ *              Tuan Hoang <tqhoang@bigfoot.com>
  *
  * Tuned for NET3 by:
  *              Alan Cox, <A.Cox@swansea.ac.uk>
@@ -54,6 +54,8 @@
  *990131 {1.37} Jan Kratochvil          added -p for prg_cache() & friends
  *                                      Flames to <short@ucw.cz>.
  *              Tuan Hoang              added IGMP support for IPv4 and IPv6
+ *
+ *990420 {1.38} Tuan Hoang              removed a useless assignment from igmp_do_one()
  *
  *              This program is free software; you can redistribute it
  *              and/or  modify it under  the terms of  the GNU General
@@ -116,7 +118,7 @@ typedef enum {
 #define FEATURE_NETSTAT
 #include "lib/net-features.h"
 
-char *Release = RELEASE, *Version = "netstat 1.37 (1999-01-31)", *Signature = "Fred Baumgarten, Alan Cox, Bernd Eckenfels and Phil Blundell and others.";
+char *Release = RELEASE, *Version = "netstat 1.38 (1999-04-20)", *Signature = "Fred Baumgarten, Alan Cox, Bernd Eckenfels, Phil Blundell, Tuan Hoang and others";
 
 
 #define E_READ  -1
@@ -511,7 +513,6 @@ static void igmp_do_one(int lnr, const char *line)
 	/* igmp6 file does not have any comments on first line */
 	if ( strstr( line, "Device" ) == NULL ) {
 	    igmp6_flag = 1;
-	    idx_flag = 1;
 	} else {
 	    /* IPV4 ONLY */
 	    /* 2.1.x kernels and up have Idx field */
