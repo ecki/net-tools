@@ -7,7 +7,7 @@
    8/2000  Andi Kleen make the list operations a bit more efficient.
    People are crazy enough to use thousands of aliases now.
 
-   $Id: interface.c,v 1.24 2002/06/14 01:33:50 ecki Exp $
+   $Id: interface.c,v 1.25 2002/12/05 21:54:50 ecki Exp $
  */
 
 #include "config.h"
@@ -87,6 +87,8 @@ int procnetdev_vsn = 1;
 
 int ife_short;
 
+int if_list_all = 0;	/* do we have requested the complete proc list, yet? */
+
 static struct interface *int_list, *int_last;
 
 static int if_readlist_proc(char *);
@@ -120,19 +122,22 @@ static struct interface *if_cache_add(char *name)
 
 struct interface *lookup_interface(char *name)
 {
-    struct interface *ife = NULL;
+   /* if we have read all, use it */
+   if (if_list_all)
+   	return if_cache_add(name);
 
-    if (if_readlist_proc(name) < 0) 
-	    return NULL; 
-    ife = if_cache_add(name); 
-    return ife;
+   /* otherwise we read a limited list */
+   if (if_readlist_proc(name) < 0)
+   	return NULL;
+ 
+   return if_cache_add(name);
 }
 
 int for_all_interfaces(int (*doit) (struct interface *, void *), void *cookie)
 {
     struct interface *ife;
 
-    if (!int_list && (if_readlist() < 0))
+    if (!int_list_all && (if_readlist() < 0))
 	return -1;
     for (ife = int_list; ife; ife = ife->next) {
 	int err = doit(ife, cookie);
@@ -150,6 +155,7 @@ int if_cache_free(void)
 	free(ife);
     }
     int_last = NULL;
+    int_list_all = 0;
     return 0;
 }
 
@@ -316,7 +322,7 @@ static int if_readlist_proc(char *target)
     if (!fh) {
 		fprintf(stderr, _("Warning: cannot open %s (%s). Limited output.\n"),
 			_PATH_PROCNET_DEV, strerror(errno)); 
-		return if_readconf();
+		return -2;
 	}	
     fgets(buf, sizeof buf, fh);	/* eat line */
     fgets(buf, sizeof buf, fh);
@@ -372,11 +378,16 @@ static int if_readlist_proc(char *target)
 int if_readlist(void) 
 { 
     /* caller will/should check not to call this too often 
-     *   (i.e. only if int_list!= NULL 
+     *   (i.e. only if int_list_all == 0 
      */
     int err = if_readlist_proc(NULL); 
-    if (!err)
-	    err = if_readconf();
+
+    if (err)
+    	err = if_readconf();
+	    
+    if(!err)
+    	if_list_all = 1;
+
     return err;
 } 
 
