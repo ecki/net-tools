@@ -2,7 +2,7 @@
  * lib/hw.c   This file contains the top-level part of the hardware
  *              support functions module.
  *
- * Version:     $Id: hw.c,v 1.12 1999/04/18 20:28:43 philip Exp $
+ * Version:     $Id: hw.c,v 1.13 1999/04/21 09:00:02 philip Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -63,6 +63,8 @@ extern struct hwtype lapb_hwtype;
 
 extern struct hwtype sit_hwtype;
 
+extern struct hwtype irda_hwtype;
+
 static struct hwtype *hwtypes[] =
 {
 
@@ -118,6 +120,9 @@ static struct hwtype *hwtypes[] =
 #endif
 #if HAVE_HWHIPPI
     &hippi_hwtype,
+#endif
+#if HAVE_HWIRDA
+    &irda_hwtype,
 #endif
     &unspec_hwtype,
     NULL
@@ -176,6 +181,9 @@ void hwinit()
 #endif
 #if HAVE_HWSIT
     sit_hwtype.title = _("IPv6-in-IPv4");
+#endif
+#if HAVE_HWIRDA
+    irda_hwtype.title = _("IrLAP");
 #endif
     sVhwinit = 1;
 }

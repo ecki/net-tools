@@ -9,7 +9,6 @@ TODO for net-tools
 [ ] netstat -i: XOVR!=compressed
 [ ] nettools.8 man-page
 [ ] lib/ddp.c: /etc/atalk.names support
-[ ] share source between netstat/ifconfig (lib/if_info.c)
 [ ] ARPHRD_LOOPBACK in new kernels, ok? dont think so :-/
 [ ] ARPHRD_LOCALTLK and aarp?
 [ ] ARCNET support? linux/drivers/net/arcnet.c
@@ -22,7 +21,6 @@ TODO for net-tools
 [ ] net-features.h in all tools
 [ ] check netstat -o
 [ ] supply some informations about new features to HOWTOs
-[ ] Need to include Jos Vos ipfwadm <ftp.xos.nl>
 [ ] Config file only works with bash not ash.
 [ ] Token ring is almost totally untested.
 [ ] additional tools for IPX, AX.25 etc be bundled [ipxripd004, ipx_* tools 
