@@ -73,6 +73,7 @@ extern void          print_hwlist(int type);
 extern struct aftype *get_aftype(const char *name);
 extern struct aftype *get_afntype(int type);
 extern void          print_aflist(int type);
+extern int           hw_null_address(struct hwtype *hw, void *addr);
 
 extern int getargs(char *string, char *arguments[]);
 

@@ -3,7 +3,7 @@
  *              support functions for the net-tools.
  *              (NET-3 base distribution).
  *
- * Version:    $Id: inet.c,v 1.9 1999/03/02 21:09:14 philip Exp $
+ * Version:    $Id: inet.c,v 1.10 1999/03/03 19:40:41 philip Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -26,10 +26,13 @@
  */
 #include "config.h"
 
-#if HAVE_AFINET
+/* FIXME.  Split this file into inet4.c for the IPv4 specific parts
+   and inet.c for those shared between IPv4 and IPv6.  */
+
+#if HAVE_AFINET || HAVE_AFINET6
+#include <netinet/in.h>
 #include <sys/types.h>
 #include <sys/socket.h>
-#include <netinet/in.h>
 #include <arpa/inet.h>
 #include <arpa/nameser.h>
 #include <ctype.h>
@@ -45,6 +48,7 @@
 #include "pathnames.h"
 #include "intl.h"
 #include "util.h"
+#endif
 
 extern int h_errno;		/* some netdb.h versions don't export this */
 
@@ -62,6 +66,8 @@ struct service {
 
 static struct service *tcp_name = NULL, *udp_name = NULL, *raw_name = NULL;
 
+
+#if HAVE_AFINET
 
 static struct addr *INET_nn = NULL;	/* addr-to-name cache           */
 

@@ -2,7 +2,7 @@
  * lib/hw.c   This file contains the top-level part of the hardware
  *              support functions module.
  *
- * Version:     $Id: hw.c,v 1.10 1999/01/05 20:53:31 philip Exp $
+ * Version:     $Id: hw.c,v 1.11 1999/03/03 19:40:38 philip Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -236,4 +236,15 @@ void print_hwlist(int type) {
 	hwp++;
     }
     fprintf(stderr,"\n");
+}
+
+/* return 1 if address is all zeros */
+int hw_null_address(struct hwtype *hw, void *ap)
+{
+    unsigned int i;
+    unsigned char *address = (unsigned char *)ap;
+    for (i = 0; i < hw->alen; i++)
+	if (address[i])
+	    return 0;
+    return 1;
 }

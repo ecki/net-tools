@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.20 1999/03/02 09:20:44 ralf Exp $
+ * Version:     $Id: netstat.c,v 1.21 1999/03/03 19:40:32 philip Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -257,7 +257,7 @@ static int netrom_info(void)
 #endif
 
 
-#if HAVE_AFINET
+#if HAVE_AFINET || HAVE_AFINET6
 
 enum {
     TCP_ESTABLISHED = 1,

@@ -4,7 +4,7 @@
    10/1998 partly rewriten by Andi Kleen to support an interface list.   
    I don't claim that the list operations are efficient @).  
 
-   $Id: interface.c,v 1.1 1999/01/09 14:36:36 philip Exp $
+   $Id: interface.c,v 1.2 1999/03/03 19:40:42 philip Exp $
  */
 
 #include "config.h"
@@ -113,7 +113,10 @@ static int if_readconf(void)
     if (skfd < 0) {
 	fprintf(stderr, _("warning: no inet socket available: %s\n"),
 		strerror(errno));
-	return -1;
+	/* Try to soldier on with whatever socket we can get hold of.  */
+	skfd = sockets_open(0);
+	if (skfd < 0)
+	    return -1;
     }
 
     ifc.ifc_buf = NULL;
@@ -394,31 +397,32 @@ int if_fetch(struct interface *ife)
 #endif
 
 #if HAVE_AFINET
+    /* IPv4 address? */
     fd = get_socket_for_af(AF_INET);
     if (fd >= 0) {
 	strcpy(ifr.ifr_name, ifname);
-	if (ioctl(fd, SIOCGIFDSTADDR, &ifr) < 0)
-	    memset(&ife->dstaddr, 0, sizeof(struct sockaddr));
-	else
-	    ife->dstaddr = ifr.ifr_dstaddr;
-
-	strcpy(ifr.ifr_name, ifname);
-	if (ioctl(fd, SIOCGIFBRDADDR, &ifr) < 0)
-	    memset(&ife->broadaddr, 0, sizeof(struct sockaddr));
-	else
-	    ife->broadaddr = ifr.ifr_broadaddr;
-
-	strcpy(ifr.ifr_name, ifname);
-	if (ioctl(fd, SIOCGIFNETMASK, &ifr) < 0)
-	    memset(&ife->netmask, 0, sizeof(struct sockaddr));
-	else
-	    ife->netmask = ifr.ifr_netmask;
-
-	strcpy(ifr.ifr_name, ifname);
-	if (ioctl(fd, SIOCGIFADDR, &ifr) < 0)
-	    memset(&ife->addr, 0, sizeof(struct sockaddr));
-	else
+	if (ioctl(fd, SIOCGIFADDR, &ifr) == 0) {
+	    ife->has_ip = 1;
 	    ife->addr = ifr.ifr_addr;
+	    strcpy(ifr.ifr_name, ifname);
+	    if (ioctl(fd, SIOCGIFDSTADDR, &ifr) < 0)
+	        memset(&ife->dstaddr, 0, sizeof(struct sockaddr));
+	    else
+	        ife->dstaddr = ifr.ifr_dstaddr;
+
+	    strcpy(ifr.ifr_name, ifname);
+	    if (ioctl(fd, SIOCGIFBRDADDR, &ifr) < 0)
+	        memset(&ife->broadaddr, 0, sizeof(struct sockaddr));
+	    else
+		ife->broadaddr = ifr.ifr_broadaddr;
+
+	    strcpy(ifr.ifr_name, ifname);
+	    if (ioctl(fd, SIOCGIFNETMASK, &ifr) < 0)
+		memset(&ife->netmask, 0, sizeof(struct sockaddr));
+	    else
+		ife->netmask = ifr.ifr_netmask;
+	} else
+	    memset(&ife->addr, 0, sizeof(struct sockaddr));
     }
 #endif
 

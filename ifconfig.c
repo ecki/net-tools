@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.27 1999/01/17 21:20:25 philip Exp $
+ * Version:     $Id: ifconfig.c,v 1.28 1999/03/03 19:40:28 philip Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -140,9 +140,6 @@ void ife_print(struct interface *ptr)
     int plen, scope, dad_status, if_idx;
     extern struct aftype inet6_aftype;
     char addr6p[8][5];
-
-    if (!strncmp(ptr->name, "sit", 3))
-	ptr->addr.sa_family = AF_INET6;		/* fix this up properly one day */
 #endif
 
     ap = get_afntype(ptr->addr.sa_family);
@@ -163,20 +160,22 @@ void ife_print(struct interface *ptr)
 
     printf(_("%-9.9s Link encap:%s  "), ptr->name, hw->title);
     /* Don't print the hardware address for ATM or Ash if it's null. */
+    /* FIXME.  Make this an option in struct hwtype.  */
     if (hw->sprint != NULL && ((strncmp(ptr->name, "atm", 3) &&
 				strncmp(ptr->name, "ash", 3)) ||
-			       (ptr->hwaddr[0] || ptr->hwaddr[1] || ptr->hwaddr[2] || ptr->hwaddr[3] ||
-				ptr->hwaddr[4] || ptr->hwaddr[5])))
+			       (! hw_null_address(hw, ptr->hwaddr))))
 	printf(_("HWaddr %s  "), hw->print(ptr->hwaddr));
 #ifdef IFF_PORTSEL
-    if (ptr->flags & IFF_PORTSEL)
-	printf(_("Media:%s%s"), if_port_text[ptr->map.port][0],
-	       (ptr->flags & IFF_AUTOMEDIA) ? _("(auto)") : "");
+    if (ptr->flags & IFF_PORTSEL) {
+	printf(_("Media:%s"), if_port_text[ptr->map.port][0]);
+	if (ptr->flags & IFF_AUTOMEDIA)
+	    printf(_("(auto)"));
+    }
 #endif
     printf("\n");
-#if HAVE_AFINET6
-    if (ap->af != AF_INET6) {
-#endif
+
+#if HAVE_AFINET
+    if (ptr->has_ip) {
 	printf(_("          %s addr:%s "), ap->name,
 	       ap->sprint(&ptr->addr, 1));
 	if (ptr->flags & IFF_POINTOPOINT) {
@@ -186,8 +185,10 @@ void ife_print(struct interface *ptr)
 	    printf(_(" Bcast:%s "), ap->sprint(&ptr->broadaddr, 1));
 	}
 	printf(_(" Mask:%s\n"), ap->sprint(&ptr->netmask, 1));
-#if HAVE_AFINET6
     }
+#endif
+
+#if HAVE_AFINET6
     /* FIXME: should be integrated into interface.c.   */
 
     if ((f = fopen(_PATH_PROCNET_IFINET6, "r")) != NULL) {
