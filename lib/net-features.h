@@ -159,6 +159,12 @@ static char *Features =
 "-"
 #endif
 "NETROM "
+#if HAVE_AFX25
+"+"
+#else
+"-"
+#endif
+"X25 "
 #if HAVE_AFATALK
 "+"
 #else
@@ -233,6 +239,13 @@ static char *Features =
 "-"
 #endif
 "NETROM "
+
+#if HAVE_HWX25
+"+"
+#else
+"-"
+#endif
+"X25 "
 
 #if HAVE_HWFR
 "+"

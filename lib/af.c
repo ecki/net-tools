@@ -2,7 +2,7 @@
  * lib/af.c   This file contains the top-level part of the protocol
  *              support functions module for the NET-2 base distribution.
  *
- * Version:     $Id: af.c,v 1.12 1999/09/27 11:00:44 philip Exp $
+ * Version:     $Id: af.c,v 1.13 2000/05/20 13:38:10 pb Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -35,6 +35,7 @@ int flag_netrom;
 int flag_inet;
 int flag_inet6;
 int flag_econet;
+int flag_x25 = 0;
 int flag_ash;
 
 
@@ -81,6 +82,9 @@ struct aftrans_t {
 	"econet", "ec", &flag_econet
     },
     {
+	"x25", "x25", &flag_x25
+    },
+    {
         "ash", "ash", &flag_ash
     },
     {
@@ -99,6 +103,7 @@ extern struct aftype netrom_aftype;
 extern struct aftype ipx_aftype;
 extern struct aftype ddp_aftype;
 extern struct aftype ec_aftype;
+extern struct aftype x25_aftype;
 extern struct aftype rose_aftype;
 extern struct aftype ash_aftype;
 
@@ -136,6 +141,9 @@ struct aftype *aftypes[] =
 #if HAVE_AFASH
     &ash_aftype,
 #endif
+#if HAVE_AFX25
+    &x25_aftype,
+#endif
     &unspec_aftype,
     NULL
 };
@@ -166,6 +174,9 @@ void afinit()
 #endif
 #if HAVE_AFECONET
     ec_aftype.title = _("Econet");
+#endif
+#if HAVE_AFX25
+    x25_aftype.title = _("CCITT X.25");
 #endif
 #if HAVE_AFROSE
     rose_aftype.title = _("AMPR ROSE");

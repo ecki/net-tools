@@ -55,6 +55,7 @@ bool 'Appletalk DDP protocol family' HAVE_AFATALK y
 bool 'AX25 (packet radio) protocol family' HAVE_AFAX25 y
 bool 'NET/ROM (packet radio) protocol family' HAVE_AFNETROM y
 bool 'Rose (packet radio) protocol family' HAVE_AFROSE n
+bool 'X.25 (CCITT) protocol family' HAVE_AFX25 y
 bool 'Econet protocol family' HAVE_AFECONET n
 bool 'DECnet protocol family' HAVE_AFDECnet n
 bool 'Ash protocol family' HAVE_AFASH n
@@ -72,6 +73,7 @@ bool 'Token ring (generic) support' HAVE_HWTR y
 bool 'AX25 (packet radio) support' HAVE_HWAX25 y
 bool 'Rose (packet radio) support' HAVE_HWROSE n
 bool 'NET/ROM (packet radio) support' HAVE_HWNETROM y
+bool 'X.25 (generic) support' HAVE_HWX25 y
 bool 'DLCI/FRAD (frame relay) support' HAVE_HWFR y
 bool 'SIT (IPv6-in-IPv4) support' HAVE_HWSIT n
 bool 'FDDI (generic) support' HAVE_HWFDDI n

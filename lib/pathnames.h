@@ -42,6 +42,8 @@
 #define _PATH_PROCNET_RARP		"/proc/net/rarp"
 #define _PATH_ETHERS			"/etc/ethers"
 #define _PATH_PROCNET_ROSE_ROUTE	"/proc/net/rose_routes"
+#define _PATH_PROCNET_X25              "/proc/net/x25"
+#define _PATH_PROCNET_X25_ROUTE                "/proc/net/x25_routes"
 #define _PATH_PROCNET_DEV_MCAST		"/proc/net/dev_mcast"
 
 /* pathname for the netlink device */

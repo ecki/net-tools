@@ -107,6 +107,7 @@ extern int DDP_rprint(int options);
 extern int IPX_rprint(int options);
 extern int NETROM_rprint(int options);
 extern int AX25_rprint(int options);
+extern int X25_rprint(int options);
 
 extern int INET_rinput(int action, int flags, char **argv);
 extern int INET6_rinput(int action, int flags, char **argv);
@@ -114,6 +115,7 @@ extern int DDP_rinput(int action, int flags, char **argv);
 extern int IPX_rinput(int action, int flags, char **argv);
 extern int NETROM_rinput(int action, int flags, char **argv);
 extern int AX25_rinput(int action, int flags, char **argv);
+extern int X25_rinput(int action, int flags, char **argv);
 
 extern int aftrans_opt(const char *arg);
 extern void aftrans_def(char *tool, char *argv0, char *dflt);
@@ -125,6 +127,7 @@ extern int flag_ipx;
 extern int flag_ax25;
 extern int flag_ddp;
 extern int flag_netrom;
+extern int flag_x25;
 extern int flag_inet;
 extern int flag_inet6;
 
@@ -132,6 +135,7 @@ extern char afname[];
 
 #define AFTRANS_OPTS \
 	{"ax25",	0,	0,	1}, \
+       {"x25",         0,      0,      1}, \
 	{"ip",		0,	0,	1}, \
 	{"ipx",         0,	0,	1}, \
 	{"appletalk",	0,	0,	1}, \
@@ -141,7 +145,7 @@ extern char afname[];
 	{"ddp",		0,	0,	1}, \
 	{"unix",	0,	0,	1}, \
 	{"tcpip",	0,	0,	1}
-#define AFTRANS_CNT 10
+#define AFTRANS_CNT 11
 
 #define EINTERN(file, text) fprintf(stderr, \
 	_("%s: Internal Error `%s'.\n"),file,text);

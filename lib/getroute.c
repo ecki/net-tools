@@ -7,7 +7,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system. (net-tools, net-drivers)
  *
- * Version:     $Id: getroute.c,v 1.5 1998/11/19 13:01:57 philip Exp $
+ * Version:     $Id: getroute.c,v 1.6 2000/05/20 13:38:10 pb Exp $
  *
  * Author:      Bernd 'eckes' Eckenfels <net-tools@lina.inka.de>
  *              Copyright 1999 Bernd Eckenfels, Germany
@@ -46,6 +46,7 @@ extern struct aftype ax25_aftype;
 extern struct aftype netrom_aftype;
 extern struct aftype ipx_aftype;
 extern struct aftype ddp_aftype;
+extern struct aftype x25_aftype;
 
 void getroute_init(void)
 {
@@ -66,6 +67,9 @@ void getroute_init(void)
 #endif
 #if HAVE_AFATALK
     ddp_aftype.rprint = DDP_rprint;
+#endif
+#if HAVE_AFX25
+    x25_aftype.rprint = X25_rprint;
 #endif
 }
 

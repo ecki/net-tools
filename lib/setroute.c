@@ -7,7 +7,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system. (net-tools, net-drivers)
  *
- * Version:     $Id: setroute.c,v 1.3 1998/11/15 20:12:07 freitag Exp $
+ * Version:     $Id: setroute.c,v 1.4 2000/05/20 13:38:10 pb Exp $
  *
  * Author:      Bernd 'eckes' Eckenfels <net-tools@lina.inka.de>
  *              Copyright 1999 Bernd Eckenfels, Germany
@@ -40,6 +40,7 @@ extern struct aftype ax25_aftype;
 extern struct aftype netrom_aftype;
 extern struct aftype ipx_aftype;
 extern struct aftype ddp_aftype;
+extern struct aftype x25_aftype;
 
 void setroute_init(void)
 {
@@ -54,6 +55,9 @@ void setroute_init(void)
 #endif
 #if HAVE_AFIPX
     ipx_aftype.rinput = IPX_rinput;
+#endif
+#if HAVE_AFX25
+    x25_aftype.rinput = X25_rinput;
 #endif
 #if 0
 #if HAVE_AFAX25

@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.33 1999/12/11 13:35:53 freitag Exp $
+ * Version:     $Id: ifconfig.c,v 1.34 2000/05/20 13:38:10 pb Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -906,7 +906,8 @@ int main(int argc, char **argv)
 		prefix_len = 0;
 	    }
 	    safe_strncpy(host, *spp, (sizeof host));
-	    if (inet6_aftype.input(1, host, (struct sockaddr *) &sa6) < 0) {
+	    if (inet6_aftype.input(1, host, (struct sockaddr *) &sa6) < 0
+		&& inet6_aftype.input(0, host, (struct sockaddr *) &sa6) < 0) {
 		inet6_aftype.herror(host);
 		goterr = 1;
 		spp++;

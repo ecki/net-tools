@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.35 2000/04/05 00:59:56 ecki Exp $
+ * Version:     $Id: netstat.c,v 1.36 2000/05/20 13:38:10 pb Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -43,6 +43,7 @@
  *                                      (relly needs to be kernel hooked but 
  *                                      this will do in the meantime)
  *                                      minor header file misplacement tidy up.
+ *980815 {1.xx} Stephane Fillod:       X.25 support
  *980411 {1.34} Arnaldo Carvalho        i18n: catgets -> gnu gettext, substitution
  *                                      of sprintf for snprintf
  *10/1998	Andi Kleen              Use new interface primitives.
@@ -636,6 +637,57 @@ static void igmp_do_one(int lnr, const char *line)
 #endif
     }    /* IPV4 */
 }
+
+#if HAVE_AFX25
+static int x25_info(void)
+{
+       FILE *f=fopen(_PATH_PROCNET_X25, "r");
+       char buffer[256],dev[16];
+       int st,vs,vr,sendq,recvq,lci;
+       static char *x25_state[5]=
+       {
+               "LISTENING",
+               "SABM_SENT",
+               "DISC_SENT",
+               "ESTABLISHED",
+               "RECOVERY"
+       };
+       if(!(f=fopen(_PATH_PROCNET_X25, "r")))
+       {
+               if (errno != ENOENT) {
+                       perror(_PATH_PROCNET_X25);
+                       return(-1);
+               }
+               if (flag_arg || flag_ver)
+                       ESYSNOT("netstat","AF X25");
+               if (flag_arg)
+                       return(1);
+               else
+                       return(0);
+       }
+       printf( _("Active X.25 sockets\n"));
+       /* IMHO, Vr/Vs is not very usefull --SF */
+       printf( _("Dest         Source          Device  LCI  State        Vr/Vs  Send-Q  Recv-Q\n"));
+       fgets(buffer,256,f);
+       while(fgets(buffer,256,f))
+       {
+               buffer[10]=0;
+               buffer[20]=0;
+               sscanf(buffer+22,"%s %d %d %d %d %*d %*d %*d %*d %*d %*d %d %d %*d",
+                       dev,&lci,&st,&vs,&vr,&sendq,&recvq);
+               if (!(flag_all || lci))
+                       continue;
+               printf("%-15s %-15s %-7s %-3d  %-11s  %02d/%02d  %-6d  %-6d\n",
+                       buffer,buffer+11,
+                       dev,
+                       lci,
+                       x25_state[st],
+                       vr,vs,sendq,recvq);
+       }
+       fclose(f);
+       return 0;               
+}
+#endif
 
 static int igmp_info(void)
 {
@@ -1622,7 +1674,7 @@ int main
         flag_inet = flag_inet6 = 1;
 
     flag_arg = flag_tcp + flag_udp + flag_raw + flag_unx + flag_ipx
-	+ flag_ax25 + flag_netrom + flag_igmp;
+	+ flag_ax25 + flag_netrom + flag_igmp + flag_x25;
 
     if (flag_mas) {
 #if HAVE_FW_MASQUERADE && HAVE_AFINET
@@ -1772,6 +1824,16 @@ int main
 #else
 	    if (flag_arg) {
 		i = 1;
+       if(!flag_arg || flag_x25) {
+#if HAVE_AFX25
+               /* FIXME */
+               i = x25_info();
+               if(i) {  return(i); }
+#endif
+       }
+      if (flag_arg)
+       { i=1; ENOSUPP("netstat","AF X25"); }
+
 		ENOSUPP("netstat", "AF AX25");
 	    }
 #endif

@@ -51,6 +51,10 @@ int sockets_open(int family)
 	if (af->af == AF_NETROM)
 	    type = SOCK_SEQPACKET;
 #endif
+#if HAVE_AFX25
+       if (af->af == AF_X25)
+           type = SOCK_SEQPACKET;
+#endif
 	af->fd = socket(af->af, type, 0);
 	if (af->fd >= 0)
 	    sfd = af->fd;

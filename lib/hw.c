@@ -2,7 +2,7 @@
  * lib/hw.c   This file contains the top-level part of the hardware
  *              support functions module.
  *
- * Version:     $Id: hw.c,v 1.16 2000/04/02 12:56:44 philip Exp $
+ * Version:     $Id: hw.c,v 1.17 2000/05/20 13:38:10 pb Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -52,6 +52,7 @@ extern struct hwtype tr_hwtype1;
 extern struct hwtype ax25_hwtype;
 extern struct hwtype rose_hwtype;
 extern struct hwtype netrom_hwtype;
+extern struct hwtype x25_hwtype;
 extern struct hwtype tunnel_hwtype;
 
 extern struct hwtype ash_hwtype;
@@ -140,6 +141,9 @@ static struct hwtype *hwtypes[] =
 #if HAVE_HWEC
     &ec_hwtype,
 #endif
+#if HAVE_HWX25
+    &x25_hwtype,
+#endif
     &unspec_hwtype,
     NULL
 };
@@ -177,6 +181,9 @@ void hwinit()
 #endif
 #if HAVE_HWNETROM
     netrom_hwtype.title = _("AMPR NET/ROM");
+#endif
+#if HAVE_HWX25
+    x25_hwtype.title = _("generic X.25");
 #endif
 #if HAVE_HWTUNNEL
     tunnel_hwtype.title = _("IPIP Tunnel");
