@@ -35,6 +35,7 @@ int flag_ddp = 0;
 int flag_netrom = 0;
 int flag_inet = 0;
 int flag_inet6 = 0;
+int flag_econet = 0;
 
 
 struct aftrans_t {
@@ -53,6 +54,7 @@ struct aftrans_t {
 	{"ddp",		"ddp",		&flag_ddp},
 	{"unix",	"unix",		&flag_unx},
 	{"tcpip",	"inet",		&flag_inet},
+	{"econet",	"ec",		&flag_econet},
 	{0,		0,		0}
 };
 
@@ -66,6 +68,7 @@ extern	struct aftype	ax25_aftype;
 extern	struct aftype	netrom_aftype;
 extern	struct aftype	ipx_aftype;
 extern	struct aftype	ddp_aftype;
+extern	struct aftype	ec_aftype;
 
 static short sVafinit = 0;
 
@@ -90,7 +93,10 @@ static struct aftype *aftypes[] = {
 #endif
 #if HAVE_AFATALK
   &ddp_aftype,
-#endif    
+#endif
+#if HAVE_AFECONET
+  &ec_aftype,
+#endif
   &unspec_aftype,
   NULL
 };
@@ -118,6 +124,9 @@ void afinit ()
 #endif
 #if HAVE_AFATALK
   ddp_aftype.title = NLS_CATSAVE (catfd, ddpSet, ddp_ddp, "Appletalk DDP");
+#endif
+#if HAVE_AFCONET
+  ec_aftype.title = NLS_CATSAVE (catfd, ecSet, ec_ec, "Econet");
 #endif
   sVafinit = 1;
 }

@@ -115,7 +115,7 @@ ife_print(struct interface *ptr)
   struct hwtype *hw;
   int hf;
   int can_compress = 0;
-  static struct aftype *ipxtype=NULL, *ddptype=NULL;
+  static struct aftype *ipxtype=NULL, *ddptype=NULL, *ectype=NULL;
 #if HAVE_AFINET6
   FILE *f;
   char addr6[40], devname[10];
@@ -205,6 +205,7 @@ ife_print(struct interface *ptr)
   }
 #endif
   
+#if HAVE_AFIPX
   if (ipxtype==NULL)
     ipxtype=get_afntype(AF_IPX);
 
@@ -226,6 +227,9 @@ ife_print(struct interface *ptr)
 			 "          IPX/Ethernet 802.3 addr:%s\n"),
 	     ipxtype->sprint(&ptr->ipxaddr_e3,1));
   }
+#endif
+
+#if HAVE_AFTALK
   if (ddptype==NULL)
     ddptype=get_afntype(AF_APPLETALK);
   if (ddptype!=NULL) {
@@ -234,6 +238,19 @@ ife_print(struct interface *ptr)
 			 "          EtherTalk Phase 2 addr:%s\n"),
 	     ddptype->sprint(&ptr->ddpaddr,1));
   }
+#endif
+
+#if HAVE_AFECONET
+  if (ectype == NULL)
+    ectype = get_afntype(AF_ECONET);
+  if (ectype != NULL) {
+    if (ptr->has_econet)
+      printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_ec,
+			 "          econet addr:%s\n"),
+	     ectype->sprint(&ptr->ecaddr,1));
+  }
+#endif
+
   printf("          ");
   if (ptr->flags == 0) printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_noflags,
 					  "[NO FLAGS] "));
@@ -273,7 +290,7 @@ ife_print(struct interface *ptr)
 	ptr->stats.tx_packets, ptr->stats.tx_errors,
 	ptr->stats.tx_dropped, ptr->stats.tx_fifo_errors,
 	ptr->stats.tx_carrier_errors);
-  printf("             collisions:%lu ", ptr->stats.collisions);
+  printf("          Collisions:%lu ", ptr->stats.collisions);
   if (can_compress)
     printf("compressed:%lu ", ptr->stats.tx_compressed);
   printf("\n");
@@ -313,9 +330,12 @@ if_print(char *ifname)
     fgets(buffer, 256, fd);
     while (!feof(fd)) {
       char *name = buffer;
+      char *sep;
       if (fgets(buffer, 256, fd) == NULL)
 	break;
-      buffer[6] = 0;
+      sep = strrchr(buffer, ':');
+      if (sep)
+	*sep = 0;
       while (*name == ' ') name++;
       if (if_fetch(name, &ife) < 0) {
 	fprintf(stderr, NLS_CATGETS(catfd, ifconfigSet, 
@@ -508,6 +528,7 @@ main(int argc, char **argv)
       continue;
     }
 
+#ifdef IFF_PORTSEL
     if (!strcmp(*spp, "media") || !strcmp(*spp, "port")) {
       if (*++spp == NULL) usage();
       if (!strcasecmp(*spp, "auto")) {
@@ -545,6 +566,7 @@ main(int argc, char **argv)
       }
       continue;
     }
+#endif
     
     if (!strcmp(*spp, "trailers")) {
       goterr |= clr_flag(ifr.ifr_name, IFF_NOTRAILERS);
@@ -931,9 +953,27 @@ main(int argc, char **argv)
     }
 
     memcpy((char *) &ifr.ifr_addr, (char *) &sa, sizeof(struct sockaddr));
-    if (ioctl(skfd, SIOCSIFADDR, &ifr) < 0) {
-      fprintf(stderr, "SIOCSIFADDR: %s\n", strerror(errno));
-      goterr = 1;
+    {
+      int r;
+      switch (ap->af) {
+#ifdef HAVE_AFINET
+      case AF_INET:
+	r = ioctl(inet_sock, SIOCSIFADDR, &ifr);
+	break;
+#endif
+#ifdef HAVE_AFECONET
+      case AF_ECONET:
+	r = ioctl(ec_sock, SIOCSIFADDR, &ifr);
+	break;
+#endif
+      default:
+	printf("Don't know how to set addresses for this family.\n");
+	exit(1);
+      }
+      if (r < 0) {
+	fprintf(stderr, "SIOCSIFADDR: %s\n", strerror(errno));
+	goterr = 1;
+      }
     }
     goterr |= set_flag(ifr.ifr_name, (IFF_UP | IFF_RUNNING));
     spp++;

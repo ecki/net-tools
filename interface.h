@@ -45,6 +45,7 @@ struct interface {
   struct sockaddr	ipxaddr_e3;		/* IPX network address   */
   struct sockaddr	ipxaddr_e2;		/* IPX network address   */
   struct sockaddr	ddpaddr;		/* Appletalk DDP address */
+  struct sockaddr	ecaddr;			/* Econet address	 */
   int			has_ip;
   int			has_ipx_bb;
   int			has_ipx_sn;
@@ -52,6 +53,7 @@ struct interface {
   int			has_ipx_e2;
   int			has_ax25;
   int			has_ddp;
+  int			has_econet;
   char			hwaddr[32];		/* HW address		 */
   struct user_net_device_stats stats;		/* statistics		 */
 };

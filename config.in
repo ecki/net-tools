@@ -61,6 +61,7 @@ bool 'Appletalk DDP protocol family' HAVE_AFATALK y
 bool 'AX25 (packet radio) protocol family' HAVE_AFAX25 y
 bool 'NET/ROM (packet radio) protocol family' HAVE_AFNETROM y
 bool 'Rose (packet radio) protocol family' HAVE_AFROSE n
+bool 'Econet protocol family' HAVE_AFECONET n
 *
 *
 *            Device Hardware types.

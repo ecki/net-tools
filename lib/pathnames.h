@@ -38,6 +38,7 @@
 # define _PATH_PROCNET_DEV		"/proc/net/dev"
 # define _PATH_PROCNET_RARP		"/proc/net/rarp"
 # define _PATH_ETHERS			"/etc/ethers"
+# define _PATH_PROCNET_ROSE_ROUTE	"/proc/net/rose_routes"
 
 /* pathname for the netlink device */
 # define _PATH_DEV_ROUTE	"/dev/route"

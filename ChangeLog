@@ -1,3 +1,26 @@
+Fri Apr 10 22:26:48 1998  Philip Blundell  <Philip.Blundell@pobox.com>
+
+	* ifconfig.c (ife_print): Bracket Appletalk stuff in #if
+	HAVE_AFIPX.  Add Econet support.
+	(ife_print): Print `collisions' left aligned with everything
+	else to make it neater.
+	(main): Make interface address setting work for Econet.
+
+	* interface.h: Add Econet support.
+
+	* lib/pathnames.h (_PATH_PROCNET_ROSE_ROUTE): Added.
+
+	* netstat.c: Fix `-i' to work with unified interface code.  Tidy
+ 	up.
+
+	* ifconfig.c (if_print): Fix printing of aliased interfaces when
+	lots are present (patch from Todd R. Eigenschink).
+	(main): Bracket media stuff with #ifdef IFF_PORTSEL.
+
+	* lib/econet.c: New file.
+	* config.in, lib/Makefile: support Econet.
+	* sockets.c: Likewise.
+
 Mon Mar  2 20:45:29 1998  Philip Blundell  <Philip.Blundell@pobox.com>
 
 	* interface.c: New file, contains code shared between ifconfig and

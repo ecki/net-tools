@@ -18,6 +18,11 @@
 #if HAVE_AFIPX
 #include "ipx.h"
 #endif
+
+#if HAVE_AFECONET
+#include <linux/if_ec.h>
+#endif
+
 #include "net-support.h"
 #include "pathnames.h"
 #include "version.h"
@@ -245,6 +250,15 @@ if_fetch(char *ifname, struct interface *ife)
       ife->has_ipx_e2=1;
       ife->ipxaddr_e2=ifr.ifr_addr;
     }
+  }
+#endif
+
+#if HAVE_AFECONET
+  /* Econet address maybe? */
+  strcpy(ifr.ifr_name, ifname);
+  if (ec_sock >= 0 && ioctl(ec_sock, SIOCGIFADDR, &ifr) == 0) {
+    ife->ecaddr = ifr.ifr_addr;
+    ife->has_econet = 1;
   }
 #endif
 

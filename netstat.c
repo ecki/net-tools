@@ -74,6 +74,8 @@
 #include "version.h"
 #include "config.h"
 #include "net-locale.h"
+#include "sockets.h"
+#include "interface.h"
 
 /* prototypes for statistics.c */
 void parsesnmp(void);
@@ -104,52 +106,6 @@ char *Release   = RELEASE,
 #define E_READ  -1
 #define E_IOCTL -3
 
-
-/* This is from <linux/netdevice.h>. */
-
-struct net_device_stats
-{
-  unsigned long	rx_packets;		/* total packets received */
-  unsigned long	tx_packets;		/* total packets transmitted */
-  unsigned long	rx_bytes;		/* total bytes received */
-  unsigned long	tx_bytes;		/* total bytes transmitted */
-  unsigned long	rx_errors;		/* bad packets received */
-  unsigned long	tx_errors;		/* packet transmit problems */
-  unsigned long	rx_dropped;		/* no space in linux buffers */
-  unsigned long	tx_dropped;		/* no space available in linux */
-  unsigned long	multicast;		/* multicast packets received */
-  unsigned long	collisions;
-  
-  /* detailed rx_errors */
-  unsigned long	rx_length_errors;
-  unsigned long	rx_over_errors;		/* receiver ring buff overflow */
-  unsigned long	rx_crc_errors;		/* packet with crc error */
-  unsigned long	rx_frame_errors;	/* frame alignment error */
-  unsigned long	rx_fifo_errors;		/* fifo overran */
-  unsigned long	rx_missed_errors;	/* receiver missed packet */
-
-  /* detailed tx_errors */
-  unsigned long	tx_aborted_errors;
-  unsigned long	tx_carrier_errors;	/* lost carrier */
-  unsigned long	tx_fifo_errors;		/* fifo underran */
-  unsigned long	tx_heartbeat_errors;	/* heartbeat failure */
-  unsigned long	tx_window_errors;
-};
-
-
-struct interface {
-  char name[IFNAMSIZ];			/* interface name       */
-  short flags;				/* various flags        */
-  int metric;				/* routing metric       */
-  int mtu;				/* MTU value            */
-  struct sockaddr addr;			/* IP address           */
-  struct sockaddr dstaddr;		/* P-P IP address       */
-  struct sockaddr broadaddr;		/* IP broadcast address */
-  struct sockaddr netmask;		/* IP network mask      */
-  struct sockaddr hwaddr;		/* HW address           */
-  struct net_device_stats stats;	/* statistics           */
-};
-
 int flag_nlp = 0;
 int flag_int = 0;
 int flag_rou = 0;
@@ -169,7 +125,6 @@ int flag_exp = 1;
 int flag_arg = 0;
 int flag_ver = 0;
 
-int skfd;
 FILE *procinfo;
 
 #define INFO_GUTS1(file,name,proc)			\
@@ -1159,51 +1114,57 @@ ife_print(struct interface *ptr)
 static int
 iface_info(void)
 {
-  char buff[1024];
   struct interface ife;
-  struct ifconf ifc;
-  struct ifreq *ifr;
-  int i;
+  char buffer[256];
+  FILE *fd;
   
-  /* Create a channel to the NET kernel. */
-  if ((skfd = socket(AF_INET,SOCK_DGRAM,0)) < 0) {
-	perror("socket");
-	return(E_READ);
-  }
-  
-  ifc.ifc_len = sizeof(buff);
-  ifc.ifc_buf = buff;
-  if (ioctl(skfd, SIOCGIFCONF, &ifc) < 0) {
-	perror("SIOCGIFCONF");
-	close(skfd);
-	return(E_IOCTL);
-  }
-
   printf(NLS_CATGETS(catfd, netstatSet, netstat_interface, "Kernel Interface table\n"));
   printf(NLS_CATGETS(catfd, netstatSet, netstat_header_iface,
 		     "Iface   MTU Met  RX-OK RX-ERR RX-DRP RX-OVR  TX-OK TX-ERR TX-DRP TX-OVR Flags\n"));
   
-  ifr = ifc.ifc_req;
-  for (i = ifc.ifc_len / sizeof(struct ifreq); --i >= 0; ifr++) {
-	if (if_fetch(ifr->ifr_name, &ife) < 0) {
-		fprintf(stderr, NLS_CATGETS(catfd, netstatSet, netstat_unkn_iface,
-					    "%s: unknown interface.\n"), ifr->ifr_name);
-	}
-    
-	if (((ife.flags & IFF_UP) == 0) && !flag_all) continue;
-	ife_print(&ife);
+  /* Create a channel to the NET kernel. */
+  if ((skfd = sockets_open()) < 0) {
+    perror("socket");
+    NLS_CATCLOSE(catfd)
+    exit(1);
   }
+
+  fd = fopen(_PATH_PROCNET_DEV, "r");
+  fgets(buffer, 256, fd);	/* chuck first two lines */
+  fgets(buffer, 256, fd);
+  while (!feof(fd)) {
+    char *name = buffer;
+    char *sep;
+    if (fgets(buffer, 256, fd) == NULL)
+      break;
+    sep = strrchr(buffer, ':');
+    if (sep)
+      *sep = 0;
+    while (*name == ' ') name++;
+    if (if_fetch(name, &ife) < 0) {
+      fprintf(stderr, NLS_CATGETS(catfd, ifconfigSet, 
+				  ifconfig_unkn, "%s: unknown interface.\n"),
+	      name);
+      continue;
+    }
+    
+    if (((ife.flags & IFF_UP) == 0) && !flag_all) continue;
+    ife_print(&ife);
+  }
+
+  fclose(fd);
   close(skfd);
-  return(0);
+
+  return 0;
 }
 
 
 static void
 version(void) 
 {
-	printf("%s\n%s\n%s\n%s\n", Release, Version, Signature, Features);
-	NLS_CATCLOSE(catfd)
-	exit(1);
+  printf("%s\n%s\n%s\n%s\n", Release, Version, Signature, Features);
+  NLS_CATCLOSE(catfd)
+  exit(1);
 }
 
 

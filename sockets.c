@@ -25,6 +25,9 @@ int inet6_sock = -1;			/* INET6 socket			*/
 #if HAVE_AFATALK
 int ddp_sock = -1;			/* Appletalk DDP socket		*/
 #endif
+#if HAVE_AFECONET
+int ec_sock = -1;			/* Econet socket		*/
+#endif
 
 int sockets_open(void)
 {
@@ -50,6 +53,10 @@ int sockets_open(void)
 
 #if HAVE_AFATALK
   ddp_sock = socket(AF_APPLETALK, SOCK_DGRAM, 0);
+#endif
+
+#if HAVE_AFECONET
+  ec_sock = socket(AF_ECONET, SOCK_DGRAM, 0);
 #endif
   
   /*
@@ -78,6 +85,10 @@ int sockets_open(void)
 
 #if HAVE_AFATALK
   if (ddp_sock != -1) return ddp_sock;
+#endif
+
+#if HAVE_AFECONET
+  if (ec_sock != -1) return ec_sock;
 #endif
 
   /* We have no address families.  */
