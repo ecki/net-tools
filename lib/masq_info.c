@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system. (net-tools, net-drivers)
  *
- * Version:     $Id: masq_info.c,v 1.3 1998/11/15 20:11:11 freitag Exp $
+ * Version:     $Id: masq_info.c,v 1.4 1998/12/06 16:17:55 philip Exp $
  *
  * Author:      Bernd 'eckes' Eckenfels <net-tools@lina.inka.de>
  *              Copyright 1999 Bernd Eckenfels, Germany
@@ -34,22 +34,14 @@
 #include <malloc.h>
 #include <string.h>
 #include <unistd.h>
-#if 0
-#include <linux/ip.h>
-#include <linux/icmp.h>
-#include <linux/tcp.h>
-#include <linux/udp.h>
-#include <linux/if.h>
-#include <linux/ip_fw.h>
-#endif
 #include "net-support.h"
 #include "pathnames.h"
 #include "version.h"
 #include "config.h"
 #include "intl.h"
 #include "net-features.h"
-#if HAVE_FW_MASQUERADE
 
+#if HAVE_FW_MASQUERADE
 
 struct masq {
     unsigned long expires;	/* Expiration timer */

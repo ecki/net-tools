@@ -28,7 +28,14 @@ Contents:
                           Notes
                           -----
 
-This is net-tools 1.48.  Notable changes since 1.47 include:
+This is net-tools 1.49.  Notable changes since 1.48 include:
+
+ - IP masquerading support is now selectable.
+ - The -t and -u switches to netstat now work as expected.
+ - AX.25 support in netstat has been improved.
+ - Various other bugs have been fixed.
+
+Notable changes since 1.47 include:
 
  - Many bugs have been fixed.
 

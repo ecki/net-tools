@@ -78,3 +78,8 @@ bool 'FDDI (generic) support' HAVE_HWFDDI n
 bool 'HIPPI (generic) support' HAVE_HWHIPPI n
 bool 'Ash hardware support' HAVE_HWASH n
 bool '(Cisco)-HDLC/LAPB support' HAVE_HWHDLCLAPB n
+*
+*
+*           Other Features.
+*
+bool 'IP Masquerading support' HAVE_FW_MASQUERADE n
