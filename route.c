@@ -2,7 +2,7 @@
  * route        This file contains an implementation of the command
  *              that manages the IP routing table in the kernel.
  *
- * Version:     $Id: route.c,v 1.9 2001/04/15 14:41:17 pb Exp $
+ * Version:     $Id: route.c,v 1.10 2002/07/30 05:24:20 ecki Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -142,7 +142,7 @@ int main(int argc, char **argv)
     }
 
     /* Fetch the command-line arguments. */
-    while ((i = getopt_long(argc, argv, "A:eCFhnNVv?", longopts, &lop)) != EOF)
+    while ((i = getopt_long(argc, argv, "A:eCFhnN64Vv?", longopts, &lop)) != EOF)
 	switch (i) {
 	case -1:
 	    break;
@@ -174,6 +174,14 @@ int main(int argc, char **argv)
 	    break;
 	case 'A':
 	    if ((i = aftrans_opt(optarg)))
+		exit(i);
+	    break;
+	case '6':
+	    if ((i = aftrans_opt("inet6")))
+		exit(i);
+	    break;
+	case '4':
+	    if ((i = aftrans_opt("inet")))
 		exit(i);
 	    break;
 	case 'V':

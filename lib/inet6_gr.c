@@ -1,4 +1,4 @@
-/*
+ /*
    Modifications:
    1998-07-01 - Arnaldo Carvalho de Melo - GNU gettext instead of catgets,
    snprintf instead of sprintf
@@ -71,11 +71,15 @@ int rprint_fib6(int ext, int numeric)
         printf(_("INET6 (IPv6) not configured in this system.\n"));
 	return 1;
     }
-    printf(_("Kernel IPv6 routing table\n"));
 
-    printf(_("Destination                                 "
-	     "Next Hop                                "
-	     "Flags Metric Ref    Use Iface\n"));
+    if (numeric & RTF_CACHE)
+    	printf(_("Kernel IPv6 routing cache\n"));
+    else
+    	printf(_("Kernel IPv6 routing table\n"));
+
+    printf(_("Destination                    "
+	     "Next Hop                   "
+	     "Flag Met Ref Use If\n"));
 
     while (fgets(buff, 1023, fp)) {
 	num = sscanf(buff, "%4s%4s%4s%4s%4s%4s%4s%4s %02x %4s%4s%4s%4s%4s%4s%4s%4s %02x %4s%4s%4s%4s%4s%4s%4s%4s %08x %08x %08x %08x %s\n",
@@ -87,13 +91,19 @@ int rprint_fib6(int ext, int numeric)
 		     &slen,
 		     naddr6p[0], naddr6p[1], naddr6p[2], naddr6p[3],
 		     naddr6p[4], naddr6p[5], naddr6p[6], naddr6p[7],
-		     &metric, &use, &refcnt, &iflags, iface);
+		     &metric, &refcnt, &use, &iflags, iface);
 #if 0
 	if (num < 23)
 	    continue;
 #endif
-	if (!(iflags & RTF_UP))
-	    continue;
+	if (iflags & RTF_CACHE) {
+		if (!(numeric & RTF_CACHE))
+			continue;
+	} else {
+		if (numeric & RTF_CACHE)
+			continue;
+	}
+			
 	/* Fetch and resolve the target address. */
 	snprintf(addr6, sizeof(addr6), "%s:%s:%s:%s:%s:%s:%s:%s",
 		 addr6p[0], addr6p[1], addr6p[2], addr6p[3],
@@ -112,7 +122,12 @@ int rprint_fib6(int ext, int numeric)
 		 inet6_aftype.sprint((struct sockaddr *) &snaddr6, 1));
 
 	/* Decode the flags. */
-	strcpy(flags, "U");
+
+	flags[0]=0;
+	if (iflags & RTF_UP)
+	    strcat(flags, "U");
+	if (iflags & RTF_REJECT)
+	    strcat(flags, "!");
 	if (iflags & RTF_GATEWAY)
 	    strcat(flags, "G");
 	if (iflags & RTF_HOST)
@@ -123,9 +138,19 @@ int rprint_fib6(int ext, int numeric)
 	    strcat(flags, "A");
 	if (iflags & RTF_CACHE)
 	    strcat(flags, "C");
+	if (iflags & RTF_ALLONLINK)
+	    strcat(flags, "a");
+	if (iflags & RTF_EXPIRES)
+	    strcat(flags, "e");
+	if (iflags & RTF_MODIFIED)
+	    strcat(flags, "m");
+	if (iflags & RTF_NONEXTHOP)
+	    strcat(flags, "n");
+	if (iflags & RTF_FLOW)
+	    strcat(flags, "f");
 
 	/* Print the info. */
-	printf("%-43s %-39s %-5s %-6d %-2d %7d %-8s\n",
+	printf("%-30s %-26s %-4s %-3d %-1d%6d %s\n",
 	       addr6, naddr6, flags, metric, refcnt, use, iface);
     }
 
@@ -144,8 +169,7 @@ int rprint_cache6(int ext, int numeric)
     char addr6p[8][5], haddrp[6][3];
 
     if (!fp) {
-	ESYSNOT("nd_print", "ND Table");
-	return 1;
+	return rprint_fib6(ext, numeric | RTF_CACHE);
     }
     printf(_("Kernel IPv6 Neighbour Cache\n"));
 
