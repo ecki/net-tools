@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.23 1999/03/17 13:04:57 philip Exp $
+ * Version:     $Id: netstat.c,v 1.24 1999/03/17 14:00:09 philip Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -1572,8 +1572,8 @@ int main
     if (flag_int + flag_rou + flag_mas + flag_sta > 1)
 	usage();
 
-    if ((flag_inet || flag_inet6 || flag_sta) && !(flag_tcp || flag_udp || flag_raw || flag_igmp))
-	flag_tcp = flag_udp = flag_raw = flag_igmp = 1;
+    if ((flag_inet || flag_inet6 || flag_sta) && !(flag_tcp || flag_udp || flag_raw))
+	flag_tcp = flag_udp = flag_raw = 1;
 
     if ((flag_tcp || flag_udp || flag_raw || flag_igmp) && !(flag_inet || flag_inet6))
         flag_inet = flag_inet6 = 1;
@@ -1682,7 +1682,8 @@ int main
 	    if (i)
 		return (i);
 	}
-	if (!flag_arg || flag_igmp) {
+
+	if (flag_igmp) {
 #if HAVE_AFINET6
 	    printf( "IPv6/");
 #endif
