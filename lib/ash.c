@@ -1,7 +1,7 @@
 /*
  * lib/ash.c  This file contains an implementation of the Ash
  *              support functions for the NET-2 base distribution.
- * $Id: ash.c,v 1.9 1999/01/05 20:53:20 philip Exp $
+ * $Id: ash.c,v 1.10 1999/04/04 21:37:02 philip Exp $
  */
 
 #include "config.h"
@@ -101,7 +101,8 @@ static int in_ash(char *bufp, struct sockaddr *sap)
 struct hwtype ash_hwtype =
 {
     "ash", NULL, ARPHRD_ASH, ASH_ALEN,
-    pr_ash, pr_sash, in_ash, NULL
+    pr_ash, pr_sash, in_ash, NULL,
+    1
 };
 
 #endif

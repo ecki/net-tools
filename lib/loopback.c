@@ -1,7 +1,7 @@
 /*
  * lib/loopback.c     This file contains the general hardware types.
  *
- * Version:     $Id: loopback.c,v 1.5 1998/11/19 13:02:02 philip Exp $
+ * Version:     $Id: loopback.c,v 1.6 1999/04/04 21:37:04 philip Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -66,6 +66,6 @@ struct hwtype unspec_hwtype =
 
 struct hwtype loop_hwtype =
 {
-    "loop", NULL, /*"Local Loopback", */ 255 /*ARPHRD_LOOPBACK */ , 0,
+    "loop", NULL, /*"Local Loopback", */ ARPHRD_LOOPBACK, 0,
     NULL, NULL, NULL, NULL
 };

@@ -53,7 +53,7 @@ int sockets_open(int family)
 #endif
 	af->fd = socket(af->af, type, 0);
 	if (af->fd >= 0)
-	  sfd = af->fd;
+	    sfd = af->fd;
     }
     if (sfd < 0)
 	fprintf(stderr, _("No usable address families found.\n"));

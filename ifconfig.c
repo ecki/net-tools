@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.29 1999/03/24 09:49:45 philip Exp $
+ * Version:     $Id: ifconfig.c,v 1.30 1999/04/04 21:37:01 philip Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -148,9 +148,6 @@ void ife_print(struct interface *ptr)
 
     hf = ptr->type;
 
-    if (strncmp(ptr->name, "lo", 2) == 0)
-	hf = 255;
-
     if (hf == ARPHRD_CSLIP || hf == ARPHRD_CSLIP6)
 	can_compress = 1;
 
@@ -159,11 +156,10 @@ void ife_print(struct interface *ptr)
 	hw = get_hwntype(-1);
 
     printf(_("%-9.9s Link encap:%s  "), ptr->name, hw->title);
-    /* Don't print the hardware address for ATM or Ash if it's null. */
-    /* FIXME.  Make this an option in struct hwtype.  */
-    if (hw->sprint != NULL && ((strncmp(ptr->name, "atm", 3) &&
-				strncmp(ptr->name, "ash", 3)) ||
-			       (! hw_null_address(hw, ptr->hwaddr))))
+    /* For some hardware types (eg Ash, ATM) we don't print the 
+       hardware address if it's null.  */
+    if (hw->sprint != NULL && (! (hw_null_address(hw, ptr->hwaddr) &&
+				  hw->suppress_null_addr)))
 	printf(_("HWaddr %s  "), hw->print(ptr->hwaddr));
 #ifdef IFF_PORTSEL
     if (ptr->flags & IFF_PORTSEL) {
