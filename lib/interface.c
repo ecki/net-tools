@@ -7,7 +7,7 @@
    8/2000  Andi Kleen make the list operations a bit more efficient.
    People are crazy enough to use thousands of aliases now.
 
-   $Id: interface.c,v 1.25 2002/12/05 21:54:50 ecki Exp $
+   $Id: interface.c,v 1.26 2002/12/05 22:10:32 ecki Exp $
  */
 
 #include "config.h"
@@ -137,7 +137,7 @@ int for_all_interfaces(int (*doit) (struct interface *, void *), void *cookie)
 {
     struct interface *ife;
 
-    if (!int_list_all && (if_readlist() < 0))
+    if (!if_list_all && (if_readlist() < 0))
 	return -1;
     for (ife = int_list; ife; ife = ife->next) {
 	int err = doit(ife, cookie);
@@ -155,7 +155,7 @@ int if_cache_free(void)
 	free(ife);
     }
     int_last = NULL;
-    int_list_all = 0;
+    if_list_all = 0;
     return 0;
 }
 
@@ -378,7 +378,7 @@ static int if_readlist_proc(char *target)
 int if_readlist(void) 
 { 
     /* caller will/should check not to call this too often 
-     *   (i.e. only if int_list_all == 0 
+     *   (i.e. only if if_list_all == 0 
      */
     int err = if_readlist_proc(NULL); 
 
