@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.48 2001/04/13 18:16:53 pb Exp $
+ * Version:     $Id: ifconfig.c,v 1.49 2001/04/13 18:24:21 pb Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -85,7 +85,7 @@ struct in6_ifreq {
 #include "sockets.h"
 #include "util.h"
 
-char *Release = RELEASE, *Version = "ifconfig 1.41 (2001-04-01)";
+char *Release = RELEASE, *Version = "ifconfig 1.42 (2001-04-13)";
 
 int opt_a = 0;			/* show all interfaces          */
 int opt_i = 0;			/* show the statistics          */
@@ -94,14 +94,11 @@ int opt_v = 0;			/* debugging output flag        */
 int addr_family = 0;		/* currently selected AF        */
 
 /* for ipv4 add/del modes */
-static int get_nmbc_parent(char *parent,
-			unsigned long *nm, unsigned long *bc);
-static int set_ifstate(char *parent,
-			unsigned long ip,
-			unsigned long nm,
-			unsigned long bc,
-			int flag);
-
+static int get_nmbc_parent(char *parent, unsigned long *nm, 
+			   unsigned long *bc);
+static int set_ifstate(char *parent, unsigned long ip,
+		       unsigned long nm, unsigned long bc,
+		       int flag);
 
 static int if_print(char *ifname)
 {
@@ -128,13 +125,13 @@ static int set_flag(char *ifname, short flag)
 {
     struct ifreq ifr;
 
-    strcpy(ifr.ifr_name, ifname);
+    safe_strcpy(ifr.ifr_name, ifname, IFNAMSIZ);
     if (ioctl(skfd, SIOCGIFFLAGS, &ifr) < 0) {
 	fprintf(stderr, _("%s: unknown interface: %s\n"), 
 		ifname,	strerror(errno));
 	return (-1);
     }
-    strcpy(ifr.ifr_name, ifname);
+    safe_strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
     ifr.ifr_flags |= flag;
     if (ioctl(skfd, SIOCSIFFLAGS, &ifr) < 0) {
 	perror("SIOCSIFFLAGS");
@@ -160,13 +157,13 @@ static int clr_flag(char *ifname, short flag)
     } else
         fd = skfd;
 
-    strcpy(ifr.ifr_name, ifname);
+    safe_strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
     if (ioctl(fd, SIOCGIFFLAGS, &ifr) < 0) {
 	fprintf(stderr, _("%s: unknown interface: %s\n"), 
 		ifname, strerror(errno));
 	return -1;
     }
-    strcpy(ifr.ifr_name, ifname);
+    safe_strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
     ifr.ifr_flags &= ~flag;
     if (ioctl(fd, SIOCSIFFLAGS, &ifr) < 0) {
 	perror("SIOCSIFFLAGS");
@@ -211,7 +208,7 @@ static void usage(void)
 static void version(void)
 {
     fprintf(stderr, "%s\n%s\n", Release, Version);
-    exit(1);
+    exit(0);
 }
 
 static int set_netmask(int skfd, struct ifreq *ifr, struct sockaddr *sa)
@@ -987,121 +984,126 @@ int main(int argc, char **argv)
 }
 
 struct ifcmd {
-	int flag;
-	unsigned long addr;
-	char *base;
-	int baselen;
+    int flag;
+    unsigned long addr;
+    char *base;
+    int baselen;
 };
 
 static unsigned char searcher[256];
 
 static int set_ip_using(const char *name, int c, unsigned long ip)
 {
-	struct ifreq ifr;
-	struct sockaddr_in sin;
+    struct ifreq ifr;
+    struct sockaddr_in sin;
 
-	strcpy(ifr.ifr_name, name);
-	memset(&sin, 0, sizeof(struct sockaddr));
-	sin.sin_family = AF_INET;
-	sin.sin_addr.s_addr = ip;
-	memcpy(&ifr.ifr_addr, &sin, sizeof(struct sockaddr));
-	if (ioctl(skfd, c, &ifr) < 0)
-		return -1;
-	return 0;
+    safe_strncpy(ifr.ifr_name, name, IFNAMSIZ);
+    memset(&sin, 0, sizeof(struct sockaddr));
+    sin.sin_family = AF_INET;
+    sin.sin_addr.s_addr = ip;
+    memcpy(&ifr.ifr_addr, &sin, sizeof(struct sockaddr));
+    if (ioctl(skfd, c, &ifr) < 0)
+	return -1;
+    return 0;
 }
+
 static int do_ifcmd(struct interface *x, struct ifcmd *ptr)
 {
-	char *z, *e;
-	struct sockaddr_in *sin;
-	int i;
-
-	if (do_if_fetch(x) < 0)
-		return 0;
-	if (strncmp(x->name, ptr->base, ptr->baselen) != 0)
-		return 0; /* skip */
-	z = strchr(x->name, ':');
-	if (!z || !*z)
-		return 0;
-	z++;
-	for (e = z; *e; e++)
-		if (*e == '-') /* deleted */
-			return 0;
-	i = atoi(z);
-	searcher[i] = 1;
-
-	/* copy */
-	sin = (struct sockaddr_in *)&x->dstaddr;
-	if (sin->sin_addr.s_addr != ptr->addr) {
-		return 0;
-	}
-	
-	if (ptr->flag) {
-		/* turn UP */
-		if (set_flag(x->name, IFF_UP | IFF_RUNNING) == -1)
-			return -1;
-	} else {
-		/* turn DOWN */
-		if (clr_flag(x->name, IFF_UP) == -1)
-			return -1;
-	}
-
-	return 1; /* all done! */
+    char *z, *e;
+    struct sockaddr_in *sin;
+    int i;
+    
+    if (do_if_fetch(x) < 0)
+	return 0;
+    if (strncmp(x->name, ptr->base, ptr->baselen) != 0)
+	return 0; /* skip */
+    z = strchr(x->name, ':');
+    if (!z || !*z)
+	return 0;
+    z++;
+    for (e = z; *e; e++)
+	if (*e == '-') /* deleted */
+	    return 0;
+    i = atoi(z);
+    if (i < 0 || i > 255)
+	abort();
+    searcher[i] = 1;
+    
+    /* copy */
+    sin = (struct sockaddr_in *)&x->dstaddr;
+    if (sin->sin_addr.s_addr != ptr->addr) {
+	return 0;
+    }
+    
+    if (ptr->flag) {
+	/* turn UP */
+	if (set_flag(x->name, IFF_UP | IFF_RUNNING) == -1)
+	    return -1;
+    } else {
+	/* turn DOWN */
+	if (clr_flag(x->name, IFF_UP) == -1)
+	    return -1;
+    }
+    
+    return 1; /* all done! */
 }
 
 
 static int get_nmbc_parent(char *parent,
 			   unsigned long *nm, unsigned long *bc)
 {
-	struct interface *i;
-	struct sockaddr_in *sin;
-
-	i = lookup_interface(parent);
-	if (!i)
-		return -1;
-	if (do_if_fetch(i) < 0)
-		return 0;
-	sin = (struct sockaddr_in *)&i->netmask;
-	memcpy(nm, &sin->sin_addr.s_addr, sizeof(unsigned long));
-	sin = (struct sockaddr_in *)&i->broadaddr;
-	memcpy(bc, &sin->sin_addr.s_addr, sizeof(unsigned long));
+    struct interface *i;
+    struct sockaddr_in *sin;
+    
+    i = lookup_interface(parent);
+    if (!i)
+	return -1;
+    if (do_if_fetch(i) < 0)
 	return 0;
+    sin = (struct sockaddr_in *)&i->netmask;
+    memcpy(nm, &sin->sin_addr.s_addr, sizeof(unsigned long));
+    sin = (struct sockaddr_in *)&i->broadaddr;
+    memcpy(bc, &sin->sin_addr.s_addr, sizeof(unsigned long));
+    return 0;
 }
 
 static int set_ifstate(char *parent, unsigned long ip,
 		       unsigned long nm, unsigned long bc,
 		       int flag)
 {
-	char buf[IFNAMSIZ];
-	struct ifcmd pt;
-	int i;
-
-	pt.base = parent;
-	pt.baselen = strlen(parent);
-	pt.addr = ip;
-	pt.flag = flag;
-	memset(searcher, 0, sizeof(searcher));
-	i = for_all_interfaces((int (*)(struct interface *,void *))do_ifcmd, 
-			       &pt);
-	if (i == -1)
-		return -1;
-	if (i == 1)
-		return 0;
-
-	/* add a new interface */
-	for (i = 0; i < 256; i++)
-		if (searcher[i] == 0)
-			break;
-	if (i == 256)
-		return -1; /* FAILURE!!! out of ip addresses */
-
-	sprintf(buf, "%s:%d", parent, i);
-	if (set_ip_using(buf, SIOCSIFADDR, ip) == -1)
-		return -1;
-	if (set_ip_using(buf, SIOCSIFNETMASK, nm) == -1)
-		return -1;
-	if (set_ip_using(buf, SIOCSIFBRDADDR, bc) == -1)
-		return -1;
-	if (set_flag(buf, IFF_BROADCAST) == -1)
-		return -1;
+    char buf[IFNAMSIZ];
+    struct ifcmd pt;
+    int i;
+    
+    pt.base = parent;
+    pt.baselen = strlen(parent);
+    pt.addr = ip;
+    pt.flag = flag;
+    memset(searcher, 0, sizeof(searcher));
+    i = for_all_interfaces((int (*)(struct interface *,void *))do_ifcmd, 
+			   &pt);
+    if (i == -1)
+	return -1;
+    if (i == 1)
 	return 0;
+    
+    /* add a new interface */
+    for (i = 0; i < 256; i++)
+	if (searcher[i] == 0)
+	    break;
+
+    if (i == 256)
+	return -1; /* FAILURE!!! out of ip addresses */
+    
+    if (snprintf(buf, IFNAMSIZ, "%s:%d", parent, i) > IFNAMSIZ)
+	return -1;
+    if (set_ip_using(buf, SIOCSIFADDR, ip) == -1)
+	return -1;
+    if (set_ip_using(buf, SIOCSIFNETMASK, nm) == -1)
+	return -1;
+    if (set_ip_using(buf, SIOCSIFBRDADDR, bc) == -1)
+	return -1;
+    if (set_flag(buf, IFF_BROADCAST) == -1)
+	return -1;
+    return 0;
 }
