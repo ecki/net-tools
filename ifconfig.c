@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.26 1999/01/05 20:52:58 philip Exp $
+ * Version:     $Id: ifconfig.c,v 1.27 1999/01/17 21:20:25 philip Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -860,7 +860,7 @@ int main(int argc, char **argv)
 		}
 		memcpy((char *) &ifr.ifr_dstaddr, (char *) &sa,
 		       sizeof(struct sockaddr));
-		if (ioctl(skfd, SIOCSIFDSTADDR, &ifr) < 0) {
+		if (ioctl(ap->fd, SIOCSIFDSTADDR, &ifr) < 0) {
 		    fprintf(stderr, "SIOCSIFDSTADDR: %s\n",
 			    strerror(errno));
 		    goterr = 1;
