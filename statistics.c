@@ -5,6 +5,14 @@
 #include <stdlib.h>
 #include <string.h>
 
+/* #define WARN 1 */
+
+#ifdef WARN
+#define UFWARN(x) x
+#else
+#define UFWARN(x) 
+#endif
+
 int print_static; 
 
 enum State { number = 0, i_forward, i_inp_icmp, i_outp_icmp, i_rto_alg };
@@ -95,6 +103,8 @@ struct entry Tcptab[] = {
 	{ "InSegs", "%d segments received", number },
 	{ "OutSegs", "%d segments send out", number },
 	{ "RetransSegs", "%d segments retransmited", number },
+	{ "InErrs", "%d bad segments received.", number },
+	{ "OutRsts", "%d resets sent", number },
 };
 
 struct entry Udptab[] = {
@@ -142,8 +152,10 @@ void printval(struct tabtab *tab, char *title, int val)
 	key.title = title; 
 	ent = bsearch(&key, tab->tab, tab->size/sizeof(struct entry),
 				  sizeof(struct entry), cmpentries); 
-	if (!ent)  /* XXX warning */ 
+	if (!ent)  {
+		UFWARN((printf("unknown field %s\n", title)));
 		return;
+	}
 	type = ent->type; 
 	if (type & I_STATIC) {
 		type &= ~I_STATIC; 
@@ -220,8 +232,10 @@ void parsesnmp()
 			goto formaterr; 
 		*sp = '\0'; 
 		tab = newtable(snmptabs, buf1); 
-		if (tab == NULL) /* XXX print warning */  
+		if (tab == NULL)  {
+			UFWARN((printf("unknown title %s\n", buf1)));
 			continue; 
+		}
 		np++; sp++; 
 		
 		endflag = 0; 
@@ -233,7 +247,9 @@ void parsesnmp()
 			p = skiptok(sp); 
 			if (*p == '\0') endflag=1; 
 			*p = '\0'; 
-			printval(tab, sp, strtoul(np,&np,10)); 
+
+			if (*sp != '\0') /* XXX */ 
+				printval(tab, sp, strtoul(np,&np,10)); 
 			sp = p+1; 
 		}
 	}
