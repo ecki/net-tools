@@ -8,7 +8,7 @@
 .\" Modified: Tuan Hoang tqhoang@bigfoot.com 
 .\"
 .\"
-.TH NETSTAT 8 "29 June 2001" "net-tools" "Linux Programmer's Manual"
+.TH NETSTAT 8 "24 November 2001" "net-tools" "Linux Programmer's Manual"
 
 .SH NAME
 netstat \- Print network connections, routing tables, interface statistics, masquerade connections, and multicast memberships
@@ -23,7 +23,7 @@ netstat \- Print network connections, routing tables, interface statistics, masq
 .RB [ \-\-listening | \-l ]
 .RB [ \-\-all | \-a ]
 .RB [ \-\-numeric | \-n ]
-.RB [ \-\-numeric-hosts ] [ \-\-numeric-ports ] [ \-\-numeric-ports ]
+.RB [ \-\-numeric-hosts "] [" \-\-numeric-ports "] [" \-\-numeric-users ]
 .RB [ \-\-symbolic | \-N ]
 .RB [ \-\-extend | \-e  [ \-\-extend | \-e] ]
 .RB [ \-\-timers | \-o ]
@@ -37,31 +37,30 @@ netstat \- Print network connections, routing tables, interface statistics, masq
 .RB [ \-\-extend | \-e  [ \-\-extend | \-e] ]
 .RB [ \-\-verbose | \-v ]
 .RB [ \-\-numeric | \-n ]
-.RB [ \-\-numeric-hosts ] [ \-\-numeric-ports ] [ \-\-numeric-ports ]
+.RB [ \-\-numeric-hosts "] [" \-\-numeric-ports "] [" \-\-numeric-users ]
 .RB [ \-\-continuous | \-c]
 .P
 .B netstat
 .RB { \-\-interfaces | \-i }
-.RI [ iface ]
 .RB [ \-\-all | \-a ]
 .RB [ \-\-extend | \-e  [ \-\-extend | \-e] ]
 .RB [ \-\-verbose | \-v ]
 .RB [ \-\-program | \-p ]
 .RB [ \-\-numeric | \-n ]
-.RB [ \-\-numeric-hosts ] [ \-\-numeric-ports ] [ \-\-numeric-ports ]
+.RB [ \-\-numeric-hosts "] [" \-\-numeric-ports "] [" \-\-numeric-users ]
 .RB [ \-\-continuous | \-c]
 .P
 .B netstat
 .RB { \-\-groups | \-g }
 .RB [ \-\-numeric | \-n ]
-.RB [ \-\-numeric-hosts ] [ \-\-numeric-ports ] [ \-\-numeric-ports ]
+.RB [ \-\-numeric-hosts "] [" \-\-numeric-ports "] [" \-\-numeric-users ]
 .RB [ \-\-continuous | \-c]
 .P
 .B netstat
 .RB { \-\-masquerade | \-M }
 .RB [ \-\-extend | \-e ]
 .RB [ \-\-numeric | \-n ]
-.RB [ \-\-numeric-hosts ] [ \-\-numeric-ports ] [ \-\-numeric-ports ]
+.RB [ \-\-numeric-hosts "] [" \-\-numeric-ports "] [" \-\-numeric-users ]
 .RB [ \-\-continuous | \-c]
 .P
 .B netstat
@@ -101,9 +100,8 @@ families will be printed.
 Display the kernel routing tables.
 .SS "\-\-groups , \-g"
 Display multicast group membership information for IPv4 and IPv6.
-.SS "\-\-interface=\fIiface \fR, \fB\-i"
-Display a table of all network interfaces, or the specified
-.IR iface ) .
+.SS "\-\-interface, \-i"
+Display a table of all network interfaces.
 .SS "\-\-masquerade , \-M"
 Display a list of masqueraded connections.
 .SS "\-\-statistics , \-s"
@@ -165,7 +163,7 @@ Show only listening sockets.  (These are omitted by default.)
 .SS "\-a, \-\-all"
 Show both listening and non-listening sockets.  With the
 .B --interfaces
-option, show interfaces that are not marked 
+option, show interfaces that are not up
 .SS "\-F"
 Print routing information from the FIB.  (This is the default.)
 .SS "\-C"

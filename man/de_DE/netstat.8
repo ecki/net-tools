@@ -9,7 +9,7 @@
 .\" Modified: Tuan Hoang tuan@optimus.mitre.org 
 .\"
 .\"
-.TH NETSTAT 8 "6. M\(:arz 1999" "net-tools" "Handbuch f\(:ur Linuxprogrammierer"
+.TH NETSTAT 8 "24 November 2001" "net-tools" "Handbuch f\(:ur Linuxprogrammierer"
 
 .SH NAME
 netstat \- Anzeige von Netzwerksverbindungen, Routentabellen, Schnittstellenstatistiken, maskierten Verbindungen, Netlink-Nachrichten und Mitgliedschaft in Multicastgruppen
@@ -44,7 +44,6 @@ netstat \- Anzeige von Netzwerksverbindungen, Routentabellen, Schnittstellenstat
 .B netstat
 .RB [ \-veenpac ]
 .RB { \-\-interfaces | \-i }
-.RI [ Schnittstelle ]
 
 .PP
 
@@ -103,18 +102,17 @@ benutzt das Ausgabeformat von
 Wegen Details siehe
 .BR route (8).
 
-.SS "\-i, \-\-interface \fISchnittstelle\fI"
+.SS "\-i, \-\-interface"
 Wird die
 .BR -i ", " --interfaces
-Option verwendet,  so wird eine Tabelle aller (oder der angegebenen
-.IR Schnittstellen ) 
+Option verwendet,  so wird eine Tabelle aller Schnittstellen
 ausgedruckt.  Die Ausgabe ist im Format von
 .B "ifconfig -e"
 und wird in
 .BR ifconfig (8)
 beschrieben.
 .B "netstat -ei" 
-druckt eine Tabelle oder einen Eintrag f\(:ur einen einzelnes Interface wie
+druckt eine Tabelle f\(:ur Interfaces wie
 .BR ifconfig .
 Die
 .B -a
