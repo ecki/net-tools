@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.52 2001/11/01 01:48:31 ecki Exp $
+ * Version:     $Id: ifconfig.c,v 1.53 2001/11/01 01:54:49 ecki Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -234,7 +234,7 @@ static void usage(void)
 static void version(void)
 {
     fprintf(stderr, "%s\n%s\n", Release, Version);
-    exit(0);
+    exit(E_USAGE);
 }
 
 static int set_netmask(int skfd, struct ifreq *ifr, struct sockaddr *sa)
