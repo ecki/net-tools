@@ -7,7 +7,7 @@
    8/2000  Andi Kleen make the list operations a bit more efficient.
    People are crazy enough to use thousands of aliases now.
 
-   $Id: interface.c,v 1.20 2001/11/24 05:23:35 ecki Exp $
+   $Id: interface.c,v 1.21 2001/11/25 06:48:51 ecki Exp $
  */
 
 #include "config.h"
@@ -91,9 +91,12 @@ static struct interface *int_list, *int_last;
 
 static int if_readlist_proc(char *);
 
-static struct interface *add_interface(char *name)
+static struct interface *if_cache_add(char *name)
 {
     struct interface *ife, **nextp, *new;
+
+    if (!int_list)
+    	int_last = NULL;
 
     for (ife = int_last; ife; ife = ife->prev) {
 	    int n = nstrcmp(ife->name, name); 
@@ -121,7 +124,7 @@ struct interface *lookup_interface(char *name)
 
     if (if_readlist_proc(name) < 0) 
 	    return NULL; 
-    ife = add_interface(name); 
+    ife = if_cache_add(name); 
     return ife;
 }
 
@@ -139,13 +142,14 @@ int for_all_interfaces(int (*doit) (struct interface *, void *), void *cookie)
     return 0;
 }
 
-int free_interface_list(void)
+int if_cache_free(void)
 {
     struct interface *ife;
     while ((ife = int_list) != NULL) {
 	int_list = ife->next;
 	free(ife);
     }
+    int_last = NULL;
     return 0;
 }
 
@@ -188,7 +192,7 @@ static int if_readconf(void)
 
     ifr = ifc.ifc_req;
     for (n = 0; n < ifc.ifc_len; n += sizeof(struct ifreq)) {
-	add_interface(ifr->ifr_name);
+	if_cache_add(ifr->ifr_name);
 	ifr++;
     }
     err = 0;
@@ -300,16 +304,10 @@ static int get_dev_fields(char *bp, struct interface *ife)
 
 static int if_readlist_proc(char *target)
 {
-    static int proc_read; 
     FILE *fh;
     char buf[512];
     struct interface *ife;
     int err;
-
-    if (proc_read) 
-	    return 0; 
-    if (!target) 
-	    proc_read = 1;
 
     fh = fopen(_PATH_PROCNET_DEV, "r");
     if (!fh) {
@@ -350,7 +348,7 @@ static int if_readlist_proc(char *target)
     while (fgets(buf, sizeof buf, fh)) {
 	char *s, name[IFNAMSIZ];
 	s = get_name(name, buf);    
-	ife = add_interface(name);
+	ife = if_cache_add(name);
 	get_dev_fields(s, ife);
 	ife->statistics_valid = 1;
 	if (target && !strcmp(target,name))
@@ -359,7 +357,6 @@ static int if_readlist_proc(char *target)
     if (ferror(fh)) {
 	perror(_PATH_PROCNET_DEV);
 	err = -1;
-	proc_read = 0; 
     }
 
 #if 0
@@ -371,6 +368,9 @@ static int if_readlist_proc(char *target)
 
 int if_readlist(void) 
 { 
+    /* caller will/should check not to call this too often 
+     *   (i.e. only if int_list!= NULL 
+     */
     int err = if_readlist_proc(NULL); 
     if (!err)
 	    err = if_readconf();
