@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.18 1999/02/25 12:20:36 philip Exp $
+ * Version:     $Id: netstat.c,v 1.19 1999/03/01 10:19:13 philip Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -90,6 +90,10 @@
 #include "interface.h"
 
 #define PROGNAME_WIDTH 20
+
+#if !defined(s6_addr32) && defined(in6a_words)
+#define s6_addr32 in6a_words	/* libinet6			*/
+#endif
 
 /* prototypes for statistics.c */
 void parsesnmp(int, int, int);
