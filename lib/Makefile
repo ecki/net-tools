@@ -23,30 +23,31 @@ AFSROBJS = inet_sr.o inet6_sr.o netrom_sr.o ipx_sr.o setroute.o
 ACTOBJS  = slip_ac.o ppp_ac.o activate.o
 VARIA	 = getargs.o masq_info.o proc.o util.o nstrcmp.o
 
-OBJS	= $(VARIA) $(AFOBJS) $(HWOBJS) \
-		$(AFGROBJS) $(AFSROBJS) $(ACTOBJS)
+OBJS	= $(sort $(VARIA) $(AFOBJS) $(HWOBJS) \
+		$(AFGROBJS) $(AFSROBJS) $(ACTOBJS))
 
 
 # This can be overwritten by the TOPLEVEL Makefile
 TOPDIR=..
-COPTS = -O2 -Wall #-DDEBUG
-LOPTS = -s
+CFLAGS += -I$(TOPDIR) -fPIC
+SONAME=libnet-tools.so.0
 
-CFLAGS  = $(COPTS) -I. -I$(TOPDIR) -I$(TOPDIR)/include
-LDFLAGS = $(LOPTS)
+.SUFFIXES: .a .so
 
-all:	libsupport.a
+all:	lib$(NET_LIB_NAME).a # lib$(NET_LIB_NAME).so
 
-libsupport.a:	Makefile $(TOPDIR)/config.h $(OBJS)
-			@echo Building libsupport.a
-			@rm -f libsupport.a
-			@ar rcs libsupport.a $(OBJS)
-			@ranlib libsupport.a
+lib$(NET_LIB_NAME).a:	Makefile $(TOPDIR)/config.h $(OBJS)
+			@echo Building $@
+			@rm -f $@
+			@ar rcs $@ $(OBJS)
+
+.a.so:;
+	$(CC) -o $@ -shared -Wl,--whole-archive -Wl,--soname -Wl,$(SONAME) -nostdlib -nostartfiles $<
 
 clean:
 		rm -f *.o *~ *.orig
 
 clobber:	clean
-		rm -f *.a
+		rm -f *.a *.so
 
 # End of lib/Makefile.

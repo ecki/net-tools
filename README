@@ -28,7 +28,19 @@ Contents:
                           Notes
                           -----
 
-This is net-tools 1.46.  Notable changes since 1.45 include:
+This is net-tools 1.48.  Notable changes since 1.47 include:
+
+ - Many bugs have been fixed.
+
+Notable changes since 1.46 include:
+
+ - Support for interface aliases with recent kernels is improved.
+ - Ifconfig et al can now auto-detect which address families are supported
+   on your system.  This avoids triggering kmod requests for all missing
+   protocols whenever ifconfig runs.
+ - Support for extended SLIP options has been added
+
+Notable changes since 1.45 include:
 
  - The internationalisation support has been reworked (see below)
  - Support for extra hardware types has been added.
@@ -65,4 +77,4 @@ may be more touchy.  Feel free to send patches if you have problems.
 
 Phil Blundell
 philb@gnu.org
-1st September 1998
+11th November 1998

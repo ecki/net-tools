@@ -73,13 +73,13 @@
 # BASEDIR = /mnt
 
 # path to the net-lib support library. Default: lib
-NET-LIB-PATH = lib
-NET-LIB-NAME = support
+NET_LIB_PATH = lib
+NET_LIB_NAME = net-tools
 
 PROGS	= ifconfig hostname arp netstat route rarp 
 
 # Compiler and Linker Options
-# You may need to uncomment and edit these if you are using libc5.
+# You may need to uncomment and edit these if you are using libc5 and IPv6.
 COPTS = -D_GNU_SOURCE -O2 -Wall -g # -I/usr/inet6/include
 LOPTS = 
 RESLIB = # -L/usr/inet6/lib -linet6
@@ -91,23 +91,23 @@ RELEASE	   = 1.48
 
 .EXPORT_ALL_VARIABLES:
 
-ifeq ("$(NET-LIB-PATH)","lib2")
+ifeq ("$(NET_LIB_PATH)","lib2")
 TOPDIR   = ..
 else
 TOPDIR  := $(shell if [ "$$PWD" != "" ]; then echo $$PWD; else pwd; fi)
 endif
 
-NET-LIB = $(NET-LIB-PATH)/lib$(NET-LIB-NAME).a
+NET-LIB = $(NET_LIB_PATH)/lib$(NET_LIB_NAME).a
 
-CFLAGS	= $(COPTS) -I. -I./include/ -I$(NET-LIB-PATH)
-LDFLAGS	= $(LOPTS) -L$(NET-LIB-PATH)
+CFLAGS	= $(COPTS) -I. -I./include/ -I$(NET_LIB_PATH)
+LDFLAGS	= $(LOPTS) -L$(NET_LIB_PATH)
 
-SUBDIRS	= man/ $(NET-LIB-PATH)/
+SUBDIRS	= man/ $(NET_LIB_PATH)/
 
 CC	= gcc
 LD	= gcc
 
-NLIB	= -l$(NET-LIB-NAME)
+NLIB	= -l$(NET_LIB_NAME)
 
 MDEFINES = COPTS='$(COPTS)' LOPTS='$(LOPTS)' TOPDIR='$(TOPDIR)'
 
@@ -156,7 +156,7 @@ $(NET-LIB):	config.h version.h intl.h libdir
 i18n.h:		i18ndir
 
 libdir:
-		@$(MAKE) -C $(NET-LIB-PATH) $(MDEFINES)
+		@$(MAKE) -C $(NET_LIB_PATH) $(MDEFINES)
 
 i18ndir:
 		@$(MAKE) -C po
