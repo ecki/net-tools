@@ -153,7 +153,7 @@ clobber: 	clean
 
 dist: 		clobber
 		@echo Creating net-tools-$(RELEASE) in ..
-		@tar -cvz -f ../net-tools-$(RELEASE).tar.gz -C .. net-tools-${RELEASE}
+		@tar -cvz -f ../net-tools-$(RELEASE).tar.gz -C .. net-tools
 
 
 config.h: 	config.in Makefile 

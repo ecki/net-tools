@@ -1,4 +1,4 @@
-# $Id: de.po,v 1.7 1999/04/18 19:07:16 philip Exp $
+# $Id: de.po,v 1.8 2000/01/05 01:02:44 ecki Exp $
 # German translation for net-tools 1.51
 # Copyright (C) 1999 Ralf Bächle <ralf@gnu.org>
 msgid ""
@@ -217,7 +217,7 @@ msgstr "arp: %s: unbekannter Hardwaretyp.\n"
 #: ../arp.c:731
 #, c-format
 msgid "arp: %s: kernel only supports 'inet'.\n"
-msgstr "arp: %s: Kern unterstützt nur ,,inet''.\n"
+msgstr "arp: %s: Kernel unterstützt nur ,,inet''.\n"
 
 #: ../arp.c:736
 #, c-format
@@ -371,7 +371,7 @@ msgstr ""
 msgid ""
 "   This comand can get or set the hostname or the NIS domainname. You can\n"
 msgstr ""
-"   Dies Kommando setzt oder drucken den Hostnamen oder NIS Domainnamen aus.  "
+"   Dies Kommando setzt oder gibt den Hostnamen oder NIS Domainnamen aus.  "
 "Es\n"
 
 #: ../hostname.c:242
@@ -383,7 +383,7 @@ msgstr ""
 msgid ""
 "   Unless you are using bind or NIS for host lookups you can change the\n"
 msgstr ""
-"   auszudrucken zu lassen.  Außer wenn DNS oder NIS als Namensdienst "
+"   ausgeben zu lassen.  Außer wenn DNS oder NIS als Namensdienst "
 "verwendet\n"
 
 #: ../hostname.c:244
@@ -639,7 +639,7 @@ msgstr "Sendewarteschlangenlänge:%d "
 #: ../ifconfig.c:344
 #, c-format
 msgid "Interrupt:%d "
-msgstr "Unterbrechung:%d "
+msgstr "Interrupt:%d "
 
 #. Only print devices using it for
 #. I/O maps
@@ -784,8 +784,8 @@ msgid ""
 "(Not all processes could be identified, non-owned process info\n"
 " will not be shown, you would have to be root to see it all.)\n"
 msgstr ""
-"(Es konnten nicht alle Prozesse identifiziert werden; Information über\n"
-"nicht-eigene Processe wird nicht angezeigt; Root kann sie anzeigen.)\n"
+"(Es konnten nicht alle Prozesse identifiziert werden; Informationen über\n"
+"nicht-eigene Processe werden nicht angezeigt; Root kann sie anzeigen.)\n"
 
 #: ../netstat.c:391 ../netstat.c:1072 ../netstat.c:1149
 msgid "LISTENING"
@@ -793,11 +793,11 @@ msgstr "HÖRT"
 
 #: ../netstat.c:392
 msgid "CONN SENT"
-msgstr "VERB GESCHICKT"
+msgstr "VERBINGSAUFBAU GESCHICKT"
 
 #: ../netstat.c:393 ../netstat.c:1151
 msgid "DISC SENT"
-msgstr "VERBABBAU GESCHICKT"
+msgstr "VERBINDUNGSABBAU GESCHICKT"
 
 #: ../netstat.c:394 ../netstat.c:461 ../netstat.c:796 ../netstat.c:1152
 msgid "ESTABLISHED"
@@ -1400,7 +1400,7 @@ msgstr "  Prüfsumme für ausgegebene Pakete berechnen.\n"
 
 #: ../iptunnel.c:464
 msgid "Wrong format of /proc/net/dev. Sorry.\n"
-msgstr "Falsches Format von /proc/net/dev, leider.\n"
+msgstr "Falsches Format von /proc/net/dev. Tut mir leid\n"
 
 #: ../iptunnel.c:477
 #, c-format
@@ -1528,7 +1528,7 @@ msgstr "%d ICMP Nachrichten empfangen"
 #: ../statistics.c:87
 #, c-format
 msgid "%d input ICMP message failed."
-msgstr "%d eingegangen ICMP Nachrichten fehlgeschlagen"
+msgstr "%d eingegangene ICMP Nachrichten fehlgeschlagen"
 
 #: ../statistics.c:88 ../statistics.c:101
 #, c-format
@@ -1590,7 +1590,7 @@ msgstr "Adressmaskenantworten"
 #: ../statistics.c:99
 #, c-format
 msgid "%d ICMP messages sent"
-msgstr "%d geschicte ICMP-Nachrichten"
+msgstr "%d ICMP-Nachrichten geschickt"
 
 #: ../statistics.c:100
 #, c-format
@@ -1656,7 +1656,7 @@ msgstr "%d Verbindungen passiv geöffnet"
 #: ../statistics.c:122
 #, c-format
 msgid "%d failed connection attempts"
-msgstr "%d fehlerhate Verbindungsversuche"
+msgstr "%d fehlerhafte Verbindungsversuche"
 
 #: ../statistics.c:123
 #, c-format
@@ -1681,7 +1681,7 @@ msgstr "%d Segmente abgeschickt"
 #: ../statistics.c:127
 #, c-format
 msgid "%d segments retransmited"
-msgstr "%d Segmente wiedergeschickt"
+msgstr "%d Segmente erneut geschickt"
 
 #: ../statistics.c:128
 #, c-format
@@ -1893,7 +1893,7 @@ msgstr "Ziel         SStelle  Benutzer\n"
 
 #: ../lib/ddp_gr.c:21
 msgid "Routing table for `ddp' not yet supported.\n"
-msgstr "DDP-Routentabelle noch nicht unterstützt.\n"
+msgstr "DDP-Routentabelle wird noch nicht unterstützt.\n"
 
 #: ../lib/ether.c:85 ../lib/ether.c:102
 #, c-format
@@ -1928,7 +1928,7 @@ msgstr "in_fddi(%s): Nachfolgender Müll!\n"
 #: ../lib/getroute.c:97 ../lib/setroute.c:76
 #, c-format
 msgid "Address family `%s' not supported.\n"
-msgstr "Adressfamily `%s' nicht unterstützt.\n"
+msgstr "Adressfamilie `%s' wird nicht unterstützt.\n"
 
 #: ../lib/getroute.c:103 ../lib/setroute.c:80
 #, c-format
@@ -2239,7 +2239,7 @@ msgstr "Ziel                      Router Netz               Router Knoten\n"
 
 #: ../lib/ipx_sr.c:33
 msgid "IPX: this needs to be written\n"
-msgstr "IPX: dies muß nocht geschrieben werden\n"
+msgstr "IPX: dies muß noch geschrieben werden\n"
 
 #: ../lib/masq_info.c:193
 msgid "IP masquerading entries\n"
@@ -2287,7 +2287,7 @@ msgstr "Bitte benutzen sie pppd.\n"
 
 #: ../lib/rose.c:87
 msgid "Node address must be ten digits"
-msgstr "Knotenadresse hat zehn Ziffern"
+msgstr "Knotenadresse muß zehn Ziffern haben"
 
 #: ../lib/rose_gr.c:51
 msgid "ROSE not configured in this system.\n"
@@ -2409,7 +2409,7 @@ msgstr "slattach: tty_open: kann aktuellen Zustand nicht auslesen!\n"
 #: ../slattach.c:485
 msgid "slattach: tty_open: cannot get current line disc!\n"
 msgstr ""
-"slattach: tty_open: Kann augenblickliche Leitungsdiziplin nicht auslesen!\n"
+"slattach: tty_open: Kann augenblicklichen Leitungszustand nicht auslesen!\n"
 
 #: ../slattach.c:493
 msgid "slattach: tty_open: cannot set RAW mode!\n"
@@ -2427,7 +2427,7 @@ msgstr "slattach: tty_open: Kann 8N1-Modus nicht setzen!\n"
 #: ../slattach.c:658
 #, c-format
 msgid "slattach: unsupported protocol %s\n"
-msgstr "slattach: Nicht unterstutztes Protokol %s\n"
+msgstr "slattach: Nicht unterstütztes Protokol %s\n"
 
 #: ../slattach.c:685
 #, c-format
