@@ -3,7 +3,7 @@
  *              support functions for the net-tools.
  *              (NET-3 base distribution).
  *
- * Version:     $Id: econet.c,v 1.4 1998/11/15 20:09:30 freitag Exp $
+ * Version:     $Id: econet.c,v 1.5 1998/11/18 10:32:06 philip Exp $
  *
  * Author:      Philip Blundell <philb@gnu.org>
  *
@@ -29,7 +29,9 @@
 #include "pathnames.h"
 #include "intl.h"
 
+#ifndef _NETECONET_EC_H
 #include <linux/if_ec.h>
+#endif
 
 /* Display an Econet address */
 static char *
