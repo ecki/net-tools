@@ -4,7 +4,7 @@
    10/1998 partly rewriten by Andi Kleen to support an interface list.   
    I don't claim that the list operations are efficient @).  
 
-   $Id: interface.c,v 1.8 2000/02/20 17:50:08 philip Exp $
+   $Id: interface.c,v 1.9 2000/05/21 19:35:34 pb Exp $
  */
 
 #include "config.h"
@@ -48,7 +48,41 @@
 #include "util.h"
 #include "intl.h"
 
+#ifdef IFF_PORTSEL
+const char *if_port_text[][4] =
+{
+  /* Keep in step with <linux/netdevice.h> */
+    {"unknown", NULL, NULL, NULL},
+    {"10base2", "bnc", "coax", NULL},
+    {"10baseT", "utp", "tpe", NULL},
+    {"AUI", "thick", "db15", NULL},
+    {"100baseT", NULL, NULL, NULL},
+    {"100baseTX", NULL, NULL, NULL},
+    {"100baseFX", NULL, NULL, NULL},
+    {NULL, NULL, NULL, NULL},
+};
+#endif
+
+#define IPV6_ADDR_ANY		0x0000U
+
+#define IPV6_ADDR_UNICAST      	0x0001U
+#define IPV6_ADDR_MULTICAST    	0x0002U
+#define IPV6_ADDR_ANYCAST	0x0004U
+
+#define IPV6_ADDR_LOOPBACK	0x0010U
+#define IPV6_ADDR_LINKLOCAL	0x0020U
+#define IPV6_ADDR_SITELOCAL	0x0040U
+
+#define IPV6_ADDR_COMPATv4	0x0080U
+
+#define IPV6_ADDR_SCOPE_MASK	0x00f0U
+
+#define IPV6_ADDR_MAPPED	0x1000U
+#define IPV6_ADDR_RESERVED	0x2000U		/* reserved address space */
+
 int procnetdev_vsn = 1;
+
+int ife_short;
 
 static struct interface *int_list;
 
@@ -524,4 +558,289 @@ int do_if_print(struct interface *ife, void *cookie)
 	    ife_print(ife);
     }
     return res;
+}
+
+void ife_print_short(struct interface *ptr)
+{
+    printf("%-5.5s ", ptr->name);
+    printf("%5d %3d ", ptr->mtu, ptr->metric);
+    /* If needed, display the interface statistics. */
+    if (ptr->statistics_valid) {
+	printf("%8lu %6lu %6lu %6lu ",
+	       ptr->stats.rx_packets, ptr->stats.rx_errors,
+	       ptr->stats.rx_dropped, ptr->stats.rx_fifo_errors);
+	printf("%8lu %6lu %6lu %6lu ",
+	       ptr->stats.tx_packets, ptr->stats.tx_errors,
+	       ptr->stats.tx_dropped, ptr->stats.tx_fifo_errors);
+    } else {
+	printf("%-56s", _("     - no statistics available -"));
+    }
+    if (ptr->flags == 0)
+	printf(_("[NO FLAGS]"));
+    if (ptr->flags & IFF_ALLMULTI)
+	printf("A");
+    if (ptr->flags & IFF_BROADCAST)
+	printf("B");
+    if (ptr->flags & IFF_DEBUG)
+	printf("D");
+    if (ptr->flags & IFF_LOOPBACK)
+	printf("L");
+    if (ptr->flags & IFF_PROMISC)
+	printf("M");
+    if (ptr->flags & IFF_NOTRAILERS)
+	printf("N");
+    if (ptr->flags & IFF_NOARP)
+	printf("O");
+    if (ptr->flags & IFF_POINTOPOINT)
+	printf("P");
+    if (ptr->flags & IFF_RUNNING)
+	printf("R");
+    if (ptr->flags & IFF_UP)
+	printf("U");
+    printf("\n");
+}
+
+void ife_print_long(struct interface *ptr)
+{
+    struct aftype *ap;
+    struct hwtype *hw;
+    int hf;
+    int can_compress = 0;
+#if HAVE_AFIPX
+    static struct aftype *ipxtype = NULL;
+#endif
+#if HAVE_AFECONET
+    static struct aftype *ectype = NULL;
+#endif
+#if HAVE_AFATALK
+    static struct aftype *ddptype = NULL;
+#endif
+#if HAVE_AFINET6
+    FILE *f;
+    char addr6[40], devname[20];
+    struct sockaddr_in6 sap;
+    int plen, scope, dad_status, if_idx;
+    extern struct aftype inet6_aftype;
+    char addr6p[8][5];
+#endif
+
+    ap = get_afntype(ptr->addr.sa_family);
+    if (ap == NULL)
+	ap = get_afntype(0);
+
+    hf = ptr->type;
+
+    if (hf == ARPHRD_CSLIP || hf == ARPHRD_CSLIP6)
+	can_compress = 1;
+
+    hw = get_hwntype(hf);
+    if (hw == NULL)
+	hw = get_hwntype(-1);
+
+    printf(_("%-9.9s Link encap:%s  "), ptr->name, hw->title);
+    /* For some hardware types (eg Ash, ATM) we don't print the 
+       hardware address if it's null.  */
+    if (hw->print != NULL && (! (hw_null_address(hw, ptr->hwaddr) &&
+				  hw->suppress_null_addr)))
+	printf(_("HWaddr %s  "), hw->print(ptr->hwaddr));
+#ifdef IFF_PORTSEL
+    if (ptr->flags & IFF_PORTSEL) {
+	printf(_("Media:%s"), if_port_text[ptr->map.port][0]);
+	if (ptr->flags & IFF_AUTOMEDIA)
+	    printf(_("(auto)"));
+    }
+#endif
+    printf("\n");
+
+#if HAVE_AFINET
+    if (ptr->has_ip) {
+	printf(_("          %s addr:%s "), ap->name,
+	       ap->sprint(&ptr->addr, 1));
+	if (ptr->flags & IFF_POINTOPOINT) {
+	    printf(_(" P-t-P:%s "), ap->sprint(&ptr->dstaddr, 1));
+	}
+	if (ptr->flags & IFF_BROADCAST) {
+	    printf(_(" Bcast:%s "), ap->sprint(&ptr->broadaddr, 1));
+	}
+	printf(_(" Mask:%s\n"), ap->sprint(&ptr->netmask, 1));
+    }
+#endif
+
+#if HAVE_AFINET6
+    /* FIXME: should be integrated into interface.c.   */
+
+    if ((f = fopen(_PATH_PROCNET_IFINET6, "r")) != NULL) {
+	while (fscanf(f, "%4s%4s%4s%4s%4s%4s%4s%4s %02x %02x %02x %02x %20s\n",
+		      addr6p[0], addr6p[1], addr6p[2], addr6p[3],
+		      addr6p[4], addr6p[5], addr6p[6], addr6p[7],
+		  &if_idx, &plen, &scope, &dad_status, devname) != EOF) {
+	    if (!strcmp(devname, ptr->name)) {
+		sprintf(addr6, "%s:%s:%s:%s:%s:%s:%s:%s",
+			addr6p[0], addr6p[1], addr6p[2], addr6p[3],
+			addr6p[4], addr6p[5], addr6p[6], addr6p[7]);
+		inet6_aftype.input(1, addr6, (struct sockaddr *) &sap);
+		printf(_("          inet6 addr: %s/%d"),
+		 inet6_aftype.sprint((struct sockaddr *) &sap, 1), plen);
+		printf(_(" Scope:"));
+		switch (scope) {
+		case 0:
+		    printf(_("Global"));
+		    break;
+		case IPV6_ADDR_LINKLOCAL:
+		    printf(_("Link"));
+		    break;
+		case IPV6_ADDR_SITELOCAL:
+		    printf(_("Site"));
+		    break;
+		case IPV6_ADDR_COMPATv4:
+		    printf(_("Compat"));
+		    break;
+		case IPV6_ADDR_LOOPBACK:
+		    printf(_("Host"));
+		    break;
+		default:
+		    printf(_("Unknown"));
+		}
+		printf("\n");
+	    }
+	}
+	fclose(f);
+    }
+#endif
+
+#if HAVE_AFIPX
+    if (ipxtype == NULL)
+	ipxtype = get_afntype(AF_IPX);
+
+    if (ipxtype != NULL) {
+	if (ptr->has_ipx_bb)
+	    printf(_("          IPX/Ethernet II addr:%s\n"),
+		   ipxtype->sprint(&ptr->ipxaddr_bb, 1));
+	if (ptr->has_ipx_sn)
+	    printf(_("          IPX/Ethernet SNAP addr:%s\n"),
+		   ipxtype->sprint(&ptr->ipxaddr_sn, 1));
+	if (ptr->has_ipx_e2)
+	    printf(_("          IPX/Ethernet 802.2 addr:%s\n"),
+		   ipxtype->sprint(&ptr->ipxaddr_e2, 1));
+	if (ptr->has_ipx_e3)
+	    printf(_("          IPX/Ethernet 802.3 addr:%s\n"),
+		   ipxtype->sprint(&ptr->ipxaddr_e3, 1));
+    }
+#endif
+
+#if HAVE_AFATALK
+    if (ddptype == NULL)
+	ddptype = get_afntype(AF_APPLETALK);
+    if (ddptype != NULL) {
+	if (ptr->has_ddp)
+	    printf(_("          EtherTalk Phase 2 addr:%s\n"), ddptype->sprint(&ptr->ddpaddr, 1));
+    }
+#endif
+
+#if HAVE_AFECONET
+    if (ectype == NULL)
+	ectype = get_afntype(AF_ECONET);
+    if (ectype != NULL) {
+	if (ptr->has_econet)
+	    printf(_("          econet addr:%s\n"), ectype->sprint(&ptr->ecaddr, 1));
+    }
+#endif
+
+    printf("          ");
+    if (ptr->flags == 0)
+	printf(_("[NO FLAGS] "));
+    if (ptr->flags & IFF_UP)
+	printf(_("UP "));
+    if (ptr->flags & IFF_BROADCAST)
+	printf(_("BROADCAST "));
+    if (ptr->flags & IFF_DEBUG)
+	printf(_("DEBUG "));
+    if (ptr->flags & IFF_LOOPBACK)
+	printf(_("LOOPBACK "));
+    if (ptr->flags & IFF_POINTOPOINT)
+	printf(_("POINTOPOINT "));
+    if (ptr->flags & IFF_NOTRAILERS)
+	printf(_("NOTRAILERS "));
+    if (ptr->flags & IFF_RUNNING)
+	printf(_("RUNNING "));
+    if (ptr->flags & IFF_NOARP)
+	printf(_("NOARP "));
+    if (ptr->flags & IFF_PROMISC)
+	printf(_("PROMISC "));
+    if (ptr->flags & IFF_ALLMULTI)
+	printf(_("ALLMULTI "));
+    if (ptr->flags & IFF_SLAVE)
+	printf(_("SLAVE "));
+    if (ptr->flags & IFF_MASTER)
+	printf(_("MASTER "));
+    if (ptr->flags & IFF_MULTICAST)
+	printf(_("MULTICAST "));
+#ifdef HAVE_DYNAMIC
+    if (ptr->flags & IFF_DYNAMIC)
+	printf(_("DYNAMIC "));
+#endif
+
+    printf(_(" MTU:%d  Metric:%d"),
+	   ptr->mtu, ptr->metric ? ptr->metric : 1);
+#ifdef SIOCSKEEPALIVE
+    if (ptr->outfill || ptr->keepalive)
+	printf(_("  Outfill:%d  Keepalive:%d"),
+	       ptr->outfill, ptr->keepalive);
+#endif
+    printf("\n");
+
+    /* If needed, display the interface statistics. */
+
+    if (ptr->statistics_valid) {
+	/* XXX: statistics are currently only printed for the primary address,
+	 *      not for the aliases, although strictly speaking they're shared
+	 *      by all addresses.
+	 */
+	printf("          ");
+
+	printf(_("RX packets:%lu errors:%lu dropped:%lu overruns:%lu frame:%lu\n"),
+	       ptr->stats.rx_packets, ptr->stats.rx_errors,
+	       ptr->stats.rx_dropped, ptr->stats.rx_fifo_errors,
+	       ptr->stats.rx_frame_errors);
+	if (can_compress)
+	    printf(_("             compressed:%lu\n"), ptr->stats.rx_compressed);
+
+	printf("          ");
+
+	printf(_("TX packets:%lu errors:%lu dropped:%lu overruns:%lu carrier:%lu\n"),
+	       ptr->stats.tx_packets, ptr->stats.tx_errors,
+	       ptr->stats.tx_dropped, ptr->stats.tx_fifo_errors,
+	       ptr->stats.tx_carrier_errors);
+	printf(_("          collisions:%lu "), ptr->stats.collisions);
+	if (can_compress)
+	    printf(_("compressed:%lu "), ptr->stats.tx_compressed);
+	if (ptr->tx_queue_len != -1)
+	    printf(_("txqueuelen:%d "), ptr->tx_queue_len);
+	printf("\n");
+    }
+
+    if ((ptr->map.irq || ptr->map.mem_start || ptr->map.dma ||
+	 ptr->map.base_addr)) {
+	printf("          ");
+	if (ptr->map.irq)
+	    printf(_("Interrupt:%d "), ptr->map.irq);
+	if (ptr->map.base_addr >= 0x100)	/* Only print devices using it for 
+						   I/O maps */
+	    printf(_("Base address:0x%x "), ptr->map.base_addr);
+	if (ptr->map.mem_start) {
+	    printf(_("Memory:%lx-%lx "), ptr->map.mem_start, ptr->map.mem_end);
+	}
+	if (ptr->map.dma)
+	    printf(_("DMA chan:%x "), ptr->map.dma);
+	printf("\n");
+    }
+    printf("\n");
+}
+
+void ife_print(struct interface *i)
+{
+    if (ife_short)
+	ife_print_short(i);
+    else
+	ife_print_long(i);
 }

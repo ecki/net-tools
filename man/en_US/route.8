@@ -210,13 +210,13 @@ This command adds the net "192.57.66.x" to be gatewayed through the former
 route to the SLIP interface.
 
 .TP
-.B route add 224.0.0.0 netmask 240.0.0.0 dev eth0
+.B route add -net 224.0.0.0 netmask 240.0.0.0 dev eth0
 This is an obscure one documented so people know how to do it. This sets
 all of the class D (multicast) IP routes to go via "eth0". This is the
 correct normal configuration line with a multicasting kernel. 
 
 .TP
-.B route add 10.0.0.0 netmask 255.0.0.0 reject
+.B route add -net 10.0.0.0 netmask 255.0.0.0 reject
 This installs a rejecting route for the private network "10.x.x.x."
 
 .LP

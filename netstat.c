@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.36 2000/05/20 13:38:10 pb Exp $
+ * Version:     $Id: netstat.c,v 1.37 2000/05/21 19:35:34 pb Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -121,7 +121,7 @@ typedef enum {
 #define FEATURE_NETSTAT
 #include "lib/net-features.h"
 
-char *Release = RELEASE, *Version = "netstat 1.38 (1999-04-20)", *Signature = "Fred Baumgarten, Alan Cox, Bernd Eckenfels, Phil Blundell, Tuan Hoang and others";
+char *Release = RELEASE, *Version = "netstat 1.39 (2000-05-21)", *Signature = "Fred Baumgarten, Alan Cox, Bernd Eckenfels, Phil Blundell, Tuan Hoang and others";
 
 
 #define E_READ  -1
@@ -724,12 +724,12 @@ static void tcp_do_one(int lnr, const char *line)
 	sscanf(local_addr, "%08X%08X%08X%08X",
 	       &in6.s6_addr32[0], &in6.s6_addr32[1],
            &in6.s6_addr32[2], &in6.s6_addr32[3]);
-    inet_ntop(AF_INET6, &in6, addr6, sizeof(addr6));
+	inet_ntop(AF_INET6, &in6, addr6, sizeof(addr6));
 	inet6_aftype.input(1, addr6, (struct sockaddr *) &localaddr);
 	sscanf(rem_addr, "%08X%08X%08X%08X",
 	       &in6.s6_addr32[0], &in6.s6_addr32[1],
-           &in6.s6_addr32[2], &in6.s6_addr32[3]);
-    inet_ntop(AF_INET6, &in6, addr6, sizeof(addr6));
+	       &in6.s6_addr32[2], &in6.s6_addr32[3]);
+	inet_ntop(AF_INET6, &in6, addr6, sizeof(addr6));
 	inet6_aftype.input(1, addr6, (struct sockaddr *) &remaddr);
 	localaddr.sin6_family = AF_INET6;
 	remaddr.sin6_family = AF_INET6;
@@ -848,13 +848,13 @@ static void udp_do_one(int lnr, const char *line)
 #if HAVE_AFINET6
 	sscanf(local_addr, "%08X%08X%08X%08X",
 	       &in6.s6_addr32[0], &in6.s6_addr32[1],
-           &in6.s6_addr32[2], &in6.s6_addr32[3]);
-    inet_ntop(AF_INET6, &in6, addr6, sizeof(addr6));
+	       &in6.s6_addr32[2], &in6.s6_addr32[3]);
+	inet_ntop(AF_INET6, &in6, addr6, sizeof(addr6));
 	inet6_aftype.input(1, addr6, (struct sockaddr *) &localaddr);
 	sscanf(rem_addr, "%08X%08X%08X%08X",
 	       &in6.s6_addr32[0], &in6.s6_addr32[1],
-           &in6.s6_addr32[2], &in6.s6_addr32[3]);
-    inet_ntop(AF_INET6, &in6, addr6, sizeof(addr6));
+	       &in6.s6_addr32[2], &in6.s6_addr32[3]);
+	inet_ntop(AF_INET6, &in6, addr6, sizeof(addr6));
 	inet6_aftype.input(1, addr6, (struct sockaddr *) &remaddr);
 	localaddr.sin6_family = AF_INET6;
 	remaddr.sin6_family = AF_INET6;
@@ -1424,46 +1424,6 @@ static int ipx_info(void)
 }
 #endif
 
-void ife_print(struct interface *ptr)
-{
-    printf("%-5.5s ", ptr->name);
-    printf("%5d %3d ", ptr->mtu, ptr->metric);
-    /* If needed, display the interface statistics. */
-    if (ptr->statistics_valid) {
-	printf("%8lu %6lu %6lu %6lu ",
-	       ptr->stats.rx_packets, ptr->stats.rx_errors,
-	       ptr->stats.rx_dropped, ptr->stats.rx_fifo_errors);
-	printf("%8lu %6lu %6lu %6lu ",
-	       ptr->stats.tx_packets, ptr->stats.tx_errors,
-	       ptr->stats.tx_dropped, ptr->stats.tx_fifo_errors);
-    } else {
-	printf("%-56s", _("     - no statistics available -"));
-    }
-    if (ptr->flags == 0)
-	printf(_("[NO FLAGS]"));
-    if (ptr->flags & IFF_ALLMULTI)
-	printf("A");
-    if (ptr->flags & IFF_BROADCAST)
-	printf("B");
-    if (ptr->flags & IFF_DEBUG)
-	printf("D");
-    if (ptr->flags & IFF_LOOPBACK)
-	printf("L");
-    if (ptr->flags & IFF_PROMISC)
-	printf("M");
-    if (ptr->flags & IFF_NOTRAILERS)
-	printf("N");
-    if (ptr->flags & IFF_NOARP)
-	printf("O");
-    if (ptr->flags & IFF_POINTOPOINT)
-	printf("P");
-    if (ptr->flags & IFF_RUNNING)
-	printf("R");
-    if (ptr->flags & IFF_UP)
-	printf("U");
-    printf("\n");
-}
-
 static int iface_info(void)
 {
     if (skfd < 0) {
@@ -1473,7 +1433,10 @@ static int iface_info(void)
 	}
 	printf(_("Kernel Interface table\n"));
     }
-    printf(_("Iface   MTU Met    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR Flg\n"));
+    if (!flag_exp) {
+	ife_short = 1;
+	printf(_("Iface   MTU Met    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR Flg\n"));
+    }
 
     if (for_all_interfaces(do_if_print, &flag_all) < 0) {
 	perror(_("missing interface information"));
@@ -1541,7 +1504,6 @@ int main
 	{"interfaces", 0, 0, 'i'},
 	{"help", 0, 0, 'h'},
 	{"route", 0, 0, 'r'},
-	{"netlink", 2, 0, 'L'},
 #if HAVE_FW_MASQUERADE
 	{"masquerade", 0, 0, 'M'},
 #endif
@@ -1824,17 +1786,20 @@ int main
 #else
 	    if (flag_arg) {
 		i = 1;
-       if(!flag_arg || flag_x25) {
-#if HAVE_AFX25
-               /* FIXME */
-               i = x25_info();
-               if(i) {  return(i); }
-#endif
-       }
-      if (flag_arg)
-       { i=1; ENOSUPP("netstat","AF X25"); }
-
 		ENOSUPP("netstat", "AF AX25");
+	    }
+#endif
+	}
+	if(!flag_arg || flag_x25) {
+#if HAVE_AFX25
+	    /* FIXME */
+	    i = x25_info();
+	    if (i)
+		return(i);
+#else
+	    if (flag_arg) {
+		i = 1;
+		ENOSUPP("netstat", "AF X25");
 	    }
 #endif
 	}

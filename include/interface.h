@@ -74,6 +74,10 @@ extern int do_if_print(struct interface *ife, void *cookie);
 
 extern void ife_print(struct interface *ptr);
 
+extern int ife_short;
+
+extern const char *if_port_text[][4];
+
 /* Defines for poor glibc2.0 users, the feature check is done at runtime */
 #if !defined(SIOCSIFTXQLEN)
 #define SIOCSIFTXQLEN      0x8943

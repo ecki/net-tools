@@ -11,7 +11,7 @@
 .TH NETSTAT 8 "29 February 2000" "net-tools" "Linux Programmer's Manual"
 
 .SH NAME
-netstat \- Print network connections, routing tables, interface statistics, masquerade connections, netlink messages, and multicast memberships
+netstat \- Print network connections, routing tables, interface statistics, masquerade connections, and multicast memberships
 
 .SH SYNOPSIS
 
@@ -29,9 +29,7 @@ netstat \- Print network connections, routing tables, interface statistics, masq
 .RB [ \-\-program | \-p ]
 .RB [ \-\-verbose | \-v ]
 .RB [ \-\-continuous | \-c]
-
-.PP
-
+.P
 .B netstat 
 .RB { \-\-route | \-r }
 .RI [ address_family_options ]
@@ -39,9 +37,7 @@ netstat \- Print network connections, routing tables, interface statistics, masq
 .RB [ \-\-verbose | \-v ]
 .RB [ \-\-numeric | \-n ]
 .RB [ \-\-continuous | \-c]
-
-.PP
-
+.P
 .B netstat
 .RB { \-\-interfaces | \-i }
 .RI [ iface ]
@@ -51,49 +47,30 @@ netstat \- Print network connections, routing tables, interface statistics, masq
 .RB [ \-\-program | \-p ]
 .RB [ \-\-numeric | \-n ]
 .RB [ \-\-continuous | \-c]
-
-.PP
-
+.P
 .B netstat
-.RB [ \-\-groups | \-g ]
+.RB { \-\-groups | \-g }
 .RB [ \-\-numeric | \-n ]
 .RB [ \-\-continuous | \-c]
-
-.PP
-
+.P
 .B netstat
 .RB { \-\-masquerade | \-M }
 .RB [ \-\-extend | \-e ]
 .RB [ \-\-numeric | \-n ]
 .RB [ \-\-continuous | \-c]
-
-.PP
-
+.P
 .B netstat
 .RB { \-\-statistics | -s }
 .RB [ \-\-tcp | \-t ]
 .RB [ \-\-udp | \-u ]
 .RB [ \-\-raw | \-w ]
-
-.PP
-
-.B netstat 
-.RB { \-\-netlink | \-L }
-.RB [ \-\-numeric | \-n ]
-.RB [ \-\-continuous | \-c]
-
-.PP
-
+.P
 .B netstat 
 .RB { \-\-version | \-V }
-
-.PP
-
+.P
 .B netstat 
 .RB { \-\-help | \-h }
-
-.PP
-
+.P
 .IR address_family_options :
 .PP
 .RB [ \-\-protocol= { inet , unix , ipx , ax25 , netrom , ddp }[, ...] ]
@@ -104,114 +81,35 @@ netstat \- Print network connections, routing tables, interface statistics, masq
 .RB [ \-\-netrom ]
 .RB [ \-\-ddp ]
 
-
-
-.PP
 .SH DESCRIPTION
 .B Netstat
-prints information about the Linux networking subsystem.
-
-.SS "(no option)"
-By default, 
+prints information about the Linux networking subsystem.  The type of
+information printed is controlled by the first argument, as follows:
+.SS (none)
+By default,
 .B
 netstat 
-prints the status of network connections by listing the open
-sockets.  If you don't specify any address families, then the active
-sockets of all configured address families will be printed. With
-.BR \-\-extend " (" \-e )
-you get some additional information (userid).  Use it twice to add
-more information (inode number).  With the
-.BR \-\-verbose " (" \-v )
-option, you can make netstat complain about known address families which are
-not supported by the kernel. The
-.BR \-\-timers " (" \-o )
-option prints some additional information on networking timers. Enabling the
-.BR \-\-program " (" \-p )
-will show you the process PID and name of the program that has the socket
-open.
-.BR \-\-listening " (" \-L )
-makes
-.B
-netstat
-show only the sockets which are only listening, which are omitted by default.
-With 
-.BR \-\-all " (" \-a ),
-you get both the listening and the non-listening sockets.  The address
-family
-.B inet
-includes raw, udp and tcp protocol sockets.
-
+displays a list of open sockets.  If you don't specify any
+address families, then the active sockets of all configured address
+families will be printed.
 .SS "\-\-route , \-r"
-With the
-.BR \-\-route " (" \-r )
-option, you get the kernel routing tables in the same format as
-.B "route -e" 
-use.
-.B "netstat --route --extend" 
-uses the output format of
-.BR route .
-Please see
-.BR route (8)
-for details.
-
+Display the kernel routing tables.
 .SS "\-\-groups , \-g"
-With the
-.BR \-\-groups " (" \-g ) 
-option, IGMP multicast group membership information for IPv4 and IPv6 is 
-printed.
-
+Display multicast group membership information for IPv4 and IPv6.
 .SS "\-\-interface=\fIiface \fR, \fB\-i"
-If you use the
-.BR \-\-interfaces " (" -\i )
-option, a table of all (or the specified 
-.IR iface ) 
-networking interfaces will be printed. The output uses the
-.B "ifconfig -e"
-format, and is described in
-.BR ifconfig (8).
-.B "netstat --interface --extend" 
-will print a table or a single interface entry just like
-.B ifconfig
-does. With the
-.BR \-\-all " (" \-a )
-option, you can include interfaces which are not configured (i.e. don't have
-the 
-.BR U = UP
-flag set).
-
+Display a table of all network interfaces, or the specified
+.IR iface ) .
 .SS "\-\-masquerade , \-M"
-
-This generates a list of masqueraded sessions.  With the
-.BR \-\-extend " (" \-e )
-option, you can include some more information about sequence numbering and
-deltas, caused by data rewrites on FTP sessions (PORT
-command). Masquerade support is used to hide hosts with unofficial network
-addresses from the outside world, as described in
-.BR ipfw "(4), " ipfwadm "(8), and " ipfw (8).
-
+Display a list of masqueraded connections.
 .SS "\-\-statistics , \-s"
-
-.B netstat
-
-prints summary statistics for each protocol.
-
-.SS "\-\-netlink , \-N"
-
-Recent kernels have a kernel/user communication support called netlink. You
-can get messages about creation or deletion of interfaces or routes from
-.I /dev/route
-(36,0).
-
-.PP
+Display summary statistics for each protocol.
 .SH OPTIONS
 .SS "\-\-verbose , \-v"
 Tell the user what is going on by being verbose. Especially print some
 useful information about unconfigured address families.
-
 .SS "\-\-numeric , \-n"
-shows numerical addresses instead of trying to determine symbolic host, port
+Show numerical addresses instead of trying to determine symbolic host, port
 or user names.
-
 .SS "\-\-protocol=\fIfamily \fR, \fB\-A"
 Specifies the address families (perhaps better described as low level
 protocols) for which connections are to be shown.
@@ -233,38 +131,50 @@ This has the same effect as using the
 and
 .B \-\-ddp 
 options.
-
-.SS "\-c, \-\-continous"
+.P
+The address family
+.B inet
+includes raw, udp and tcp protocol sockets.
+.SS "\-c, \-\-continuous"
 This will cause
 .B netstat
-to print the selected information every second continously.
-
-.PP
+to print the selected information every second continuously.
+.SS "\-e, \-\-extend"
+Display additional information.  Use this option twice for maximum detail.
+.SS "\-o, \-\-timers"
+Include information related to networking timers.
+.SS "\-p, \-\-program"
+Show the PID and name of the program to which each socket belongs.
+.SS "\-L, \-\-listening"
+Show only listening sockets.  (These are omitted by default.)
+.SS "\-a, \-\-all"
+Show both listening and non-listening sockets.  With the
+.B --interfaces
+option, show interfaces that are not marked 
+.SS "\-F"
+Print routing information from the FIB.  (This is the default.)
+.SS "\-C"
+Print routing information from the route cache.
+.IR UP .
+.P
 .SH OUTPUT
-
-.PP
+.P
 .SS Active Internet connections \fR(TCP, UDP, raw)\fR
-
 .SS "Proto" 
 The protocol (tcp, udp, raw) used by the socket. 
-
 .SS "Recv-Q"
 The count of bytes not copied by the user program connected to this socket.
-
 .SS "Send-Q"
 The count of bytes not acknowledged by the remote host.
-
 .SS "Local Address" 
 Address and port number of the local end of the socket.  Unless the
 .BR \-\-numeric " (" \-n )
 option is specified, the socket address is resolved to its canonical
 host name (FQDN), and the port number is translated into the
 corresponding service name.
-
 .SS "Foreign Address"
 Address and port number of the remote end of the socket.
 Analogous to "Local Address."
-
 .SS "State"
 The state of the socket. Since there are no states in raw mode and usually no
 states used in UDP, this column may be left blank. Normally this can be one
@@ -325,10 +235,8 @@ sent.
 .I
 UNKNOWN
 The state of the socket is unknown.
-
 .SS "User"
 The username or the user id (UID) of the owner of the socket.
-
 .SS "PID/Program name"
 Slash-separated pair of the process id (PID) and process name of the 
 process that owns the socket.
@@ -337,21 +245,14 @@ causes this column to be included.  You will also need
 .I superuser
 privileges to see this information on sockets you don't own.  This
 identification information is not yet available for IPX sockets.
-
 .SS "Timer"
 (this needs to be written)
-
-
-.PP
+.P
 .SS Active UNIX domain Sockets
-
-
 .SS "Proto" 
 The protocol (usually unix) used by the socket.
-
 .SS "RefCnt"
 The reference count (i.e. attached processes via this socket).
-
 .SS "Flags"
 The flags displayed is SO_ACCEPTON (displayed as 
 .BR ACC ),
@@ -363,7 +264,6 @@ SO_ACCECPTON
 is used on unconnected sockets if their corresponding
 processes are waiting for a connect request. The other flags are not
 of normal interest.
-
 .SS "Type"
 There are several types of socket access:
 .TP
@@ -394,7 +294,6 @@ Raw interface access socket.
 .I
 UNKNOWN
 Who ever knows what the future will bring us - just fill in here :-)
-
 .PP
 .SS "State"
 This field will contain one of the following Keywords:
@@ -424,35 +323,26 @@ The socket is not connected to another one.
 .TP
 .I UNKNOWN
 This state should never happen.
-
 .SS "PID/Program name"
 Process ID (PID) and process name of the process that has the socket open. 
 More info available in
 .B "Active Internet connections"
 section written above.
-
 .SS "Path"
 This is the path name as which the corresponding processes attached
 to the socket.
-
-.PP
+.P
 .SS Active IPX sockets
-
 (this needs to be done by somebody who knows it)
-
-.PP
+.P
 .SS Active NET/ROM sockets
-
 (this needs to be done by somebody who knows it)
-
-.PP
+.P
 .SS Active AX.25 sockets
-
 (this needs to be done by somebody who knows it)
-
 .PP
 .SH NOTES
-Starting with Linux Release 2.2 
+Starting with Linux release 2.2 
 .B netstat -i 
 does not show interface statistics for alias interfaces. To get per
 alias interface counters you need to setup explicit rules using the
@@ -473,7 +363,6 @@ status information via the following files.
 
 .I /proc/net/raw
 -- raw socket information
-
 
 .I /proc/net/tcp
 -- TCP socket information
@@ -517,29 +406,21 @@ status information via the following files.
 .I /proc/net/ip_masquerade
 -- masqueraded connections
 
+.I /proc/net/snmp
+-- statistics
 .fi
-
-.PP
+.P
 .SH SEE ALSO
 .BR route (8), 
 .BR ifconfig (8), 
-.BR ipfw (4), 
-.BR ipfw (8), 
-.BR ipfwadm (8),
 .BR ipchains (8),
+.BR iptables (8),
 .BR proc (5)
-
-.PP
+.P
 .SH BUGS
 Occasionally strange information may appear if a socket changes
 as it is viewed. This is unlikely to occur.
-.br
-The
-.B netstat -i
-options is described as it should work after some code cleanup of the BETA
-release of the net-tools package.
-
-.PP
+.P
 .SH AUTHORS
 The netstat user interface was written by Fred Baumgarten
 <dc6iq@insu1.etec.uni-karlsruhe.de> the man page basically
