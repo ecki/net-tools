@@ -174,7 +174,9 @@ IPX_input(int type, char *bufp, struct sockaddr *sap)
 struct aftype ipx_aftype = {
   "ipx",	NULL, /*"IPX",*/		AF_IPX,	0,
   IPX_print,	IPX_sprint,		IPX_input,		NULL,
-  NULL/*IPX_rprint*/
+  NULL/*IPX_rprint*/,	NULL, NULL,
+  -1,
+  "/proc/net/ipx"
 };
 
 #endif

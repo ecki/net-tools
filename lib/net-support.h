@@ -45,10 +45,13 @@ struct aftype {
   int 		(*rinput)	(int typ, int ext, char **argv);
 
   /* may modify src */ 
-  int		(*getmask)  (char *src, struct sockaddr *mask, char *name); 	
+  int		(*getmask)  (char *src, struct sockaddr *mask, char *name);
 
+  int		fd;
+  char		*flag_file; 
 };
 
+extern struct aftype *aftypes[];
 
 /* This structure defines hardware protocols and their handlers. */
 struct hwtype {
@@ -69,6 +72,8 @@ extern struct aftype	*get_aftype(const char *name);
 extern struct aftype	*get_afntype(int type);
 
 extern int		getargs(char *string, char *arguments[]);
+
+extern int		get_socket_for_af(int af);
 
 extern void		getroute_init(void);
 extern void		setroute_init(void);

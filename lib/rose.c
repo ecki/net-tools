@@ -136,7 +136,9 @@ struct hwtype rose_hwtype = {
 struct aftype rose_aftype = {
   "rose",	NULL, /*"AMPR ROSE",*/		AF_ROSE,	10,
   ROSE_print,	ROSE_sprint,		ROSE_input,	ROSE_herror,	
-  NULL
+  NULL,		NULL,		NULL,
+  -1,
+  "/proc/net/rose"
 };
 
 #endif	/* HAVE_xxROSE */

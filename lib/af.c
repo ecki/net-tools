@@ -71,7 +71,7 @@ extern	struct aftype	ec_aftype;
 
 static short sVafinit = 0;
 
-static struct aftype *aftypes[] = {
+struct aftype *aftypes[] = {
 #if HAVE_AFUNIX
   &unix_aftype,
 #endif
@@ -207,6 +207,22 @@ get_afntype(int af)
   return(NULL);
 }
 
+/* Check our protocol family table for this family and return its socket */
+int
+get_socket_for_af(int af)
+{
+  struct aftype **afp;
+
+  if (!sVafinit)
+    afinit ();
+  
+  afp = aftypes;
+  while (*afp != NULL) {
+	if ((*afp)->af == af) return (*afp)->fd;
+	afp++;
+  }
+  return -1;
+}
 
 int aftrans_opt(const char *arg)
 {

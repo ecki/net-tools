@@ -4,7 +4,7 @@
    10/1998 partly rewriten by Andi Kleen to support interface list.   
 		   I don't claim that the list operations are efficient @).  
 
-   $Id: interface.c,v 1.7 1998/10/31 09:55:42 philip Exp $
+   $Id: interface.c,v 1.8 1998/11/14 10:37:06 philip Exp $
  */
 
 #include "config.h"
@@ -100,19 +100,12 @@ static int if_readconf(void)
 	struct ifreq *ifr; 
 	int n, err = -1;  
 
-	int sk; 
-	sk = socket(PF_INET, SOCK_DGRAM, 0); 
-	if (sk < 0) { 
-		perror(_("error opening inet socket"));
-		return -1; 
-	}
-
 	ifc.ifc_buf = NULL;
 	for (;;) { 
 		ifc.ifc_len = sizeof(struct ifreq) * numreqs; 
 		ifc.ifc_buf = xrealloc(ifc.ifc_buf, ifc.ifc_len); 
 		
-		if (ioctl(sk, SIOCGIFCONF, &ifc) < 0) { 
+		if (ioctl(skfd, SIOCGIFCONF, &ifc) < 0) { 
 			perror("SIOCGIFCONF");
 			goto out; 
 		}
@@ -141,7 +134,6 @@ static int if_readconf(void)
 
 out:
 	free(ifc.ifc_buf);  
-	close(sk);
 	return err;  
 }
 
@@ -326,6 +318,7 @@ int
 if_fetch(char *ifname, struct interface *ife)
 {
   struct ifreq ifr;
+  int fd;
 
   strcpy(ifr.ifr_name, ifname);
   if (ioctl(skfd, SIOCGIFFLAGS, &ifr) < 0) return(-1);
@@ -393,60 +386,67 @@ if_fetch(char *ifname, struct interface *ife)
 #endif
 
 #if HAVE_AFINET
-  strcpy(ifr.ifr_name, ifname);
-  if (inet_sock < 0 || ioctl(inet_sock, SIOCGIFDSTADDR, &ifr) < 0)
-    memset(&ife->dstaddr, 0, sizeof(struct sockaddr));
-  else 
-    ife->dstaddr = ifr.ifr_dstaddr;
+  fd = get_socket_for_af(AF_INET);
+  if (fd >= 0) {
+    strcpy(ifr.ifr_name, ifname);
+    if (ioctl(fd, SIOCGIFDSTADDR, &ifr) < 0)
+      memset(&ife->dstaddr, 0, sizeof(struct sockaddr));
+    else 
+      ife->dstaddr = ifr.ifr_dstaddr;
 
-  strcpy(ifr.ifr_name, ifname);
-  if (inet_sock < 0 || ioctl(inet_sock, SIOCGIFBRDADDR, &ifr) < 0)
-    memset(&ife->broadaddr, 0, sizeof(struct sockaddr));
-  else 
-    ife->broadaddr = ifr.ifr_broadaddr;
+    strcpy(ifr.ifr_name, ifname);
+    if (ioctl(fd, SIOCGIFBRDADDR, &ifr) < 0)
+      memset(&ife->broadaddr, 0, sizeof(struct sockaddr));
+    else 
+      ife->broadaddr = ifr.ifr_broadaddr;
 
-  strcpy(ifr.ifr_name, ifname);
-  if (inet_sock < 0 || ioctl(inet_sock, SIOCGIFNETMASK, &ifr) < 0)
-    memset(&ife->netmask, 0, sizeof(struct sockaddr));
-  else 
-    ife->netmask = ifr.ifr_netmask;
+    strcpy(ifr.ifr_name, ifname);
+    if (ioctl(fd, SIOCGIFNETMASK, &ifr) < 0)
+      memset(&ife->netmask, 0, sizeof(struct sockaddr));
+    else 
+      ife->netmask = ifr.ifr_netmask;
 
-  strcpy(ifr.ifr_name, ifname);
-  if (inet_sock < 0 || ioctl(inet_sock, SIOCGIFADDR, &ifr) < 0) 
-    memset(&ife->addr, 0, sizeof(struct sockaddr));
-  else 
-    ife->addr = ifr.ifr_addr;
+    strcpy(ifr.ifr_name, ifname);
+    if (ioctl(fd, SIOCGIFADDR, &ifr) < 0) 
+      memset(&ife->addr, 0, sizeof(struct sockaddr));
+    else 
+      ife->addr = ifr.ifr_addr;
+  }
 #endif
-  
+    
 #if HAVE_AFATALK
   /* DDP address maybe ? */
-  strcpy(ifr.ifr_name, ifname);
-  if (ddp_sock >= 0 && ioctl(ddp_sock, SIOCGIFADDR, &ifr) == 0) {
-    ife->ddpaddr=ifr.ifr_addr;
-    ife->has_ddp=1;
+  fd = get_socket_for_af(AF_APPLETALK);
+  if (fd >= 0) {
+    strcpy(ifr.ifr_name, ifname);
+    if (ioctl(fd, SIOCGIFADDR, &ifr) == 0) {
+      ife->ddpaddr=ifr.ifr_addr;
+      ife->has_ddp=1;
+    }
   }
 #endif
 
 #if HAVE_AFIPX  
   /* Look for IPX addresses with all framing types */
-  strcpy(ifr.ifr_name, ifname);
-  if (ipx_sock >= 0) {
-    if (!ipx_getaddr(ipx_sock, IPX_FRAME_ETHERII, &ifr)) {
+  fd = get_socket_for_af(AF_IPX);
+  if (fd >= 0) {
+    strcpy(ifr.ifr_name, ifname);
+    if (!ipx_getaddr(fd, IPX_FRAME_ETHERII, &ifr)) {
       ife->has_ipx_bb=1;
       ife->ipxaddr_bb=ifr.ifr_addr;
     }
     strcpy(ifr.ifr_name, ifname);
-    if (!ipx_getaddr(ipx_sock, IPX_FRAME_SNAP, &ifr)) {
+    if (!ipx_getaddr(fd, IPX_FRAME_SNAP, &ifr)) {
       ife->has_ipx_sn=1;
       ife->ipxaddr_sn=ifr.ifr_addr;
     }
     strcpy(ifr.ifr_name, ifname);
-    if(!ipx_getaddr(ipx_sock, IPX_FRAME_8023, &ifr)) {
+    if(!ipx_getaddr(fd, IPX_FRAME_8023, &ifr)) {
       ife->has_ipx_e3=1;
       ife->ipxaddr_e3=ifr.ifr_addr;
     }
     strcpy(ifr.ifr_name, ifname);
-    if(!ipx_getaddr(ipx_sock, IPX_FRAME_8022, &ifr)) {
+    if(!ipx_getaddr(fd, IPX_FRAME_8022, &ifr)) {
       ife->has_ipx_e2=1;
       ife->ipxaddr_e2=ifr.ifr_addr;
     }
@@ -455,10 +455,13 @@ if_fetch(char *ifname, struct interface *ife)
 
 #if HAVE_AFECONET
   /* Econet address maybe? */
-  strcpy(ifr.ifr_name, ifname);
-  if (ec_sock >= 0 && ioctl(ec_sock, SIOCGIFADDR, &ifr) == 0) {
-    ife->ecaddr = ifr.ifr_addr;
-    ife->has_econet = 1;
+  fd = get_socket_for_af(AF_ECONET);
+  if (fd >= 0) {
+    strcpy(ifr.ifr_name, ifname);
+    if (ioctl(fd, SIOCGIFADDR, &ifr) == 0) {
+      ife->ecaddr = ifr.ifr_addr;
+      ife->has_econet = 1;
+    }
   }
 #endif
 

@@ -199,7 +199,9 @@ struct hwtype ax25_hwtype = {
 struct aftype ax25_aftype = {
   "ax25",	NULL, /*"AMPR AX.25",*/		AF_AX25,	7,
   AX25_print,	AX25_sprint,		AX25_input,	AX25_herror,	
-  NULL
+  NULL,		NULL,		NULL,
+  -1,
+  "/proc/net/ax25"
 };
 
 #endif	/* HAVE_xxAX25 */

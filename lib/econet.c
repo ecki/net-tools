@@ -78,6 +78,8 @@ ec_input(int type, char *bufp, struct sockaddr *sap)
 struct aftype ec_aftype = {
   "ec",	NULL,	AF_ECONET,	0,
   ec_print,	ec_sprint,	ec_input,	NULL,
+  NULL,		NULL,		NULL,
+  -1,
   NULL
 };
 

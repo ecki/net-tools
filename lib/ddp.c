@@ -54,7 +54,9 @@ ddp_sprint(struct sockaddr *sap, int numeric)
 struct aftype ddp_aftype = {
   "ddp",	NULL, /*"Appletalk DDP",*/	AF_APPLETALK,	0,
   ddp_print,	ddp_sprint,		NULL,		NULL,
-  NULL/*DDP_rprint*/
+  NULL/*DDP_rprint*/,	NULL,	NULL,
+  -1,
+  "/proc/net/appletalk"
 };
 
 #endif

@@ -287,7 +287,9 @@ struct aftype inet_aftype = {
   "inet",	NULL, /*"DARPA Internet",*/	AF_INET,	sizeof(unsigned long),
   INET_print,	INET_sprint,		INET_input,	INET_reserror,	
   NULL/*INET_rprint*/,	NULL/*INET_rinput*/,
-  INET_getnetmask 
+  INET_getnetmask,
+  -1,
+  NULL
 };
 
 #endif	/* HAVE_AFINET || HAVE_AFINET6 */

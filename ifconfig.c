@@ -478,6 +478,7 @@ main(int argc, char **argv)
   struct ifreq ifr;
   int goterr = 0, didnetmask = 0;
   char **spp;
+  int fd;
 #if HAVE_AFINET6
   extern struct aftype inet6_aftype;
   struct sockaddr_in6 sa6;
@@ -738,7 +739,7 @@ main(int argc, char **argv)
 	}
 	memcpy((char *) &ifr.ifr_broadaddr, (char *) &sa,
 	       sizeof(struct sockaddr));
-	if (ioctl(skfd, SIOCSIFBRDADDR, &ifr) < 0) {
+	if (ioctl(ap->fd, SIOCSIFBRDADDR, &ifr) < 0) {
 	  fprintf(stderr, "SIOCSIFBRDADDR: %s\n",
 		  strerror(errno));
 	  goterr = 1;
@@ -761,7 +762,7 @@ main(int argc, char **argv)
       }
       memcpy((char *) &ifr.ifr_dstaddr, (char *) &sa,
 	     sizeof(struct sockaddr));
-      if (ioctl(skfd, SIOCSIFDSTADDR, &ifr) < 0) {
+      if (ioctl(ap->fd, SIOCSIFDSTADDR, &ifr) < 0) {
 	fprintf(stderr, "SIOCSIFDSTADDR: %s\n",
 		strerror(errno));
 	goterr = 1;
@@ -780,8 +781,8 @@ main(int argc, char **argv)
 	spp++;
 	continue;
       }
-	  didnetmask++;
-	  goterr = set_netmask(skfd, &ifr, &sa);
+      didnetmask++;
+      goterr = set_netmask(ap->fd, &ifr, &sa);
       spp++;
       continue;
     }
@@ -907,9 +908,9 @@ main(int argc, char **argv)
       } else {
 	prefix_len = 0;
       }
-		  host[(sizeof host)-1] = 0; 
-		  strncpy(host, *spp, (sizeof host)-1);
-     if (inet6_aftype.input(1, host, (struct sockaddr *)&sa6) < 0) {
+      host[(sizeof host)-1] = 0; 
+      strncpy(host, *spp, (sizeof host)-1);
+      if (inet6_aftype.input(1, host, (struct sockaddr *)&sa6) < 0) {
 	inet6_aftype.herror(host);
 	goterr = 1;
 	spp++;
@@ -918,7 +919,15 @@ main(int argc, char **argv)
       memcpy((char *) &ifr6.ifr6_addr, (char *) &sa6.sin6_addr,
 	     sizeof(struct in6_addr));
       
-      if (ioctl(inet6_sock, SIOGIFINDEX, &ifr) < 0) {
+      fd = get_socket_for_af(AF_INET6);
+      if (fd < 0) {
+	fprintf(stderr, _("No support for INET6 on this system.\n"));
+	goterr = 1;
+	spp++;
+	continue;
+      }
+
+      if (ioctl(fd, SIOGIFINDEX, &ifr) < 0) {
 	perror("SIOGIFINDEX");
 	goterr = 1;
 	spp++;
@@ -927,9 +936,8 @@ main(int argc, char **argv)
 
       ifr6.ifr6_ifindex = ifr.ifr_ifindex;
       ifr6.ifr6_prefixlen = prefix_len;
-      if (ioctl(inet6_sock, SIOCSIFADDR, &ifr6) < 0) {
-	fprintf(stderr, "SIOCSIFADDR: %s\n",
-		strerror(errno));
+      if (ioctl(fd, SIOCSIFADDR, &ifr6) < 0) {
+	perror("SIOCSIFADDR");
 	goterr = 1;
       }
       spp++;
@@ -945,8 +953,8 @@ main(int argc, char **argv)
       } else {
 	prefix_len = 0;
       }
-		  host[(sizeof host)-1] = 0; 
-		  strncpy(host, *spp, (sizeof host)-1);
+      host[(sizeof host)-1] = 0; 
+      strncpy(host, *spp, (sizeof host)-1);
       if (inet6_aftype.input(1, host, (struct sockaddr *)&sa6) < 0) {
 	inet6_aftype.herror(host);
 	goterr = 1;
@@ -956,7 +964,15 @@ main(int argc, char **argv)
       memcpy((char *) &ifr6.ifr6_addr, (char *) &sa6.sin6_addr,
 	     sizeof(struct in6_addr));
       
-      if (ioctl(inet6_sock, SIOGIFINDEX, &ifr) < 0) {
+      fd = get_socket_for_af(AF_INET6);
+      if (fd < 0) {
+	fprintf(stderr, _("No support for INET6 on this system.\n"));
+	goterr = 1;
+	spp++;
+	continue;
+      }
+
+      if (ioctl(fd, SIOGIFINDEX, &ifr) < 0) {
 	perror("SIOGIFINDEX");
 	goterr = 1;
 	spp++;
@@ -966,7 +982,7 @@ main(int argc, char **argv)
       ifr6.ifr6_ifindex = ifr.ifr_ifindex;
       ifr6.ifr6_prefixlen = prefix_len;
 #ifdef SIOCDIFADDR
-      if (ioctl(inet6_sock, SIOCDIFADDR, &ifr6) < 0) {
+      if (ioctl(fd, SIOCDIFADDR, &ifr6) < 0) {
 	fprintf(stderr, "SIOCDIFADDR: %s\n",
 		strerror(errno));
 	goterr = 1;
@@ -987,8 +1003,8 @@ main(int argc, char **argv)
       } else {
 	prefix_len = 0;
       }
-		  host[(sizeof host)-1] = 0; 
-		  strncpy(host, *spp, (sizeof host)-1);
+      host[(sizeof host)-1] = 0; 
+      strncpy(host, *spp, (sizeof host)-1);
       if (inet6_aftype.input(1, host, (struct sockaddr *)&sa6) < 0) {
 	inet6_aftype.herror(host);
 	goterr = 1;
@@ -998,7 +1014,15 @@ main(int argc, char **argv)
       memcpy((char *) &ifr6.ifr6_addr, (char *) &sa6.sin6_addr,
 	     sizeof(struct in6_addr));
       
-      if (ioctl(inet6_sock, SIOGIFINDEX, &ifr) < 0) {
+      fd = get_socket_for_af(AF_INET6);
+      if (fd < 0) {
+	fprintf(stderr, _("No support for INET6 on this system.\n"));
+	goterr = 1;
+	spp++;
+	continue;
+      }
+
+      if (ioctl(fd, SIOGIFINDEX, &ifr) < 0) {
 	perror("SIOGIFINDEX");
 	goterr = 1;
 	spp++;
@@ -1008,7 +1032,7 @@ main(int argc, char **argv)
       ifr6.ifr6_ifindex = ifr.ifr_ifindex;
       ifr6.ifr6_prefixlen = prefix_len;
       
-      if (ioctl(inet6_sock, SIOCSIFDSTADDR, &ifr6) < 0) {
+      if (ioctl(fd, SIOCSIFDSTADDR, &ifr6) < 0) {
 	fprintf(stderr, "SIOCSIFDSTADDR: %s\n",
 		strerror(errno));
 	goterr = 1;
@@ -1022,20 +1046,20 @@ main(int argc, char **argv)
 	host[(sizeof host)-1] = '\0'; 
     strncpy(host, *spp, (sizeof host)-1);
 
-	/* FIXME: sa is too small for INET6 addresses, inet6 should use that too, 
-	 		  broadcast is unexpected */ 
-	if (ap->getmask) { 
-		switch (ap->getmask(host, &sa, NULL)) {
-		case -1: usage(); break; 
-		case 1:  
-			if (didnetmask) usage(); 
-
-			goterr = set_netmask(skfd, &ifr, &sa); 
-			didnetmask++; 
-			break;
-		}
-	}
-
+    /* FIXME: sa is too small for INET6 addresses, inet6 should use that too, 
+       broadcast is unexpected */ 
+    if (ap->getmask) { 
+      switch (ap->getmask(host, &sa, NULL)) {
+      case -1: usage(); break; 
+      case 1:  
+	if (didnetmask) usage(); 
+	
+	goterr = set_netmask(skfd, &ifr, &sa); 
+	didnetmask++; 
+	break;
+      }
+    }
+    
     if (ap->input(0, host, &sa) < 0) {
       ap->herror(host);
       usage();
@@ -1047,29 +1071,37 @@ main(int argc, char **argv)
       switch (ap->af) {
 #if HAVE_AFINET
       case AF_INET:
-	r = ioctl(inet_sock, SIOCSIFADDR, &ifr);
+	fd = get_socket_for_af(AF_INET);
+	if (fd < 0) {
+	  fprintf(stderr, _("No support for INET on this system.\n"));
+	  exit(1);
+	}
+	r = ioctl(fd, SIOCSIFADDR, &ifr);
 	break;
 #endif
 #if HAVE_AFECONET
       case AF_ECONET:
-	r = ioctl(ec_sock, SIOCSIFADDR, &ifr);
+	fd = get_socket_for_af(AF_ECONET);
+	if (fd < 0) {
+	  fprintf(stderr, _("No support for ECONET on this system.\n"));
+	  exit(1);
+	}
+	r = ioctl(fd, SIOCSIFADDR, &ifr);
 	break;
 #endif
       default:
-	printf(_("Don't know how to set addresses for this family.\n"));
+	fprintf(stderr, 
+		_("Don't know how to set addresses for this family.\n"));
 	exit(1);
       }
       if (r < 0) {
-	fprintf(stderr, "SIOCSIFADDR: %s\n", strerror(errno));
+	perror("SIOCSIFADDR");
 	goterr = 1;
       }
     }
     goterr |= set_flag(ifr.ifr_name, (IFF_UP | IFF_RUNNING));
     spp++;
   }
-
-  /* Close the socket. */
-  (void) close(skfd);
 
   return(goterr);
 }

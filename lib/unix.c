@@ -84,7 +84,9 @@ UNIX_sprint(struct sockaddr *sap, int numeric)
 struct aftype unix_aftype = {
   "unix",	NULL, /*"UNIX Domain",*/		AF_UNIX,	0,
   UNIX_print,	UNIX_sprint,		NULL,		NULL,
-  NULL
+  NULL,		NULL,		NULL,
+  -1,
+  "/proc/net/unix"
 };
 #endif	/* HAVE_AFUNIX */
 
@@ -92,5 +94,5 @@ struct aftype unix_aftype = {
 struct aftype unspec_aftype = {
   "unspec",	NULL, /*"UNSPEC",*/		AF_UNSPEC,	0,
   UNSPEC_print,	UNSPEC_sprint,		NULL,		NULL,	
-  NULL
+  NULL,
 };
