@@ -7,7 +7,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.14 1998/12/06 16:17:46 philip Exp $
+ * Version:     $Id: netstat.c,v 1.15 1998/12/11 10:48:52 philip Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -1188,7 +1188,9 @@ static void usage(void)
     fprintf(stderr, _("        -r, --route              display routing table\n"));	/* xxx */
     fprintf(stderr, _("        -L, --netlink            display netlink kernel messages\n"));
     fprintf(stderr, _("        -i, --interfaces         display interface table\n"));
+#if HAVE_FW_MASQUERADE
     fprintf(stderr, _("        -M, --masquerade         display masqueraded connections\n\n"));
+#endif
     fprintf(stderr, _("        -v, --verbose            be verbose\n"));
     fprintf(stderr, _("        -n, --numeric            dont resolve names\n"));
     fprintf(stderr, _("        -e, --extend             display other/more informations\n"));
@@ -1217,7 +1219,9 @@ int main
 	{"help", 0, 0, 'h'},
 	{"route", 0, 0, 'r'},
 	{"netlink", 2, 0, 'L'},
+#if HAVE_FW_MASQUERADE
 	{"masquerade", 0, 0, 'M'},
+#endif
 	{"protocol", 1, 0, 'A'},
 	{"tcp", 0, 0, 't'},
 	{"udp", 0, 0, 'u'},
