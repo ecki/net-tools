@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.19 1999/03/01 10:19:13 philip Exp $
+ * Version:     $Id: netstat.c,v 1.20 1999/03/02 09:20:44 ralf Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -1402,7 +1402,7 @@ static void usage(void)
     fprintf(stderr, _("        -p, --programs           display PID/Program name for sockets\n"));
     fprintf(stderr, _("        -c, --continuous         continuous listing\n\n"));
     fprintf(stderr, _("        -l, --listening          display listening server sockets\n"));
-    fprintf(stderr, _("        -a, --all, --listening   display all sockets (default: conected)\n"));
+    fprintf(stderr, _("        -a, --all, --listening   display all sockets (default: connected)\n"));
     fprintf(stderr, _("        -o, --timers             display timers\n"));
     fprintf(stderr, _("        -F, --fib                display Forwarding Infomation Base (default)\n"));
     fprintf(stderr, _("        -C, --cache              display routing cache instead of FIB\n\n"));
