@@ -7,7 +7,7 @@ TUPDATE = tupdate
 
 NLSPACKAGE = net-tools
 
-CATALOGS = pt_BR.mo
+CATALOGS = de.mo pt_BR.mo
 
 POTFILES=../arp.c ../hostname.c ../ifconfig.c ../rarp.c \
 	../lib/ax25.c ../lib/activate.c ../lib/af.c \
