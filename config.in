@@ -40,8 +40,8 @@
 *              (Internationalization)
 *
 * In this BETA Release the I18N (NLS) is enabled and now based
-* on GNU gettext, only a brazilian portuguese catalog (translation)
-* is present, but others are *highly* welcome!
+* on GNU gettext, only a brazilian portuguese and German catalog
+* (translation) is present, but others are *highly* welcome!
 *
 * (answer 'n' if you have no system with GNU gettext support)
 *
