@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.34 2000/05/20 13:38:10 pb Exp $
+ * Version:     $Id: ifconfig.c,v 1.35 2000/05/20 18:08:48 pb Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -13,6 +13,10 @@
  *              Public  License as  published  by  the  Free  Software
  *              Foundation;  either  version 2 of the License, or  (at
  *              your option) any later version.
+ *
+ * Patched to support 'add' and 'del' keywords for INET(4) addresses
+ * by Mrs. Brisby <mrs.brisby@nimh.org>
+ *
  * {1.34} - 19980630 - Arnaldo Carvalho de Melo <acme@conectiva.com.br>
  *                     - gettext instead of catgets for i18n
  *          10/1998  - Andi Kleen. Use interface list primitives.       
@@ -117,6 +121,15 @@ int opt_i = 0;			/* show the statistics          */
 int opt_v = 0;			/* debugging output flag        */
 
 int addr_family = 0;		/* currently selected AF        */
+
+/* for ipv4 add/del modes */
+static int get_nmbc_parent(char *parent,
+			unsigned long *nm, unsigned long *bc);
+static int set_ifstate(char *parent,
+			unsigned long ip,
+			unsigned long nm,
+			unsigned long bc,
+			int flag);
 
 
 void ife_print(struct interface *ptr)
@@ -419,16 +432,9 @@ static int clr_flag(char *ifname, short flag)
 static void usage(void)
 {
     fprintf(stderr, _("Usage:\n  ifconfig [-a] [-i] [-v] <interface> [[<AF>] <address>]\n"));
-    /* XXX: it would be useful to have the add/del syntax even without IPv6.
-       the 2.1 interface address lists make this natural */
-#ifdef HAVE_AFINET6
-    fprintf(stderr, _("  [add <address>[/<prefixlen>]]\n"));
-#ifdef SIOCDIFADDR
-    fprintf(stderr, _("  [del <address>[/<prefixlen>]]\n"));
-#endif
-    /* XXX the kernel supports tunneling even without ipv6 */
-#endif
 #if HAVE_AFINET
+    fprintf(stderr, _("  [add <address>[/<prefixlen>]]\n"));
+    fprintf(stderr, _("  [del <address>[/<prefixlen>]]\n"));
     fprintf(stderr, _("  [[-]broadcast [<address>]]  [[-]pointopoint [<address>]]\n"));
     fprintf(stderr, _("  [netmask <address>]  [dstaddr <address>]  [tunnel <address>]\n"));
 #endif
@@ -479,6 +485,7 @@ static int set_netmask(int skfd, struct ifreq *ifr, struct sockaddr *sa)
 int main(int argc, char **argv)
 {
     struct sockaddr sa;
+    struct sockaddr_in sin;
     char host[128];
     struct aftype *ap;
     struct hwtype *hw;
@@ -492,6 +499,9 @@ int main(int argc, char **argv)
     struct in6_ifreq ifr6;
     unsigned long prefix_len;
     char *cp;
+#endif
+#if HAVE_AFINET
+    extern struct aftype inet_aftype;
 #endif
 
 #if I18N
@@ -893,99 +903,188 @@ int main(int argc, char **argv)
 	    spp++;
 	    continue;
 	}
-#if HAVE_AFINET6
+#if HAVE_AFINET || HAVE_AFINET6
 	if (!strcmp(*spp, "add")) {
 	    if (*++spp == NULL)
 		usage();
-	    if ((cp = strchr(*spp, '/'))) {
-		prefix_len = atol(cp + 1);
-		if ((prefix_len < 0) || (prefix_len > 128))
-		    usage();
-		*cp = 0;
-	    } else {
-		prefix_len = 0;
-	    }
-	    safe_strncpy(host, *spp, (sizeof host));
-	    if (inet6_aftype.input(1, host, (struct sockaddr *) &sa6) < 0
-		&& inet6_aftype.input(0, host, (struct sockaddr *) &sa6) < 0) {
-		inet6_aftype.herror(host);
-		goterr = 1;
-		spp++;
-		continue;
-	    }
-	    memcpy((char *) &ifr6.ifr6_addr, (char *) &sa6.sin6_addr,
-		   sizeof(struct in6_addr));
+#if HAVE_AFINET6
+	    if (strchr(*spp, ':')) {
+		/* INET6 */
+		if ((cp = strchr(*spp, '/'))) {
+		    prefix_len = atol(cp + 1);
+		    if ((prefix_len < 0) || (prefix_len > 128))
+			usage();
+		    *cp = 0;
+		} else {
+		    prefix_len = 0;
+		}
+		safe_strncpy(host, *spp, (sizeof host));
+		if (inet6_aftype.input(1, host, 
+				       (struct sockaddr *) &sa6) < 0) {
+		    inet6_aftype.herror(host);
+		    goterr = 1;
+		    spp++;
+		    continue;
+		}
+		memcpy((char *) &ifr6.ifr6_addr, (char *) &sa6.sin6_addr,
+		       sizeof(struct in6_addr));
 
-	    fd = get_socket_for_af(AF_INET6);
-	    if (fd < 0) {
-		fprintf(stderr, _("No support for INET6 on this system.\n"));
-		goterr = 1;
+		fd = get_socket_for_af(AF_INET6);
+		if (fd < 0) {
+		    fprintf(stderr, 
+			    _("No support for INET6 on this system.\n"));
+		    goterr = 1;
+		    spp++;
+		    continue;
+		}
+		if (ioctl(fd, SIOGIFINDEX, &ifr) < 0) {
+		    perror("SIOGIFINDEX");
+		    goterr = 1;
+		    spp++;
+		    continue;
+		}
+		ifr6.ifr6_ifindex = ifr.ifr_ifindex;
+		ifr6.ifr6_prefixlen = prefix_len;
+		if (ioctl(fd, SIOCSIFADDR, &ifr6) < 0) {
+		    perror("SIOCSIFADDR");
+		    goterr = 1;
+		}
 		spp++;
 		continue;
 	    }
-	    if (ioctl(fd, SIOGIFINDEX, &ifr) < 0) {
-		perror("SIOGIFINDEX");
-		goterr = 1;
-		spp++;
-		continue;
-	    }
-	    ifr6.ifr6_ifindex = ifr.ifr_ifindex;
-	    ifr6.ifr6_prefixlen = prefix_len;
-	    if (ioctl(fd, SIOCSIFADDR, &ifr6) < 0) {
-		perror("SIOCSIFADDR");
-		goterr = 1;
+#endif
+#ifdef HAVE_AFINET
+	    { /* ipv4 address a.b.c.d */
+		unsigned long ip, nm, bc;
+		safe_strncpy(host, *spp, (sizeof host));
+		if (inet_aftype.input(0, host, (struct sockaddr *)&sin) < 0) {
+		    ap->herror(host);
+		    goterr = 1;
+		    spp++;
+		    continue;
+		}
+		fd = get_socket_for_af(AF_INET);
+		if (fd < 0) {
+		    fprintf(stderr, 
+			    _("No support for INET on this system.\n"));
+		    goterr = 1;
+		    spp++;
+		    continue;
+		}
+
+		memcpy(&ip, &sin.sin_addr.s_addr, sizeof(unsigned long));
+		
+		if (get_nmbc_parent(ifr.ifr_name, &nm, &bc) < 0) {
+			fprintf(stderr, _("Interface %s not initialized\n"),
+				ifr.ifr_name);
+			goterr = 1;
+			spp++;
+			continue;
+		}
+		set_ifstate(ifr.ifr_name, ip, nm, bc, 1);
+		
 	    }
 	    spp++;
 	    continue;
 	}
+#else
+	fprintf(stderr, _("Bad address.\n"));
+#endif
+#endif
+
+#if HAVE_AFINET || HAVE_AFINET6
 	if (!strcmp(*spp, "del")) {
 	    if (*++spp == NULL)
 		usage();
-	    if ((cp = strchr(*spp, '/'))) {
-		prefix_len = atol(cp + 1);
-		if ((prefix_len < 0) || (prefix_len > 128))
-		    usage();
-		*cp = 0;
-	    } else {
-		prefix_len = 0;
-	    }
-	    safe_strncpy(host, *spp, (sizeof host));
-	    if (inet6_aftype.input(1, host, (struct sockaddr *) &sa6) < 0) {
-		inet6_aftype.herror(host);
-		goterr = 1;
-		spp++;
-		continue;
-	    }
-	    memcpy((char *) &ifr6.ifr6_addr, (char *) &sa6.sin6_addr,
-		   sizeof(struct in6_addr));
 
-	    fd = get_socket_for_af(AF_INET6);
-	    if (fd < 0) {
-		fprintf(stderr, _("No support for INET6 on this system.\n"));
-		goterr = 1;
-		spp++;
-		continue;
-	    }
-	    if (ioctl(fd, SIOGIFINDEX, &ifr) < 0) {
-		perror("SIOGIFINDEX");
-		goterr = 1;
-		spp++;
-		continue;
-	    }
-	    ifr6.ifr6_ifindex = ifr.ifr_ifindex;
-	    ifr6.ifr6_prefixlen = prefix_len;
 #ifdef SIOCDIFADDR
-	    if (ioctl(fd, SIOCDIFADDR, &ifr6) < 0) {
-		fprintf(stderr, "SIOCDIFADDR: %s\n",
-			strerror(errno));
-		goterr = 1;
+#if HAVE_AFINET6
+	    if (strchr(*spp, ':')) {	/* INET6 */
+		if ((cp = strchr(*spp, '/'))) {
+		    prefix_len = atol(cp + 1);
+		    if ((prefix_len < 0) || (prefix_len > 128))
+			usage();
+		    *cp = 0;
+		} else {
+		    prefix_len = 0;
+		}
+		safe_strncpy(host, *spp, (sizeof host));
+		if (inet6_aftype.input(1, host, 
+				       (struct sockaddr *) &sa6) < 0) {
+		    inet6_aftype.herror(host);
+		    goterr = 1;
+		    spp++;
+		    continue;
+		}
+		memcpy((char *) &ifr6.ifr6_addr, (char *) &sa6.sin6_addr,
+		       sizeof(struct in6_addr));
+		
+		fd = get_socket_for_af(AF_INET6);
+		if (fd < 0) {
+		    fprintf(stderr, 
+			    _("No support for INET6 on this system.\n"));
+		    goterr = 1;
+		    spp++;
+		    continue;
+		}
+		if (ioctl(fd, SIOGIFINDEX, &ifr) < 0) {
+		    perror("SIOGIFINDEX");
+		    goterr = 1;
+		    spp++;
+		    continue;
+		}
+		ifr6.ifr6_ifindex = ifr.ifr_ifindex;
+		ifr6.ifr6_prefixlen = prefix_len;
+		if (ioctl(fd, SIOCDIFADDR, &ifr6) < 0) {
+		    fprintf(stderr, "SIOCDIFADDR: %s\n",
+			    strerror(errno));
+		    goterr = 1;
+		}
+		spp++;
+		continue;
 	    }
-#else
-	    fprintf(stderr, _("Address deletion not supported on this system.\n"));
 #endif
+#ifdef HAVE_AFINET
+	    {
+		/* ipv4 address a.b.c.d */
+		unsigned long ip, nm, bc;
+		safe_strncpy(host, *spp, (sizeof host));
+		if (inet_aftype.input(0, host, (struct sockaddr *)&sin) < 0) {
+		    ap->herror(host);
+		    goterr = 1;
+		    spp++;
+		    continue;
+		}
+		fd = get_socket_for_af(AF_INET);
+		if (fd < 0) {
+		    fprintf(stderr, _("No support for INET on this system.\n"));
+		    goterr = 1;
+		    spp++;
+		    continue;
+		}
+		
+		memcpy(&ip, &sin.sin_addr.s_addr, sizeof(unsigned long));
+		
+		if (get_nmbc_parent(ifr.ifr_name, &nm, &bc) < 0) {
+		    fprintf(stderr, _("Interface %s not initialized\n"),
+			    ifr.ifr_name);
+		    goterr = 1;
+		    spp++;
+		    continue;
+		}
+		set_ifstate(ifr.ifr_name, ip, nm, bc, 0);
+	    }
 	    spp++;
 	    continue;
 	}
+#else
+	fprintf(stderr, _("Bad address.\n"));
+#endif
+#else
+	fprintf(stderr, _("Address deletion not supported on this system.\n"));
+#endif
+#endif
+#if HAVE_AFINET6
 	if (!strcmp(*spp, "tunnel")) {
 	    if (*++spp == NULL)
 		usage();
@@ -1111,4 +1210,122 @@ int main(int argc, char **argv)
     }
 
     return (goterr);
+}
+struct ifcmd {
+	int flag;
+	unsigned long addr;
+	char *base;
+	int baselen;
+};
+static unsigned char searcher[256];
+
+static int set_ip_using(const char *name, int c, unsigned long ip)
+{
+	struct ifreq ifr;
+	struct sockaddr_in sin;
+
+	strcpy(ifr.ifr_name, name);
+	memset(&sin, 0, sizeof(struct sockaddr));
+	sin.sin_family = AF_INET;
+	sin.sin_addr.s_addr = ip;
+	memcpy(&ifr.ifr_addr, &sin, sizeof(struct sockaddr));
+	if (ioctl(skfd, c, &ifr) < 0)
+		return -1;
+	return 0;
+}
+static int do_ifcmd(struct interface *x, struct ifcmd *ptr)
+{
+	char *z, *e;
+	struct sockaddr_in *sin;
+	int i;
+
+	if (do_if_fetch(x) < 0)
+		return 0;
+	if (strncmp(x->name, ptr->base, ptr->baselen) != 0)
+		return 0; /* skip */
+	z = strchr(x->name, ':');
+	if (!z || !*z)
+		return 0;
+	z++;
+	for (e = z; *e; e++)
+		if (*e == '-') /* deleted */
+			return 0;
+	i = atoi(z);
+	searcher[i] = 1;
+
+	/* copy */
+	sin = (struct sockaddr_in *)&x->dstaddr;
+	if (sin->sin_addr.s_addr != ptr->addr) {
+		return 0;
+	}
+	
+	if (ptr->flag) {
+		/* turn UP */
+		if (set_flag(x->name, IFF_UP | IFF_RUNNING) == -1)
+			return -1;
+	} else {
+		/* turn DOWN */
+		if (clr_flag(x->name, IFF_UP) == -1)
+			return -1;
+	}
+
+	return 1; /* all done! */
+}
+
+
+static int get_nmbc_parent(char *parent,
+			   unsigned long *nm, unsigned long *bc)
+{
+	struct interface *i;
+	struct sockaddr_in *sin;
+
+	i = lookup_interface(parent, 1);
+	if (!i)
+		return -1;
+	if (do_if_fetch(i) < 0)
+		return 0;
+	sin = (struct sockaddr_in *)&i->netmask;
+	memcpy(nm, &sin->sin_addr.s_addr, sizeof(unsigned long));
+	sin = (struct sockaddr_in *)&i->broadaddr;
+	memcpy(bc, &sin->sin_addr.s_addr, sizeof(unsigned long));
+	return 0;
+}
+
+static int set_ifstate(char *parent, unsigned long ip,
+		       unsigned long nm, unsigned long bc,
+		       int flag)
+{
+	char buf[IFNAMSIZ];
+	struct ifcmd pt;
+	int i;
+
+	pt.base = parent;
+	pt.baselen = strlen(parent);
+	pt.addr = ip;
+	pt.flag = flag;
+	memset(searcher, 0, sizeof(searcher));
+	i = for_all_interfaces((int (*)(struct interface *,void *))do_ifcmd, 
+			       &pt);
+	if (i == -1)
+		return -1;
+	if (i == 1)
+		return 0;
+
+	/* add a new interface */
+	for (i = 0; i < 256; i++)
+		if (searcher[i] == 0)
+			break;
+	if (i == 256)
+		return -1; /* FAILURE!!! out of ip addresses */
+
+	sprintf(buf, "%s:%d", parent, i);
+	if (set_ip_using(buf, SIOCSIFADDR, ip) == -1)
+		return -1;
+	if (set_ip_using(buf, SIOCSIFNETMASK, nm) == -1)
+		return -1;
+	if (set_ip_using(buf, SIOCSIFBRDADDR, bc) == -1)
+		return -1;
+	if (set_flag(buf, IFF_BROADCAST) == -1)
+		return -1;
+	return 0;
 }
