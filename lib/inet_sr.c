@@ -81,9 +81,13 @@ static int INET_setroute(int action, int options, char **args)
 		  struct sockaddr_in m;
 		  struct sockaddr d;
 	  } mask; 
-	  if (inet_aftype.getmask(target, &mask.d, netmask) < 0)
+	  int n; 
+
+	  n = inet_aftype.getmask(target, &mask.d, netmask);
+	  if (n < 0) 
 		  return usage();
-	  rt.rt_genmask = full_mask(mask.d);
+	  else if (n)
+	  	  rt.rt_genmask = full_mask(mask.d);
   }
 		  
   if ((isnet = inet_aftype.input(0, target, &rt.rt_dst)) < 0) {
@@ -263,7 +267,7 @@ static int INET_setroute(int action, int options, char **args)
 	__u32 mask = ~ntohl(mask_in_addr(rt));
 	if ((rt.rt_flags & RTF_HOST) && mask != 0xffffffff) {
 		fprintf(stderr, NLS_CATGETS(catfd, routeSet, route_netmask1,
-					    "route: netmask doesn't make sense with host route\n"));
+					    "route: netmask %.8x doesn't make sense with host route\n"), mask);
 		return(E_OPTERR);
 	}
 	if (mask & (mask+1)) {
