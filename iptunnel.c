@@ -13,6 +13,7 @@
  *
  * Rani Assaf <rani@magic.metawire.com> 980929:	resolve addresses
  * Rani Assaf <rani@magic.metawire.com> 980930:	do not allow key for ipip/sit
+ * Bernd Eckenfels 990715: add linux/types.h (not clean but solves missing __u16
  */
 
 #include <stdio.h>
@@ -28,6 +29,7 @@
 #include <netinet/in.h>
 #include <netinet/ip.h>
 #include <arpa/inet.h>
+#include <linux/types.h>
 #include <linux/if_tunnel.h>
 
 #include "config.h"
@@ -61,7 +63,7 @@
 #include "util-ank.h"
 
 char *Release = RELEASE,
-     *Version = "iptunnel 1.0",
+     *Version = "iptunnel 1.01",
      *Signature = "Alexey Kuznetsov, <kuznet@ms2.inr.ac.ru>";
 
 static void version(void)
