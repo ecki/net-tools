@@ -1,4 +1,4 @@
-.TH IFCONFIG 8 "2 M\(:arz 1999" "net-tools" "Handbuch f\(:ur Linuxprogrammierer"
+.TH IFCONFIG 8 "6. M\(:arz 1999" "net-tools" "Handbuch f\(:ur Linuxprogrammierer"
 .SH NAME
 ifconfig \- Konfiguration einer Netzwerkskarte
 .SH SYNOPSIS
@@ -74,7 +74,7 @@ empfangen unabh\(:angig davon, ob sie an die Schnittstelle adressiert sind
 oder nicht.
 .TP
 .B "metric N"
-Dieses Argument setzt den Metrik-Wert f\(:r die Schnittstelle auf N.
+Dieses Argument setzt den Metrik-Wert f\(:ur die Schnittstelle auf N.
 .TP
 .B "mtu N"
 Dieses Argument setzt die Maximum Transfer Unit (MTU) der Schnittstelle,
@@ -110,7 +110,7 @@ Ger\(:ate koennen ihre Interruptkonfiguration dynamisch \(:andern.
 Setzt die I/O-Basisadresse f\(:ur dieses Ger\(:at.
 .TP
 .B "mem_start Adr"
-Setzt die Startadresse f\(:r shared memory der von diesem Ger\(:at benutzt
+Setzt die Startadresse f\(:ur shared memory der von diesem Ger\(:at benutzt
 wird.  Dies wird nur von wenigen Ger\(:aten ben\(:otigt.
 .TP
 .B "media Typ"
@@ -132,7 +132,7 @@ erkennt.  Wiederum unterst\(:utzen dies nicht alle Treiber.
 .TP
 .B "[-]broadcast [Adr]"
 Wird das Adressargument gegeben, so wird die Protokolladresse f\(:ur Broadcast
-f\(:r diese Schnittstelle gesetzt.  Ansonsten wird die
+f\(:ur diese Schnittstelle gesetzt.  Ansonsten wird die
 .B IFF_BROADCAST
 Flagge f\(:ur diese Schnittstelle gesetzt bzw. gel\(:oscht.
 .TP
@@ -179,7 +179,7 @@ Gro\(ss\(:ubertragungen interaktiven Verkehr wie Telnet zu sehr st\(:oren.
 Seit Kernel Version 2.2 gibt es keine expliziten Statistiken f\(:ur
 Schnittstellenaliase mehr.  Die Statistiken f\(:ur die Originaladresse werden
 mit allen Aliasen auf das gleiche Ger\(:at geteilt.  Um Statistiken per
-Adresse zu erhalten sollte explizite EIntr\(:age f\(:r die Adresse mit dem
+Adresse zu erhalten sollte explizite EIntr\(:age f\(:ur die Adresse mit dem
 .BR ipchains(8)
 Kommando gemacht werden.
 
@@ -202,3 +202,5 @@ Alan Cox, <Alan.Cox@linux.org>
 Phil Blundell, <Philip.Blundell@pobox.com>
 .br
 Andi Kleen, <ak@muc.de> 
+.SH \(:Ubersetzung
+Ralf B\(:achle <ralf@gnu.org>
