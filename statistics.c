@@ -1,11 +1,8 @@
-/* Copyright '97 by Andi Kleen. Subject to the GPL. */
-/* $Id: statistics.c,v 1.10 1999/01/05 20:53:05 philip Exp $ */ 
+/* Copyright 1997,1999 by Andi Kleen. Subject to the GPL. */
+/* $Id: statistics.c,v 1.11 1999/01/06 12:05:49 freitag Exp $ */ 
 /* 19980630 - i18n - Arnaldo Carvalho de Melo <acme@conectiva.com.br> */
 /* 19981113 - i18n fixes - Arnaldo Carvalho de Melo <acme@conectiva.com.br> */
 /* 19990101 - added net/netstat, -t, -u, -w supprt - Bernd Eckenfels */
-/* 
-   XXX: add some long-text to TcpExtt 
- */
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -24,7 +21,8 @@
 int print_static,f_raw,f_tcp,f_udp;
 
 enum State {
-    number = 0, i_forward, i_inp_icmp, i_outp_icmp, i_rto_alg
+    number = 0, opt_number, i_forward, i_inp_icmp, i_outp_icmp, i_rto_alg,
+    MaxState
 };
 
 #define normal number
@@ -35,49 +33,52 @@ struct entry {
     enum State type;
 };
 
+struct statedesc { 
+    int indent;
+    char *title; 
+}; 
+
+struct statedesc states[] = { 
+    [number] = { 4, NULL },
+    [opt_number] = { 4, NULL }, 
+    [i_forward] = { 4, NULL },
+    [i_inp_icmp] = { 8, N_("ICMP input histogram:") },
+    [i_outp_icmp] = { 8, N_("ICMP output histogram:") },
+    [MaxState] = {0},
+}; 
+
 static enum State state;
-static int indent[] =
-{4, 4, 8, 8, 4};		/* for each state */
 
 #define I_STATIC (1<<16)	/* static configuration option. */
 #define I_TITLE  (1<<17)
 
-char *titles[] =
-{				/* for each state */
-    NULL, NULL,
-    N_("ICMP input histogram:"),
-    N_("ICMP output histogram:"),
-    NULL
-};
-
-/* XXX check against the snmp mib rfc.
+/* 
+ * XXX check against the snmp mib rfc.
+ *
+ * Don't mark the first field as translatable! It's a snmp MIB standard.
+ * - acme
  */
- /*
-    Don't mark the first field as translatable! It's a snmp MIB standard.
-
-    - acme
-  */
 struct entry Iptab[] =
 {
     {"Forwarding", N_("Forwarding is %s"), i_forward | I_STATIC},
     {"DefaultTTL", N_("Default TTL is %d"), number | I_STATIC},
     {"InReceives", N_("%d total packets received"), number},
-    {"InHdrErrors", N_("%d with invalid headers"), number},
-    {"InAddrErrors", N_("%d with invalid addresses"), number},
+    {"InHdrErrors", N_("%d with invalid headers"), opt_number},
+    {"InAddrErrors", N_("%d with invalid addresses"), opt_number},
     {"ForwDatagrams", N_("%d forwarded"), number},
-    {"InUnknownProtos", N_("%d with unknown protocol"), number},
+    {"InUnknownProtos", N_("%d with unknown protocol"), opt_number},
     {"InDiscards", N_("%d incoming packets discarded"), number},
     {"InDelivers", N_("%d incoming packets delivered"), number},
     {"OutRequests", N_("%d requests sent out"), number},	/*? */
-    {"OutDiscards", N_("%d outgoing packets dropped"), number},
-    {"OutNoRoutes", N_("%d dropped because of missing route"), number},
-    {"ReasmTimeout", N_("%d fragments dropped after timeout"), number},
-    {"ReasmReqds", N_("%d reassemblies required"), number},	/* ? */
-    {"ReasmOKs", N_("%d packets reassembled ok"), number},
-    {"ReasmFails", N_("%d packet reassembles failed"), number},
-    {"FragOKs", N_("%d fragments received ok"), number},
-    {"FragFails", N_("%d fragments failed"), number},
-    {"FragCreates", N_("%d fragments created"), number}
+    {"OutDiscards", N_("%d outgoing packets dropped"), opt_number},
+    {"OutNoRoutes", N_("%d dropped because of missing route"), opt_number},
+    {"ReasmTimeout", N_("%d fragments dropped after timeout"), opt_number},
+    {"ReasmReqds", N_("%d reassemblies required"), opt_number},	/* ? */
+    {"ReasmOKs", N_("%d packets reassembled ok"), opt_number},
+    {"ReasmFails", N_("%d packet reassembles failed"), opt_number},
+    {"FragOKs", N_("%d fragments received ok"), opt_number},
+    {"FragFails", N_("%d fragments failed"), opt_number},
+    {"FragCreates", N_("%d fragments created"), opt_number}
 };
 
 struct entry Icmptab[] =
@@ -116,8 +117,8 @@ struct entry Tcptab[] =
     {"RtoMin", "", number},
     {"RtoMax", "", number},
     {"MaxConn", "", number},
-    {"ActiveOpens", N_("%d active opens"), number},
-    {"PassiveOpens", N_("%d passive opens"), number},
+    {"ActiveOpens", N_("%d active connections openings"), number},
+    {"PassiveOpens", N_("%d passive connection openings"), number},
     {"AttemptFails", N_("%d failed connection attempts"), number},
     {"EstabResets", N_("%d connection resets received"), number},
     {"CurrEstab", N_("%d connections established"), number},
@@ -133,46 +134,45 @@ struct entry Udptab[] =
     {"InDatagrams", N_("%d packets received"), number},
     {"NoPorts", N_("%d packets to unknown port received."), number},
     {"InErrors", N_("%d packet receive errors"), number},
-    {"OutDatagrams", N_("%d packets send"), number},
+    {"OutDatagrams", N_("%d packets sent"), number},
 };
 
 struct entry Tcpexttab[] =
 {
-    {"SyncookiesSent", N_("%d SYN cookies sent"), number},
-    {"SyncookiesRecv", N_("%d SYN cookies received"), number},
-    {"SyncookiesFailed", N_("%d SYN cookies failed"), number},
-    /* XXX */
-    /* EmbryonicRsts 
-       PruneCalled 
-       RcvPruned
-       OfoPruned
-       OutOfWindowIcmps
-       LockDroppedIcmps */
+    {"SyncookiesSent", N_("%d SYN cookies sent"), opt_number},
+    {"SyncookiesRecv", N_("%d SYN cookies received"), opt_number},
+    {"SyncookiesFailed", N_("%d invalid SYN cookies received"), opt_number},
+
+    { "EmbryonicRsts", N_("%d resets received for embryonic SYN_RECV sockets"),
+      opt_number },  
+    { "PruneCalled", N_("%d packets pruned from receive queue because of socket"
+			" buffer overrun"), opt_number },  
+    /* obsolete: 2.2.0 doesn't do that anymore */
+    { "RcvPruned", N_("%d packets pruned from out-of-order queue"), opt_number },
+    { "OfoPruned", N_("%d packets dropped from out-of-order queue because of"
+		      " socket buffer overrun"), opt_number }, 
+    { "OutOfWindowIcmps", N_("%d ICMP packets dropped because they were "
+			     "out-of-window"), opt_number }, 
+    { "LockDroppedIcmps", N_("%d ICMP packets dropped because socket was locked"),
+      opt_number }, 
 };
 
 struct tabtab {
     char *title;
     struct entry *tab;
     size_t size;
+    int *flag; 
 };
 
 struct tabtab snmptabs[] =
 {
-    {"Ip", Iptab, sizeof(Iptab)},
-    {"Icmp", Icmptab, sizeof(Icmptab)},
-    {"Tcp", Tcptab, sizeof(Tcptab)},
-    {"Udp", Udptab, sizeof(Udptab)},
-    {"TcpExt", Tcpexttab, sizeof(Tcpexttab)},
+    {"Ip", Iptab, sizeof(Iptab), &f_raw},
+    {"Icmp", Icmptab, sizeof(Icmptab), &f_raw},
+    {"Tcp", Tcptab, sizeof(Tcptab), &f_tcp},
+    {"Udp", Udptab, sizeof(Udptab), &f_udp},
+    {"TcpExt", Tcpexttab, sizeof(Tcpexttab), &f_tcp},
     {NULL}
 };
-
-static char *skiptok(char *s)
-{
-    while (!isspace(*s) && *s != '\0')
-	s++;
-    return s;
-}
-
 
 /* XXX IGMP */
 
@@ -187,12 +187,11 @@ void printval(struct tabtab *tab, char *title, int val)
     int type;
     char buf[512];
 
-    /* printf("key: %s value: %d\n",title,val); */
     key.title = title;
     ent = bsearch(&key, tab->tab, tab->size / sizeof(struct entry),
 		  sizeof(struct entry), cmpentries);
     if (!ent) {			/* try our best */
-	printf("%*s%s: %d\n", indent[state], "", title, val);
+	printf("%*s%s: %d\n", states[state].indent, "", title, val);
 	return;
     }
     type = ent->type;
@@ -207,10 +206,14 @@ void printval(struct tabtab *tab, char *title, int val)
     if (type & I_TITLE) {
 	type &= ~I_TITLE;
 	if (state != type)
-	    printf("%*s%s\n", indent[state], "", _(titles[type]));
+	    printf("%*s%s\n", states[state].indent, "", _(states[type].title));
     }
     buf[0] = '\0';
     switch (type) {
+    case opt_number:
+	if (val == 0) 
+	    break;
+	/*FALL THOUGH*/
     case number:
 	snprintf(buf, sizeof(buf), _(ent->out), val);
 	break;
@@ -229,7 +232,7 @@ void printval(struct tabtab *tab, char *title, int val)
 	abort();
     }
     if (buf[0])
-	printf("%*s%s\n", indent[type], "", buf);
+	printf("%*s%s\n", states[type].indent, "", buf);
 
     state = type;
 }
@@ -240,12 +243,8 @@ struct tabtab *newtable(struct tabtab *tabs, char *title)
 
     for (t = tabs; t->title; t++)
 	if (!strcmp(title, t->title)) {
-	    if (
-                (((t->tab==Iptab) ||(t->tab==Icmptab))  &&f_raw) ||
-		(((t->tab==Tcptab)||(t->tab==Tcpexttab))&&f_tcp) ||
-		( (t->tab==Udptab)                      &&f_udp)
-	       )
-	    printf("%s:\n", _(title));
+	    if (*(t->flag))
+		printf("%s:\n", _(title));
 	    state = normal;
 	    return t;
 	}
@@ -278,27 +277,18 @@ void process_fd(FILE *f)
 
 	endflag = 0;
 	while (!endflag) {
-	    while (isspace(*sp))
-		sp++;
-	    while (isspace(*np))
-		np++;
+	    sp += strspn(sp, " \t\n"); 
+	    np += strspn(np, " \t\n"); 
 	    /*if (*np == '\0') goto formaterr; */
 
-	    p = skiptok(sp);
+	    p = sp+strcspn(sp, " \t\n");
 	    if (*p == '\0')
 		endflag = 1;
 	    *p = '\0';
 
-            /* printf("f: %d %d %d  %p %p %p %p %p\n",f_raw, f_tcp, f_udp, Iptab, Icmptab, Tcptab, Tcpexttab, Udptab, tab); */
-            
-	    if (*sp != '\0') {	/* XXX */
-		if (
-		    (((tab->tab==Iptab) ||(tab->tab==Icmptab))  &&f_raw) ||
-		    (((tab->tab==Tcptab)||(tab->tab==Tcpexttab))&&f_tcp) ||
-		    ( (tab->tab==Udptab)                        &&f_udp)
-		   )
+	    if (*sp != '\0' && *(tab->flag)) 	
 		printval(tab, sp, strtoul(np, &np, 10));
-	    }
+
 	    sp = p + 1;
 	}
     }
@@ -342,7 +332,7 @@ void parsesnmp(int flag_raw, int flag_tcp, int flag_udp)
 }
     
 
-void inittab()
+void inittab(void)
 {
     struct tabtab *t;
 
