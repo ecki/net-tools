@@ -12,8 +12,6 @@
 
     Copyright (C) 2000 David A. Hinds -- dhinds@pcmcia.sourceforge.org
 
-    mii-tool.c 1.9 2000/04/28 00:56:08 (David Hinds)
-
     mii-diag is written/copyright 1997-2000 by Donald Becker
         <becker@scyld.com>
 
@@ -31,7 +29,7 @@
 	http://www.national.com/pf/DP/DP83840.html
 */
 
-static char version[] = "$Id: mii-tool.c,v 1.7 2003/10/20 22:22:22 ecki Exp $ (Author: David Hinds based on Donald Becker's mii-diag)";
+static char version[] = "$Id: mii-tool.c,v 1.8 2004/06/03 22:18:26 ecki Exp $\n(Author: David Hinds based on Donald Becker's mii-diag)";
 
 #include <unistd.h>
 #include <stdlib.h>
