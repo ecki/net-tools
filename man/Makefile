@@ -24,6 +24,13 @@
 
 INSTALL=install
 
+-include ../config.make
+ifeq ($(I18N),1)
+LANGS=`ls -d * | grep -v Makefile`
+else
+LANGS=en_US
+endif
+
 all:
 
 clean:
@@ -33,7 +40,7 @@ clean:
 clobber:	clean
 
 install:
-		LANGS=`ls -d * | grep -v Makefile` ; \
+		LANGS=$(LANGS) ; \
 		for LANG in $$LANGS; do \
 			cd $$LANG; \
 			for SECTION in 1 5 8; do \

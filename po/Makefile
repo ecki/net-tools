@@ -7,7 +7,12 @@ TUPDATE = tupdate
 
 NLSPACKAGE = net-tools
 
+-include ../config.make
+ifeq ($(I18N),1)
 CATALOGS = de.mo pt_BR.mo
+else
+CATALOGS =
+endif
 
 POTFILES=../arp.c ../hostname.c ../ifconfig.c ../netstat.c ../rarp.c \
 	../route.c ../plipconfig.c ../iptunnel.c ../statistics.c \
@@ -62,7 +67,8 @@ distclean: clean
 depend:
 
 install: $(CATALOGS)
-	for n in $(CATALOGS); do \
+	catalogs='$(CATALOGS)'; \
+	for n in $$catalogs; do \
 	    l=`basename $$n .mo`; \
 	    $(INSTALL) -m 755 -d $(INSTALLNLSDIR)/$$l; \
 	    $(INSTALL) -m 755 -d $(INSTALLNLSDIR)/$$l/LC_MESSAGES; \

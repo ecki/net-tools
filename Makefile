@@ -215,8 +215,10 @@ installbin:
 	install -m 0755 hostname   ${BASEDIR}/bin
 	install -m 0755 slattach   $(BASEDIR)/sbin
 	install -m 0755 plipconfig $(BASEDIR)/sbin
+ifeq ($(HAVE_IP_TOOLS),1)
 	install -m 0755 ipmaddr    $(BASEDIR)/sbin
 	install -m 0755 iptunnel   $(BASEDIR)/sbin
+endif
 	ln -fs hostname $(BASEDIR)/bin/dnsdomainname
 	ln -fs hostname $(BASEDIR)/bin/ypdomainname
 	ln -fs hostname $(BASEDIR)/bin/nisdomainname
