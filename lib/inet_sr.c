@@ -41,15 +41,39 @@ static int skfd = -1;
 
 static int usage(void)
 {
-  fprintf(stderr,"Usage: inet_route [-vF] del {-host|-net} Target [gw Gw] [metric M] [[dev] If]\n");
-  fprintf(stderr,"       inet_route [-vF] add {-host|-net} Target [gw Gw] [metric M]\n");
+  fprintf(stderr,"Usage: inet_route [-vF] del {-host|-net} Target[/prefix] [gw Gw] [metric M] [[dev] If]\n");
+  fprintf(stderr,"       inet_route [-vF] add {-host|-net} Target[/prefix] [gw Gw] [metric M]\n");
   fprintf(stderr,"                              [netmask N] [mss Mss] [window W] [irtt I]\n");
   fprintf(stderr,"                              [mod] [dyn] [reinstate] [[dev] If]\n");
-  fprintf(stderr,"       inet_route [-vF] add {-host|-net} Target [metric M] reject\n");
+  fprintf(stderr,"       inet_route [-vF] add {-host|-net} Target[/prefix] [metric M] reject\n");
   fprintf(stderr,"       inet_route [-FC] flush      NOT aupported\n");
   return(E_USAGE);
 }
 
+static int INET_getnetmask(char *adr, struct rtentry *rt, char *name)
+{ 
+	union {  /* grr */
+		struct sockaddr_in mask; 
+		struct sockaddr dumb; 
+	} m; 
+	char *slash, *end; 
+	int prefix; 
+
+	if ((slash = strchr(adr, '/')) == NULL) 
+		return 0; 
+		
+	*slash++ = '\0';
+	prefix = strtoul(slash,&end,0);
+	if (*end != '\0') 
+		return -1; 
+
+	sprintf(name, "/%d", prefix); 
+
+	m.mask.sin_family = AF_INET; 
+	m.mask.sin_addr.s_addr = htonl(~(0xffffffffU >> prefix)); 
+	rt->rt_genmask = full_mask(m.dumb); 
+	return 0;
+} 
 
 static int INET_setroute(int action, int options, char **args)
 {
@@ -70,11 +94,15 @@ static int INET_setroute(int action, int options, char **args)
   if (*args == NULL)
 	return(usage());
 
-  strcpy(target, *args++);
+  strncpy(target, *args++, sizeof target);
 
   /* Clean out the RTREQ structure. */
   memset((char *) &rt, 0, sizeof(struct rtentry));
 
+  /* Special hack for /prefix syntax */ 
+  if (INET_getnetmask(target, &rt, netmask) < 0)
+	  return usage();
+		  
   if ((isnet = inet_aftype.input(0, target, &rt.rt_dst)) < 0) {
 	inet_aftype.herror(target);
 	return (1);
@@ -222,17 +250,22 @@ static int INET_setroute(int action, int options, char **args)
 		rt.rt_flags |= RTF_REINSTATE;
 		continue;
 	}
-	if (!strcmp(*args,"device") || !strcmp(*args,"dev")) {
-		args++;
-		if (!*args)
-			return(usage());
+
+	if (!strcmp(*args,"device") || !strcmp(*args,"dev")) { 
+		args++; 
+		if (rt.rt_dev || *args == NULL) 
+			return usage();
+		rt.rt_dev = *args++;
+		continue; 
+	}
+
+	/* nothing matches */ 
+	if (!rt.rt_dev) { 
+		rt.rt_dev = *args++; 
+		if (*args) 
+			return usage(); /* must be last to catch typos */ 
 	} else
-		if (args[1])
-			return(usage());
-	if (rt.rt_dev)
-		return(usage());
-	rt.rt_dev = *args;
-	args++;
+		return usage(); 
   }
 
 #if HAVE_RTF_REJECT
@@ -243,7 +276,7 @@ static int INET_setroute(int action, int options, char **args)
   /* sanity checks.. */
   if (mask_in_addr(rt)) {
 	__u32 mask = ~ntohl(mask_in_addr(rt));
-	if (rt.rt_flags & RTF_HOST) {
+	if ((rt.rt_flags & RTF_HOST) && mask != 0xffffffff) {
 		fprintf(stderr, NLS_CATGETS(catfd, routeSet, route_netmask1,
 					    "route: netmask doesn't make sense with host route\n"));
 		return(E_OPTERR);

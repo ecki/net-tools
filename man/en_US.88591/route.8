@@ -11,7 +11,7 @@ route \- show / manipulate the IP routing table
 family] 
 .B add 
 .RB [ \-net | \-host ] 
-target 
+target[/prefix] 
 .RB [ netmask 
 Nm] 
 .RB [ gw 
@@ -117,9 +117,11 @@ deletes a route.
 adds a route.
 
 .TP
-.B target
+.B target [/prefix]
 The destination network or host. You can provide IP addresses in dotted
 decimal or host/network names.
+Prefix is the optional network prefix length attached to targetx, which can
+be used instead of the netmask parameter.
 
 .TP
 .B netmask Nm
