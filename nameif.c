@@ -3,7 +3,7 @@
  * Writen 2000 by Andi Kleen.
  * Subject to the Gnu Public License, version 2.  
  * TODO: make it support token ring etc.
- * $Id: nameif.c,v 1.2 2001/11/25 06:55:06 ecki Exp $
+ * $Id: nameif.c,v 1.3 2003/03/06 23:26:52 ecki Exp $
  */ 
 #ifndef _GNU_SOURCE 
 #define _GNU_SOURCE
@@ -117,7 +117,8 @@ int getmac(char *name, unsigned char *mac)
 }
 
 struct change { 
-	struct change *next,**pprev;
+	struct change *next;
+	int found;
 	char ifname[IFNAMSIZ+1];
 	unsigned char mac[6];
 }; 
@@ -139,10 +140,7 @@ int addchange(char *p, struct change *ch, char *pos)
 			ch->ifname, pos); 
 	if (parsemac(p,ch->mac) < 0) 
 		complain(_("cannot parse MAC `%s' at %s"), p, pos); 
-	if (clist) 
-		clist->pprev = &ch->next;
 	ch->next = clist;
-	ch->pprev = &clist;
 	clist = ch;
 	return 0; 
 }
@@ -277,21 +275,21 @@ int main(int ac, char **av)
 		ch = lookupmac(mac); 
 		if (!ch) 
 			continue;
-			
-		*ch->pprev = ch->next;
+		
+		ch->found = 1;	
 		if (strcmp(p, ch->ifname)) { 
 			if (setname(p, ch->ifname) < 0)  
 				complain(_("cannot change name of %s to %s: %s"),
 						p, ch->ifname, strerror(errno)); 
 		} 
-		free(ch);
 	} 
 	fclose(ifh); 
 	
 	while (clist) { 
 		struct change *ch = clist;
 		clist = clist->next;
-		warning(_("interface '%s' not found"), ch->ifname); 
+		if (!ch->found)
+			warning(_("interface '%s' not found"), ch->ifname); 
 		free(ch); 
 	}
 
