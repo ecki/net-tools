@@ -2,7 +2,7 @@
  * lib/af.c   This file contains the top-level part of the protocol
  *              support functions module for the NET-2 base distribution.
  *
- * Version:     $Id: af.c,v 1.8 1998/11/19 13:01:52 philip Exp $
+ * Version:     $Id: af.c,v 1.9 1998/12/01 09:30:30 philip Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -131,7 +131,7 @@ struct aftype *aftypes[] =
 void afinit()
 {
     unspec_aftype.title = _("UNSPEC");
-#if HAVE_AFINET
+#if HAVE_AFUNIX
     unix_aftype.title = _("UNIX Domain");
 #endif
 #if HAVE_AFINET
