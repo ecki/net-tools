@@ -2,7 +2,7 @@
  * lib/hw.c   This file contains the top-level part of the hardware
  *              support functions module.
  *
- * Version:     $Id: hw.c,v 1.14 1999/05/16 16:41:12 philip Exp $
+ * Version:     $Id: hw.c,v 1.15 1999/12/11 12:09:23 philip Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -19,6 +19,7 @@
  */
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <net/if_arp.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
@@ -43,6 +44,9 @@ extern struct hwtype ether_hwtype;
 extern struct hwtype fddi_hwtype;
 extern struct hwtype hippi_hwtype;
 extern struct hwtype tr_hwtype;
+#ifdef ARPHRD_IEEE802_TR
+extern struct hwtype tr_hwtype1;
+#endif
 
 extern struct hwtype ax25_hwtype;
 extern struct hwtype rose_hwtype;
@@ -87,6 +91,9 @@ static struct hwtype *hwtypes[] =
 #endif
 #if HAVE_HWTR
     &tr_hwtype,
+#ifdef ARPHRD_IEEE802_TR
+    &tr_hwtype1, 
+#endif
 #endif
 #if HAVE_HWAX25
     &ax25_hwtype,
@@ -192,6 +199,9 @@ void hwinit()
 #endif
 #if HAVE_HWTR
     tr_hwtype.title = _("16/4 Mbps Token Ring");
+#ifdef ARPHRD_IEEE802_TR
+    tr_hwtype1.title = _("16/4 Mbps Token Ring (New)") ; 
+#endif
 #endif
 #if HAVE_HWEC
     ec_hwtype.title = _("Econet");
