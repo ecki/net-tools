@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.50 2002/12/10 00:56:41 ecki Exp $
+ * Version:     $Id: netstat.c,v 1.51 2004/06/03 22:27:37 ecki Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -821,7 +821,7 @@ static void tcp_do_one(int lnr, const char *line)
 		break;
 	    }
 	printf("%-4s  %6ld %6ld %-*s %-*s %-11s",
-	       protname, rxq, txq, max(23,strlen(local_addr)), local_addr, max(23,strlen(rem_addr)), rem_addr, _(tcp_state[state]));
+	       protname, rxq, txq, netmax(23,strlen(local_addr)), local_addr, netmax(23,strlen(rem_addr)), rem_addr, _(tcp_state[state]));
 
 	finish_this_one(uid,inode,timers);
     }
