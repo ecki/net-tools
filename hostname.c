@@ -240,7 +240,7 @@ int main(int argc, char **argv)
 	char type='\0';
 	int option_index = 0;
 	int what = 0;
-	char myname[MAXHOSTNAMELEN+1];
+	char myname[MAXHOSTNAMELEN+1] = { 0 };
 	char *file=NULL;
 
 	static const struct option long_options[] =
