@@ -295,6 +295,13 @@ static char *Features =
 "-"
 #endif
 "HDLC/LAPB "
+
+#if HAVE_HWEUI64
+"+"
+#else
+"-"
+#endif
+"EUI64 "
 ;
 
 

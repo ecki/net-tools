@@ -82,6 +82,8 @@ bool 'Ash hardware support' HAVE_HWASH n
 bool '(Cisco)-HDLC/LAPB support' HAVE_HWHDLCLAPB n
 bool 'IrDA support' HAVE_HWIRDA y
 bool 'Econet hardware support' HAVE_HWEC n
+bool 'Generic EUI-64 hardware support' HAVE_HWEUI64 n
+
 *
 *
 *           Other Features.

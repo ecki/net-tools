@@ -2,7 +2,7 @@
  * lib/hw.c   This file contains the top-level part of the hardware
  *              support functions module.
  *
- * Version:     $Id: hw.c,v 1.17 2000/05/20 13:38:10 pb Exp $
+ * Version:     $Id: hw.c,v 1.18 2001/11/12 02:12:05 ecki Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -72,6 +72,8 @@ extern struct hwtype sit_hwtype;
 extern struct hwtype irda_hwtype;
 
 extern struct hwtype ec_hwtype;
+
+extern struct hwtype eui64_hwtype;
 
 static struct hwtype *hwtypes[] =
 {
@@ -143,6 +145,9 @@ static struct hwtype *hwtypes[] =
 #endif
 #if HAVE_HWX25
     &x25_hwtype,
+#endif
+#if HAVE_HWEUI64
+    &eui64_hwtype,
 #endif
     &unspec_hwtype,
     NULL
@@ -216,6 +221,9 @@ void hwinit()
 #endif
 #if HAVE_HWEC
     ec_hwtype.title = _("Econet");
+#endif
+#if HAVE_HWEUI64
+    eui64_hwtype.title = _("Generic EUI-64");
 #endif
     sVhwinit = 1;
 }
