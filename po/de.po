@@ -1,4 +1,4 @@
-# $Id: de.po,v 1.6 1999/04/13 02:05:54 ralf Exp $
+# $Id: de.po,v 1.7 1999/04/18 19:07:16 philip Exp $
 # German translation for net-tools 1.51
 # Copyright (C) 1999 Ralf Bächle <ralf@gnu.org>
 msgid ""
@@ -60,7 +60,7 @@ msgstr "arp: Kann Eintrag auf Zeile %u von Etherdatei %s nicht setzen!\n"
 
 #: ../arp.c:428
 msgid "Address\t\t\tHWtype\tHWaddress\t    Flags Mask\t\t  Iface\n"
-msgstr "Adresse\\t\\t\\tHWTyp\\tHWAdresse       Flags   Maske\\t\\t  Iface\n"
+msgstr "Adresse\t\t\tHWTyp\tHWAdresse\t    Flags   Maske\t\t  Iface\n"
 
 #: ../arp.c:458
 msgid "(incomplete)"
