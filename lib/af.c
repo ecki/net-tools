@@ -124,7 +124,7 @@ void afinit ()
 #if HAVE_AFATALK
   ddp_aftype.title = _("Appletalk DDP");
 #endif
-#if HAVE_AFCONET
+#if HAVE_AFECONET
   ec_aftype.title = _("Econet");
 #endif
   sVafinit = 1;
