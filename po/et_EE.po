@@ -5,10 +5,10 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: net-tools 1.52\n"
-"POT-Creation-Date: 2000-02-14 02:31+0100\n"
-"PO-Revision-Date: 1999-05-21 18:00+0300\n"
-"Last-Translator: Meelis Roos <Meelis.Roos@mail.ee>\n"
+"Project-Id-Version: net-tools 1.58\n"
+"POT-Creation-Date: 2001-02-15 21:28+0200\n"
+"PO-Revision-Date: 2001-02-15 18:00+0300\n"
+"Last-Translator: Meelis Roos <mroos@linux.ee>\n"
 "Language-Team: Estonian <linux-ee@eenet.ee>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-15\n"
@@ -61,8 +61,12 @@ msgid "arp: cannot set entry on line %u of etherfile %s !\n"
 msgstr "arp: ei saa kehtestada ARP kirjet real %u failis %s\n"
 
 #: ../arp.c:437
-msgid "Address\t\t\tHWtype\tHWaddress\t    Flags Mask\t\t  Iface\n"
-msgstr "Aadress\t\t\tHWtüüp\tHWaadress\t    Lipud Mask\t\t  Liides\n"
+msgid ""
+"Address                  HWtype  HWaddress           Flags Mask            "
+"Iface\n"
+msgstr ""
+"Aadress                  HWtüüp  HWaadress           Lipud Mask            "
+"Liides\n"
 
 #: ../arp.c:467
 msgid "(incomplete)"
@@ -168,13 +172,13 @@ msgstr "        -s, --set                uue ARP kirje seadmine\n"
 msgid "        -d, --delete             delete a specified entry\n"
 msgstr "        -d, --delete             määratud kirje kustutamine\n"
 
-#: ../arp.c:623 ../netstat.c:1436 ../route.c:85
+#: ../arp.c:623 ../netstat.c:1485 ../route.c:85
 msgid "        -v, --verbose            be verbose\n"
 msgstr "        -v, --verbose            jutukas väljund\n"
 
-#: ../arp.c:624 ../netstat.c:1437 ../route.c:86
-msgid "        -n, --numeric            dont resolve names\n"
-msgstr "        -n, --numeric            mitte lahendada numbreid nimedeks\n"
+#: ../arp.c:624
+msgid "        -n, --numeric            don't resolve names\n"
+msgstr "        -n, --numeric            mitte lahendada nimesid\n"
 
 #: ../arp.c:625
 msgid ""
@@ -196,7 +200,8 @@ msgid ""
 "/etc/ethers\n"
 "\n"
 msgstr ""
-"        -f, --file               lugeda kirjed antud failist või /etc/ethers'st\n"
+"        -f, --file               lugeda kirjed antud failist või "
+"/etc/ethers'st\n"
 "\n"
 
 #: ../arp.c:630 ../rarp.c:181
@@ -210,7 +215,7 @@ msgstr ""
 msgid "  List of possible hardware types (which support ARP):\n"
 msgstr "  Võimalike ARP-i toetavate riistvara tüüpide nimekiri:\n"
 
-#: ../arp.c:664
+#: ../arp.c:664 ../arp.c:749
 #, c-format
 msgid "%s: hardware type not supported!\n"
 msgstr "arp: riistvara tüüpi %s ei toetata\n"
@@ -239,7 +244,7 @@ msgstr "arp: tundmatu riistvara tüüp %s\n"
 msgid "arp: %s: kernel only supports 'inet'.\n"
 msgstr "arp: tuumas on ainult 'inet' aadressiperekonna toetus\n"
 
-#: ../arp.c:746
+#: ../arp.c:754
 #, c-format
 msgid "arp: %s: hardware type without ARP support.\n"
 msgstr "arp: riistvara tüübil %s pole ARP toetust\n"
@@ -436,288 +441,76 @@ msgstr "getdomainname()=`%s'\n"
 msgid "getnodename()=`%s'\n"
 msgstr "getnodename()=`%s'\n"
 
-#: ../ifconfig.c:159
-#, c-format
-msgid "%-9.9s Link encap:%s  "
-msgstr "%-9.9s kapseldus:%s  "
+#: ../ifconfig.c:110
+msgid ""
+"Iface   MTU Met    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR "
+"Flg\n"
+msgstr ""
+"Liides  MTU Meetr. RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR "
+"Lip\n"
 
-#: ../ifconfig.c:164
-#, c-format
-msgid "HWaddr %s  "
-msgstr "HWaddr %s  "
-
-#: ../ifconfig.c:167
-#, c-format
-msgid "Media:%s"
-msgstr "meedia:%s"
-
-#: ../ifconfig.c:169
-msgid "(auto)"
-msgstr "(auto)"
-
-#: ../ifconfig.c:176
-#, c-format
-msgid "          %s addr:%s "
-msgstr "          %s aadress:%s "
-
-#: ../ifconfig.c:179
-#, c-format
-msgid " P-t-P:%s "
-msgstr " P-t-P:%s "
-
-#: ../ifconfig.c:182
-#, c-format
-msgid " Bcast:%s "
-msgstr " bcast:%s "
-
-#: ../ifconfig.c:184
-#, c-format
-msgid " Mask:%s\n"
-msgstr " mask:%s\n"
-
-#: ../ifconfig.c:201
-#, c-format
-msgid "          inet6 addr: %s/%d"
-msgstr "          inet6 aadr: %s/%d"
-
-#: ../ifconfig.c:203
-msgid " Scope:"
-msgstr " skoop:"
-
-#: ../ifconfig.c:206
-msgid "Global"
-msgstr "globaalne"
-
-#: ../ifconfig.c:209
-msgid "Link"
-msgstr "ühendus"
-
-#: ../ifconfig.c:212
-msgid "Site"
-msgstr "site"
-
-#: ../ifconfig.c:215
-msgid "Compat"
-msgstr "ühilduvus"
-
-#: ../ifconfig.c:218
-msgid "Host"
-msgstr "host"
-
-#: ../ifconfig.c:221
-msgid "Unknown"
-msgstr "tundmatu"
-
-#: ../ifconfig.c:236
-#, c-format
-msgid "          IPX/Ethernet II addr:%s\n"
-msgstr "          IPX/Ethernet II aadr:%s\n"
-
-#: ../ifconfig.c:239
-#, c-format
-msgid "          IPX/Ethernet SNAP addr:%s\n"
-msgstr "          IPX/Ethernet SNAP aadr:%s\n"
-
-#: ../ifconfig.c:242
-#, c-format
-msgid "          IPX/Ethernet 802.2 addr:%s\n"
-msgstr "          IPX/Ethernet 802.2 aadr:%s\n"
-
-#: ../ifconfig.c:245
-#, c-format
-msgid "          IPX/Ethernet 802.3 addr:%s\n"
-msgstr "          IPX/Ethernet 802.3 aadr:%s\n"
-
-#: ../ifconfig.c:255
-#, c-format
-msgid "          EtherTalk Phase 2 addr:%s\n"
-msgstr "          EtherTalk Phase 2 aadr:%s\n"
-
-#: ../ifconfig.c:264
-#, c-format
-msgid "          econet addr:%s\n"
-msgstr "          econeti aadr:%s\n"
-
-#: ../ifconfig.c:270
-msgid "[NO FLAGS] "
-msgstr "[LIPPE POLE]"
-
-#: ../ifconfig.c:272
-msgid "UP "
-msgstr "UP "
-
-#: ../ifconfig.c:274
-msgid "BROADCAST "
-msgstr "BROADCAST "
-
-#: ../ifconfig.c:276
-msgid "DEBUG "
-msgstr "DEBUG "
-
-#: ../ifconfig.c:278
-msgid "LOOPBACK "
-msgstr "LOOPBACK "
-
-#: ../ifconfig.c:280
-msgid "POINTOPOINT "
-msgstr "POINTOPOINT "
-
-#: ../ifconfig.c:282
-msgid "NOTRAILERS "
-msgstr "NOTRAILERS "
-
-#: ../ifconfig.c:284
-msgid "RUNNING "
-msgstr "RUNNING "
-
-#: ../ifconfig.c:286
-msgid "NOARP "
-msgstr "NOARP "
-
-#: ../ifconfig.c:288
-msgid "PROMISC "
-msgstr "PROMISC "
-
-#: ../ifconfig.c:290
-msgid "ALLMULTI "
-msgstr "ALLMULTI "
-
-#: ../ifconfig.c:292
-msgid "SLAVE "
-msgstr "SLAVE "
-
-#: ../ifconfig.c:294
-msgid "MASTER "
-msgstr "MASTER "
-
-#: ../ifconfig.c:296
-msgid "MULTICAST "
-msgstr "MULTICAST "
-
-#: ../ifconfig.c:299
-msgid "DYNAMIC "
-msgstr "DYNAMIC "
-
-#: ../ifconfig.c:302
-#, c-format
-msgid " MTU:%d  Metric:%d"
-msgstr " MTU:%d meetrika:%d"
-
-#: ../ifconfig.c:306
-#, c-format
-msgid "  Outfill:%d  Keepalive:%d"
-msgstr "  ülalhoidepakettide intervall:%d  ülalhoidetaimaut:%d"
-
-#: ../ifconfig.c:320
-#, c-format
-msgid "RX packets:%lu errors:%lu dropped:%lu overruns:%lu frame:%lu\n"
-msgstr "RX pakette:%lu vigu:%lu ära visatud:%lu ületäit:%lu kaadri vigu:%lu\n"
-
-#: ../ifconfig.c:325
-#, c-format
-msgid "             compressed:%lu\n"
-msgstr "             pakitud:%lu\n"
-
-#: ../ifconfig.c:329
-#, c-format
-msgid "TX packets:%lu errors:%lu dropped:%lu overruns:%lu carrier:%lu\n"
-msgstr "TX pakette:%lu vigu:%lu ära visatud:%lu ületäit:%lu carrier:%lu\n"
-
-#: ../ifconfig.c:333
-#, c-format
-msgid "          collisions:%lu "
-msgstr "          kollisioone:%lu "
-
-#: ../ifconfig.c:335
-#, c-format
-msgid "compressed:%lu "
-msgstr "pakitud:%lu "
-
-#: ../ifconfig.c:337
-#, c-format
-msgid "txqueuelen:%d "
-msgstr "txqueuelen:%d "
-
-#: ../ifconfig.c:345
-#, c-format
-msgid "Interrupt:%d "
-msgstr "katkestus:%d "
-
-#. Only print devices using it for
-#. I/O maps
-#: ../ifconfig.c:348
-#, c-format
-msgid "Base address:0x%x "
-msgstr "baasaadress:0x%x "
-
-#: ../ifconfig.c:350
-#, c-format
-msgid "Memory:%lx-%lx "
-msgstr "mälu:%lx-%lx "
-
-#: ../ifconfig.c:353
-#, c-format
-msgid "DMA chan:%x "
-msgstr "DMA kanal:%x "
-
-#: ../ifconfig.c:384 ../ifconfig.c:405
+#: ../ifconfig.c:132 ../ifconfig.c:164
 #, c-format
 msgid "%s: unknown interface: %s\n"
 msgstr "ifconfig: tundmatu liides %s: %s\n"
 
-#: ../ifconfig.c:421
+#: ../ifconfig.c:156 ../ifconfig.c:740 ../ifconfig.c:831 ../ifconfig.c:937
+msgid "No support for INET on this system.\n"
+msgstr "Antud süsteem ei toeta INET aadressiperekonda\n"
+
+#: ../ifconfig.c:179
 msgid ""
 "Usage:\n"
-"  ifconfig [-a] [-i] [-v] <interface> [[<AF>] <address>]\n"
+"  ifconfig [-a] [-i] [-v] [-s] <interface> [[<AF>] <address>]\n"
 msgstr ""
 "Kasutamine:\n"
-"  ifconfig [-a] [-i] [-v] <liides> [[<AF>] <aadress>]\n"
+"  ifconfig [-a] [-i] [-v] [-s] <liides> [[<AF>] <aadress>]\n"
 
-#: ../ifconfig.c:425
+#: ../ifconfig.c:181
 msgid "  [add <address>[/<prefixlen>]]\n"
 msgstr "  [add <aadress>[/<prefiksi pikkus>]]\n"
 
-#: ../ifconfig.c:427
+#: ../ifconfig.c:182
 msgid "  [del <address>[/<prefixlen>]]\n"
 msgstr "  [del <aadress>[/<prefiksi pikkus>]]\n"
 
-#: ../ifconfig.c:432
+#: ../ifconfig.c:183
 msgid "  [[-]broadcast [<address>]]  [[-]pointopoint [<address>]]\n"
 msgstr "  [[-]broadcast [<aadress>]]  [[-]pointopoint [<aadress>]]\n"
 
-#: ../ifconfig.c:433
+#: ../ifconfig.c:184
 msgid "  [netmask <address>]  [dstaddr <address>]  [tunnel <address>]\n"
 msgstr "  [netmask <aadress>]  [dstaddr <aadress>]  [tunnel <aadress>]\n"
 
-#: ../ifconfig.c:436
+#: ../ifconfig.c:187
 msgid "  [outfill <NN>] [keepalive <NN>]\n"
 msgstr "  [outfill <NN>] [keepalive <NN>]\n"
 
-#: ../ifconfig.c:438
+#: ../ifconfig.c:189
 msgid "  [hw <HW> <address>]  [metric <NN>]  [mtu <NN>]\n"
 msgstr "  [hw <HW> <aadress>]  [metric <NN>]  [mtu <NN>]\n"
 
-#: ../ifconfig.c:439
+#: ../ifconfig.c:190
 msgid "  [[-]trailers]  [[-]arp]  [[-]allmulti]\n"
 msgstr "  [[-]trailers]  [[-]arp]  [[-]allmulti]\n"
 
-#: ../ifconfig.c:440
+#: ../ifconfig.c:191
 msgid "  [multicast]  [[-]promisc]\n"
 msgstr "  [multicast]  [[-]promisc]\n"
 
-#: ../ifconfig.c:441
+#: ../ifconfig.c:192
 msgid "  [mem_start <NN>]  [io_addr <NN>]  [irq <NN>]  [media <type>]\n"
 msgstr "  [mem_start <NN>]  [io_addr <NN>]  [irq <NN>]  [media <tüüp>]\n"
 
-#: ../ifconfig.c:443
+#: ../ifconfig.c:194
 msgid "  [txqueuelen <NN>]\n"
 msgstr "  [txqueuelen <NN>]\n"
 
-#: ../ifconfig.c:446
+#: ../ifconfig.c:197
 msgid "  [[-]dynamic]\n"
 msgstr "  [[-]dynamic]\n"
 
-#: ../ifconfig.c:448
+#: ../ifconfig.c:199
 msgid ""
 "  [up|down] ...\n"
 "\n"
@@ -725,62 +518,73 @@ msgstr ""
 "  [up|down] ...\n"
 "\n"
 
-#: ../ifconfig.c:450
+#: ../ifconfig.c:201
 msgid "  <HW>=Hardware Type.\n"
 msgstr "  <HW>=riistvara tüüp\n"
 
-#: ../ifconfig.c:451
+#: ../ifconfig.c:202
 msgid "  List of possible hardware types:\n"
 msgstr "  Võimalike riistvara tüüpide nimekiri:\n"
 
 #. 1 = ARPable
-#: ../ifconfig.c:453
+#: ../ifconfig.c:204
 #, c-format
 msgid "  <AF>=Address family. Default: %s\n"
 msgstr "  <AF>=aadressiperekond, vaikimisi %s\n"
 
-#: ../ifconfig.c:454
+#: ../ifconfig.c:205
 msgid "  List of possible address families:\n"
 msgstr "  Võimalike aadressiperekondade nimekiri:\n"
 
-#: ../ifconfig.c:593
+#: ../ifconfig.c:361
 msgid "Unknown media type.\n"
 msgstr "Tundmatu meedia tüüp\n"
 
-#: ../ifconfig.c:881
+#: ../ifconfig.c:653
+#, c-format
+msgid "hw address type `%s' has no handler to set address. failed.\n"
+msgstr ""
+"riistvara aadressi tüübil `%s' pole käsitlejat aadressi seadmiseks - ebaõnn\n"
+
+#: ../ifconfig.c:662
 #, c-format
 msgid "%s: invalid %s address.\n"
 msgstr "%s: vigane %s aadress\n"
 
-#: ../ifconfig.c:920 ../ifconfig.c:963 ../ifconfig.c:1011
+#: ../ifconfig.c:706 ../ifconfig.c:796 ../ifconfig.c:882
 msgid "No support for INET6 on this system.\n"
 msgstr "Antud süsteem ei toeta INET6 aadressiperekonda\n"
 
-#: ../ifconfig.c:983
+#: ../ifconfig.c:749 ../ifconfig.c:840
+#, c-format
+msgid "Interface %s not initialized\n"
+msgstr "Liides %s pole initsialiseeritud\n"
+
+#: ../ifconfig.c:761 ../ifconfig.c:851
+msgid "Bad address.\n"
+msgstr "Vigane aadress\n"
+
+#: ../ifconfig.c:854
 msgid "Address deletion not supported on this system.\n"
-msgstr "Antud süsteemis ei toetata aadresside kustutamist\n"
+msgstr "Antud süsteem ei toeta aadresside kustutamist\n"
 
-#: ../ifconfig.c:1066
-msgid "No support for INET on this system.\n"
-msgstr "Antud süsteem ei toeta INET aadressiperekonda\n"
-
-#: ../ifconfig.c:1076
+#: ../ifconfig.c:947
 msgid "No support for ECONET on this system.\n"
 msgstr "Antud süsteem ei toeta ECONET aadressiperekonda\n"
 
-#: ../ifconfig.c:1084
+#: ../ifconfig.c:955
 #, c-format
 msgid "Don't know how to set addresses for family %d.\n"
 msgstr "Ei oska seada aadresse aadressiperekonna %d jaoks\n"
 
-#: ../netstat.c:383
+#: ../netstat.c:429
 #, c-format
 msgid ""
 "(No info could be read for \"-p\": geteuid()=%d but you should be root.)\n"
 msgstr ""
 "(\"-p\" jaoks ei saanud infot lugeda: geteuid()=%d, aga vaja oleks root'u)\n"
 
-#: ../netstat.c:387
+#: ../netstat.c:433
 msgid ""
 "(Not all processes could be identified, non-owned process info\n"
 " will not be shown, you would have to be root to see it all.)\n"
@@ -788,27 +592,27 @@ msgstr ""
 "(Mõnesid protsesse ei saanud identifitseerida, teiste kasutajate\n"
 "info lugemiseks peab olema root)\n"
 
-#: ../netstat.c:394 ../netstat.c:1089 ../netstat.c:1166
+#: ../netstat.c:440 ../netstat.c:1171 ../netstat.c:1248
 msgid "LISTENING"
 msgstr "LISTENING"
 
-#: ../netstat.c:395
+#: ../netstat.c:441
 msgid "CONN SENT"
 msgstr "CONN SENT"
 
-#: ../netstat.c:396 ../netstat.c:1168
+#: ../netstat.c:442 ../netstat.c:1250
 msgid "DISC SENT"
 msgstr "DISC SENT"
 
-#: ../netstat.c:397 ../netstat.c:464 ../netstat.c:809 ../netstat.c:1169
+#: ../netstat.c:443 ../netstat.c:510 ../netstat.c:889 ../netstat.c:1251
 msgid "ESTABLISHED"
 msgstr "ESTABLISHED"
 
-#: ../netstat.c:419
+#: ../netstat.c:465
 msgid "Active NET/ROM sockets\n"
 msgstr "Aktiivsed NET/ROM soklid\n"
 
-#: ../netstat.c:420
+#: ../netstat.c:466
 msgid ""
 "User       Dest       Source     Device  State        Vr/Vs    Send-Q  "
 "Recv-Q\n"
@@ -816,170 +620,182 @@ msgstr ""
 "Kasutaja   Sihtpunkt  Lähtepunkt Liides  Olek         Vr/Vs    SaatJrk "
 "VvJrk\n"
 
-#: ../netstat.c:430 ../netstat.c:1208
+#: ../netstat.c:476 ../netstat.c:1290
 #, c-format
 msgid "Problem reading data from %s\n"
 msgstr "Probleem andmete lugemisel failist %s\n"
 
-#: ../netstat.c:465
+#: ../netstat.c:511
 msgid "SYN_SENT"
 msgstr "SYN_SENT"
 
-#: ../netstat.c:466
+#: ../netstat.c:512
 msgid "SYN_RECV"
 msgstr "SYN_RECV"
 
-#: ../netstat.c:467
+#: ../netstat.c:513
 msgid "FIN_WAIT1"
 msgstr "FIN_WAIT1"
 
-#: ../netstat.c:468
+#: ../netstat.c:514
 msgid "FIN_WAIT2"
 msgstr "FIN_WAIT2"
 
-#: ../netstat.c:469
+#: ../netstat.c:515
 msgid "TIME_WAIT"
 msgstr "TIME_WAIT"
 
-#: ../netstat.c:470
+#: ../netstat.c:516
 msgid "CLOSE"
 msgstr "CLOSE"
 
-#: ../netstat.c:471
+#: ../netstat.c:517
 msgid "CLOSE_WAIT"
 msgstr "CLOSE_WAIT"
 
-#: ../netstat.c:472
+#: ../netstat.c:518
 msgid "LAST_ACK"
 msgstr "LAST_ACK"
 
-#: ../netstat.c:473
+#: ../netstat.c:519
 msgid "LISTEN"
 msgstr "LISTEN"
 
-#: ../netstat.c:474
+#: ../netstat.c:520
 msgid "CLOSING"
 msgstr "CLOSING"
 
-#: ../netstat.c:544
+#: ../netstat.c:587
 #, c-format
 msgid "warning, got bogus igmp6 line %d.\n"
 msgstr "Hoiatus - sain imeliku igmp6 rea (nr. %d)\n"
 
-#: ../netstat.c:549 ../netstat.c:587 ../netstat.c:670 ../netstat.c:803
-#: ../netstat.c:935 ../netstat.c:940
+#: ../netstat.c:592 ../netstat.c:630 ../netstat.c:751 ../netstat.c:883
+#: ../netstat.c:1014 ../netstat.c:1019
 #, c-format
 msgid "netstat: unsupported address family %d !\n"
 msgstr "netstat: aadressiperekonda %d ei toetata\n"
 
-#: ../netstat.c:562 ../netstat.c:567 ../netstat.c:575 ../netstat.c:582
+#: ../netstat.c:605 ../netstat.c:610 ../netstat.c:618 ../netstat.c:625
 #, c-format
 msgid "warning, got bogus igmp line %d.\n"
 msgstr "Hoiatus - sain imeliku igmp rea (nr. %d)\n"
 
-#: ../netstat.c:666
+#: ../netstat.c:668
+msgid "Active X.25 sockets\n"
+msgstr "Aktiivsed X.25 soklid\n"
+
+#. IMHO, Vr/Vs is not very usefull --SF
+#: ../netstat.c:670
+msgid ""
+"Dest         Source          Device  LCI  State        Vr/Vs  Send-Q  "
+"Recv-Q\n"
+msgstr ""
+"Sihtpunkt    Lähtepunkt      Liides  LCI  Olek         Vr/Vs  SaatJrk VvJrk\n"
+
+#: ../netstat.c:747
 msgid "warning, got bogus tcp line.\n"
 msgstr "Hoiatus - sain imeliku tcp rea\n"
 
-#: ../netstat.c:704 ../netstat.c:855 ../netstat.c:975
+#: ../netstat.c:788 ../netstat.c:938 ../netstat.c:1057
 #, c-format
 msgid "off (0.00/%ld/%d)"
 msgstr "eikäi ((0.00/%ld/%d)"
 
-#: ../netstat.c:708
+#: ../netstat.c:792
 #, c-format
 msgid "on (%2.2f/%ld/%d)"
 msgstr "käib (%2.2f/%ld/%d)"
 
-#: ../netstat.c:713
+#: ../netstat.c:797
 #, c-format
 msgid "keepalive (%2.2f/%ld/%d)"
 msgstr "keepalive (%2.2f/%ld/%d)"
 
-#: ../netstat.c:718
+#: ../netstat.c:802
 #, c-format
 msgid "timewait (%2.2f/%ld/%d)"
 msgstr "timewait (%2.2f/%ld/%d)"
 
-#: ../netstat.c:723 ../netstat.c:864 ../netstat.c:985
+#: ../netstat.c:807 ../netstat.c:947 ../netstat.c:1067
 #, c-format
 msgid "unkn-%d (%2.2f/%ld/%d)"
 msgstr "eitea-%d (%2.2f/%ld/%d)"
 
-#: ../netstat.c:799
+#: ../netstat.c:879
 msgid "warning, got bogus udp line.\n"
 msgstr "Hoiatus - sain imeliku udp rea\n"
 
-#: ../netstat.c:817 ../netstat.c:1075 ../netstat.c:1108
+#: ../netstat.c:897 ../netstat.c:1157 ../netstat.c:1190
 msgid "UNKNOWN"
 msgstr "TUNDMATU"
 
-#: ../netstat.c:860 ../netstat.c:980
+#: ../netstat.c:943 ../netstat.c:1062
 #, c-format
 msgid "on%d (%2.2f/%ld/%d)"
 msgstr "käib-%d (%2.2f/%ld/%d)"
 
-#: ../netstat.c:949
+#: ../netstat.c:1028
 msgid "warning, got bogus raw line.\n"
 msgstr "Hoiatus - sain imeliku raw rea\n"
 
-#: ../netstat.c:1028
+#: ../netstat.c:1110
 msgid "warning, got bogus unix line.\n"
 msgstr "Hoiatus - sain imeliku unix rea\n"
 
-#: ../netstat.c:1055
+#: ../netstat.c:1137
 msgid "STREAM"
 msgstr "STREAM"
 
-#: ../netstat.c:1059
+#: ../netstat.c:1141
 msgid "DGRAM"
 msgstr "DGRAM"
 
-#: ../netstat.c:1063
+#: ../netstat.c:1145
 msgid "RAW"
 msgstr "RAW"
 
-#: ../netstat.c:1067
+#: ../netstat.c:1149
 msgid "RDM"
 msgstr "RDM"
 
-#: ../netstat.c:1071
+#: ../netstat.c:1153
 msgid "SEQPACKET"
 msgstr "SEQPACKET"
 
-#: ../netstat.c:1080
+#: ../netstat.c:1162
 msgid "FREE"
 msgstr "VABA"
 
-#: ../netstat.c:1096
+#: ../netstat.c:1178
 msgid "CONNECTING"
 msgstr "ÜHENDUMAS"
 
-#: ../netstat.c:1100
+#: ../netstat.c:1182
 msgid "CONNECTED"
 msgstr "ÜHENDATUD"
 
-#: ../netstat.c:1104
+#: ../netstat.c:1186
 msgid "DISCONNECTING"
 msgstr "LAHTIÜHENDUMAS"
 
-#: ../netstat.c:1135
+#: ../netstat.c:1217
 msgid "Active UNIX domain sockets "
 msgstr "Aktiivsed UNIX domeeni soklid "
 
-#: ../netstat.c:1137 ../netstat.c:1666
+#: ../netstat.c:1219 ../netstat.c:1729
 msgid "(servers and established)"
 msgstr "(serverid ja ühendatud)"
 
-#: ../netstat.c:1140 ../netstat.c:1669
+#: ../netstat.c:1222 ../netstat.c:1732
 msgid "(only servers)"
 msgstr "(ainult serverid)"
 
-#: ../netstat.c:1142 ../netstat.c:1671
+#: ../netstat.c:1224 ../netstat.c:1734
 msgid "(w/o servers)"
 msgstr "(ilma serveriteta)"
 
-#: ../netstat.c:1145
+#: ../netstat.c:1227
 msgid ""
 "\n"
 "Proto RefCnt Flags       Type       State         I-Node"
@@ -987,32 +803,32 @@ msgstr ""
 "\n"
 "Proto Mitu   Lipud       Tüüp       Olek         I-kirje "
 
-#: ../netstat.c:1147
+#: ../netstat.c:1229
 msgid " Path\n"
 msgstr "Tee\n"
 
-#: ../netstat.c:1167
+#: ../netstat.c:1249
 msgid "SABM SENT"
 msgstr "SABM SENT"
 
-#: ../netstat.c:1170
+#: ../netstat.c:1252
 msgid "RECOVERY"
 msgstr "RECOVERY"
 
-#: ../netstat.c:1184
+#: ../netstat.c:1266
 msgid "Active AX.25 sockets\n"
 msgstr "Aktiivsed AX.25 soklid\n"
 
-#: ../netstat.c:1185
+#: ../netstat.c:1267
 msgid "Dest       Source     Device  State        Vr/Vs    Send-Q  Recv-Q\n"
 msgstr "Sihtpunkt  Lähtepunkt Liides  Olek         Vr/Vs    SaatJrk VvJrk\n"
 
-#: ../netstat.c:1228
+#: ../netstat.c:1310
 #, c-format
 msgid "problem reading data from %s\n"
 msgstr "Probleem andmete lugemisel failist %s\n"
 
-#: ../netstat.c:1279
+#: ../netstat.c:1361
 msgid ""
 "Active IPX sockets\n"
 "Proto Recv-Q Send-Q Local Address              Foreign Address            "
@@ -1022,43 +838,35 @@ msgstr ""
 "Proto VvJrk  SaatJrk Kohalik aadress           Väline aadress             "
 "Olek "
 
-#: ../netstat.c:1281
+#: ../netstat.c:1363
 msgid " User"
 msgstr " Kasutaja"
 
-#: ../netstat.c:1315
+#: ../netstat.c:1397
 msgid "ESTAB"
 msgstr "ESTAB"
 
-#: ../netstat.c:1323
+#: ../netstat.c:1405
 msgid "UNK."
 msgstr "UNK."
 
-#: ../netstat.c:1367
-msgid "     - no statistics available -"
-msgstr "     - statistikat ei ole      -"
-
-#: ../netstat.c:1370
-msgid "[NO FLAGS]"
-msgstr "[LIPPE POLE]"
-
-#: ../netstat.c:1400
+#: ../netstat.c:1443
 msgid "Kernel Interface table\n"
 msgstr "Tuuma liideste tabel\n"
 
-#: ../netstat.c:1401
+#: ../netstat.c:1447
 msgid ""
-"Iface   MTU Met    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR "
+"Iface   MTU Met   RX-OK RX-ERR RX-DRP RX-OVR   TX-OK TX-ERR TX-DRP TX-OVR "
 "Flg\n"
 msgstr ""
-"Liides  MTU Meetr. RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR "
+"Liides  MTU Meetr RX-OK RX-ERR RX-DRP RX-OVR   TX-OK TX-ERR TX-DRP TX-OVR "
 "Lip\n"
 
-#: ../netstat.c:1404
+#: ../netstat.c:1451
 msgid "missing interface information"
 msgstr "Puudulik informatsioon liideste kohta"
 
-#: ../netstat.c:1425
+#: ../netstat.c:1474
 msgid ""
 "usage: netstat [-veenNcCF] [<Af>] -r         netstat "
 "{-V|--version|-h|--help}\n"
@@ -1066,11 +874,11 @@ msgstr ""
 "Kasutamine: netstat [-veenNcCF] [<Af>] -r\n"
 "            netstat {-V|--version|-h|--help}\n"
 
-#: ../netstat.c:1426
+#: ../netstat.c:1475
 msgid "       netstat [-vnNcaeol] [<Socket> ...]\n"
 msgstr "            netstat [-vnNcaeol] [<Sokkel> ...]\n"
 
-#: ../netstat.c:1427
+#: ../netstat.c:1476
 msgid ""
 "       netstat { [-veenNac] -i | [-cnNe] -M | -s }\n"
 "\n"
@@ -1078,25 +886,25 @@ msgstr ""
 "            netstat { [-veenNac] -i | [-cnNe] -M | -s }\n"
 "\n"
 
-#: ../netstat.c:1429
+#: ../netstat.c:1478
 msgid "        -r, --route              display routing table\n"
 msgstr "        -r, --route              ruutingutabeli näitamine\n"
 
-#: ../netstat.c:1430
+#: ../netstat.c:1479
 msgid "        -i, --interfaces         display interface table\n"
 msgstr "        -i, --interfaces         liideste tabeli näitamine\n"
 
-#: ../netstat.c:1431
+#: ../netstat.c:1480
 msgid "        -g, --groups             display multicast group memberships\n"
 msgstr "        -g, --groups             multiedastuse gruppide näitamine\n"
 
-#: ../netstat.c:1432
+#: ../netstat.c:1481
 msgid ""
 "        -s, --statistics         display networking statistics (like SNMP)\n"
 msgstr ""
 "        -s, --statistics         võrgu statistika näitamine (SNMP stiilis)\n"
 
-#: ../netstat.c:1434
+#: ../netstat.c:1483
 msgid ""
 "        -M, --masquerade         display masqueraded connections\n"
 "\n"
@@ -1104,20 +912,36 @@ msgstr ""
 "        -M, --masquerade         maskeeritavate ühenduste näitamine\n"
 "\n"
 
-#: ../netstat.c:1438 ../route.c:87
+#: ../netstat.c:1486 ../route.c:86
+msgid "        -n, --numeric            dont resolve names\n"
+msgstr "        -n, --numeric            mitte lahendada numbreid nimedeks\n"
+
+#: ../netstat.c:1487
+msgid "        --numeric-hosts          dont resolve host names\n"
+msgstr "        --numeric-hosts          mitte lahendada hostinimesid\n"
+
+#: ../netstat.c:1488
+msgid "        --numeric-ports          dont resolve port names\n"
+msgstr "        --numeric-ports          mitte lahendada pordinimesid\n"
+
+#: ../netstat.c:1489
+msgid "        --numeric-users          dont resolve user names\n"
+msgstr "        --numeric-users          mitte lahendada kasutajanimesid\n"
+
+#: ../netstat.c:1490
 msgid "        -N, --symbolic           resolve hardware names\n"
 msgstr "        -N, --symbolic           lahendada riistvara aadressid\n"
 
-#: ../netstat.c:1439 ../route.c:88
+#: ../netstat.c:1491 ../route.c:87
 msgid "        -e, --extend             display other/more information\n"
 msgstr "        -e, --extend             muu info/lisainfo näitamine\n"
 
-#: ../netstat.c:1440
+#: ../netstat.c:1492
 msgid "        -p, --programs           display PID/Program name for sockets\n"
 msgstr ""
 "        -p, --programs           soklite kohta PID/protsessi nime näitamine\n"
 
-#: ../netstat.c:1441
+#: ../netstat.c:1493
 msgid ""
 "        -c, --continuous         continuous listing\n"
 "\n"
@@ -1125,22 +949,22 @@ msgstr ""
 "        -c, --continuous         pidevalt uuenev nimekiri\n"
 "\n"
 
-#: ../netstat.c:1442
+#: ../netstat.c:1494
 msgid "        -l, --listening          display listening server sockets\n"
 msgstr "        -l, --listening          kuulavate serversoklite näitamine\n"
 
-#: ../netstat.c:1443
+#: ../netstat.c:1495
 msgid ""
 "        -a, --all, --listening   display all sockets (default: connected)\n"
 msgstr ""
 "        -a, --all, --listening   kõigi soklite näitamine (vaikimisi "
 "ühendatud)\n"
 
-#: ../netstat.c:1444
+#: ../netstat.c:1496
 msgid "        -o, --timers             display timers\n"
 msgstr "        -o, --timers             taimerite näitamine\n"
 
-#: ../netstat.c:1445 ../route.c:89
+#: ../netstat.c:1497 ../route.c:88
 msgid ""
 "        -F, --fib                display Forwarding Information Base "
 "(default)\n"
@@ -1148,7 +972,7 @@ msgstr ""
 "        -F, --fib                üldiste ruutingutabelite näitamine "
 "(vaikimisi)\n"
 
-#: ../netstat.c:1446 ../route.c:90
+#: ../netstat.c:1498 ../route.c:89
 msgid ""
 "        -C, --cache              display routing cache instead of FIB\n"
 "\n"
@@ -1157,7 +981,7 @@ msgstr ""
 "näitamine\n"
 "\n"
 
-#: ../netstat.c:1448
+#: ../netstat.c:1500
 msgid ""
 "  <Socket>={-t|--tcp} {-u|--udp} {-w|--raw} {-x|--unix} --ax25 --ipx "
 "--netrom\n"
@@ -1165,20 +989,20 @@ msgstr ""
 "  <Sokkel>={-t|--tcp} {-u|--udp} {-w|--raw} {-x|--unix} --ax25 --ipx "
 "--netrom\n"
 
-#: ../netstat.c:1449 ../route.c:92
+#: ../netstat.c:1501 ../route.c:91
 #, c-format
 msgid "  <AF>=Use '-A <af>' or '--<af>' Default: %s\n"
 msgstr "  <AF>=kasutage '-A <af>' või '--<af>' vaikimisi: %s\n"
 
-#: ../netstat.c:1450 ../route.c:93
+#: ../netstat.c:1502 ../route.c:92
 msgid "  List of possible address families (which support routing):\n"
 msgstr "  Võimalike ruutingu toetavate aadressiperekondade nimekiri:\n"
 
-#: ../netstat.c:1663
+#: ../netstat.c:1726
 msgid "Active Internet connections "
 msgstr "Aktiivsed internetiühendused "
 
-#: ../netstat.c:1673
+#: ../netstat.c:1736
 msgid ""
 "\n"
 "Proto Recv-Q Send-Q Local Address           Foreign Address         State    "
@@ -1188,19 +1012,19 @@ msgstr ""
 "Proto  VvJrk SaatJrk Kohalik aadress        Väline aadress          Olek     "
 "  "
 
-#: ../netstat.c:1675
+#: ../netstat.c:1738
 msgid " User       Inode     "
 msgstr " Kasutaja   I-kirje   "
 
-#: ../netstat.c:1678
+#: ../netstat.c:1741
 msgid " Timer"
 msgstr " Taimer"
 
-#: ../netstat.c:1708
+#: ../netstat.c:1771
 msgid "IPv4 Group Memberships\n"
 msgstr "IPv4 grupikuuluvused\n"
 
-#: ../netstat.c:1709
+#: ../netstat.c:1772
 msgid "Interface       RefCnt Group\n"
 msgstr "Liides          Mitu   Grupp\n"
 
@@ -1325,25 +1149,25 @@ msgstr "             plipconfig -V | --version\n"
 msgid "%s\tnibble %lu  trigger %lu\n"
 msgstr "%s\tnibble %lu  trigger %lu\n"
 
-#: ../iptunnel.c:79
+#: ../iptunnel.c:84
 msgid "Usage: iptunnel { add | change | del | show } [ NAME ]\n"
 msgstr "Kasutamine: iptunnel { add | change | del | show } [ NIMI ]\n"
 
-#: ../iptunnel.c:80
+#: ../iptunnel.c:85
 msgid ""
 "          [ mode { ipip | gre | sit } ] [ remote ADDR ] [ local ADDR ]\n"
 msgstr ""
 "             [ mode { ipip | gre | sit } ] [ remote AADR ] [ local AADR ]\n"
 
-#: ../iptunnel.c:81
+#: ../iptunnel.c:86
 msgid "          [ [i|o]seq ] [ [i|o]key KEY ] [ [i|o]csum ]\n"
 msgstr "             [ [i|o]seq ] [ [i|o]key KEY ] [ [i|o]csum ]\n"
 
-#: ../iptunnel.c:82
+#: ../iptunnel.c:87
 msgid "          [ ttl TTL ] [ tos TOS ] [ nopmtudisc ] [ dev PHYS_DEV ]\n"
 msgstr "             [ ttl TTL ] [ tos TOS ] [ nopmtudisc ] [ dev LIIDES ]\n"
 
-#: ../iptunnel.c:83
+#: ../iptunnel.c:88
 msgid ""
 "       iptunnel -V | --version\n"
 "\n"
@@ -1351,450 +1175,531 @@ msgstr ""
 "             iptunnel -V | --version\n"
 "\n"
 
-#: ../iptunnel.c:84
+#: ../iptunnel.c:89
 msgid "Where: NAME := STRING\n"
 msgstr "Kus:   NIMI := STRING\n"
 
-#: ../iptunnel.c:85
+#: ../iptunnel.c:90
 msgid "       ADDR := { IP_ADDRESS | any }\n"
 msgstr "       AADR := { IP_AADRESS | any }\n"
 
-#: ../iptunnel.c:86
+#: ../iptunnel.c:91
 msgid "       TOS  := { NUMBER | inherit }\n"
 msgstr "       TOS  := { ARV | inherit }\n"
 
-#: ../iptunnel.c:87
+#: ../iptunnel.c:92
 msgid "       TTL  := { 1..255 | inherit }\n"
 msgstr "       TTL  := { 1..255 | inherit }\n"
 
-#: ../iptunnel.c:88
+#: ../iptunnel.c:93
 msgid "       KEY  := { DOTTED_QUAD | NUMBER }\n"
 msgstr ""
 "       KEY  := { PUNKTIDEGA_ARVUNELIK | ARV }\n"
 "       LIIDES := FÜÜSILISE_LIIDESE_NIMI\n"
 
-#: ../iptunnel.c:326
+#: ../iptunnel.c:331
 msgid "Keys are not allowed with ipip and sit.\n"
 msgstr "ipip ja sit juures ei ole võtmed lubatud\n"
 
-#: ../iptunnel.c:346
+#: ../iptunnel.c:351
 msgid "Broadcast tunnel requires a source address.\n"
 msgstr "Leviedastusega tunnel vajab lähteaadressi\n"
 
-#: ../iptunnel.c:361
+#: ../iptunnel.c:366
 msgid "ttl != 0 and noptmudisc are incompatible\n"
 msgstr "ttl != 0 ning noptmudisc ei sobi kokku\n"
 
-#: ../iptunnel.c:373
+#: ../iptunnel.c:378
 msgid "cannot determine tunnel mode (ipip, gre or sit)\n"
 msgstr "Ei suuda määrata tunneli moodi (ipip, gre või sit)\n"
 
-#: ../iptunnel.c:411
+#: ../iptunnel.c:416
 #, c-format
 msgid "%s: %s/ip  remote %s  local %s "
 msgstr "%s: %s/ip teises otsas %s  siin %s "
 
-#: ../iptunnel.c:415
+#: ../iptunnel.c:420
 msgid "unknown"
 msgstr "tundmatu"
 
-#: ../iptunnel.c:447
+#: ../iptunnel.c:452
 msgid "  Drop packets out of sequence.\n"
 msgstr "  Järjekorravälised paketid visatakse minema\n"
 
-#: ../iptunnel.c:449
+#: ../iptunnel.c:454
 msgid "  Checksum in received packet is required.\n"
 msgstr "  Vastuvõetavates pakettides on kontrollsumma kohustuslik\n"
 
-#: ../iptunnel.c:451
+#: ../iptunnel.c:456
 msgid "  Sequence packets on output.\n"
 msgstr "  Väljuvad paketid varustatakse järjekorranumbritega\n"
 
-#: ../iptunnel.c:453
+#: ../iptunnel.c:458
 msgid "  Checksum output packets.\n"
 msgstr "  Väljuvad paketid varustatakse kontrollsummaga\n"
 
-#: ../iptunnel.c:481
+#: ../iptunnel.c:486
 msgid "Wrong format of /proc/net/dev. Sorry.\n"
 msgstr "/proc/net/dev on vales formaadis. Vale tuuma versioon?\n"
 
-#: ../iptunnel.c:494
+#: ../iptunnel.c:499
 #, c-format
 msgid "Failed to get type of [%s]\n"
 msgstr "Ei suutnud kindlaks teha liidese %s tüüpi\n"
 
-#: ../iptunnel.c:510
+#: ../iptunnel.c:515
 msgid "RX: Packets    Bytes        Errors CsumErrs OutOfSeq Mcasts\n"
 msgstr "RX: Pakette    Baite        Vigu   KSumVigu JrkVigu  Levipakette\n"
 
-#: ../iptunnel.c:513
+#: ../iptunnel.c:518
 msgid "TX: Packets    Bytes        Errors DeadLoop NoRoute  NoBufs\n"
 msgstr "TX: Pakette    Baite        Vigu   DeadLoop EiRuudi  MäluOtsas\n"
 
-#: ../statistics.c:45
+#: ../statistics.c:47
 msgid "ICMP input histogram:"
 msgstr "Siseneva ICMP jaotus:"
 
-#: ../statistics.c:46
+#: ../statistics.c:48
 msgid "ICMP output histogram:"
 msgstr "Väljuva ICMP jaotus:"
 
-#: ../statistics.c:63
+#: ../statistics.c:65
 #, c-format
 msgid "Forwarding is %s"
 msgstr "Pakettide edastamine on %s"
 
-#: ../statistics.c:64
-#, c-format
-msgid "Default TTL is %d"
-msgstr "TTL on vaikimisi %d"
-
-#: ../statistics.c:65
-#, c-format
-msgid "%d total packets received"
-msgstr "kokku vastu võetud %d paketti"
-
 #: ../statistics.c:66
 #, c-format
-msgid "%d with invalid headers"
-msgstr "%d vigaste päistega"
+msgid "Default TTL is %u"
+msgstr "TTL on vaikimisi %u"
 
 #: ../statistics.c:67
 #, c-format
-msgid "%d with invalid addresses"
-msgstr "%d vigaste aadressidega"
+msgid "%u total packets received"
+msgstr "kokku võeti vastu %u paketti"
 
 #: ../statistics.c:68
 #, c-format
-msgid "%d forwarded"
-msgstr "%d edastatud"
+msgid "%u with invalid headers"
+msgstr "%u vigaste päistega"
 
 #: ../statistics.c:69
 #, c-format
-msgid "%d with unknown protocol"
-msgstr "%d tundmatu protokolliga"
+msgid "%u with invalid addresses"
+msgstr "%u vigaste aadressidega"
 
 #: ../statistics.c:70
 #, c-format
-msgid "%d incoming packets discarded"
-msgstr "%d saabuvat paketti blokeeritud"
+msgid "%u forwarded"
+msgstr "%u edastati"
 
 #: ../statistics.c:71
 #, c-format
-msgid "%d incoming packets delivered"
-msgstr "%d saabuvat paketti läbi lastud"
+msgid "%u with unknown protocol"
+msgstr "%u tundmatu protokolliga"
 
 #: ../statistics.c:72
 #, c-format
-msgid "%d requests sent out"
-msgstr "%d paketti saadetud"
+msgid "%u incoming packets discarded"
+msgstr "%u saabuvat paketti visati minema"
 
-#. ?
 #: ../statistics.c:73
 #, c-format
-msgid "%d outgoing packets dropped"
-msgstr "%d väljuvat paketti minema visatud"
+msgid "%u incoming packets delivered"
+msgstr "%u saabuvat paketti lasti läbi"
 
 #: ../statistics.c:74
 #, c-format
-msgid "%d dropped because of missing route"
-msgstr "%d minema visatud ruutingu puudumise tõttu"
+msgid "%u requests sent out"
+msgstr "%u päringut saadeti"
 
+#. ?
 #: ../statistics.c:75
 #, c-format
-msgid "%d fragments dropped after timeout"
-msgstr "%d fragmenti minema visatud aegumise tõttu"
+msgid "%u outgoing packets dropped"
+msgstr "%u väljuvat paketti visati minema"
 
 #: ../statistics.c:76
 #, c-format
-msgid "%d reassemblies required"
-msgstr "%d fragmentide kokkupanekut on toimunud"
+msgid "%u dropped because of missing route"
+msgstr "%u visati minema ruutingu puudumise tõttu"
 
-#. ?
 #: ../statistics.c:77
 #, c-format
-msgid "%d packets reassembled ok"
-msgstr "%d paketti edukalt kokku pandud"
+msgid "%u fragments dropped after timeout"
+msgstr "%u fragmenti visati minema aegumise tõttu"
 
 #: ../statistics.c:78
 #, c-format
-msgid "%d packet reassembles failed"
-msgstr "%d pakettide kokkupanekut ebaõnnestus"
+msgid "%u reassemblies required"
+msgstr "%u fragmentide kokkupanekut toimus"
 
+#. ?
 #: ../statistics.c:79
 #, c-format
-msgid "%d fragments received ok"
-msgstr "%d fragmenti edukalt vastu võetud"
+msgid "%u packets reassembled ok"
+msgstr "%u paketti pandi edukalt kokku"
 
 #: ../statistics.c:80
 #, c-format
-msgid "%d fragments failed"
-msgstr "%d fragmendi vastuvõtt ebaõnnestus"
+msgid "%u packet reassembles failed"
+msgstr "%u pakettide kokkupanekut ebaõnnestus"
 
 #: ../statistics.c:81
 #, c-format
-msgid "%d fragments created"
-msgstr "%d fragmenti tekitatud"
+msgid "%u fragments received ok"
+msgstr "%u fragmenti võeti edukalt vastu"
 
-#: ../statistics.c:86
+#: ../statistics.c:82
 #, c-format
-msgid "%d ICMP messages received"
-msgstr "%d ICMP teadet vastu võetud"
+msgid "%u fragments failed"
+msgstr "%u fragmendi vastuvõtt ebaõnnestus"
 
-#: ../statistics.c:87
+#: ../statistics.c:83
 #, c-format
-msgid "%d input ICMP message failed."
-msgstr "%d sisenevat ICMP teadet olid vigased"
+msgid "%u fragments created"
+msgstr "%u fragmenti tekitati"
 
-#: ../statistics.c:88 ../statistics.c:101
+#: ../statistics.c:88
 #, c-format
-msgid "destination unreachable: %d"
-msgstr "sihtpunkt kättesaamatu: %d"
+msgid "%u ICMP messages received"
+msgstr "%u ICMP teadet võeti vastu"
 
 #: ../statistics.c:89
 #, c-format
-msgid "timeout in transit: %d"
-msgstr "aeg sai tee peal otsa: %d"
+msgid "%u input ICMP message failed."
+msgstr "%u sisenevat ICMP teadet olid vigased"
 
 #: ../statistics.c:90 ../statistics.c:103
 #, c-format
-msgid "wrong parameters: %d"
-msgstr "valed parameetrid: %d"
+msgid "destination unreachable: %u"
+msgstr "sihtpunkt kättesaamatu: %u"
 
-#. ?
 #: ../statistics.c:91
 #, c-format
-msgid "source quenchs: %d"
-msgstr "pidurduspakette (source quench): %d"
+msgid "timeout in transit: %u"
+msgstr "aeg sai tee peal otsa: %u"
 
-#: ../statistics.c:92
+#: ../statistics.c:92 ../statistics.c:105
 #, c-format
-msgid "redirects: %d"
-msgstr "ümbersuunamisi: %d"
+msgid "wrong parameters: %u"
+msgstr "valed parameetrid: %u"
 
+#. ?
 #: ../statistics.c:93
 #, c-format
-msgid "echo requests: %d"
-msgstr "echo päringuid: %d"
+msgid "source quenches: %u"
+msgstr "pidurduspakette (source quench): %u"
 
-#: ../statistics.c:94 ../statistics.c:107
+#: ../statistics.c:94
 #, c-format
-msgid "echo replies: %d"
-msgstr "echo vastuseid: %d"
+msgid "redirects: %u"
+msgstr "ümbersuunamisi: %u"
 
 #: ../statistics.c:95
 #, c-format
-msgid "timestamp request: %d"
-msgstr "ajatempli palveid: %d"
+msgid "echo requests: %u"
+msgstr "echo päringuid: %u"
 
-#: ../statistics.c:96
+#: ../statistics.c:96 ../statistics.c:109
 #, c-format
-msgid "timestamp reply: %d"
-msgstr "ajatempli vastuseid: %d"
+msgid "echo replies: %u"
+msgstr "echo vastuseid: %u"
 
 #: ../statistics.c:97
 #, c-format
-msgid "address mask request: %d"
-msgstr "aadressi maski palveid: %d"
+msgid "timestamp request: %u"
+msgstr "ajatempli palveid: %u"
 
-#. ?
 #: ../statistics.c:98
-msgid "address mask replies"
-msgstr "aadressi maski vastuseid: %d"
+#, c-format
+msgid "timestamp reply: %u"
+msgstr "ajatempli vastuseid: %u"
 
-#. ?
 #: ../statistics.c:99
 #, c-format
-msgid "%d ICMP messages sent"
-msgstr "%d ICMP teadet saadetud"
+msgid "address mask request: %u"
+msgstr "aadressi maski palveid: %u"
 
-#: ../statistics.c:100
+#. ?
+#: ../statistics.c:100 ../statistics.c:113
 #, c-format
-msgid "%d ICMP messages failed"
-msgstr "%d ICMP teate saatmine ebaõnnestus"
+msgid "address mask replies: %u"
+msgstr "aadressi maski vastuseid: %u"
+
+#. ?
+#: ../statistics.c:101
+#, c-format
+msgid "%u ICMP messages sent"
+msgstr "%u ICMP teadet saadeti"
 
 #: ../statistics.c:102
 #, c-format
-msgid "time exceeded: %d"
-msgstr "aeg otsas: %d"
+msgid "%u ICMP messages failed"
+msgstr "%u ICMP teate saatmine ebaõnnestus"
 
-#. ?
 #: ../statistics.c:104
 #, c-format
-msgid "source quench: %d"
-msgstr "pidurduspakette (source quench): %d"
+msgid "time exceeded: %u"
+msgstr "aeg otsas: %u"
 
-#: ../statistics.c:105
-#, c-format
-msgid "redirect: %d"
-msgstr "ümbersuunamisi: %d"
-
+#. ?
 #: ../statistics.c:106
 #, c-format
-msgid "echo request: %d"
-msgstr " echo päringuid: %d"
+msgid "source quench: %u"
+msgstr "pidurduspakette (source quench): %u"
+
+#: ../statistics.c:107
+#, c-format
+msgid "redirect: %u"
+msgstr "ümbersuunamisi: %u"
 
 #: ../statistics.c:108
 #, c-format
-msgid "timestamp requests: %d"
-msgstr "ajatempli palveid: %d"
-
-#: ../statistics.c:109
-#, c-format
-msgid "timestamp replies: %d"
-msgstr "ajatempli vastuseid: %d"
+msgid "echo request: %u"
+msgstr " echo päringuid: %u"
 
 #: ../statistics.c:110
 #, c-format
-msgid "address mask requests: %d"
-msgstr "aadressi maski palveid: %d"
+msgid "timestamp requests: %u"
+msgstr "ajatempli palveid: %u"
 
 #: ../statistics.c:111
 #, c-format
-msgid "address mask replies: %d"
-msgstr "aadressi maski vastuseid: %d"
+msgid "timestamp replies: %u"
+msgstr "ajatempli vastuseid: %u"
 
-#: ../statistics.c:116
+#: ../statistics.c:112
+#, c-format
+msgid "address mask requests: %u"
+msgstr "aadressi maski palveid: %u"
+
+#: ../statistics.c:118
 #, c-format
 msgid "RTO algorithm is %s"
 msgstr "RTO algoritm on %s"
 
-#: ../statistics.c:120
-#, c-format
-msgid "%d active connections openings"
-msgstr "%d aktiivset ühenduse avamist"
-
-#: ../statistics.c:121
-#, c-format
-msgid "%d passive connection openings"
-msgstr "%d passiivset ühenduse avamist"
-
 #: ../statistics.c:122
 #, c-format
-msgid "%d failed connection attempts"
-msgstr "%d ebaõnnestunud ühenduse loomise katset"
+msgid "%u active connections openings"
+msgstr "%u aktiivset ühenduse avamist"
 
 #: ../statistics.c:123
 #, c-format
-msgid "%d connection resets received"
-msgstr "%d ühenduse katkemist saabunud"
+msgid "%u passive connection openings"
+msgstr "%u passiivset ühenduse avamist"
 
 #: ../statistics.c:124
 #, c-format
-msgid "%d connections established"
-msgstr "%d ühendust loodud"
+msgid "%u failed connection attempts"
+msgstr "%u ebaõnnestunud ühenduse loomise katset"
 
 #: ../statistics.c:125
 #, c-format
-msgid "%d segments received"
-msgstr "%d segmenti vastu võetud"
+msgid "%u connection resets received"
+msgstr "%u ühenduse katkestust saabus"
 
 #: ../statistics.c:126
 #, c-format
-msgid "%d segments send out"
-msgstr "%d segmenti saadetud"
+msgid "%u connections established"
+msgstr "%u ühendust loodi"
 
 #: ../statistics.c:127
 #, c-format
-msgid "%d segments retransmited"
-msgstr "%d segmenti uuesti saadetud"
+msgid "%u segments received"
+msgstr "%u segmenti võeti vastu"
 
 #: ../statistics.c:128
 #, c-format
-msgid "%d bad segments received."
-msgstr "%d vigast segmenti vastu võetud"
+msgid "%u segments send out"
+msgstr "%u segmenti saadeti"
 
 #: ../statistics.c:129
 #, c-format
-msgid "%d resets sent"
-msgstr "%d katkestust saadetud"
+msgid "%u segments retransmited"
+msgstr "%u segmenti saadeti uuesti"
 
-#: ../statistics.c:134
+#: ../statistics.c:130
 #, c-format
-msgid "%d packets received"
-msgstr "%d paketti vastu võetud"
+msgid "%u bad segments received."
+msgstr "%u vigast segmenti võeti vastu"
 
-#: ../statistics.c:135
+#: ../statistics.c:131
 #, c-format
-msgid "%d packets to unknown port received."
-msgstr "%d sisenevat paketti tundmatule pordile"
+msgid "%u resets sent"
+msgstr "%u katkestust saadeti"
 
 #: ../statistics.c:136
 #, c-format
-msgid "%d packet receive errors"
-msgstr "%d paketi vastuvõtu viga"
+msgid "%u packets received"
+msgstr "%u paketti võeti vastu"
 
 #: ../statistics.c:137
 #, c-format
-msgid "%d packets sent"
-msgstr "%d paketti saadetud"
+msgid "%u packets to unknown port received."
+msgstr "%u sisenevat paketti tundmatule pordile"
 
-#: ../statistics.c:142
+#: ../statistics.c:138
 #, c-format
-msgid "%d SYN cookies sent"
-msgstr "%d SYN küpsist saadetud"
+msgid "%u packet receive errors"
+msgstr "%u paketi vastuvõtu viga"
 
-#: ../statistics.c:143
+#: ../statistics.c:139
 #, c-format
-msgid "%d SYN cookies received"
-msgstr "%d SYN küpsist vastu võetud"
+msgid "%u packets sent"
+msgstr "%u paketti saadeti"
 
 #: ../statistics.c:144
 #, c-format
-msgid "%d invalid SYN cookies received"
-msgstr "%d vigast SYN küpsist vastu võetud"
+msgid "%u SYN cookies sent"
+msgstr "%u SYN küpsist saadeti"
+
+#: ../statistics.c:145
+#, c-format
+msgid "%u SYN cookies received"
+msgstr "%u SYN küpsist võeti vastu"
 
 #: ../statistics.c:146
 #, c-format
-msgid "%d resets received for embryonic SYN_RECV sockets"
-msgstr "%d RST paketti SYN_RECV olekus soklitele"
+msgid "%u invalid SYN cookies received"
+msgstr "%u vigast SYN küpsist võeti vastu"
 
 #: ../statistics.c:148
 #, c-format
-msgid "%d packets pruned from receive queue because of socket buffer overrun"
+msgid "%u resets received for embryonic SYN_RECV sockets"
+msgstr "%u RST paketti SYN_RECV olekus soklitele"
+
+#: ../statistics.c:150
+#, c-format
+msgid "%u packets pruned from receive queue because of socket buffer overrun"
 msgstr ""
-"%d paketti kustutatud vastuvõtu järjekorrast sokli puhvri ületäitumise tõttu"
+"%u paketti kustutati vastuvõtu järjekorrast sokli puhvri ületäitumise tõttu"
 
 #. obsolete: 2.2.0 doesn't do that anymore
-#: ../statistics.c:151
+#: ../statistics.c:153
 #, c-format
-msgid "%d packets pruned from out-of-order queue"
-msgstr "%d paketti kustutaud eelisjärjekorrast"
-
-#: ../statistics.c:152
-#, c-format
-msgid ""
-"%d packets dropped from out-of-order queue because of socket buffer overrun"
-msgstr "%d paketti kustutaud eelisjärjekorrast sokli puhvri ületäitumise tõttu"
+msgid "%u packets pruned from receive queue"
+msgstr "%u paketti kustutati eelisjärjekorrast"
 
 #: ../statistics.c:154
 #, c-format
-msgid "%d ICMP packets dropped because they were out-of-window"
-msgstr "%d ICMP paketti minema visatud, kuna nad olid \"aknast väljas\""
+msgid ""
+"%u packets dropped from out-of-order queue because of socket buffer overrun"
+msgstr "%u paketti kustutati eelisjärjekorrast sokli puhvri ületäitumise tõttu"
 
 #: ../statistics.c:156
 #, c-format
-msgid "%d ICMP packets dropped because socket was locked"
-msgstr "%d ICMP paketti minema visatud, kuna sokkel oli lukus"
+msgid "%u ICMP packets dropped because they were out-of-window"
+msgstr "%u ICMP paketti visati minema, kuna nad olid \"aknast väljas\""
 
-#: ../statistics.c:222
+#: ../statistics.c:158
+#, c-format
+msgid "%u ICMP packets dropped because socket was locked"
+msgstr "%u ICMP paketti visati minema, kuna sokkel oli lukus"
+
+#: ../statistics.c:160
+#, c-format
+msgid "%u TCP sockets finished time wait in fast timer"
+msgstr "%u TCP soklit lõpetasid TIME_WAIT oleku kiires taimeris"
+
+#: ../statistics.c:161
+#, c-format
+msgid "%u time wait sockets recycled by time stamp"
+msgstr "%u TIME_WAIT soklit läksid uuesti käiku ajatempli järgi"
+
+#: ../statistics.c:162
+#, c-format
+msgid "%u TCP sockets finished time wait in slow timer"
+msgstr "%u TCP soklit lõpetasid TIME_WAIT oleku aeglases taimeris"
+
+#: ../statistics.c:163
+#, c-format
+msgid "%u passive connections rejected because of time stamp"
+msgstr "%u passiivsest ühendusest keelduti ajatempli tõttu"
+
+#: ../statistics.c:165
+#, c-format
+msgid "%u active connections rejected because of time stamp"
+msgstr "%u aktiivsest ühendusest keelduti ajatempli tõttu"
+
+#: ../statistics.c:167
+#, c-format
+msgid "%u packets rejects in established connections because of timestamp"
+msgstr "%u paketist keelduti loodud ühendustes ajatempli tõttu"
+
+#: ../statistics.c:169
+#, c-format
+msgid "%u delayed acks sent"
+msgstr "%u viivisega ACK-d saadeti"
+
+#: ../statistics.c:170
+#, c-format
+msgid "%u delayed acks further delayed because of locked socket"
+msgstr "%u viivisega ACK-d viibisid edasi lukus sokli tõttu"
+
+#: ../statistics.c:172
+#, c-format
+msgid "Quick ack mode was activated %u times"
+msgstr "Kiire ACK mood aktiveeriti %u korral"
+
+#: ../statistics.c:173
+#, c-format
+msgid "%u times the listen queue of a socket overflowed"
+msgstr "%u korral ületäitus sokli kuulamise järjekord"
+
+#: ../statistics.c:175
+#, c-format
+msgid "%u SYNs to LISTEN sockets ignored"
+msgstr "%u SYN'i kuulavatele soklitele ignoreeriti"
+
+#: ../statistics.c:176
+#, c-format
+msgid "%u packets directly queued to recvmsg prequeue."
+msgstr "%u paketti pandi otse recvmsg eeljärjekorda"
+
+#: ../statistics.c:178
+#, c-format
+msgid "%u packets directly received from backlog"
+msgstr "%u paketti võeti vastu otse backlog-ist"
+
+#: ../statistics.c:180
+#, c-format
+msgid "%u packets directly received from prequeue"
+msgstr "%u paketti võeti vastu otse eeljärjekorrast"
+
+#: ../statistics.c:182
+#, c-format
+msgid "%u packets dropped from prequeue"
+msgstr "%u paketti kustutati eeljärjekorrast"
+
+#: ../statistics.c:183
+#, c-format
+msgid "%u packets header predicted"
+msgstr "%u paketti päise õige ennustusega"
+
+#: ../statistics.c:184
+#, c-format
+msgid "%u packets header predicted and directly queued to user"
+msgstr "%u paketti päise õige ennustusega pandi otse kasutaja järjekorda"
+
+#: ../statistics.c:186
+#, c-format
+msgid "Ran %u times out of system memory during packet sending"
+msgstr "Pakettide saatmisel sai %u korda süsteemne mälu otsa"
+
+#: ../statistics.c:253
 msgid "enabled"
 msgstr "lubatud"
 
-#: ../statistics.c:222
+#: ../statistics.c:253
 msgid "disabled"
 msgstr "keelatud"
 
-#: ../statistics.c:272
-#, c-format
-msgid "unknown title %s\n"
-msgstr "Tundmatu väli %s\n"
-
-#: ../statistics.c:298
+#: ../statistics.c:336
 msgid "error parsing /proc/net/snmp"
 msgstr "Viga /proc/net/snmp analüüsimisel"
 
-#: ../statistics.c:311
+#: ../statistics.c:349
 msgid "cannot open /proc/net/snmp"
 msgstr "Ei saa avada faili /proc/net/snmp"
 
@@ -1808,81 +1713,78 @@ msgstr "Riistvara tüüpi `%s' ei toetata\n"
 msgid "Cannot change line discipline to `%s'.\n"
 msgstr "Ei suuda seada `%s' liiniprotokolliks\n"
 
-#: ../lib/af.c:145 ../lib/hw.c:148
+#: ../lib/af.c:153 ../lib/hw.c:156
 msgid "UNSPEC"
 msgstr "UNSPEC"
 
-#: ../lib/af.c:147
+#: ../lib/af.c:155
 msgid "UNIX Domain"
 msgstr "UNIX domeen"
 
-#: ../lib/af.c:150
+#: ../lib/af.c:158
 msgid "DARPA Internet"
 msgstr "DARPA Internet"
 
-#: ../lib/af.c:153
+#: ../lib/af.c:161
 msgid "IPv6"
 msgstr "IPv6"
 
-#: ../lib/af.c:156 ../lib/hw.c:169
+#: ../lib/af.c:164 ../lib/hw.c:177
 msgid "AMPR AX.25"
 msgstr "AMPR AX.25"
 
-#: ../lib/af.c:159 ../lib/hw.c:175
+#: ../lib/af.c:167 ../lib/hw.c:183
 msgid "AMPR NET/ROM"
 msgstr "AMPR NET/ROM"
 
-#: ../lib/af.c:162
+#: ../lib/af.c:170
 msgid "Novell IPX"
 msgstr "Novell IPX"
 
-#: ../lib/af.c:165
+#: ../lib/af.c:173
 msgid "Appletalk DDP"
 msgstr "Appletalk DDP"
 
-#: ../lib/af.c:168 ../lib/hw.c:207
+#: ../lib/af.c:176 ../lib/hw.c:218
 msgid "Econet"
 msgstr "Econet"
 
-#: ../lib/af.c:171 ../lib/hw.c:172
+#: ../lib/af.c:179
+msgid "CCITT X.25"
+msgstr "CCITT X.25"
+
+#: ../lib/af.c:182 ../lib/hw.c:180
 msgid "AMPR ROSE"
 msgstr "AMPR ROSE"
 
-#: ../lib/af.c:174 ../lib/hw.c:160
+#: ../lib/af.c:185 ../lib/hw.c:168
 msgid "Ash"
 msgstr "Ash"
 
-#: ../lib/af.c:232
+#: ../lib/af.c:243
 msgid "Please don't supply more than one address family.\n"
 msgstr "Meil on kombeks üks aadressiperekond korraga\n"
 
-#: ../lib/af.c:293
+#: ../lib/af.c:304
 msgid "Too much address family arguments.\n"
 msgstr "Liiga palju aadressiperekonna argumente\n"
 
-#: ../lib/af.c:304
+#: ../lib/af.c:315
 #, c-format
 msgid "Unknown address family `%s'.\n"
 msgstr "Tundmatu aadressiperekond `%s'\n"
 
-#: ../lib/arcnet.c:53 ../lib/ax25.c:75 ../lib/ddp.c:50 ../lib/econet.c:52
-#: ../lib/fddi.c:67 ../lib/hippi.c:68 ../lib/inet.c:244 ../lib/inet.c:259
-#: ../lib/inet6.c:129 ../lib/ipx.c:81 ../lib/netrom.c:78 ../lib/rose.c:71
-#: ../lib/rose.c:126 ../lib/unix.c:56 ../lib/unix.c:76
-msgid "[NONE SET]"
-msgstr "[POLE SEATUD]"
-
-#: ../lib/arcnet.c:81 ../lib/arcnet.c:96
+#: ../lib/arcnet.c:70 ../lib/arcnet.c:85
 #, c-format
 msgid "in_arcnet(%s): invalid arcnet address!\n"
 msgstr "in_arcnet(%s): vigane Arcneti aadress\n"
 
-#: ../lib/arcnet.c:108
+#: ../lib/arcnet.c:97
 #, c-format
 msgid "in_arcnet(%s): trailing : ignored!\n"
 msgstr "in_arcnet(%s): ignoreerin lõpetavat koolonit\n"
 
-#: ../lib/arcnet.c:120
+#: ../lib/arcnet.c:109
 #, c-format
 msgid "in_arcnet(%s): trailing junk!\n"
 msgstr "in_arcnet(%s): sodi lõpus\n"
@@ -1890,6 +1792,12 @@ msgstr "in_arcnet(%s): sodi lõpus\n"
 #: ../lib/ash.c:81
 msgid "Malformed Ash address"
 msgstr "Vigane Ash aadress"
+
+#: ../lib/ax25.c:75 ../lib/ddp.c:50 ../lib/econet.c:52 ../lib/inet.c:244
+#: ../lib/inet.c:259 ../lib/inet6.c:129 ../lib/ipx.c:81 ../lib/netrom.c:78
+#: ../lib/rose.c:71 ../lib/unix.c:56 ../lib/unix.c:76
+msgid "[NONE SET]"
+msgstr "[POLE SEATUD]"
 
 #: ../lib/ax25.c:97 ../lib/netrom.c:100
 msgid "Invalid callsign"
@@ -1931,123 +1839,127 @@ msgstr "in_ether(%s): ignoreerin lõpetavat koolonit\n"
 msgid "in_ether(%s): trailing junk!\n"
 msgstr "in_ether(%s): sodi lõpus\n"
 
-#: ../lib/fddi.c:95 ../lib/fddi.c:110
+#: ../lib/fddi.c:84 ../lib/fddi.c:99
 #, c-format
 msgid "in_fddi(%s): invalid fddi address!\n"
 msgstr "in_fddi(%s): vigane fddi aadress\n"
 
-#: ../lib/fddi.c:122
+#: ../lib/fddi.c:111
 #, c-format
 msgid "in_fddi(%s): trailing : ignored!\n"
 msgstr "in_fddi(%s): ignoreerin lõpetavat koolonit\n"
 
-#: ../lib/fddi.c:134
+#: ../lib/fddi.c:123
 #, c-format
 msgid "in_fddi(%s): trailing junk!\n"
 msgstr "in_fddi(%s): sodi lõpus\n"
 
-#: ../lib/getroute.c:97 ../lib/setroute.c:76
+#: ../lib/getroute.c:101 ../lib/setroute.c:80
 #, c-format
 msgid "Address family `%s' not supported.\n"
 msgstr "Aadressiperekonda `%s' ei toetata\n"
 
-#: ../lib/getroute.c:103 ../lib/setroute.c:80
+#: ../lib/getroute.c:107 ../lib/setroute.c:84
 #, c-format
 msgid "No routing for address family `%s'.\n"
 msgstr "Aadressiperekonnal `%s' ei ole ruutingut\n"
 
-#: ../lib/hippi.c:96 ../lib/hippi.c:111
+#: ../lib/hippi.c:84 ../lib/hippi.c:99
 #, c-format
 msgid "in_hippi(%s): invalid hippi address!\n"
 msgstr "in_hippi(%s): vigane hippi aadress\n"
 
-#: ../lib/hippi.c:123
+#: ../lib/hippi.c:111
 #, c-format
 msgid "in_hippi(%s): trailing : ignored!\n"
 msgstr "in_hippi(%s): ignoreerin lõpetavat koolonit\n"
 
-#: ../lib/hippi.c:134
+#: ../lib/hippi.c:122
 #, c-format
 msgid "in_hippi(%s): trailing junk!\n"
 msgstr "in_hippi(%s): sodi lõpus\n"
 
-#: ../lib/hw.c:147
+#: ../lib/hw.c:155
 msgid "Local Loopback"
 msgstr "Kohalik loopback"
 
-#: ../lib/hw.c:150
+#: ../lib/hw.c:158
 msgid "Serial Line IP"
 msgstr "Serial Line IP"
 
-#: ../lib/hw.c:151
+#: ../lib/hw.c:159
 msgid "VJ Serial Line IP"
 msgstr "VJ Serial Line IP"
 
-#: ../lib/hw.c:152
+#: ../lib/hw.c:160
 msgid "6-bit Serial Line IP"
 msgstr "6-bitine Serial Line IP"
 
-#: ../lib/hw.c:153
+#: ../lib/hw.c:161
 msgid "VJ 6-bit Serial Line IP"
 msgstr "VJ 6-bitine Serial Line IP"
 
-#: ../lib/hw.c:154
+#: ../lib/hw.c:162
 msgid "Adaptive Serial Line IP"
 msgstr "Adaptiivne Serial Line IP"
 
-#: ../lib/hw.c:157
+#: ../lib/hw.c:165
 msgid "Ethernet"
 msgstr "Ethernet"
 
-#: ../lib/hw.c:163
+#: ../lib/hw.c:171
 msgid "Fiber Distributed Data Interface"
 msgstr "Fiber Distributed Data Interface"
 
-#: ../lib/hw.c:166
+#: ../lib/hw.c:174
 msgid "HIPPI"
 msgstr "HIPPI"
 
-#: ../lib/hw.c:178
+#: ../lib/hw.c:186
+msgid "generic X.25"
+msgstr "üldine X.25"
+
+#: ../lib/hw.c:189
 msgid "IPIP Tunnel"
 msgstr "IPIP tunnel"
 
-#: ../lib/hw.c:181
+#: ../lib/hw.c:192
 msgid "Point-to-Point Protocol"
 msgstr "Kakspunktprotokoll"
 
-#: ../lib/hw.c:184
+#: ../lib/hw.c:195
 msgid "(Cisco)-HDLC"
 msgstr "(Cisco-)HDLC"
 
-#: ../lib/hw.c:185
+#: ../lib/hw.c:196
 msgid "LAPB"
 msgstr "LAPB"
 
-#: ../lib/hw.c:188
+#: ../lib/hw.c:199
 msgid "ARCnet"
 msgstr "ARCnet"
 
-#: ../lib/hw.c:191
+#: ../lib/hw.c:202
 msgid "Frame Relay DLCI"
 msgstr "Frame Relay DLCI"
 
-#: ../lib/hw.c:192
+#: ../lib/hw.c:203
 msgid "Frame Relay Access Device"
 msgstr "Frame Relay Access Device"
 
-#: ../lib/hw.c:195
+#: ../lib/hw.c:206
 msgid "IPv6-in-IPv4"
 msgstr "IPv6-in-IPv4"
 
-#: ../lib/hw.c:198
+#: ../lib/hw.c:209
 msgid "IrLAP"
 msgstr "IrLAP"
 
-#: ../lib/hw.c:201
+#: ../lib/hw.c:212
 msgid "16/4 Mbps Token Ring"
 msgstr "16/4 Mbps Token Ring"
 
-#: ../lib/hw.c:203
+#: ../lib/hw.c:214
 msgid "16/4 Mbps Token Ring (New)"
 msgstr "16/4 Mbps Token Ring (New)"
 
@@ -2055,6 +1967,10 @@ msgstr "16/4 Mbps Token Ring (New)"
 #, c-format
 msgid "rresolve: unsupport address family %d !\n"
 msgstr "rresolve: toetuseta aadressiperekond %d\n"
+
+#: ../lib/inet6.c:131
+msgid "[UNKNOWN]"
+msgstr "[TUNDMATU]"
 
 #: ../lib/inet6_gr.c:79
 msgid "INET6 (IPv6) not configured in this system.\n"
@@ -2105,7 +2021,7 @@ msgstr ""
 msgid "       inet6_route [-FC] flush      NOT supported\n"
 msgstr "            route [-FC] flush      Seda EI toetata\n"
 
-#: ../lib/inet6_sr.c:182
+#: ../lib/inet6_sr.c:188
 msgid "Flushing `inet6' routing table not supported\n"
 msgstr "`inet6' ruutingutabeli tühjendamist ei toetata\n"
 
@@ -2269,15 +2185,15 @@ msgstr "Sihtpunkt                 Ruuteri võrk              Ruuter ise\n"
 msgid "IPX: this needs to be written\n"
 msgstr "IPX osa vajab ümbertegemist\n"
 
-#: ../lib/masq_info.c:197
+#: ../lib/masq_info.c:198
 msgid "IP masquerading entries\n"
 msgstr "IP maskeerimise kirjed\n"
 
-#: ../lib/masq_info.c:200
+#: ../lib/masq_info.c:201
 msgid "prot   expire source               destination          ports\n"
 msgstr "Proto  Aegub  Lähtepunkt           Sihtpunkt            Pordid\n"
 
-#: ../lib/masq_info.c:203
+#: ../lib/masq_info.c:204
 msgid ""
 "prot   expire    initseq delta prevd source               destination        "
 "  ports\n"
@@ -2340,27 +2256,265 @@ msgstr "in_tr(%s): ignoreerin lõpetavat koolonit\n"
 msgid "in_tr(%s): trailing junk!\n"
 msgstr "in_tr(%s): sodi lõpus\n"
 
-#: ../lib/interface.c:124
+#: ../lib/interface.c:164
 #, c-format
 msgid "warning: no inet socket available: %s\n"
 msgstr "Hoiatus: `inet' sokleid ei ole: %s\n"
 
-#: ../lib/interface.c:270
+#: ../lib/interface.c:316
 #, c-format
 msgid "Warning: cannot open %s (%s). Limited output.\n"
 msgstr "Hoiatus: ei saa avada faili %s (%s). Väljund on piiratud.\n"
 
 #. Give better error message for this case.
-#: ../lib/interface.c:504
+#: ../lib/interface.c:556
 msgid "Device not found"
 msgstr "Liidest ei leitud"
 
-#: ../lib/interface.c:508
+#: ../lib/interface.c:560
 #, c-format
 msgid "%s: error fetching interface information: %s\n"
 msgstr "%s: viga liidese info küsimisel: %s\n"
 
-#: ../lib/sockets.c:59
+#: ../lib/interface.c:593
+msgid "     - no statistics available -"
+msgstr "     - statistikat ei ole      -"
+
+#: ../lib/interface.c:597
+msgid "[NO FLAGS]"
+msgstr "[LIPPE POLE]"
+
+#: ../lib/interface.c:673
+#, c-format
+msgid "%-9.9s Link encap:%s  "
+msgstr "%-9.9s kapseldus:%s  "
+
+#: ../lib/interface.c:678
+#, c-format
+msgid "HWaddr %s  "
+msgstr "HWaddr %s  "
+
+#: ../lib/interface.c:681
+#, c-format
+msgid "Media:%s"
+msgstr "meedia:%s"
+
+#: ../lib/interface.c:683
+msgid "(auto)"
+msgstr "(auto)"
+
+#: ../lib/interface.c:690
+#, c-format
+msgid "          %s addr:%s "
+msgstr "          %s aadress:%s "
+
+#: ../lib/interface.c:693
+#, c-format
+msgid " P-t-P:%s "
+msgstr " P-t-P:%s "
+
+#: ../lib/interface.c:696
+#, c-format
+msgid " Bcast:%s "
+msgstr " bcast:%s "
+
+#: ../lib/interface.c:698
+#, c-format
+msgid " Mask:%s\n"
+msgstr " mask:%s\n"
+
+#: ../lib/interface.c:715
+#, c-format
+msgid "          inet6 addr: %s/%d"
+msgstr "          inet6 aadr: %s/%d"
+
+#: ../lib/interface.c:717
+msgid " Scope:"
+msgstr " skoop:"
+
+#: ../lib/interface.c:720
+msgid "Global"
+msgstr "globaalne"
+
+#: ../lib/interface.c:723
+msgid "Link"
+msgstr "ühendus"
+
+#: ../lib/interface.c:726
+msgid "Site"
+msgstr "site"
+
+#: ../lib/interface.c:729
+msgid "Compat"
+msgstr "ühilduvus"
+
+#: ../lib/interface.c:732
+msgid "Host"
+msgstr "host"
+
+#: ../lib/interface.c:735
+msgid "Unknown"
+msgstr "tundmatu"
+
+#: ../lib/interface.c:750
+#, c-format
+msgid "          IPX/Ethernet II addr:%s\n"
+msgstr "          IPX/Ethernet II aadr:%s\n"
+
+#: ../lib/interface.c:753
+#, c-format
+msgid "          IPX/Ethernet SNAP addr:%s\n"
+msgstr "          IPX/Ethernet SNAP aadr:%s\n"
+
+#: ../lib/interface.c:756
+#, c-format
+msgid "          IPX/Ethernet 802.2 addr:%s\n"
+msgstr "          IPX/Ethernet 802.2 aadr:%s\n"
+
+#: ../lib/interface.c:759
+#, c-format
+msgid "          IPX/Ethernet 802.3 addr:%s\n"
+msgstr "          IPX/Ethernet 802.3 aadr:%s\n"
+
+#: ../lib/interface.c:769
+#, c-format
+msgid "          EtherTalk Phase 2 addr:%s\n"
+msgstr "          EtherTalk Phase 2 aadr:%s\n"
+
+#: ../lib/interface.c:778
+#, c-format
+msgid "          econet addr:%s\n"
+msgstr "          econeti aadr:%s\n"
+
+#: ../lib/interface.c:785
+msgid "[NO FLAGS] "
+msgstr "[LIPPE POLE]"
+
+#: ../lib/interface.c:787
+msgid "UP "
+msgstr "UP "
+
+#: ../lib/interface.c:789
+msgid "BROADCAST "
+msgstr "BROADCAST "
+
+#: ../lib/interface.c:791
+msgid "DEBUG "
+msgstr "DEBUG "
+
+#: ../lib/interface.c:793
+msgid "LOOPBACK "
+msgstr "LOOPBACK "
+
+#: ../lib/interface.c:795
+msgid "POINTOPOINT "
+msgstr "POINTOPOINT "
+
+#: ../lib/interface.c:797
+msgid "NOTRAILERS "
+msgstr "NOTRAILERS "
+
+#: ../lib/interface.c:799
+msgid "RUNNING "
+msgstr "RUNNING "
+
+#: ../lib/interface.c:801
+msgid "NOARP "
+msgstr "NOARP "
+
+#: ../lib/interface.c:803
+msgid "PROMISC "
+msgstr "PROMISC "
+
+#: ../lib/interface.c:805
+msgid "ALLMULTI "
+msgstr "ALLMULTI "
+
+#: ../lib/interface.c:807
+msgid "SLAVE "
+msgstr "SLAVE "
+
+#: ../lib/interface.c:809
+msgid "MASTER "
+msgstr "MASTER "
+
+#: ../lib/interface.c:811
+msgid "MULTICAST "
+msgstr "MULTICAST "
+
+#: ../lib/interface.c:814
+msgid "DYNAMIC "
+msgstr "DYNAMIC "
+
+#. DONT FORGET TO ADD THE FLAGS IN ife_print_short
+#: ../lib/interface.c:817
+#, c-format
+msgid " MTU:%d  Metric:%d"
+msgstr " MTU:%d meetrika:%d"
+
+#: ../lib/interface.c:821
+#, c-format
+msgid "  Outfill:%d  Keepalive:%d"
+msgstr "  ülalhoidepakettide intervall:%d  ülalhoidetaimaut:%d"
+
+#: ../lib/interface.c:835
+#, c-format
+msgid "RX packets:%llu errors:%lu dropped:%lu overruns:%lu frame:%lu\n"
+msgstr "RX pakette:%llu vigu:%lu ära visatud:%lu ületäit:%lu kaadri vigu:%lu\n"
+
+#: ../lib/interface.c:840
+#, c-format
+msgid "             compressed:%lu\n"
+msgstr "             pakitud:%lu\n"
+
+#: ../lib/interface.c:852
+#, c-format
+msgid "TX packets:%llu errors:%lu dropped:%lu overruns:%lu carrier:%lu\n"
+msgstr "TX pakette:%llu vigu:%lu ära visatud:%lu ületäit:%lu carrier:%lu\n"
+
+#: ../lib/interface.c:856
+#, c-format
+msgid "          collisions:%lu "
+msgstr "          kollisioone:%lu "
+
+#: ../lib/interface.c:858
+#, c-format
+msgid "compressed:%lu "
+msgstr "pakitud:%lu "
+
+#: ../lib/interface.c:860
+#, c-format
+msgid "txqueuelen:%d "
+msgstr "txqueuelen:%d "
+
+#: ../lib/interface.c:862
+#, c-format
+msgid "RX bytes:%llu (%lu.%lu %s)  TX bytes:%llu (%lu.%lu %s)\n"
+msgstr "RX baite:%llu (%lu.%lu %s)  TX baite:%llu (%lu.%lu %s)\n"
+
+#: ../lib/interface.c:873
+#, c-format
+msgid "Interrupt:%d "
+msgstr "katkestus:%d "
+
+#. Only print devices using it for
+#. I/O maps
+#: ../lib/interface.c:876
+#, c-format
+msgid "Base address:0x%x "
+msgstr "baasaadress:0x%x "
+
+#: ../lib/interface.c:878
+#, c-format
+msgid "Memory:%lx-%lx "
+msgstr "mälu:%lx-%lx "
+
+#: ../lib/interface.c:881
+#, c-format
+msgid "DMA chan:%x "
+msgstr "DMA kanal:%x "
+
+#: ../lib/sockets.c:63
 msgid "No usable address families found.\n"
 msgstr "Ei leidnud ühtegi kasutatavat aadressiperekonda\n"
 
@@ -2384,29 +2538,29 @@ msgstr "iptunnel: %s on vigane IPv4 aadress\n"
 msgid "ip: argument is wrong: %s\n"
 msgstr "iptunnel: vale argument %s\n"
 
-#: ../ipmaddr.c:56
+#: ../ipmaddr.c:58
 msgid "Usage: ipmaddr [ add | del ] MULTIADDR dev STRING\n"
 msgstr "Kasutamine: ipmaddr [ add | del ] MULTIAADR dev STRING\n"
 
-#: ../ipmaddr.c:57
+#: ../ipmaddr.c:59
 msgid "       ipmaddr show [ dev STRING ] [ ipv4 | ipv6 | link | all ]\n"
 msgstr "            ipmaddr show [ dev STRING ] [ ipv4 | ipv6 | link | all ]\n"
 
-#: ../ipmaddr.c:58
+#: ../ipmaddr.c:60
 msgid "       ipmaddr -V | -version\n"
 msgstr "            ipmaddr -V | -version\n"
 
-#: ../ipmaddr.c:258
+#: ../ipmaddr.c:260
 #, c-format
 msgid "family %d "
 msgstr "perekond %d "
 
-#: ../ipmaddr.c:267
+#: ../ipmaddr.c:269
 #, c-format
 msgid " users %d"
 msgstr " kasutajaid %d"
 
-#: ../ipmaddr.c:353
+#: ../ipmaddr.c:355
 msgid "Cannot create socket"
 msgstr "Ei saa avada soklit"
 
@@ -2439,62 +2593,47 @@ msgstr "slattach: tty_hangup(DROP): %s\n"
 msgid "slattach: tty_hangup(RAISE): %s\n"
 msgstr "slattach: tty_hangup(RAISE): %s\n"
 
-#: ../slattach.c:486
+#: ../slattach.c:468
+msgid "slattach: tty name too long\n"
+msgstr "slattach: terminali nimi on liiga pikk\n"
+
+#: ../slattach.c:498
 msgid "slattach: tty_open: cannot get current state!\n"
 msgstr "slattach: tty_open: ei saa lugeda jooksvat olekut\n"
 
-#: ../slattach.c:493
+#: ../slattach.c:505
 msgid "slattach: tty_open: cannot get current line disc!\n"
 msgstr "slattach: tty_open: liiniprotokolli küsimine ebaõnnestus\n"
 
-#: ../slattach.c:501
+#: ../slattach.c:513
 msgid "slattach: tty_open: cannot set RAW mode!\n"
 msgstr "slattach: tty_open: ei saa seada RAW moodi\n"
 
-#: ../slattach.c:508
+#: ../slattach.c:520
 #, c-format
 msgid "slattach: tty_open: cannot set %s bps!\n"
 msgstr "slattach: tty_open: ei saa seada kiiruseks %s bps\n"
 
-#: ../slattach.c:518
+#: ../slattach.c:530
 msgid "slattach: tty_open: cannot set 8N1 mode!\n"
 msgstr "slattach: tty_open: ei saa seada 8N1 moodi\n"
 
-#: ../slattach.c:686
+#: ../slattach.c:672
+#, c-format
+msgid "slattach: setvbuf(stdout,0,_IOLBF,0) : %s\n"
+msgstr "slattach: setvbuf(stdout,0,_IOLBF,0) : %s\n"
+
+#: ../slattach.c:704
 #, c-format
 msgid "%s started"
 msgstr "%s käivitatud"
 
-#: ../slattach.c:687
+#: ../slattach.c:705
 #, c-format
 msgid " on %s"
 msgstr " pordil %s"
 
-#: ../slattach.c:688
+#: ../slattach.c:706
 #, c-format
 msgid " interface %s\n"
 msgstr " liides %s\n"
-
-#~ msgid ""
-#~ "   This comand can read or set the hostname or the NIS domainname. You can\n"
-#~ msgstr ""
-#~ "   Selle käsuga saab vaadata ja seada hosti nime ja NIS domeeni nime. "
-#~ "Samuti\n"
-
-#~ msgid ""
-#~ "   also read the DNS domain or the FQDN (fully qualified domain name).\n"
-#~ msgstr ""
-#~ "   saab vaadata DNS domeeni nime ja FQDN-i (täielikku süsteeminime).\n"
-
-#~ msgid ""
-#~ "   Unless you are using bind or NIS for host lookups you can change the\n"
-#~ msgstr ""
-#~ "   Kui Te ei kasuta bind'i ega NIS'i nimede lahendamiseks, saate täielikku\n"
-
-#~ msgid ""
-#~ "   FQDN (Fully Qualified Domain Name) and the DNS domain name (which is\n"
-#~ msgstr ""
-#~ "   süsteeminime (FQDN) ja DNS domeeni nime (mis on täieliku nime osa)\n"
-
-#~ msgid "   part of the FQDN) in the /etc/hosts file.\n"
-#~ msgstr "   muuta failist /etc/hosts.\n"
