@@ -121,13 +121,12 @@ msgstr ""
 "  arp [-v]          [-i <if>] -d  <hosti nimi> [pub] [nopub]\n"
 
 #: ../arp.c:615
-#, fuzzy
 msgid ""
 "  arp [-vnD] [<HW>] [-i <if>] -f  [<filename>]              <-Add entry from "
 "file\n"
 msgstr ""
 "ARP kirjete lisamine failist:\n"
-"  arp [-vnD] [<HW>] [-i <if>] -f  <failinimi>\n"
+"  arp [-vnD] [<HW>] [-i <if>] -f  [<failinimi>]\n"
 
 #: ../arp.c:616
 msgid ""
@@ -188,18 +187,16 @@ msgid "        -D, --use-device         read <hwaddr> from given device\n"
 msgstr "        -D, --use-device         lugeda <hwaddr> vastavalt liideselt\n"
 
 #: ../arp.c:627
-#, fuzzy
 msgid "        -A, -p, --protocol       specify protocol family\n"
-msgstr "        -r, --route              ruutingutabeli näitamine\n"
+msgstr "        -A, -p, --protocol       protokollipere määramine\n"
 
 #: ../arp.c:628
-#, fuzzy
 msgid ""
 "        -f, --file               read new entries from file or from "
 "/etc/ethers\n"
 "\n"
 msgstr ""
-"        -f, --file               lugeda kirjed antud failist\n"
+"        -f, --file               lugeda kirjed antud failist või /etc/ethers'st\n"
 "\n"
 
 #: ../arp.c:630 ../rarp.c:181
@@ -401,6 +398,11 @@ msgid ""
 "   FQDN (Fully Qualified Domain Name) and the DNS domain name (which is\n"
 "   part of the FQDN) in the /etc/hosts file.\n"
 msgstr ""
+"   Selle käsuga saab vaadata või seada hosti nime või NIS domeeni nime.\n"
+"   Samuti saab lugeda DNS domeeni nime ja täielikku süsteeminime (FQDN).\n"
+"   Kui Te EI kasuta nimeserverit ega NIS'i hostinimede lahendamiseks, saate\n"
+"   täielikku süsteeminime (FQDN) ja DNS domeeni nime (mis on täieliku nime\n"
+"   osa) muuta failist /etc/hosts.\n"
 
 #: ../hostname.c:338
 #, c-format
@@ -413,7 +415,7 @@ msgid ""
 "Unless you are using bind or NIS for host lookups you can change the DNS\n"
 msgstr ""
 "\n"
-"Kui Te ei kasuta bind'i ega NIS'i nimede lahendamiseks, saate DNS domeeni\n"
+"Kui Te EI kasuta bind'i ega NIS'i nimede lahendamiseks, saate DNS domeeni\n"
 
 #: ../hostname.c:340
 msgid "domain name (which is part of the FQDN) in the /etc/hosts file.\n"
@@ -885,19 +887,19 @@ msgid "off (0.00/%ld/%d)"
 msgstr "eikäi ((0.00/%ld/%d)"
 
 #: ../netstat.c:708
-#, fuzzy, c-format
+#, c-format
 msgid "on (%2.2f/%ld/%d)"
-msgstr "käib-%d (%2.2f/%ld/%d)"
+msgstr "käib (%2.2f/%ld/%d)"
 
 #: ../netstat.c:713
-#, fuzzy, c-format
+#, c-format
 msgid "keepalive (%2.2f/%ld/%d)"
-msgstr "käib-%d (%2.2f/%ld/%d)"
+msgstr "keepalive (%2.2f/%ld/%d)"
 
 #: ../netstat.c:718
-#, fuzzy, c-format
+#, c-format
 msgid "timewait (%2.2f/%ld/%d)"
-msgstr "käib-%d (%2.2f/%ld/%d)"
+msgstr "timewait (%2.2f/%ld/%d)"
 
 #: ../netstat.c:723 ../netstat.c:864 ../netstat.c:985
 #, c-format
@@ -2043,11 +2045,11 @@ msgstr "IrLAP"
 
 #: ../lib/hw.c:201
 msgid "16/4 Mbps Token Ring"
-msgstr ""
+msgstr "16/4 Mbps Token Ring"
 
 #: ../lib/hw.c:203
 msgid "16/4 Mbps Token Ring (New)"
-msgstr ""
+msgstr "16/4 Mbps Token Ring (New)"
 
 #: ../lib/inet.c:153 ../lib/inet6.c:79
 #, c-format
@@ -2217,9 +2219,8 @@ msgid "route: %s: cannot use a NETWORK as gateway!\n"
 msgstr "route: %s: võrku ei saa kasutada ruuterina\n"
 
 #: ../lib/inet_sr.c:174
-#, fuzzy
 msgid "route: Invalid MSS/MTU.\n"
-msgstr "route: vigane MSS\n"
+msgstr "route: vigane MSS/MTU\n"
 
 #: ../lib/inet_sr.c:187
 msgid "route: Invalid window.\n"
@@ -2347,7 +2348,7 @@ msgstr "Hoiatus: `inet' sokleid ei ole: %s\n"
 #: ../lib/interface.c:270
 #, c-format
 msgid "Warning: cannot open %s (%s). Limited output.\n"
-msgstr ""
+msgstr "Hoiatus: ei saa avada faili %s (%s). Väljund on piiratud.\n"
 
 #. Give better error message for this case.
 #: ../lib/interface.c:504
