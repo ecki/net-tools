@@ -5,10 +5,10 @@
 #		NET-3 Networking Distribution for the LINUX operating
 #		system.
 #
-# Version:	Makefile 1.45 (1996-06-29)
+# Version:	2001-02-13
 #
 # Author:	Bernd Eckenfels <net-tools@lina.inka.de>
-#		Copyright 1995-1996 Bernd Eckebnfels, Germany
+#		Copyright 1995-1996 Bernd Eckenfels, Germany
 #
 # URLs:		ftp://ftp.inka.de/pub/comp/Linux/networking/NetTools/ 
 #		ftp://ftp.linux.org.uk/pub/linux/Networking/PROGRAMS/NetTools/
@@ -232,6 +232,7 @@ installbin:
 	install -m 0755 rarp       ${BASEDIR}/sbin
 	install -m 0755 route      ${BASEDIR}/sbin
 	install -m 0755 slattach   $(BASEDIR)/sbin
+	install -m 0755 nameif     $(BASEDIR)/sbin
 ifeq ($(HAVE_IP_TOOLS),1)
 	install -m 0755 ipmaddr    $(BASEDIR)/sbin
 	install -m 0755 iptunnel   $(BASEDIR)/sbin
