@@ -7,7 +7,7 @@
    8/2000  Andi Kleen make the list operations a bit more efficient.
    People are crazy enough to use thousands of aliases now.
 
-   $Id: interface.c,v 1.10 2000/08/14 07:57:19 ak Exp $
+   $Id: interface.c,v 1.11 2000/12/19 01:01:41 ecki Exp $
  */
 
 #include "config.h"
@@ -623,6 +623,10 @@ void ife_print_long(struct interface *ptr)
     struct hwtype *hw;
     int hf;
     int can_compress = 0;
+    unsigned long rx, tx, short_rx, short_tx;
+    char Rext[5]="b";
+    char Text[5]="b";
+
 #if HAVE_AFIPX
     static struct aftype *ipxtype = NULL;
 #endif
@@ -822,8 +826,16 @@ void ife_print_long(struct interface *ptr)
 	if (can_compress)
 	    printf(_("             compressed:%lu\n"), ptr->stats.rx_compressed);
 
-	printf("          ");
+	rx = ptr->stats.rx_bytes;  
+	tx = ptr->stats.tx_bytes;
+	short_rx = rx * 10;  
+	short_tx = tx * 10;
+	if (rx > 1048576) { short_rx /= 1048576;  strcpy(Rext, "Mb"); }
+	else if (rx > 1024) { short_rx /= 1024;  strcpy(Rext, "Kb"); }
+	if (tx > 1048576) { short_tx /= 1048576;  strcpy(Text, "Mb"); }
+	else if (tx > 1024) { short_tx /= 1024;  strcpy(Text, "Kb"); }
 
+	printf("          ");
 	printf(_("TX packets:%lu errors:%lu dropped:%lu overruns:%lu carrier:%lu\n"),
 	       ptr->stats.tx_packets, ptr->stats.tx_errors,
 	       ptr->stats.tx_dropped, ptr->stats.tx_fifo_errors,
@@ -833,7 +845,10 @@ void ife_print_long(struct interface *ptr)
 	    printf(_("compressed:%lu "), ptr->stats.tx_compressed);
 	if (ptr->tx_queue_len != -1)
 	    printf(_("txqueuelen:%d "), ptr->tx_queue_len);
-	printf("\n");
+	printf("\n          ");
+	printf(_("RX bytes:%lu (%lu.%lu %s)  TX bytes:%lu (%lu.%lu %s)\n"),
+		rx, short_rx / 10, short_rx % 10, Rext, 
+		tx, short_tx / 10, short_tx % 10, Text);
     }
 
     if ((ptr->map.irq || ptr->map.mem_start || ptr->map.dma ||
