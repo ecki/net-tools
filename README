@@ -32,12 +32,18 @@ Contents:
                           Notes
                           -----
 
-This is net-tools 1.53.  Notable changes since 1.52 include:
+This is net-tools 1.54.  Notable changes since 1.53 include:
+
+ - Jiri Pavlovsky supplied a Czech translation
+ - various small bugs have been fixed
+
+Notable changes since 1.52 include:
 
  - a bunch of buffer overrun vulnerabilities are fixed (thanks to 
    David Wagner)
  - Meelis Roos contributed an Estonian translation
  - netstat recognizes ESP and GRE protocols, courtesy John D. Hardin.
+ - various other bugs have been fixed
 
 Notable changes since 1.51 include:
 

@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.30 1999/08/28 11:26:08 philip Exp $
+ * Version:     $Id: netstat.c,v 1.31 1999/11/20 22:49:18 philip Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -705,9 +705,18 @@ static void tcp_do_one(int lnr, const char *line)
 		break;
 
 	    case 1:
+		snprintf(timers, sizeof(timers), _("on (%2.2f/%ld/%d)"),
+			 (double) time_len / HZ, retr, timeout);
+		break;
+
 	    case 2:
-		snprintf(timers, sizeof(timers), _("on%d (%2.2f/%ld/%d)"),
-			 timer_run,(double) time_len / HZ, retr, timeout);
+		snprintf(timers, sizeof(timers), _("keepalive (%2.2f/%ld/%d)"),
+			 (double) time_len / HZ, retr, timeout);
+		break;
+
+	    case 3:
+		snprintf(timers, sizeof(timers), _("timewait (%2.2f/%ld/%d)"),
+			 (double) time_len / HZ, retr, timeout);
 		break;
 
 	    default:

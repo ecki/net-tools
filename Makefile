@@ -98,7 +98,7 @@ endif
 # -------- end of user definitions --------
 
 MAINTAINER = Philip.Blundell@pobox.com
-RELEASE	   = 1.53
+RELEASE	   = 1.54
 
 .EXPORT_ALL_VARIABLES:
 
@@ -147,7 +147,7 @@ cleanconfig:
 		rm -f config.h
 
 clobber: 	clean
-		rm -f $(PROGS) config.h version.h config.status
+		rm -f $(PROGS) config.h version.h config.status config.make
 		@for i in $(SUBDIRS); do (cd $$i && $(MAKE) clobber) ; done
 
 

@@ -72,13 +72,13 @@
 #define DEF_PROTO	"cslip"
 
 
-char *Release = RELEASE,
-     *Version = "@(#) slattach 1.20 (1999-05-29)",
-     *Signature = "net-tools, Fred N. van Kempen et al.";
+const char *Release = RELEASE,
+	   *Version = "@(#) slattach 1.21 (1999-11-21)",
+	   *Signature = "net-tools, Fred N. van Kempen et al.";
 
 
 struct {
-  char	*speed;
+  const char	*speed;
   int	code;
 } tty_speeds[] = {			/* table of usable baud rates	*/
   { "50",	B50	}, { "75",	B75  	},	
@@ -222,7 +222,7 @@ tty_lock(char *path, int mode)
 
 /* Find a serial speed code in the table. */
 static int
-tty_find_speed(char *speed)
+tty_find_speed(const char *speed)
 {
   int i;
 
@@ -315,7 +315,7 @@ tty_set_parity(struct termios *tty, char *parity)
 
 /* Set the line speed of a terminal line. */
 static int
-tty_set_speed(struct termios *tty, char *speed)
+tty_set_speed(struct termios *tty, const char *speed)
 {
   int code;
 
@@ -410,8 +410,8 @@ static int
 tty_get_name(char *name)
 {
   if (ioctl(tty_fd, SIOCGIFNAME, name) < 0) {
-	if (opt_q == 0) fprintf(stderr,
-		"slattach: tty_get_name: %s\n", strerror(errno));
+	if (opt_q == 0) 
+	    perror("tty_get_name");
 	return(-errno);
   }
   return(0);
@@ -454,7 +454,7 @@ tty_close(void)
 
 /* Open and initialize a terminal line. */
 static int
-tty_open(char *name, char *speed)
+tty_open(char *name, const char *speed)
 {
   char path[PATH_MAX];
   register char *sp;
@@ -571,10 +571,9 @@ main(int argc, char *argv[])
 {
   char path[128];
   char buff[128];
-  char *speed = NULL;
-  char *proto = DEF_PROTO;
-  char *extcmd = (char *)0;
-  struct hwtype *ht;
+  const char *speed = NULL;
+  const char *proto = DEF_PROTO;
+  const char *extcmd = NULL;
   char *sp;
   int s;
   static struct option longopts[] = {
@@ -658,12 +657,8 @@ main(int argc, char *argv[])
   
   activate_init();
 
-  /* Check the protocol. */
-  if ((ht = get_hwtype(proto)) == NULL && strcmp(proto, "tty")) {
-	if (opt_q == 0) fprintf(stderr, _("slattach: unsupported protocol %s\n"), proto);
-	return(2);
-  }
-  if (ht == NULL) opt_m++;
+  if (!strcmp(proto, "tty"))
+       opt_m++;
 
   /* Is a terminal given? */
   if (optind != (argc - 1)) usage();
@@ -679,14 +674,15 @@ main(int argc, char *argv[])
   }
 
   /* Start the correct protocol. */
-  if (ht == NULL) {
+  if (!strcmp(proto, "tty")) {
 	tty_sdisc = N_TTY;
 	tty_close();
 	return(0);
   }
-  (*ht->activate)(tty_fd);
+  if (activate_ld(proto, tty_fd))
+        return(1);
   if ((opt_v == 1) || (opt_d == 1)) {
-	tty_get_name(buff);
+        if (tty_get_name(buff)) { return(3); }
 	printf(_("%s started"), proto);
 	if (sp != NULL) printf(_(" on %s"), sp);
 	printf(_(" interface %s\n"), buff);
@@ -723,7 +719,7 @@ main(int argc, char *argv[])
 	};
 
 	tty_close();
-	if(extcmd!=(char *)0) /* external command on exit */
+	if(extcmd)	/* external command on exit */
 		system(extcmd);
   }
   exit(0);

@@ -21,14 +21,9 @@ First of all change into the net-tools directory.
 Before you start with the Installation please have a look into the toplevel
 Makefile. There are some configuration options with explanations.
 
-To configure the compilation use "make config".
-
-If you have a recent Kernel you can and SHOULD answer ALL the Configuration
-Options with YES. You only have to decide about the NLS:
-
-If you don't know whether GNU gettext is supported on your system or not, run
-msgfmt.  If it exists, there is every chance that GNU gettext is
-supported.
+To configure the compilation use "make config".  The default answers should
+be safe for all configurations.  If you have kernel 2.2 and glibc 2.1 most
+of the other options should work as well.
 
 
 COMPILE
