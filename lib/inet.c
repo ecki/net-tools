@@ -3,7 +3,7 @@
  *              support functions for the net-tools.
  *              (NET-3 base distribution).
  *
- * Version:    $Id: inet.c,v 1.10 1999/03/03 19:40:41 philip Exp $
+ * Version:    $Id: inet.c,v 1.11 1999/03/03 21:43:08 philip Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -48,7 +48,6 @@
 #include "pathnames.h"
 #include "intl.h"
 #include "util.h"
-#endif
 
 extern int h_errno;		/* some netdb.h versions don't export this */
 
@@ -65,7 +64,6 @@ struct service {
 };
 
 static struct service *tcp_name = NULL, *udp_name = NULL, *raw_name = NULL;
-
 
 #if HAVE_AFINET
 
@@ -304,9 +302,7 @@ struct aftype inet_aftype =
     NULL
 };
 
-#endif				/* HAVE_AFINET || HAVE_AFINET6 */
-
-#if HAVE_AFINET || HAVE_AFINET6
+#endif				/* HAVE_AFINET */
 
 static void add2list(struct service **namebase, struct service *item)
 {

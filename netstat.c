@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.21 1999/03/03 19:40:32 philip Exp $
+ * Version:     $Id: netstat.c,v 1.22 1999/03/03 21:43:06 philip Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -80,7 +80,7 @@
 #include <sys/ioctl.h>
 #include <net/if.h>
 #include <dirent.h>
-/* #include <net/route.h> realy broken */
+
 #include "net-support.h"
 #include "pathnames.h"
 #include "version.h"
@@ -147,26 +147,23 @@ int flag_ver = 0;
 FILE *procinfo;
 
 #define INFO_GUTS1(file,name,proc)			\
-							\
   procinfo = fopen((file), "r");			\
   if (procinfo == NULL) {				\
     if (errno != ENOENT) {				\
       perror((file));					\
-      return(-1);					\
+      return -1;					\
     }							\
     if (flag_arg || flag_ver)				\
       ESYSNOT("netstat", (name));			\
     if (flag_arg)					\
-      return(1);					\
-    else						\
-      return(0);					\
-  }							\
-							\
-  do {							\
-    if (fgets(buffer, sizeof(buffer), procinfo))	\
-      (proc)(lnr++, buffer);				\
-  } while (!feof(procinfo));				\
-  fclose(procinfo);
+      rc = 1;						\
+  } else {						\
+    do {						\
+      if (fgets(buffer, sizeof(buffer), procinfo))	\
+        (proc)(lnr++, buffer);				\
+    } while (!feof(procinfo));				\
+    fclose(procinfo);					\
+  }
 
 #if HAVE_AFINET6
 #define INFO_GUTS2(file,proc)				\
@@ -184,10 +181,11 @@ FILE *procinfo;
 #endif
 
 #define INFO_GUTS3					\
- return(0);
+ return rc;
 
 #define INFO_GUTS6(file,file6,name,proc)		\
  char buffer[8192];					\
+ int rc = 0;						\
  int lnr = 0;						\
  if (!flag_arg || flag_inet) {				\
     INFO_GUTS1(file,name,proc)				\
@@ -199,9 +197,193 @@ FILE *procinfo;
 
 #define INFO_GUTS(file,name,proc)			\
  char buffer[8192];					\
+ int rc = 0;						\
  int lnr = 0;						\
  INFO_GUTS1(file,name,proc)				\
  INFO_GUTS3
+
+#define PROGNAME_WIDTHs PROGNAME_WIDTH1(PROGNAME_WIDTH)
+#define PROGNAME_WIDTH1(s) PROGNAME_WIDTH2(s)
+#define PROGNAME_WIDTH2(s) #s
+
+#define PRG_HASH_SIZE 211
+
+static struct prg_node {
+    struct prg_node *next;
+    int inode;
+    char name[PROGNAME_WIDTH];
+} *prg_hash[PRG_HASH_SIZE];
+
+static char prg_cache_loaded = 0;
+
+#define PRG_HASHIT(x) ((x) % PRG_HASH_SIZE)
+
+#define PROGNAME_BANNER "PID/Program name"
+
+#define print_progname_banner() do { if (flag_prg) printf("%-" PROGNAME_WIDTHs "s"," " PROGNAME_BANNER); } while (0)
+
+#define PRG_LOCAL_ADDRESS "local_address"
+#define PRG_INODE	 "inode"
+#define PRG_SOCKET_PFX    "socket:["
+#define PRG_SOCKET_PFXl (strlen(PRG_SOCKET_PFX))
+
+#ifndef LINE_MAX
+#define LINE_MAX 4096
+#endif
+
+#define PATH_PROC	   "/proc"
+#define PATH_FD_SUFF	"fd"
+#define PATH_FD_SUFFl       strlen(PATH_FD_SUFF)
+#define PATH_PROC_X_FD      PATH_PROC "/%s/" PATH_FD_SUFF
+#define PATH_CMDLINE	"cmdline"
+#define PATH_CMDLINEl       strlen(PATH_CMDLINE)
+/* NOT working as of glibc-2.0.7: */
+#undef  DIRENT_HAVE_D_TYPE_WORKS
+
+static void prg_cache_add(int inode, char *name)
+{
+    unsigned hi = PRG_HASHIT(inode);
+    struct prg_node **pnp,*pn;
+
+    prg_cache_loaded=2;
+    for (pnp=prg_hash+hi;(pn=*pnp);pnp=&pn->next) {
+	if (pn->inode==inode) {
+	    /* Some warning should be appropriate here
+	       as we got multiple processes for one i-node */
+	    return;
+	}
+    }
+    if (!(*pnp=malloc(sizeof(**pnp)))) 
+	return;
+    pn=*pnp;
+    pn->next=NULL;
+    pn->inode=inode;
+    if (strlen(name)>sizeof(pn->name)-1) 
+	name[sizeof(pn->name)-1]='\0';
+    strcpy(pn->name,name);
+}
+
+static const char *prg_cache_get(int inode)
+{
+    unsigned hi=PRG_HASHIT(inode);
+    struct prg_node *pn;
+
+    for (pn=prg_hash[hi];pn;pn=pn->next)
+	if (pn->inode==inode) return(pn->name);
+    return("-");
+}
+
+static void prg_cache_clear(void)
+{
+    struct prg_node **pnp,*pn;
+
+    if (prg_cache_loaded == 2)
+	for (pnp=prg_hash;pnp<prg_hash+PRG_HASH_SIZE;pnp++)
+	    while ((pn=*pnp)) {
+		*pnp=pn->next;
+		free(pn);
+	    }
+    prg_cache_loaded=0;
+}
+
+static void prg_cache_load(void)
+{
+    char line[LINE_MAX],*serr,eacces=0;
+    int procfdlen,fd,cmdllen,lnamelen;
+    char lname[30],cmdlbuf[512],finbuf[PROGNAME_WIDTH];
+    long inode;
+    const char *cs,*cmdlp;
+    DIR *dirproc=NULL,*dirfd=NULL;
+    struct dirent *direproc,*direfd;
+
+    if (prg_cache_loaded || !flag_prg) return;
+    prg_cache_loaded=1;
+    cmdlbuf[sizeof(cmdlbuf)-1]='\0';
+    if (!(dirproc=opendir(PATH_PROC))) goto fail;
+    while (errno=0,direproc=readdir(dirproc)) {
+#ifdef DIRENT_HAVE_D_TYPE_WORKS
+	if (direproc->d_type!=DT_DIR) continue;
+#endif
+	for (cs=direproc->d_name;*cs;cs++)
+	    if (!isdigit(*cs)) 
+		break;
+	if (*cs) 
+	    continue;
+	procfdlen=snprintf(line,sizeof(line),PATH_PROC_X_FD,direproc->d_name);
+	if (procfdlen<=0 || procfdlen>=sizeof(line)-5) 
+	    continue;
+	errno=0;
+	dirfd=opendir(line);
+	if (! dirfd) {
+	    if (errno==EACCES) 
+		eacces=1;
+	    continue;
+	}
+	line[procfdlen] = '/';
+	cmdlp = NULL;
+	while ((direfd = readdir(dirfd))) {
+#ifdef DIRENT_HAVE_D_TYPE_WORKS
+	    if (direfd->d_type!=DT_LNK) 
+		continue;
+#endif
+	    if (procfdlen+1+strlen(direfd->d_name)+1>sizeof(line)) 
+		continue;
+	    memcpy(line + procfdlen - PATH_FD_SUFFl, PATH_FD_SUFF "/",
+		   PATH_FD_SUFFl+1);
+	    strcpy(line + procfdlen + 1, direfd->d_name);
+	    lnamelen=readlink(line,lname,sizeof(lname));
+	    if (lnamelen < strlen(PRG_SOCKET_PFX+2)) 
+		continue;
+	    if (memcmp(lname, PRG_SOCKET_PFX, PRG_SOCKET_PFXl)
+		|| lname[lnamelen-1]!=']') 
+		continue;
+	    lname[lnamelen-1]='\0';
+	    inode = strtol(lname+PRG_SOCKET_PFXl,&serr,0);
+	    if (!serr || *serr || inode < 0 || inode >= INT_MAX) 
+		continue;
+
+	    if (!cmdlp) {
+		if (procfdlen - PATH_FD_SUFFl + PATH_CMDLINEl >= 
+		    sizeof(line) - 5) 
+		    continue;
+		strcpy(line + procfdlen-PATH_FD_SUFFl, PATH_CMDLINE);
+		fd = open(line, O_RDONLY);
+		if (fd < 0) 
+		    continue;
+		cmdllen = read(fd, cmdlbuf, sizeof(cmdlbuf) - 1);
+		if (close(fd)) 
+		    continue;
+		if (cmdllen == -1) 
+		    continue;
+		if (cmdllen < sizeof(cmdlbuf) - 1) 
+		    cmdlbuf[cmdllen]='\0';
+		if ((cmdlp = strrchr(cmdlbuf, '/'))) 
+		    cmdlp++;
+		else 
+		    cmdlp = cmdlbuf;
+	    }
+
+	    snprintf(finbuf, sizeof(finbuf), "%s/%s", direproc->d_name, cmdlp);
+	    prg_cache_add(inode, finbuf);
+	}
+	closedir(dirfd); 
+	dirfd = NULL;
+    }
+    if (dirproc) 
+	closedir(dirproc);
+    if (dirfd) 
+	closedir(dirfd);
+    if (!eacces) 
+	return;
+    if (prg_cache_loaded == 1) {
+    fail:
+	fprintf(stderr,_("(No info could be read for \"-p\": geteuid()=%d but you should be root.)\n"),
+		geteuid());
+    }
+    else
+	fprintf(stderr, _("(Not all processes could be identified, non-owned process info\n"
+			 " will not be shown, you would have to be root to see it all.)\n"));
+}
 
 #if HAVE_AFNETROM
 static const char *netrom_state[] =
@@ -256,9 +438,7 @@ static int netrom_info(void)
 }
 #endif
 
-
-#if HAVE_AFINET || HAVE_AFINET6
-
+/* These enums are used by IPX too. :-( */
 enum {
     TCP_ESTABLISHED = 1,
     TCP_SYN_SENT,
@@ -272,6 +452,8 @@ enum {
     TCP_LISTEN,
     TCP_CLOSING			/* now a valid state */
 };
+
+#if HAVE_AFINET || HAVE_AFINET6
 
 static const char *tcp_state[] =
 {
@@ -289,6 +471,23 @@ static const char *tcp_state[] =
     N_("CLOSING")
 };
 
+static void finish_this_one(int uid, unsigned long inode, const char *timers)
+{
+    struct passwd *pw;
+
+    if (flag_exp > 1) {
+	if (!flag_not && ((pw = getpwuid(uid)) != NULL))
+	    printf("%-10s ", pw->pw_name);
+	else
+	    printf("%-10d ", uid);
+	printf("%-10ld ",inode);
+    }
+    if (flag_prg)
+	printf("%-" PROGNAME_WIDTHs "s",prg_cache_get(inode));
+    if (flag_opt)
+	printf("%s", timers);
+    putchar('\n');
+}
 
 static void igmp_do_one(int lnr, const char *line)
 {
@@ -308,96 +507,89 @@ static void igmp_do_one(int lnr, const char *line)
     int num, idx, refcnt;
 
     if (lnr == 0) {
-      /* IPV6 ONLY */
-      /* igmp6 file does not have any comments on first line */
-      if ( strstr( line, "Device" ) == NULL ) {
-	igmp6_flag = 1;
-	idx_flag = 1;
-      }
-      else {
-	/* IPV4 ONLY */
-	/* 2.1.x kernels and up have Idx field */
-	/* 2.0.x and below do not have Idx field */
-	if ( strncmp( line, "Idx", strlen("Idx") ) == 0 )
-	  idx_flag = 1;
-	else
-	  idx_flag = 0;
-	return;
-      }
+	/* IPV6 ONLY */
+	/* igmp6 file does not have any comments on first line */
+	if ( strstr( line, "Device" ) == NULL ) {
+	    igmp6_flag = 1;
+	    idx_flag = 1;
+	} else {
+	    /* IPV4 ONLY */
+	    /* 2.1.x kernels and up have Idx field */
+	    /* 2.0.x and below do not have Idx field */
+	    if ( strncmp( line, "Idx", strlen("Idx") ) == 0 )
+		idx_flag = 1;
+	    else
+		idx_flag = 0;
+	    return;
+	}
     }
 
-    if ( igmp6_flag ) {    /* IPV6 */
+    if (igmp6_flag) {    /* IPV6 */
 #if HAVE_AFINET6
-      num = sscanf( line, "%d %15s %64[0-9A-Fa-f] %d", &idx, device, mcast_addr, &refcnt );
-      if ( num == 4 ) {
-	/* Demangle what the kernel gives us */
-	sscanf(mcast_addr,
-	       "%4s%4s%4s%4s%4s%4s%4s%4s",
-	       addr6p[0], addr6p[1], addr6p[2], addr6p[3],
-	       addr6p[4], addr6p[5], addr6p[6], addr6p[7]);
-	snprintf(addr6, sizeof(addr6), "%s:%s:%s:%s:%s:%s:%s:%s",
-		 addr6p[0], addr6p[1], addr6p[2], addr6p[3],
-		 addr6p[4], addr6p[5], addr6p[6], addr6p[7]);
-	inet6_aftype.input(1, addr6, (struct sockaddr *) &mcastaddr);
-	mcastaddr.sin6_family = AF_INET6;
-      }
-      else {
-	fprintf(stderr, _("warning, got bogus igmp6 line %d.\n"), lnr);
-	return;
-      }
+	num = sscanf( line, "%d %15s %64[0-9A-Fa-f] %d", &idx, device, mcast_addr, &refcnt );
+	if (num == 4) {
+	    /* Demangle what the kernel gives us */
+	    sscanf(mcast_addr,
+		   "%4s%4s%4s%4s%4s%4s%4s%4s",
+		   addr6p[0], addr6p[1], addr6p[2], addr6p[3],
+		   addr6p[4], addr6p[5], addr6p[6], addr6p[7]);
+	    snprintf(addr6, sizeof(addr6), "%s:%s:%s:%s:%s:%s:%s:%s",
+		     addr6p[0], addr6p[1], addr6p[2], addr6p[3],
+		     addr6p[4], addr6p[5], addr6p[6], addr6p[7]);
+	    inet6_aftype.input(1, addr6, (struct sockaddr *) &mcastaddr);
+	    mcastaddr.sin6_family = AF_INET6;
+	} else {
+	    fprintf(stderr, _("warning, got bogus igmp6 line %d.\n"), lnr);
+	    return;
+	}
 
-      if ((ap = get_afntype(((struct sockaddr *) &mcastaddr)->sa_family)) == NULL) {
-	fprintf(stderr, _("netstat: unsupported address family %d !\n"),
-		((struct sockaddr *) &mcastaddr)->sa_family);
-	return;
-      }
-      strcpy( mcast_addr, ap->sprint((struct sockaddr *) &mcastaddr, flag_not) );
-      printf( "%-15s %-6d %s\n", device, refcnt, mcast_addr );
-      
+	if ((ap = get_afntype(((struct sockaddr *) &mcastaddr)->sa_family)) == NULL) {
+	    fprintf(stderr, _("netstat: unsupported address family %d !\n"),
+		    ((struct sockaddr *) &mcastaddr)->sa_family);
+	    return;
+	}
+	strcpy(mcast_addr, ap->sprint((struct sockaddr *) &mcastaddr, 
+				      flag_not));
+	printf("%-15s %-6d %s\n", device, refcnt, mcast_addr);
 #endif
-
-    }         /* IPV6 */
-
-    else {    /* IPV4 */
-
-      if ( line[0] != '\t' ) {
-	if ( idx_flag ) {
-	  if ( (num = sscanf( line, "%d\t%10c", &idx, device )) < 2) {
+    } else {    /* IPV4 */
+#if HAVE_AFINET
+	if (line[0] != '\t') {
+	    if (idx_flag) {
+		if ((num = sscanf( line, "%d\t%10c", &idx, device)) < 2) {
+		    fprintf(stderr, _("warning, got bogus igmp line %d.\n"), lnr);
+		    return;
+		}
+	    } else {
+		if ( (num = sscanf( line, "%10c", device )) < 1 ) {
+		    fprintf(stderr, _("warning, got bogus igmp line %d.\n"), lnr);
+		    return;
+		}
+	    }
+	    device[10] = '\0';
+	    return;
+	} else if ( line[0] == '\t' ) {
+	    if ( (num = sscanf(line, "\t%8[0-9A-Fa-f] %d", mcast_addr, &refcnt)) < 2 ) {
+		fprintf(stderr, _("warning, got bogus igmp line %d.\n"), lnr);
+		return;
+	    }
+	    sscanf( mcast_addr, "%X",
+		    &((struct sockaddr_in *) &mcastaddr)->sin_addr.s_addr );
+	    ((struct sockaddr *) &mcastaddr)->sa_family = AF_INET;
+	} else {
 	    fprintf(stderr, _("warning, got bogus igmp line %d.\n"), lnr);
 	    return;
-	  }
 	}
-	else {
-	  if ( (num = sscanf( line, "%10c", device )) < 1 ) {
-	    fprintf(stderr, _("warning, got bogus igmp line %d.\n"), lnr);
+	
+	if ((ap = get_afntype(((struct sockaddr *) &mcastaddr)->sa_family)) == NULL) {
+	    fprintf(stderr, _("netstat: unsupported address family %d !\n"),
+		    ((struct sockaddr *) &mcastaddr)->sa_family);
 	    return;
-	  }
 	}
-	device[10] = '\0';
-	return;
-      }
-      else if ( line[0] == '\t' ) {
-	if ( (num = sscanf(line, "\t%8[0-9A-Fa-f] %d", mcast_addr, &refcnt)) < 2 ) {
-	  fprintf(stderr, _("warning, got bogus igmp line %d.\n"), lnr);
-	  return;
-	}
-	sscanf( mcast_addr, "%X",
-		&((struct sockaddr_in *) &mcastaddr)->sin_addr.s_addr );
-	((struct sockaddr *) &mcastaddr)->sa_family = AF_INET;
-      }
-      else {
-	fprintf(stderr, _("warning, got bogus igmp line %d.\n"), lnr);
-	return;
-      }
-
-      if ((ap = get_afntype(((struct sockaddr *) &mcastaddr)->sa_family)) == NULL) {
-	fprintf(stderr, _("netstat: unsupported address family %d !\n"),
-		((struct sockaddr *) &mcastaddr)->sa_family);
-	return;
-      }
-      strcpy( mcast_addr, ap->sprint((struct sockaddr *) &mcastaddr, flag_not) );
-      printf( "%-15s %-6d %s\n", device, refcnt, mcast_addr );
-
+	strcpy(mcast_addr, ap->sprint((struct sockaddr *) &mcastaddr, 
+				      flag_not) );
+	printf("%-15s %-6d %s\n", device, refcnt, mcast_addr );
+#endif
     }    /* IPV4 */
 }
 
@@ -405,178 +597,6 @@ static int igmp_info(void)
 {
     INFO_GUTS6(_PATH_PROCNET_IGMP, _PATH_PROCNET_IGMP6, "AF INET (igmp)",
 	       igmp_do_one);
-}
-
-#define PRG_HASH_SIZE 211
-
-static struct prg_node {
-    struct prg_node *next;
-    int inode;
-    char name[PROGNAME_WIDTH];
-    } *prg_hash[PRG_HASH_SIZE];
-static char prg_cache_loaded=0;
-#define PRG_HASHIT(x) ((x)%PRG_HASH_SIZE)
-
-#define PROGNAME_WIDTHs PROGNAME_WIDTH1(PROGNAME_WIDTH)
-#define PROGNAME_WIDTH1(s) PROGNAME_WIDTH2(s)
-#define PROGNAME_WIDTH2(s) #s
-
-#define PROGNAME_BANNER "PID/Program name"
-
-#define print_progname_banner() do { if (flag_prg) printf("%-" PROGNAME_WIDTHs "s"," " PROGNAME_BANNER); } while (0)
-
-#define PRG_LOCAL_ADDRESS "local_address"
-#define PRG_INODE	 "inode"
-#define PRG_SOCKET_PFX    "socket:["
-#define PRG_SOCKET_PFXl (strlen(PRG_SOCKET_PFX))
-
-#ifndef LINE_MAX
-#define LINE_MAX 4096
-#endif
-
-#define PATH_PROC	   "/proc"
-#define PATH_FD_SUFF	"fd"
-#define PATH_FD_SUFFl       strlen(PATH_FD_SUFF)
-#define PATH_PROC_X_FD      PATH_PROC "/%s/" PATH_FD_SUFF
-#define PATH_CMDLINE	"cmdline"
-#define PATH_CMDLINEl       strlen(PATH_CMDLINE)
-/* NOT working as of glibc-2.0.7: */
-#undef  DIRENT_HAVE_D_TYPE_WORKS
-
-static void prg_cache_add(int inode,char *name)
-{
-    unsigned hi=PRG_HASHIT(inode);
-    struct prg_node **pnp,*pn;
-
-    prg_cache_loaded=2;
-    for (pnp=prg_hash+hi;(pn=*pnp);pnp=&pn->next) {
-	if (pn->inode==inode) {
-	    /* Some warning should be appropriate here     *
-	     * as we got multiple processes for one i-node */
-	    return;
-	    }
-	}
-    if (!(*pnp=malloc(sizeof(**pnp)))) return;
-    pn=*pnp;
-    pn->next=NULL;
-    pn->inode=inode;
-    if (strlen(name)>sizeof(pn->name)-1) name[sizeof(pn->name)-1]='\0';
-    strcpy(pn->name,name);
-}
-
-static const char *prg_cache_get(int inode)
-{
-    unsigned hi=PRG_HASHIT(inode);
-    struct prg_node *pn;
-
-    for (pn=prg_hash[hi];pn;pn=pn->next)
-	if (pn->inode==inode) return(pn->name);
-    return("-");
-}
-
-static void prg_cache_clear(void)
-{
-    struct prg_node **pnp,*pn;
-
-    if (prg_cache_loaded==2)
-	for (pnp=prg_hash;pnp<prg_hash+PRG_HASH_SIZE;pnp++)
-	    while ((pn=*pnp)) {
-		*pnp=pn->next;
-		free(pn);
-		}
-    prg_cache_loaded=0;
-}
-
-static void prg_cache_load(void)
-{
-    char line[LINE_MAX],*serr,eacces=0;
-    int procfdlen,fd,cmdllen,lnamelen;
-    char lname[30],cmdlbuf[512],finbuf[PROGNAME_WIDTH];
-    long inode;
-    const char *cs,*cmdlp;
-    DIR *dirproc=NULL,*dirfd=NULL;
-    struct dirent *direproc,*direfd;
-
-    if (prg_cache_loaded || !flag_prg) return;
-    prg_cache_loaded=1;
-    cmdlbuf[sizeof(cmdlbuf)-1]='\0';
-    if (!(dirproc=opendir(PATH_PROC))) goto fail;
-    while (errno=0,direproc=readdir(dirproc)) {
-#ifdef DIRENT_HAVE_D_TYPE_WORKS
-	if (direproc->d_type!=DT_DIR) continue;
-#endif
-	for (cs=direproc->d_name;*cs;cs++)
-	    if (!isdigit(*cs)) break;
-	if (*cs) continue;
-	procfdlen=snprintf(line,sizeof(line),PATH_PROC_X_FD,direproc->d_name);
-	if (procfdlen<=0 || procfdlen>=sizeof(line)-5) continue;
-	errno=0;
-	if (!(dirfd=opendir(line))) {
-		if (errno==EACCES) eacces=1;
-		continue;
-		}
-	line[procfdlen]='/';
-	cmdlp=NULL;
-	while ((direfd=readdir(dirfd))) {
-#ifdef DIRENT_HAVE_D_TYPE_WORKS
-	    if (direfd->d_type!=DT_LNK) continue;
-#endif
-	    if (procfdlen+1+strlen(direfd->d_name)+1>sizeof(line)) continue;
-	    memcpy(line+procfdlen-PATH_FD_SUFFl,PATH_FD_SUFF "/",PATH_FD_SUFFl+1);
-	    strcpy(line+procfdlen+1,direfd->d_name);
-	    if ((lnamelen=readlink(line,lname,sizeof(lname)))<strlen(PRG_SOCKET_PFX+2)) continue;
-	    if (memcmp(lname,PRG_SOCKET_PFX,PRG_SOCKET_PFXl)
-	      ||lname[lnamelen-1]!=']') continue;
-	    lname[lnamelen-1]='\0';
-	    inode=strtol(lname+PRG_SOCKET_PFXl,&serr,0);
-	    if (!serr||*serr||inode<0||inode>=INT_MAX) continue;
-
-	    if (!cmdlp) {
-		if (procfdlen-PATH_FD_SUFFl+PATH_CMDLINEl>=sizeof(line)-5) continue;
-		strcpy(line+procfdlen-PATH_FD_SUFFl,PATH_CMDLINE);
-		if ((fd=open(line,O_RDONLY))==-1) continue;
-		cmdllen=read(fd,cmdlbuf,sizeof(cmdlbuf)-1);
-		if (close(fd)) continue;
-		if (cmdllen==-1) continue;
-		if (cmdllen<sizeof(cmdlbuf)-1) cmdlbuf[cmdllen]='\0';
-		if ((cmdlp=strrchr(cmdlbuf,'/'))) cmdlp++;
-		else cmdlp=cmdlbuf;
-		}
-
-	    snprintf(finbuf,sizeof(finbuf),"%s/%s",direproc->d_name,cmdlp);
-	    prg_cache_add(inode,finbuf);
-	    }
-	closedir(dirfd); dirfd=NULL;
-	}
-    if (dirproc) closedir(dirproc);
-    if (dirfd  ) closedir(dirfd  );
-    if (!eacces) return;
-    if (prg_cache_loaded==1) {
-fail:
-	fprintf(stderr,_("(No info could be read for \"-p\": geteuid()=%d but you should be root.)\n"),
-	    geteuid());
-	}
-    else
-	fprintf(stderr,_("(Not all processes could be identified, non-owned process info\n"
-			 " will not be shown, you would have to be root to see it all.)\n"));
-}
-
-static void finish_this_one(int uid,unsigned long inode,const char *timers)
-{
-    struct passwd *pw;
-
-    if (flag_exp > 1) {
-	if (!flag_not && ((pw = getpwuid(uid)) != NULL))
-	    printf("%-10s ", pw->pw_name);
-	else
-	    printf("%-10d ", uid);
-	printf("%-10ld ",inode);
-    }
-    if (flag_prg)
-	printf("%-" PROGNAME_WIDTHs "s",prg_cache_get(inode));
-    if (flag_opt)
-	printf("%s", timers);
-    putchar('\n');
 }
 
 static void tcp_do_one(int lnr, const char *line)
