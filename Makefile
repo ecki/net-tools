@@ -111,7 +111,7 @@ else
 TOPDIR  := $(shell if [ "$$PWD" != "" ]; then echo $$PWD; else pwd; fi)
 endif
 
-NET-LIB = $(NET_LIB_PATH)/lib$(NET_LIB_NAME).a
+NET_LIB = $(NET_LIB_PATH)/lib$(NET_LIB_NAME).a
 
 CFLAGS	= $(COPTS) -I. -idirafter ./include/ -I$(NET_LIB_PATH)
 LDFLAGS	= $(LOPTS) -L$(NET_LIB_PATH)
@@ -171,7 +171,7 @@ version.h:	Makefile
 		@echo "#define RELEASE \"net-tools $(RELEASE)\"" >version.h
 
 
-$(NET-LIB):	config.h version.h intl.h libdir
+$(NET_LIB):	config.h version.h intl.h libdir
 
 i18n.h:		i18ndir
 
@@ -184,34 +184,34 @@ i18ndir:
 subdirs:
 		@for i in $(SUBDIRS); do $(MAKE) -C $$i $(MDEFINES) ; done
 
-ifconfig:	$(NET-LIB) ifconfig.o
+ifconfig:	$(NET_LIB) ifconfig.o
 		$(CC) $(LDFLAGS) -o ifconfig ifconfig.o $(NLIB) $(RESLIB)
 
 hostname:	hostname.o
 		$(CC) $(LDFLAGS) -o hostname hostname.o $(DNLIB)
 
-route:		$(NET-LIB) route.o
+route:		$(NET_LIB) route.o
 		$(CC) $(LDFLAGS) -o route route.o $(NLIB) $(RESLIB)
 
-arp:		$(NET-LIB) arp.o
+arp:		$(NET_LIB) arp.o
 		$(CC) $(LDFLAGS) -o arp arp.o $(NLIB) $(RESLIB)
 
-rarp:		$(NET-LIB) rarp.o
+rarp:		$(NET_LIB) rarp.o
 		$(CC) $(LDFLAGS) -o rarp rarp.o $(NLIB)
 
-slattach:	$(NET-LIB) slattach.o
+slattach:	$(NET_LIB) slattach.o
 		$(CC) $(LDFLAGS) -o slattach slattach.o $(NLIB)
 
-plipconfig:	$(NET-LIB) plipconfig.o
+plipconfig:	$(NET_LIB) plipconfig.o
 		$(CC) $(LDFLAGS) -o plipconfig plipconfig.o $(NLIB)
 
-netstat:	$(NET-LIB) netstat.o statistics.o
+netstat:	$(NET_LIB) netstat.o statistics.o
 		$(CC) $(LDFLAGS) -o netstat netstat.o statistics.o $(NLIB) $(RESLIB)
 
-iptunnel:	$(NET-LIB) iptunnel.o
+iptunnel:	$(NET_LIB) iptunnel.o
 		$(CC) $(LDFLAGS) -o iptunnel iptunnel.o $(NLIB) $(RESLIB)
 
-ipmaddr:	$(NET-LIB) ipmaddr.o
+ipmaddr:	$(NET_LIB) ipmaddr.o
 		$(CC) $(LDFLAGS) -o ipmaddr ipmaddr.o $(NLIB) $(RESLIB)
 
 mii-tool:	mii-tool.o
