@@ -3,7 +3,7 @@
  *              support functions for the net-tools.
  *              (most of it copied from lib/inet.c 1.26).
  *
- * Version:     $Id: inet6.c,v 1.7 1998/11/29 13:29:44 philip Exp $
+ * Version:     $Id: inet6.c,v 1.8 1999/08/24 16:47:24 ecki Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -11,6 +11,7 @@
  * Modified:
  *960808 {0.01} Frank Strauss :         adapted for IPv6 support
  *980701 {0.02} Arnaldo C. Melo:        GNU gettext instead of catgets
+ *990824        Bernd Eckenfels:	clear members for selecting v6 address
  *
  *              This program is free software; you can redistribute it
  *              and/or  modify it under  the terms of  the GNU General
@@ -48,6 +49,7 @@ static int INET6_resolve(char *name, struct sockaddr_in6 *sin6)
     struct addrinfo req, *ai;
     int s;
 
+    memset (&req, '\0', sizeof req);
     req.ai_family = AF_INET6;
     if ((s = getaddrinfo(name, NULL, &req, &ai))) {
 	fprintf(stderr, "getaddrinfo: %s: %s\n", name, gai_strerror(s));
