@@ -68,14 +68,15 @@ extern int for_all_interfaces(int (*)(struct interface *, void *), void *);
 extern struct interface *lookup_interface(char *name);
 extern int if_readlist(void);
 
-/* Define for poor glibc2.0 users, the feature check is done at runtime */
+/* Defines for poor glibc2.0 users, the feature check is done at runtime */
 #if !defined(SIOCSIFTXQLEN)
 #define SIOCSIFTXQLEN      0x8943
 #define SIOCGIFTXQLEN      0x8942
 #endif
 
 #if !defined(ifr_qlen)
-#define ifr_qlen        ifr_ifru.ifru_ivalue
+/* Actually it is ifru_ivalue, but that is not present in 2.0 kernel headers */   
+#define ifr_qlen        ifr_ifru.ifru_mtu
 #endif
 
 #define HAVE_TXQUEUELEN
