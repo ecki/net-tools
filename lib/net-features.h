@@ -47,24 +47,10 @@
 #  define HAVE_RT_NETLINK 1
 #endif
 
-/* compos the feature information string */
+/* compose the feature information string */
 
 #if defined (FEATURE_ARP) || defined (FEATURE_ROUTE) || defined (FEATURE_NETSTAT)
 static char *Features=
-
-/* ---------------------------------------------------- */
-#ifdef FEATURE_ARP
-
-#  if HAVE_NEW_SIOCSARP
-	"+"
-#  else 
-	"-"
-#  endif
-	"NEW_SIOCSARP "
-	
-#endif /* FEATURE_ARP */
-/* ---------------------------------------------------- */
-
 
 /* ---------------------------------------------------- */
 #ifdef FEATURE_ROUTE
@@ -143,7 +129,7 @@ static char *Features=
 #endif /* I18N */
 
 
-"\nAF:"
+"\nAF: "
 #ifdef DFLT_AF
 	"("DFLT_AF")"
 #endif
@@ -190,8 +176,20 @@ static char *Features=
 	"-"
 #endif
 	"ATALK "
+#if HAVE_AFECONET
+	"+"
+#else
+	"-"
+#endif
+	"ECONET "
+#if HAVE_AFROSE
+	"+"
+#else
+	"-"
+#endif
+	"ROSE "
 
-"\nHW:"
+"\nHW: "
 
 #ifdef DFLT_HW
 	"("DFLT_HW")"
@@ -252,7 +250,50 @@ static char *Features=
 #else
 	"-"
 #endif
-	"FR ";
+	"FR "
+
+#if HAVE_HWROSE
+	"+"
+#else
+	"-"
+#endif
+	"ROSE "
+
+#if HAVE_HWASH
+	"+"
+#else
+	"-"
+#endif
+	"ASH "
+
+#if HAVE_HWSIT
+	"+"
+#else
+	"-"
+#endif
+	"SIT "
+
+#if HAVE_HWFDDI
+	"+"
+#else
+	"-"
+#endif
+	"FDDI "
+
+#if HAVE_HWHIPPI
+	"+"
+#else
+	"-"
+#endif
+	"HIPPI "
+
+#if HAVE_HWHDLCLAPB
+	"+"
+#else
+	"-"
+#endif
+	"HDLC/LAPB "	
+;
 
 
 #endif /* FEATURE_* */
