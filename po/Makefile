@@ -1,4 +1,4 @@
-INSTALL= /usr/bin/install -c
+INSTALL=install -c
 INSTALL_PROGRAM= ${INSTALL}
 INSTALL_DATA= ${INSTALL} -m 644
 INSTALLNLSDIR=${BASEDIR}/usr/share/locale
