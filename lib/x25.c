@@ -66,8 +66,6 @@ X25_print(unsigned char *ptr)
 static char *
 X25_sprint(struct sockaddr *sap, int numeric)
 {
-  static char buf[64];
-
   if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
     return( _("[NONE SET]"));
   return(X25_print(((struct sockaddr_x25 *)sap)->sx25_addr.x25_addr));
@@ -139,17 +137,6 @@ X25_herror(char *text)
 }
 
 
-static char *
-X25_hprint(struct sockaddr *sap)
-{
-  static char buf[64];
-
-  if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-    return( _("[NONE SET]"));
-  return(X25_print(((struct sockaddr_x25 *)sap)->sx25_addr.x25_addr));
-}
-
-
 static int
 X25_hinput(char *bufp, struct sockaddr *sap)
 {
@@ -161,16 +148,9 @@ X25_hinput(char *bufp, struct sockaddr *sap)
 
 struct hwtype x25_hwtype = {
   "x25",	NULL, /*"CCITT X.25",*/		ARPHRD_X25,	X25_ADDR_LEN,
-  X25_print,	NULL, /* X25_hprint,*/		X25_hinput,	NULL
+  X25_print,	X25_hinput,	NULL
 };
 
-#if 0
-struct aftype x25_aftype = {
-  "x25",	NULL, /*"CCITT X.25",*/		AF_X25,	X25_ADDR_LEN,
-  X25_print,	X25_sprint,		X25_input,	X25_herror,	
-  NULL/*X25_rprint*/,  NULL/*X25_rinput*/
-};
-#endif
 struct aftype x25_aftype =
 {   
     "x25", NULL, /*"CCITT X.25", */ AF_X25, X25_ADDR_LEN,
