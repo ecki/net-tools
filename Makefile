@@ -131,8 +131,11 @@ install:	all savebin installbin installdata
 
 update: 	all installbin installdata
 
-clean:
+mostlyclean:
 		rm -f *.o DEADJOE config.new *~ *.orig lib/*.o
+
+clean: mostlyclean
+		rm -f $(PROGS)
 		@for i in $(SUBDIRS); do (cd $$i && make clean) ; done
 		@cd po && make clean
 

@@ -8,7 +8,7 @@
 #		NET-3 Networking Distribution for the LINUX operating
 #		system.
 #
-# Version:	config.in 1.21	(98-06-30)
+# Version:	config.in 1.22	(99-04-19)
 #
 # Author:	Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
 #		Copyright 1988-1993 MicroWalt Corporation
@@ -35,15 +35,12 @@
 =  */
 *
 *
-*                     I18N
+*              Internationalization
 *
-*              (Internationalization)
-*
-* In this BETA Release the I18N (NLS) is enabled and now based
-* on GNU gettext, only a brazilian portuguese and German catalog
-* (translation) is present, but others are *highly* welcome!
-*
-* (answer 'n' if you have no system with GNU gettext support)
+* The net-tools package has currently been translated to French,
+* German and Brazilian Portugese.  Other translations are, of
+* course, welcome.  Answer `n' here if you have no support for
+* internationalization on your system.
 *
 bool 'Does your system support GNU gettext?' I18N n
 *
