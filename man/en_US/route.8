@@ -1,4 +1,4 @@
-.TH ROUTE 8 "8 August 1997" "net-tools" "Linux Programmer's Manual"
+.TH ROUTE 8 "2 January 2000" "net-tools" "Linux Programmer's Manual"
 .SH NAME
 route \- show / manipulate the IP routing table
 .SH SYNOPSIS
@@ -54,28 +54,45 @@ If]
 .RB [ \--help ]
 .SH DESCRIPTION
 .B Route
-manipulates the kernel's IP routing table.  Its primary use is to set
+manipulates the kernel's IP routing tables.  Its primary use is to set
 up static routes to specific hosts or networks via an interface after
 it has been configured with the
 .BR ifconfig (8)
 program.
 
+When the
+.B add
+or
+.B del
+options are used,
+.B route
+modifies the routing tables.  Without these options,
+.B route
+displays the current contents of the routing tables.
 
 .SH OPTIONS
 .TP
-.B \-v
-select verbose operation.
+.B \-A family
+use the specified address family (eg `inet'; use `route --help' for a full 
+list).
+
+.TP 
+.B -F
+operate on the kernel's FIB (Forwarding Information Base) routing
+table. 
+This is the default.
+.TP 
+.B -C
+operate on the kernel's routing cache.
 
 .TP
-.B \-A family
-Use the specified address family (eg `inet', `inet6').
-
+.B \-v
+select verbose operation.
 .TP
 .B \-n
 show numerical addresses instead of trying to determine symbolic host
 names. This is useful if you are trying to determine why the route to your
 nameserver has vanished.
-
 .TP
 .B \-e
 use
@@ -85,96 +102,70 @@ for displaying the routing table.
 will generate a very long line with all parameters from the routing table.
 
 .TP
+.B del
+delete a route.
+.TP 
+.B add 
+add a new route.
+.TP
+.B target
+the destination network or host. You can provide IP addresses in dotted
+decimal or host/network names.
+.TP
 .B \-net
 the
 .B target
 is a network.
-
 .TP
 .B -host
 the
 .B target 
 is a host.
-
-.TP 
-.B -F
-displays the kernel FIB routing table. The layout can be changed with
-.B \-e
-and
-.B \-ee
-.
-
-.TP 
-.B -C
-displays the kernel's route cache. 
-
 .TP
-.B del
-deletes a route.
-
-.TP 
-.B add 
-adds a route.
-
+.B netmask NM
+when adding a network route, the netmask to be used.
 .TP
-.B target
-The destination network or host. You can provide IP addresses in dotted
-decimal or host/network names.
-
-.TP
-.B netmask Nm
-modifier specifies the netmask of the route to be added.
-
-.TP
-.B gw Gw
-Any IP packets for the target network/host will be routed through the 
-specified gateway. 
+.B gw GW
+route packets via a gateway.
 .B NOTE:
 The specified gateway must be reachable first. This usually means that
 you have to set up a static route to the gateway beforehand. If you specify
 the address of one of your local interfaces, it will be used to decide about
 the interface to which the packets should be routed to. This is a BSDism
 compatibility hack.
-
 .TP
 .B metric M
-Set the metric field in the routing table (used by routing daemons) to M.
-
+set the metric field in the routing table (used by routing daemons) to M.
 .TP 
 .B mss M
-Set the TCP Maximum Segment Size (MSS) for connections over this route
+set the TCP Maximum Segment Size (MSS) for connections over this route
 to M bytes. 
 The default is the device MTU minus headers, or a lower MTU when path mtu 
 discovery occured. This setting can be used to force smaller TCP packets on the
 other end when path mtu discovery does not work (usually because of
 misconfigured firewalls that block ICMP Fragmentation Needed)
-
 .TP 
 .B window W 
-Set the TCP window size for connections over this route to W
+set the TCP window size for connections over this route to W
 bytes. This is typically only used on AX.25 networks and with drivers
 unable to handle back to back frames.
-
 .TP
 .B irtt I
-Set the initial round trip time (irtt) for TCP connections over this
+set the initial round trip time (irtt) for TCP connections over this
 route to I milliseconds (1-12000). This is typically only used on
 AX.25 networks. If omitted the RFC 1122 default of 300ms is used.
-
 .TP
 .B reject
-Install a blocking route, which will force a route lookup to fail.
+install a blocking route, which will force a route lookup to fail.
 This is for example used to mask out networks before using the default
 route.  This is NOT for firewalling.
-
 .TP
 .B mod, dyn, reinstate
-Install a dynamic or modified route. Both flags are generally only
-set by a routing daemon. This is only for diagnostic purpose.
-
+install a dynamic or modified route. These flags are for diagnostic
+purposes, and are generally only set by routing daemons.
 .TP
 .B dev If
-Forces the route to be associated with the specified device, as the
+force the route to be associated with the specified device, as the
 kernel will otherwise try to determine the device on its own (by
 checking already existing routes and device specifications, and where
 the route is added to). In most normal networks you won't need this.
@@ -245,7 +236,7 @@ and '0.0.0.0' for the
 route.
 .TP
 .B Flags 
-Possible flags are
+Possible flags include
 .br
 .B U
 (route is
@@ -269,7 +260,15 @@ installed by daemon or redirect)
 .br
 .B M
 .RB ( modified
-from routing daemon or rederict)
+from routing daemon or redirect)
+.br
+.B A
+(installed by
+.BR addrconf )
+.br
+.B C
+.RB ( cache
+entry)
 .br
 .B !
 .RB ( reject
@@ -297,7 +296,7 @@ Default window size for TCP connections over this route.
 .TP
 .B irtt
 Initial RTT (Round Trip Time). The kernel uses this to guess about the best
-TCP protocol parameters without waiting on (possible slow) answers.
+TCP protocol parameters without waiting on (possibly slow) answers.
 .TP
 .B HH (cached only)
 The number of ARP entries and cached routes that refer to the hardware
