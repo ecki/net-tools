@@ -1,10 +1,10 @@
-.TH IFCONFIG 8 "11 Nov 2001" "net-tools" "Linux Programmer's Manual"
+.TH IFCONFIG 8 "2002-07-04" "net-tools" "Linux Programmer's Manual"
 .SH NAME
 ifconfig \- configure a network interface
 .SH SYNOPSIS
-.B "ifconfig [interface]"
+.B "ifconfig [-v] [-a] [-s] [interface]"
 .br
-.B "ifconfig interface [aftype] options | address ..."
+.B "ifconfig [-v] interface [aftype] options | address ..."
 .SH DESCRIPTION
 .B Ifconfig
 is used to configure the kernel-resident network interfaces.  It is
@@ -40,6 +40,15 @@ supported address families include
 .B netrom
 (AMPR Packet radio).
 .SH OPTIONS
+.TP
+.B -a
+display all interfaces which are currently available, even if down
+.TP
+.B -s
+display a short list (like netstat -i)
+.TP
+.B -v
+be more verbose for some error conditions
 .TP
 .B interface
 The name of the interface.  This is usually a driver name followed by

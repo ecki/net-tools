@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.54 2001/11/01 03:00:13 ecki Exp $
+ * Version:     $Id: ifconfig.c,v 1.55 2002/07/03 23:40:47 ecki Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -88,7 +88,6 @@ struct in6_ifreq {
 char *Release = RELEASE, *Version = "ifconfig 1.42 (2001-04-13)";
 
 int opt_a = 0;			/* show all interfaces          */
-int opt_i = 0;			/* show the statistics          */
 int opt_v = 0;			/* debugging output flag        */
 
 int addr_family = 0;		/* currently selected AF        */
@@ -200,7 +199,7 @@ static int test_flag(char *ifname, short flags)
 
 static void usage(void)
 {
-    fprintf(stderr, _("Usage:\n  ifconfig [-a] [-i] [-v] [-s] <interface> [[<AF>] <address>]\n"));
+    fprintf(stderr, _("Usage:\n  ifconfig [-a] [-v] [-s] <interface> [[<AF>] <address>]\n"));
 #if HAVE_AFINET
     fprintf(stderr, _("  [add <address>[/<prefixlen>]]\n"));
     fprintf(stderr, _("  [del <address>[/<prefixlen>]]\n"));
