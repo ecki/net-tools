@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.53 2001/11/01 01:54:49 ecki Exp $
+ * Version:     $Id: ifconfig.c,v 1.54 2001/11/01 03:00:13 ecki Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -254,12 +254,13 @@ static int set_netmask(int skfd, struct ifreq *ifr, struct sockaddr *sa)
 int main(int argc, char **argv)
 {
     struct sockaddr sa;
+    struct sockaddr samask;
     struct sockaddr_in sin;
     char host[128];
     struct aftype *ap;
     struct hwtype *hw;
     struct ifreq ifr;
-    int goterr = 0, didnetmask = 0;
+    int goterr = 0, didnetmask = 0, neednetmask=0;
     char **spp;
     int fd;
 #if HAVE_AFINET6
@@ -941,7 +942,7 @@ int main(int argc, char **argv)
 	/* FIXME: sa is too small for INET6 addresses, inet6 should use that too, 
 	   broadcast is unexpected */
 	if (ap->getmask) {
-	    switch (ap->getmask(host, &sa, NULL)) {
+	    switch (ap->getmask(host, &samask, NULL)) {
 	    case -1:
 		usage();
 		break;
@@ -949,8 +950,8 @@ int main(int argc, char **argv)
 		if (didnetmask)
 		    usage();
 
-		goterr |= set_netmask(skfd, &ifr, &sa);
-		didnetmask++;
+		// remeber to set the netmask from samask later
+		neednetmask = 1;
 		break;
 	    }
 	}
@@ -1016,6 +1017,11 @@ int main(int argc, char **argv)
         }
 
 	spp++;
+    }
+
+    if (neednetmask) {
+	goterr |= set_netmask(skfd, &ifr, &samask);
+	didnetmask++;
     }
 
     if (opt_v && goterr)
