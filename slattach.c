@@ -456,29 +456,41 @@ tty_close(void)
 static int
 tty_open(char *name, const char *speed)
 {
-  char path[PATH_MAX];
-  register char *sp;
+  char pathbuf[PATH_MAX];
+  register char *path_open, *path_lock;
   int fd;
 
   /* Try opening the TTY device. */
   if (name != NULL) {
-	if ((sp = strrchr(name, '/')) != (char *)NULL) *sp++ = '\0';
-	  else sp = name;
-	sprintf(path, "/dev/%s", sp);
+	if (name[0] != '/') {
+		if (strlen(name + 6) > sizeof(pathbuf)) {
+			if (opt_q == 0) fprintf(stderr, 
+				_("slattach: tty name too long\n"));
+			return (-1);
+		}
+		sprintf(pathbuf, "/dev/%s", name);
+		path_open = pathbuf;
+		path_lock = name;
+	} else if (!strncmp(name, "/dev/", 5)) {
+		path_open = name;
+		path_lock = name + 5;
+	} else {
+		path_open = name;
+		path_lock = name;
+	}
 	if (opt_d) printf("slattach: tty_open: looking for lock\n");
-	if (tty_lock(sp, 1)) return(-1); /* can we lock the device? */
-	if (opt_d) printf("slattach: tty_open: trying to open %s\n", path);
-	if ((fd = open(path, O_RDWR|O_NDELAY)) < 0) {
+	if (tty_lock(path_lock, 1)) return(-1); /* can we lock the device? */
+	if (opt_d) printf("slattach: tty_open: trying to open %s\n", path_open);
+	if ((fd = open(path_open, O_RDWR|O_NDELAY)) < 0) {
 		if (opt_q == 0) fprintf(stderr,
 			"slattach: tty_open(%s, RW): %s\n",
-					path, strerror(errno));
+					path_open, strerror(errno));
 		return(-errno);
 	}
 	tty_fd = fd;
-	if (opt_d) printf("slattach: tty_open: %s (fd=%d) ", path, fd);
+	if (opt_d) printf("slattach: tty_open: %s (fd=%d) ", path_open, fd);
   } else {
 	tty_fd = 0;
-	sp = (char *)NULL;
   }
 
   /* Fetch the current state of the terminal. */
@@ -569,19 +581,20 @@ version(void)
 int
 main(int argc, char *argv[])
 {
-  char path[128];
+  char path_buf[128];
+  char *path_dev;
   char buff[128];
   const char *speed = NULL;
   const char *proto = DEF_PROTO;
   const char *extcmd = NULL;
-  char *sp;
   int s;
   static struct option longopts[] = {
     { "version", 0, NULL, 'V' },
     { NULL, 0, NULL, 0 }
   };
 
-  strcpy(path, "");
+  strcpy(path_buf, "");
+  path_dev = path_buf;
 
   /* Scan command line for any arguments. */
   opterr = 0;
@@ -655,6 +668,12 @@ main(int argc, char *argv[])
 		/*NOTREACHED*/
   }
   
+  if (setvbuf(stdout,0,_IOLBF,0)) {
+	if (opt_q == 0) fprintf(stderr, _("slattach: setvbuf(stdout,0,_IOLBF,0) : %s\n"),
+				strerror(errno));
+	exit(1);
+  }
+
   activate_init();
 
   if (!strcmp(proto, "tty"))
@@ -662,15 +681,14 @@ main(int argc, char *argv[])
 
   /* Is a terminal given? */
   if (optind != (argc - 1)) usage();
-  safe_strncpy(path, argv[optind], sizeof(path));
-  if (!strcmp(path, "-")) {
+  safe_strncpy(path_buf, argv[optind], sizeof(path_buf));
+  if (!strcmp(path_buf, "-")) {
 	opt_e = 1;
-	sp = NULL;
+	path_dev = NULL;
 	if (tty_open(NULL, speed) < 0) { return(3); }
   } else {
-	if ((sp = strrchr(path, '/')) != NULL) *sp++ = '\0';
-	  else sp = path;
-	if (tty_open(sp, speed) < 0) { return(3); }
+	path_dev = path_buf;
+	if (tty_open(path_dev, speed) < 0) { return(3); }
   }
 
   /* Start the correct protocol. */
@@ -684,7 +702,7 @@ main(int argc, char *argv[])
   if ((opt_v == 1) || (opt_d == 1)) {
         if (tty_get_name(buff)) { return(3); }
 	printf(_("%s started"), proto);
-	if (sp != NULL) printf(_(" on %s"), sp);
+	if (path_dev != NULL) printf(_(" on %s"), path_dev);
 	printf(_(" interface %s\n"), buff);
   }
 
