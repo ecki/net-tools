@@ -48,6 +48,7 @@ extern	struct hwtype	tr_hwtype;
 extern	struct hwtype	ax25_hwtype;
 extern  struct hwtype   netrom_hwtype;
 extern  struct hwtype   tunnel_hwtype;
+extern	struct hwtype	ash_hwtype;
 
 extern struct hwtype	ppp_hwtype;
 
@@ -68,6 +69,9 @@ static struct hwtype *hwtypes[] = {
   &slip6_hwtype,
   &cslip6_hwtype,
   &adaptive_hwtype,
+#endif
+#if HAVE_HWASH
+  &ash_hwtype,
 #endif
 #if HAVE_HWETHER
   &ether_hwtype,
@@ -116,6 +120,9 @@ void hwinit ()
   unspec_hwtype.title = NLS_CATSAVE (catfd, loopbackSet, loopback_unspec, "UNSPEC");
 #if HAVE_HWETHER
   ether_hwtype.title = NLS_CATSAVE (catfd, etherSet, ether_ether, "Ethernet");
+#endif
+#if HAVE_HWASH
+  ash_hwtype.title = NLS_CATSAVE (catfd, ashSet, ash_hw, "64Mbps ASH");
 #endif
 #if HAVE_HWAX25
   ax25_hwtype.title = NLS_CATSAVE (catfd, ax25Set, ax25_hw, "AMPR AX.25");

@@ -81,3 +81,5 @@ bool 'AX25 (Packet Radio) support' HAVE_HWAX25 y
 bool 'NET/ROM (Packet Radio) support' HAVE_HWNETROM y
 bool 'DLCI/FRAD (Frame Relay) support' HAVE_HWFR y
 bool 'SIT (IPv6-in-IPv4) support' HAVE_HWSIT n
+bool 'Ash support' HAVE_HWASH y
+
