@@ -1,5 +1,5 @@
 /*
-   $Id: inet_gr.c,v 1.10 1999/01/05 20:53:43 philip Exp $
+   $Id: inet_gr.c,v 1.11 1999/03/02 21:09:15 philip Exp $
 
    Modifications:
    1998-07-01 - Arnaldo Carvalho de Melo - GNU gettext instead of catgets
@@ -31,13 +31,14 @@
 #include "proc.h"
 extern struct aftype inet_aftype;
 
+extern char *INET_sprintmask(struct sockaddr *sap, int numeric, 
+			     unsigned int netmask);
 
 int rprint_fib(int ext, int numeric)
 {
     char buff[1024], iface[16], flags[64];
     char gate_addr[128], net_addr[128];
     char mask_addr[128];
-    struct sockaddr snet;
     int num, iflags, metric, refcnt, use, mss, window, irtt;
     FILE *fp = fopen(_PATH_PROCNET_ROUTE, "r");
     char *fmt;
@@ -83,6 +84,9 @@ int rprint_fib(int ext, int numeric)
 	return 1;
 
     while (fgets(buff, 1023, fp)) {
+        struct sockaddr snet_target, snet_gateway, snet_mask;
+	struct sockaddr_in *sin_netmask;
+
 	num = sscanf(buff, fmt,
 		     iface, net_addr, gate_addr,
 		     &iflags, &refcnt, &use, &metric, mask_addr,
@@ -91,18 +95,24 @@ int rprint_fib(int ext, int numeric)
 	    continue;
 
 	/* Fetch and resolve the target address. */
-	(void) inet_aftype.input(1, net_addr, &snet);
-	strcpy(net_addr, inet_aftype.sprint(&snet, (numeric | 0x8000)));
-	net_addr[15] = '\0';
+	(void) inet_aftype.input(1, net_addr, &snet_target);
 
 	/* Fetch and resolve the gateway address. */
-	(void) inet_aftype.input(1, gate_addr, &snet);
-	strcpy(gate_addr, inet_aftype.sprint(&snet, numeric));
-	gate_addr[15] = '\0';
+	(void) inet_aftype.input(1, gate_addr, &snet_gateway);
 
 	/* Fetch and resolve the genmask. */
-	(void) inet_aftype.input(1, mask_addr, &snet);
-	strcpy(mask_addr, inet_aftype.sprint(&snet, 1));
+	(void) inet_aftype.input(1, mask_addr, &snet_mask);
+	
+	sin_netmask = (struct sockaddr_in *)&snet_mask;
+	strcpy(net_addr, INET_sprintmask(&snet_target, 
+					 (numeric | 0x8000),
+					 sin_netmask->sin_addr.s_addr));
+	net_addr[15] = '\0';
+
+	strcpy(gate_addr, inet_aftype.sprint(&snet_gateway, numeric));
+	gate_addr[15] = '\0';
+
+	strcpy(mask_addr, inet_aftype.sprint(&snet_mask, 1));
 	mask_addr[15] = '\0';
 
 	/* Decode the flags. */

@@ -3,7 +3,7 @@
  *              support functions for the net-tools.
  *              (NET-3 base distribution).
  *
- * Version:    $Id: inet.c,v 1.8 1999/01/05 20:53:33 philip Exp $
+ * Version:    $Id: inet.c,v 1.9 1999/03/02 21:09:14 philip Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -16,6 +16,7 @@
  *960219 {1.25} Bernd Eckenfels :       extern int h_errno
  *960329 {1.26} Bernd Eckenfels :       resolve 255.255.255.255 
  *980101 {1.27} Bernd Eckenfels :	resolve raw sockets in /etc/protocols
+ *990302 {1.28} Phil Blundell   :       add netmask to INET_rresolve
  *
  *              This program is free software; you can redistribute it
  *              and/or  modify it under  the terms of  the GNU General
@@ -104,7 +105,8 @@ static int INET_resolve(char *name, struct sockaddr_in *sin)
 }
 
 
-static int INET_rresolve(char *name, struct sockaddr_in *sin, int numeric)
+static int INET_rresolve(char *name, struct sockaddr_in *sin, int numeric,
+			 unsigned int netmask)
 {
     struct hostent *ent;
     struct netent *np;
@@ -148,7 +150,7 @@ static int INET_rresolve(char *name, struct sockaddr_in *sin, int numeric)
     host_ad = ntohl(ad);
     np = NULL;
     ent = NULL;
-    if ((host_ad & 0xFF) != 0) {
+    if ((ad & (~ netmask)) != 0) {
 	ent = gethostbyaddr((char *) &ad, 4, AF_INET);
 	if (ent != NULL)
 	    strcpy(name, ent->h_name);
@@ -192,7 +194,21 @@ static char *INET_sprint(struct sockaddr *sap, int numeric)
 
     if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
 	return safe_strncpy(buff, _("[NONE SET]"), sizeof(buff));
-    if (INET_rresolve(buff, (struct sockaddr_in *) sap, numeric) != 0)
+    if (INET_rresolve(buff, (struct sockaddr_in *) sap, numeric, 
+		      0xffffff00) != 0)
+	return (NULL);
+    return (buff);
+}
+
+char *INET_sprintmask(struct sockaddr *sap, int numeric, 
+		      unsigned int netmask)
+{
+    static char buff[128];
+
+    if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
+	return safe_strncpy(buff, _("[NONE SET]"), sizeof(buff));
+    if (INET_rresolve(buff, (struct sockaddr_in *) sap, numeric,
+		      netmask) != 0)
 	return (NULL);
     return (buff);
 }
