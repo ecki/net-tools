@@ -28,7 +28,14 @@ Contents:
                           Notes
                           -----
 
-This is net-tools 1.49.  Notable changes since 1.48 include:
+This is net-tools 1.50.  Notable changes since 1.49 include:
+
+ - netstat supports a new option `--listening' to show only listening
+   sockets.
+ - netstat -s is improved.
+ - route/netstat -r display the routing cache correctly.
+
+Notable changes since 1.48 include:
 
  - IP masquerading support is now selectable.
  - The -t and -u switches to netstat now work as expected.
@@ -72,16 +79,23 @@ route/netstat -r do not yet support different AF cleanly.  IPX/DDP/AX25
 people, please feel free to add the code.
 
 ifconfig now supports changing media types for interfaces.  This requires
-a recent 2.1.x kernel, and many devices do not support it yet.
+a recent 2.1.x or 2.2.x kernel, and many devices do not support it yet.
 
 The documentation is slimmed down.  I think most of it was out of
 date.
 
-Some configuration options require recent 2.1.x kernels and/or particular
-versions of the C library.  The defaults should be safe for all common
-environments but some of the more esoteric hardware and protocol families
-may be more touchy.  Feel free to send patches if you have problems.
+The tools now support the layout of the 2.2.0 /proc files (Bernd Eckenfels).
+
+Some configuration options require recent 2.1.x or 2.2.x kernels
+and/or particular versions of the C library.  The defaults should be
+safe for all common environments but some of the more esoteric
+hardware and protocol families may be more touchy.  Feel free to send
+patches if you have problems.
 
 Phil Blundell
 philb@gnu.org
 11th December 1998
+
+Bernd Eckenfels
+net-tools@lina.inka.de
+1999-01-02

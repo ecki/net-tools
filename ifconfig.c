@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.25 1998/12/06 16:17:44 philip Exp $
+ * Version:     $Id: ifconfig.c,v 1.26 1999/01/05 20:52:58 philip Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -17,6 +17,8 @@
  *                     - gettext instead of catgets for i18n
  *          10/1998  - Andi Kleen. Use interface list primitives.       
  */
+
+#define DFLT_AF "inet"
 
 #include "config.h"
 
@@ -107,7 +109,7 @@ static const char *if_port_text[][4] =
 #include "sockets.h"
 #include "util.h"
 
-char *Release = RELEASE, *Version = "ifconfig 1.37 (1998-12-05)";
+char *Release = RELEASE, *Version = "ifconfig 1.38 (1999-01-05)";
 
 int opt_a = 0;			/* show all interfaces          */
 int opt_i = 0;			/* show the statistics          */
@@ -418,42 +420,42 @@ static int clr_flag(char *ifname, short flag)
 
 static void usage(void)
 {
-    fprintf(stderr, _("Usage: ifconfig [-a] [-i] [-v] interface\n"));
-    fprintf(stderr, _("                [[family] address]\n"));
+    fprintf(stderr, _("Usage:\n  ifconfig [-a] [-i] [-v] <interface> [[<AF>] <address>]\n"));
     /* XXX: it would be useful to have the add/del syntax even without IPv6.
        the 2.1 interface address lists make this natural */
 #ifdef HAVE_AFINET6
-    fprintf(stderr, _("                [add address[/prefixlen]]\n"));
+    fprintf(stderr, _("  [add <address>[/<prefixlen>]]\n"));
 #ifdef SIOCDIFADDR
-    fprintf(stderr, _("                [del address[/prefixlen]]\n"));
+    fprintf(stderr, _("  [del <address>[/<prefixlen>]]\n"));
 #endif
     /* XXX the kernel supports tunneling even without ipv6 */
-    fprintf(stderr, _("                [tunnel aa.bb.cc.dd]\n"));
 #endif
 #if HAVE_AFINET
-    fprintf(stderr, _("                [[-]broadcast [aa.bb.cc.dd]]\n"));
-    fprintf(stderr, _("                [[-]pointopoint [aa.bb.cc.dd]]\n"));
-    fprintf(stderr, _("                [netmask aa.bb.cc.dd]\n"));
-    fprintf(stderr, _("                [dstaddr aa.bb.cc.dd]\n"));
+    fprintf(stderr, _("  [[-]broadcast [<address>]]  [[-]pointopoint [<address>]]\n"));
+    fprintf(stderr, _("  [netmask <address>]  [dstaddr <address>]  [tunnel <adress>]\n"));
 #endif
-    fprintf(stderr, _("                [hw class address]\n"));
-    fprintf(stderr, _("                [metric NN] [mtu NN]\n"));
 #ifdef SIOCSKEEPALIVE
-    fprintf(stderr, _("                [outfill NN] [keepalive NN]\n"));
+    fprintf(stderr, _("  [outfill <NN>] [keepalive <NN>]\n"));
 #endif
-    fprintf(stderr, _("                [[-]trailers] [[-]arp]\n"));
-    fprintf(stderr, _("                [[-]allmulti] [[-]promisc]\n"));
-    fprintf(stderr, _("                [multicast]\n"));
-    fprintf(stderr, _("                [mem_start NN] [io_addr NN] [irq NN]\n"));
-    fprintf(stderr, _("                [media type]\n"));
+    fprintf(stderr, _("  [hw <HW> <address>]  [metric <NN>]  [mtu <NN>]\n"));
+    fprintf(stderr, _("  [[-]trailers]  [[-]arp]  [[-]allmulti]\n"));
+    fprintf(stderr, _("  [multicast]  [[-]promisc]\n"));
+    fprintf(stderr, _("  [mem_start <NN>]  [io_addr <NN>]  [irq <NN>]  [media <type>]\n"));
 #ifdef HAVE_TXQUEUELEN
-    fprintf(stderr, _("                [txqueuelen len]\n"));
+    fprintf(stderr, _("  [txqueuelen len]\n"));
 #endif
 #ifdef HAVE_DYNAMIC
-    fprintf(stderr, _("                [[-]dynamic]\n"));
+    fprintf(stderr, _("  [[-]dynamic]\n"));
 #endif
-    fprintf(stderr, _("                [up] [down] ...\n"));
-    exit(1);
+    fprintf(stderr, _("  [up|down] ...\n\n"));
+
+    fprintf(stderr, _("  <HW>=Hardware Type.\n"));
+    fprintf(stderr, _("  List of possible hardware types:\n"));
+    print_hwlist(0); /* 1 = ARPable */
+    fprintf(stderr, _("  <AF>=Address family. Default: %s\n"), DFLT_AF);
+    fprintf(stderr, _("  List of possible address families:\n"));
+    print_aflist(0); /* 1 = routeable */
+    exit(E_USAGE);
 }
 
 static void version(void)
@@ -543,7 +545,7 @@ int main(int argc, char **argv)
     }
     /* The next argument is either an address family name, or an option. */
     if ((ap = get_aftype(*spp)) == NULL)
-	ap = get_aftype("inet");
+	ap = get_aftype(DFLT_AF);
     else {
 	/* XXX: should print the current setup if no args left, but only 
 	   for this family */
@@ -1089,7 +1091,23 @@ int main(int argc, char **argv)
 		goterr = 1;
 	    }
 	}
-	goterr |= set_flag(ifr.ifr_name, (IFF_UP | IFF_RUNNING));
+       /*
+        * Don't do the set_flag() if the address is an alias with a - at the
+        * end, since it's deleted already! - Roman
+        *
+        * Should really use regex.h here, not sure though how well it'll go
+        * with the cross-platform support etc. 
+        */
+        {
+            char *ptr;
+            short int found_colon = 0;
+            for (ptr = ifr.ifr_name; *ptr; ptr++ )
+                if (*ptr == ':') found_colon++;
+                
+            if (!(found_colon && *(ptr - 1) == '-'))
+                goterr |= set_flag(ifr.ifr_name, (IFF_UP | IFF_RUNNING));
+        }
+
 	spp++;
     }
 

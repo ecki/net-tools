@@ -1,4 +1,3 @@
-
 /*
  * netstat    This file contains an implementation of the command
  *              that helps in debugging the networking modules.
@@ -7,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.15 1998/12/11 10:48:52 philip Exp $
+ * Version:     $Id: netstat.c,v 1.16 1999/01/05 20:53:00 philip Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -45,7 +44,12 @@
  *                                      minor header file misplacement tidy up.
  *980411 {1.34} Arnaldo Carvalho        i18n: catgets -> gnu gettext, substitution
  *                                      of sprintf for snprintf
- *10/1998               Andi Kleen              Use new interface primitives.
+ *10/1998	Andi Kleen              Use new interface primitives.
+ *990101 {1.36}	Bernd Eckenfels		usage updated to include -s and -C -F,
+ *					fixed netstat -rC output (lib/inet_gr.c)
+ *					removed broken NETLINK Support
+ *					fixed format for /proc/net/udp|tcp|raw
+ 					added -w,-t,-u TcpExt support to -s
  *
  *              This program is free software; you can redistribute it
  *              and/or  modify it under  the terms of  the GNU General
@@ -71,7 +75,7 @@
 #include <netinet/in.h>
 #include <sys/ioctl.h>
 #include <net/if.h>
-#include <net/route.h>
+/* #include <net/route.h> realy broken */
 #include "net-support.h"
 #include "pathnames.h"
 #include "version.h"
@@ -81,7 +85,7 @@
 #include "interface.h"
 
 /* prototypes for statistics.c */
-void parsesnmp(void);
+void parsesnmp(int, int, int);
 void inittab(void);
 
 typedef enum {
@@ -101,18 +105,19 @@ typedef enum {
 #define FEATURE_NETSTAT
 #include "lib/net-features.h"
 
-char *Release = RELEASE, *Version = "netstat 1.35 (1998-12-05)", *Signature = "Fred Baumgarten <dc6iq@insu1.etec.uni-karlsruhe.de> and Alan Cox.";
+char *Release = RELEASE, *Version = "netstat 1.36 (1999-01-01)", *Signature = "Fred Baumgarten, Alan Cox, Bernd Eckenfels and Phil Blundell and others.";
 
 
 #define E_READ  -1
 #define E_IOCTL -3
 
-int flag_nlp = 0;
 int flag_int = 0;
 int flag_rou = 0;
 int flag_mas = 0;
+int flag_sta = 0;
 
 int flag_all = 0;
+int flag_lst = 0;
 int flag_cnt = 0;
 int flag_deb = 0;
 int flag_not = 0;
@@ -184,101 +189,6 @@ FILE *procinfo;
  int lnr = 0;						\
  INFO_GUTS1(file,name,proc)				\
  INFO_GUTS3
-
-#if HAVE_RT_NETLINK && 0
-static int netlink_print(void)
-{
-    int flag;
-#define NL_DEV   1
-#define NL_ADDR  2
-#define NL_MISC  4
-    int fd, ret;
-    struct in_rtmsg buf;
-    struct aftype *ap;
-    struct sockaddr *s;
-
-    if ((fd = open(_PATH_DEV_ROUTE, O_RDONLY)) < 0) {
-	if (errno == ENODEV)
-	    ESYSNOT("netstat", _PATH_DEV_ROUTE);
-	else
-	    perror(_PATH_DEV_ROUTE);
-	return (-1);
-    }
-    if (flag_ver) {
-	printf(_("Netlink Kernel Messages"));
-	if (flag_cnt)
-	    printf(_(" (continous)"));
-	printf("\n");
-    }
-    do {
-	if ((ret = read(fd, (char *) &buf, sizeof(buf))) < 0) {
-	    perror("read " _PATH_DEV_ROUTE);
-	    return (-1);
-	}
-	if (ret != sizeof(buf)) {
-	    EINTERN("netstat.c", _("netlink message size mismatch"));
-	    return (-1);
-	}
-	flag = 0;
-	/* No NLS, keep this parseable */
-	switch (buf.rtmsg_type) {
-	case RTMSG_NEWROUTE:
-	    printf("NEWROUTE\t");
-	    flag = NL_DEV | NL_ADDR | NL_MISC;
-	    break;
-	case RTMSG_DELROUTE:
-	    printf("DELROUTE\t");
-	    flag = NL_DEV | NL_ADDR | NL_MISC;
-	    break;
-	case RTMSG_NEWDEVICE:
-	    printf("NEWDEVICE\t");
-	    flag = NL_DEV | NL_MISC;
-	    break;
-	case RTMSG_DELDEVICE:
-	    printf("DELDEVICE\t");
-	    flag = NL_DEV | NL_MISC;
-	    break;
-	default:
-	    printf("UNKNOWN%lx\t", buf.rtmsg_type);
-	    flag = NL_DEV | NL_ADDR | NL_MISC;
-	    break;
-	}
-
-	if (flag & NL_ADDR) {
-	    s = &buf.rtmsg_dst;
-	    ap = get_afntype(s->sa_family);
-	    if (ap == NULL)
-		ap = get_afntype(0);
-
-	    printf("%s/%s ", ap->sprint(s, flag_not), ap->name);
-
-	    s = &buf.rtmsg_gateway;
-	    ap = get_afntype(s->sa_family);
-	    if (ap == NULL)
-		ap = get_afntype(0);
-
-	    printf("%s/%s ", ap->sprint(s, flag_not), ap->name);
-
-	    s = &buf.rtmsg_genmask;
-	    ap = get_afntype(s->sa_family);
-	    if (ap == NULL)
-		ap = get_afntype(0);
-
-	    printf("%s/%s ", ap->sprint(s, 1), ap->name);
-	}
-	if (flag & NL_MISC) {
-	    printf("0x%x %d ", buf.rtmsg_flags, buf.rtmsg_metric);
-	}
-	if (flag & NL_DEV) {
-	    printf("%s", buf.rtmsg_device);
-	}
-	printf("\n");
-    } while (flag_cnt);
-    close(fd);
-    return (0);
-}
-#endif
-
 
 #if HAVE_AFNETROM
 static const char *netrom_state[] =
@@ -368,9 +278,9 @@ static const char *tcp_state[] =
 
 static void tcp_do_one(int lnr, const char *line)
 {
-    unsigned long rxq, txq, time_len, retr;
-    int num, local_port, rem_port, d, state, uid, timer_run;
-    char rem_addr[128], local_addr[128], timers[64], buffer[1024];
+    unsigned long rxq, txq, time_len, retr, inode;
+    int num, local_port, rem_port, d, state, uid, timer_run, timeout;
+    char rem_addr[128], local_addr[128], timers[64], buffer[1024], more[512];
     struct aftype *ap;
     struct passwd *pw;
 #if HAVE_AFINET6
@@ -385,9 +295,9 @@ static void tcp_do_one(int lnr, const char *line)
 	return;
 
     num = sscanf(line,
-    "%d: %64[0-9A-Fa-f]:%X %64[0-9A-Fa-f]:%X %X %lX:%lX %X:%lX %lX %d\n",
+    "%d: %64[0-9A-Fa-f]:%X %64[0-9A-Fa-f]:%X %X %lX:%lX %X:%lX %lX %d %d %ld %512s\n",
 		 &d, local_addr, &local_port, rem_addr, &rem_port, &state,
-		 &txq, &rxq, &timer_run, &time_len, &retr, &uid);
+		 &txq, &rxq, &timer_run, &time_len, &retr, &uid, &timeout, &inode, more);
 
     if (strlen(local_addr) > 8) {
 #if HAVE_AFINET6
@@ -445,7 +355,7 @@ static void tcp_do_one(int lnr, const char *line)
     }
     strcpy(local_addr, ap->sprint((struct sockaddr *) &localaddr, flag_not));
     strcpy(rem_addr, ap->sprint((struct sockaddr *) &remaddr, flag_not));
-    if (flag_all || rem_port) {
+    if (flag_all || (flag_lst && !rem_port) || (!flag_lst && rem_port)) {
 	snprintf(buffer, sizeof(buffer), "%s", get_sname(htons(local_port), "tcp", flag_not));
 
 	if ((strlen(local_addr) + strlen(buffer)) > 22)
@@ -465,17 +375,18 @@ static void tcp_do_one(int lnr, const char *line)
 	if (flag_opt)
 	    switch (timer_run) {
 	    case 0:
-		snprintf(timers, sizeof(timers), _("off (0.00/%ld)"), retr);
+		snprintf(timers, sizeof(timers), _("off (0.00/%ld/%d)"), retr, timeout);
 		break;
 
 	    case 1:
-		snprintf(timers, sizeof(timers), _("on (%2.2f/%ld)"),
-			 (double) time_len / 100, retr);
+	    case 2:
+		snprintf(timers, sizeof(timers), _("on%d (%2.2f/%ld/%d)"),
+			 timer_run,(double) time_len / HZ, retr, timeout);
 		break;
 
 	    default:
-		snprintf(timers, sizeof(timers), _("unkn-%d (%2.2f/%ld)"),
-			 timer_run, (double) time_len / 100, retr);
+		snprintf(timers, sizeof(timers), _("unkn-%d (%2.2f/%ld/%d)"),
+			 timer_run, (double) time_len / HZ, retr, timeout);
 		break;
 	    }
 	printf("tcp   %6ld %6ld %-23s %-23s %-12s",
@@ -486,6 +397,7 @@ static void tcp_do_one(int lnr, const char *line)
 		printf("%-10s ", pw->pw_name);
 	    else
 		printf("%-10d ", uid);
+	    printf("%-10ld ",inode);
 	}
 	if (flag_opt)
 	    printf("%s", timers);
@@ -502,8 +414,9 @@ static int tcp_info(void)
 static void udp_do_one(int lnr, const char *line)
 {
     char buffer[8192], local_addr[64], rem_addr[64];
-    char *udp_state, timer_queued, timers[64], more[512];
-    int num, local_port, rem_port, d, state, timer_run;
+    char *udp_state, timers[64], more[512];
+    int num, local_port, rem_port, d, state, timer_run, uid, timeout;
+    struct passwd *pw;
 #if HAVE_AFINET6
     struct sockaddr_in6 localaddr, remaddr;
     char addr6p[8][5];
@@ -513,18 +426,17 @@ static void udp_do_one(int lnr, const char *line)
     struct sockaddr_in localaddr, remaddr;
 #endif
     struct aftype *ap;
-    unsigned long rxq, txq, time_len, retr;
+    unsigned long rxq, txq, time_len, retr, inode;
 
     if (lnr == 0)
 	return;
 
     more[0] = '\0';
-    timer_queued = '\0';
     num = sscanf(line,
-		 "%d: %64[0-9A-Fa-f]:%X %64[0-9A-Fa-f]:%X %X %lX:%lX %X:%lX %lX %c %512s\n",
+		 "%d: %64[0-9A-Fa-f]:%X %64[0-9A-Fa-f]:%X %X %lX:%lX %X:%lX %lX %d %d %ld %512s\n",
 		 &d, local_addr, &local_port,
 		 rem_addr, &rem_port, &state,
-	  &txq, &rxq, &timer_run, &time_len, &retr, &timer_queued, more);
+	  &txq, &rxq, &timer_run, &time_len, &retr, &uid, &timeout, &inode, more);
 
     if (strlen(local_addr) > 8) {
 #if HAVE_AFINET6
@@ -581,31 +493,31 @@ static void udp_do_one(int lnr, const char *line)
 	break;
     }
 
-    strcpy(local_addr, ap->sprint((struct sockaddr *) &localaddr, flag_not));
-    strcpy(rem_addr, ap->sprint((struct sockaddr *) &remaddr, flag_not));
 #if HAVE_AFINET6
-    if (flag_all ||
-	((localaddr.sin6_family == AF_INET6) &&
-	 ((localaddr.sin6_addr.s6_addr32[0]) ||
-	  (localaddr.sin6_addr.s6_addr32[1]) ||
-	  (localaddr.sin6_addr.s6_addr32[2]) ||
-	  (localaddr.sin6_addr.s6_addr32[3]))) ||
-	((localaddr.sin6_family == AF_INET) &&
-	 ((struct sockaddr_in *) &localaddr)->sin_addr.s_addr))
+#define notnull(A) ((A.sin6_family == AF_INET6) && \
+	 ((A.sin6_addr.s6_addr32[0]) ||            \
+	  (A.sin6_addr.s6_addr32[1]) ||            \
+	  (A.sin6_addr.s6_addr32[2]) ||            \
+	  (A.sin6_addr.s6_addr32[3]))) ||          \
+	((A.sin6_family == AF_INET) &&             \
+	 ((struct sockaddr_in *) &A)->sin_addr.s_addr))
 #else
-    if (flag_all || localaddr.sin_addr.s_addr)
+#define notnull(A) (A.sin_addr.s_addr)
 #endif
+
+    if (flag_all || (notnull(remaddr) && !flag_lst) || (!notnull(remaddr) && flag_lst))
     {
+        strcpy(local_addr, ap->sprint((struct sockaddr *) &localaddr, flag_not));
 	snprintf(buffer, sizeof(buffer), "%s", get_sname(htons(local_port), "udp", flag_not));
 	if ((strlen(local_addr) + strlen(buffer)) > 22)
 	    local_addr[22 - strlen(buffer)] = '\0';
-
 	strcat(local_addr, ":");
 	strcat(local_addr, buffer);
+
 	snprintf(buffer, sizeof(buffer), "%s", get_sname(htons(rem_port), "udp", flag_not));
+        strcpy(rem_addr, ap->sprint((struct sockaddr *) &remaddr, flag_not));
 	if ((strlen(rem_addr) + strlen(buffer)) > 22)
 	    rem_addr[22 - strlen(buffer)] = '\0';
-
 	strcat(rem_addr, ":");
 	strcat(rem_addr, buffer);
 
@@ -613,24 +525,29 @@ static void udp_do_one(int lnr, const char *line)
 	if (flag_opt)
 	    switch (timer_run) {
 	    case 0:
-		snprintf(timers, sizeof(timers), _("off (0.00/%ld) %c"), retr, timer_queued);
+		snprintf(timers, sizeof(timers), _("off (0.00/%ld/%d)"), retr, timeout);
 		break;
 
 	    case 1:
-		snprintf(timers, sizeof(timers), _("on (%2.2f/%ld) %c"), (double) time_len / 100, retr, timer_queued);
+	    case 2:
+		snprintf(timers, sizeof(timers), _("on%d (%2.2f/%ld/%d)"), timer_run, (double) time_len / 100, retr, timeout);
 		break;
 
 	    default:
-		snprintf(timers, sizeof(timers), _("unkn-%d (%2.2f/%ld) %c"), timer_run, (double) time_len / 100,
-			 retr, timer_queued);
+		snprintf(timers, sizeof(timers), _("unkn-%d (%2.2f/%ld/%d)"), timer_run, (double) time_len / 100,
+			 retr, timeout);
 		break;
 	    }
 	printf("udp   %6ld %6ld %-23s %-23s %-12s",
 	       rxq, txq, local_addr, rem_addr, udp_state);
 
-	if (flag_exp > 1)
-	    printf("%-10s ", "");
-
+	if (flag_exp > 1) {
+	    if (!flag_not && ((pw = getpwuid(uid)) != NULL))
+		printf("%-10s ", pw->pw_name);
+	    else
+		printf("%-10d ", uid);
+	    printf("%-10ld ",inode);
+	}
 	if (flag_opt)
 	    printf("%s", timers);
 	printf("\n");
@@ -646,8 +563,9 @@ static int udp_info(void)
 static void raw_do_one(int lnr, const char *line)
 {
     char buffer[8192], local_addr[64], rem_addr[64];
-    char *raw_state, timer_queued, timers[64], more[512];
-    int num, local_port, rem_port, d, state, timer_run;
+    char timers[64], more[512];
+    int num, local_port, rem_port, d, state, timer_run, uid, timeout;
+    struct passwd *pw;
 #if HAVE_AFINET6
     struct sockaddr_in6 localaddr, remaddr;
     char addr6p[8][5];
@@ -657,17 +575,16 @@ static void raw_do_one(int lnr, const char *line)
     struct sockaddr_in localaddr, remaddr;
 #endif
     struct aftype *ap;
-    unsigned long rxq, txq, time_len, retr;
+    unsigned long rxq, txq, time_len, retr, inode;
 
     if (lnr == 0)
 	return;
 
     more[0] = '\0';
-    timer_queued = '\0';
     num = sscanf(line,
-		 "%d: %64[0-9A-Fa-f]:%X %64[0-9A-Fa-f]:%X %X %lX:%lX %X:%lX %lX %c %512s\n",
+		 "%d: %64[0-9A-Fa-f]:%X %64[0-9A-Fa-f]:%X %X %lX:%lX %X:%lX %lX %d %d %ld %512s\n",
 		 &d, local_addr, &local_port, rem_addr, &rem_port, &state,
-	  &txq, &rxq, &timer_run, &time_len, &retr, &timer_queued, more);
+	  &txq, &rxq, &timer_run, &time_len, &retr, &uid, &timeout, &inode, more);
 
     if (strlen(local_addr) > 8) {
 #if HAVE_AFINET6
@@ -715,32 +632,20 @@ static void raw_do_one(int lnr, const char *line)
 	fprintf(stderr, _("warning, got bogus raw line.\n"));
 	return;
     }
-    raw_state = "";
-    strcpy(local_addr, ap->sprint((struct sockaddr *) &localaddr, flag_not));
-    strcpy(rem_addr, ap->sprint((struct sockaddr *) &remaddr, flag_not));
-#if HAVE_AFINET6
-    if (flag_all ||
-	((localaddr.sin6_family == AF_INET6) &&
-	 ((localaddr.sin6_addr.s6_addr32[0]) ||
-	  (localaddr.sin6_addr.s6_addr32[1]) ||
-	  (localaddr.sin6_addr.s6_addr32[2]) ||
-	  (localaddr.sin6_addr.s6_addr32[3]))) ||
-	((localaddr.sin6_family == AF_INET) &&
-	 ((struct sockaddr_in *) &localaddr)->sin_addr.s_addr))
-#else
-    if (flag_all || localaddr.sin_addr.s_addr)
-#endif
+
+    if (flag_all || (notnull(remaddr) && !flag_lst) || (!notnull(remaddr) && flag_lst))
     {
 	snprintf(buffer, sizeof(buffer), "%s", get_sname(htons(local_port), "raw", flag_not));
+        strcpy(local_addr, ap->sprint((struct sockaddr *) &localaddr, flag_not));
 	if ((strlen(local_addr) + strlen(buffer)) > 22)
 	    local_addr[22 - strlen(buffer)] = '\0';
-
 	strcat(local_addr, ":");
 	strcat(local_addr, buffer);
+
 	snprintf(buffer, sizeof(buffer), "%s", get_sname(htons(rem_port), "raw", flag_not));
+        strcpy(rem_addr, ap->sprint((struct sockaddr *) &remaddr, flag_not));
 	if ((strlen(rem_addr) + strlen(buffer)) > 22)
 	    rem_addr[22 - strlen(buffer)] = '\0';
-
 	strcat(rem_addr, ":");
 	strcat(rem_addr, buffer);
 
@@ -748,26 +653,31 @@ static void raw_do_one(int lnr, const char *line)
 	if (flag_opt)
 	    switch (timer_run) {
 	    case 0:
-		snprintf(timers, sizeof(timers), _("off (0.00/%ld) %c"), retr, timer_queued);
+		snprintf(timers, sizeof(timers), _("off (0.00/%ld/%d)"), retr, timeout);
 		break;
 
 	    case 1:
-		snprintf(timers, sizeof(timers), _("on (%2.2f/%ld) %c"), (double) time_len / 100,
-			 retr, timer_queued);
+            case 2:
+		snprintf(timers, sizeof(timers), _("on%d (%2.2f/%ld/%d)"), timer_run, (double) time_len / 100,
+			 retr, timeout);
 		break;
 
 	    default:
-		snprintf(timers, sizeof(timers), _("unkn-%d (%2.2f/%ld) %c"),
+		snprintf(timers, sizeof(timers), _("unkn-%d (%2.2f/%ld/%d)"),
 			 timer_run, (double) time_len / 100,
-			 retr, timer_queued);
+			 retr, timeout);
 		break;
 	    }
-	printf("raw   %6ld %6ld %-23s %-23s %-12s",
-	       rxq, txq, local_addr, rem_addr, raw_state);
+	printf("raw   %6ld %6ld %-23s %-23s %-12d",
+	       rxq, txq, local_addr, rem_addr, state);
 
-	if (flag_exp > 1)
-	    printf("%-10s ", "");
-
+	if (flag_exp > 1) {
+	    if (!flag_not && ((pw = getpwuid(uid)) != NULL))
+		printf("%-10s ", pw->pw_name);
+	    else
+		printf("%-10d ", uid);
+	    printf("%-10ld ",inode);
+	}
 	if (flag_opt)
 	    printf("%s", timers);
 	printf("\n");
@@ -813,8 +723,16 @@ static void unix_do_one(int nr, const char *line)
 	strcpy(path, inode);
 	strcpy(inode, "-");
     }
-    if (!flag_all && (state == SS_UNCONNECTED) && (flags & SO_ACCEPTCON))
-	return;
+
+    if (!flag_all) {
+    	if ((state == SS_UNCONNECTED) && (flags & SO_ACCEPTCON)) {
+    		if (!flag_lst)
+    			return;
+    	} else {
+    		if (flag_lst)
+    			return;
+    	}
+    }
 
     switch (proto) {
     case 0:
@@ -900,11 +818,15 @@ static void unix_do_one(int nr, const char *line)
 static int unix_info(void)
 {
 
-    printf(_("Active UNIX domain sockets "));	/* xxx */
+    printf(_("Active UNIX domain sockets "));
     if (flag_all)
-	printf(_("(including servers)"));	/* xxx */
-    else
-	printf(_("(w/o servers)"));	/* xxx */
+	printf(_("(servers and established)"));
+    else {
+      if (flag_lst)
+	printf(_("(only servers)"));
+      else
+	printf(_("(w/o servers)"));
+    }
 
     printf(_("\nProto RefCnt Flags       Type       State         I-Node Path\n"));	/* xxx */
 
@@ -1176,34 +1098,38 @@ static int iface_info(void)
 static void version(void)
 {
     printf("%s\n%s\n%s\n%s\n", Release, Version, Signature, Features);
-    exit(1);
+    exit(E_VERSION);
 }
 
 
 static void usage(void)
 {
     fprintf(stderr, _("usage: netstat [-veenNcCF] [<Af>] -r         netstat {-V|--version|-h|--help}\n"));
-    fprintf(stderr, _("       netstat [-vnNcaeo] [<Socket>]\n"));
-    fprintf(stderr, _("       netstat { [-veenNac] -i | [-vnNc] -L | [-cnNe] -M }\n\n"));
-    fprintf(stderr, _("        -r, --route              display routing table\n"));	/* xxx */
-    fprintf(stderr, _("        -L, --netlink            display netlink kernel messages\n"));
+    fprintf(stderr, _("       netstat [-vnNcaeol] [<Socket> ...]\n"));
+    fprintf(stderr, _("       netstat { [-veenNac] -i | [-cnNe] -M | -s }\n\n"));
+
+    fprintf(stderr, _("        -r, --route              display routing table\n"));
     fprintf(stderr, _("        -i, --interfaces         display interface table\n"));
+    fprintf(stderr, _("        -s, --statistics         display networking statistics (like SNMP)\n"));
 #if HAVE_FW_MASQUERADE
     fprintf(stderr, _("        -M, --masquerade         display masqueraded connections\n\n"));
 #endif
     fprintf(stderr, _("        -v, --verbose            be verbose\n"));
     fprintf(stderr, _("        -n, --numeric            dont resolve names\n"));
+    fprintf(stderr, _("        -N, --symbolic           resolve hardware names\n"));
     fprintf(stderr, _("        -e, --extend             display other/more informations\n"));
     fprintf(stderr, _("        -c, --continuous         continuous listing\n\n"));
-    fprintf(stderr, _("        -a, --all, --listening   display all\n"));
-    fprintf(stderr, _("        -o, --timers             display timers\n\n"));
-    fprintf(stderr, _("<Socket>={-t|--tcp} {-u|--udp} {-w|--raw} {-x|--unix} --ax25 --ipx --netrom\n"));
-#if HAVE_AFINET6
-    fprintf(stderr, _("<Af>= -A {inet|inet6|ipx|netrom|ddp|ax25},... --inet --inet6 --ipx --netrom --ddp --ax25\n"));
-#else
-    fprintf(stderr, _("<Af>= -A {inet|ipx|netrom|ddp|ax25},... --inet --ipx --netrom --ddp --ax25\n"));
-#endif
-    exit(1);
+    fprintf(stderr, _("        -l, --listening          display listening server sockets\n"));
+    fprintf(stderr, _("        -a, --all, --listening   display all sockets (default: conected)\n"));
+    fprintf(stderr, _("        -o, --timers             display timers\n"));
+    fprintf(stderr, _("        -F, --fib                display Forwarding Infomation Base (default)\n"));
+    fprintf(stderr, _("        -C, --cache              display routing cache instead of FIB\n\n"));
+
+    fprintf(stderr, _("  <Socket>={-t|--tcp} {-u|--udp} {-w|--raw} {-x|--unix} --ax25 --ipx --netrom\n"));
+    fprintf(stderr, _("  <AF>=Use '-A <af>' or '--<af>' Default: %s\n"), DFLT_AF);
+    fprintf(stderr, _("  List of possible address families (which support routing):\n"));
+    print_aflist(1); /* 1 = routeable */
+    exit(E_USAGE);
 }
 
 
@@ -1227,7 +1153,7 @@ int main
 	{"udp", 0, 0, 'u'},
 	{"raw", 0, 0, 'w'},
 	{"unix", 0, 0, 'x'},
-	{"listening", 0, 0, 'a'},
+	{"listening", 0, 0, 'l'},
 	{"all", 0, 0, 'a'},
 	{"timers", 0, 0, 'o'},
 	{"continuous", 0, 0, 'c'},
@@ -1248,7 +1174,7 @@ int main
     getroute_init();		/* Set up AF routing support */
 
     afname[0] = '\0';
-    while ((i = getopt_long(argc, argv, "MLCFA:acdehinNorstuVv?wx", longopts, &lop)) != EOF)
+    while ((i = getopt_long(argc, argv, "MCFA:acdehinNorstuVv?wxl", longopts, &lop)) != EOF)
 	switch (i) {
 	case -1:
 	    break;
@@ -1264,14 +1190,14 @@ int main
 	    if (aftrans_opt(optarg))
 		exit(1);
 	    break;
-	case 'L':
-	    flag_nlp++;
-	    break;
 	case 'M':
 	    flag_mas++;
 	    break;
 	case 'a':
 	    flag_all++;
+	    break;
+	case 'l':
+	    flag_lst++;
 	    break;
 	case 'c':
 	    flag_cnt++;
@@ -1330,15 +1256,13 @@ int main
 	case 'h':
 	    usage();
 	case 's':
-	    inittab();
-	    parsesnmp();
-	    exit(0);
+	    flag_sta++;
 	}
 
-    if (flag_int + flag_rou + flag_nlp + flag_mas > 1)
+    if (flag_int + flag_rou + flag_mas + flag_sta > 1)
 	usage();
 
-    if ((flag_inet || flag_inet6) && !(flag_tcp || flag_udp || flag_raw))
+    if ((flag_inet || flag_inet6 || flag_sta) && !(flag_tcp || flag_udp || flag_raw))
 	flag_tcp = flag_udp = flag_raw = 1;
 
     if ((flag_tcp || flag_udp || flag_raw) && !(flag_inet || flag_inet6))
@@ -1347,15 +1271,6 @@ int main
     flag_arg = flag_tcp + flag_udp + flag_raw + flag_unx + flag_ipx
 	+ flag_ax25 + flag_netrom;
 
-    if (flag_nlp) {
-#if HAVE_RT_NETLINK && 0
-	i = netlink_print();
-#else
-	ENOSUPP("netstat.c", "RT_NETLINK");
-	i = -1;
-#endif
-	return (i);
-    }
     if (flag_mas) {
 #if HAVE_FW_MASQUERADE && HAVE_AFINET
 #if MORE_THAN_ONE_MASQ_AF
@@ -1374,6 +1289,13 @@ int main
 #endif
 	return (i);
     }
+
+    if (flag_sta) {
+        inittab();
+	parsesnmp(flag_raw, flag_tcp, flag_udp);
+	exit(0);
+    }
+    
     if (flag_rou) {
 	int options = 0;
 
@@ -1410,14 +1332,18 @@ int main
 	if (!flag_arg || flag_tcp || flag_udp || flag_raw) {
 #if HAVE_AFINET
 	    printf(_("Active Internet connections "));	/* xxx */
-	    if (flag_all)
-		printf(_("(including servers)"));	/* xxx */
-	    else
-		printf(_("(w/o servers)"));	/* xxx */
 
+	    if (flag_all)
+		printf(_("(servers and established)"));
+	    else {
+	      if (flag_lst)
+		printf(_("(only servers)"));
+	      else
+		printf(_("(w/o servers)"));
+	    }
 	    printf(_("\nProto Recv-Q Send-Q Local Address           Foreign Address         State      "));	/* xxx */
 	    if (flag_exp > 1)
-		printf(_(" User      "));	/* xxx */
+		printf(_(" User       Inode     "));
 	    if (flag_opt)
 		printf(_(" Timer"));	/* xxx */
 	    printf("\n");

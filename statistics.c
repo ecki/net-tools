@@ -1,11 +1,10 @@
 /* Copyright '97 by Andi Kleen. Subject to the GPL. */
-/* $Id: statistics.c,v 1.9 1998/11/15 20:08:30 freitag Exp $ */ 
+/* $Id: statistics.c,v 1.10 1999/01/05 20:53:05 philip Exp $ */ 
 /* 19980630 - i18n - Arnaldo Carvalho de Melo <acme@conectiva.com.br> */
 /* 19981113 - i18n fixes - Arnaldo Carvalho de Melo <acme@conectiva.com.br> */
-
+/* 19990101 - added net/netstat, -t, -u, -w supprt - Bernd Eckenfels */
 /* 
-   XXX: rewrite to 2 pass to support /proc/net/netstat too
-   support -t -u 
+   XXX: add some long-text to TcpExtt 
  */
 #include <ctype.h>
 #include <stdio.h>
@@ -22,7 +21,7 @@
 #define UFWARN(x)
 #endif
 
-int print_static;
+int print_static,f_raw,f_tcp,f_udp;
 
 enum State {
     number = 0, i_forward, i_inp_icmp, i_outp_icmp, i_rto_alg
@@ -105,9 +104,9 @@ struct entry Icmptab[] =
     {"OutRedirects", N_("redirect: %d"), i_outp_icmp | I_TITLE},
     {"OutEchos", N_("echo request: %d"), i_outp_icmp | I_TITLE},
     {"OutEchoReps", N_("echo replies: %d"), i_outp_icmp | I_TITLE},
-  {"OutTimestamps", N_("timestamp requests: %d"), i_outp_icmp | I_TITLE},
-{"OutTimestampReps", N_("timestamp replies: %d"), i_outp_icmp | I_TITLE},
-{"OutAddrMasks", N_("address mask requests: %d"), i_outp_icmp | I_TITLE},
+    {"OutTimestamps", N_("timestamp requests: %d"), i_outp_icmp | I_TITLE},
+    {"OutTimestampReps", N_("timestamp replies: %d"), i_outp_icmp | I_TITLE},
+    {"OutAddrMasks", N_("address mask requests: %d"), i_outp_icmp | I_TITLE},
     {"OutAddrMaskReps", N_("address mask replies: %d"), i_outp_icmp | I_TITLE},
 };
 
@@ -137,6 +136,20 @@ struct entry Udptab[] =
     {"OutDatagrams", N_("%d packets send"), number},
 };
 
+struct entry Tcpexttab[] =
+{
+    {"SyncookiesSent", N_("%d SYN cookies sent"), number},
+    {"SyncookiesRecv", N_("%d SYN cookies received"), number},
+    {"SyncookiesFailed", N_("%d SYN cookies failed"), number},
+    /* XXX */
+    /* EmbryonicRsts 
+       PruneCalled 
+       RcvPruned
+       OfoPruned
+       OutOfWindowIcmps
+       LockDroppedIcmps */
+};
+
 struct tabtab {
     char *title;
     struct entry *tab;
@@ -149,6 +162,7 @@ struct tabtab snmptabs[] =
     {"Icmp", Icmptab, sizeof(Icmptab)},
     {"Tcp", Tcptab, sizeof(Tcptab)},
     {"Udp", Udptab, sizeof(Udptab)},
+    {"TcpExt", Tcpexttab, sizeof(Tcpexttab)},
     {NULL}
 };
 
@@ -173,6 +187,7 @@ void printval(struct tabtab *tab, char *title, int val)
     int type;
     char buf[512];
 
+    /* printf("key: %s value: %d\n",title,val); */
     key.title = title;
     ent = bsearch(&key, tab->tab, tab->size / sizeof(struct entry),
 		  sizeof(struct entry), cmpentries);
@@ -225,6 +240,11 @@ struct tabtab *newtable(struct tabtab *tabs, char *title)
 
     for (t = tabs; t->title; t++)
 	if (!strcmp(title, t->title)) {
+	    if (
+                (((t->tab==Iptab) ||(t->tab==Icmptab))  &&f_raw) ||
+		(((t->tab==Tcptab)||(t->tab==Tcpexttab))&&f_tcp) ||
+		( (t->tab==Udptab)                      &&f_udp)
+	       )
 	    printf("%s:\n", _(title));
 	    state = normal;
 	    return t;
@@ -232,17 +252,11 @@ struct tabtab *newtable(struct tabtab *tabs, char *title)
     return NULL;
 }
 
-void parsesnmp()
+
+void process_fd(FILE *f)
 {
-    FILE *f;
     char buf1[512], buf2[512];
     char *sp, *np, *p;
-
-    f = fopen("/proc/net/snmp", "r");
-    if (!f) {
-	perror(_("cannot open /proc/net/snmp"));
-	return;
-    }
     while (fgets(buf1, sizeof buf1, f)) {
 	int endflag;
 	struct tabtab *tab;
@@ -275,20 +289,58 @@ void parsesnmp()
 		endflag = 1;
 	    *p = '\0';
 
-	    if (*sp != '\0')	/* XXX */
+            /* printf("f: %d %d %d  %p %p %p %p %p\n",f_raw, f_tcp, f_udp, Iptab, Icmptab, Tcptab, Tcpexttab, Udptab, tab); */
+            
+	    if (*sp != '\0') {	/* XXX */
+		if (
+		    (((tab->tab==Iptab) ||(tab->tab==Icmptab))  &&f_raw) ||
+		    (((tab->tab==Tcptab)||(tab->tab==Tcpexttab))&&f_tcp) ||
+		    ( (tab->tab==Udptab)                        &&f_udp)
+		   )
 		printval(tab, sp, strtoul(np, &np, 10));
+	    }
 	    sp = p + 1;
 	}
     }
+  return;
+  
+formaterr:
+  perror(_("error parsing /proc/net/snmp"));
+  return;
+}
+
+
+void parsesnmp(int flag_raw, int flag_tcp, int flag_udp)
+{
+    FILE *f;
+
+    f_raw = flag_raw; f_tcp = flag_tcp; f_udp = flag_udp;
+    
+    f = fopen("/proc/net/snmp", "r");
+    if (!f) {
+	perror(_("cannot open /proc/net/snmp"));
+	return;
+    }
+    process_fd(f);
+
     if (ferror(f))
 	perror("/proc/net/snmp");
-    fclose(f);
-    return;
 
-  formaterr:
-    perror(_("error parsing /proc/net/snmp"));
+    fclose(f);
+
+    f = fopen("/proc/net/netstat", "r");
+
+    if (f) {
+    	process_fd(f);
+
+        if (ferror(f))
+	    perror("/proc/net/netstat");
+    
+        fclose(f);
+    }
     return;
 }
+    
 
 void inittab()
 {

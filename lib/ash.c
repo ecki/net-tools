@@ -1,7 +1,7 @@
 /*
  * lib/ash.c  This file contains an implementation of the Ash
  *              support functions for the NET-2 base distribution.
- * $Id: ash.c,v 1.8 1998/11/26 10:16:38 philip Exp $
+ * $Id: ash.c,v 1.9 1999/01/05 20:53:20 philip Exp $
  */
 
 #include "config.h"
@@ -23,7 +23,8 @@
 #include "util.h"
 
 #ifndef ARPHRD_ASH
-#error No support for Ash on this system
+#warning "No definition of ARPHRD_ASH in <net/if_arp.h>, using private value 517"
+#define ARPHRD_ASH 517
 #endif
 
 #define ASH_ALEN		64

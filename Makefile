@@ -87,7 +87,7 @@ RESLIB = # -L/usr/inet6/lib -linet6
 # -------- end of user definitions --------
 
 MAINTAINER = Philip.Blundell@pobox.com
-RELEASE	   = 1.49
+RELEASE	   = 1.50
 
 .EXPORT_ALL_VARIABLES:
 
@@ -99,7 +99,7 @@ endif
 
 NET-LIB = $(NET_LIB_PATH)/lib$(NET_LIB_NAME).a
 
-CFLAGS	= $(COPTS) -I. -I./include/ -I$(NET_LIB_PATH)
+CFLAGS	= $(COPTS) -I. -idirafter ./include/ -I$(NET_LIB_PATH)
 LDFLAGS	= $(LOPTS) -L$(NET_LIB_PATH)
 
 SUBDIRS	= man/ $(NET_LIB_PATH)/
@@ -136,7 +136,7 @@ clobber: 	clean
 
 dist: 		clobber
 		@echo Creating net-tools-$(RELEASE) in ..
-		@tar -cvz -f ../net-tools-$(RELEASE).tar.gz -C .. net-tools
+		@tar -cvz -f ../net-tools-$(RELEASE).tar.gz -C .. net-tools-${RELEASE}
 
 
 config.h: 	config.in Makefile 

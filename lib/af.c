@@ -2,7 +2,7 @@
  * lib/af.c   This file contains the top-level part of the protocol
  *              support functions module for the NET-2 base distribution.
  *
- * Version:     $Id: af.c,v 1.9 1998/12/01 09:30:30 philip Exp $
+ * Version:     $Id: af.c,v 1.10 1999/01/05 20:53:18 philip Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -290,4 +290,27 @@ int aftrans_opt(const char *arg)
     }
 
     return (0);
+}
+
+/* type: 0=all, 1=getroute */
+void print_aflist(int type) {
+    int count = 0;
+    char * txt;
+    struct aftype **afp;
+
+    if (!sVafinit)
+	afinit();
+
+    afp = aftypes;
+    while (*afp != NULL) {
+	if ((type == 1 && ((*afp)->rprint == NULL)) || ((*afp)->af == 0)) {
+		afp++; continue;
+	}
+	if ((count % 3) == 0) fprintf(stderr,count?"\n    ":"    "); 
+        txt = (*afp)->name; if (!txt) txt = "..";
+	fprintf(stderr,"%s (%s) ",txt,(*afp)->title);
+	count++;
+	afp++;
+    }
+    fprintf(stderr,"\n");
 }

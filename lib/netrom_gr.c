@@ -2,7 +2,7 @@
  * lib/netrom_gr.c    This file contains an implementation of the NET/ROM
  *                      route support functions.
  *
- * Version:     $Id: netrom_gr.c,v 1.3 1998/11/15 20:11:29 freitag Exp $
+ * Version:     $Id: netrom_gr.c,v 1.4 1999/01/05 20:53:55 philip Exp $
  *
  * Author:      Bernd Eckenfels, <ecki@lina.inka.de>
  *              Copyright 1999 Bernd Eckenfels, Germany
@@ -39,12 +39,17 @@ int NETROM_rprint(int options)
     /*int ext = options & FLAG_EXT;
        int numeric = options & FLAG_NUM; */
 
+    f1 = fopen(_PATH_PROCNET_NR_NODES, "r");
+    if (!f1) perror(_PATH_PROCNET_NR_NODES);
+    f2 = fopen(_PATH_PROCNET_NR_NEIGH, "r");
+    if (!f2) perror(_PATH_PROCNET_NR_NEIGH);
+
     if (f1 == NULL || f2 == NULL) {
-	printf(_("NET/ROM not configured in this system.\n"));	/* xxx */
+	printf(_("NET/ROM not configured in this system.\n"));
 	return 1;
     }
-    printf(_("Kernel NET/ROM routing table\n"));	/* xxx */
-    printf(_("Destination  Mnemonic  Quality  Neighbour  Iface\n"));	/* xxx */
+    printf(_("Kernel NET/ROM routing table\n"));
+    printf(_("Destination  Mnemonic  Quality  Neighbour  Iface\n"));
     fgets(buffer, 256, f1);
     while (fgets(buffer, 256, f1)) {
 	buffer[9] = 0;

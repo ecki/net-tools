@@ -3,7 +3,7 @@
  *              support functions for the net-tools.
  *              (NET-3 base distribution).
  *
- * Version:    $Id: inet.c,v 1.7 1998/11/19 13:01:58 philip Exp $
+ * Version:    $Id: inet.c,v 1.8 1999/01/05 20:53:33 philip Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -15,6 +15,7 @@
  *960217 {1.24} Bernd Eckenfels :       get_sname
  *960219 {1.25} Bernd Eckenfels :       extern int h_errno
  *960329 {1.26} Bernd Eckenfels :       resolve 255.255.255.255 
+ *980101 {1.27} Bernd Eckenfels :	resolve raw sockets in /etc/protocols
  *
  *              This program is free software; you can redistribute it
  *              and/or  modify it under  the terms of  the GNU General
@@ -312,6 +313,7 @@ static struct service *searchlist(struct service *servicebase, int number)
 static int read_services(void)
 {
     struct servent *se;
+    struct protoent *pe;
     struct service *item;
 
     setservent(1);
@@ -333,6 +335,17 @@ static int read_services(void)
 	}
     }
     endservent();
+    setprotoent(1);
+    while ((pe = getprotoent())) {
+	/* Allocate a service entry. */
+	item = (struct service *) malloc(sizeof(struct service));
+	if (item == NULL)
+	    perror("netstat");
+	item->name = strdup(pe->p_name);
+	item->number = htons(pe->p_proto);
+	add2list(&raw_name, item);
+    }
+    endprotoent();
     return (0);
 }
 

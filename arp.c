@@ -8,7 +8,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: arp.c,v 1.10 1998/11/17 15:16:09 freitag Exp $
+ * Version:     $Id: arp.c,v 1.11 1999/01/05 20:52:54 philip Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -41,7 +41,8 @@
  *970925 {1.82} Bernd Eckenfels :       include fix for libc6
  *980213 (1.83) Phil Blundell:          set ATF_COM on new entries
  *980629 (1.84) Arnaldo Carvalho de Melo: gettext instead of catgets
- *
+ *990101 {1.85} Bernd Eckenfels		fixed usage and return codes
+ *990105 (1.86) Phil Blundell:		don't ignore EINVAL in arp_set
  *
  *              This program is free software; you can redistribute it
  *              and/or  modify it under  the terms of  the GNU General
@@ -77,7 +78,7 @@
 #define FEATURE_ARP
 #include "lib/net-features.h"
 
-char *Release = RELEASE, *Version = "arp 1.84 (1998-06-29)";
+char *Release = RELEASE, *Version = "arp 1.85 (1999-01-05)";
 
 int opt_n = 0;			/* do not resolve addresses     */
 int opt_N = 0;			/* use symbolic names           */
@@ -366,10 +367,8 @@ static int arp_set(char **args)
     if (opt_v)
 	fprintf(stderr, "arp: SIOCSARP()\n");
     if (ioctl(sockfd, SIOCSARP, &req) < 0) {
-	if (errno != EINVAL) {
-	    perror("SIOCSARP");
-	    return (-1);
-	}
+        perror("SIOCSARP");
+	return (-1);
     }
     return (0);
 }
@@ -597,18 +596,31 @@ static int arp_show(char *name)
 static void version(void)
 {
     fprintf(stderr, "%s\n%s\n%s\n", Release, Version, Features);
-    exit(-1);
+    exit(E_VERSION);
 }
 
 static void usage(void)
 {
-    fprintf(stderr, _("Usage: arp [-vn] [-H type] [-i if] -a [hostname]\n"));
-    fprintf(stderr, _("       arp [-v] [-i if] -d hostname [pub][nopub]\n"));
-    fprintf(stderr, _("       arp [-v] [-H type] [-i if] -s  hostname hw_addr [temp][nopub]\n"));
-    fprintf(stderr, _("       arp [-v] [-H type] [-i if] -s  hostname hw_addr [netmask nm] pub\n"));
-    fprintf(stderr, _("       arp [-v] [-H type] [-i if] -Ds hostname if [netmask nm] pub\n"));
-    fprintf(stderr, _("       arp [-vnD] [-H type] [-i if] -f filename\n"));
-    exit(-1);
+    fprintf(stderr, _("Usage:\n  arp [-vn]  [<HW>] [-i <if>] [-a] [<hostname>]             <-Display ARP cache\n"));
+    fprintf(stderr, _("  arp [-v]          [-i <if>] -d  <hostname> [pub][nopub]    <-Delete ARP entry\n"));
+    fprintf(stderr, _("  arp [-vnD] [<HW>] [-i <if>] -f  <filename>              <-Add entry from file\n"));
+    fprintf(stderr, _("  arp [-v]   [<HW>] [-i <if>] -s  <hostname> <hwaddr> [temp][nopub] <-Add entry\n"));
+    fprintf(stderr, _("  arp [-v]   [<HW>] [-i <if>] -s  <hostname> <hwaddr> [netmask <nm>] pub  <-''-\n"));
+    fprintf(stderr, _("  arp [-v]   [<HW>] [-i <if>] -Ds <hostname> <if> [netmask <nm>] pub      <-''-\n\n"));
+    
+    fprintf(stderr, _("        -a                       display (all) hosts in alternative (BSD) style\n"));
+    fprintf(stderr, _("        -s, --set                set a new ARP entry\n"));
+    fprintf(stderr, _("        -d, --delete             delete a specified entry\n"));
+    fprintf(stderr, _("        -v, --verbose            be verbose\n"));
+    fprintf(stderr, _("        -n, --numeric            dont resolve names\n"));
+    fprintf(stderr, _("        -i, --device             specify network interface (e.g. eth0)\n"));
+    fprintf(stderr, _("        -D, --use-device         read <hwaddr> from given device\n"));
+    fprintf(stderr, _("        -f, --file               read new entries from file\n\n"));
+
+    fprintf(stderr, _("  <HW>=Use '-H <hw>' to specify hardware address type. Default: %s\n"), DFLT_HW);
+    fprintf(stderr, _("  List of possible hardware types (which support ARP):\n"));
+    print_hwlist(1); /* 1 = ARPable */
+    exit(E_USAGE);
 }
 
 int main(int argc, char **argv)

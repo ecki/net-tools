@@ -180,7 +180,7 @@ static void setfilename(char *name, int what)
 static void version(void)
 {
     fprintf(stderr, "%s\n%s\n", Release, Version);
-    exit(-1);
+    exit(5); /* E_VERSION */
 }
 
 static void usage(void)
@@ -203,7 +203,7 @@ static void usage(void)
     fprintf(stderr, _("   Unless you are using bind or NIS for host lookups you can change the\n"));
     fprintf(stderr, _("   FQDN (Fully Qualified Domain Name) and the DNS domain name (which is\n"));
     fprintf(stderr, _("   part of the FQDN) in the /etc/hosts file.\n"));
-    exit(-1);
+    exit(4); /* E_USAGE */
 }
 
 

@@ -21,10 +21,6 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <net/if_arp.h>
-#ifndef ARPHRD_HIPPI
-#error "No HIPPI Support in your current Kernelsource Tree."
-#error "Disable HW Type HIPPI"
-#endif
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
@@ -41,6 +37,10 @@
  */
 
 #define HIPPI_ALEN	6	/* Bytes in one HIPPI hw-addr        */
+#ifndef ARPHRD_HIPPI
+#define ARPHRD_HIPPI    780
+#warning "ARPHRD_HIPPI is not defined in <net/if_arp.h>. Using private value 708"
+#endif
 
 extern struct hwtype hippi_hwtype;
 

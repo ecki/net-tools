@@ -2,7 +2,7 @@
  * lib/ax25_gr.c      This file contains an implementation of the "AX.25"
  *                      route print support functions.
  *
- * Version:     $Id: ax25_gr.c,v 1.3 1998/11/15 20:09:22 freitag Exp $
+ * Version:     $Id: ax25_gr.c,v 1.4 1999/01/05 20:53:21 philip Exp $
  *
  * Author:      Bernd Eckenfels, <ecki@lina.inka.de>
  *              Copyright 1999 Bernd Eckenfels, Germany
@@ -43,6 +43,7 @@ int AX25_rprint(int options)
     int use;
 
     if (f == NULL) {
+        perror(_PATH_PROCNET_AX25_ROUTE);
 	printf(_("AX.25 not configured in this system.\n"));	/* xxx */
 	return 1;
     }

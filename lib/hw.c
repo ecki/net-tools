@@ -2,7 +2,7 @@
  * lib/hw.c   This file contains the top-level part of the hardware
  *              support functions module.
  *
- * Version:     $Id: hw.c,v 1.9 1998/11/16 15:13:48 philip Exp $
+ * Version:     $Id: hw.c,v 1.10 1999/01/05 20:53:31 philip Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -213,4 +213,27 @@ struct hwtype *get_hwntype(int type)
 	hwp++;
     }
     return (NULL);
+}
+
+/* type: 0=all, 1=ARPable */
+void print_hwlist(int type) {
+    int count = 0;
+    char * txt;
+    struct hwtype **hwp;
+
+    if (!sVhwinit)
+	hwinit();
+
+    hwp = hwtypes;
+    while (*hwp != NULL) {
+	if (((type == 1) && ((*hwp)->alen == 0)) || ((*hwp)->type == -1)) {
+		hwp++; continue;
+	}
+	if ((count % 3) == 0) fprintf(stderr,count?"\n    ":"    "); 
+        txt = (*hwp)->name; if (!txt) txt = "..";
+	fprintf(stderr,"%s (%s) ",txt,(*hwp)->title);
+	count++;
+	hwp++;
+    }
+    fprintf(stderr,"\n");
 }

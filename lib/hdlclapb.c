@@ -3,7 +3,7 @@
  *              This file contains the HDLC/LAPB support for the NET-2 base
  *              distribution.
  *
- * Version:    $Id: hdlclapb.c,v 1.3 1998/11/15 20:09:55 freitag Exp $
+ * Version:    $Id: hdlclapb.c,v 1.4 1999/01/05 20:53:26 philip Exp $
  *
  * Original Author:     
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -35,6 +35,16 @@
 #include <unistd.h>
 #include "net-support.h"
 #include "pathnames.h"
+
+#ifndef ARPHRD_HDLC
+#warning "No definition of ARPHRD_HDLC in <net/if_arp.h>, using private value 513"
+#define ARPHRD_HDLC 513
+#endif
+
+#ifndef ARPHRD_LAPB
+#warning "No definition of ARPHRD_HDLC in <net/if_arp.h>, using private value 516"
+#define ARPHRD_LAPB 516
+#endif
 
 struct hwtype hdlc_hwtype =
 {

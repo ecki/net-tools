@@ -8,7 +8,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system. (net-tools, net-drivers)
  *
- * Version:     lib/net-support.h 1.34 (1996-04-13)
+ * Version:     lib/net-support.h 1.35 (1996-01-01)
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -22,6 +22,7 @@
  *960219 {1.32} Bernd Eckenfels:        type for ap->input()
  *960322 {1.33} Bernd Eckenfels:        activate_ld and const in get_hwtype
  *960413 {1.34} Bernd Eckenfels:        new RTACTION suport
+ *990101 {1.35} Bernd Eckenfels:	print_(hw|af)list support, added kerneldefines
  *
  *              This program is free software; you can redistribute it
  *              and/or  modify it under  the terms of  the GNU General
@@ -68,8 +69,10 @@ struct hwtype {
 
 extern struct hwtype *get_hwtype(const char *name);
 extern struct hwtype *get_hwntype(int type);
+extern void          print_hwlist(int type);
 extern struct aftype *get_aftype(const char *name);
 extern struct aftype *get_afntype(int type);
+extern void          print_aflist(int type);
 
 extern int getargs(char *string, char *arguments[]);
 
@@ -158,4 +161,76 @@ extern char afname[];
 #define E_INTERN	2
 #define E_NOSUPP	1
 
+
+/* ========== Kernel Defines =============
+ * Since it is not a good idea to depend on special kernel sources for the headers
+ * and since the libc6 Headers are not always up to date, we keep a copy of the
+ * most often used Flags in this file. We realy need a way to keep them up-to-date.
+ * Perhaps anybody knows how the glibc2 folk is doing it? -ecki
+ */
+
+/* Keep this ins sync with /usr/src/linux/include/linux/rtnetlink.h */
+#define RTNH_F_DEAD            1       /* Nexthop is dead (used by multipath)  */
+#define RTNH_F_PERVASIVE       2       /* Do recursive gateway lookup  */
+#define RTNH_F_ONLINK          4       /* Gateway is forced on link    */
+
+/* Keep this in sync with /usr/src/linux/include/linux/in_route.h */
+#define RTCF_DEAD       RTNH_F_DEAD
+#define RTCF_ONLINK     RTNH_F_ONLINK
+/* #define RTCF_NOPMTUDISC RTM_F_NOPMTUDISC */
+#define RTCF_NOTIFY     0x00010000
+#define RTCF_DIRECTDST  0x00020000
+#define RTCF_REDIRECTED 0x00040000
+#define RTCF_TPROXY     0x00080000
+#define RTCF_FAST       0x00200000
+#define RTCF_MASQ       0x00400000
+#define RTCF_SNAT       0x00800000
+#define RTCF_DOREDIRECT 0x01000000
+#define RTCF_DIRECTSRC  0x04000000
+#define RTCF_DNAT       0x08000000
+#define RTCF_BROADCAST  0x10000000
+#define RTCF_MULTICAST  0x20000000
+#define RTCF_REJECT     0x40000000
+#define RTCF_LOCAL      0x80000000
+
+/* Keep this in sync with /usr/src/linux/include/linux/ipv6_route.h */
+#ifndef RTF_DEFAULT
+#define RTF_DEFAULT     0x00010000      /* default - learned via ND     */
+#endif
+#define RTF_ALLONLINK   0x00020000      /* fallback, no routers on link */
+#ifndef RTF_ADDRCONF
+#define RTF_ADDRCONF    0x00040000      /* addrconf route - RA          */
+#endif
+#define RTF_NONEXTHOP   0x00200000      /* route with no nexthop        */
+#define RTF_EXPIRES     0x00400000
+#define RTF_CACHE       0x01000000      /* cache entry                  */
+#define RTF_FLOW        0x02000000      /* flow significant route       */
+#define RTF_POLICY      0x04000000      /* policy route                 */
+#define RTF_LOCAL       0x80000000
+
+/* Keep this in sync with /usr/src/linux/include/linux/route.h */
+#define RTF_UP          0x0001          /* route usable                 */
+#define RTF_GATEWAY     0x0002          /* destination is a gateway     */
+#define RTF_HOST        0x0004          /* host entry (net otherwise)   */
+#define RTF_REINSTATE   0x0008          /* reinstate route after tmout  */
+#define RTF_DYNAMIC     0x0010          /* created dyn. (by redirect)   */
+#define RTF_MODIFIED    0x0020          /* modified dyn. (by redirect)  */
+#define RTF_MTU         0x0040          /* specific MTU for this route  */
+#ifndef RTF_MSS
+#define RTF_MSS         RTF_MTU         /* Compatibility :-(            */
+#endif
+#define RTF_WINDOW      0x0080          /* per route window clamping    */
+#define RTF_IRTT        0x0100          /* Initial round trip time      */
+#define RTF_REJECT      0x0200          /* Reject route                 */
+
+/* this is a 2.0.36 flag from /usr/src/linux/include/linux/route.h */
+#define RTF_NOTCACHED   0x0400          /* this route isn't cached        */
+
+#ifdef HAVE_AFECONET
+#ifndef AF_ECONET
+#define AF_ECONET       19      /* Acorn Econet */
+#endif
+#endif
+
 /* End of lib/support.h */
+

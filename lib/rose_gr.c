@@ -3,7 +3,7 @@
  * lib/rose_gr.c      This file contains an implementation of the "ROSE"
  *                      route print support functions.
  *
- * Version:     $Id: rose_gr.c,v 1.3 1998/11/15 20:12:03 freitag Exp $
+ * Version:     $Id: rose_gr.c,v 1.4 1999/01/05 20:54:07 philip Exp $
  *
  * Author:      Terry Dawson, VK2KTJ, <terry@perf.no.itg.telstra.com.au>
  *              based on ax25_gr.c by:
@@ -41,16 +41,18 @@
 
 int ROSE_rprint(int options)
 {
-    FILE *f = fopen(_PATH_PROCNET_ROSE_ROUTE, "r");
+    FILE *f = NULL;
     char buffer[256];
     int use;
 
+    f=fopen(_PATH_PROCNET_ROSE_ROUTE, "r");
     if (f == NULL) {
+	perror(_PATH_PROCNET_ROSE_ROUTE);
 	printf(_("ROSE not configured in this system.\n"));	/* xxx */
 	return 1;
     }
-    printf(_("Kernel ROSE routing table\n"));	/* xxx */
-    printf(_("Destination  Iface    Use\n"));	/* xxx */
+    printf(_("Kernel ROSE routing table\n"));
+    printf(_("Destination  Iface    Use\n"));
     fgets(buffer, 256, f);
     while (fgets(buffer, 256, f)) {
 	buffer[9] = 0;

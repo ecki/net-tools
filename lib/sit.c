@@ -1,7 +1,7 @@
 /*
  * lib/sit.c  This file contains the SIT HW-type support.
  *
- * Version:    $Id: sit.c,v 1.3 1998/11/15 20:12:12 freitag Exp $
+ * Version:    $Id: sit.c,v 1.4 1999/01/05 20:54:08 philip Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -32,6 +32,11 @@
 #include <unistd.h>
 #include "net-support.h"
 #include "pathnames.h"
+
+#ifndef ARPHRD_SIT
+#warning "No definition of ARPHRD_SIT in <net/if_arp.h>, using private value 776"
+#define ARPHRD_SIT 776
+#endif
 
 struct hwtype sit_hwtype =
 {

@@ -1,4 +1,4 @@
-.TH ARP 8 "15 May 1996" "net-tools" "Linux Programmer's Manual"
+.TH ARP 8 "5 Jan 1999" "net-tools" "Linux Programmer's Manual"
 .SH NAME
 arp \- manipulate the system ARP cache
 .SH SYNOPSIS
@@ -93,10 +93,12 @@ Use the interface
 hardware address.
 .TP
 .B "\-i If, \-\-device If"
-Select an Interface. When dumping the ARP cache only entries matching the
-Interface will be printed. Setting a permanent or temp ARP entry will be
-used on the specified device. If no device is given, the kernels guess the
-device from the routing table. For
+Select an interface. When dumping the ARP cache only entries matching
+the specified interface will be printed. When setting a permanent or
+.B temp
+ARP entry this interface will be associated with the entry; if this
+option is not used, the kernel will guess based on the routing
+table. For
 .B pub
 entries the specified interface is the interface on which ARP requests will
 be answered. 
@@ -118,11 +120,16 @@ the
 .BR pub lish 
 flag set a 
 .B netmask 
-may be specified to proxy arp for
-entire subnets. Proxy arp for routing entire networks is not a good 
-protocol, but its sometimes useful so supported. If the 
+may be specified to proxy arp for entire subnets. This is not good
+practice, but is supported by older kernels because it can be
+useful. If the
 .B temp
-flag is not supplied entries will be permanent stored into the ARP cache.
+flag is not supplied entries will be permanent stored into the ARP
+cache.
+.br
+.B NOTE:
+As of kernel 2.2.0 it is no longer possible to set an ARP entry for an 
+entire subnet.
 .TP
 .B "\-f filename, \-\-file filename"
 Similar to the

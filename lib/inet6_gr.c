@@ -14,7 +14,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <arpa/nameser.h>
-#include <net/route.h>
+/* #include <net/route.h> realy broken */
 #include <ctype.h>
 #include <errno.h>
 #include <netdb.h>
@@ -71,10 +71,12 @@ int rprint_fib6(int ext, int numeric)
     struct sockaddr_in6 saddr6, snaddr6;
     int num, iflags, metric, refcnt, use, prefix_len, slen;
     FILE *fp = fopen(_PATH_PROCNET_ROUTE6, "r");
+    
     char addr6p[8][5], saddr6p[8][5], naddr6p[8][5];
 
     if (!fp) {
-	ESYSNOT("getroute", "INET6 FIB");
+	perror(_PATH_PROCNET_ROUTE6);
+        printf(_("INET6 (IPv6) not configured in this system.\n"));
 	return 1;
     }
     printf(_("Kernel IPv6 routing table\n"));

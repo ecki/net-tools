@@ -2,7 +2,7 @@
  * route        This file contains an implementation of the command
  *              that manages the IP routing table in the kernel.
  *
- * Version:     $Id: route.c,v 1.3 1998/11/15 20:08:17 freitag Exp $
+ * Version:     $Id: route.c,v 1.4 1999/01/05 20:53:04 philip Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -32,13 +32,14 @@
  *960426 {1.92} Bernd Eckenfels:        FLAG_SYM/-N support
  *960823 {x.xx} Frank Strauss:          INET6 stuff
  *980629 {1.95} Arnaldo Carvalho de Melo: gettext instead of catgets
+ *990101 {1.96} Bernd Eckenfels:	fixed usage and FLAG_CACHE Output
  *
  */
 #include <sys/types.h>
 #include <sys/ioctl.h>
 #include <sys/socket.h>
 #include <net/if.h>
-#include <net/route.h>
+/* #include <net/route.h> realy broken */
 #include <netinet/in.h>
 #include <netdb.h>
 #include <netinet/in.h>
@@ -64,7 +65,7 @@
 #define FEATURE_ROUTE
 #include "lib/net-features.h"	/* needs some of the system includes above! */
 
-char *Release = RELEASE, *Version = "route 1.95 (1998-06-29)";
+char *Release = RELEASE, *Version = "route 1.96 (1999-01-01-)";
 
 int opt_n = 0;			/* numerical output flag        */
 int opt_v = 0;			/* debugging output flag        */
@@ -75,12 +76,22 @@ struct aftype *ap;		/* current address family       */
 
 static void usage(void)
 {
-    fprintf(stderr, _("Usage: route [-nNvee] [-FC] [Address_families]  List kernel routing tables\n"));
-    fprintf(stderr, _("       route {-V|--version}                  Display command version and exit.\n"));
-    fprintf(stderr, _("       route {-h|--help} [Address_family]    Usage Syntax for specified AF.\n"));
+    fprintf(stderr, _("Usage: route [-nNvee] [-FC] [<AF>]           List kernel routing tables\n"));
     fprintf(stderr, _("       route [-v] [-FC] {add|del|flush} ...  Modify routing table for AF.\n\n"));
-    fprintf(stderr, _("  Address_families: inet,inet6,ddp,ipx,netrom,ax25\n"));
-    fprintf(stderr, _("        specify AF: -A af1,af2..  or  --af1 --af2  or  af_route\n"));
+
+    fprintf(stderr, _("       route {-h|--help} [<AF>]              Detailed usage syntax for specified AF.\n"));
+    fprintf(stderr, _("       route {-V|--version}                  Display version/author and exit.\n\n"));
+
+    fprintf(stderr, _("        -v, --verbose            be verbose\n"));
+    fprintf(stderr, _("        -n, --numeric            dont resolve names\n"));
+    fprintf(stderr, _("        -N, --symbolic           resolve hardware names\n"));
+    fprintf(stderr, _("        -e, --extend             display other/more informations\n"));
+    fprintf(stderr, _("        -F, --fib                display Forwarding Infomation Base (default)\n"));
+    fprintf(stderr, _("        -C, --cache              display routing cache instead of FIB\n\n"));
+
+    fprintf(stderr, _("  <AF>=Use '-A <af>' or '--<af>' Default: %s\n"), DFLT_AF);
+    fprintf(stderr, _("  List of possible address families (which support routing):\n"));
+    print_aflist(1); /* 1 = routeable */
     exit(E_USAGE);
 }
 

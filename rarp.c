@@ -3,7 +3,7 @@
  *              that maintains the kernel's RARP cache.  It is derived
  *              from Fred N. van Kempen's arp command.
  *
- * Version:	$Id: rarp.c,v 1.4 1998/11/15 20:08:12 freitag Exp $
+ * Version:	$Id: rarp.c,v 1.5 1999/01/05 20:53:02 philip Exp $
  *
  * Usage:       rarp -d hostname                      Delete entry
  *              rarp -s hostname ethernet_address     Add entry
@@ -12,6 +12,7 @@
  *
  * Rewritten: Phil Blundell <Philip.Blundell@pobox.com>  1997-08-03
  * gettext instead of catgets: Arnaldo Carvalho de Melo <acme@conectiva.com.br> 1998-06-29
+ * 1998-01-01 Bernd Eckenfels	reorganised usage()
  *
  */
 
@@ -30,6 +31,8 @@
 #include <string.h>
 #include <unistd.h>
 #include <getopt.h>
+
+#define DFLT_HW "ether"
 
 #include "config.h"
 #include "intl.h"
@@ -170,11 +173,15 @@ static int display_cache(void)
 static void usage(void)
 {
     fprintf(stderr, _("Usage: rarp -a                               list entries in cache.\n"));
-    fprintf(stderr, _("       rarp -d hostname                      delete entry from cache.\n"));
-    fprintf(stderr, _("       rarp [-t hwtype] -s hostname hwaddr   add entry to cache.\n"));
-    fprintf(stderr, _("       rarp -f                               add entries from ethers.\n"));
-    fprintf(stderr, _("       rarp -V                               display program version.\n"));
-    exit(-1);
+    fprintf(stderr, _("       rarp -d <hostname>                    delete entry from cache.\n"));
+    fprintf(stderr, _("       rarp [<HW>] -s <hostname> <hwaddr>    add entry to cache.\n"));
+    fprintf(stderr, _("       rarp -f                               add entries from /etc/ethers.\n"));
+    fprintf(stderr, _("       rarp -V                               display program version.\n\n"));
+
+    fprintf(stderr, _("  <HW>=Use '-H <hw>' to specify hardware address type. Default: %s\n"), DFLT_HW);
+    fprintf(stderr, _("  List of possible hardware types (which support ARP):\n"));
+    print_hwlist(1); /* 1 = ARPable */
+    exit(E_USAGE);
 }
 
 #define MODE_DISPLAY   1
@@ -205,13 +212,11 @@ int main(int argc, char **argv)
     textdomain("net-tools");
 #endif
 
-#if HAVE_HWETHER
     /* Get a default hardware type.  */
-    hardware = get_hwtype("ether");
-#endif
+    hardware = get_hwtype(DFLT_HW);
 
     do {
-	c = getopt_long(argc, argv, "-ht:adsVvf", longopts, NULL);
+	c = getopt_long(argc, argv, "-ht:aHdsVvf", longopts, NULL);
 	switch (c) {
 	case EOF:
 	    break;
@@ -219,7 +224,7 @@ int main(int argc, char **argv)
 	    usage();
 	case 'V':
 	    fprintf(stderr, version_string);
-	    exit(1);
+	    exit(E_VERSION);
 	    break;
 	case 'v':
 	    verbose++;
@@ -237,6 +242,7 @@ int main(int argc, char **argv)
 	case 'f':
 	    mode = MODE_ETHERS;
 	    break;
+        case 'H':
 	case 't':
 	    if (optarg) {
 		hardware = get_hwtype(optarg);

@@ -2,7 +2,7 @@
  * lib/rose.c This file contains an implementation of the "ROSE"
  *              support functions for the NET-2 base distribution.
  *
- * Version:     $Id: rose.c,v 1.5 1998/11/15 20:12:00 freitag Exp $
+ * Version:     $Id: rose.c,v 1.6 1999/01/05 20:54:04 philip Exp $
  *
  * Author:      Terry Dawson, VK2KTJ, <terry@perf.no.itg.telstra.com.au>
  *              based on ax25.c by:
@@ -35,8 +35,18 @@
 #include "pathnames.h"
 #include "intl.h"
 
-#if __GLIBC__ >= 2
-#include <netrose/rose.h>
+#ifndef _NETROSE_ROSE_H
+#include <linux/ax25.h>
+#include <linux/rose.h>
+/* this will check for the broken #define PF_ROSE AF_ROSE define in some older kernel headers */
+#undef AF_ROSE
+#if PF_ROSE == AF_ROSE
+#warning "Your <linux/rose.h> is broken and defines PF_ROSE, better remove the define in /usr/include/linux/rose.h (using private define for PF_ROSE meanwhile)"
+#undef PF_ROSE
+#define PF_ROSE         11      /* Amateur Radio X.25 PLP       */
+#endif
+/* now restore the value of AF_ROSE (which had to be deleted to catch the case where #define AF_ROSE PF_ROSE) */
+#define AF_ROSE         PF_ROSE
 #endif
 
 static char ROSE_errmsg[128];

@@ -43,10 +43,6 @@
 #define HAVE_RTF_REJECT 1
 #endif
 
-#ifdef RTMSG_NEWROUTE		/* netstat */
-#define HAVE_RT_NETLINK 1
-#endif
-
 /* compose the feature information string */
 
 #if defined (FEATURE_ARP) || defined (FEATURE_ROUTE) || defined (FEATURE_NETSTAT)
@@ -103,13 +99,6 @@ static char *Features =
 "-"
 #endif
 "RTF_REJECT "
-
-#if HAVE_RT_NETLINK
-"+"
-#else
-"-"
-#endif
-"RT_NETLINK "
 
 #if HAVE_FW_MASQUERADE
 "+"
