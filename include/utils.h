@@ -1,12 +1,7 @@
 #ifndef __UTILS_H__
 #define __UTILS_H__ 1
 
-#if 0
 #include <asm/types.h>
-#include <asm/bitops.h>
-#include <linux/inetdevice.h>
-#include <resolv.h>
-#endif
 
 extern int preferred_family;
 extern int show_stats;

@@ -25,7 +25,6 @@
 #include <netdb.h>
 #include <arpa/inet.h>
 #include <resolv.h>
-#include <asm/types.h>
 
 #include "intl.h"
 #include "utils.h"
