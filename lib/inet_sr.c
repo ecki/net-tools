@@ -50,31 +50,6 @@ static int usage(void)
   return(E_USAGE);
 }
 
-static int INET_getnetmask(char *adr, struct rtentry *rt, char *name)
-{ 
-	union {  /* grr */
-		struct sockaddr_in mask; 
-		struct sockaddr dumb; 
-	} m; 
-	char *slash, *end; 
-	int prefix; 
-
-	if ((slash = strchr(adr, '/')) == NULL) 
-		return 0; 
-		
-	*slash++ = '\0';
-	prefix = strtoul(slash,&end,0);
-	if (*end != '\0') 
-		return -1; 
-
-	sprintf(name, "/%d", prefix); 
-
-	m.mask.sin_family = AF_INET; 
-	m.mask.sin_addr.s_addr = htonl(~(0xffffffffU >> prefix)); 
-	rt->rt_genmask = full_mask(m.dumb); 
-	return 0;
-} 
-
 static int INET_setroute(int action, int options, char **args)
 {
   struct rtentry rt;
@@ -94,14 +69,22 @@ static int INET_setroute(int action, int options, char **args)
   if (*args == NULL)
 	return(usage());
 
-  strncpy(target, *args++, sizeof target);
+  target[(sizeof target)-1] = 0;
+  strncpy(target, *args++, (sizeof target)-1);
 
   /* Clean out the RTREQ structure. */
   memset((char *) &rt, 0, sizeof(struct rtentry));
 
-  /* Special hack for /prefix syntax */ 
-  if (INET_getnetmask(target, &rt, netmask) < 0)
-	  return usage();
+  /* Special hack for /prefix syntax */
+  {
+	  union {
+		  struct sockaddr_in m;
+		  struct sockaddr d;
+	  } mask; 
+	  if (inet_aftype.getmask(target, &mask.d, netmask) < 0)
+		  return usage();
+	  rt.rt_genmask = full_mask(mask.d);
+  }
 		  
   if ((isnet = inet_aftype.input(0, target, &rt.rt_dst)) < 0) {
 	inet_aftype.herror(target);
@@ -147,7 +130,8 @@ static int INET_setroute(int action, int options, char **args)
 		args++;
 		if (!*args || mask_in_addr(rt))
 			return(usage());
-		strcpy(netmask, *args);
+		netmask[(sizeof netmask)-1] = 0; 
+		strncpy(netmask, *args, (sizeof netmask)-1);
 		if ((isnet = inet_aftype.input(0, netmask, &mask)) < 0) {
 			inet_aftype.herror(netmask);
 			return (E_LOOKUP);
@@ -162,7 +146,8 @@ static int INET_setroute(int action, int options, char **args)
 			return(usage());
 		if (rt.rt_flags & RTF_GATEWAY)
 			return(usage());
-		strcpy(gateway, *args);
+		gateway[(sizeof gateway)-1] = 0;
+		strncpy(gateway, *args, (sizeof gateway)-1);
 		if ((isnet = inet_aftype.input(0, gateway, &rt.rt_gateway)) < 0) {
 			inet_aftype.herror(gateway);
 			return (E_LOOKUP);

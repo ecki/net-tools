@@ -43,6 +43,10 @@ struct aftype {
   void		(*herror)	(char *text);
   int		(*rprint)	(int options);
   int 		(*rinput)	(int typ, int ext, char **argv);
+
+  /* may modify src */ 
+  int		(*getmask)  (char *src, struct sockaddr *mask, char *name); 	
+
 };
 
 

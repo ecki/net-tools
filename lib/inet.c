@@ -260,11 +260,35 @@ INET_input(int type, char *bufp, struct sockaddr *sap)
   }
 }
 
+static int INET_getnetmask(char *adr, struct sockaddr *m, char *name)
+{ 
+	struct sockaddr_in *mask = (struct sockaddr_in *)m; 
+	char *slash, *end; 
+	int prefix; 
+
+	if ((slash = strchr(adr, '/')) == NULL) 
+		return 0; 
+		
+	*slash++ = '\0';
+	prefix = strtoul(slash,&end,0);
+	if (*end != '\0') 
+		return -1; 
+
+	if (name) {
+		sprintf(name, "/%d", prefix); 
+	}
+		
+	mask->sin_family = AF_INET; 
+    mask->sin_addr.s_addr = htonl(~(0xffffffffU >> prefix)); 
+	return 1;
+} 
+
 
 struct aftype inet_aftype = {
   "inet",	NULL, /*"DARPA Internet",*/	AF_INET,	sizeof(unsigned long),
   INET_print,	INET_sprint,		INET_input,	INET_reserror,	
-  NULL/*INET_rprint*/,	NULL/*INET_rinput*/
+  NULL/*INET_rprint*/,	NULL/*INET_rinput*/,
+  INET_getnetmask 
 };
 
 #endif	/* HAVE_AFINET || HAVE_AFINET6 */

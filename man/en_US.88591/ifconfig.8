@@ -160,7 +160,10 @@ Set the multicast flag on the interface. This should not normally be needed
 as the drivers set the flag correctly themselves.
 .TP
 .B address
-The IP address to be assigned to this interface.
+The address to be assigned to this interface.
+
+For Inet addresses you may use address/prefixlength to specify the default
+netmask. 
 .TP
 .B txqueuelen length
 Set the length of the transmit queue of the device. It is useful to set this

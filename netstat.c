@@ -376,7 +376,7 @@ static void tcp_do_one(int lnr, const char *line)
     return;
   
   num = sscanf(line,
-	  "%d: %[0-9A-Fa-f]:%X %[0-9A-Fa-f]:%X %X %lX:%lX %X:%lX %lX %d\n",
+	  "%d: %64[0-9A-Fa-f]:%X %64[0-9A-Fa-f]:%X %X %lX:%lX %X:%lX %lX %d\n",
 	  &d, local_addr, &local_port, rem_addr, &rem_port, &state,
 	  &txq, &rxq, &timer_run, &time_len, &retr, &uid);
   
@@ -520,7 +520,7 @@ static void udp_do_one(int lnr, const char *line)
   more[0] = '\0';
   timer_queued = '\0';
   num = sscanf(line,
-	 "%d: %[0-9A-Fa-f]:%X %[0-9A-Fa-f]:%X %X %lX:%lX %X:%lX %lX %c %s\n",
+	 "%d: %64[0-9A-Fa-f]:%X %64[0-9A-Fa-f]:%X %X %lX:%lX %X:%lX %lX %c %512s\n",
 	 &d, local_addr, &local_port,
 	 rem_addr, &rem_port, &state,
 	 &txq, &rxq, &timer_run, &time_len, &retr, &timer_queued, more);
@@ -672,7 +672,7 @@ static void raw_do_one(int lnr, const char *line)
   more[0] = '\0';
   timer_queued = '\0';
   num = sscanf(line,
-          "%d: %[0-9A-Fa-f]:%X %[0-9A-Fa-f]:%X %X %lX:%lX %X:%lX %lX %c %s\n",
+          "%d: %64[0-9A-Fa-f]:%X %64[0-9A-Fa-f]:%X %X %lX:%lX %X:%lX %lX %c %512s\n",
 	   &d, local_addr, &local_port, rem_addr, &rem_port, &state,
 	   &txq, &rxq, &timer_run, &time_len, &retr, &timer_queued, more);
   

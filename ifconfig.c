@@ -121,7 +121,7 @@ ife_print(struct interface *ptr)
 #endif
 #if HAVE_AFINET6
   FILE *f;
-  char addr6[40], devname[10];
+  char addr6[40], devname[20];
   struct sockaddr_in6 sap;
   int plen, scope, dad_status, if_idx;
   extern struct aftype inet6_aftype;
@@ -179,7 +179,7 @@ ife_print(struct interface *ptr)
 #if HAVE_AFINET6
   }
   if ((f = fopen(_PATH_PROCNET_IFINET6, "r")) != NULL) {
-    while(fscanf(f, "%4s%4s%4s%4s%4s%4s%4s%4s %02x %02x %02x %02x %s\n",
+    while(fscanf(f, "%4s%4s%4s%4s%4s%4s%4s%4s %02x %02x %02x %02x %20s\n",
 		 addr6p[0], addr6p[1], addr6p[2], addr6p[3],
 		 addr6p[4], addr6p[5], addr6p[6], addr6p[7],
 		 &if_idx, &plen, &scope, &dad_status, devname) != EOF) {
@@ -413,11 +413,14 @@ usage(void)
   fprintf(stderr, NLS_CATGETS(catfd, ifconfigSet, ifconfig_usage1,
 			      "Usage: ifconfig [-a] [-i] [-v] interface\n"));
   fprintf(stderr, "                [[family] address]\n");
-#if HAVE_AFINET6
-  fprintf(stderr, "                [add inet6address/prefixlen]\n");
+  /* XXX: it would be useful to have the add/del syntax even without IPv6.
+	 the 2.1 interface address lists make this natural */ 
+#ifdef HAVE_AFINET6
+  fprintf(stderr, "                [add address[/prefixlen]]\n");
 #ifdef SIOCDIFADDR
-  fprintf(stderr, "                [del inet6address/prefixlen]\n");
+  fprintf(stderr, "                [del address[/prefixlen]]\n");
 #endif
+  /* XXX the kernel supports tunneling even without ipv6 */ 
   fprintf(stderr, "                [tunnel aa.bb.cc.dd]\n");
 #endif
 #if HAVE_AFINET
@@ -449,6 +452,21 @@ version(void)
   exit(1);
 }
 
+static int 
+set_netmask(int skfd, struct ifreq *ifr, struct sockaddr *sa)
+{
+	int err = 0; 
+
+	memcpy((char *) &ifr->ifr_netmask, (char *) sa,
+		   sizeof(struct sockaddr));
+	if (ioctl(skfd, SIOCSIFNETMASK, ifr) < 0) {
+		fprintf(stderr, "SIOCSIFNETMASK: %s\n",
+				strerror(errno));
+		err = 1;
+	}
+	return 0;
+}
+
 int
 main(int argc, char **argv)
 {
@@ -457,7 +475,7 @@ main(int argc, char **argv)
   struct aftype *ap;
   struct hwtype *hw;
   struct ifreq ifr;
-  int goterr = 0;
+  int goterr = 0, didnetmask = 0;
   char **spp;
 #if HAVE_AFINET6
   extern struct aftype inet6_aftype;
@@ -665,7 +683,8 @@ main(int argc, char **argv)
     
     if (!strcmp(*spp, "broadcast")) {
       if (*++spp != NULL ) {
-	strcpy(host, *spp);
+		  host[(sizeof host)-1] = 0; 
+		  strncpy(host, *spp, (sizeof host)-1);
 	if (ap->input(0, host, &sa) < 0) {
 	  ap->herror(host);
 	  goterr = 1;
@@ -687,7 +706,8 @@ main(int argc, char **argv)
     
     if (!strcmp(*spp, "dstaddr")) {
       if (*++spp == NULL) usage();
-      strcpy(host, *spp);
+		  host[(sizeof host)-1] = 0; 
+		  strncpy(host, *spp, (sizeof host)-1);
       if (ap->input(0, host, &sa) < 0) {
 	ap->herror(host);
 	goterr = 1;
@@ -706,21 +726,17 @@ main(int argc, char **argv)
     }
     
     if (!strcmp(*spp, "netmask")) {
-      if (*++spp == NULL) usage();
-      strcpy(host, *spp);
+      if (*++spp == NULL || didnetmask) usage();
+		  host[(sizeof host)-1] = 0; 
+		  strncpy(host, *spp, (sizeof host)-1);
       if (ap->input(0, host, &sa) < 0) {
 	ap->herror(host);
 	goterr = 1;
 	spp++;
 	continue;
       }
-      memcpy((char *) &ifr.ifr_netmask, (char *) &sa,
-	     sizeof(struct sockaddr));
-      if (ioctl(skfd, SIOCSIFNETMASK, &ifr) < 0) {
-	fprintf(stderr, "SIOCSIFNETMASK: %s\n",
-		strerror(errno));
-	goterr = 1;
-      }
+	  didnetmask++;
+	  goterr = set_netmask(skfd, &ifr, &sa);
       spp++;
       continue;
     }
@@ -792,7 +808,8 @@ main(int argc, char **argv)
     if (!strcmp(*spp, "pointopoint")) {
       if (*(spp+1) != NULL) {
 	spp++;
-	strcpy(host, *spp);
+		  host[(sizeof host)-1] = 0; 
+		  strncpy(host, *spp, (sizeof host)-1);
 	if (ap->input(0, host, &sa)) {
 	  ap->herror(host);
 	  goterr = 1;
@@ -816,7 +833,8 @@ main(int argc, char **argv)
       if (*++spp == NULL) usage();
       if ((hw = get_hwtype(*spp)) == NULL) usage();
       if (*++spp == NULL) usage();
-      strcpy(host, *spp);
+		  host[(sizeof host)-1] = 0; 
+		  strncpy(host, *spp, (sizeof host)-1);
       if (hw->input(host, &sa) < 0) {
 	fprintf(stderr, "%s: invalid %s address.\n", host, hw->name);
 	goterr = 1;
@@ -844,8 +862,9 @@ main(int argc, char **argv)
       } else {
 	prefix_len = 0;
       }
-      strcpy(host, *spp);
-      if (inet6_aftype.input(1, host, (struct sockaddr *)&sa6) < 0) {
+		  host[(sizeof host)-1] = 0; 
+		  strncpy(host, *spp, (sizeof host)-1);
+     if (inet6_aftype.input(1, host, (struct sockaddr *)&sa6) < 0) {
 	inet6_aftype.herror(host);
 	goterr = 1;
 	spp++;
@@ -881,7 +900,8 @@ main(int argc, char **argv)
       } else {
 	prefix_len = 0;
       }
-      strcpy(host, *spp);
+		  host[(sizeof host)-1] = 0; 
+		  strncpy(host, *spp, (sizeof host)-1);
       if (inet6_aftype.input(1, host, (struct sockaddr *)&sa6) < 0) {
 	inet6_aftype.herror(host);
 	goterr = 1;
@@ -922,7 +942,8 @@ main(int argc, char **argv)
       } else {
 	prefix_len = 0;
       }
-      strcpy(host, *spp);
+		  host[(sizeof host)-1] = 0; 
+		  strncpy(host, *spp, (sizeof host)-1);
       if (inet6_aftype.input(1, host, (struct sockaddr *)&sa6) < 0) {
 	inet6_aftype.herror(host);
 	goterr = 1;
@@ -953,7 +974,23 @@ main(int argc, char **argv)
 #endif
     
     /* If the next argument is a valid hostname, assume OK. */
-    strcpy(host, *spp);
+	host[(sizeof host)-1] = '\0'; 
+    strncpy(host, *spp, (sizeof host)-1);
+
+	/* FIXME: sa is too small for INET6 addresses, inet6 should use that too, 
+	 		  broadcast is unexpected */ 
+	if (ap->getmask) { 
+		switch (ap->getmask(host, &sa, NULL)) {
+		case -1: usage(); break; 
+		case 1:  
+			if (didnetmask) usage(); 
+
+			goterr = set_netmask(skfd, &ifr, &sa); 
+			didnetmask++; 
+			break;
+		}
+	}
+
     if (ap->input(0, host, &sa) < 0) {
       ap->herror(host);
       usage();

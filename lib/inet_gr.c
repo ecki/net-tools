@@ -28,7 +28,7 @@ extern     struct aftype   inet_aftype;
 
 int rprint_fib(int ext, int numeric)
 {
-  char buff[4096], iface[16], flags[16];
+  char buff[1024], iface[16], flags[16];
   char gate_addr[128], net_addr[128];
   char mask_addr[128];
   struct sockaddr snet, sgate, smask;
@@ -61,7 +61,7 @@ int rprint_fib(int ext, int numeric)
   mss=0;
   while (fgets(buff, 1023, fp))
   {
-	num = sscanf(buff, "%s %s %s %X %d %d %d %s %d %d %d\n",
+	num = sscanf(buff, "%16s %128s %128s %X %d %d %d %128s %d %d %d\n",
 		iface, net_addr, gate_addr,
 		&iflags, &refcnt, &use, &metric, mask_addr,
  		&mss,&window,&irtt);
@@ -134,7 +134,7 @@ int rprint_fib(int ext, int numeric)
 
 int rprint_cache(int ext, int numeric)
 {
-  char buff[4096], iface[16], flags[16];
+  char buff[1024], iface[16], flags[16];
   char gate_addr[128], net_addr[128];
   char mask_addr[128];
   struct sockaddr snet, sgate, smask;
@@ -168,7 +168,7 @@ int rprint_cache(int ext, int numeric)
   arp=0;
   while (fgets(buff, 1023, fp))
   {
-	num = sscanf(buff, "%s %s %s %X %d %d %d %s %d %d %d %d %d\n",
+	num = sscanf(buff, "%16s %128s %128s %X %d %d %d %128s %d %d %d %d %d\n",
 		iface, net_addr, gate_addr,
 		&iflags, &refcnt, &use, &metric, mask_addr,
 		&mss,&window,&irtt,&hh,&arp);
