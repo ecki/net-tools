@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.42 2000/10/08 00:48:35 ecki Exp $
+ * Version:     $Id: ifconfig.c,v 1.43 2000/10/26 03:19:06 ak Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -362,12 +362,13 @@ int main(int argc, char **argv)
 		    goterr = 1;
 		} else {
 		    if (ioctl(skfd, SIOCGIFMAP, &ifr) < 0) {
+			perror("port: SIOCGIFMAP"); 
 			goterr = 1;
 			continue;
 		    }
 		    ifr.ifr_map.port = newport;
 		    if (ioctl(skfd, SIOCSIFMAP, &ifr) < 0) {
-			perror("SIOCSIFMAP");
+			perror("port: SIOCSIFMAP");
 			goterr = 1;
 		    }
 		}
@@ -568,12 +569,14 @@ int main(int argc, char **argv)
 	    if (*++spp == NULL)
 		usage();
 	    if (ioctl(skfd, SIOCGIFMAP, &ifr) < 0) {
+		fprintf(stderr, "mem_start: SIOCGIFMAP: %s\n", strerror(errno)); 
+		spp++; 
 		goterr = 1;
 		continue;
 	    }
 	    ifr.ifr_map.mem_start = strtoul(*spp, NULL, 0);
 	    if (ioctl(skfd, SIOCSIFMAP, &ifr) < 0) {
-		fprintf(stderr, "SIOCSIFMAP: %s\n", strerror(errno));
+		fprintf(stderr, "mem_start: SIOCSIFMAP: %s\n", strerror(errno));
 		goterr = 1;
 	    }
 	    spp++;
@@ -583,12 +586,14 @@ int main(int argc, char **argv)
 	    if (*++spp == NULL)
 		usage();
 	    if (ioctl(skfd, SIOCGIFMAP, &ifr) < 0) {
+		fprintf(stderr, "io_addr: SIOCGIFMAP: %s\n", strerror(errno)); 
+		spp++; 
 		goterr = 1;
 		continue;
 	    }
 	    ifr.ifr_map.base_addr = strtol(*spp, NULL, 0);
 	    if (ioctl(skfd, SIOCSIFMAP, &ifr) < 0) {
-		fprintf(stderr, "SIOCSIFMAP: %s\n", strerror(errno));
+		fprintf(stderr, "io_addr: SIOCSIFMAP: %s\n", strerror(errno));
 		goterr = 1;
 	    }
 	    spp++;
@@ -598,12 +603,14 @@ int main(int argc, char **argv)
 	    if (*++spp == NULL)
 		usage();
 	    if (ioctl(skfd, SIOCGIFMAP, &ifr) < 0) {
+		fprintf(stderr, "irq: SIOCGIFMAP: %s\n", strerror(errno)); 
 		goterr = 1;
+		spp++; 
 		continue;
 	    }
 	    ifr.ifr_map.irq = atoi(*spp);
 	    if (ioctl(skfd, SIOCSIFMAP, &ifr) < 0) {
-		fprintf(stderr, "SIOCSIFMAP: %s\n", strerror(errno));
+		fprintf(stderr, "irq: SIOCSIFMAP: %s\n", strerror(errno));
 		goterr = 1;
 	    }
 	    spp++;
