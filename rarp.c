@@ -6,6 +6,7 @@
  * Usage:       rarp -d hostname                      Delete entry
  *		rarp -s hostname ethernet_address     Add entry
  *              rarp -a                               Print entries
+ *		rarp -f				      Add frop /etc/ethers
  *
  * Rewritten: Phil Blundell <Philip.Blundell@pobox.com>  1997-08-03
  *
@@ -181,6 +182,8 @@ static void usage(void)
   "       rarp -d hostname                      delete entry from cache.\n"));
   fprintf(stderr, NLS_CATGETS(catfd, rarpSet, rarp_usage3,
   "       rarp [-t hwtype] -s hostname hwaddr   add entry to cache.\n"));
+  fprintf(stderr, NLS_CATGETS(catfd, rarpSet, rarp_usage3a,
+  "       rarp -f                               add entries from ethers.\n"));
   fprintf(stderr, NLS_CATGETS(catfd, rarpSet, rarp_usage4,
   "       rarp -V                               display program version.\n"));
   NLS_CATCLOSE(catfd)
