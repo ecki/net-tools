@@ -193,25 +193,12 @@ arp_del(char **args)
   if (flags == 0)
   	flags = 3;
   	
-#if HAVE_NEW_SIOCSARP
   strcpy(req.arp_dev,device);
 
   /* Call the kernel. */
   if (flags & 2) {
   	if (opt_v)  fprintf(stderr,"arp: SIOCDARP(nopub)\n");
   	if (ioctl(sockfd, SIOCDARP, &req) < 0) {
-		if (errno == EINVAL) {
-			if (opt_v)  fprintf(stderr,"arp: OLD_SIOCDARP(priv)\n");
-			memcpy((char *)&old_req,(char *)&req,sizeof(old_req));
-			if (ioctl(sockfd, OLD_SIOCDARP, &old_req) < 0) {
-				if (errno != ENXIO) {
-					perror("OLD_SIOCSARP(priv)");
-					return(-1);
-				}
-			} else {
-				return(0);
-			}
-		}
 		if (errno == ENXIO) {
 			if (flags & 1)
 				goto nopub;
@@ -228,18 +215,6 @@ nopub:
   	req.arp_flags |= ATF_PUBL;
   	if (opt_v)  fprintf(stderr,"arp: SIOCDARP(pub)\n");
   	if (ioctl(sockfd, SIOCDARP, &req) < 0) {
-		if (errno == EINVAL) {
-			if (opt_v)  fprintf(stderr,"arp: OLD_SIOCDARP(pub)\n");
-			memcpy((char *)&old_req,(char *)&req,sizeof(old_req));
-			if (ioctl(sockfd, OLD_SIOCDARP, &old_req) < 0) {
-				if (errno != ENXIO) {
-					perror("OLD_SIOCSARP(pub)");
-					return(-1);
-				}
-			} else {
-				return(0);
-			}
-		}
 		if (errno == ENXIO) {
 			printf(NLS_CATGETS(catfd, arpSet, arp_no_arp, 
 				"No ARP entry for %s\n"), host);
@@ -249,14 +224,6 @@ nopub:
 		return(-1);
   	}
   }
-#else
-  /* Call the kernel. */
-  if (opt_v)  fprintf(stderr,"arp: old_SIOCDARP()\n");
-  if (ioctl(sockfd, SIOCDARP, &req) < 0) {
-	perror("SIOCDARP");
-	return(-1);
-  }
-#endif
 
   return(0);
 }

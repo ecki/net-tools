@@ -30,10 +30,6 @@
 
 /* detect the present features */
 
-#ifdef OLD_SIOCSARP /* arp */
-#  define HAVE_NEW_SIOCSARP 1
-#endif
-
 #if defined (SIOCADDRTOLD) || defined (RTF_IRTT) /* route */
 #  define HAVE_NEW_ADDRT 1
 #endif
