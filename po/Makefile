@@ -23,7 +23,7 @@ POTFILES=../arp.c ../hostname.c ../ifconfig.c ../netstat.c ../rarp.c \
 	../lib/rose_gr.c ../lib/setroute.c ../lib/sit.c ../lib/slip.c \
 	../lib/slip_ac.c ../lib/tr.c ../lib/tunnel.c ../lib/unix.c \
 	../lib/util.c ../lib/interface.c ../lib/sockets.c ../lib/util-ank.c \
-	../ipmaddr.c ../slattach.c
+	../ipmaddr.c ../slattach.c ../iptunnel.c
 
 all: $(NLSPACKAGE).pot $(CATALOGS)
 

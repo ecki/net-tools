@@ -253,7 +253,7 @@ static void print_maddr(FILE *fp, struct ma_info *list)
 			fprintf(fp, "inet6 ");
 			break;
 		default:
-			fprintf(fp, "family %d ", list->addr.family);
+			fprintf(fp, _("family %d "), list->addr.family);
 			break;
 		}
 		if (format_host(list->addr.family, list->addr.data, abuf, sizeof(abuf)))
@@ -262,7 +262,7 @@ static void print_maddr(FILE *fp, struct ma_info *list)
 			fprintf(fp, "?");
 	}
 	if (list->users != 1)
-		fprintf(fp, " users %d", list->users);
+		fprintf(fp, _(" users %d"), list->users);
 	if (list->features)
 		fprintf(fp, " %s", list->features);
 	fprintf(fp, "\n");

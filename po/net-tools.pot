@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 1999-03-06 00:09+0100\n"
+"POT-Creation-Date: 1999-03-23 20:34+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,6 +21,20 @@ msgstr ""
 #: ../arp.c:206 ../arp.c:220
 #, c-format
 msgid "No ARP entry for %s\n"
+msgstr ""
+
+#: ../arp.c:238
+#, c-format
+msgid "arp: cant get HW-Address for `%s': %s.\n"
+msgstr ""
+
+#: ../arp.c:242
+msgid "arp: protocol type mismatch.\n"
+msgstr ""
+
+#: ../arp.c:251
+#, c-format
+msgid "arp: device `%s' has HW address %s `%s'.\n"
 msgstr ""
 
 #: ../arp.c:281
@@ -50,9 +64,37 @@ msgstr ""
 msgid "Address\t\t\tHWtype\tHWaddress\t    Flags Mask\t\t  Iface\n"
 msgstr ""
 
+#: ../arp.c:458
+msgid "(incomplete)"
+msgstr ""
+
+#: ../arp.c:475
+#, c-format
+msgid "%s (%s) at "
+msgstr ""
+
+#: ../arp.c:481
+msgid "<incomplete> "
+msgstr ""
+
+#: ../arp.c:487
+#, c-format
+msgid "netmask %s "
+msgstr ""
+
+#: ../arp.c:504
+#, c-format
+msgid "on %s\n"
+msgstr ""
+
 #: ../arp.c:583
 #, c-format
 msgid "Entries: %d\tSkipped: %d\tFound: %d\n"
+msgstr ""
+
+#: ../arp.c:587
+#, c-format
+msgid "%s (%s) -- no entry\n"
 msgstr ""
 
 #: ../arp.c:589
@@ -152,6 +194,10 @@ msgstr ""
 #: ../arp.c:658
 #, c-format
 msgid "%s: address family not supported!\n"
+msgstr ""
+
+#: ../arp.c:693
+msgid "arp: -N not yet supported.\n"
 msgstr ""
 
 #: ../arp.c:703
@@ -729,6 +775,11 @@ msgid ""
 "Recv-Q\n"
 msgstr ""
 
+#: ../netstat.c:427 ../netstat.c:1191
+#, c-format
+msgid "Problem reading data from %s\n"
+msgstr ""
+
 #: ../netstat.c:462
 msgid "SYN_SENT"
 msgstr ""
@@ -898,6 +949,11 @@ msgstr ""
 msgid "Dest       Source     Device  State        Vr/Vs    Send-Q  Recv-Q\n"
 msgstr ""
 
+#: ../netstat.c:1211
+#, c-format
+msgid "problem reading data from %s\n"
+msgstr ""
+
 #: ../netstat.c:1262
 msgid ""
 "Active IPX sockets\n"
@@ -915,6 +971,10 @@ msgstr ""
 
 #: ../netstat.c:1306
 msgid "UNK."
+msgstr ""
+
+#: ../netstat.c:1350
+msgid "     - no statistics available -"
 msgstr ""
 
 #: ../netstat.c:1353
@@ -1051,6 +1111,14 @@ msgstr ""
 msgid " Timer"
 msgstr ""
 
+#: ../netstat.c:1690
+msgid "IPv4 Group Memberships\n"
+msgstr ""
+
+#: ../netstat.c:1691
+msgid "Interface       RefCnt Group\n"
+msgstr ""
+
 #: ../rarp.c:43
 msgid "This kernel does not support RARP.\n"
 msgstr ""
@@ -1157,6 +1225,103 @@ msgstr ""
 #: ../plipconfig.c:74
 #, c-format
 msgid "%s\tnibble %lu  trigger %lu\n"
+msgstr ""
+
+#: ../iptunnel.c:61
+msgid "Usage: iptunnel { add | change | del | show } [ NAME ]\n"
+msgstr ""
+
+#: ../iptunnel.c:62
+msgid ""
+"          [ mode { ipip | gre | sit } ] [ remote ADDR ] [ local ADDR ]\n"
+msgstr ""
+
+#: ../iptunnel.c:63
+msgid "          [ [i|o]seq ] [ [i|o]key KEY ] [ [i|o]csum ]\n"
+msgstr ""
+
+#: ../iptunnel.c:64
+msgid ""
+"          [ ttl TTL ] [ tos TOS ] [ nopmtudisc ] [ dev PHYS_DEV ]\n"
+"\n"
+msgstr ""
+
+#: ../iptunnel.c:65
+msgid "Where: NAME := STRING\n"
+msgstr ""
+
+#: ../iptunnel.c:66
+msgid "       ADDR := { IP_ADDRESS | any }\n"
+msgstr ""
+
+#: ../iptunnel.c:67
+msgid "       TOS  := { NUMBER | inherit }\n"
+msgstr ""
+
+#: ../iptunnel.c:68
+msgid "       TTL  := { 1..255 | inherit }\n"
+msgstr ""
+
+#: ../iptunnel.c:69
+msgid "       KEY  := { DOTTED_QUAD | NUMBER }\n"
+msgstr ""
+
+#: ../iptunnel.c:307
+msgid "Keys are not allowed with ipip and sit.\n"
+msgstr ""
+
+#: ../iptunnel.c:327
+msgid "Broadcast tunnel requires a source address.\n"
+msgstr ""
+
+#: ../iptunnel.c:342
+msgid "ttl != 0 and noptmudisc are incompatible\n"
+msgstr ""
+
+#: ../iptunnel.c:354
+msgid "cannot determine tunnel mode (ipip, gre or sit)\n"
+msgstr ""
+
+#: ../iptunnel.c:392
+#, c-format
+msgid "%s: %s/ip  remote %s  local %s "
+msgstr ""
+
+#: ../iptunnel.c:396
+msgid "unknown"
+msgstr ""
+
+#: ../iptunnel.c:428
+msgid "  Drop packets out of sequence.\n"
+msgstr ""
+
+#: ../iptunnel.c:430
+msgid "  Checksum in received packet is required.\n"
+msgstr ""
+
+#: ../iptunnel.c:432
+msgid "  Sequence packets on output.\n"
+msgstr ""
+
+#: ../iptunnel.c:434
+msgid "  Checksum output packets.\n"
+msgstr ""
+
+#: ../iptunnel.c:462
+msgid "Wrong format of /proc/net/dev. Sorry.\n"
+msgstr ""
+
+#: ../iptunnel.c:475
+#, c-format
+msgid "Failed to get type of [%s]\n"
+msgstr ""
+
+#: ../iptunnel.c:491
+msgid "RX: Packets    Bytes        Errors CsumErrs OutOfSeq Mcasts\n"
+msgstr ""
+
+#: ../iptunnel.c:494
+msgid "TX: Packets    Bytes        Errors DeadLoop NoRoute  NoBufs\n"
 msgstr ""
 
 #: ../statistics.c:45
@@ -2073,6 +2238,16 @@ msgstr ""
 msgid "       ipmaddr show [ dev STRING ] [ ipv4 | ipv6 | link | all ]\n"
 msgstr ""
 
+#: ../ipmaddr.c:256
+#, c-format
+msgid "family %d "
+msgstr ""
+
+#: ../ipmaddr.c:265
+#, c-format
+msgid " users %d"
+msgstr ""
+
 #: ../ipmaddr.c:351
 msgid "Cannot create socket"
 msgstr ""
@@ -2130,4 +2305,19 @@ msgstr ""
 #: ../slattach.c:658
 #, c-format
 msgid "slattach: unsupported protocol %s\n"
+msgstr ""
+
+#: ../slattach.c:685
+#, c-format
+msgid "%s started"
+msgstr ""
+
+#: ../slattach.c:686
+#, c-format
+msgid " on %s"
+msgstr ""
+
+#: ../slattach.c:687
+#, c-format
+msgid " interface %s\n"
 msgstr ""

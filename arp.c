@@ -8,7 +8,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: arp.c,v 1.11 1999/01/05 20:52:54 philip Exp $
+ * Version:     $Id: arp.c,v 1.12 1999/03/24 09:49:43 philip Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -235,11 +235,11 @@ static int arp_getdevhw(char *ifname, struct sockaddr *sa, struct hwtype *hw)
 
     strcpy(ifr.ifr_name, ifname);
     if (ioctl(sockfd, SIOCGIFHWADDR, &ifr) < 0) {
-	fprintf(stderr, "arp: cant get HW-Address for `%s': %s.\n", ifname, strerror(errno));
+	fprintf(stderr, _("arp: cant get HW-Address for `%s': %s.\n"), ifname, strerror(errno));
 	return (-1);
     }
     if (hw && (ifr.ifr_hwaddr.sa_family != hw->type)) {
-	fprintf(stderr, "arp: protocol type missmatch.\n");
+	fprintf(stderr, _("arp: protocol type mismatch.\n"));
 	return (-1);
     }
     memcpy((char *) sa, (char *) &(ifr.ifr_hwaddr), sizeof(struct sockaddr));
@@ -248,7 +248,7 @@ static int arp_getdevhw(char *ifname, struct sockaddr *sa, struct hwtype *hw)
 	if (!(xhw = get_hwntype(ifr.ifr_hwaddr.sa_family)) || (xhw->sprint == 0)) {
 	    xhw = get_hwntype(-1);
 	}
-	fprintf(stderr, "arp: device `%s' has HW address %s `%s'.\n", ifname, xhw->name, xhw->sprint(&ifr.ifr_hwaddr));
+	fprintf(stderr, _("arp: device `%s' has HW address %s `%s'.\n"), ifname, xhw->name, xhw->sprint(&ifr.ifr_hwaddr));
     }
     return (0);
 }
@@ -455,7 +455,7 @@ static void arp_disp_2(char *name, int type, int arp_flags, char *hwa, char *mas
 	if (arp_flags & ATF_PUBL)
 	    printf("%-8.8s%-20.20s", "*", "*");
 	else
-	    printf("%-8.8s%-20.20s", "", "(incomplete)");
+	    printf("%-8.8s%-20.20s", "", _("(incomplete)"));
     } else {
 	printf("%-8.8s%-20.20s", xhw->name, hwa);
     }
@@ -472,19 +472,19 @@ static void arp_disp(char *name, char *ip, int type, int arp_flags, char *hwa, c
     if (xhw == NULL)
 	xhw = get_hwtype(DFLT_HW);
 
-    printf("%s (%s) at ", name, ip);
+    printf(_("%s (%s) at "), name, ip);
 
     if (!(arp_flags & ATF_COM)) {
 	if (arp_flags & ATF_PUBL)
 	    printf("* ");
 	else
-	    printf("<incomplete> ");
+	    printf(_("<incomplete> "));
     } else {
 	printf("%s [%s] ", hwa, xhw->name);
     }
 
     if (arp_flags & ATF_NETMASK)
-	printf("netmask %s ", mask);
+	printf(_("netmask %s "), mask);
 
     if (arp_flags & ATF_PERM)
 	printf("PERM ");
@@ -501,7 +501,7 @@ static void arp_disp(char *name, char *ip, int type, int arp_flags, char *hwa, c
     if (arp_flags & ATF_USETRAILERS)
 	printf("TRAIL ");
 
-    printf("on %s\n", dev);
+    printf(_("on %s\n"), dev);
 }
 
 
@@ -584,7 +584,7 @@ static int arp_show(char *name)
 
     if (!showed) {
 	if (host[0] && !opt_a)
-	    printf("%s (%s) -- no entry\n", name, host);
+	    printf(_("%s (%s) -- no entry\n"), name, host);
 	else if (hw_set || host[0] || device[0]) {
 	    printf(_("arp: in %d entries no match found.\n"), entries);
 	}
@@ -690,7 +690,7 @@ int main(int argc, char **argv)
 	    break;
 	case 'N':
 	    opt_N = FLAG_SYM;
-	    fprintf(stderr, "arp: -N not yet supported.\n");
+	    fprintf(stderr, _("arp: -N not yet supported.\n"));
 	    break;
 	case 'v':
 	    opt_v = 1;

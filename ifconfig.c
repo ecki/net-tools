@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.28 1999/03/03 19:40:28 philip Exp $
+ * Version:     $Id: ifconfig.c,v 1.29 1999/03/24 09:49:45 philip Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -109,7 +109,7 @@ static const char *if_port_text[][4] =
 #include "sockets.h"
 #include "util.h"
 
-char *Release = RELEASE, *Version = "ifconfig 1.38 (1999-01-05)";
+char *Release = RELEASE, *Version = "ifconfig 1.39 (1999-03-18)";
 
 int opt_a = 0;			/* show all interfaces          */
 int opt_i = 0;			/* show the statistics          */

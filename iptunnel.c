@@ -58,16 +58,15 @@ static void usage(void) __attribute__((noreturn));
 
 static void usage(void)
 {
-	fprintf(stderr, "Usage: iptunnel { add | change | del | show } [ NAME ]\n");
-	fprintf(stderr, "          [ mode { ipip | gre | sit } ] [ remote ADDR ] [ local ADDR ]\n");
-	fprintf(stderr, "          [ [i|o]seq ] [ [i|o]key KEY ] [ [i|o]csum ]\n");
-	fprintf(stderr, "          [ ttl TTL ] [ tos TOS ] [ nopmtudisc ] [ dev PHYS_DEV ]\n");
-	fprintf(stderr, "\n");
-	fprintf(stderr, "Where: NAME := STRING\n");
-	fprintf(stderr, "       ADDR := { IP_ADDRESS | any }\n");
-	fprintf(stderr, "       TOS  := { NUMBER | inherit }\n");
-	fprintf(stderr, "       TTL  := { 1..255 | inherit }\n");
-	fprintf(stderr, "       KEY  := { DOTTED_QUAD | NUMBER }\n");
+	fprintf(stderr, _("Usage: iptunnel { add | change | del | show } [ NAME ]\n"));
+	fprintf(stderr, _("          [ mode { ipip | gre | sit } ] [ remote ADDR ] [ local ADDR ]\n"));
+	fprintf(stderr, _("          [ [i|o]seq ] [ [i|o]key KEY ] [ [i|o]csum ]\n"));
+	fprintf(stderr, _("          [ ttl TTL ] [ tos TOS ] [ nopmtudisc ] [ dev PHYS_DEV ]\n\n"));
+	fprintf(stderr, _("Where: NAME := STRING\n"));
+	fprintf(stderr, _("       ADDR := { IP_ADDRESS | any }\n"));
+	fprintf(stderr, _("       TOS  := { NUMBER | inherit }\n"));
+	fprintf(stderr, _("       TTL  := { 1..255 | inherit }\n"));
+	fprintf(stderr, _("       KEY  := { DOTTED_QUAD | NUMBER }\n"));
 	exit(-1);
 }
 
@@ -305,7 +304,7 @@ static int parse_args(int argc, char **argv, struct ip_tunnel_parm *p)
 
 	if (p->iph.protocol == IPPROTO_IPIP || p->iph.protocol == IPPROTO_IPV6) {
 		if ((p->i_flags & GRE_KEY) || (p->o_flags & GRE_KEY)) {
-			fprintf(stderr, "Keys are not allowed with ipip and sit.\n");
+			fprintf(stderr, _("Keys are not allowed with ipip and sit.\n"));
 			return -1;
 		}
 	}
@@ -325,7 +324,7 @@ static int parse_args(int argc, char **argv, struct ip_tunnel_parm *p)
 		p->o_flags |= GRE_KEY;
 	}
 	if (IN_MULTICAST(ntohl(p->iph.daddr)) && !p->iph.saddr) {
-		fprintf(stderr, "Broadcast tunnel requires a source address.\n");
+		fprintf(stderr, _("Broadcast tunnel requires a source address.\n"));
 		return -1;
 	}
 	return 0;
@@ -340,7 +339,7 @@ static int do_add(int cmd, int argc, char **argv)
 		return -1;
 
 	if (p.iph.ttl && p.iph.frag_off == 0) {
-		fprintf(stderr, "ttl != 0 and noptmudisc are incompatible\n");
+		fprintf(stderr, _("ttl != 0 and noptmudisc are incompatible\n"));
 		return -1;
 	}
 
@@ -352,7 +351,7 @@ static int do_add(int cmd, int argc, char **argv)
 	case IPPROTO_IPV6:
 		return do_add_ioctl(cmd, "sit0", &p);
 	default:	
-		fprintf(stderr, "cannot determine tunnel mode (ipip, gre or sit)\n");
+		fprintf(stderr, _("cannot determine tunnel mode (ipip, gre or sit)\n"));
 		return -1;
 	}
 	return -1;
@@ -390,11 +389,11 @@ void print_tunnel(struct ip_tunnel_parm *p)
 	inet_ntop(AF_INET, &p->i_key, s3, sizeof(s3));
 	inet_ntop(AF_INET, &p->o_key, s4, sizeof(s4));
 
-	printf("%s: %s/ip  remote %s  local %s ",
+	printf(_("%s: %s/ip  remote %s  local %s "),
 	       p->name,
 	       p->iph.protocol == IPPROTO_IPIP ? "ip" :
 	       (p->iph.protocol == IPPROTO_GRE ? "gre" :
-		(p->iph.protocol == IPPROTO_IPV6 ? "ipv6" : "unknown")),
+		(p->iph.protocol == IPPROTO_IPV6 ? "ipv6" : _("unknown"))),
 	       p->iph.daddr ? s1 : "any", p->iph.saddr ? s2 : "any");
 	if (p->link) {
 		char *n = do_ioctl_get_ifname(p->link);
@@ -426,13 +425,13 @@ void print_tunnel(struct ip_tunnel_parm *p)
 	printf("\n");
 
 	if (p->i_flags&GRE_SEQ)
-		printf("  Drop packets out of sequence.\n");
+		printf(_("  Drop packets out of sequence.\n"));
 	if (p->i_flags&GRE_CSUM)
-		printf("  Checksum in received packet is required.\n");
+		printf(_("  Checksum in received packet is required.\n"));
 	if (p->o_flags&GRE_SEQ)
-		printf("  Sequence packets on output.\n");
+		printf(_("  Sequence packets on output.\n"));
 	if (p->o_flags&GRE_CSUM)
-		printf("  Checksum output packets.\n");
+		printf(_("  Checksum output packets.\n"));
 }
 
 static int do_tunnels_list(struct ip_tunnel_parm *p)
@@ -460,7 +459,7 @@ static int do_tunnels_list(struct ip_tunnel_parm *p)
 		buf[sizeof(buf) - 1] = 0;
 		if ((ptr = strchr(buf, ':')) == NULL ||
 		    (*ptr++ = 0, sscanf(buf, "%s", name) != 1)) {
-			fprintf(stderr, "Wrong format of /proc/net/dev. Sorry.\n");
+			fprintf(stderr, _("Wrong format of /proc/net/dev. Sorry.\n"));
 			return -1;
 		}
 		if (sscanf(ptr, "%ld%ld%ld%ld%ld%ld%ld%*d%ld%ld%ld%ld%ld%ld%ld",
@@ -473,7 +472,7 @@ static int do_tunnels_list(struct ip_tunnel_parm *p)
 			continue;
 		type = do_ioctl_get_iftype(name);
 		if (type == -1) {
-			fprintf(stderr, "Failed to get type of [%s]\n", name);
+			fprintf(stderr, _("Failed to get type of [%s]\n"), name);
 			continue;
 		}
 		if (type != ARPHRD_TUNNEL && type != ARPHRD_IPGRE && type != ARPHRD_SIT)
@@ -489,10 +488,10 @@ static int do_tunnels_list(struct ip_tunnel_parm *p)
 			continue;
 		print_tunnel(&p1);
 		if (show_stats) {
-			printf("RX: Packets    Bytes        Errors CsumErrs OutOfSeq Mcasts\n");
+			printf(_("RX: Packets    Bytes        Errors CsumErrs OutOfSeq Mcasts\n"));
 			printf("    %-10ld %-12ld %-6ld %-8ld %-8ld %-8ld\n",
 			       rx_packets, rx_bytes, rx_errs, rx_frame, rx_fifo, rx_multi);
-			printf("TX: Packets    Bytes        Errors DeadLoop NoRoute  NoBufs\n");
+			printf(_("TX: Packets    Bytes        Errors DeadLoop NoRoute  NoBufs\n"));
 			printf("    %-10ld %-12ld %-6ld %-8ld %-8ld %-6ld\n\n",
 			       tx_packets, tx_bytes, tx_errs, tx_colls, tx_carrier, tx_drops);
 		}

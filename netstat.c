@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.24 1999/03/17 14:00:09 philip Exp $
+ * Version:     $Id: netstat.c,v 1.25 1999/03/24 09:49:52 philip Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -424,7 +424,7 @@ static int netrom_info(void)
 	ret = sscanf(buffer + 30, "%s %*x/%*x %*x/%*x %d %d %d %*d %*d/%*d %*d/%*d %*d/%*d %*d/%*d %*d/%*d %*d %d %d %*d",
 	       dev, &st, &vs, &vr, &sendq, &recvq);
 	if (ret != 6) {
-	    printf("Problem reading data from %s\n", _PATH_PROCNET_NR);
+	    printf(_("Problem reading data from %s\n"), _PATH_PROCNET_NR);
 	    continue;
 	}
 	printf("%-9s  %-9s  %-9s  %-6s  %-11s  %03d/%03d  %-6d  %-6d\n",
@@ -1188,7 +1188,7 @@ static int ax25_info(void)
 	    ret = sscanf(buffer + 20, "%s %d %d %d %*d %*d/%*d %*d/%*d %*d/%*d %*d/%*d %*d/%*d %*d %*d %*d %d %d %*d",
 		   buf, &st, &vs, &vr, &sendq, &recvq);
 	    if (ret != 4 && ret != 6) {
-		printf("Problem reading data from %s\n", _PATH_PROCNET_AX25);
+		printf(_("Problem reading data from %s\n"), _PATH_PROCNET_AX25);
 		continue;
 	    }
 	    dev = buf;
@@ -1208,7 +1208,7 @@ static int ax25_info(void)
 	    ret = sscanf(p, "%d %d %d %*d %*d %*d %*d %*d %*d %*d %*d %*d %*d %*d %*d %*d %*d %d %d %*d",
 		   &st, &vs, &vr, &sendq, &recvq);
 	    if (ret != 3 && ret != 5) {
-		    printf("problem reading data from %s\n", _PATH_PROCNET_AX25);
+		    printf(_("problem reading data from %s\n"), _PATH_PROCNET_AX25);
 		    continue;
 	    }
 	    /*
@@ -1347,7 +1347,7 @@ void ife_print(struct interface *ptr)
 	       ptr->stats.tx_packets, ptr->stats.tx_errors,
 	       ptr->stats.tx_dropped, ptr->stats.tx_fifo_errors);
     } else {
-	printf("%-56s", "     - no statistics available -");
+	printf("%-56s", _("     - no statistics available -"));
     }
     if (ptr->flags == 0)
 	printf(_("[NO FLAGS]"));
@@ -1687,8 +1687,8 @@ int main
 #if HAVE_AFINET6
 	    printf( "IPv6/");
 #endif
-	    printf( "IPv4 Group Memberships\n" );
-	    printf( "Interface       RefCnt Group\n" );
+	    printf( _("IPv4 Group Memberships\n") );
+	    printf( _("Interface       RefCnt Group\n") );
 	    printf( "--------------- ------ ---------------------\n" );
 	    i = igmp_info();
 	    if (i)

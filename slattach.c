@@ -682,9 +682,9 @@ main(int argc, char *argv[])
   (*ht->activate)(tty_fd);
   if (opt_v == 1) {
 	tty_get_name(buff);
-	printf("%s started", proto);
-	if (sp != NULL) printf(" on %s", sp);
-	printf(" interface %s\n", buff);
+	printf(_("%s started"), proto);
+	if (sp != NULL) printf(_(" on %s"), sp);
+	printf(_(" interface %s\n"), buff);
   }
 
   /* Configure keepalive and outfill. */
