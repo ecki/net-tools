@@ -172,8 +172,8 @@ nlsdir:
 subdirs:
 		@for i in $(SUBDIRS); do $(MAKE) -C $$i $(MDEFINES) ; done
 
-ifconfig:	$(NET-LIB) ifconfig.o
-		$(CC) $(LDFLAGS) -o ifconfig ifconfig.o $(NLIB) $(RESLIB)
+ifconfig:	$(NET-LIB) ifconfig.o interface.o sockets.o
+		$(CC) $(LDFLAGS) -o ifconfig ifconfig.o interface.o sockets.o $(NLIB) $(RESLIB)
 
 hostname:	hostname.o
 		$(CC) $(LDFLAGS) -o hostname hostname.o
@@ -187,8 +187,8 @@ arp:		$(NET-LIB) arp.o
 rarp:		$(NET-LIB) rarp.o
 		$(CC) $(LDFLAGS) -o rarp rarp.o $(NLIB)
 
-netstat:	$(NET-LIB) netstat.o statistics.o
-		$(CC) $(LDFLAGS) -o netstat netstat.o statistics.o $(NLIB) $(RESLIB)
+netstat:	$(NET-LIB) netstat.o statistics.o interface.o sockets.o
+		$(CC) $(LDFLAGS) -o netstat netstat.o statistics.o interface.o sockets.o $(NLIB) $(RESLIB)
 
 installbin:
 	install -o root -g root -m 0755 arp      ${BASEDIR}/sbin

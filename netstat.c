@@ -6,7 +6,7 @@
  *		NET-3 Networking Distribution for the LINUX operating
  *		system.
  *
- * Version:	netstat 1.25 (1998-02-09)
+ * Version:	netstat 1.26 (1998-03-02)
  *
  * Authors:	Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *		Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -97,7 +97,7 @@ typedef enum {
 #include "lib/net-features.h"
 
 char *Release   = RELEASE,
-     *Version   = "netstat 1.25 (1998-02-13)",
+     *Version   = "netstat 1.26 (1998-03-02)",
      *Signature = "Fred Baumgarten <dc6iq@insu1.etec.uni-karlsruhe.de> and Alan Cox.";
 
 
@@ -1155,134 +1155,6 @@ ife_print(struct interface *ptr)
   if (ptr->flags & IFF_UP) printf("U");
   printf("\n");
 }
-
-static void if_getstats(char *ifname, struct interface *ife)
-{
-  FILE *f=fopen("/proc/net/dev","r");
-  int have_byte_counters=0;
-  char buf[256];
-  char *bp;
-  if(f==NULL)
-  	return;
-  fgets(buf, 255, f);  /* throw away first line of header */
-  fgets(buf, 255, f);
-  if (strstr(buf, "bytes")) have_byte_counters=1;
-  while(fgets(buf,255,f))
-  {
-  	bp=buf;
-  	while(*bp&&isspace(*bp))
-  		bp++;
-  	if(strncmp(bp,ifname,strlen(ifname))==0 && bp[strlen(ifname)]==':')
-  	{
- 		bp=strchr(bp,':');
- 		bp++;
-		if (have_byte_counters) {
-		  sscanf(bp,"%ld %ld %ld %ld %ld %ld %ld %ld %ld %ld %ld %ld %ld",
-			 &ife->stats.rx_bytes,
-			 &ife->stats.rx_packets,
-			 &ife->stats.rx_errors,
-			 &ife->stats.rx_dropped,
-			 &ife->stats.rx_fifo_errors,
-			 &ife->stats.rx_frame_errors,
-			 
-			 &ife->stats.tx_bytes,
-			 &ife->stats.tx_packets,
-			 &ife->stats.tx_errors,
-			 &ife->stats.tx_dropped,
-			 &ife->stats.tx_fifo_errors,
-			 &ife->stats.collisions,
-			 
-			 &ife->stats.tx_carrier_errors
-			 );
-		} else {
-		  sscanf(bp,"%ld %ld %ld %ld %ld %ld %ld %ld %ld %ld %ld",
-			 &ife->stats.rx_packets,
-			 &ife->stats.rx_errors,
-			 &ife->stats.rx_dropped,
-			 &ife->stats.rx_fifo_errors,
-			 &ife->stats.rx_frame_errors,
-			 
-			 &ife->stats.tx_packets,
-			 &ife->stats.tx_errors,
-			 &ife->stats.tx_dropped,
-			 &ife->stats.tx_fifo_errors,
-			 &ife->stats.collisions,
-			 
-			 &ife->stats.tx_carrier_errors
-			 );
-		  ife->stats.rx_bytes = 0;
-		  ife->stats.tx_bytes = 0;
-		}
- 		fclose(f);
- 		return;
-  	}
-  }
-  fclose(f);
-}
-  
-/* Fetch the inteface configuration from the kernel. */
-static int
-if_fetch(char *ifname, struct interface *ife)
-{
-  struct ifreq ifr;
-  
-  memset((char *) ife, 0, sizeof(struct interface));
-  strcpy(ife->name, ifname);
-  
-  strcpy(ifr.ifr_name, ifname);
-  if (ioctl(skfd, SIOCGIFFLAGS, &ifr) < 0) {
-	fprintf(stderr, "SIOCGIFFLAGS: %s\n", strerror(errno));
-	return(-1);
-  }
-  ife->flags = ifr.ifr_flags;
-  
-  strcpy(ifr.ifr_name, ifname);
-  if (ioctl(skfd, SIOCGIFADDR, &ifr) < 0) {
-	memset(&ife->addr, 0, sizeof(struct sockaddr));
-  } else ife->addr = ifr.ifr_addr;
-  
-  strcpy(ifr.ifr_name, ifname);
-  if (ioctl(skfd, SIOCGIFHWADDR, &ifr) < 0) {
-	memset(&ife->hwaddr, 0, sizeof(struct sockaddr));
-  } else ife->hwaddr = ifr.ifr_addr;
-  
-  strcpy(ifr.ifr_name, ifname);
-  if (ioctl(skfd, SIOCGIFMETRIC, &ifr) < 0) {
-	ife->metric = 0;
-  } else ife->metric = ifr.ifr_metric;
-  
-  strcpy(ifr.ifr_name, ifname);
-  if (ioctl(skfd, SIOCGIFMTU, &ifr) < 0) {
-	ife->mtu = 0;
-  } else ife->mtu = ifr.ifr_mtu;
-  
-  strcpy(ifr.ifr_name, ifname);
-  if (ioctl(skfd, SIOCGIFDSTADDR, &ifr) < 0) {
-	memset(&ife->dstaddr, 0, sizeof(struct sockaddr));
-  } else ife->dstaddr = ifr.ifr_dstaddr;
-  
-  strcpy(ifr.ifr_name, ifname);
-  if (ioctl(skfd, SIOCGIFBRDADDR, &ifr) < 0) {
-	memset(&ife->broadaddr, 0, sizeof(struct sockaddr));
-  } else ife->broadaddr = ifr.ifr_broadaddr;
-  
-  strcpy(ifr.ifr_name, ifname);
-  if (ioctl(skfd, SIOCGIFNETMASK, &ifr) < 0) {
-	memset(&ife->netmask, 0, sizeof(struct sockaddr));
-  } else {
-	memcpy(ife->netmask.sa_data, &ifr.ifr_data, sizeof(struct sockaddr));
-  }
-    
-  if_getstats(ifname,ife);
-/*  strcpy(ifr.ifr_name, ifname);
-  ifr.ifr_data = (caddr_t) &ife->stats;
-  if (ioctl(skfd, SIOCGIFSTATS, &ifr) < 0) {
-	memset(&ife->stats, 0, sizeof(struct dev_stats));
-  }
-  */
-  return(0);
-}
-
 
 static int
 iface_info(void)

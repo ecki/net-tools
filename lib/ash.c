@@ -22,10 +22,10 @@
 #include "net-locale.h"
 
 #ifndef ARPHRD_ASH
-#error Your C library does not support Ash
+#error No support for Ash on this system
 #endif
 
-#define ASH_ALEN		32
+#define ASH_ALEN		64
 
 extern struct hwtype ash_hwtype;
 
@@ -37,16 +37,12 @@ pr_ash(unsigned char *ptr)
   char *p = buff;
   unsigned int i = 0;
 
-  while (ptr[i] != 0xc9 && (i < ASH_ALEN)) {
-	  sprintf(p, "%x:", ptr[i]);
-	  i++;
-	  p += 2;
-  }
-  
-  if (p != buff) 
-	  p[-1] = 0;
-  else
-	  p[0] = 0;
+  p[0] = '['; p++;
+  while (ptr[i] != 0xc9 && ptr[i] != 0xff && (i < ASH_ALEN))
+	  sprintf (p++, "%01", ptr[i++]);
+  *(p++) = ']';
+  *p = 0;
+
   return buff;
 }
 
@@ -57,8 +53,8 @@ pr_sash(struct sockaddr *sap)
   static char buf[64];
 
   if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-    return strncpy(buf, "[NONE SET]", 64);
-  return(pr_ash(sap->sa_data));
+    return strncpy (buf, "[NONE SET]", 64);
+  return pr_ash (sap->sa_data);
 }
 
 
@@ -71,25 +67,25 @@ in_ash(char *bufp, struct sockaddr *sap)
   sap->sa_family = ash_hwtype.type;
   ptr = sap->sa_data;
 
-  while (bufp && i < 32) {
-	  char *next;
-	  int hop = strtol(bufp, &next, 16);
-	  ptr[i++] = hop;
-	  switch (*next) {
-	  case ':':
-		  bufp = next + 1;
-		  break;
-	  case 0:
-		  bufp = NULL;
-		  break;
-	  default:
-		  fprintf(stderr, "Malformed Ash address");
-		  memset(ptr, 0xc9, 32);
-		  return -1;
-	  }
+  while (bufp && i < ASH_ALEN) {
+    char *next;
+    int hop = strtol (bufp, &next, 16);
+    ptr[i++] = hop;
+    switch (*next) {
+    case ':':
+      bufp = next + 1;
+      break;
+    case 0:
+      bufp = NULL;
+      break;
+    default:
+      fprintf (stderr, "Malformed Ash address");
+      memset (ptr, 0xc9, ASH_ALEN);
+      return -1;
+    }
   }
 
-  while (i < 32)
+  while (i < ASH_ALEN)
 	  ptr[i++] = 0xc9;
 
   return 0;

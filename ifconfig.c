@@ -3,7 +3,7 @@
  *		that either displays or sets the characteristics of
  *		one or more of the system's networking interfaces.
  *
- * Version:	ifconfig 1.32 (1998-02-09)
+ * Version:	ifconfig 1.33 (1998-03-02)
  *
  * Author:	Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -76,64 +76,6 @@ struct in6_ifreq {
 #define HAVE_TXQUEUELEN
 #endif
 
-/* This is from <linux/netdevice.h>. */
-
-struct user_net_device_stats
-{
-  unsigned long	rx_packets;	/* total packets received	*/
-  unsigned long	tx_packets;	/* total packets transmitted	*/
-  unsigned long	rx_bytes;	/* total bytes received 	*/
-  unsigned long	tx_bytes;	/* total bytes transmitted	*/
-  unsigned long	rx_errors;	/* bad packets received		*/
-  unsigned long	tx_errors;	/* packet transmit problems	*/
-  unsigned long	rx_dropped;	/* no space in linux buffers	*/
-  unsigned long	tx_dropped;	/* no space available in linux	*/
-  unsigned long	multicast;	/* multicast packets received	*/
-  unsigned long	collisions;
-
-  /* detailed rx_errors: */
-  unsigned long	rx_length_errors;
-  unsigned long	rx_over_errors;	/* receiver ring buff overflow	*/
-  unsigned long	rx_crc_errors;	/* recved pkt with crc error	*/
-  unsigned long	rx_frame_errors; /* recv'd frame alignment error */
-  unsigned long	rx_fifo_errors;	/* recv'r fifo overrun		*/
-  unsigned long	rx_missed_errors; /* receiver missed packet	*/
-  /* detailed tx_errors */
-  unsigned long	tx_aborted_errors;
-  unsigned long	tx_carrier_errors;
-  unsigned long	tx_fifo_errors;
-  unsigned long	tx_heartbeat_errors;
-  unsigned long	tx_window_errors;
-};
-
-struct interface {
-  char			name[IFNAMSIZ];		/* interface name	 */
-  short			type;			/* if type		 */
-  short			flags;			/* various flags	 */
-  int			metric;			/* routing metric	 */
-  int			mtu;			/* MTU value		 */
-  int			tx_queue_len;		/* transmit queue length */
-  struct ifmap		map;			/* hardware setup	 */
-  struct sockaddr	addr;			/* IP address		 */
-  struct sockaddr	dstaddr;		/* P-P IP address	 */
-  struct sockaddr	broadaddr;		/* IP broadcast address	 */
-  struct sockaddr	netmask;		/* IP network mask	 */
-  struct sockaddr	ipxaddr_bb;		/* IPX network address   */
-  struct sockaddr	ipxaddr_sn;		/* IPX network address   */
-  struct sockaddr	ipxaddr_e3;		/* IPX network address   */
-  struct sockaddr	ipxaddr_e2;		/* IPX network address   */
-  struct sockaddr	ddpaddr;		/* Appletalk DDP address */
-  int			has_ip;
-  int			has_ipx_bb;
-  int			has_ipx_sn;
-  int			has_ipx_e3;
-  int			has_ipx_e2;
-  int			has_ax25;
-  int			has_ddp;
-  char			hwaddr[32];		/* HW address		 */
-  struct user_net_device_stats stats;		/* statistics		 */
-};
-
 static const char *if_port_text[][4] = {
   /* Keep in step with <linux/netdevice.h> */
   { "unknown", NULL , NULL, NULL },
@@ -153,33 +95,16 @@ static const char *if_port_text[][4] = {
 #include "pathnames.h"
 #include "version.h"
 #include "net-locale.h"
+#include "interface.h"
+#include "sockets.h"
 
 char *Release = RELEASE,
-     *Version = "ifconfig 1.32 (1998-02-09)";
+     *Version = "ifconfig 1.33 (1998-03-02)";
 
 int opt_a = 0;				/* show all interfaces		*/
 int opt_i = 0;				/* show the statistics		*/
 int opt_v = 0;				/* debugging output flag	*/
 
-int skfd = -1;				/* generic raw socket desc.	*/
-#if HAVE_AFIPX
-int ipx_sock = -1;			/* IPX socket			*/
-#endif
-#if HAVE_AFAX25
-int ax25_sock = -1;			/* AX.25 socket			*/
-#endif
-#if HAVE_AFROSE
-int rose_sock = -1;			/* Rose socket			*/
-#endif
-#if HAVE_AFINET
-int inet_sock = -1;			/* INET socket			*/
-#endif
-#if HAVE_AFINET6
-int inet6_sock = -1;			/* INET6 socket			*/
-#endif
-#if HAVE_AFATALK
-int ddp_sock = -1;			/* Appletalk DDP socket		*/
-#endif
 int addr_family = 0;			/* currently selected AF	*/
 
 
@@ -189,7 +114,7 @@ ife_print(struct interface *ptr)
   struct aftype *ap;
   struct hwtype *hw;
   int hf;
-  char *dispname=NLS_CATSAVE (catfd, ifconfigSet, ifconfig_over, "overruns");
+  int can_compress = 0;
   static struct aftype *ipxtype=NULL, *ddptype=NULL;
 #if HAVE_AFINET6
   FILE *f;
@@ -208,18 +133,11 @@ ife_print(struct interface *ptr)
 
   hf=ptr->type;
 
-  if(strncmp(ptr->name,"lo",2)==0)
+  if (strncmp(ptr->name, "lo", 2) == 0)
   	hf=255;
   	
-  if(hf==ARPHRD_CSLIP || hf==ARPHRD_CSLIP6)
-  {
-#if NLS
-    /* NLS must free dispname */
-    free (dispname);
-#endif
-    /* Overrun got reused: BAD - fix later */
-    dispname=NLS_CATSAVE (catfd, ifconfigSet, ifconfig_compress, "compressed");
-  }
+  if (hf==ARPHRD_CSLIP || hf==ARPHRD_CSLIP6)
+    can_compress = 1;
   
   hw = get_hwntype(hf);
   if (hw == NULL) hw = get_hwntype(-1);
@@ -341,19 +259,24 @@ ife_print(struct interface *ptr)
   printf("          ");
 
   printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_rx,
-	"RX packets:%lu errors:%lu dropped:%lu %s:%lu frame:%lu\n"),
+	"RX packets:%lu errors:%lu dropped:%lu overruns:%lu frame:%lu\n"),
 	ptr->stats.rx_packets, ptr->stats.rx_errors,
-	ptr->stats.rx_dropped, dispname, ptr->stats.rx_fifo_errors,
+	ptr->stats.rx_dropped, ptr->stats.rx_fifo_errors,
         ptr->stats.rx_frame_errors);
+  if (can_compress)
+    printf("             compressed:%lu\n", ptr->stats.rx_compressed);
 	 
   printf("          ");
 
   printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_tx,
-	"TX packets:%lu errors:%lu dropped:%lu %s:%lu carrier:%lu\n"),
+	"TX packets:%lu errors:%lu dropped:%lu overruns:%lu carrier:%lu\n"),
 	ptr->stats.tx_packets, ptr->stats.tx_errors,
-	ptr->stats.tx_dropped, dispname, ptr->stats.tx_fifo_errors,
+	ptr->stats.tx_dropped, ptr->stats.tx_fifo_errors,
 	ptr->stats.tx_carrier_errors);
-  printf("             collisions:%lu\n", ptr->stats.collisions);
+  printf("             collisions:%lu ", ptr->stats.collisions);
+  if (can_compress)
+    printf("compressed:%lu ", ptr->stats.tx_compressed);
+  printf("\n");
 
   if ((ptr->map.irq || ptr->map.mem_start || ptr->map.dma || 
 		ptr->map.base_addr)) {
@@ -376,205 +299,7 @@ ife_print(struct interface *ptr)
   }
   
   printf("\n");
-
-#if NLS
-  /* NLS must free dispname */
-  free (dispname);
-#endif
 }
-
-
-static void if_getstats(char *ifname, struct interface *ife)
-{
-  FILE *f = fopen(_PATH_PROCNET_DEV, "r");
-  char buf[256];
-  int have_byte_counters = 0;
-  char *bp;
-  if (f==NULL)
-    return;
-  fgets(buf, 255, f);  /* throw away first line of header */
-  fgets(buf, 255, f);
-  if (strstr(buf, "bytes")) have_byte_counters=1;
-  while(fgets(buf,255,f)) {
-    bp=buf;
-    while(*bp&&isspace(*bp))
-      bp++;
-    if(strncmp(bp,ifname,strlen(ifname))==0 && bp[strlen(ifname)]==':') {
-      bp=strchr(bp,':');
-      bp++;
-      if (have_byte_counters) {
-	sscanf(bp,"%ld %ld %ld %ld %ld %ld %ld %ld %ld %ld %ld %ld %ld",
-	       &ife->stats.rx_bytes,
-	       &ife->stats.rx_packets,
-	       &ife->stats.rx_errors,
-	       &ife->stats.rx_dropped,
-	       &ife->stats.rx_fifo_errors,
-	       &ife->stats.rx_frame_errors,
-	       
-	       &ife->stats.tx_bytes,
-	       &ife->stats.tx_packets,
-	       &ife->stats.tx_errors,
-	       &ife->stats.tx_dropped,
-	       &ife->stats.tx_fifo_errors,
-	       &ife->stats.collisions,
-	       
-	       &ife->stats.tx_carrier_errors
-	       );
-      } else {
-	sscanf(bp,"%ld %ld %ld %ld %ld %ld %ld %ld %ld %ld %ld",
-	       &ife->stats.rx_packets,
-	       &ife->stats.rx_errors,
-	       &ife->stats.rx_dropped,
-	       &ife->stats.rx_fifo_errors,
-	       &ife->stats.rx_frame_errors,
-	       
-	       &ife->stats.tx_packets,
-	       &ife->stats.tx_errors,
-	       &ife->stats.tx_dropped,
-	       &ife->stats.tx_fifo_errors,
-	       &ife->stats.collisions,
-	       
-	       &ife->stats.tx_carrier_errors
-	       );
-	ife->stats.rx_bytes = 0;
-	ife->stats.tx_bytes = 0;
-      }
-      break;
-    }
-  }
-  fclose(f);
-}
-
-/* Support for fetching an IPX address */
-
-#if HAVE_AFIPX
-static int ipx_getaddr(int sock, int ft, struct ifreq *ifr)
-{
-	((struct sockaddr_ipx *)&ifr->ifr_addr)->sipx_type=ft;
-	return ioctl(sock, SIOCGIFADDR, ifr);
-}
-#endif
-
-/* Fetch the interface configuration from the kernel. */
-static int
-if_fetch(char *ifname, struct interface *ife)
-{
-  struct ifreq ifr;
-
-  memset((char *) ife, 0, sizeof(struct interface));
-  strcpy(ife->name, ifname);
-
-  strcpy(ifr.ifr_name, ifname);
-  if (ioctl(skfd, SIOCGIFFLAGS, &ifr) < 0) return(-1);
-  ife->flags = ifr.ifr_flags;
-
-  strcpy(ifr.ifr_name, ifname);
-  if (ioctl(skfd, SIOCGIFHWADDR, &ifr) < 0) 
-    memset(ife->hwaddr, 0, 32);
-  else 
-    memcpy(ife->hwaddr,ifr.ifr_hwaddr.sa_data,8);
-
-  ife->type=ifr.ifr_hwaddr.sa_family;
-
-  strcpy(ifr.ifr_name, ifname);
-  if (ioctl(skfd, SIOCGIFMETRIC, &ifr) < 0)
-    ife->metric = 0;
-  else 
-    ife->metric = ifr.ifr_metric;
-
-  strcpy(ifr.ifr_name, ifname);
-  if (ioctl(skfd, SIOCGIFMTU, &ifr) < 0)
-    ife->mtu = 0;
-  else 
-    ife->mtu = ifr.ifr_mtu;
-
-  strcpy(ifr.ifr_name, ifname);
-  if (ioctl(skfd, SIOCGIFMAP, &ifr) < 0)
-    memset(&ife->map, 0, sizeof(struct ifmap));
-  else 
-    memcpy(&ife->map,&ifr.ifr_map,sizeof(struct ifmap));
-
-  strcpy(ifr.ifr_name, ifname);
-  if (ioctl(skfd, SIOCGIFMAP, &ifr) < 0)
-    memset(&ife->map, 0, sizeof(struct ifmap));
-  else 
-    ife->map = ifr.ifr_map;
-
-#ifdef HAVE_TXQUEUELEN
-  strcpy(ifr.ifr_name, ifname);
-  if (ioctl(skfd, SIOCGIFTXQLEN, &ifr) < 0)
-    ife->tx_queue_len = -1; /* unknown value */
-  else 
-    ife->tx_queue_len = ifr.ifr_qlen;
-#else
-  ife->tx_queue_len = -1; /* unknown value */
-#endif
-
-#if HAVE_AFINET
-  strcpy(ifr.ifr_name, ifname);
-  if (inet_sock < 0 || ioctl(inet_sock, SIOCGIFDSTADDR, &ifr) < 0)
-    memset(&ife->dstaddr, 0, sizeof(struct sockaddr));
-  else 
-    ife->dstaddr = ifr.ifr_dstaddr;
-
-  strcpy(ifr.ifr_name, ifname);
-  if (inet_sock < 0 || ioctl(inet_sock, SIOCGIFBRDADDR, &ifr) < 0)
-    memset(&ife->broadaddr, 0, sizeof(struct sockaddr));
-  else 
-    ife->broadaddr = ifr.ifr_broadaddr;
-
-  strcpy(ifr.ifr_name, ifname);
-  if (inet_sock < 0 || ioctl(inet_sock, SIOCGIFNETMASK, &ifr) < 0)
-    memset(&ife->netmask, 0, sizeof(struct sockaddr));
-  else 
-    ife->netmask = ifr.ifr_netmask;
-
-  strcpy(ifr.ifr_name, ifname);
-  if (inet_sock < 0 || ioctl(inet_sock, SIOCGIFADDR, &ifr) < 0) 
-    memset(&ife->addr, 0, sizeof(struct sockaddr));
-  else 
-    ife->addr = ifr.ifr_addr;
-#endif
-  
-#if HAVE_AFATALK
-  /* DDP address maybe ? */
-  strcpy(ifr.ifr_name, ifname);
-  if (ddp_sock >= 0 && ioctl(ddp_sock, SIOCGIFADDR, &ifr) == 0) {
-    ife->ddpaddr=ifr.ifr_addr;
-    ife->has_ddp=1;
-  }
-#endif
-
-#if HAVE_AFIPX  
-  /* Look for IPX addresses with all framing types */
-  strcpy(ifr.ifr_name, ifname);
-  if (ipx_sock >= 0) {
-    if (!ipx_getaddr(ipx_sock, IPX_FRAME_ETHERII, &ifr)) {
-      ife->has_ipx_bb=1;
-      ife->ipxaddr_bb=ifr.ifr_addr;
-    }
-    strcpy(ifr.ifr_name, ifname);
-    if (!ipx_getaddr(ipx_sock, IPX_FRAME_SNAP, &ifr)) {
-      ife->has_ipx_sn=1;
-      ife->ipxaddr_sn=ifr.ifr_addr;
-    }
-    strcpy(ifr.ifr_name, ifname);
-    if(!ipx_getaddr(ipx_sock, IPX_FRAME_8023, &ifr)) {
-      ife->has_ipx_e3=1;
-      ife->ipxaddr_e3=ifr.ifr_addr;
-    }
-    strcpy(ifr.ifr_name, ifname);
-    if(!ipx_getaddr(ipx_sock, IPX_FRAME_8022, &ifr)) {
-      ife->has_ipx_e2=1;
-      ife->ipxaddr_e2=ifr.ifr_addr;
-    }
-  }
-#endif
-
-  if_getstats(ifname,ife);
-  return(0);
-}
-
 
 static void
 if_print(char *ifname)
@@ -582,52 +307,27 @@ if_print(char *ifname)
   struct interface ife;
 
   if (ifname == (char *)NULL) {
-    int i;
-    struct ifconf ifc;
-    struct ifreq *ifr;
-    ifc.ifc_buf = NULL;
-    ifc.ifc_len = 0;
-    if (ioctl(skfd, SIOCGIFCONF, &ifc) < 0 || ifc.ifc_len == 0) {
-      int n = 2, s;
-      ifc.ifc_buf = NULL;
-      do {
-	n *= 2;
-	ifc.ifc_buf = realloc(ifc.ifc_buf, (ifc.ifc_len = s = 
-					    n*sizeof(struct ifreq)));
-	if (ifc.ifc_buf == NULL) {
-	  fprintf(stderr, "Out of memory\n");
-	  exit(1);
-	}
-	
-	if (ioctl(skfd, SIOCGIFCONF, &ifc) < 0) {
-	  perror("SIOCGIFCONF");
-	  return;
-	}
-      } while (ifc.ifc_len == s);
-    } else {
-      ifc.ifc_buf = malloc(ifc.ifc_len);
-      if (ifc.ifc_buf == NULL) {
-	fprintf(stderr, "Out of memory.\n");
-	exit(1);
-      }
-      if (ioctl(skfd, SIOCGIFCONF, &ifc) < 0) {
-	perror("SIOCGIFCONF");
-	return;
-      }
-    }
-    ifr = ifc.ifc_req;
-    for (i = ifc.ifc_len / sizeof(struct ifreq); --i >= 0; ifr++) {
-      if (if_fetch(ifr->ifr_name, &ife) < 0) {
+    FILE *fd = fopen(_PATH_PROCNET_DEV, "r");
+    char buffer[256];
+    fgets(buffer, 256, fd);	/* chuck first two lines */
+    fgets(buffer, 256, fd);
+    while (!feof(fd)) {
+      char *name = buffer;
+      if (fgets(buffer, 256, fd) == NULL)
+	break;
+      buffer[6] = 0;
+      while (*name == ' ') name++;
+      if (if_fetch(name, &ife) < 0) {
 	fprintf(stderr, NLS_CATGETS(catfd, ifconfigSet, 
 		      ifconfig_unkn, "%s: unknown interface.\n"),
-		ifr->ifr_name);
+		name);
 	continue;
       }
       
       if (((ife.flags & IFF_UP) == 0) && !opt_a) continue;
       ife_print(&ife);
     }
-    free(ifc.ifc_buf);
+    fclose(fd);
   } else {
     if (if_fetch(ifname, &ife) < 0)
       fprintf(stderr, NLS_CATGETS(catfd, ifconfigSet, 
@@ -722,65 +422,6 @@ version(void)
   exit(1);
 }
 
-static int sockets_open()
-{
-#if HAVE_AFINET
-  inet_sock = socket(AF_INET, SOCK_DGRAM, 0);
-#endif
-
-#if HAVE_AFINET6
-  inet6_sock = socket(AF_INET6, SOCK_DGRAM, 0);
-#endif
-
-#if HAVE_AFIPX 
-  ipx_sock = socket(AF_IPX, SOCK_DGRAM, 0);
-#endif
-
-#if HAVE_AFAX25 
-  ax25_sock = socket(AF_AX25, SOCK_DGRAM, 0);
-#endif
-
-#if HAVE_ROSE
-  rose_sock = socket(AF_ROSE, SOCK_DGRAM, 0);
-#endif
-
-#if HAVE_AFATALK
-  ddp_sock = socket(AF_APPLETALK, SOCK_DGRAM, 0);
-#endif
-  
-  /*
-   *	Now pick any (existing) useful socket family for generic queries
-   */
-
-#if HAVE_AFINET
-  if (inet_sock != -1) return inet_sock;
-#endif
-
-#if HAVE_AFINET6
-  if (inet6_sock != -1) return inet6_sock;
-#endif
-
-#if HAVE_AFIPX 
-  if (ipx_sock != -1) return ipx_sock;
-#endif
-
-#if HAVE_AFAX25 
-  if (ax25_sock != -1) return ax25_sock;
-#endif
-
-#if HAVE_AFROSE 
-  if (rose_sock != -1) return rose_sock;
-#endif
-
-#if HAVE_AFATALK
-  if (ddp_sock != -1) return ddp_sock;
-#endif
-
-  /* We have no address families.  */
-  fprintf(stderr, "No usable address families found.\n");
-  return -1;
-}
-	
 int
 main(int argc, char **argv)
 {

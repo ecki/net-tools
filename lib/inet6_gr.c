@@ -17,7 +17,6 @@
 #include <string.h>
 #include <stdio.h>
 #include <unistd.h>
-#include <netinet/ip6.h>
 #ifndef __GLIBC__
 #include <netinet6/ipv6_route.h>  /* glibc doesn't have this */
 #endif
