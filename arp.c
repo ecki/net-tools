@@ -8,7 +8,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: arp.c,v 1.18 2000/11/06 19:48:49 pb Exp $
+ * Version:     $Id: arp.c,v 1.19 2000/12/19 00:34:27 ecki Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -434,7 +434,7 @@ static void arp_disp_2(char *name, int type, int arp_flags, char *hwa, char *mas
 	xhw = get_hwtype(DFLT_HW);
 
     if (title++ == 0) {
-	printf(_("Address\t\t\tHWtype\tHWaddress\t    Flags Mask\t\t  Iface\n"));
+	printf(_("Address                  HWtype  HWaddress           Flags Mask            Iface\n"));
     }
     /* Setup the flags. */
     flags[0] = '\0';
@@ -458,7 +458,7 @@ static void arp_disp_2(char *name, int type, int arp_flags, char *hwa, char *mas
     if (!(arp_flags & ATF_NETMASK))
 	mask = "";
 
-    printf("%-23.23s\t", name);
+    printf("%-23.23s  ", name);
 
     if (!(arp_flags & ATF_COM)) {
 	if (arp_flags & ATF_PUBL)
