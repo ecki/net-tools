@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.50 2001/04/13 18:25:18 pb Exp $
+ * Version:     $Id: ifconfig.c,v 1.51 2001/06/29 03:48:51 ecki Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -127,7 +127,7 @@ static int set_flag(char *ifname, short flag)
 
     safe_strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
     if (ioctl(skfd, SIOCGIFFLAGS, &ifr) < 0) {
-	fprintf(stderr, _("%s: unknown interface: %s\n"), 
+	fprintf(stderr, _("%s: ERROR while getting interface flags: %s\n"), 
 		ifname,	strerror(errno));
 	return (-1);
     }
@@ -159,7 +159,7 @@ static int clr_flag(char *ifname, short flag)
 
     safe_strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
     if (ioctl(fd, SIOCGIFFLAGS, &ifr) < 0) {
-	fprintf(stderr, _("%s: unknown interface: %s\n"), 
+	fprintf(stderr, _("%s: ERROR while getting interface flags: %s\n"), 
 		ifname, strerror(errno));
 	return -1;
     }
@@ -170,6 +170,32 @@ static int clr_flag(char *ifname, short flag)
 	return -1;
     }
     return (0);
+}
+
+/** test is a specified flag is set */
+static int test_flag(char *ifname, short flags)
+{
+    struct ifreq ifr;
+    int fd;
+
+    if (strchr(ifname, ':')) {
+        /* This is a v4 alias interface.  Downing it via a socket for
+	   another AF may have bad consequences. */
+        fd = get_socket_for_af(AF_INET);
+	if (fd < 0) {
+	    fprintf(stderr, _("No support for INET on this system.\n"));
+	    return -1;
+	}
+    } else
+        fd = skfd;
+
+    safe_strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
+    if (ioctl(fd, SIOCGIFFLAGS, &ifr) < 0) {
+	fprintf(stderr, _("%s: ERROR while testing interface flags: %s\n"), 
+		ifname, strerror(errno));
+	return -1;
+    }
+    return (ifr.ifr_flags & flags);
 }
 
 static void usage(void)
@@ -388,6 +414,8 @@ int main(int argc, char **argv)
 	}
 	if (!strcmp(*spp, "-promisc")) {
 	    goterr |= clr_flag(ifr.ifr_name, IFF_PROMISC);
+	    if (test_flag(ifr.ifr_name, IFF_PROMISC) > 0)
+	    	fprintf(stderr, _("Warning: Interface %s still in promisc mode... maybe other application is running?\n"), ifr.ifr_name);
 	    spp++;
 	    continue;
 	}
@@ -398,6 +426,8 @@ int main(int argc, char **argv)
 	}
 	if (!strcmp(*spp, "-multicast")) {
 	    goterr |= clr_flag(ifr.ifr_name, IFF_MULTICAST);
+	    if (test_flag(ifr.ifr_name, IFF_MULTICAST) > 0)
+	    	fprintf(stderr, _("Warning: Interface %s still in MULTICAST mode.\n"), ifr.ifr_name);
 	    spp++;
 	    continue;
 	}
@@ -408,6 +438,8 @@ int main(int argc, char **argv)
 	}
 	if (!strcmp(*spp, "-allmulti")) {
 	    goterr |= clr_flag(ifr.ifr_name, IFF_ALLMULTI);
+	    if (test_flag(ifr.ifr_name, IFF_MULTICAST) > 0)
+	    	fprintf(stderr, _("Warning: Interface %s still in ALLMULTI mode.\n"), ifr.ifr_name);
 	    spp++;
 	    continue;
 	}
@@ -430,6 +462,8 @@ int main(int argc, char **argv)
 	if (!strcmp(*spp, "-dynamic")) {
 	    goterr |= clr_flag(ifr.ifr_name, IFF_DYNAMIC);
 	    spp++;
+	    if (test_flag(ifr.ifr_name, IFF_MULTICAST) > 0)
+	    	fprintf(stderr, _("Warning: Interface %s still in DYNAMIC mode.\n"), ifr.ifr_name);
 	    continue;
 	}
 #endif
@@ -486,6 +520,8 @@ int main(int argc, char **argv)
 
 	if (!strcmp(*spp, "-broadcast")) {
 	    goterr |= clr_flag(ifr.ifr_name, IFF_BROADCAST);
+	    if (test_flag(ifr.ifr_name, IFF_MULTICAST) > 0)
+	    	fprintf(stderr, _("Warning: Interface %s still in BROADCAST mode.\n"), ifr.ifr_name);
 	    spp++;
 	    continue;
 	}
@@ -541,7 +577,7 @@ int main(int argc, char **argv)
 		continue;
 	    }
 	    didnetmask++;
-	    goterr = set_netmask(ap->fd, &ifr, &sa);
+	    goterr |= set_netmask(ap->fd, &ifr, &sa);
 	    spp++;
 	    continue;
 	}
@@ -613,6 +649,8 @@ int main(int argc, char **argv)
 	if (!strcmp(*spp, "-pointopoint")) {
 	    goterr |= clr_flag(ifr.ifr_name, IFF_POINTOPOINT);
 	    spp++;
+	    if (test_flag(ifr.ifr_name, IFF_MULTICAST) > 0)
+	    	fprintf(stderr, _("Warning: Interface %s still in POINTOPOINT mode.\n"), ifr.ifr_name);
 	    continue;
 	}
 	if (!strcmp(*spp, "pointopoint")) {
@@ -911,7 +949,7 @@ int main(int argc, char **argv)
 		if (didnetmask)
 		    usage();
 
-		goterr = set_netmask(skfd, &ifr, &sa);
+		goterr |= set_netmask(skfd, &ifr, &sa);
 		didnetmask++;
 		break;
 	    }
@@ -979,6 +1017,9 @@ int main(int argc, char **argv)
 
 	spp++;
     }
+
+    if (opt_v && goterr)
+    	fprintf(stderr, _("WARNING: at least one error occured. (%d)\n"), goterr);
 
     return (goterr);
 }
