@@ -4,7 +4,7 @@
    10/1998 partly rewriten by Andi Kleen to support an interface list.   
    I don't claim that the list operations are efficient @).  
 
-   $Id: interface.c,v 1.3 1999/04/20 13:31:46 philip Exp $
+   $Id: interface.c,v 1.4 1999/04/21 09:30:32 philip Exp $
  */
 
 #include "config.h"
@@ -401,6 +401,7 @@ int if_fetch(struct interface *ife)
     fd = get_socket_for_af(AF_INET);
     if (fd >= 0) {
 	strcpy(ifr.ifr_name, ifname);
+	ifr.ifr_addr.sa_family = AF_INET;
 	if (ioctl(fd, SIOCGIFADDR, &ifr) == 0) {
 	    ife->has_ip = 1;
 	    ife->addr = ifr.ifr_addr;
