@@ -44,8 +44,8 @@ char *Release = RELEASE,
 
 static void version(void)
 {
-    printf("%s\n%s\n%s\n", Release, Version, Signature);
-    exit(E_VERSION);
+	printf("%s\n%s\n%s\n", Release, Version, Signature);
+	exit(E_VERSION);
 }
 
 static void usage(void) __attribute__((noreturn));
@@ -54,6 +54,7 @@ static void usage(void)
 {
 	fprintf(stderr, _("Usage: ipmaddr [ add | del ] MULTIADDR dev STRING\n"));
 	fprintf(stderr, _("       ipmaddr show [ dev STRING ] [ ipv4 | ipv6 | link | all ]\n"));
+	fprintf(stderr, _("       ipmaddr -V | -version\n"));
 	exit(-1);
 }
 
@@ -408,7 +409,7 @@ int main(int argc, char **argv)
 			++show_stats;
 		} else if (matches(argv[1], "-resolve") == 0) {
 			++resolve_hosts;
-		} else if (matches(argv[1], "-V") == 0) {
+		} else if ((matches(argv[1], "-V") == 0) || matches(argv[1], "--version") == 0) {
 			version();
 		} else
 			usage();

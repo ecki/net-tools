@@ -39,6 +39,7 @@
 #include <stdlib.h>          
 #include <string.h>
 #include <unistd.h>
+#include <getopt.h>
 #include <linux/if_slip.h>
 
 #if defined(__GLIBC__)
@@ -543,7 +544,7 @@ usage(void)
 	  "[-o outfill] "
 #endif
 	  "[-c cmd] [-s speed] [-p protocol] tty | -\n"
-	  "       slattach -V\n";
+	  "       slattach -V | --version\n";
 
   fprintf(stderr, usage_msg);
   exit(1);
@@ -569,19 +570,16 @@ main(int argc, char *argv[])
   struct hwtype *ht;
   char *sp;
   int s;
+  static struct option longopts[] = {
+    { "version", 0, NULL, 'V' },
+    { NULL, 0, NULL, 0 }
+  };
 
   strcpy(path, "");
 
   /* Scan command line for any arguments. */
   opterr = 0;
-  while ((s = getopt(argc, argv, "c:ehlLmnp:qs:vdV"
-#ifdef SIOCSKEEPALIVE
-		     "k:"
-#endif
-#ifdef SIOCSOUTFILL
-		     "o:"
-#endif
-		     )) != EOF) switch(s) {
+  while ((s = getopt_long(argc, argv, "c:ehlLmnp:qs:vdVk:o:", longopts, NULL)) != EOF) switch(s) {
 	case 'c':
 		extcmd = optarg;
 		break;

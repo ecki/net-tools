@@ -31,6 +31,8 @@
 #include <linux/if_tunnel.h>
 
 #include "intl.h"
+#include "net-support.h"
+#include "version.h"
 
 #undef GRE_CSUM
 #define GRE_CSUM	htons(0x8000)
@@ -56,6 +58,16 @@
 
 #include "utils.h"
 
+char *Release = RELEASE,
+     *Version = "iptunnel 1.0",
+     *Signature = "Alexey Kuznetsov, <kuznet@ms2.inr.ac.ru>";
+
+static void version(void)
+{
+	printf("%s\n%s\n%s\n", Release, Version, Signature);
+	exit(E_VERSION);
+}
+
 static void usage(void) __attribute__((noreturn));
 
 static void usage(void)
@@ -63,7 +75,8 @@ static void usage(void)
 	fprintf(stderr, _("Usage: iptunnel { add | change | del | show } [ NAME ]\n"));
 	fprintf(stderr, _("          [ mode { ipip | gre | sit } ] [ remote ADDR ] [ local ADDR ]\n"));
 	fprintf(stderr, _("          [ [i|o]seq ] [ [i|o]key KEY ] [ [i|o]csum ]\n"));
-	fprintf(stderr, _("          [ ttl TTL ] [ tos TOS ] [ nopmtudisc ] [ dev PHYS_DEV ]\n\n"));
+	fprintf(stderr, _("          [ ttl TTL ] [ tos TOS ] [ nopmtudisc ] [ dev PHYS_DEV ]\n"));
+	fprintf(stderr, _("       iptunnel -V | --version\n\n"));
 	fprintf(stderr, _("Where: NAME := STRING\n"));
 	fprintf(stderr, _("       ADDR := { IP_ADDRESS | any }\n"));
 	fprintf(stderr, _("       TOS  := { NUMBER | inherit }\n"));
@@ -583,6 +596,8 @@ int main(int argc, char **argv)
 			++show_stats;
 		} else if (matches(argv[1], "-resolve") == 0) {
 			++resolve_hosts;
+		} else if ((matches(argv[1], "-V") == 0) || (matches(argv[1], "--version") == 0)) {
+			version();
 		} else
 			usage();
 		argc--;	argv++;

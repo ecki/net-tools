@@ -65,7 +65,7 @@ void usage(void)
 {
     fprintf(stderr, _("Usage: plipconfig [-a] [-i] [-v] interface\n"));
     fprintf(stderr, _("                  [nibble NN] [trigger NN]\n"));
-    fprintf(stderr, _("       plipconfig -V\n"));
+    fprintf(stderr, _("       plipconfig -V | --version\n"));
     exit(-1);
 }
 
@@ -91,7 +91,7 @@ int main(int argc, char **argv)
 	    opt_a = 1;
 	if (!strcmp(*argv, "-v"))
 	    opt_v = 1;
-	if (!strcmp(*argv, "-V"))
+	if (!strcmp(*argv, "-V") || !strcmp(*argv, "--version"))
 	    version();
 	argv++;
 	argc--;
