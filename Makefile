@@ -76,7 +76,7 @@
 NET_LIB_PATH = lib
 NET_LIB_NAME = net-tools
 
-PROGS	:= ifconfig hostname arp netstat route rarp slattach plipconfig
+PROGS	:= ifconfig hostname arp netstat route rarp slattach plipconfig nameif
 
 -include config.make
 ifeq ($(HAVE_IP_TOOLS),1)
@@ -186,6 +186,9 @@ subdirs:
 
 ifconfig:	$(NET_LIB) ifconfig.o
 		$(CC) $(LDFLAGS) -o ifconfig ifconfig.o $(NLIB) $(RESLIB)
+		
+nameif:	nameif.o
+		$(CC) $(LDFLAGS) -o nameif nameif.o 
 
 hostname:	hostname.o
 		$(CC) $(LDFLAGS) -o hostname hostname.o $(DNLIB)
