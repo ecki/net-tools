@@ -429,6 +429,9 @@ int main(int argc, char **argv)
 	perror("socket");
 	exit(-1);
     }
+    
+    if (verbose > 1)
+    	printf("Using SIOCGMIIPHY=0x%x\n", SIOCGMIIPHY);	
 
     /* No remaining args means show all interfaces. */
     if (optind == argc) {

@@ -6,11 +6,14 @@
  * Copyright (C) 2000 David A. Hinds -- dhinds@pcmcia.sourceforge.org
  */
 
-#ifndef _LINUX_MII_H
-#define _LINUX_MII_H
+#ifndef _NETTOOL_MII_H
+#define _NETTOOLS_MII_H
+
+#include <linux/sockios.h>
 
 /* network interface ioctl's for MII commands */
 #ifndef SIOCGMIIPHY
+#warning "SIOCGMIIPHY is not defined by your kernel source"
 #define SIOCGMIIPHY (SIOCDEVPRIVATE)	/* Read from current PHY */
 #define SIOCGMIIREG (SIOCDEVPRIVATE+1) 	/* Read any PHY register */
 #define SIOCSMIIREG (SIOCDEVPRIVATE+2) 	/* Write any PHY register */
@@ -83,4 +86,4 @@ struct mii_data {
 #define  MII_ANER_PAGE_RX	0x0002
 #define  MII_ANER_LP_AN_ABLE	0x0001
 
-#endif /* _LINUX_MII_H */
+#endif /* _NETTOOLS_MII_H */
