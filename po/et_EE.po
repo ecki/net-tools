@@ -267,7 +267,7 @@ msgstr "%s: ainult root saab hosti nime muuta\n"
 #: ../hostname.c:107
 #, c-format
 msgid "Setting domainname to `%s'\n"
-msgstr "Sean domeenii nimeks `%s'\n"
+msgstr "Sean domeeni nimeks `%s'\n"
 
 #: ../hostname.c:112
 #, c-format
