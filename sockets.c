@@ -46,8 +46,9 @@ int sockets_open(int family)
 	    if (access(af->flag_file, R_OK))
 		continue;
 	}
-	sfd = socket(af->af, SOCK_DGRAM, 0);
-	af->fd = sfd;
+	af->fd = socket(af->af, SOCK_DGRAM, 0);
+	if (af->fd >= 0)
+	  sfd = af->fd;
     }
     if (sfd < 0)
 	fprintf(stderr, _("No usable address families found.\n"));
