@@ -1,6 +1,6 @@
 /*
  * Copyright 1997,1999,2000 Andi Kleen. Subject to the GPL. 
- * $Id: statistics.c,v 1.16 2001/10/24 11:57:05 ak Exp $
+ * $Id: statistics.c,v 1.17 2002/04/28 15:41:01 ak Exp $
  * 19980630 - i18n - Arnaldo Carvalho de Melo <acme@conectiva.com.br> 
  * 19981113 - i18n fixes - Arnaldo Carvalho de Melo <acme@conectiva.com.br> 
  * 19990101 - added net/netstat, -t, -u, -w supprt - Bernd Eckenfels 
@@ -175,9 +175,9 @@ struct entry Tcpexttab[] =
     { "ListenDrops", N_("%u SYNs to LISTEN sockets ignored"), opt_number },
     { "TCPPrequeued", N_("%u packets directly queued to recvmsg prequeue."), 
       opt_number },
-    { "TCPDirectCopyFromBacklog", N_("%u packets directly received"
+    { "TCPDirectCopyFromBacklog", N_("%u of bytes directly received"
 				     " from backlog"), opt_number },
-    { "TCPDirectCopyFromPrequeue", N_("%u packets directly received"
+    { "TCPDirectCopyFromPrequeue", N_("%u of bytes directly received"
 				      " from prequeue"), opt_number },
     { "TCPPrequeueDropped", N_("%u packets dropped from prequeue"), opt_number },
     { "TCPHPHits", N_("%u packet headers predicted"), number },
