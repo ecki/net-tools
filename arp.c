@@ -8,7 +8,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: arp.c,v 1.13 1999/06/12 23:04:14 philip Exp $
+ * Version:     $Id: arp.c,v 1.14 1999/09/27 11:00:42 philip Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -245,10 +245,10 @@ static int arp_getdevhw(char *ifname, struct sockaddr *sa, struct hwtype *hw)
     memcpy((char *) sa, (char *) &(ifr.ifr_hwaddr), sizeof(struct sockaddr));
 
     if (opt_v) {
-	if (!(xhw = get_hwntype(ifr.ifr_hwaddr.sa_family)) || (xhw->sprint == 0)) {
+	if (!(xhw = get_hwntype(ifr.ifr_hwaddr.sa_family)) || (xhw->print == 0)) {
 	    xhw = get_hwntype(-1);
 	}
-	fprintf(stderr, _("arp: device `%s' has HW address %s `%s'.\n"), ifname, xhw->name, xhw->sprint(&ifr.ifr_hwaddr));
+	fprintf(stderr, _("arp: device `%s' has HW address %s `%s'.\n"), ifname, xhw->name, xhw->print((char *)&ifr.ifr_hwaddr.sa_data));
     }
     return (0);
 }
@@ -615,6 +615,7 @@ static void usage(void)
     fprintf(stderr, _("        -n, --numeric            dont resolve names\n"));
     fprintf(stderr, _("        -i, --device             specify network interface (e.g. eth0)\n"));
     fprintf(stderr, _("        -D, --use-device         read <hwaddr> from given device\n"));
+    fprintf(stderr, _("        -A, -p, --protocol       specify protocol family\n"));
     fprintf(stderr, _("        -f, --file               read new entries from file\n\n"));
 
     fprintf(stderr, _("  <HW>=Use '-H <hw>' to specify hardware address type. Default: %s\n"), DFLT_HW);

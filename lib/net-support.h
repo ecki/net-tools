@@ -61,7 +61,6 @@ struct hwtype {
     int type;
     int alen;
     char *(*print) (unsigned char *);
-    char *(*sprint) (struct sockaddr *);
     int (*input) (char *, struct sockaddr *);
     int (*activate) (int fd);
     int suppress_null_addr;

@@ -2,7 +2,7 @@
  * lib/ec_hw.c  This file contains an implementation of the Econet
  *              hardware support functions.
  *
- * Version:     $Id: ec_hw.c,v 1.1 1999/05/16 16:41:11 philip Exp $
+ * Version:     $Id: ec_hw.c,v 1.2 1999/09/27 11:00:46 philip Exp $
  *
  * Author:      Philip Blundell <philb@gnu.org>
  *
@@ -22,7 +22,7 @@
 struct hwtype ec_hwtype =
 {
     "ec", NULL /* "Econet" */, ARPHRD_ECONET, 0,
-    NULL, NULL, NULL, NULL
+    NULL, NULL, NULL
 };
 
 #endif

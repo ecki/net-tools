@@ -1,9 +1,9 @@
 /*
- * lib/econet.c       This file contains an implementation of the Econet
+ * lib/econet.c This file contains an implementation of the Econet
  *              support functions for the net-tools.
  *              (NET-3 base distribution).
  *
- * Version:     $Id: econet.c,v 1.8 1999/04/20 13:31:50 philip Exp $
+ * Version:     $Id: econet.c,v 1.9 1999/09/27 11:00:47 philip Exp $
  *
  * Author:      Philip Blundell <philb@gnu.org>
  *
@@ -33,7 +33,7 @@
 
 /* Display an Econet address */
 static char *
- ec_print(unsigned char *ptr)
+ec_print(unsigned char *ptr)
 {
     static char buff[64];
     struct ec_addr *ec = (struct ec_addr *) ptr;
@@ -44,7 +44,7 @@ static char *
 
 /* Display an Econet socket address */
 static char *
- ec_sprint(struct sockaddr *sap, int numeric)
+ec_sprint(struct sockaddr *sap, int numeric)
 {
     struct sockaddr_ec *sec = (struct sockaddr_ec *) sap;
 
@@ -54,7 +54,8 @@ static char *
     return ec_print((unsigned char *) &sec->addr);
 }
 
-static int ec_input(int type, char *bufp, struct sockaddr *sap)
+static int 
+ec_input(int type, char *bufp, struct sockaddr *sap)
 {
     struct sockaddr_ec *sec = (struct sockaddr_ec *) sap;
     int net, stn;

@@ -2,7 +2,7 @@
  * lib/ether.c        This file contains an implementation of the "Ethernet"
  *              support functions.
  *
- * Version:     $Id: ether.c,v 1.6 1998/11/19 13:01:56 philip Exp $
+ * Version:     $Id: ether.c,v 1.7 1999/09/27 11:00:47 philip Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -44,17 +44,6 @@ static char *pr_ether(unsigned char *ptr)
 	     (ptr[3] & 0377), (ptr[4] & 0377), (ptr[5] & 0377)
 	);
     return (buff);
-}
-
-
-/* Display an Ethernet socket address. */
-static char *pr_sether(struct sockaddr *sap)
-{
-    static char buf[64];
-
-    if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-	return safe_strncpy(buf, _("[NONE SET]"), sizeof(buf));
-    return (pr_ether(sap->sa_data));
 }
 
 
@@ -141,7 +130,7 @@ static int in_ether(char *bufp, struct sockaddr *sap)
 struct hwtype ether_hwtype =
 {
     "ether", NULL, /*"10Mbps Ethernet", */ ARPHRD_ETHER, ETH_ALEN,
-    pr_ether, pr_sether, in_ether, NULL
+    pr_ether, in_ether, NULL
 };
 
 

@@ -57,6 +57,7 @@ bool 'NET/ROM (packet radio) protocol family' HAVE_AFNETROM y
 bool 'Rose (packet radio) protocol family' HAVE_AFROSE n
 bool 'Econet protocol family' HAVE_AFECONET n
 bool 'DECnet protocol family' HAVE_AFDECnet n
+bool 'Ash protocol family' HAVE_AFASH n
 *
 *
 *            Device Hardware types.

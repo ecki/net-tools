@@ -1,7 +1,7 @@
 /*
  * lib/loopback.c     This file contains the general hardware types.
  *
- * Version:     $Id: loopback.c,v 1.6 1999/04/04 21:37:04 philip Exp $
+ * Version:     $Id: loopback.c,v 1.7 1999/09/27 11:00:48 philip Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -46,26 +46,14 @@ static char *pr_unspec(unsigned char *ptr)
     return (buff);
 }
 
-
-/* Display an UNSPEC socket address. */
-static char *pr_sunspec(struct sockaddr *sap)
-{
-    static char buf[64];
-
-    if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-	return safe_strncpy(buf, _("[NONE SET]"), sizeof(buf));
-    return (pr_unspec(sap->sa_data));
-}
-
-
 struct hwtype unspec_hwtype =
 {
     "unspec", NULL, /*"UNSPEC", */ -1, 0,
-    pr_unspec, pr_sunspec, NULL, NULL
+    pr_unspec, NULL, NULL
 };
 
 struct hwtype loop_hwtype =
 {
     "loop", NULL, /*"Local Loopback", */ ARPHRD_LOOPBACK, 0,
-    NULL, NULL, NULL, NULL
+    NULL, NULL, NULL
 };

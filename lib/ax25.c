@@ -2,7 +2,7 @@
  * lib/ax25.c This file contains an implementation of the "AX.25"
  *              support functions.
  *
- * Version:     $Id: ax25.c,v 1.8 1998/11/19 13:01:54 philip Exp $
+ * Version:     $Id: ax25.c,v 1.9 1999/09/27 11:00:45 philip Exp $
  *
  * NOTE:        I will redo this module as soon as I got the libax25.a
  *              library sorted out.  This library contains some useful
@@ -149,16 +149,6 @@ static void AX25_herror(char *text)
 }
 
 
-static char *AX25_hprint(struct sockaddr *sap)
-{
-    static char buf[64];
-
-    if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-	return safe_strncpy(buf, _("[NONE SET]"), sizeof(buf));
-    return (AX25_print(((struct sockaddr_ax25 *) sap)->sax25_call.ax25_call));
-}
-
-
 static int AX25_hinput(char *bufp, struct sockaddr *sap)
 {
     if (AX25_input(0, bufp, sap) < 0)
@@ -193,7 +183,7 @@ static int KISS_init(int fd)
 struct hwtype ax25_hwtype =
 {
     "ax25", NULL, /*"AMPR AX.25", */ ARPHRD_AX25, 7,
-    AX25_print, AX25_hprint, AX25_hinput, NULL
+    AX25_print, AX25_hinput, NULL
 };
 
 struct aftype ax25_aftype =

@@ -2,7 +2,7 @@
  * lib/tr.c   This file contains an implementation of the "Tokenring"
  *              support functions.
  *
- * Version:     $Id: tr.c,v 1.5 1999/05/16 16:41:14 philip Exp $
+ * Version:     $Id: tr.c,v 1.6 1999/09/27 11:00:49 philip Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -42,14 +42,6 @@ static char *pr_tr(unsigned char *ptr)
 	     (ptr[3] & 0377), (ptr[4] & 0377), (ptr[5] & 0377)
 	);
     return (buff);
-}
-
-
-static char *pr_str(struct sockaddr *sap)
-{
-    if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-	return ("[NONE SET]");
-    return (pr_tr(sap->sa_data));
 }
 
 
@@ -130,7 +122,7 @@ static int in_tr(char *bufp, struct sockaddr *sap)
 struct hwtype tr_hwtype =
 {
     "tr", NULL /* "16/4 Mbps Token Ring" */, ARPHRD_IEEE802, TR_ALEN,
-    pr_tr, pr_str, in_tr, NULL
+    pr_tr, in_tr, NULL
 };
 
 

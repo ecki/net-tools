@@ -2,7 +2,7 @@
  * lib/af.c   This file contains the top-level part of the protocol
  *              support functions module for the NET-2 base distribution.
  *
- * Version:     $Id: af.c,v 1.11 1999/04/18 20:28:42 philip Exp $
+ * Version:     $Id: af.c,v 1.12 1999/09/27 11:00:44 philip Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -27,14 +27,15 @@
 #include "intl.h"
 #include "util.h"
 
-int flag_unx = 0;
-int flag_ipx = 0;
-int flag_ax25 = 0;
-int flag_ddp = 0;
-int flag_netrom = 0;
-int flag_inet = 0;
-int flag_inet6 = 0;
-int flag_econet = 0;
+int flag_unx;
+int flag_ipx;
+int flag_ax25;
+int flag_ddp;
+int flag_netrom;
+int flag_inet;
+int flag_inet6;
+int flag_econet;
+int flag_ash;
 
 
 struct aftrans_t {
@@ -80,6 +81,9 @@ struct aftrans_t {
 	"econet", "ec", &flag_econet
     },
     {
+        "ash", "ash", &flag_ash
+    },
+    {
 	0, 0, 0
     }
 };
@@ -96,6 +100,7 @@ extern struct aftype ipx_aftype;
 extern struct aftype ddp_aftype;
 extern struct aftype ec_aftype;
 extern struct aftype rose_aftype;
+extern struct aftype ash_aftype;
 
 static short sVafinit = 0;
 
@@ -127,6 +132,9 @@ struct aftype *aftypes[] =
 #endif
 #if HAVE_AFECONET
     &ec_aftype,
+#endif
+#if HAVE_AFASH
+    &ash_aftype,
 #endif
     &unspec_aftype,
     NULL
@@ -161,6 +169,9 @@ void afinit()
 #endif
 #if HAVE_AFROSE
     rose_aftype.title = _("AMPR ROSE");
+#endif
+#if HAVE_AFASH
+    ash_aftype.title = _("Ash");
 #endif
     sVafinit = 1;
 }
