@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.25 1999/03/24 09:49:52 philip Exp $
+ * Version:     $Id: netstat.c,v 1.26 1999/04/18 20:28:40 philip Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -1418,13 +1418,13 @@ static void usage(void)
     fprintf(stderr, _("        -v, --verbose            be verbose\n"));
     fprintf(stderr, _("        -n, --numeric            dont resolve names\n"));
     fprintf(stderr, _("        -N, --symbolic           resolve hardware names\n"));
-    fprintf(stderr, _("        -e, --extend             display other/more informations\n"));
+    fprintf(stderr, _("        -e, --extend             display other/more information\n"));
     fprintf(stderr, _("        -p, --programs           display PID/Program name for sockets\n"));
     fprintf(stderr, _("        -c, --continuous         continuous listing\n\n"));
     fprintf(stderr, _("        -l, --listening          display listening server sockets\n"));
     fprintf(stderr, _("        -a, --all, --listening   display all sockets (default: connected)\n"));
     fprintf(stderr, _("        -o, --timers             display timers\n"));
-    fprintf(stderr, _("        -F, --fib                display Forwarding Infomation Base (default)\n"));
+    fprintf(stderr, _("        -F, --fib                display Forwarding Information Base (default)\n"));
     fprintf(stderr, _("        -C, --cache              display routing cache instead of FIB\n\n"));
 
     fprintf(stderr, _("  <Socket>={-t|--tcp} {-u|--udp} {-w|--raw} {-x|--unix} --ax25 --ipx --netrom\n"));

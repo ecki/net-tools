@@ -2,7 +2,7 @@
  * lib/af.c   This file contains the top-level part of the protocol
  *              support functions module for the NET-2 base distribution.
  *
- * Version:     $Id: af.c,v 1.10 1999/01/05 20:53:18 philip Exp $
+ * Version:     $Id: af.c,v 1.11 1999/04/18 20:28:42 philip Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -95,6 +95,7 @@ extern struct aftype netrom_aftype;
 extern struct aftype ipx_aftype;
 extern struct aftype ddp_aftype;
 extern struct aftype ec_aftype;
+extern struct aftype rose_aftype;
 
 static short sVafinit = 0;
 
@@ -114,6 +115,9 @@ struct aftype *aftypes[] =
 #endif
 #if HAVE_AFNETROM
     &netrom_aftype,
+#endif
+#if HAVE_AFROSE
+    &rose_aftype,
 #endif
 #if HAVE_AFIPX
     &ipx_aftype,
@@ -147,13 +151,16 @@ void afinit()
     netrom_aftype.title = _("AMPR NET/ROM");
 #endif
 #if HAVE_AFIPX
-    ipx_aftype.title = _("IPX");
+    ipx_aftype.title = _("Novell IPX");
 #endif
 #if HAVE_AFATALK
     ddp_aftype.title = _("Appletalk DDP");
 #endif
 #if HAVE_AFECONET
     ec_aftype.title = _("Econet");
+#endif
+#if HAVE_AFROSE
+    rose_aftype.title = _("AMPR ROSE");
 #endif
     sVafinit = 1;
 }

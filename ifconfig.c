@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.30 1999/04/04 21:37:01 philip Exp $
+ * Version:     $Id: ifconfig.c,v 1.31 1999/04/18 20:28:39 philip Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -429,7 +429,7 @@ static void usage(void)
 #endif
 #if HAVE_AFINET
     fprintf(stderr, _("  [[-]broadcast [<address>]]  [[-]pointopoint [<address>]]\n"));
-    fprintf(stderr, _("  [netmask <address>]  [dstaddr <address>]  [tunnel <adress>]\n"));
+    fprintf(stderr, _("  [netmask <address>]  [dstaddr <address>]  [tunnel <address>]\n"));
 #endif
 #ifdef SIOCSKEEPALIVE
     fprintf(stderr, _("  [outfill <NN>] [keepalive <NN>]\n"));
@@ -439,7 +439,7 @@ static void usage(void)
     fprintf(stderr, _("  [multicast]  [[-]promisc]\n"));
     fprintf(stderr, _("  [mem_start <NN>]  [io_addr <NN>]  [irq <NN>]  [media <type>]\n"));
 #ifdef HAVE_TXQUEUELEN
-    fprintf(stderr, _("  [txqueuelen len]\n"));
+    fprintf(stderr, _("  [txqueuelen <NN>]\n"));
 #endif
 #ifdef HAVE_DYNAMIC
     fprintf(stderr, _("  [[-]dynamic]\n"));

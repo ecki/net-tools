@@ -2,7 +2,7 @@
  * route        This file contains an implementation of the command
  *              that manages the IP routing table in the kernel.
  *
- * Version:     $Id: route.c,v 1.5 1999/01/09 15:37:35 philip Exp $
+ * Version:     $Id: route.c,v 1.6 1999/04/18 20:28:41 philip Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -85,8 +85,8 @@ static void usage(void)
     fprintf(stderr, _("        -v, --verbose            be verbose\n"));
     fprintf(stderr, _("        -n, --numeric            dont resolve names\n"));
     fprintf(stderr, _("        -N, --symbolic           resolve hardware names\n"));
-    fprintf(stderr, _("        -e, --extend             display other/more informations\n"));
-    fprintf(stderr, _("        -F, --fib                display Forwarding Infomation Base (default)\n"));
+    fprintf(stderr, _("        -e, --extend             display other/more information\n"));
+    fprintf(stderr, _("        -F, --fib                display Forwarding Information Base (default)\n"));
     fprintf(stderr, _("        -C, --cache              display routing cache instead of FIB\n\n"));
 
     fprintf(stderr, _("  <AF>=Use '-A <af>' or '--<af>' Default: %s\n"), DFLT_AF);

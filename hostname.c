@@ -237,9 +237,9 @@ static void usage(void)
 #if HAVE_AFDECnet
     fprintf(stderr, _("    -n, --node            DECnet node name\n"));
 #endif /* HAVE_AFDECnet */
-    fprintf(stderr, _("    -F, --file            read hostname or nis domainname from given File\n\n"));
-    fprintf(stderr, _("   This comand can get or set the hostname or the NIS domainname. You can\n"));
-    fprintf(stderr, _("   also get the DNS domain or the FQDN (fully qualified domain name).\n"));
+    fprintf(stderr, _("    -F, --file            read hostname or NIS domainname from given file\n\n"));
+    fprintf(stderr, _("   This comand can read or set the hostname or the NIS domainname. You can\n"));
+    fprintf(stderr, _("   also read the DNS domain or the FQDN (fully qualified domain name).\n"));
     fprintf(stderr, _("   Unless you are using bind or NIS for host lookups you can change the\n"));
     fprintf(stderr, _("   FQDN (Fully Qualified Domain Name) and the DNS domain name (which is\n"));
     fprintf(stderr, _("   part of the FQDN) in the /etc/hosts file.\n"));

@@ -2,7 +2,7 @@
  * lib/hw.c   This file contains the top-level part of the hardware
  *              support functions module.
  *
- * Version:     $Id: hw.c,v 1.11 1999/03/03 19:40:38 philip Exp $
+ * Version:     $Id: hw.c,v 1.12 1999/04/18 20:28:43 philip Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -90,6 +90,9 @@ static struct hwtype *hwtypes[] =
 #if HAVE_HWNETROM
     &netrom_hwtype,
 #endif
+#if HAVE_HWROSE
+    &rose_hwtype,
+#endif
 #if HAVE_HWTUNNEL
     &tunnel_hwtype,
 #endif
@@ -109,9 +112,6 @@ static struct hwtype *hwtypes[] =
 #endif
 #if HAVE_HWSIT
     &sit_hwtype,
-#endif
-#if HAVE_HWROSE
-    &rose_hwtype,
 #endif
 #if HAVE_HWFDDI
     &fddi_hwtype,

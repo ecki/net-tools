@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 1999-04-18 20:58+0100\n"
+"POT-Creation-Date: 1999-04-18 21:39+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -347,17 +347,18 @@ msgstr ""
 
 #: ../hostname.c:240
 msgid ""
-"    -F, --file            read hostname or nis domainname from given File\n"
+"    -F, --file            read hostname or NIS domainname from given file\n"
 "\n"
 msgstr ""
 
 #: ../hostname.c:241
 msgid ""
-"   This comand can get or set the hostname or the NIS domainname. You can\n"
+"   This comand can read or set the hostname or the NIS domainname. You can\n"
 msgstr ""
 
 #: ../hostname.c:242
-msgid "   also get the DNS domain or the FQDN (fully qualified domain name).\n"
+msgid ""
+"   also read the DNS domain or the FQDN (fully qualified domain name).\n"
 msgstr ""
 
 #: ../hostname.c:243
@@ -652,7 +653,7 @@ msgid "  [[-]broadcast [<address>]]  [[-]pointopoint [<address>]]\n"
 msgstr ""
 
 #: ../ifconfig.c:432
-msgid "  [netmask <address>]  [dstaddr <address>]  [tunnel <adress>]\n"
+msgid "  [netmask <address>]  [dstaddr <address>]  [tunnel <address>]\n"
 msgstr ""
 
 #: ../ifconfig.c:435
@@ -676,7 +677,7 @@ msgid "  [mem_start <NN>]  [io_addr <NN>]  [irq <NN>]  [media <type>]\n"
 msgstr ""
 
 #: ../ifconfig.c:442
-msgid "  [txqueuelen len]\n"
+msgid "  [txqueuelen <NN>]\n"
 msgstr ""
 
 #: ../ifconfig.c:445
@@ -1039,7 +1040,7 @@ msgid "        -N, --symbolic           resolve hardware names\n"
 msgstr ""
 
 #: ../netstat.c:1421 ../route.c:88
-msgid "        -e, --extend             display other/more informations\n"
+msgid "        -e, --extend             display other/more information\n"
 msgstr ""
 
 #: ../netstat.c:1422
@@ -1067,7 +1068,7 @@ msgstr ""
 
 #: ../netstat.c:1427 ../route.c:89
 msgid ""
-"        -F, --fib                display Forwarding Infomation Base "
+"        -F, --fib                display Forwarding Information Base "
 "(default)\n"
 msgstr ""
 
@@ -1704,51 +1705,55 @@ msgstr ""
 msgid "Cannot change line discipline to `%s'.\n"
 msgstr ""
 
-#: ../lib/af.c:133 ../lib/hw.c:131
+#: ../lib/af.c:137 ../lib/hw.c:131
 msgid "UNSPEC"
 msgstr ""
 
-#: ../lib/af.c:135
+#: ../lib/af.c:139
 msgid "UNIX Domain"
 msgstr ""
 
-#: ../lib/af.c:138
+#: ../lib/af.c:142
 msgid "DARPA Internet"
 msgstr ""
 
-#: ../lib/af.c:141
+#: ../lib/af.c:145
 msgid "IPv6"
 msgstr ""
 
-#: ../lib/af.c:144 ../lib/hw.c:152
+#: ../lib/af.c:148 ../lib/hw.c:152
 msgid "AMPR AX.25"
 msgstr ""
 
-#: ../lib/af.c:147 ../lib/hw.c:158
+#: ../lib/af.c:151 ../lib/hw.c:158
 msgid "AMPR NET/ROM"
 msgstr ""
 
-#: ../lib/af.c:150
-msgid "IPX"
+#: ../lib/af.c:154
+msgid "Novell IPX"
 msgstr ""
 
-#: ../lib/af.c:153
+#: ../lib/af.c:157
 msgid "Appletalk DDP"
 msgstr ""
 
-#: ../lib/af.c:156
+#: ../lib/af.c:160
 msgid "Econet"
 msgstr ""
 
-#: ../lib/af.c:214
+#: ../lib/af.c:163 ../lib/hw.c:155
+msgid "AMPR ROSE"
+msgstr ""
+
+#: ../lib/af.c:221
 msgid "Please don't supply more than one address family.\n"
 msgstr ""
 
-#: ../lib/af.c:275
+#: ../lib/af.c:282
 msgid "Too much address family arguments.\n"
 msgstr ""
 
-#: ../lib/af.c:286
+#: ../lib/af.c:293
 #, c-format
 msgid "Unknown address family `%s'.\n"
 msgstr ""
@@ -1898,10 +1903,6 @@ msgstr ""
 
 #: ../lib/hw.c:149
 msgid "HIPPI"
-msgstr ""
-
-#: ../lib/hw.c:155
-msgid "AMPR ROSE"
 msgstr ""
 
 #: ../lib/hw.c:161
