@@ -166,7 +166,7 @@ static int parse_media(char *arg)
 	s = strtok(arg, ", ");
 	do {
 	    for (i = 0; i < NMEDIA; i++)
-		if (strcasecmp(media[i].name, s) == 0) break;
+		if (s && strcasecmp(media[i].name, s) == 0) break;
 	    if (i == NMEDIA) goto failed;
 	    mask |= media[i].value;
 	} while ((s = strtok(NULL, ", ")) != NULL);
@@ -329,7 +329,7 @@ static int do_one_xcvr(int skfd, char *ifname, int maybe)
 	printf("resetting the transceiver...\n");
 	mdio_write(skfd, MII_BMCR, MII_BMCR_RESET);
     }
-    if (nway_advertise) {
+    if (nway_advertise > 0) {
 	mdio_write(skfd, MII_ANAR, nway_advertise | 1);
 	opt_restart = 1;
     }
@@ -411,6 +411,10 @@ int main(int argc, char **argv)
 	}
     /* Check for a few inappropriate option combinations */
     if (opt_watch) verbose = 0;
+
+    if ((nway_advertise < 0) || (fixed_speed < 0))
+    	return 2;
+
     if (errflag || (fixed_speed & (fixed_speed-1)) ||
 	(fixed_speed && (opt_restart || nway_advertise))) {
 	fprintf(stderr, usage, argv[0]);
