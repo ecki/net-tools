@@ -302,6 +302,7 @@ int show_basic_mii(int sock, int phy_id)
 	    printf("\n  link partner:%s", media_list(lkpar, 0));
 	printf("\n");
     }
+    fflush(stdout);
     return 0;
 }
 
