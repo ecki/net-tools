@@ -100,6 +100,7 @@ arp_del(char **args)
   struct arpreq req;
   struct sockaddr sa;
   int flags=0;
+  int err;
 
   memset((char *) &req, 0, sizeof(req));
 
@@ -189,13 +190,15 @@ arp_del(char **args)
   }
   if (flags == 0)
   	flags = 3;
-  	
+
   strcpy(req.arp_dev,device);
+
+  err = -1;
 
   /* Call the kernel. */
   if (flags & 2) {
   	if (opt_v)  fprintf(stderr,"arp: SIOCDARP(nopub)\n");
-  	if (ioctl(sockfd, SIOCDARP, &req) < 0) {
+  	if ((err = ioctl(sockfd, SIOCDARP, &req) < 0)) {
 		if (errno == ENXIO) {
 			if (flags & 1)
 				goto nopub;
@@ -207,7 +210,7 @@ arp_del(char **args)
 		return(-1);
   	}
   }
-  if (flags & 1) {
+  if ((flags & 1) && (err)) {
 nopub:
   	req.arp_flags |= ATF_PUBL;
   	if (opt_v)  fprintf(stderr,"arp: SIOCDARP(pub)\n");
