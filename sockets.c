@@ -43,7 +43,7 @@ int sockets_open(int family)
 	    continue;
 	}
 	/* Check some /proc file first to not stress kmod */
-	if (!force && af->flag_file) {
+	if (!family && !force && af->flag_file) {
 	    if (access(af->flag_file, R_OK))
 		continue;
 	}

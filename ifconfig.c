@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.23 1998/12/01 20:48:41 philip Exp $
+ * Version:     $Id: ifconfig.c,v 1.24 1998/12/05 10:33:51 philip Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -548,8 +548,8 @@ int main(int argc, char **argv)
 	/* XXX: should print the current setup if no args left, but only 
 	   for this family */
 	spp++;
+	addr_family = ap->af;
     }
-    addr_family = ap->af;
 
     if (sockets_open(addr_family) < 0) {
 	perror("family socket");
