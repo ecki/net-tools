@@ -22,6 +22,7 @@
  *960218 {1.96} Bernd Eckenfels :       netinet/in.h added
  *980629 {1.97} Arnaldo Carvalho de Melo : gettext instead of catgets for i18n
  *20000213 {1.99} Arnaldo Carvalho de Melo : fixed some i18n strings
+ *20010404 {1.100} Arnaldo Carvalho de Melo: use setlocale
  *
  *              This program is free software; you can redistribute it
  *              and/or  modify it under  the terms of  the GNU General
@@ -46,7 +47,7 @@
 #include <netdnet/dn.h>
 #endif
 
-char *Release = RELEASE, *Version = "hostname 1.99 (2000-02-13)";
+char *Release = RELEASE, *Version = "hostname 1.100 (2001-04-14)";
 
 static char *program_name;
 static int opt_v;
@@ -280,6 +281,7 @@ int main(int argc, char **argv)
 	{0, 0, 0, 0}
     };
 #if I18N
+    setlocale (LC_ALL, "");
     bindtextdomain("net-tools", "/usr/share/locale");
     textdomain("net-tools");
 #endif

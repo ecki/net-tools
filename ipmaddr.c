@@ -8,6 +8,9 @@
  *
  * Authors:	Alexey Kuznetsov, <kuznet@ms2.inr.ac.ru>
  *
+ * Changes:	Arnaldo Carvalho de Melo <acme@conectiva.com.br>
+ *		20010404 - use setlocale
+ *
  */
 
 #include <stdio.h>
@@ -42,7 +45,7 @@ int  filter_family;
 #define DELADDR		2
 
 char *Release = RELEASE,
-     *Version = "ipmaddr 1.0",
+     *Version = "ipmaddr 1.1",
      *Signature = "Alexey Kuznetsov, <kuznet@ms2.inr.ac.ru>";
 
 static void version(void)
@@ -388,6 +391,7 @@ int main(int argc, char **argv)
 	char *basename;
 
 #if I18N
+	setlocale (LC_ALL, "");
 	bindtextdomain("net-tools", "/usr/share/locale");
 	textdomain("net-tools");
 #endif

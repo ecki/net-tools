@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.41 2001/04/01 15:04:43 pb Exp $
+ * Version:     $Id: netstat.c,v 1.42 2001/04/08 17:05:05 pb Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -57,6 +57,7 @@
  *              Tuan Hoang              added IGMP support for IPv4 and IPv6
  *
  *990420 {1.38} Tuan Hoang              removed a useless assignment from igmp_do_one()
+ *20010404 {1.39} Arnaldo Carvalho de Melo - use setlocale
  *
  *              This program is free software; you can redistribute it
  *              and/or  modify it under  the terms of  the GNU General
@@ -121,7 +122,7 @@ typedef enum {
 #define FEATURE_NETSTAT
 #include "lib/net-features.h"
 
-char *Release = RELEASE, *Version = "netstat 1.40 (2001-04-01)", *Signature = "Fred Baumgarten, Alan Cox, Bernd Eckenfels, Phil Blundell, Tuan Hoang and others";
+char *Release = RELEASE, *Version = "netstat 1.41 (2001-04-08)", *Signature = "Fred Baumgarten, Alan Cox, Bernd Eckenfels, Phil Blundell, Tuan Hoang and others";
 
 
 #define E_READ  -1
@@ -1548,6 +1549,7 @@ int main
     };
 
 #if I18N
+    setlocale (LC_ALL, "");
     bindtextdomain("net-tools", "/usr/share/locale");
     textdomain("net-tools");
 #endif

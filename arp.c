@@ -8,7 +8,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: arp.c,v 1.19 2000/12/19 00:34:27 ecki Exp $
+ * Version:     $Id: arp.c,v 1.20 2001/04/08 17:05:05 pb Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -44,6 +44,7 @@
  *990101 {1.85} Bernd Eckenfels		fixed usage and return codes
  *990105 (1.86) Phil Blundell:		don't ignore EINVAL in arp_set
  *991121 (1.87) Bernd Eckenfels:	yes --device has a mandatory arg
+ *010404 (1.88) Arnaldo Carvalho de Melo: use setlocale
  *
  *              This program is free software; you can redistribute it
  *              and/or  modify it under  the terms of  the GNU General
@@ -79,7 +80,7 @@
 #define FEATURE_ARP
 #include "lib/net-features.h"
 
-char *Release = RELEASE, *Version = "arp 1.87 (1999-11-21)";
+char *Release = RELEASE, *Version = "arp 1.88 (2001-04-04)";
 
 int opt_n = 0;			/* do not resolve addresses     */
 int opt_N = 0;			/* use symbolic names           */
@@ -655,6 +656,7 @@ int main(int argc, char **argv)
     };
 
 #if I18N
+    setlocale (LC_ALL, "");
     bindtextdomain("net-tools", "/usr/share/locale");
     textdomain("net-tools");
 #endif

@@ -2,7 +2,7 @@
  * route        This file contains an implementation of the command
  *              that manages the IP routing table in the kernel.
  *
- * Version:     $Id: route.c,v 1.7 2000/12/19 00:26:16 ecki Exp $
+ * Version:     $Id: route.c,v 1.8 2001/04/08 17:05:05 pb Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -33,6 +33,7 @@
  *960823 {x.xx} Frank Strauss:          INET6 stuff
  *980629 {1.95} Arnaldo Carvalho de Melo: gettext instead of catgets
  *990101 {1.96} Bernd Eckenfels:	fixed usage and FLAG_CACHE Output
+ *20010404 {1.97} Arnaldo Carvalho de Melo: use setlocale
  *
  */
 #include <sys/types.h>
@@ -65,7 +66,7 @@
 #define FEATURE_ROUTE
 #include "lib/net-features.h"	/* needs some of the system includes above! */
 
-char *Release = RELEASE, *Version = "route 1.96 (1999-01-01)";
+char *Release = RELEASE, *Version = "route 1.97 (2001-04-04)";
 
 int opt_n = 0;			/* numerical output flag        */
 int opt_v = 0;			/* debugging output flag        */
@@ -123,6 +124,7 @@ int main(int argc, char **argv)
     char *progname;
     int options;
 #if I18N
+    setlocale (LC_ALL, "");
     bindtextdomain("net-tools", "/usr/share/locale");
     textdomain("net-tools");
 #endif

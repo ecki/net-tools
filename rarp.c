@@ -3,7 +3,7 @@
  *              that maintains the kernel's RARP cache.  It is derived
  *              from Fred N. van Kempen's arp command.
  *
- * Version:	$Id: rarp.c,v 1.5 1999/01/05 20:53:02 philip Exp $
+ * Version:	$Id: rarp.c,v 1.6 2001/04/08 17:05:05 pb Exp $
  *
  * Usage:       rarp -d hostname                      Delete entry
  *              rarp -s hostname ethernet_address     Add entry
@@ -13,6 +13,7 @@
  * Rewritten: Phil Blundell <Philip.Blundell@pobox.com>  1997-08-03
  * gettext instead of catgets: Arnaldo Carvalho de Melo <acme@conectiva.com.br> 1998-06-29
  * 1998-01-01 Bernd Eckenfels	reorganised usage()
+ * 2001-04-04 Arnaldo Carvalho de Melo - use setlocale
  *
  */
 
@@ -42,7 +43,7 @@
 
 static char no_rarp_message[] = N_("This kernel does not support RARP.\n");
 
-static char version_string[] = RELEASE "\nrarp 1.02 (1998-06-30)\n";
+static char version_string[] = RELEASE "\nrarp 1.03 (2001-04-04)\n";
 
 static struct hwtype *hardware = NULL;
 
@@ -208,6 +209,7 @@ int main(int argc, char **argv)
     int fd;
 
 #if I18N
+    setlocale (LC_ALL, "");
     bindtextdomain("net-tools", "/usr/share/locale");
     textdomain("net-tools");
 #endif

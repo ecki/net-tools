@@ -14,6 +14,7 @@
  * Rani Assaf <rani@magic.metawire.com> 980929:	resolve addresses
  * Rani Assaf <rani@magic.metawire.com> 980930:	do not allow key for ipip/sit
  * Bernd Eckenfels 990715: add linux/types.h (not clean but solves missing __u16
+ * Arnaldo Carvalho de Melo 20010404: use setlocale
  */
 
 #include <stdio.h>
@@ -581,6 +582,7 @@ int main(int argc, char **argv)
 	char *basename;
 
 #if I18N
+	setlocale (LC_ALL, "");
 	bindtextdomain("net-tools", "/usr/share/locale");
 	textdomain("net-tools");
 #endif

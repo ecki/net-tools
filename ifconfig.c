@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.46 2001/04/01 14:50:24 pb Exp $
+ * Version:     $Id: ifconfig.c,v 1.47 2001/04/08 17:05:05 pb Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -22,6 +22,7 @@
  *          10/1998  - Andi Kleen. Use interface list primitives.       
  *	    20001008 - Bernd Eckenfels, Patch from RH for setting mtu 
  *			(default AF was wrong)
+ *          20010404 - Arnaldo Carvalho de Melo, use setlocale
  */
 
 #define DFLT_AF "inet"
@@ -250,6 +251,7 @@ int main(int argc, char **argv)
 #endif
 
 #if I18N
+    setlocale (LC_ALL, "");
     bindtextdomain("net-tools", "/usr/share/locale");
     textdomain("net-tools");
 #endif

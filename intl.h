@@ -1,6 +1,7 @@
 /* Dummy header for libintl.h */
 
 #if I18N
+#include <locale.h>
 #undef __OPTIMIZE__
 #include <libintl.h>
 #define _(String) gettext((String))

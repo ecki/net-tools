@@ -80,6 +80,7 @@ int main(int argc, char **argv)
     char **spp;
 
 #if I18N
+    setlocale (LC_ALL, "");
     bindtextdomain("net-tools", "/usr/share/locale");
     textdomain("net-tools");
 #endif
