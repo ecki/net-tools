@@ -159,7 +159,7 @@ function int()
   done
   [ "$prevcmd" = "*" ] && echo " */" >>${CONFIG}
 
-  [ -z "$stack" ] || echo "Error!  Untermiated if." 1>&2
+  [ -z "$stack" ] || echo "Error!  Unterminated if." 1>&2
 
   mv config.new config.status
   exit 0
