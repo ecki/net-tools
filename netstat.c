@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.29 1999/07/28 21:53:34 philip Exp $
+ * Version:     $Id: netstat.c,v 1.30 1999/08/28 11:26:08 philip Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -90,6 +90,7 @@
 #include "intl.h"
 #include "sockets.h"
 #include "interface.h"
+#include "util.h"
 
 #define PROGNAME_WIDTH 20
 
