@@ -4,7 +4,7 @@
    10/1998 partly rewriten by Andi Kleen to support an interface list.   
    I don't claim that the list operations are efficient @).  
 
-   $Id: interface.c,v 1.15 1998/12/01 09:30:06 philip Exp $
+   $Id: interface.c,v 1.1 1999/01/09 14:36:36 philip Exp $
  */
 
 #include "config.h"

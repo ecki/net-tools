@@ -76,7 +76,7 @@
 NET_LIB_PATH = lib
 NET_LIB_NAME = net-tools
 
-PROGS	= ifconfig hostname arp netstat route rarp 
+PROGS	= ifconfig hostname arp netstat route rarp slattach plipconfig iptunnel ipmaddr
 
 # Compiler and Linker Options
 # You may need to uncomment and edit these if you are using libc5 and IPv6.
@@ -164,8 +164,8 @@ i18ndir:
 subdirs:
 		@for i in $(SUBDIRS); do $(MAKE) -C $$i $(MDEFINES) ; done
 
-ifconfig:	$(NET-LIB) ifconfig.o interface.o sockets.o
-		$(CC) $(LDFLAGS) -o ifconfig ifconfig.o interface.o sockets.o $(NLIB) $(RESLIB)
+ifconfig:	$(NET-LIB) ifconfig.o
+		$(CC) $(LDFLAGS) -o ifconfig ifconfig.o $(NLIB) $(RESLIB)
 
 hostname:	hostname.o
 		$(CC) $(LDFLAGS) -o hostname hostname.o
@@ -179,8 +179,20 @@ arp:		$(NET-LIB) arp.o
 rarp:		$(NET-LIB) rarp.o
 		$(CC) $(LDFLAGS) -o rarp rarp.o $(NLIB)
 
-netstat:	$(NET-LIB) netstat.o statistics.o interface.o sockets.o
-		$(CC) $(LDFLAGS) -o netstat netstat.o statistics.o interface.o sockets.o $(NLIB) $(RESLIB)
+slattach:	$(NET-LIB) slattach.o
+		$(CC) $(LDFLAGS) -o slattach slattach.o $(NLIB)
+
+plipconfig:	$(NET-LIB) plipconfig.o
+		$(CC) $(LDFLAGS) -o plipconfig plipconfig.o $(NLIB)
+
+netstat:	$(NET-LIB) netstat.o statistics.o
+		$(CC) $(LDFLAGS) -o netstat netstat.o statistics.o $(NLIB) $(RESLIB)
+
+iptunnel:	$(NET-LIB) iptunnel.o
+		$(CC) $(LDFLAGS) -o iptunnel iptunnel.o $(NLIB) $(RESLIB)
+
+ipmaddr:	$(NET-LIB) ipmaddr.o
+		$(CC) $(LDFLAGS) -o ipmaddr ipmaddr.o $(NLIB) $(RESLIB)
 
 installbin:
 	install -m 0755 -d ${BASEDIR}/sbin
