@@ -83,7 +83,7 @@ int rprint_fib(int ext, int numeric)
 	mask_addr[15] = '\0';
 
 	/* Decode the flags. */
-	flags[0] = '\0';
+	strcpy(flags, "U");
 	if (iflags & RTF_GATEWAY) strcat(flags, "G");
 #if HAVE_RTF_REJECT
 	if (iflags & RTF_REJECT) strcpy(flags,"!");

@@ -1,3 +1,9 @@
+1998-01-31  Phil Blundell  <philb@gnu.org>
+
+	* lib/inet6_gr.c (rprint_fib6): Reinstate the "U" flag, although it
+ 	is always printed.
+	* lib/inet_gr.c (rprint_fib): Likewise.	
+
 Sun Jan 25 13:00:00 1998  Philip Blundell  <Philip.Blundell@pobox.com>
 
 	* lib/net-string.c (str_in_buff): Avoid compiler warning.  Remove

@@ -116,7 +116,7 @@ int rprint_fib6(int ext, int numeric)
 		inet6_aftype.sprint((struct sockaddr *)&snaddr6, 1));
 	
 	/* Decode the flags. */
-	flags[0] = '\0';
+	strcpy(flags, "U");
 	if (iflags & RTF_GATEWAY) strcat(flags, "G");
 	if (iflags & RTF_HOST) strcat(flags, "H");
 	if (iflags & RTF_DEFAULT) strcat(flags, "D");
