@@ -3,7 +3,7 @@
  *		that either displays or sets the characteristics of
  *		one or more of the system's networking interfaces.
  *
- * Version:	ifconfig 1.34 (1998-06-30)
+ * Version:	ifconfig 1.34 (1998-06-30) 
  *
  * Author:	Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -263,6 +263,10 @@ ife_print(struct interface *ptr)
   if (ptr->flags & IFF_SLAVE) printf(_("SLAVE "));
   if (ptr->flags & IFF_MASTER) printf(_("MASTER "));
   if (ptr->flags & IFF_MULTICAST) printf(_("MULTICAST "));
+#ifdef HAVE_DYNAMIC
+  if (ptr->flags & IFF_DYNAMIC) printf(_("DYNAMIC ")); 
+#endif  
+
   printf(_(" MTU:%d  Metric:%d\n"),
 	 ptr->mtu, ptr->metric?ptr->metric:1);
 
@@ -422,6 +426,9 @@ usage(void)
 #ifdef HAVE_TXQUEUELEN
   fprintf(stderr, _("                [txqueuelen len]\n"));
 #endif
+#ifdef HAVE_DYNAMIC
+  fprintf(stderr, _("				 [[-]dynamic]\n")); 
+#endif
   fprintf(stderr, _("                [up] [down] ...\n"));
   exit(1);
 }
@@ -472,7 +479,7 @@ main(int argc, char **argv)
 #endif
 
   /* Create a channel to the NET kernel. */
-  if ((skfd = sockets_open()) < 0) {
+  if ((skfd = sockets_open(0)) < 0) {
     perror("socket");
     exit(1);
   }
@@ -513,10 +520,18 @@ main(int argc, char **argv)
   /* The next argument is either an address family name, or an option. */
   if ((ap = get_aftype(*spp)) == NULL) 
     ap = get_aftype("inet");
-  else 
-    spp++;
+  else { 
+	  /* XXX: should print the current setup if no args left, but only 
+		 for this family */  
+	  spp++;
+  }
   addr_family = ap->af;
 
+  if (sockets_open(addr_family) < 0) { 
+	  perror("family socket");  
+	  exit(1); 
+  }
+  
   /* Process the remaining arguments. */
   while (*spp != (char *)NULL) {
     if (!strcmp(*spp, "arp")) {
@@ -630,6 +645,19 @@ main(int argc, char **argv)
       spp++;
       continue;
     }
+
+#ifdef HAVE_DYNAMIC
+	if (!strcmp(*spp, "dynamic")) { 
+	  goterr |= set_flag(ifr.ifr_name, IFF_DYNAMIC); 
+	  spp++;
+	  continue;
+	}
+	if (!strcmp(*spp, "-dynamic")) {
+	  goterr |= clr_flag(ifr.ifr_name, IFF_DYNAMIC);
+	  spp++;
+	  continue;
+	}
+#endif
 
     if (!strcmp(*spp, "metric")) {
       if (*++spp == NULL) usage();
@@ -976,7 +1004,7 @@ main(int argc, char **argv)
 
     memcpy((char *) &ifr.ifr_addr, (char *) &sa, sizeof(struct sockaddr));
     {
-      int r;
+      int r = 0; /* to shut gcc up */  
       switch (ap->af) {
 #if HAVE_AFINET
       case AF_INET:

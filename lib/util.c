@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "util.h"
+#include <sys/utsname.h>
 
 static void oom(void)
 { 
@@ -22,4 +23,16 @@ void *xrealloc(void *oldp, size_t sz)
 	if (!p) 
 		oom();
 	return p;
+}
+
+int kernel_version(void)
+{
+	struct utsname uts;
+	int major, minor, patch; 
+
+	if (uname(&uts) < 0) 
+		return -1; 
+	if (sscanf(uts.release, "%d.%d.%d", &major, &minor, &patch) != 3)
+		return -1;
+	return KRELEASE(major,minor,patch);
 }

@@ -78,3 +78,8 @@ extern int if_readlist(void);
 #endif
 
 #define HAVE_TXQUEUELEN
+
+#define HAVE_DYNAMIC
+#ifndef IFF_DYNAMIC
+#define IFF_DYNAMIC	0x8000		/* dialup device with changing addresses*/
+#endif

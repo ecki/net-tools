@@ -3,7 +3,9 @@
 
    10/1998 partly rewriten by Andi Kleen to support interface list.   
 		   I don't claim that the list operations are efficient @).  
-*/
+
+   $Id: interface.c,v 1.6 1998/10/30 14:16:09 freitag Exp $
+ */
 
 #include "config.h"
 

@@ -1111,7 +1111,7 @@ static int do_if_print(struct interface *ife, void *cookie)
 static int
 iface_info(void)
 {
-  if ((skfd = sockets_open()) < 0) {
+  if ((skfd = sockets_open(0)) < 0) {
     perror("socket");
     exit(1);
   }
