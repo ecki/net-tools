@@ -64,7 +64,8 @@ Notable changes since 1.45 include:
  - Various bugs have been fixed.
 
 You need kernel 2.0 or later to use these programs.  These programs
-should compile cleanly with either glibc or libc5.
+should compile cleanly with either glibc or libc5.  The `iptunnel' and
+`ipmaddr' programs require kernel 2.1 or later.
 
 The NLS support was changed from catgets to GNU gettext by Arnaldo
 Carvalho de Melo <acme@conectiva.com.br> in June, 1998, to make the

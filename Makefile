@@ -76,7 +76,12 @@
 NET_LIB_PATH = lib
 NET_LIB_NAME = net-tools
 
-PROGS	= ifconfig hostname arp netstat route rarp slattach plipconfig iptunnel ipmaddr
+PROGS	:= ifconfig hostname arp netstat route rarp slattach plipconfig
+
+-include config.make
+ifeq ($(HAVE_IP_TOOLS),1)
+PROGS   += iptunnel ipmaddr
+endif
 
 # Compiler and Linker Options
 # You may need to uncomment and edit these if you are using libc5 and IPv6.

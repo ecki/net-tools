@@ -47,6 +47,11 @@
 #undef GRE_VERSION
 #define GRE_VERSION	htons(0x0007)
 
+/* Old versions of glibc do not define this */
+#if __GLIBC__ == 2 && __GLIBC_MINOR__ == 0
+#define IPPROTO_GRE	47
+#endif
+
 #include "utils.h"
 
 static void usage(void) __attribute__((noreturn));

@@ -34,6 +34,7 @@
 #
 
 CONFIG=config.h
+MAKECONFIG=config.make
 
 
 [ -z "$BASH" ] && { echo "Configure requires bash" 1>&2; exit 1; }
@@ -69,8 +70,10 @@ function bool()
   done
   if [ "$ans" = "y" ]; then
 	echo "#define $2 1" >>${CONFIG}
+	echo "$2=1" >>${MAKECONFIG}
     else
 	echo "#define $2 0" >>${CONFIG}
+	echo "# $2=0" >> ${MAKECONFIG}
   fi
   raw_input_line="bool '$1' $2 $ans"
   eval "$2=$ans"
@@ -99,6 +102,7 @@ function int()
   #
   > config.new
   > ${CONFIG}
+  > ${MAKECONFIG}
 
   stack=''
   branch='t'

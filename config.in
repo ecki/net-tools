@@ -83,3 +83,4 @@ bool '(Cisco)-HDLC/LAPB support' HAVE_HWHDLCLAPB n
 *           Other Features.
 *
 bool 'IP Masquerading support' HAVE_FW_MASQUERADE n
+bool 'Build iptunnel and ipmaddr' HAVE_IP_TOOLS n
