@@ -4,7 +4,7 @@
    10/1998 partly rewriten by Andi Kleen to support interface list.   
 		   I don't claim that the list operations are efficient @).  
 
-   $Id: interface.c,v 1.8 1998/11/14 10:37:06 philip Exp $
+   $Id: interface.c,v 1.9 1998/11/15 18:58:40 freitag Exp $
  */
 
 #include "config.h"
@@ -58,8 +58,7 @@ void add_interface(struct interface *n)
 
 	pp = &int_list;
 	for (ife = int_list; ife; pp = &ife->next, ife = ife->next) { 
-		/* XXX: should use numerical sort */ 
-		if (strcmp(ife->name, n->name) > 0) 
+		if (nstrcmp(ife->name, n->name) > 0) 
 			break; 
 	}
 	n->next = (*pp);
@@ -99,6 +98,16 @@ static int if_readconf(void)
 	struct ifconf ifc;
 	struct ifreq *ifr; 
 	int n, err = -1;  
+	int skfd;
+
+	/* SIOCGIFCONF seems to only work properly on AF_INET sockets
+           currently */ 
+	skfd = get_socket_for_af(AF_INET); 
+	if (skfd < 0) { 
+		fprintf(stderr, _("warning: no inet socket available: %s\n"),
+				strerror(errno)); 
+		return -1;
+	}
 
 	ifc.ifc_buf = NULL;
 	for (;;) { 

@@ -2,6 +2,10 @@
 /* 19980630 - i18n - Arnaldo Carvalho de Melo <acme@conectiva.com.br> */
 /* 19981113 - i18n fixes - Arnaldo Carvalho de Melo <acme@conectiva.com.br> */
 
+/* 
+   XXX: rewrite to 2 pass to support /proc/net/netstat too
+   	    support -t -u 
+ */		
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>

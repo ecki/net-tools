@@ -8,3 +8,6 @@ void *xrealloc(void *p, size_t sz);
 
 int kernel_version(void); 
 #define KRELEASE(maj,min,patch) ((maj) * 10000 + (min)*1000 + (patch)) 
+
+
+int nstrcmp(const char *, const char *); 
