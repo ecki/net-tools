@@ -28,9 +28,11 @@ Contents:
                           Notes
                           -----
 
-This is a snapshot net-tools release, which by definition is not well
-tested.  Be prepared for bugs and strange behaviour.  The next release
-of net-tools should be 1.5.
+This is net-tools 1.46.  Notable changes since 1.45 include:
+
+ - The internationalisation support has been reworked (see below)
+ - Support for extra hardware types has been added.
+ - Various bugs have been fixed.
 
 You need kernel 2.0 or later to use these programs.  These programs
 should compile cleanly with either glibc or libc5.
@@ -56,11 +58,11 @@ a recent 2.1.x kernel, and many devices do not support it yet.
 The documentation is slimmed down.  I think most of it was out of
 date.
 
-Some configuration options require recent 2.1.x kernels.  The defaults should
-be safe for both 2.0 and 2.1.  Some of this code may also have problems with
-glibc 2.0.
-
+Some configuration options require recent 2.1.x kernels and/or particular
+versions of the C library.  The defaults should be safe for all common
+environments but some of the more esoteric hardware and protocol families
+may be more touchy.  Feel free to send patches if you have problems.
 
 Phil Blundell
 philb@gnu.org
-10th August 1998
+1st September 1998
