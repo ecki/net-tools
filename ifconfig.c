@@ -115,7 +115,15 @@ ife_print(struct interface *ptr)
   struct hwtype *hw;
   int hf;
   int can_compress = 0;
-  static struct aftype *ipxtype=NULL, *ddptype=NULL, *ectype=NULL;
+#if HAVE_AFIPX
+  static struct aftype *ipxtype=NULL;
+#endif
+#if HAVE_AFECONET
+  static struct aftype *ectype = NULL;
+#endif
+#if HAVE_AFATALK
+   static struct aftype *ddptype = NULL;
+#endif
 #if HAVE_AFINET6
   FILE *f;
   char addr6[40], devname[10];
@@ -229,7 +237,7 @@ ife_print(struct interface *ptr)
   }
 #endif
 
-#if HAVE_AFTALK
+#if HAVE_AFATALK
   if (ddptype==NULL)
     ddptype=get_afntype(AF_APPLETALK);
   if (ddptype!=NULL) {
@@ -956,12 +964,12 @@ main(int argc, char **argv)
     {
       int r;
       switch (ap->af) {
-#ifdef HAVE_AFINET
+#if HAVE_AFINET
       case AF_INET:
 	r = ioctl(inet_sock, SIOCSIFADDR, &ifr);
 	break;
 #endif
-#ifdef HAVE_AFECONET
+#if HAVE_AFECONET
       case AF_ECONET:
 	r = ioctl(ec_sock, SIOCSIFADDR, &ifr);
 	break;
