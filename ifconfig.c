@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.31 1999/04/18 20:28:39 philip Exp $
+ * Version:     $Id: ifconfig.c,v 1.32 1999/09/28 09:01:49 philip Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -158,7 +158,7 @@ void ife_print(struct interface *ptr)
     printf(_("%-9.9s Link encap:%s  "), ptr->name, hw->title);
     /* For some hardware types (eg Ash, ATM) we don't print the 
        hardware address if it's null.  */
-    if (hw->sprint != NULL && (! (hw_null_address(hw, ptr->hwaddr) &&
+    if (hw->print != NULL && (! (hw_null_address(hw, ptr->hwaddr) &&
 				  hw->suppress_null_addr)))
 	printf(_("HWaddr %s  "), hw->print(ptr->hwaddr));
 #ifdef IFF_PORTSEL
