@@ -26,7 +26,6 @@
 #include <arpa/inet.h>
 #include <resolv.h>
 #include <asm/types.h>
-#include <linux/pkt_sched.h>
 
 #include "utils.h"
 
@@ -141,61 +140,6 @@ int get_s8(__s8 *val, char *arg, int base)
 	*val = res;
 	return 0;
 }
-
-int get_tc_classid(__u32 *h, char *str)
-{
-	__u32 maj, min;
-	char *p;
-
-	maj = TC_H_ROOT;
-	if (strcmp(str, "root") == 0)
-		goto ok;
-	maj = TC_H_UNSPEC;
-	if (strcmp(str, "none") == 0)
-		goto ok;
-	maj = strtoul(str, &p, 16);
-	if (p == str) {
-		maj = 0;
-		if (*p != ':')
-			return -1;
-	}
-	if (*p == ':') {
-		maj <<= 16;
-		str = p+1;
-		min = strtoul(str, &p, 16);
-		if (*p != 0)
-			return -1;
-		maj |= min;
-	} else if (*p != 0)
-		return -1;
-
-ok:
-	*h = maj;
-	return 0;
-}
-
-int print_tc_classid(char *buf, int len, __u32 h)
-{
-	if (h == TC_H_ROOT)
-		sprintf(buf, "root");
-	else if (h == TC_H_UNSPEC)
-		snprintf(buf, len, "none");
-	else if (TC_H_MAJ(h) == 0)
-		snprintf(buf, len, ":%x", TC_H_MIN(h));
-	else if (TC_H_MIN(h) == 0)
-		snprintf(buf, len, "%x:", TC_H_MAJ(h)>>16);
-	else
-		snprintf(buf, len, "%x:%x", TC_H_MAJ(h)>>16, TC_H_MIN(h));
-	return 0;
-}
-
-char * sprint_tc_classid(__u32 h, char *buf)
-{
-	if (print_tc_classid(buf, SPRINT_BSIZE-1, h))
-		strcpy(buf, "???");
-	return buf;
-}
-
 
 int get_addr_1(inet_prefix *addr, char *name, int family)
 {
