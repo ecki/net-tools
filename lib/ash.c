@@ -21,8 +21,10 @@
 #define  EXTERN
 #include "net-locale.h"
 
-#undef ARPHRD_ASH64
-#define ARPHRD_ASH64		517
+#ifndef ARPHRD_ASH
+#error Your C library does not support Ash
+#endif
+
 #define ASH_ALEN		32
 
 extern struct hwtype ash_hwtype;
@@ -95,7 +97,7 @@ in_ash(char *bufp, struct sockaddr *sap)
 
 
 struct hwtype ash_hwtype = {
-  "ash",	NULL, 		ARPHRD_ASH64,	ASH_ALEN,
+  "ash",	NULL, 		ARPHRD_ASH,	ASH_ALEN,
   pr_ash,	pr_sash,	in_ash,		NULL
 };
 

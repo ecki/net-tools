@@ -128,7 +128,7 @@ void hwinit ()
   ether_hwtype.title = NLS_CATSAVE (catfd, etherSet, ether_ether, "Ethernet");
 #endif
 #if HAVE_HWASH
-  ash_hwtype.title = NLS_CATSAVE (catfd, ashSet, ash_hw, "64Mbps Ash");
+  ash_hwtype.title = NLS_CATSAVE (catfd, ashSet, ash_hw, "Ash");
 #endif
 #if HAVE_HWFDDI
   fddi_hwtype.title = NLS_CATSAVE (catfd, fddiSet, fddi_fddi, "Fiber Distributed Data Interface");
