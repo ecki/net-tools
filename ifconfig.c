@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.51 2001/06/29 03:48:51 ecki Exp $
+ * Version:     $Id: ifconfig.c,v 1.52 2001/11/01 01:48:31 ecki Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -248,7 +248,7 @@ static int set_netmask(int skfd, struct ifreq *ifr, struct sockaddr *sa)
 		strerror(errno));
 	err = 1;
     }
-    return 0;
+    return err;
 }
 
 int main(int argc, char **argv)
