@@ -21,7 +21,10 @@
 #		Extensively modified from 01/21/94 onwards by
 #		Alan Cox <A.Cox@swansea.ac.uk>
 #		Copyright 1993-1994 Swansea University Computer Society
-#		
+#
+# Be careful! 
+# This Makefile doesn't describe complete dependencies for all include files.
+# If you change include files you might need to do make clean. 
 #
 #	{1.20}	Bernd Eckenfels:	Even more modifications for the new 
 #					package layout

@@ -1,5 +1,9 @@
 /* Code to manipulate interface information, shared between ifconfig and
-   netstat. */
+   netstat. 
+
+   10/1998 partly rewriten by Andi Kleen to support interface list.   
+		   I don't claim that the list operations are efficient @).  
+*/
 
 #include "config.h"
 
@@ -30,105 +34,275 @@
 #include "net-support.h"
 #include "pathnames.h"
 #include "version.h"
+#include "proc.h"
 
 #include "interface.h"
 #include "sockets.h"
+#include "util.h"
+#include "intl.h"
 
-int procnetdev_vsn = 1;
+int procnetdev_vsn = 1; 
 
-static void 
-if_getstats(char *ifname, struct interface *ife)
+static struct interface *int_list;
+
+void add_interface(struct interface *n)
 {
-  FILE *f = fopen(_PATH_PROCNET_DEV, "r");
-  char buf[256];
-  char *bp;
+	struct interface *ife, **pp;
 
-  if (f == NULL)
-    return;
+	pp = &int_list;
+	for (ife = int_list; ife; pp = &ife->next, ife = ife->next) { 
+		/* XXX: should use numerical sort */ 
+		if (strcmp(ife->name, n->name) > 0) 
+			break; 
+	}
+	n->next = (*pp);
+	(*pp) = n;  
+} 
 
-  fgets(buf, 255, f);  /* throw away first line of header */
-  fgets(buf, 255, f);
-
-  if (strstr(buf, "compressed")) 
-    procnetdev_vsn = 3;
-  else
-    if (strstr(buf, "bytes"))
-      procnetdev_vsn = 2;
-  
-  while (fgets(buf, 255, f)) {
-    bp=buf;
-    while(*bp && isspace(*bp))
-      bp++;
-    if (strncmp(bp, ifname, strlen(ifname)) == 0 && 
-	bp[strlen(ifname)] == ':') {
-      bp = strchr(bp, ':');
-      bp++;
-      switch (procnetdev_vsn) {
-      case 3:
-	sscanf(bp, "%ld %ld %ld %ld %ld %ld %ld %ld %ld %ld %ld %ld %ld %ld %ld %ld",
-	       &ife->stats.rx_bytes,
-	       &ife->stats.rx_packets,
-	       &ife->stats.rx_errors,
-	       &ife->stats.rx_dropped,
-	       &ife->stats.rx_fifo_errors,
-	       &ife->stats.rx_frame_errors,
-	       &ife->stats.rx_compressed,
-	       &ife->stats.rx_multicast,
-	       
-	       &ife->stats.tx_bytes,
-	       &ife->stats.tx_packets,
-	       &ife->stats.tx_errors,
-	       &ife->stats.tx_dropped,
-	       &ife->stats.tx_fifo_errors,
-	       &ife->stats.collisions,
-	       &ife->stats.tx_carrier_errors,
-	       &ife->stats.tx_compressed
-	       );
-	break;
-      case 2:
-	sscanf(bp, "%ld %ld %ld %ld %ld %ld %ld %ld %ld %ld %ld %ld %ld",
-	       &ife->stats.rx_bytes,
-	       &ife->stats.rx_packets,
-	       &ife->stats.rx_errors,
-	       &ife->stats.rx_dropped,
-	       &ife->stats.rx_fifo_errors,
-	       &ife->stats.rx_frame_errors,
-	       
-	       &ife->stats.tx_bytes,
-	       &ife->stats.tx_packets,
-	       &ife->stats.tx_errors,
-	       &ife->stats.tx_dropped,
-	       &ife->stats.tx_fifo_errors,
-	       &ife->stats.collisions,
-	       &ife->stats.tx_carrier_errors
-	       );
-	ife->stats.rx_multicast = 0;
-	break;
-      case 1:
-	sscanf(bp, "%ld %ld %ld %ld %ld %ld %ld %ld %ld %ld %ld",
-	       &ife->stats.rx_packets,
-	       &ife->stats.rx_errors,
-	       &ife->stats.rx_dropped,
-	       &ife->stats.rx_fifo_errors,
-	       &ife->stats.rx_frame_errors,
-	       
-	       &ife->stats.tx_packets,
-	       &ife->stats.tx_errors,
-	       &ife->stats.tx_dropped,
-	       &ife->stats.tx_fifo_errors,
-	       &ife->stats.collisions,
-	       &ife->stats.tx_carrier_errors
-	       );
-	ife->stats.rx_bytes = 0;
-	ife->stats.tx_bytes = 0;
-	ife->stats.rx_multicast = 0;
-	break;
-      }
-      break;
-    }
-  }
-  fclose(f);
+struct interface *lookup_interface(char *name) 
+{ 
+	struct interface *ife;
+	if (!int_list && (if_readlist()) < 0)
+		return NULL;
+	for (ife = int_list; ife; ife = ife->next) {  
+		if (!strcmp(ife->name,name))
+			break; 
+	}
+	return ife; 
 }
+
+int 
+for_all_interfaces(int (*doit)(struct interface *, void *), void *cookie)
+{   
+	struct interface *ife;
+
+	if (!int_list && (if_readlist() < 0))
+		return -1;
+	for (ife = int_list; ife; ife = ife->next) { 
+		int err = doit(ife, cookie); 
+		if (err) 
+			return err;
+	}
+	return 0;
+}
+
+static int if_readconf(void)
+{
+	int numreqs = 30;
+	struct ifconf ifc;
+	struct ifreq *ifr; 
+	int n, err = -1;  
+
+	int sk; 
+	sk = socket(PF_INET, SOCK_DGRAM, 0); 
+	if (sk < 0) { 
+		perror(_("error opening inet socket"));
+		return -1; 
+	}
+
+	ifc.ifc_buf = NULL;
+	for (;;) { 
+		ifc.ifc_len = sizeof(struct ifreq) * numreqs; 
+		ifc.ifc_buf = xrealloc(ifc.ifc_buf, ifc.ifc_len); 
+		
+		if (ioctl(sk, SIOCGIFCONF, &ifc) < 0) { 
+			perror("SIOCGIFCONF");
+			goto out; 
+		}
+		
+		if (ifc.ifc_len == sizeof(struct ifreq)*numreqs) {
+			/* assume it overflowed and try again */ 
+			numreqs += 10; 
+			continue;
+		}
+		break; 
+	}
+
+	for (ifr = ifc.ifc_req,n = 0; n < ifc.ifc_len; 
+		 n += sizeof(struct ifreq), ifr++) {
+		struct interface *ife;
+		
+		ife = lookup_interface(ifr->ifr_name);
+		if (ife) 
+			continue; 
+		
+		new(ife); 
+		strcpy(ife->name, ifr->ifr_name);
+		add_interface(ife); 
+	}
+	err = 0; 
+
+out:
+	free(ifc.ifc_buf);  
+	close(sk);
+	return err;  
+}
+
+static char *get_name(char *name, char *p)
+{
+	while (isspace(*p)) p++; 
+	while (*p) { 
+		if (isspace(*p)) 
+			break; 
+		if (*p == ':') { /* could be an alias */ 
+			char *dot = p, *dotname = name; 
+			*name++ = *p++; 
+			while (isdigit(*p))
+				*name++ = *p++; 
+			if (*p != ':') { /* it wasn't, backup */ 
+				p = dot; 
+				name = dotname; 
+			} 
+			if (*p == '\0') return NULL; 
+			p++;
+			break; 
+		}
+		*name++ = *p++; 
+	}
+	*name++ = '\0';
+	return p; 
+} 
+
+static int procnetdev_version(char *buf)
+{
+	if (strstr(buf,"compressed")) 
+		return 3;
+	if (strstr(buf,"bytes"))
+		return 2;
+	return 1; 
+}
+
+static int get_dev_fields(char *bp, struct interface *ife)
+ {
+	 switch (procnetdev_vsn) {
+	 case 3:
+		 sscanf(bp, 
+			"%ld %ld %ld %ld %ld %ld %ld %ld %ld %ld %ld %ld %ld %ld %ld %ld",
+					&ife->stats.rx_bytes,
+					&ife->stats.rx_packets,
+					&ife->stats.rx_errors,
+					&ife->stats.rx_dropped,
+					&ife->stats.rx_fifo_errors,
+					&ife->stats.rx_frame_errors,
+					&ife->stats.rx_compressed,
+					&ife->stats.rx_multicast,
+					
+					&ife->stats.tx_bytes,
+					&ife->stats.tx_packets,
+					&ife->stats.tx_errors,
+					&ife->stats.tx_dropped,
+					&ife->stats.tx_fifo_errors,
+					&ife->stats.collisions,
+					&ife->stats.tx_carrier_errors,
+					&ife->stats.tx_compressed);
+		 break;
+	 case 2:
+		 sscanf(bp, "%ld %ld %ld %ld %ld %ld %ld %ld %ld %ld %ld %ld %ld",
+					&ife->stats.rx_bytes,
+					&ife->stats.rx_packets,
+					&ife->stats.rx_errors,
+					&ife->stats.rx_dropped,
+					&ife->stats.rx_fifo_errors,
+					&ife->stats.rx_frame_errors,
+					
+					&ife->stats.tx_bytes,
+					&ife->stats.tx_packets,
+					&ife->stats.tx_errors,
+					&ife->stats.tx_dropped,
+					&ife->stats.tx_fifo_errors,
+					&ife->stats.collisions,
+					&ife->stats.tx_carrier_errors);
+		 ife->stats.rx_multicast = 0;
+		 break;
+	 case 1:
+		   sscanf(bp, "%ld %ld %ld %ld %ld %ld %ld %ld %ld %ld %ld",
+				  &ife->stats.rx_packets,
+				  &ife->stats.rx_errors,
+				  &ife->stats.rx_dropped,
+				  &ife->stats.rx_fifo_errors,
+				  &ife->stats.rx_frame_errors,
+				  
+				  &ife->stats.tx_packets,
+				  &ife->stats.tx_errors,
+				  &ife->stats.tx_dropped,
+				  &ife->stats.tx_fifo_errors,
+				  &ife->stats.collisions,
+				  &ife->stats.tx_carrier_errors);
+		   ife->stats.rx_bytes = 0;
+		   ife->stats.tx_bytes = 0;
+		   ife->stats.rx_multicast = 0;
+		   break;
+	 }
+	 return 0;
+}
+
+int if_readlist(void) 
+{
+	FILE *fh;
+	char buf[512];
+	struct interface *ife; 
+	int err;
+	
+	fh = fopen(_PATH_PROCNET_DEV,"r"); 
+	if (!fh) { 
+		perror(_PATH_PROCNET_DEV); 
+		return -1;
+	} 
+
+	fgets(buf,sizeof buf,fh);  /* eat line */ 
+	fgets(buf,sizeof buf,fh); 
+
+#if 0 /* pretty, but can't cope with missing fields */   
+	fmt = proc_gen_fmt(_PATH_PROCNET_DEV, 1, fh,
+					   "face", "", /* parsed separately */
+					   "bytes",  "%lu",  
+					   "packets", "%lu",
+					   "errs", "%lu",
+					   "drop", "%lu",
+					   "fifo", "%lu", 
+					   "frame", "%lu", 
+					   "compressed", "%lu",
+					   "multicast", "%lu", 
+					   "bytes", "%lu",
+					   "packets", "%lu",
+					   "errs", "%lu",
+					   "drop", "%lu",
+					   "fifo", "%lu",
+					   "colls", "%lu",
+					   "carrier", "%lu",
+					   "compressed", "%lu",  
+					   NULL); 
+	if (!fmt) 
+		return -1; 
+#else
+	procnetdev_vsn = procnetdev_version(buf); 
+#endif	
+
+	err = 0; 	
+	while (fgets(buf,sizeof buf,fh)) { 
+		char *s; 
+
+		new(ife); 
+	
+		s = get_name(ife->name, buf);    
+		get_dev_fields(s, ife);
+		ife->statistics_valid = 1;
+
+		add_interface(ife);
+	}
+	if (ferror(fh)) {
+		perror(_PATH_PROCNET_DEV); 
+		err = -1; 
+	} 
+	
+	if (!err) 
+		err = if_readconf();  
+
+#if 0
+	free(fmt); 
+#endif
+	return err; 
+} 
 
 /* Support for fetching an IPX address */
 
@@ -145,9 +319,6 @@ int
 if_fetch(char *ifname, struct interface *ife)
 {
   struct ifreq ifr;
-
-  memset((char *) ife, 0, sizeof(struct interface));
-  strcpy(ife->name, ifname);
 
   strcpy(ifr.ifr_name, ifname);
   if (ioctl(skfd, SIOCGIFFLAGS, &ifr) < 0) return(-1);
@@ -265,6 +436,5 @@ if_fetch(char *ifname, struct interface *ife)
   }
 #endif
 
-  if_getstats(ifname, ife);
   return 0;
 }

@@ -167,22 +167,31 @@ Set the length of the transmit queue of the device. It is useful to set this
 to small values for slower devices with a high latency (modem links, ISDN)
 to prevent fast bulk transfers from disturbing interactive traffic like
 telnet too much. 
+.SH NOTES
+Since kernel release 2.2 there are no explicit interface statistics for
+alias interfaces anymore. The statistics printed for the original address
+are shared with all alias addresses on the same device. If you want per-address
+statistics you should add explicit accounting
+rules for the address using the 
+.BR ipchains(8)
+command.
+
 .SH FILES
 .I /proc/net/socket 
 .br
 .I /proc/net/dev
 .br
 .I /proc/net/if_inet6
-.br
-.I /etc/init.d/network
 .SH BUGS
 While appletalk DDP and IPX addresses will be displayed they cannot be
 altered by this command.
 .SH SEE ALSO
-route(8), netstat(8), arp(8), rarp(8)
+route(8), netstat(8), arp(8), rarp(8), ipchains(8)
 .SH AUTHORS
 Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
 .br
 Alan Cox, <Alan.Cox@linux.org>
 .br
 Phil Blundell, <Philip.Blundell@pobox.com>
+.br
+Andi Kleen, <ak@muc.de> 

@@ -1,3 +1,4 @@
+
 /*
  * netstat	This file contains an implementation of the command
  *		that helps in debugging the networking modules.
@@ -44,6 +45,7 @@
  *					minor header file misplacement tidy up.
  *980411 {1.34} Arnaldo Carvalho        i18n: catgets -> gnu gettext, substitution
  *					of sprintf for snprintf
+ *10/1998		Andi Kleen		Use new interface primitives.
  *
  *		This program is free software; you can redistribute it
  *		and/or  modify it under  the terms of  the GNU General
@@ -1066,15 +1068,19 @@ static int ipx_info(void)
 static void
 ife_print(struct interface *ptr)
 {
-  printf("%-5.5s ", ptr->name);
+  printf("%-7.7s ", ptr->name);
   printf("%5d %3d ", ptr->mtu, ptr->metric);
   /* If needed, display the interface statistics. */
-  printf("%6lu %6lu %6lu %6lu ",
-	 ptr->stats.rx_packets, ptr->stats.rx_errors,
-	 ptr->stats.rx_dropped, ptr->stats.rx_fifo_errors);
-  printf("%6lu %6lu %6lu %6lu ",
-	 ptr->stats.tx_packets, ptr->stats.tx_errors,
-	 ptr->stats.tx_dropped, ptr->stats.tx_fifo_errors);
+  if (ptr->statistics_valid) {  
+	  printf("%6lu %6lu %6lu %6lu ",
+			 ptr->stats.rx_packets, ptr->stats.rx_errors,
+			 ptr->stats.rx_dropped, ptr->stats.rx_fifo_errors);
+	  printf("%6lu %6lu %6lu %6lu ",
+			 ptr->stats.tx_packets, ptr->stats.tx_errors,
+			 ptr->stats.tx_dropped, ptr->stats.tx_fifo_errors);
+  } else { 
+	  printf("%-56s", "     - no statistics available -");  
+  } 
   if (ptr->flags == 0) printf(_("[NO FLAGS]"));
   if (ptr->flags & IFF_ALLMULTI) printf("A");
   if (ptr->flags & IFF_BROADCAST) printf("B");
@@ -1089,47 +1095,38 @@ ife_print(struct interface *ptr)
   printf("\n");
 }
 
+static int do_if_print(struct interface *ife, void *cookie)
+{
+    int *opt_a = (int *)cookie; 
+    if (if_fetch(ife->name, ife) < 0) {
+		fprintf (stderr, _("%s: unknown interface.\n"), ife->name);
+		return -1;
+    }
+    if (!(ife->flags & IFF_UP) && !(*opt_a))
+		return 0;
+    ife_print(ife); 
+	return 0;
+}
+
 static int
 iface_info(void)
 {
-  struct interface ife;
-  char buffer[256];
-  FILE *fd;
-  
-  printf(_("Kernel Interface table\n"));
-  printf(_("Iface   MTU Met  RX-OK RX-ERR RX-DRP RX-OVR  TX-OK TX-ERR TX-DRP TX-OVR Flags\n"));
-  
-  /* Create a channel to the NET kernel. */
   if ((skfd = sockets_open()) < 0) {
     perror("socket");
     exit(1);
   }
 
-  fd = fopen(_PATH_PROCNET_DEV, "r");
-  fgets(buffer, 256, fd);	/* chuck first two lines */
-  fgets(buffer, 256, fd);
-  while (!feof(fd)) {
-    char *name = buffer;
-    char *sep;
-    if (fgets(buffer, 256, fd) == NULL)
-      break;
-    sep = strrchr(buffer, ':');
-    if (sep)
-      *sep = 0;
-    while (*name == ' ') name++;
-    if (if_fetch(name, &ife) < 0) {
-      fprintf(stderr, _("%s: unknown interface.\n"),
-	      name);
-      continue;
-    }
-    
-    if (((ife.flags & IFF_UP) == 0) && !flag_all) continue;
-    ife_print(&ife);
+  printf(_("Kernel Interface table\n"));
+  printf(_("Iface     MTU Met  RX-OK RX-ERR RX-DRP RX-OVR  TX-OK TX-ERR TX-DRP TX-OVR Flags\n"));
+  
+  if (for_all_interfaces(do_if_print, &flag_all) < 0) {
+	  perror(_("missing interface information")); 
+	  exit(1);
   }
 
-  fclose(fd);
   close(skfd);
-
+  skfd = -1;
+  
   return 0;
 }
 

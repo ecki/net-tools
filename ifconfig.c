@@ -15,6 +15,7 @@
  *		your option) any later version.
  * {1.34} - 19980630 - Arnaldo Carvalho de Melo <acme@conectiva.com.br>
  *                     - gettext instead of catgets for i18n
+ *	    10/1998  - Andi Kleen. Use interface list primitives. 	
  */
 
 #include "config.h"
@@ -179,6 +180,8 @@ ife_print(struct interface *ptr)
     printf(_(" Mask:%s\n"), ap->sprint(&ptr->netmask, 1));
 #if HAVE_AFINET6
   }
+  /* FIXME: should be integrated into interface.c.   */ 
+
   if ((f = fopen(_PATH_PROCNET_IFINET6, "r")) != NULL) {
     while(fscanf(f, "%4s%4s%4s%4s%4s%4s%4s%4s %02x %02x %02x %02x %20s\n",
 		 addr6p[0], addr6p[1], addr6p[2], addr6p[3],
@@ -264,6 +267,12 @@ ife_print(struct interface *ptr)
 	 ptr->mtu, ptr->metric?ptr->metric:1);
 
   /* If needed, display the interface statistics. */
+
+  if (ptr->statistics_valid) { 
+	  /* XXX: statistics are currently only printed for the original address,
+	   *	  not for the aliases, although strictly speaking they're shared
+	   *	  by all addresses.
+	   */
   printf("          ");
 
   printf(_("RX packets:%lu errors:%lu dropped:%lu overruns:%lu frame:%lu\n"),
@@ -284,7 +293,8 @@ ife_print(struct interface *ptr)
     printf(_("compressed:%lu "), ptr->stats.tx_compressed);
   if (ptr->tx_queue_len != -1)
     printf(_("txqueuelen:%d "), ptr->tx_queue_len);
-  printf("\n");
+  printf("\n"); 
+  }
 
   if ((ptr->map.irq || ptr->map.mem_start || ptr->map.dma || 
 		ptr->map.base_addr)) {
@@ -305,40 +315,37 @@ ife_print(struct interface *ptr)
   printf("\n");
 }
 
-static void
-if_print(char *ifname)
+static int do_if_print(struct interface *ife, void *cookie)
 {
-  struct interface ife;
+    int *opt_a = (int *)cookie; 
 
-  if (ifname == (char *)NULL) {
-    FILE *fd = fopen(_PATH_PROCNET_DEV, "r");
-    char buffer[256];
-    fgets(buffer, 256, fd);	/* chuck first two lines */
-    fgets(buffer, 256, fd);
-    while (!feof(fd)) {
-      char *name = buffer;
-      char *sep;
-      if (fgets(buffer, 256, fd) == NULL)
-	break;
-      sep = strrchr(buffer, ':');
-      if (sep)
-	*sep = 0;
-      while (*name == ' ') name++;
-      if (if_fetch(name, &ife) < 0) {
-	fprintf (stderr, _("%s: unknown interface.\n"), name);
-	continue;
-      }
-      
-      if (((ife.flags & IFF_UP) == 0) && !opt_a) continue;
-      ife_print(&ife);
+    if (if_fetch(ife->name, ife) < 0) {
+	fprintf (stderr, _("%s: error fetching interface information: %s\n\n"), 
+		 ife->name, strerror(errno));
+	return -1;
     }
-    fclose(fd);
-  } else {
-    if (if_fetch(ifname, &ife) < 0)
-      fprintf(stderr, _("%s: unknown interface.\n"), ifname);
-    else 
-      ife_print(&ife);
-  }
+    if (!(ife->flags & IFF_UP) && !(*opt_a))
+	return 0;
+    ife_print(ife); 
+    return 0;
+}
+
+static void if_print(char *ifname)
+{
+    struct interface *ife;
+
+    if (!ifname) { 
+	for_all_interfaces(do_if_print, &opt_a); 
+    } else {
+	ife = lookup_interface(ifname); 
+	if (!ife)
+	    fprintf(stderr, _("%s: interface not found.\n"), ifname); 
+	else if (if_fetch(ifname, ife) < 0)
+	    fprintf(stderr, _("%s: error fetching interface information: %s"),
+		    ifname, strerror(errno)); 
+	else 
+	    ife_print(ife);
+    }
 }
 
 

@@ -3,34 +3,41 @@
 #include <string.h> 
 #include <stdarg.h>
 #include <stdio.h>
+#include <ctype.h>
 
 /* Caller must free return string. */ 
+
 char * 
-proc_gen_fmt(char *name, FILE *fh, ...)
+proc_gen_fmt(char *name, int more, FILE *fh, ...)
 {
 	char buf[512], format[512] = ""; 
-	char *title, *head; 
+	char *title, *head, *hdr; 
 	va_list ap;
 
-	if (!fgets(buf, sizeof buf, fh)) 
+	if (!fgets(buf, (sizeof buf)-1, fh)) 
 		return NULL; 
+	strcat(buf," ");  
 
 	va_start(ap,fh); 
-	head = strtok(buf, " \t"); 
 	title = va_arg(ap, char *); 
-	while (title && head) { 
+	for (hdr = buf; hdr; ) { 
+		while (isspace(*hdr) || *hdr == '|') hdr++; 
+		head = hdr; 
+		hdr = strpbrk(hdr,"| \t\n"); 
+		if (hdr) *hdr++ = 0; 
+
 		if (!strcmp(title, head)) { 
 			strcat(format, va_arg(ap, char *)); 
 			title = va_arg(ap, char *); 
+			if (!title || !head) break;
 		} else {
-			strcat(format, "%*[^ \t]"); 
+			strcat(format, "%*s"); /* XXX */ 
 		}
 		strcat(format, " "); 
-		head = strtok(NULL, " \t"); 
 	}
 	va_end(ap); 
 
-	if (title) { 
+	if (!more && title) { 
 		fprintf(stderr, "warning: %s does not contain required field %s\n",
 						name, title); 
 		return NULL; 

@@ -25,6 +25,7 @@ struct entry {
 	char *title;
 	char *out; 
 	enum State type;
+	unsigned long val; 
 }; 
 
 static enum State state;

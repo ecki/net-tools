@@ -4,6 +4,7 @@
 .\" Original: (mdw@tc.cornell.edu & dc6iq@insu1.etec.uni-karlsruhe.de)
 .\"
 .\" Modified: Bernd.Eckenfels@inka.de
+.\" Modified: Andi Kleen ak@muc.de 
 .\"
 .\"
 .TH NETSTAT 8 "20 Feb 1999" "net-tools" "Linux Programmer's Manual"
@@ -212,7 +213,7 @@ The socket is actively attempting to establish a connection.
 .TP
 .I
 SYN_RECV
-The connection is being initialized.
+A connection request has been received from the network.
 .TP
 .I
 FIN_WAIT1
@@ -225,7 +226,7 @@ remote end.
 .TP
 .I
 TIME_WAIT
-The socket is waiting after close for remote shutdown retransmission.
+The socket is waiting after close to handle packets still in the network.
 .TP
 .I
 CLOSED
@@ -371,6 +372,13 @@ to the socket.
 (this needs to be done by somebody who knows it)
 
 .PP
+.SH NOTES
+Since kernel release 2.2 netstat -i does not display interface statistics for
+alias interfaces anymore. To get per alias interface counters you need to
+setup explicit rules using the 
+.BR ipchains(8) 
+command.  
+
 .SH FILES
 .ta
 .I /etc/services
@@ -431,6 +439,7 @@ to the socket.
 .BR ipfw (4), 
 .BR ipfw (8), 
 .BR ipfwadm (8)
+.BR ipchains (8)
 
 .PP
 .SH BUGS

@@ -29,6 +29,8 @@ struct user_net_device_stats
 };
 
 struct interface {
+  struct interface *next; 	
+
   char			name[IFNAMSIZ];		/* interface name	 */
   short			type;			/* if type		 */
   short			flags;			/* various flags	 */
@@ -55,15 +57,24 @@ struct interface {
   int			has_ddp;
   int			has_econet;
   char			hwaddr[32];		/* HW address		 */
+  int			statistics_valid; 
   struct user_net_device_stats stats;		/* statistics		 */
 };
 
-extern int procnetdev_vsn;
-
 extern int if_fetch(char *ifname, struct interface *ife);
 
-/* Check for supported features */
+extern int for_all_interfaces(int (*)(struct interface *, void *), void *); 
+extern struct interface *lookup_interface(char *name);
+extern int if_readlist(void);
 
-#if defined(SIOCSIFTXQLEN) && defined(ifr_qlen)
-#define HAVE_TXQUEUELEN
+/* Define for poor glibc2.0 users, the feature check is done at runtime */ 
+#if !defined(SIOCSIFTXQLEN)
+#define SIOCSIFTXQLEN      0x8943 
+#define SIOCGIFTXQLEN      0x8942 
 #endif
+
+#if !defined(ifr_qlen)
+#define ifr_qlen        ifr_ifru.ifru_ivalue
+#endif
+
+#define HAVE_TXQUEUELEN

@@ -62,7 +62,7 @@ int rprint_fib(int ext, int numeric)
   window=0;
   mss=0;
 
-  fmt = proc_gen_fmt(_PATH_PROCNET_ROUTE, fp,
+  fmt = proc_gen_fmt(_PATH_PROCNET_ROUTE, 0, fp,
 					 "Iface", "%16s",
 					 "Destination", "%128s",
 					 "Gateway", "%128s",
@@ -181,7 +181,7 @@ int rprint_cache(int ext, int numeric)
 		 "Flags Metric Ref    Use Iface    "
 		 "MSS   Window irtt   HH  Arp\n"));
 
-  fmt = proc_gen_fmt(_PATH_PROCNET_ROUTE, fp,
+  fmt = proc_gen_fmt(_PATH_PROCNET_ROUTE, 0, fp,
 					 "Iface", "%16s",
 					 "Destination", "%128s",
 					 "Gateway", "%128s",
