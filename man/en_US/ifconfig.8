@@ -1,4 +1,4 @@
-.TH IFCONFIG 8 "14 August 2000" "net-tools" "Linux Programmer's Manual"
+.TH IFCONFIG 8 "29 June 2001" "net-tools" "Linux Programmer's Manual"
 .SH NAME
 ifconfig \- configure a network interface
 .SH SYNOPSIS
@@ -176,8 +176,10 @@ rules for the address using the
 .BR ipchains(8)
 command.
 .LP
-Interrupt problems with Ethernet device drivers fail with EAGAIN. See
-.I http://cesdis.gsfc.nasa.gov/linux/misc/irq-conflict.html
+Interrupt problems with Ethernet device drivers fail with EAGAIN
+.I (SIOCSIIFLAGS: Resource temporarily unavailable)
+it is most likely a interrupt conflict. See
+.I http://www.scyld.com/expert/irq-conflict.html
 for more information.
 .SH FILES
 .I /proc/net/socket 
@@ -197,4 +199,4 @@ Alan Cox, <Alan.Cox@linux.org>
 .br
 Phil Blundell, <Philip.Blundell@pobox.com>
 .br
-Andi Kleen
+Andi Kleen; Bernd Eckenfels, <net-tools@lina.inka.de>
