@@ -111,8 +111,8 @@ datagrams will be routed.
 Manually create an ARP address mapping entry for host
 .B hostname
 with hardware address set to
-.B hw_addr
-.  The format of the hardware address is dependent on the hardware
+.BR hw_addr .
+The format of the hardware address is dependent on the hardware
 class, but for most classes one can assume that the usual presentation
 can be used.  For the Ethernet class, this is 6 bytes in hexadecimal,
 separated by colons. When adding proxy arp entries (that is those with
@@ -138,8 +138,8 @@ for details.
 Similar to the
 .B \-s
 option, only this time the address info is taken from file
-.B filename
-.  This can be used if ARP entries for a lot of hosts have to be
+.BR filename .
+This can be used if ARP entries for a lot of hosts have to be
 set up.  The name of the data file is very often
 .IR /etc/ethers , 
 but this is not official. If no filename is specified /etc/ethers
