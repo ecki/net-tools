@@ -56,7 +56,7 @@
 #define IPPROTO_GRE	47
 #endif
 
-#include "utils.h"
+#include "util-ank.h"
 
 char *Release = RELEASE,
      *Version = "iptunnel 1.0",
