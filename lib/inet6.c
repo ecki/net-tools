@@ -3,7 +3,7 @@
  *              support functions for the net-tools.
  *              (most of it copied from lib/inet.c 1.26).
  *
- * Version:     $Id: inet6.c,v 1.11 2001/08/26 05:25:21 ak Exp $
+ * Version:     $Id: inet6.c,v 1.12 2002/12/10 01:03:09 ecki Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -105,7 +105,7 @@ static int INET6_rresolve(char *name, struct sockaddr_in6 *sin6, int numeric)
         if (numeric & 0x8000)
 	    strcpy(name, "default");
 	else
-	    strcpy(name, "*");
+	    strcpy(name, "[::]");
 	return (0);
     }
 
