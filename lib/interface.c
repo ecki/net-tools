@@ -7,7 +7,7 @@
    8/2000  Andi Kleen make the list operations a bit more efficient.
    People are crazy enough to use thousands of aliases now.
 
-   $Id: interface.c,v 1.22 2002/02/23 21:27:30 ecki Exp $
+   $Id: interface.c,v 1.23 2002/03/05 00:47:36 ecki Exp $
  */
 
 #include "config.h"
@@ -202,7 +202,7 @@ out:
     return err;
 }
 
-static char *get_name(char *name, char *p)
+char *get_name(char *name, char *p)
 {
     while (isspace(*p))
 	p++;
@@ -229,7 +229,7 @@ static char *get_name(char *name, char *p)
     return p;
 }
 
-static int procnetdev_version(char *buf)
+int procnetdev_version(char *buf)
 {
     if (strstr(buf, "compressed"))
 	return 3;
@@ -238,7 +238,7 @@ static int procnetdev_version(char *buf)
     return 1;
 }
 
-static int get_dev_fields(char *bp, struct interface *ife)
+int get_dev_fields(char *bp, struct interface *ife)
 {
     switch (procnetdev_vsn) {
     case 3:

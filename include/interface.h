@@ -71,6 +71,10 @@ extern int if_readlist(void);
 extern int do_if_fetch(struct interface *ife);
 extern int do_if_print(struct interface *ife, void *cookie);
 
+extern int    procnetdev_version(char *buf);
+extern int    get_dev_fields(char *bp, struct interface *ife);
+extern char * get_name(char *name, char *p);
+
 extern void ife_print(struct interface *ptr);
 
 extern int ife_short;
