@@ -191,15 +191,16 @@ KISS_init(int fd)
 #endif
 
 struct hwtype netrom_hwtype = {
-  "netrom",	"AMPR NET/ROM",		ARPHRD_NETROM,	7,
+  "netrom",	NULL, /* "AMPR NET/ROM", */	ARPHRD_NETROM,	7,
   NETROM_print,	NETROM_hprint,		NETROM_hinput,	NULL
 };
 
 struct aftype netrom_aftype = {
-  "netrom",	"AMPR NET/ROM",		AF_NETROM,	7,
+  "netrom",	NULL, /* "AMPR NET/ROM", */	AF_NETROM,	7,
   NETROM_print,	NETROM_sprint,		NETROM_input,	NETROM_herror,	
-  NULL/*NETROM_rprint*/
+  NULL,		NULL,		NULL,
+  -1,
+  "/proc/net/nr"
 };
-
 
 #endif	/* HAVE_AFNETROM */
