@@ -70,18 +70,10 @@ struct in6_ifreq {
 
 #endif  /* HAVE_AFINET6 */
 
-#ifndef IFF_PORTSEL
-#define IFF_PORTSEL	0x2000
-#define IFF_AUTOMEDIA	0x4000
-#endif
+/* Check for supported features */
 
-#ifndef SIOCSIFTXQLEN /* 2.1.77+ option */
-#define SIOCGIFTXQLEN	0x8942		/* Get the tx queue length	*/
-#define SIOCSIFTXQLEN	0x8943		/* Set the tx queue length 	*/
-#endif
-
-#ifndef ifr_qlen
-#define ifr_qlen	ifr_ifru.ifru_ivalue	/* Queue length 	*/
+#if defined(SIOCSIFTXQLEN) && defined(ifr_qlen)
+#define HAVE_TXQUEUELEN
 #endif
 
 /* This is from <linux/netdevice.h>. */
@@ -153,14 +145,6 @@ static const char *if_port_text[][4] = {
   { "100baseFX", NULL, NULL, NULL },
   { NULL, NULL, NULL, NULL },
 };
-
-/* Not all kernels have these new ioctls. */
-#ifndef SIOGIFNAME
-#define SIOGIFNAME	0x8934		/* if_index -> name mapping	*/
-#endif
-#ifndef SIOCDIFADDR
-#define SIOCDIFADDR	0x8936		/* delete PA address		*/
-#endif
 
 #if HAVE_AFIPX
 #include "ipx.h"
@@ -248,9 +232,11 @@ ife_print(struct interface *ptr)
    ptr->hwaddr[4] || ptr->hwaddr[5]))) 
     printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_hw, "HWaddr %s  ")
 	   , hw->print(ptr->hwaddr));
+#ifdef IFF_PORTSEL
   if (ptr->flags & IFF_PORTSEL) 
     printf("Media:%s%s", if_port_text[ptr->map.port][0], 
 	   (ptr->flags & IFF_AUTOMEDIA)?"(auto)":"");
+#endif
   printf("\n");
 #if HAVE_AFINET6  
   if (ap->af != AF_INET6) {
@@ -346,10 +332,8 @@ ife_print(struct interface *ptr)
   if (ptr->flags & IFF_MULTICAST) printf("MULTICAST ");
   printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_mtu, " MTU:%d  Metric:%d\n"),
 	 ptr->mtu, ptr->metric?ptr->metric:1);
-  /* XXX: Merge this with the previous line, but I don't want to touch the
-   * NLS stuff yet. */
   if (ptr->tx_queue_len != -1)
-    printf("TXQUEUELEN: %d\n", ptr->tx_queue_len);
+    printf("          txqueuelen:%d\n", ptr->tx_queue_len);
 
   /* If needed, display the interface statistics. */
   printf("          ");
@@ -513,11 +497,15 @@ if_fetch(char *ifname, struct interface *ife)
   else 
     ife->map = ifr.ifr_map;
 
+#ifdef HAVE_TXQUEUELEN
   strcpy(ifr.ifr_name, ifname);
   if (ioctl(skfd, SIOCGIFTXQLEN, &ifr) < 0)
     ife->tx_queue_len = -1; /* unknown value */
   else 
     ife->tx_queue_len = ifr.ifr_qlen;
+#else
+  ife->tx_queue_len = -1; /* unknown value */
+#endif
 
 #if HAVE_AFINET
   strcpy(ifr.ifr_name, ifname);
@@ -698,7 +686,9 @@ usage(void)
   fprintf(stderr, "                [[family] address]\n");
 #if HAVE_AFINET6
   fprintf(stderr, "                [add inet6address/prefixlen]\n");
+#ifdef SIOCDIFADDR
   fprintf(stderr, "                [del inet6address/prefixlen]\n");
+#endif
   fprintf(stderr, "                [tunnel aa.bb.cc.dd]\n");
 #endif
 #if HAVE_AFINET
@@ -714,7 +704,9 @@ usage(void)
   fprintf(stderr, "                [multicast]\n");
   fprintf(stderr, "                [mem_start NN] [io_addr NN] [irq NN]\n");
   fprintf(stderr, "                [media type]\n");
+#ifdef HAVE_TXQUEUELEN
   fprintf(stderr, "                [txqueuelen len]\n");
+#endif
   fprintf(stderr, "                [up] [down] ...\n");
   NLS_CATCLOSE(catfd)
   exit(1);
@@ -1061,6 +1053,7 @@ main(int argc, char **argv)
       continue;
     }
 
+#ifdef HAVE_TXQUEUELEN
     if (!strcmp(*spp, "txqueuelen")) {
       if (*++spp == NULL) usage();
       ifr.ifr_qlen = strtoul(*spp, NULL, 0);
@@ -1071,6 +1064,7 @@ main(int argc, char **argv)
       spp++;
       continue;
     }
+#endif
 
     if (!strcmp(*spp, "mem_start")) {
       if (*++spp == NULL) usage();
@@ -1234,11 +1228,15 @@ main(int argc, char **argv)
 
       ifr6.ifr6_ifindex = ifr.ifr_ifindex;
       ifr6.ifr6_prefixlen = prefix_len;
+#ifdef SIOCDIFADDR
       if (ioctl(inet6_sock, SIOCDIFADDR, &ifr6) < 0) {
 	fprintf(stderr, "SIOCDIFADDR: %s\n",
 		strerror(errno));
 	goterr = 1;
       }
+#else
+      fprintf(stderr, "Address deletion not supported on this system.\n");
+#endif
       spp++;
       continue;
     }

@@ -1,3 +1,10 @@
+Sun Feb  8 18:33:00 1998  Philip Blundell  <philb@gnu.org>
+
+	* ifconfig.c: Tidy up txqueuelen support, and other functionality
+ 	not supported by all kernels/glibcs.
+
+	* arp.c: Update from Bernd's latest.
+
 1998-02-05  Phil Blundell  <philb@gnu.org>
 
 	* lib/ash.c: Don't redefine ARPHRD constant.  Change it from

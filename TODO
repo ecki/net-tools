@@ -1,15 +1,14 @@
 TODO for net-tools
 
-[ ] netstat manpage and code cleanup, ddp support
+[ ] netstat ddp support
 [ ] lib/netrom_rt.c rprint should not rewind _PATH_PROCNET_NR_NEIGH
 [ ] ARPHRD_METRICOM [1.3.82]
 [ ] include proxy arp description into man page.
 [ ] netstat -i: XOVR!=compressed
 [ ] nettools.8 man-page
 [ ] lib/ddp.c: /etc/atalk.names support
-[ ] lib/ether.c: /etc/ether support
 [ ] share source between netstat/ifconfig (lib/if_info.c)
-[ ] ARPHDR_LOOPBACK in new kernels, ok? dont think so :-/
+[ ] ARPHRD_LOOPBACK in new kernels, ok? dont think so :-/
 [ ] ARPHRD_LOCALTLK and aarp?
 [ ] ARCNET support? linux/drivers/net/arcnet.c
 [ ] ifconfig support for isdn4linux, linefill...
@@ -31,3 +30,4 @@ TODO for net-tools
 [ ] ppp_dev_stat called for each dev in ifconfig, why? (1.3.17)
 [ ] linux/include/net/br.h?
 [ ] update fr/de translations (or drop NLS entirely)
+[ ] get rid of local ipx.h copy
