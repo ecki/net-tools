@@ -17,7 +17,7 @@ have version numbers 2.0.x where x is greater than 90.  With such a libc
 installed there should be no need to edit the Makefile or patch net-tools.
 
 Version 2.0 of glibc has no support for IPv6.  Patches did exist at one
-point but they are now seriously updated.  Consider upgrading to glibc 2.1
+point but they are now seriously outdated.  Consider upgrading to glibc 2.1
 instead.
 
 BUGS
