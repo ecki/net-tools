@@ -143,8 +143,11 @@ Set the metric field in the routing table (used by routing daemons) to M.
 .TP 
 .B mss M
 Set the TCP Maximum Segment Size (MSS) for connections over this route
-to M bytes. This is normally used only for fine optimisation of
-routing setups. The default is 536.
+to M bytes. 
+The default is the device MTU minus headers, or a lower MTU when path mtu 
+discovery occured. This setting can be used to force smaller TCP packets on the
+other end when path mtu discovery does not work (usually because of
+misconfigured firewalls that block ICMP Fragmentation Needed)
 
 .TP 
 .B window W 

@@ -148,8 +148,14 @@ wird, auf M.
 .TP 
 .B mss M
 Setzt den MSS-Wert (Maximum Segment Size) f\(:ur TCP-Verbindungen \(:uber
-diese Route auf M bytes.  Dies wird normalerweise zur Verfeinerung der
-Routeneinstellungen verwendet.  Die Voreinstellung ist 536 bytes.
+diese Route auf M bytes.  Diese Einstellung kann verwendet werden um eine
+kleinere MTU zu erzwingen, wenn
+Path MTU Discovery nicht funktioniert (normalerweise weil ein Firewall
+dazwischen ist der ICMP Fragmentation Needed blockt). Die Standardeinstellung
+ist die MTU des Netzwerkinterfaces minus Headers oder eine kleinere falls 
+bekannt.
+
+
 
 .TP 
 .B window W 
