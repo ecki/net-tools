@@ -3,7 +3,7 @@
  * Writen 2000 by Andi Kleen.
  * Subject to the Gnu Public License, version 2.  
  * TODO: make it support token ring etc.
- * $Id: nameif.c,v 1.1 2000/10/18 17:26:29 ak Exp $
+ * $Id: nameif.c,v 1.2 2001/11/25 06:55:06 ecki Exp $
  */ 
 #ifndef _GNU_SOURCE 
 #define _GNU_SOURCE
@@ -200,7 +200,7 @@ struct option lopt[] = {
 
 void usage(void)
 {
-	fprintf(stderr, _("usage: nameif [-c configurationfile] [-s] {ifname macaddress}")); 
+	fprintf(stderr, _("usage: nameif [-c configurationfile] [-s] {ifname macaddress}\n")); 
 	exit(1); 
 }
 
