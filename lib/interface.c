@@ -4,7 +4,7 @@
    10/1998 partly rewriten by Andi Kleen to support an interface list.   
    I don't claim that the list operations are efficient @).  
 
-   $Id: interface.c,v 1.2 1999/03/03 19:40:42 philip Exp $
+   $Id: interface.c,v 1.3 1999/04/20 13:31:46 philip Exp $
  */
 
 #include "config.h"
@@ -29,8 +29,8 @@
 #endif
 #endif
 
-#if !defined(_NETECONET_EC_H) && HAVE_AFECONET
-#include <linux/if_ec.h>
+#if HAVE_AFECONET
+#include <neteconet/ec.h>
 #endif
 
 #ifdef HAVE_HWSLIP

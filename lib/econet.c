@@ -3,7 +3,7 @@
  *              support functions for the net-tools.
  *              (NET-3 base distribution).
  *
- * Version:     $Id: econet.c,v 1.7 1999/04/04 21:37:03 philip Exp $
+ * Version:     $Id: econet.c,v 1.8 1999/04/20 13:31:50 philip Exp $
  *
  * Author:      Philip Blundell <philb@gnu.org>
  *
@@ -23,10 +23,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <stdio.h>
-
-#ifndef _NETECONET_EC_H
-#include <linux/if_ec.h>
-#endif
+#include <neteconet/ec.h>
 
 #include "version.h"
 #include "net-support.h"
