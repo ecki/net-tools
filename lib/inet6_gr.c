@@ -259,7 +259,7 @@ int rprint_cache6(int ext, int numeric)
 int INET6_rprint(int options)
 {
     int ext = options & FLAG_EXT;
-    int numeric = options & (FLAG_NUM | FLAG_SYM);
+    int numeric = options & (FLAG_NUM_HOST | FLAG_SYM);
     int rc = E_INTERN;
 
     if (options & FLAG_FIB)

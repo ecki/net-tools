@@ -23,6 +23,7 @@ netstat \- Print network connections, routing tables, interface statistics, masq
 .RB [ \-\-listening | \-l ]
 .RB [ \-\-all | \-a ]
 .RB [ \-\-numeric | \-n ]
+.RB [ \-\-numeric-hosts ] [ \-\-numeric-ports ] [ \-\-numeric-ports ]
 .RB [ \-\-symbolic | \-N ]
 .RB [ \-\-extend | \-e  [ \-\-extend | \-e] ]
 .RB [ \-\-timers | \-o ]
@@ -36,6 +37,7 @@ netstat \- Print network connections, routing tables, interface statistics, masq
 .RB [ \-\-extend | \-e  [ \-\-extend | \-e] ]
 .RB [ \-\-verbose | \-v ]
 .RB [ \-\-numeric | \-n ]
+.RB [ \-\-numeric-hosts ] [ \-\-numeric-ports ] [ \-\-numeric-ports ]
 .RB [ \-\-continuous | \-c]
 .P
 .B netstat
@@ -46,17 +48,20 @@ netstat \- Print network connections, routing tables, interface statistics, masq
 .RB [ \-\-verbose | \-v ]
 .RB [ \-\-program | \-p ]
 .RB [ \-\-numeric | \-n ]
+.RB [ \-\-numeric-hosts ] [ \-\-numeric-ports ] [ \-\-numeric-ports ]
 .RB [ \-\-continuous | \-c]
 .P
 .B netstat
 .RB { \-\-groups | \-g }
 .RB [ \-\-numeric | \-n ]
+.RB [ \-\-numeric-hosts ] [ \-\-numeric-ports ] [ \-\-numeric-ports ]
 .RB [ \-\-continuous | \-c]
 .P
 .B netstat
 .RB { \-\-masquerade | \-M }
 .RB [ \-\-extend | \-e ]
 .RB [ \-\-numeric | \-n ]
+.RB [ \-\-numeric-hosts ] [ \-\-numeric-ports ] [ \-\-numeric-ports ]
 .RB [ \-\-continuous | \-c]
 .P
 .B netstat
@@ -110,6 +115,16 @@ useful information about unconfigured address families.
 .SS "\-\-numeric , \-n"
 Show numerical addresses instead of trying to determine symbolic host, port
 or user names.
+.SS "\-\-numeric-hosts"
+shows numerical host addresses but does not affect the resolution of
+port or user names.
+.SS "\-\-numeric-ports"
+shows numerical port numbers but does not affect the resolution of
+host or user names.
+.SS "\-\-numeric-users"
+shows numerical user IDs but does not affect the resolution of host or
+port names.
+
 .SS "\-\-protocol=\fIfamily \fR, \fB\-A"
 Specifies the address families (perhaps better described as low level
 protocols) for which connections are to be shown.

@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system. (net-tools, net-drivers)
  *
- * Version:     $Id: masq_info.c,v 1.6 1999/06/12 23:04:19 philip Exp $
+ * Version:     $Id: masq_info.c,v 1.7 2000/10/08 01:00:44 ecki Exp $
  *
  * Author:      Bernd 'eckes' Eckenfels <net-tools@lina.inka.de>
  *              Copyright 1999 Bernd Eckenfels, Germany
@@ -57,7 +57,8 @@ struct masq {
 static struct aftype *ap;	/* current address family       */
 static int has_pdelta;
 
-static void print_masq(struct masq *ms, int numeric, int ext)
+static void print_masq(struct masq *ms, int numeric_host, int numeric_port,
+		       int ext)
 {
     unsigned long minutes, seconds, sec100s;
 
@@ -77,12 +78,12 @@ static void print_masq(struct masq *ms, int numeric, int ext)
 	    printf("%10lu %5hd     - ", ms->initseq,
 		   ms->delta);
     }
-    printf("%-20s ", ap->sprint((struct sockaddr *) &(ms->src), numeric));
-    printf("%-20s ", ap->sprint((struct sockaddr *) &(ms->dst), numeric));
+    printf("%-20s ", ap->sprint((struct sockaddr *) &(ms->src), numeric_host));
+    printf("%-20s ", ap->sprint((struct sockaddr *) &(ms->dst), numeric_host));
 
-    printf("%s -> ", get_sname(ms->sport, ms->proto, numeric));
-    printf("%s", get_sname(ms->dport, ms->proto, numeric));
-    printf(" (%s)\n", get_sname(ms->mport, ms->proto, numeric));
+    printf("%s -> ", get_sname(ms->sport, ms->proto, numeric_port));
+    printf("%s", get_sname(ms->dport, ms->proto, numeric_port));
+    printf(" (%s)\n", get_sname(ms->mport, ms->proto, numeric_port));
 }
 
 
@@ -144,7 +145,7 @@ static int read_masqinfo(FILE * f, struct masq *mslist, int nmslist)
 }
 
 
-int ip_masq_info(int numeric, int ext)
+int ip_masq_info(int numeric_host, int numeric_port, int ext)
 {
     FILE *f;
     int i;
@@ -204,7 +205,7 @@ int ip_masq_info(int numeric, int ext)
 	    break;
 	}
 	for (i = 0; i < ntotal; i++)
-	    print_masq(&(mslist[i]), numeric, ext);
+	    print_masq(&(mslist[i]), numeric_host, numeric_port, ext);
 	if (mslist)
 	    free(mslist);
 

@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.38 2000/05/28 15:19:15 pb Exp $
+ * Version:     $Id: netstat.c,v 1.39 2000/10/08 01:00:43 ecki Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -525,7 +525,7 @@ static void finish_this_one(int uid, unsigned long inode, const char *timers)
     struct passwd *pw;
 
     if (flag_exp > 1) {
-	if (!flag_not && ((pw = getpwuid(uid)) != NULL))
+	if (!(flag_not & FLAG_NUM_USER) && ((pw = getpwuid(uid)) != NULL))
 	    printf("%-10s ", pw->pw_name);
 	else
 	    printf("%-10d ", uid);
@@ -763,14 +763,17 @@ static void tcp_do_one(int lnr, const char *line)
     safe_strncpy(rem_addr, ap->sprint((struct sockaddr *) &remaddr, flag_not),
 		 sizeof(rem_addr));
     if (flag_all || (flag_lst && !rem_port) || (!flag_lst && rem_port)) {
-	snprintf(buffer, sizeof(buffer), "%s", get_sname(htons(local_port), "tcp", flag_not));
+	snprintf(buffer, sizeof(buffer), "%s",
+		 get_sname(htons(local_port), "tcp",
+			   flag_not & FLAG_NUM_PORT));
 
 	if ((strlen(local_addr) + strlen(buffer)) > 22)
 	    local_addr[22 - strlen(buffer)] = '\0';
 
 	strcat(local_addr, ":");
 	strcat(local_addr, buffer);
-	snprintf(buffer, sizeof(buffer), "%s", get_sname(htons(rem_port), "tcp", flag_not));
+	snprintf(buffer, sizeof(buffer), "%s",
+		 get_sname(htons(rem_port), "tcp", flag_not & FLAG_NUM_PORT));
 
 	if ((strlen(rem_addr) + strlen(buffer)) > 22)
 	    rem_addr[22 - strlen(buffer)] = '\0';
@@ -911,13 +914,16 @@ static void udp_do_one(int lnr, const char *line)
     {
         safe_strncpy(local_addr, ap->sprint((struct sockaddr *) &localaddr, 
 					    flag_not), sizeof(local_addr));
-	snprintf(buffer, sizeof(buffer), "%s", get_sname(htons(local_port), "udp", flag_not));
+	snprintf(buffer, sizeof(buffer), "%s",
+		 get_sname(htons(local_port), "udp",
+			   flag_not & FLAG_NUM_PORT));
 	if ((strlen(local_addr) + strlen(buffer)) > 22)
 	    local_addr[22 - strlen(buffer)] = '\0';
 	strcat(local_addr, ":");
 	strcat(local_addr, buffer);
 
-	snprintf(buffer, sizeof(buffer), "%s", get_sname(htons(rem_port), "udp", flag_not));
+	snprintf(buffer, sizeof(buffer), "%s",
+		 get_sname(htons(rem_port), "udp", flag_not & FLAG_NUM_PORT));
         safe_strncpy(rem_addr, ap->sprint((struct sockaddr *) &remaddr, 
 					  flag_not), sizeof(rem_addr));
 	if ((strlen(rem_addr) + strlen(buffer)) > 22)
@@ -1025,7 +1031,9 @@ static void raw_do_one(int lnr, const char *line)
 
     if (flag_all || (notnull(remaddr) && !flag_lst) || (!notnull(remaddr) && flag_lst))
     {
-	snprintf(buffer, sizeof(buffer), "%s", get_sname(htons(local_port), "raw", flag_not));
+	snprintf(buffer, sizeof(buffer), "%s",
+		 get_sname(htons(local_port), "raw",
+			   flag_not & FLAG_NUM_PORT));
         safe_strncpy(local_addr, ap->sprint((struct sockaddr *) &localaddr, 
 					    flag_not), sizeof(local_addr));
 	if ((strlen(local_addr) + strlen(buffer)) > 22)
@@ -1033,7 +1041,8 @@ static void raw_do_one(int lnr, const char *line)
 	strcat(local_addr, ":");
 	strcat(local_addr, buffer);
 
-	snprintf(buffer, sizeof(buffer), "%s", get_sname(htons(rem_port), "raw", flag_not));
+	snprintf(buffer, sizeof(buffer), "%s",
+		 get_sname(htons(rem_port), "raw", flag_not & FLAG_NUM_PORT));
         safe_strncpy(rem_addr, ap->sprint((struct sockaddr *) &remaddr, 
 					  flag_not), sizeof(rem_addr));
 	if ((strlen(rem_addr) + strlen(buffer)) > 22)
@@ -1412,7 +1421,7 @@ static int ipx_info(void)
 
 	printf("IPX   %6ld %6ld %-26s %-26s %-5s", txq, rxq, sad, dad, st);
 	if (flag_exp > 1) {
-	    if (!flag_not && ((pw = getpwuid(uid)) != NULL))
+	    if (!(flag_not & FLAG_NUM_USER) && ((pw = getpwuid(uid)) != NULL))
 		printf(" %-10s", pw->pw_name);
 	    else
 		printf(" %-10d", uid);
@@ -1475,6 +1484,9 @@ static void usage(void)
 #endif
     fprintf(stderr, _("        -v, --verbose            be verbose\n"));
     fprintf(stderr, _("        -n, --numeric            dont resolve names\n"));
+    fprintf(stderr, _("        --numeric-hosts          dont resolve host names\n"));
+    fprintf(stderr, _("        --numeric-ports          dont resolve port names\n"));
+    fprintf(stderr, _("        --numeric-users          dont resolve user names\n"));
     fprintf(stderr, _("        -N, --symbolic           resolve hardware names\n"));
     fprintf(stderr, _("        -e, --extend             display other/more information\n"));
     fprintf(stderr, _("        -p, --programs           display PID/Program name for sockets\n"));
@@ -1521,6 +1533,9 @@ int main
 	{"verbose", 0, 0, 'v'},
 	{"statistics", 0, 0, 's'},
 	{"numeric", 0, 0, 'n'},
+	{"numeric-hosts", 0, 0, '!'},
+	{"numeric-ports", 0, 0, '@'},
+	{"numeric-users", 0, 0, '#'},
 	{"symbolic", 0, 0, 'N'},
 	{"cache", 0, 0, 'C'},
 	{"fib", 0, 0, 'F'},
@@ -1579,9 +1594,17 @@ int main
 	case 'i':
 	    flag_int++;
 	    break;
-
 	case 'n':
 	    flag_not |= FLAG_NUM;
+	    break;
+	case '!':
+	    flag_not |= FLAG_NUM_HOST;
+	    break;
+	case '@':
+	    flag_not |= FLAG_NUM_PORT;
+	    break;
+	case '#':
+	    flag_not |= FLAG_NUM_USER;
 	    break;
 	case 'N':
 	    flag_not |= FLAG_SYM;
@@ -1645,7 +1668,8 @@ int main
 	    strcpy(afname, DFLT_AF);
 #endif
 	for (;;) {
-	    i = ip_masq_info(flag_not, flag_exp);
+	    i = ip_masq_info(flag_not & FLAG_NUM_HOST,
+			     flag_not & FLAG_NUM_PORT, flag_exp);
 	    if (i || !flag_cnt)
 		break;
 	    sleep(1);

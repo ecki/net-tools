@@ -33,7 +33,7 @@
 int IPX_rprint(int options)
 {
     /* int ext = options & FLAG_EXT; */
-    int numeric = options & FLAG_NUM;
+    int numeric = options & FLAG_NUM_HOST;
     char buff[1024];
     char net[128], router_net[128];
     char router_node[128];

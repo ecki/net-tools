@@ -92,14 +92,17 @@ extern int activate_ld(const char *hwname, int fd);
 #define RTACTION_FLUSH 4
 #define RTACTION_SHOW  5
 
-#define FLAG_EXT      3		/* AND-Mask */
-#define FLAG_NUM      4
-#define FLAG_SYM      8
-#define FLAG_CACHE   16
-#define FLAG_FIB     32
-#define FLAG_VERBOSE 64
+#define FLAG_EXT       3		/* AND-Mask */
+#define FLAG_NUM_HOST  4
+#define FLAG_NUM_PORT  8
+#define FLAG_NUM_USER 16
+#define FLAG_NUM     (FLAG_NUM_HOST|FLAG_NUM_PORT|FLAG_NUM_USER)
+#define FLAG_SYM      32
+#define FLAG_CACHE    64
+#define FLAG_FIB     128
+#define FLAG_VERBOSE 256
 
-extern int ip_masq_info(int numeric, int ext);
+extern int ip_masq_info(int numeric_host, int numeric_port, int ext);
 
 extern int INET_rprint(int options);
 extern int INET6_rprint(int options);

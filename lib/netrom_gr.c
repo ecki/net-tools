@@ -2,7 +2,7 @@
  * lib/netrom_gr.c    This file contains an implementation of the NET/ROM
  *                      route support functions.
  *
- * Version:     $Id: netrom_gr.c,v 1.4 1999/01/05 20:53:55 philip Exp $
+ * Version:     $Id: netrom_gr.c,v 1.5 2000/10/08 01:00:44 ecki Exp $
  *
  * Author:      Bernd Eckenfels, <ecki@lina.inka.de>
  *              Copyright 1999 Bernd Eckenfels, Germany
@@ -37,7 +37,7 @@ int NETROM_rprint(int options)
     char buffer[256];
     int qual, n, w;
     /*int ext = options & FLAG_EXT;
-       int numeric = options & FLAG_NUM; */
+       int numeric = options & FLAG_NUM_HOST; */
 
     f1 = fopen(_PATH_PROCNET_NR_NODES, "r");
     if (!f1) perror(_PATH_PROCNET_NR_NODES);

@@ -1,5 +1,5 @@
 /*
-   $Id: inet_gr.c,v 1.12 1999/12/11 13:35:58 freitag Exp $
+   $Id: inet_gr.c,v 1.13 2000/10/08 01:00:44 ecki Exp $
 
    Modifications:
    1998-07-01 - Arnaldo Carvalho de Melo - GNU gettext instead of catgets
@@ -444,7 +444,7 @@ if (format == 2) {
 int INET_rprint(int options)
 {
     int ext = options & FLAG_EXT;
-    int numeric = options & (FLAG_NUM | FLAG_SYM);
+    int numeric = options & (FLAG_NUM_HOST | FLAG_SYM);
     int rc = E_INTERN;
 
     if (options & FLAG_FIB)
