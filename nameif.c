@@ -3,7 +3,7 @@
  * Writen 2000 by Andi Kleen.
  * Subject to the Gnu Public License, version 2.  
  * TODO: make it support token ring etc.
- * $Id: nameif.c,v 1.3 2003/03/06 23:26:52 ecki Exp $
+ * $Id: nameif.c,v 1.4 2003/09/11 03:46:49 ak Exp $
  */ 
 #ifndef _GNU_SOURCE 
 #define _GNU_SOURCE
@@ -175,7 +175,7 @@ void readconf(void)
 		if (*p == '\0')
 			continue; 
 		n = strcspn(p, " \t"); 
-		if (n > IFNAMSIZ) 
+		if (n > IFNAMSIZ-1) 
 			complain(_("interface name too long at line %d"), line);  
 		memcpy(ch->ifname, p, n); 
 		ch->ifname[n] = 0; 
