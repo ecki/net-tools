@@ -7,7 +7,7 @@
  * Usage:	slattach [-ehlmnqv] [ -k keepalive ] [ -o outfill ]
  * 			[-c cmd] [-s speed] [-p protocol] tty | -
  *
- * Version:	@(#)slattach.c	1.1.30  03/01/95
+ * Version:	@(#)slattach.c	1.20  1999-05-29
  *
  * Author:      Fred N. van Kempen, <waltje@uWalt.NL.Mugnet.ORG>
  *		Copyright 1988-1993 MicroWalt Corporation
@@ -18,6 +18,9 @@
  *		George Shearer, <gshearer@one.net>, January 3, 1995
  *		Yossi Gottlieb, <yogo@math.tau.ac.il>, February 11, 1995
  *		Peter Tobias, <tobias@et-inf.fho-emden.de>, July 30 1995
+ *		Bernd Eckenfels <net-tools@lina.inka.de>, May 29, 1999
+ *			added some more printf's for debug and NOBLOCK to open
+ *			this should be enough to support 2.2 ttyS-style locks
  *
  *		This program is free software; you can redistribute it
  *		and/or  modify it under  the terms of  the GNU General
@@ -68,8 +71,8 @@
 
 
 char *Release = RELEASE,
-     *Version = "@(#) slattach 1.1.91 (12-Feb-95)",
-     *Signature = "Fred N. van Kempen et al.";
+     *Version = "@(#) slattach 1.20 (1999-05-29)",
+     *Signature = "net-tools, Fred N. van Kempen et al.";
 
 
 struct {
@@ -460,15 +463,17 @@ tty_open(char *name, char *speed)
 	if ((sp = strrchr(name, '/')) != (char *)NULL) *sp++ = '\0';
 	  else sp = name;
 	sprintf(path, "/dev/%s", sp);
+	if (opt_d) printf("slattach: tty_open: looking for lock\n");
 	if (tty_lock(sp, 1)) return(-1); /* can we lock the device? */
-	if ((fd = open(path, O_RDWR)) < 0) {
+	if (opt_d) printf("slattach: tty_open: trying to open %s\n", path);
+	if ((fd = open(path, O_RDWR|O_NDELAY)) < 0) {
 		if (opt_q == 0) fprintf(stderr,
 			"slattach: tty_open(%s, RW): %s\n",
 					path, strerror(errno));
 		return(-errno);
 	}
 	tty_fd = fd;
-	if (opt_d) printf("slattach: tty_open: %s (%d) ", path, fd);
+	if (opt_d) printf("slattach: tty_open: %s (fd=%d) ", path, fd);
   } else {
 	tty_fd = 0;
 	sp = (char *)NULL;
@@ -678,7 +683,7 @@ main(int argc, char *argv[])
 	return(0);
   }
   (*ht->activate)(tty_fd);
-  if (opt_v == 1) {
+  if ((opt_v == 1) || (opt_d == 1)) {
 	tty_get_name(buff);
 	printf(_("%s started"), proto);
 	if (sp != NULL) printf(_(" on %s"), sp);
