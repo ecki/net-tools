@@ -88,3 +88,4 @@ bool 'Econet hardware support' HAVE_HWEC n
 *
 bool 'IP Masquerading support' HAVE_FW_MASQUERADE n
 bool 'Build iptunnel and ipmaddr' HAVE_IP_TOOLS n
+bool 'Build mii-tool' HAVE_MII n

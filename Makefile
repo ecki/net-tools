@@ -82,6 +82,9 @@ PROGS	:= ifconfig hostname arp netstat route rarp slattach plipconfig
 ifeq ($(HAVE_IP_TOOLS),1)
 PROGS   += iptunnel ipmaddr
 endif
+ifeq ($(HAVE_MII),1)
+PROGS	+= mii-tool
+endif
 
 # Compiler and Linker Options
 # You may need to uncomment and edit these if you are using libc5 and IPv6.
@@ -211,6 +214,9 @@ iptunnel:	$(NET-LIB) iptunnel.o
 ipmaddr:	$(NET-LIB) ipmaddr.o
 		$(CC) $(LDFLAGS) -o ipmaddr ipmaddr.o $(NLIB) $(RESLIB)
 
+mii-tool:	mii-tool.o
+		$(CC) $(LDFLAGS) -o mii-tool mii-tool.o
+
 installbin:
 	install -m 0755 -d ${BASEDIR}/sbin
 	install -m 0755 -d ${BASEDIR}/bin
@@ -225,6 +231,9 @@ installbin:
 ifeq ($(HAVE_IP_TOOLS),1)
 	install -m 0755 ipmaddr    $(BASEDIR)/sbin
 	install -m 0755 iptunnel   $(BASEDIR)/sbin
+endif
+ifeq ($(HAVE_MII),1)
+	install -m 0755 mii-tool   $(BASEDIR)/sbin
 endif
 	ln -fs hostname $(BASEDIR)/bin/dnsdomainname
 	ln -fs hostname $(BASEDIR)/bin/ypdomainname
