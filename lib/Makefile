@@ -45,9 +45,8 @@ lib$(NET_LIB_NAME).a:	Makefile $(TOPDIR)/config.h $(OBJS)
 	$(CC) -o $@ -shared -Wl,--whole-archive -Wl,--soname -Wl,$(SONAME) -nostdlib -nostartfiles $<
 
 clean:
-		rm -f *.o *~ *.orig
+		rm -f *.o *~ *.orig lib$(NET_LIB_NAME).a lib$(NET_LIB_NAME).so
 
 clobber:	clean
-		rm -f *.a *.so
 
 # End of lib/Makefile.

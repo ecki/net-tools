@@ -30,6 +30,7 @@
 #include <arpa/inet.h>
 #include <linux/if_tunnel.h>
 
+#include "config.h"
 #include "intl.h"
 #include "net-support.h"
 #include "version.h"
@@ -570,6 +571,11 @@ int resolve_hosts = 0;
 int main(int argc, char **argv)
 {
 	char *basename;
+
+#if I18N
+	bindtextdomain("net-tools", "/usr/share/locale");
+	textdomain("net-tools");
+#endif
 
 	basename = strrchr(argv[0], '/');
 	if (basename == NULL)

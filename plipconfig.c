@@ -37,9 +37,9 @@
 #include <sys/ioctl.h>
 #include <net/if.h>
 #include <linux/if_plip.h>
+
 #include "config.h"
 #include "intl.h"
-
 #include "net-support.h"
 #include "version.h"
 
@@ -78,6 +78,11 @@ int main(int argc, char **argv)
 {
     int ret = 0;
     char **spp;
+
+#if I18N
+    bindtextdomain("net-tools", "/usr/share/locale");
+    textdomain("net-tools");
+#endif
 
     if ((skfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
 	perror("socket");

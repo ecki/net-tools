@@ -145,7 +145,7 @@ extern char afname[];
 #define AFTRANS_CNT 10
 
 #define EINTERN(file, text) fprintf(stderr, \
-	"%s: Internal Error `%s'.\n",file,text);
+	_("%s: Internal Error `%s'.\n"),file,text);
 
 #define ENOSUPP(A,B)	fprintf(stderr,\
                                 _("%s: feature `%s' not supported.\n" \
