@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.49 2001/04/13 18:24:21 pb Exp $
+ * Version:     $Id: ifconfig.c,v 1.50 2001/04/13 18:25:18 pb Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -125,7 +125,7 @@ static int set_flag(char *ifname, short flag)
 {
     struct ifreq ifr;
 
-    safe_strcpy(ifr.ifr_name, ifname, IFNAMSIZ);
+    safe_strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
     if (ioctl(skfd, SIOCGIFFLAGS, &ifr) < 0) {
 	fprintf(stderr, _("%s: unknown interface: %s\n"), 
 		ifname,	strerror(errno));
