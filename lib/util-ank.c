@@ -27,6 +27,7 @@
 #include <resolv.h>
 #include <asm/types.h>
 
+#include "intl.h"
 #include "utils.h"
 
 int scan_number(char *arg, unsigned *val)
@@ -222,7 +223,7 @@ done:
 int get_addr(inet_prefix *dst, char *arg, int family)
 {
 	if (get_addr_1(dst, arg, family)) {
-		fprintf(stderr, "ip: %s is invalid inet address\n", arg);
+		fprintf(stderr, _("ip: %s is invalid inet address\n"), arg);
 		exit(1);
 	}
 	return 0;
@@ -231,7 +232,7 @@ int get_addr(inet_prefix *dst, char *arg, int family)
 int get_prefix(inet_prefix *dst, char *arg, int family)
 {
 	if (get_prefix_1(dst, arg, family)) {
-		fprintf(stderr, "ip: %s is invalid inet prefix\n", arg);
+		fprintf(stderr, _("ip: %s is invalid inet prefix\n"), arg);
 		exit(1);
 	}
 	return 0;
@@ -241,7 +242,7 @@ __u32 get_addr32(char *name)
 {
 	inet_prefix addr;
 	if (get_addr_1(&addr, name, AF_INET)) {
-		fprintf(stderr, "ip: %s is invalid IPv4 address\n", name);
+		fprintf(stderr, _("ip: %s is invalid IPv4 address\n"), name);
 		exit(1);
 	}
 	return addr.data[0];
@@ -249,7 +250,7 @@ __u32 get_addr32(char *name)
 
 void invarg(char *msg)
 {
-	fprintf(stderr, "ip: argument is wrong: %s\n", msg);
+	fprintf(stderr, _("ip: argument is wrong: %s\n"), msg);
 	exit(1);
 }
 
