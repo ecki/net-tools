@@ -41,6 +41,7 @@ extern	struct hwtype	adaptive_hwtype;
 
 extern	struct hwtype	ether_hwtype;
 extern	struct hwtype	fddi_hwtype;
+extern	struct hwtype	hippi_hwtype;
 extern	struct hwtype	tr_hwtype;
 
 extern	struct hwtype	ax25_hwtype;
@@ -107,6 +108,9 @@ static struct hwtype *hwtypes[] = {
 #if HAVE_HWFDDI
   &fddi_hwtype,
 #endif
+#if HAVE_HWHIPPI
+  &hippi_hwtype,
+#endif
   &unspec_hwtype,
   NULL
 };
@@ -132,6 +136,9 @@ void hwinit ()
 #endif
 #if HAVE_HWFDDI
   fddi_hwtype.title = NLS_CATSAVE (catfd, fddiSet, fddi_fddi, "Fiber Distributed Data Interface");
+#endif
+#if HAVE_HWHIPPI
+  hippi_hwtype.title = NLS_CATSAVE (catfd, hippiSet, hippi_hippi, "HIPPI");
 #endif
 #if HAVE_HWAX25
   ax25_hwtype.title = NLS_CATSAVE (catfd, ax25Set, ax25_hw, "AMPR AX.25");
