@@ -30,6 +30,8 @@
 #include <arpa/inet.h>
 #include <linux/if_tunnel.h>
 
+#include "intl.h"
+
 #undef GRE_CSUM
 #define GRE_CSUM	htons(0x8000)
 #undef GRE_ROUTING
