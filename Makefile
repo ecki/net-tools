@@ -86,7 +86,9 @@ endif
 # Compiler and Linker Options
 # You may need to uncomment and edit these if you are using libc5 and IPv6.
 COPTS = -D_GNU_SOURCE -O2 -Wall -g # -I/usr/inet6/include
+ifeq ($(origin LOPTS), undefined)
 LOPTS = 
+endif
 RESLIB = # -L/usr/inet6/lib -linet6
 
 ifeq ($(HAVE_AFDECnet),1)
@@ -113,8 +115,10 @@ LDFLAGS	= $(LOPTS) -L$(NET_LIB_PATH)
 
 SUBDIRS	= man/ $(NET_LIB_PATH)/
 
+ifeq ($(origin CC), undefined)
 CC	= gcc
-LD	= gcc
+endif
+LD	= $(CC)
 
 NLIB	= -l$(NET_LIB_NAME)
 
@@ -136,15 +140,15 @@ mostlyclean:
 
 clean: mostlyclean
 		rm -f $(PROGS)
-		@for i in $(SUBDIRS); do (cd $$i && make clean) ; done
-		@cd po && make clean
+		@for i in $(SUBDIRS); do (cd $$i && $(MAKE) clean) ; done
+		@cd po && $(MAKE) clean
 
 cleanconfig:
 		rm -f config.h
 
 clobber: 	clean
 		rm -f $(PROGS) config.h version.h config.status
-		@for i in $(SUBDIRS); do (cd $$i && make clobber) ; done
+		@for i in $(SUBDIRS); do (cd $$i && $(MAKE) clobber) ; done
 
 
 dist: 		clobber
@@ -155,8 +159,8 @@ dist: 		clobber
 config.h: 	config.in Makefile 
 		@echo "Configuring the Linux net-tools (NET-3 Base Utilities)..." ; echo
 		@if [ config.status -nt config.in ]; \
-			then ./configure.sh <config.status; \
-		   else ./configure.sh <config.in; \
+			then ./configure.sh config.status; \
+		   else ./configure.sh config.in; \
 		 fi
 
 

@@ -28,6 +28,7 @@
  *		Foundation;  either  version 2 of the License, or  (at
  *		your option) any later version.
  */
+#include <sys/param.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/ioctl.h>

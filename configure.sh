@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Configure.sh	Generates interactively a config.h from config.in
 #
@@ -43,6 +43,14 @@ MAKECONFIG=config.make
 # Enable function cacheing.
 set -f -h
 
+# set up reading of config file
+if [ "$#" != "1" ] || [ ! -f "$1" ]; then
+	echo "usage: $0 configfile" 1>&2
+	exit 1
+fi
+exec 7<$1
+config_fd_redir='<&7'
+
 #
 # readln reads a line into $ans.
 #
@@ -51,7 +59,7 @@ set -f -h
 function readln()
 {
   echo -n "$1"
-  IFS='@' read ans </dev/tty || exit 1
+  IFS='@' read ans || exit 1
   [ -z "$ans" ] && ans=$2
 }
 
@@ -107,7 +115,7 @@ function int()
   stack=''
   branch='t'
 
-  while IFS='@' read raw_input_line
+  while IFS='@' eval read raw_input_line ${config_fd_redir}
   do
 	# Slimy hack to get bash to rescan a line.
 	read cmd rest <<-END_OF_COMMAND
