@@ -67,7 +67,8 @@ in_ether(char *bufp, struct sockaddr *sap)
 {
   unsigned char *ptr;
   char c, *orig;
-  int i, val;
+  int i;
+  unsigned val;
 
   sap->sa_family = ether_hwtype.type;
   ptr = sap->sa_data;
@@ -89,10 +90,11 @@ in_ether(char *bufp, struct sockaddr *sap)
 		return(-1);
 	}
 	val <<= 4;
-	c = *bufp++;
+	c = *bufp;
 	if (isdigit(c)) val |= c - '0';
 	  else if (c >= 'a' && c <= 'f') val |= c - 'a' + 10;
 	  else if (c >= 'A' && c <= 'F') val |= c - 'A' + 10;
+	  else if (c == ':' || c == 0) val >>= 4;
 	  else {
 #ifdef DEBUG
 		fprintf(stderr, NLS_CATGETS(catfd, etherSet, ether_debug2,
@@ -101,6 +103,7 @@ in_ether(char *bufp, struct sockaddr *sap)
 		errno = EINVAL;
 		return(-1);
 	}
+	if (c != 0) bufp++;
 	*ptr++ = (unsigned char) (val & 0377);
 	i++;
 
