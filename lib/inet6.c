@@ -3,7 +3,7 @@
  *              support functions for the net-tools.
  *              (most of it copied from lib/inet.c 1.26).
  *
- * Version:     $Id: inet6.c,v 1.9 1999/12/11 13:35:57 freitag Exp $
+ * Version:     $Id: inet6.c,v 1.10 2000/10/28 11:04:00 pb Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -96,7 +96,7 @@ static int INET6_rresolve(char *name, struct sockaddr_in6 *sin6, int numeric)
 
     if ((s = getnameinfo((struct sockaddr *) sin6, sizeof(struct sockaddr_in6),
 			 name, 255 /* !! */ , NULL, 0, 0))) {
-	fprintf(stderr, "getnameinfo: %s\n", gai_strerror(s));
+	fputs("getnameinfo failed\n", stderr);
 	return -1;
     }
     return (0);
@@ -128,7 +128,7 @@ static char *INET6_sprint(struct sockaddr *sap, int numeric)
     if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
 	return safe_strncpy(buff, _("[NONE SET]"), sizeof(buff));
     if (INET6_rresolve(buff, (struct sockaddr_in6 *) sap, numeric) != 0)
-	return (NULL);
+	return safe_strncpy(buff, _("[UNKNOWN]"), sizeof(buff));
     return (buff);
 }
 
