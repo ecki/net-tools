@@ -36,16 +36,17 @@ install:
 		LANGS=`ls -d * | grep -v Makefile` ; \
 		for LANG in $$LANGS; do \
 			cd $$LANG; \
-			for SECTION in 1 8; do \
+			for SECTION in 1 5 8; do \
 				if [ "$$LANG" = "en_US" ] ; then \
 					MAN_DIR=${BASEDIR}/usr/man/man$$SECTION; \
 				else \
 					MAN_DIR=${BASEDIR}/usr/man/$$LANG/man$$SECTION; \
 				fi ; \
-				$(INSTALL) -d -m 755 -o 0 -g 0 $$MAN_DIR; \
 				CMDS=`ls *.$$SECTION`; \
+				[ -z "$$CMDS" ] && continue; \
+				$(INSTALL) -d -m 755 $$MAN_DIR; \
 				for CMD in $$CMDS; do \
-					$(INSTALL) -m 644 -o 0 -g 0 $$CMD $$MAN_DIR; \
+					$(INSTALL) -m 644 $$CMD $$MAN_DIR; \
 				done; \
 			done; \
 			cd ..; \

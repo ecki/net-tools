@@ -87,7 +87,7 @@ RESLIB = # -L/usr/inet6/lib -linet6
 # -------- end of user definitions --------
 
 MAINTAINER = Philip.Blundell@pobox.com
-RELEASE	   = 981118
+RELEASE	   = 1.48
 
 .EXPORT_ALL_VARIABLES:
 
@@ -183,14 +183,14 @@ netstat:	$(NET-LIB) netstat.o statistics.o interface.o sockets.o
 		$(CC) $(LDFLAGS) -o netstat netstat.o statistics.o interface.o sockets.o $(NLIB) $(RESLIB)
 
 installbin:
-	install -o 0 -g 0 -m 0755 -d ${BASEDIR}/sbin
-	install -o 0 -g 0 -m 0755 -d ${BASEDIR}/bin
-	install -o 0 -g 0 -m 0755 arp      ${BASEDIR}/sbin
-	install -o 0 -g 0 -m 0755 ifconfig ${BASEDIR}/sbin
-	install -o 0 -g 0 -m 0755 netstat  ${BASEDIR}/bin
-	install -o 0 -g 0 -m 0755 rarp     ${BASEDIR}/sbin
-	install -o 0 -g 0 -m 0755 route    ${BASEDIR}/sbin
-	install -o 0 -g 0 -m 0755 hostname ${BASEDIR}/bin
+	install -m 0755 -d ${BASEDIR}/sbin
+	install -m 0755 -d ${BASEDIR}/bin
+	install -m 0755 arp      ${BASEDIR}/sbin
+	install -m 0755 ifconfig ${BASEDIR}/sbin
+	install -m 0755 netstat  ${BASEDIR}/bin
+	install -m 0755 rarp     ${BASEDIR}/sbin
+	install -m 0755 route    ${BASEDIR}/sbin
+	install -m 0755 hostname ${BASEDIR}/bin
 	ln -fs hostname $(BASEDIR)/bin/dnsdomainname
 	ln -fs hostname $(BASEDIR)/bin/ypdomainname
 	ln -fs hostname $(BASEDIR)/bin/nisdomainname
