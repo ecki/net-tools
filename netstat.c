@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.34 2000/04/03 23:25:59 ecki Exp $
+ * Version:     $Id: netstat.c,v 1.35 2000/04/05 00:59:56 ecki Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -78,6 +78,7 @@
 #include <getopt.h>
 #include <sys/param.h>
 #include <sys/socket.h>
+#include <arpa/inet.h>
 #include <netinet/in.h>
 #include <sys/ioctl.h>
 #include <net/if.h>
@@ -541,8 +542,8 @@ static void igmp_do_one(int lnr, const char *line)
     char mcast_addr[128];
 #if HAVE_AFINET6
     struct sockaddr_in6 mcastaddr;
-    char addr6p[8][5];
-    char addr6[128];
+    char addr6[INET6_ADDRSTRLEN];
+    struct in6_addr in6;
     extern struct aftype inet6_aftype;
 #else
     struct sockaddr_in mcastaddr;
@@ -575,13 +576,10 @@ static void igmp_do_one(int lnr, const char *line)
 	num = sscanf( line, "%d %15s %64[0-9A-Fa-f] %d", &idx, device, mcast_addr, &refcnt );
 	if (num == 4) {
 	    /* Demangle what the kernel gives us */
-	    sscanf(mcast_addr,
-		   "%4s%4s%4s%4s%4s%4s%4s%4s",
-		   addr6p[0], addr6p[1], addr6p[2], addr6p[3],
-		   addr6p[4], addr6p[5], addr6p[6], addr6p[7]);
-	    snprintf(addr6, sizeof(addr6), "%s:%s:%s:%s:%s:%s:%s:%s",
-		     addr6p[0], addr6p[1], addr6p[2], addr6p[3],
-		     addr6p[4], addr6p[5], addr6p[6], addr6p[7]);
+	    sscanf(mcast_addr, "%08X%08X%08X%08X",
+		   &in6.s6_addr32[0], &in6.s6_addr32[1],
+           &in6.s6_addr32[2], &in6.s6_addr32[3]);
+        inet_ntop(AF_INET6, &in6, addr6, sizeof(addr6));
 	    inet6_aftype.input(1, addr6, (struct sockaddr *) &mcastaddr);
 	    mcastaddr.sin6_family = AF_INET6;
 	} else {
@@ -653,7 +651,8 @@ static void tcp_do_one(int lnr, const char *line)
     struct aftype *ap;
 #if HAVE_AFINET6
     struct sockaddr_in6 localaddr, remaddr;
-    char addr6p[8][5], addr6[128];
+    char addr6[INET6_ADDRSTRLEN];
+    struct in6_addr in6;
     extern struct aftype inet6_aftype;
 #else
     struct sockaddr_in localaddr, remaddr;
@@ -670,21 +669,15 @@ static void tcp_do_one(int lnr, const char *line)
     if (strlen(local_addr) > 8) {
 #if HAVE_AFINET6
 	/* Demangle what the kernel gives us */
-	sscanf(local_addr,
-	       "%4s%4s%4s%4s%4s%4s%4s%4s",
-	       addr6p[0], addr6p[1], addr6p[2], addr6p[3],
-	       addr6p[4], addr6p[5], addr6p[6], addr6p[7]);
-	snprintf(addr6, sizeof(addr6), "%s:%s:%s:%s:%s:%s:%s:%s",
-		 addr6p[0], addr6p[1], addr6p[2], addr6p[3],
-		 addr6p[4], addr6p[5], addr6p[6], addr6p[7]);
+	sscanf(local_addr, "%08X%08X%08X%08X",
+	       &in6.s6_addr32[0], &in6.s6_addr32[1],
+           &in6.s6_addr32[2], &in6.s6_addr32[3]);
+    inet_ntop(AF_INET6, &in6, addr6, sizeof(addr6));
 	inet6_aftype.input(1, addr6, (struct sockaddr *) &localaddr);
-	sscanf(rem_addr,
-	       "%4s%4s%4s%4s%4s%4s%4s%4s",
-	       addr6p[0], addr6p[1], addr6p[2], addr6p[3],
-	       addr6p[4], addr6p[5], addr6p[6], addr6p[7]);
-	snprintf(addr6, sizeof(addr6), "%s:%s:%s:%s:%s:%s:%s:%s",
-		 addr6p[0], addr6p[1], addr6p[2], addr6p[3],
-		 addr6p[4], addr6p[5], addr6p[6], addr6p[7]);
+	sscanf(rem_addr, "%08X%08X%08X%08X",
+	       &in6.s6_addr32[0], &in6.s6_addr32[1],
+           &in6.s6_addr32[2], &in6.s6_addr32[3]);
+    inet_ntop(AF_INET6, &in6, addr6, sizeof(addr6));
 	inet6_aftype.input(1, addr6, (struct sockaddr *) &remaddr);
 	localaddr.sin6_family = AF_INET6;
 	remaddr.sin6_family = AF_INET6;
@@ -780,8 +773,8 @@ static void udp_do_one(int lnr, const char *line)
     int num, local_port, rem_port, d, state, timer_run, uid, timeout;
 #if HAVE_AFINET6
     struct sockaddr_in6 localaddr, remaddr;
-    char addr6p[8][5];
-    char addr6[128];
+    char addr6[INET6_ADDRSTRLEN];
+    struct in6_addr in6;
     extern struct aftype inet6_aftype;
 #else
     struct sockaddr_in localaddr, remaddr;
@@ -801,19 +794,15 @@ static void udp_do_one(int lnr, const char *line)
 
     if (strlen(local_addr) > 8) {
 #if HAVE_AFINET6
-	sscanf(local_addr, "%4s%4s%4s%4s%4s%4s%4s%4s",
-	       addr6p[0], addr6p[1], addr6p[2], addr6p[3],
-	       addr6p[4], addr6p[5], addr6p[6], addr6p[7]);
-	snprintf(addr6, sizeof(addr6), "%s:%s:%s:%s:%s:%s:%s:%s",
-		 addr6p[0], addr6p[1], addr6p[2], addr6p[3],
-		 addr6p[4], addr6p[5], addr6p[6], addr6p[7]);
+	sscanf(local_addr, "%08X%08X%08X%08X",
+	       &in6.s6_addr32[0], &in6.s6_addr32[1],
+           &in6.s6_addr32[2], &in6.s6_addr32[3]);
+    inet_ntop(AF_INET6, &in6, addr6, sizeof(addr6));
 	inet6_aftype.input(1, addr6, (struct sockaddr *) &localaddr);
-	sscanf(rem_addr, "%4s%4s%4s%4s%4s%4s%4s%4s",
-	       addr6p[0], addr6p[1], addr6p[2], addr6p[3],
-	       addr6p[4], addr6p[5], addr6p[6], addr6p[7]);
-	snprintf(addr6, sizeof(addr6), "%s:%s:%s:%s:%s:%s:%s:%s",
-		 addr6p[0], addr6p[1], addr6p[2], addr6p[3],
-		 addr6p[4], addr6p[5], addr6p[6], addr6p[7]);
+	sscanf(rem_addr, "%08X%08X%08X%08X",
+	       &in6.s6_addr32[0], &in6.s6_addr32[1],
+           &in6.s6_addr32[2], &in6.s6_addr32[3]);
+    inet_ntop(AF_INET6, &in6, addr6, sizeof(addr6));
 	inet6_aftype.input(1, addr6, (struct sockaddr *) &remaddr);
 	localaddr.sin6_family = AF_INET6;
 	remaddr.sin6_family = AF_INET6;
@@ -921,8 +910,8 @@ static void raw_do_one(int lnr, const char *line)
     int num, local_port, rem_port, d, state, timer_run, uid, timeout;
 #if HAVE_AFINET6
     struct sockaddr_in6 localaddr, remaddr;
-    char addr6p[8][5];
-    char addr6[128];
+    char addr6[INET6_ADDRSTRLEN];
+    struct in6_addr in6;
     extern struct aftype inet6_aftype;
 #else
     struct sockaddr_in localaddr, remaddr;
@@ -941,19 +930,15 @@ static void raw_do_one(int lnr, const char *line)
 
     if (strlen(local_addr) > 8) {
 #if HAVE_AFINET6
-	sscanf(local_addr, "%4s%4s%4s%4s%4s%4s%4s%4s",
-	       addr6p[0], addr6p[1], addr6p[2], addr6p[3],
-	       addr6p[4], addr6p[5], addr6p[6], addr6p[7]);
-	snprintf(addr6, sizeof(addr6), "%s:%s:%s:%s:%s:%s:%s:%s",
-		 addr6p[0], addr6p[1], addr6p[2], addr6p[3],
-		 addr6p[4], addr6p[5], addr6p[6], addr6p[7]);
+	sscanf(local_addr, "%08X%08X%08X%08X",
+	       &in6.s6_addr32[0], &in6.s6_addr32[1],
+           &in6.s6_addr32[2], &in6.s6_addr32[3]);
+    inet_ntop(AF_INET6, &in6, addr6, sizeof(addr6));
 	inet6_aftype.input(1, addr6, (struct sockaddr *) &localaddr);
-	sscanf(rem_addr, "%4s%4s%4s%4s%4s%4s%4s%4s",
-	       addr6p[0], addr6p[1], addr6p[2], addr6p[3],
-	       addr6p[4], addr6p[5], addr6p[6], addr6p[7]);
-	snprintf(addr6, sizeof(addr6), "%s:%s:%s:%s:%s:%s:%s:%s",
-		 addr6p[0], addr6p[1], addr6p[2], addr6p[3],
-		 addr6p[4], addr6p[5], addr6p[6], addr6p[7]);
+	sscanf(rem_addr, "%08X%08X%08X%08X",
+	       &in6.s6_addr32[0], &in6.s6_addr32[1],
+           &in6.s6_addr32[2], &in6.s6_addr32[3]);
+    inet_ntop(AF_INET6, &in6, addr6, sizeof(addr6));
 	inet6_aftype.input(1, addr6, (struct sockaddr *) &remaddr);
 	localaddr.sin6_family = AF_INET6;
 	remaddr.sin6_family = AF_INET6;
