@@ -39,6 +39,10 @@
 /* Ugh.  But libc5 doesn't provide POSIX types.  */
 #include <asm/types.h>
 
+#ifdef HAVE_HWSLIP
+#include <linux/if_slip.h>
+#endif
+
 #if HAVE_AFINET6
 
 #ifndef _LINUX_IN6_H
@@ -102,7 +106,7 @@ static const char *if_port_text[][4] = {
 #include "sockets.h"
 
 char *Release = RELEASE,
-     *Version = "ifconfig 1.35 (1998-08-29)";
+     *Version = "ifconfig 1.36 (1998-10-31)";
 
 int opt_a = 0;				/* show all interfaces		*/
 int opt_i = 0;				/* show the statistics		*/
@@ -267,8 +271,14 @@ ife_print(struct interface *ptr)
   if (ptr->flags & IFF_DYNAMIC) printf(_("DYNAMIC ")); 
 #endif  
 
-  printf(_(" MTU:%d  Metric:%d\n"),
+  printf(_(" MTU:%d  Metric:%d"),
 	 ptr->mtu, ptr->metric?ptr->metric:1);
+#ifdef SIOCSKEEPALIVE
+  if (ptr->outfill || ptr->keepalive)
+    printf(_("  Outfill:%d  Keepalive:%d"),
+	      ptr->outfill, ptr->keepalive);
+#endif
+  printf("\n");
 
   /* If needed, display the interface statistics. */
 
@@ -418,6 +428,9 @@ usage(void)
 #endif
   fprintf(stderr, _("                [hw class address]\n"));
   fprintf(stderr, _("                [metric NN] [mtu NN]\n"));
+#ifdef SIOCSKEEPALIVE
+  fprintf(stderr, _("                [outfill NN] [keepalive NN]\n"));
+#endif
   fprintf(stderr, _("                [[-]trailers] [[-]arp]\n"));
   fprintf(stderr, _("                [[-]allmulti] [[-]promisc]\n"));
   fprintf(stderr, _("                [multicast]\n"));
@@ -680,6 +693,32 @@ main(int argc, char **argv)
       spp++;
       continue;
     }
+
+#ifdef SIOCSKEEPALIVE
+    if (!strcmp(*spp, "keepalive")) {
+      if (*++spp == NULL) usage();
+      ifr.ifr_data = (caddr_t)atoi(*spp);
+      if (ioctl(skfd, SIOCSKEEPALIVE, &ifr) < 0) {
+       fprintf(stderr, "SIOCSKEEPALIVE: %s\n", strerror(errno));
+       goterr = 1;
+      }
+      spp++;
+      continue;
+    }
+#endif
+
+#ifdef SIOCSOUTFILL
+    if (!strcmp(*spp, "outfill")) {
+      if (*++spp == NULL) usage();
+      ifr.ifr_data = (caddr_t)atoi(*spp);
+      if (ioctl(skfd, SIOCSOUTFILL, &ifr) < 0) {
+       fprintf(stderr, "SIOCSOUTFILL: %s\n", strerror(errno));
+       goterr = 1;
+      }
+      spp++;
+      continue;
+    }
+#endif
     
     if (!strcmp(*spp, "-broadcast")) {
       goterr |= clr_flag(ifr.ifr_name, IFF_BROADCAST);

@@ -59,6 +59,8 @@ struct interface {
   char			hwaddr[32];		/* HW address		 */
   int			statistics_valid; 
   struct user_net_device_stats stats;		/* statistics		 */
+  int			keepalive;		/* keepalive value for SLIP */
+  int			outfill;		/* outfill value for SLIP */
 };
 
 extern int if_fetch(char *ifname, struct interface *ife);

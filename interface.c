@@ -4,7 +4,7 @@
    10/1998 partly rewriten by Andi Kleen to support interface list.   
 		   I don't claim that the list operations are efficient @).  
 
-   $Id: interface.c,v 1.6 1998/10/30 14:16:09 freitag Exp $
+   $Id: interface.c,v 1.7 1998/10/31 09:55:42 philip Exp $
  */
 
 #include "config.h"
@@ -31,6 +31,11 @@
 
 #if HAVE_AFECONET
 #include <linux/if_ec.h>
+#endif
+
+#ifdef HAVE_HWSLIP
+#include <linux/if_slip.h>
+#include <net/if_arp.h>
 #endif
 
 #include "net-support.h"
@@ -345,6 +350,25 @@ if_fetch(char *ifname, struct interface *ife)
     ife->mtu = 0;
   else 
     ife->mtu = ifr.ifr_mtu;
+
+  if (ife->type==ARPHRD_SLIP || ife->type==ARPHRD_CSLIP ||
+      ife->type==ARPHRD_SLIP6 || ife->type==ARPHRD_CSLIP6 || 
+      ife->type==ARPHRD_ADAPT) {
+#ifdef SIOCGOUTFILL
+    strcpy(ifr.ifr_name, ifname);
+    if (ioctl(skfd, SIOCGOUTFILL, &ifr) < 0)
+      ife->outfill = 0;
+    else
+      ife->outfill = (unsigned int)ifr.ifr_data;
+#endif
+#ifdef SIOCGKEEPALIVE
+    strcpy(ifr.ifr_name, ifname);
+    if (ioctl(skfd, SIOCGKEEPALIVE, &ifr) < 0)
+      ife->keepalive = 0;
+    else
+      ife->keepalive = (unsigned int)ifr.ifr_data;
+#endif
+  }
 
   strcpy(ifr.ifr_name, ifname);
   if (ioctl(skfd, SIOCGIFMAP, &ifr) < 0)
