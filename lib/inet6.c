@@ -3,7 +3,7 @@
  *              support functions for the net-tools.
  *              (most of it copied from lib/inet.c 1.26).
  *
- * Version:     $Id: inet6.c,v 1.10 2000/10/28 11:04:00 pb Exp $
+ * Version:     $Id: inet6.c,v 1.11 2001/08/26 05:25:21 ak Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -44,6 +44,21 @@
 
 extern int h_errno;		/* some netdb.h versions don't export this */
 
+char * fix_v4_address(char *buf, struct in6_addr *in6) 
+{ 
+	if (IN6_IS_ADDR_V4MAPPED(in6->s6_addr)) { 
+			char *s =strchr(buf, '.'); 
+			if (s) { 
+				while (s > buf && *s != ':')
+					--s;
+				if (*s == ':') ++s; 	
+				else s = NULL; 
+			} 	
+			if (s) return s;
+	} 
+	return buf; 
+} 
+
 static int INET6_resolve(char *name, struct sockaddr_in6 *sin6)
 {
     struct addrinfo req, *ai;
@@ -83,7 +98,7 @@ static int INET6_rresolve(char *name, struct sockaddr_in6 *sin6, int numeric)
 	return (-1);
     }
     if (numeric & 0x7FFF) {
-	inet_ntop(AF_INET6, &sin6->sin6_addr, name, 80);
+	inet_ntop( AF_INET6, &sin6->sin6_addr, name, 80);
 	return (0);
     }
     if (IN6_IS_ADDR_UNSPECIFIED(&sin6->sin6_addr)) {
@@ -109,13 +124,14 @@ static void INET6_reserror(char *text)
 }
 
 
+
 /* Display an Internet socket address. */
 static char *INET6_print(unsigned char *ptr)
 {
     static char name[80];
 
     inet_ntop(AF_INET6, (struct in6_addr *) ptr, name, 80);
-    return name;
+	return fix_v4_address(name, (struct in6_addr *)ptr);
 }
 
 
@@ -129,13 +145,14 @@ static char *INET6_sprint(struct sockaddr *sap, int numeric)
 	return safe_strncpy(buff, _("[NONE SET]"), sizeof(buff));
     if (INET6_rresolve(buff, (struct sockaddr_in6 *) sap, numeric) != 0)
 	return safe_strncpy(buff, _("[UNKNOWN]"), sizeof(buff));
-    return (buff);
+    return (fix_v4_address(buff, &((struct sockaddr_in6 *)sap)->sin6_addr));
 }
 
 
 static int INET6_getsock(char *bufp, struct sockaddr *sap)
 {
     struct sockaddr_in6 *sin6;
+	char *p;
 
     sin6 = (struct sockaddr_in6 *) sap;
     sin6->sin6_family = AF_INET6;
@@ -143,7 +160,9 @@ static int INET6_getsock(char *bufp, struct sockaddr *sap)
 
     if (inet_pton(AF_INET6, bufp, sin6->sin6_addr.s6_addr) <= 0)
 	return (-1);
-
+	p = fix_v4_address(bufp, &sin6->sin6_addr);
+	if (p != bufp) 
+		memcpy(bufp, p, strlen(p)+1); 
     return 16;			/* ?;) */
 }
 

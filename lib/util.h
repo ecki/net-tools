@@ -14,3 +14,6 @@ int nstrcmp(const char *, const char *);
 
 char *safe_strncpy(char *dst, const char *src, size_t size); 
 
+
+#define min(a,b) ((a)<(b) ? (a) : (b))
+#define max(a,b) ((a)>(b) ? (a) : (b))

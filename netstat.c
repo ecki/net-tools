@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.43 2001/04/15 14:41:17 pb Exp $
+ * Version:     $Id: netstat.c,v 1.44 2001/08/26 05:25:21 ak Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -813,8 +813,8 @@ static void tcp_do_one(int lnr, const char *line)
 			 timer_run, (double) time_len / HZ, retr, timeout);
 		break;
 	    }
-	printf("tcp   %6ld %6ld %-23s %-23s %-12s",
-	       rxq, txq, local_addr, rem_addr, _(tcp_state[state]));
+	printf("tcp   %6ld %6ld %-*s %-*s %-12s",
+	       rxq, txq, max(23,strlen(local_addr)+1), local_addr, max(23,strlen(rem_addr)), rem_addr, _(tcp_state[state]));
 
 	finish_this_one(uid,inode,timers);
     }
@@ -1514,7 +1514,7 @@ int main
  (int argc, char *argv[]) {
     int i;
     int lop;
-    struct option longopts[] =
+    static struct option longopts[] =
     {
 	AFTRANS_OPTS,
 	{"version", 0, 0, 'V'},
