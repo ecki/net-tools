@@ -7,7 +7,7 @@
    8/2000  Andi Kleen make the list operations a bit more efficient.
    People are crazy enough to use thousands of aliases now.
 
-   $Id: interface.c,v 1.11 2000/12/19 01:01:41 ecki Exp $
+   $Id: interface.c,v 1.12 2000/12/19 01:28:34 ecki Exp $
  */
 
 #include "config.h"
@@ -580,10 +580,10 @@ int do_if_print(struct interface *ife, void *cookie)
 void ife_print_short(struct interface *ptr)
 {
     printf("%-5.5s ", ptr->name);
-    printf("%5d %3d ", ptr->mtu, ptr->metric);
+    printf("%5d %3d", ptr->mtu, ptr->metric);
     /* If needed, display the interface statistics. */
     if (ptr->statistics_valid) {
-	printf("%8lu %6lu %6lu %6lu ",
+	printf("%8lu %6lu %6lu %6lu",
 	       ptr->stats.rx_packets, ptr->stats.rx_errors,
 	       ptr->stats.rx_dropped, ptr->stats.rx_fifo_errors);
 	printf("%8lu %6lu %6lu %6lu ",
@@ -592,6 +592,7 @@ void ife_print_short(struct interface *ptr)
     } else {
 	printf("%-56s", _("     - no statistics available -"));
     }
+    /* DONT FORGET TO ADD THE FLAGS IN ife_print_long, too */
     if (ptr->flags == 0)
 	printf(_("[NO FLAGS]"));
     if (ptr->flags & IFF_ALLMULTI)
@@ -602,18 +603,29 @@ void ife_print_short(struct interface *ptr)
 	printf("D");
     if (ptr->flags & IFF_LOOPBACK)
 	printf("L");
-    if (ptr->flags & IFF_PROMISC)
+    if (ptr->flags & IFF_MULTICAST)
 	printf("M");
+#ifdef HAVE_DYNAMIC
+    if (ptr->flags & IFF_DYNAMIC)
+	printf("d");
+#endif
+    if (ptr->flags & IFF_PROMISC)
+	printf("P");
     if (ptr->flags & IFF_NOTRAILERS)
 	printf("N");
     if (ptr->flags & IFF_NOARP)
 	printf("O");
     if (ptr->flags & IFF_POINTOPOINT)
 	printf("P");
+    if (ptr->flags & IFF_SLAVE)
+	printf("s");
+    if (ptr->flags & IFF_MASTER)
+	printf("m");
     if (ptr->flags & IFF_RUNNING)
 	printf("R");
     if (ptr->flags & IFF_UP)
 	printf("U");
+    /* DONT FORGET TO ADD THE FLAGS IN ife_print_long, too */
     printf("\n");
 }
 
@@ -768,6 +780,7 @@ void ife_print_long(struct interface *ptr)
 #endif
 
     printf("          ");
+    /* DONT FORGET TO ADD THE FLAGS IN ife_print_short, too */
     if (ptr->flags == 0)
 	printf(_("[NO FLAGS] "));
     if (ptr->flags & IFF_UP)
@@ -800,7 +813,7 @@ void ife_print_long(struct interface *ptr)
     if (ptr->flags & IFF_DYNAMIC)
 	printf(_("DYNAMIC "));
 #endif
-
+    /* DONT FORGET TO ADD THE FLAGS IN ife_print_short */
     printf(_(" MTU:%d  Metric:%d"),
 	   ptr->mtu, ptr->metric ? ptr->metric : 1);
 #ifdef SIOCSKEEPALIVE
