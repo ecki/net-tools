@@ -9,20 +9,19 @@
  *              dnsdmoainname   
  *              nisdomainname {name|-F file}
  *
- * Version:     hostname 1.96 (1996-02-18)
+ * Version:     hostname 1.101 (2003-10-11)
  *
  * Author:      Peter Tobias <tobias@et-inf.fho-emden.de>
  *
  * Changes:
- *      {1.90}  Peter Tobias :          Added -a and -i options.
- *      {1.91}  Bernd Eckenfels :       -v,-V rewritten, long_opts 
- *                                      (major rewrite), usage.
- *960120 {1.95} Bernd Eckenfels :       -y/nisdomainname - support for get/
- *                                      setdomainname added 
- *960218 {1.96} Bernd Eckenfels :       netinet/in.h added
- *980629 {1.97} Arnaldo Carvalho de Melo : gettext instead of catgets for i18n
- *20000213 {1.99} Arnaldo Carvalho de Melo : fixed some i18n strings
+ *         {1.90}  Peter Tobias : Added -a and -i options.
+ *         {1.91}  Bernd Eckenfels : -v,-V rewritten, long_opts (major rewrite), usage.
+ *19960120 {1.95}  Bernd Eckenfels : -y/nisdomainname - support for get/setdomainname added 
+ *19960218 {1.96}  Bernd Eckenfels : netinet/in.h added
+ *19980629 {1.97}  Arnaldo Carvalho de Melo : gettext instead of catgets for i18n
+ *20000213 {1.99}  Arnaldo Carvalho de Melo : fixed some i18n strings
  *20010404 {1.100} Arnaldo Carvalho de Melo: use setlocale
+ *20031011 {1.101} Maik Broemme: gcc 3.x fixes (default: break)
  *
  *              This program is free software; you can redistribute it
  *              and/or  modify it under  the terms of  the GNU General
@@ -31,6 +30,7 @@
  *              your option) any later version.
  */
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <getopt.h>
@@ -79,6 +79,7 @@ static void setnname(char *nname)
             fprintf(stderr, _("%s: name too long\n"), program_name);
             break;
         default:
+	    break;
         }
 	exit(1);
     }
@@ -324,11 +325,12 @@ int main(int argc, char **argv)
 	    break;
 	case 'V':
 	    version();
+	    break; // not reached
 	case '?':
 	case 'h':
 	default:
 	    usage();
-
+	    break; // not reached
 	};
 
 
