@@ -8,7 +8,7 @@
 .\" Modified: Tuan Hoang tqhoang@bigfoot.com 
 .\"
 .\"
-.TH NETSTAT 8 "24 November 2001" "net-tools" "Linux Programmer's Manual"
+.TH NETSTAT 8 "02 October 2003" "net-tools" "Linux Programmer's Manual"
 
 .SH NAME
 netstat \- Print network connections, routing tables, interface statistics, masquerade connections, and multicast memberships
@@ -99,7 +99,12 @@ displays a list of open sockets.  If you don't specify any
 address families, then the active sockets of all configured address
 families will be printed.
 .SS "\-\-route , \-r"
-Display the kernel routing tables.
+Display the kernel routing tables. See the description in 
+.BR route (8) for details. 
+.B netstat -r 
+and 
+.B route -e 
+produce the same output.
 .SS "\-\-groups , \-g"
 Display multicast group membership information for IPv4 and IPv6.
 .SS "\-\-interface, \-i"
@@ -170,7 +175,6 @@ option, show interfaces that are not up
 Print routing information from the FIB.  (This is the default.)
 .SS "\-C"
 Print routing information from the route cache.
-.IR UP .
 .P
 .SH OUTPUT
 .P
