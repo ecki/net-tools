@@ -8,7 +8,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: arp.c,v 1.16 1999/12/06 16:57:27 freitag Exp $
+ * Version:     $Id: arp.c,v 1.17 2000/03/23 01:14:03 ecki Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -742,6 +742,14 @@ int main(int argc, char **argv)
 		ap->name);
 	exit(-1);
     }
+
+    /* If not hw type specified get default */
+    if(hw_set==0)
+	if ((hw = get_hwtype(DFLT_HW)) == NULL) {
+	  fprintf(stderr, _("%s: hardware type not supported!\n"), DFLT_HW);
+	  return (-1);
+	}
+
     if (hw->alen <= 0) {
 	fprintf(stderr, _("arp: %s: hardware type without ARP support.\n"),
 		hw->name);
