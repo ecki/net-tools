@@ -3,7 +3,7 @@
  *              support functions for the net-tools.
  *              (NET-3 base distribution).
  *
- * Version:    $Id: inet.c,v 1.13 1999/12/11 13:35:56 freitag Exp $
+ * Version:    $Id: inet.c,v 1.14 2003/10/19 11:57:37 pb Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -144,7 +144,7 @@ static int INET_rresolve(char *name, size_t len, struct sockaddr_in *sin,
     struct hostent *ent;
     struct netent *np;
     struct addr *pn;
-    unsigned long ad, host_ad;
+    u_int32_t ad, host_ad;
     int host = 0;
 
     /* Grmpf. -FvK */
@@ -155,7 +155,7 @@ static int INET_rresolve(char *name, size_t len, struct sockaddr_in *sin,
 	errno = EAFNOSUPPORT;
 	return (-1);
     }
-    ad = (unsigned long) sin->sin_addr.s_addr;
+    ad = sin->sin_addr.s_addr;
 #ifdef DEBUG
     fprintf (stderr, "rresolve: %08lx, mask %08x, num %08x \n", ad, netmask, numeric);
 #endif
