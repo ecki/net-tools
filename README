@@ -32,7 +32,7 @@ Contents:
                           Notes
                           -----
 
-This is net-tools 1.56.  Notable changes since 1.55 include:
+This is net-tools 1.57.  Notable changes since 1.55 include:
 
  - A bug relating to IPv4 alias interfaces has been fixed.
  - Support for X.25 and STRIP has been added.
