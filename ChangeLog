@@ -1,3 +1,26 @@
+Fri Feb 13 18:47:09 1998  Philip Blundell  <philb@gnu.org>
+
+	* ifconfig.c (ife_print): Only print the broadcast addreess if the
+ 	interface is broadcast capable.
+	(ife_print): Don't print null hardware address for Ash either.
+	(Version): Remove spurious "$Id" and insert correct date.
+
+Tue Feb 10 11:45:38 1998  Philip Blundell  <pb@nexus.co.uk>
+
+	* arp.c (arp_set): Add ATF_COM to flags.
+
+	* ifconfig.c (ife_print): Print collisions on a separate line to
+	avoid wrapping with busy interfaces.
+
+Mon Feb  9 10:30:35 1998  Philip Blundell  <pb@nexus.co.uk>
+
+	* ifconfig.c (ife_print): Display hardware info even for ARPHRD >
+	255.
+	(if_print): Fix bug with 2.0 kernels.
+
+	* netstat.c: Include <string.h> to avoid warnings.
+	* lib/ax25.c: Include <netax25/ax25.h> not <linux/ax25.h> under glibc2.
+
 Sun Feb  8 18:33:00 1998  Philip Blundell  <philb@gnu.org>
 
 	* ifconfig.c: Tidy up txqueuelen support, and other functionality

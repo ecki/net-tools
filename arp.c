@@ -8,7 +8,7 @@
  *		NET-3 Networking Distribution for the LINUX operating
  *		system.
  *
- * Version:	arp 1.82 (1997-09-25)
+ * Version:	arp 1.83 (1998-02-13)
  *
  * Maintainer:	Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -39,6 +39,7 @@
  *					Typo fix (Debian Bug#5728 Giuliano Procida)
  *970803 {1.81} Bernd Eckenfels :	removed junk comment line 1
  *970925 {1.82} Bernd Eckenfels	:	include fix for libc6
+ +980213 (1.83) Phil Blundell:		set ATF_COM on new entries
  *
  *
  *		This program is free software; you can redistribute it
@@ -76,7 +77,7 @@
 
 
 char *Release = RELEASE,
-     *Version = "arp 1.82 (1997-09-25)";
+     *Version = "arp 1.83 (1998-02-13)";
 
 int opt_n = 0;				/* do not resolve addresses	*/
 int opt_N = 0;				/* use symbolic names           */
@@ -331,7 +332,7 @@ arp_set(char **args)
   }
   
   /* Check out any modifiers. */
-  flags = ATF_PERM;
+  flags = ATF_PERM | ATF_COM;
   while (*args != NULL) {
 	if (! strcmp(*args, "temp")) {
 		flags &= ~ATF_PERM;

@@ -3,7 +3,7 @@
  *		that either displays or sets the characteristics of
  *		one or more of the system's networking interfaces.
  *
- * Version:	ifconfig 1.31 (1998-01-25)
+ * Version:	ifconfig 1.32 (1998-02-09)
  *
  * Author:	Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -155,7 +155,7 @@ static const char *if_port_text[][4] = {
 #include "net-locale.h"
 
 char *Release = RELEASE,
-     *Version = "ifconfig 1.30 ($Id)";
+     *Version = "ifconfig 1.32 (1998-02-09)";
 
 int opt_a = 0;				/* show all interfaces		*/
 int opt_i = 0;				/* show the statistics		*/
@@ -226,8 +226,9 @@ ife_print(struct interface *ptr)
 
   printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_link, 
 		     "%-8.8s  Link encap:%s  "), ptr->name, hw->title);
-  /* Don't print the hardware address for ATM if it's null. */
-  if (hw->sprint != NULL && (strncmp(ptr->name, "atm", 3) || 
+  /* Don't print the hardware address for ATM or Ash if it's null. */
+  if (hw->sprint != NULL && ((strncmp(ptr->name, "atm", 3) &&
+			      strncmp(ptr->name, "ash", 3)) || 
    (ptr->hwaddr[0] || ptr->hwaddr[1] || ptr->hwaddr[2] || ptr->hwaddr[3] || 
    ptr->hwaddr[4] || ptr->hwaddr[5]))) 
     printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_hw, "HWaddr %s  ")
@@ -242,16 +243,17 @@ ife_print(struct interface *ptr)
   if (ap->af != AF_INET6) {
 #endif
     printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_adr,
-		       "          %s addr:%s"), ap->name,
+		       "          %s addr:%s "), ap->name,
 	   ap->sprint(&ptr->addr, 1));
     if (ptr->flags & IFF_POINTOPOINT) {
-      printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_pap, "  P-t-P:%s  "),
+      printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_pap, " P-t-P:%s "),
 	     ap->sprint(&ptr->dstaddr, 1));
-    } else {
-      printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_bcast, "  Bcast:%s  "),
+    } 
+    if (ptr->flags & IFF_BROADCAST) {
+      printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_bcast, " Bcast:%s "),
 	     ap->sprint(&ptr->broadaddr, 1));
     }
-    printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_mask, "Mask:%s\n"),
+    printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_mask, " Mask:%s\n"),
 	   ap->sprint(&ptr->netmask, 1));
 #if HAVE_AFINET6
   }
@@ -347,12 +349,13 @@ ife_print(struct interface *ptr)
   printf("          ");
 
   printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_tx,
-	"TX packets:%lu errors:%lu dropped:%lu %s:%lu carrier:%lu coll:%lu\n"),
+	"TX packets:%lu errors:%lu dropped:%lu %s:%lu carrier:%lu\n"),
 	ptr->stats.tx_packets, ptr->stats.tx_errors,
 	ptr->stats.tx_dropped, dispname, ptr->stats.tx_fifo_errors,
-	ptr->stats.tx_carrier_errors, ptr->stats.collisions);
+	ptr->stats.tx_carrier_errors);
+  printf("             collisions:%lu\n", ptr->stats.collisions);
 
-  if (hf<255 && (ptr->map.irq || ptr->map.mem_start || ptr->map.dma || 
+  if ((ptr->map.irq || ptr->map.mem_start || ptr->map.dma || 
 		ptr->map.base_addr)) {
     printf("          ");
     if (ptr->map.irq)
@@ -584,8 +587,7 @@ if_print(char *ifname)
     struct ifreq *ifr;
     ifc.ifc_buf = NULL;
     ifc.ifc_len = 0;
-    if (ioctl(skfd, SIOCGIFCONF, &ifc) < 0) {
-      /* Can this ever happen? */
+    if (ioctl(skfd, SIOCGIFCONF, &ifc) < 0 || ifc.ifc_len == 0) {
       int n = 2, s;
       ifc.ifc_buf = NULL;
       do {

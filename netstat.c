@@ -6,7 +6,7 @@
  *		NET-3 Networking Distribution for the LINUX operating
  *		system.
  *
- * Version:	netstat 1.24 (1997-09-21)
+ * Version:	netstat 1.25 (1998-02-09)
  *
  * Authors:	Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *		Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -54,6 +54,7 @@
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <strings.h>
 #include <unistd.h>
 #include <ctype.h>
@@ -96,7 +97,7 @@ typedef enum {
 #include "lib/net-features.h"
 
 char *Release   = RELEASE,
-     *Version   = "netstat 1.24 (1997-09-21)",
+     *Version   = "netstat 1.25 (1998-02-13)",
      *Signature = "Fred Baumgarten <dc6iq@insu1.etec.uni-karlsruhe.de> and Alan Cox.";
 
 
