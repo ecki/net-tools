@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.41 2000/08/14 07:57:19 ak Exp $
+ * Version:     $Id: ifconfig.c,v 1.42 2000/10/08 00:48:35 ecki Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -20,6 +20,8 @@
  * {1.34} - 19980630 - Arnaldo Carvalho de Melo <acme@conectiva.com.br>
  *                     - gettext instead of catgets for i18n
  *          10/1998  - Andi Kleen. Use interface list primitives.       
+ *	    20001008 - Bernd Eckenfels, Patch from RH for setting mtu 
+ *			(default AF was wrong)
  */
 
 #define DFLT_AF "inet"
@@ -252,11 +254,6 @@ int main(int argc, char **argv)
     textdomain("net-tools");
 #endif
 
-    /* Create a channel to the NET kernel. */
-    if ((skfd = sockets_open(0)) < 0) {
-	perror("socket");
-	exit(1);
-    }
 
     /* Find any options. */
     argc--;
@@ -289,6 +286,12 @@ int main(int argc, char **argv)
 	argc--;
     }
 
+    /* Create a channel to the NET kernel. */
+    if ((skfd = sockets_open(0)) < 0) {
+	perror("socket");
+	exit(1);
+    }
+
     /* Do we have to show the current setup? */
     if (argc == 0) {
 	int err = if_print((char *) NULL);
@@ -304,19 +307,22 @@ int main(int argc, char **argv)
 	exit(err < 0);
     }
     /* The next argument is either an address family name, or an option. */
-    if ((ap = get_aftype(*spp)) == NULL)
+    if ((ap = get_aftype(*spp)) != NULL)
+	spp++; /* it was a AF name */
+    else 
 	ap = get_aftype(DFLT_AF);
-    else {
-	/* XXX: should print the current setup if no args left, but only 
-	   for this family */
-	spp++;
+	
+    if(ap) {
 	addr_family = ap->af;
+    	if ((fd=sockets_open(addr_family)) < 0) {
+		perror("family socket");
+		exit(1);
+    	} else {
+    		if (skfd) close(skfd);
+    		skfd = fd;
+    	}
     }
 
-    if (sockets_open(addr_family) < 0) {
-	perror("family socket");
-	exit(1);
-    }
     /* Process the remaining arguments. */
     while (*spp != (char *) NULL) {
 	if (!strcmp(*spp, "arp")) {
