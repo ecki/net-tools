@@ -4,6 +4,7 @@
 .\" Original: (mdw@tc.cornell.edu & dc6iq@insu1.etec.uni-karlsruhe.de)
 .\"
 .\" Modificado por: Bernd.Eckenfels@inka.de
+.\" Modificado por: Andi Kleen ak@muc.de
 .\" Traduzido para português por Arnaldo Carvalho de Melo <acme@conectiva.com.br>
 .\" Revisado por Jorge Luiz Godoy Filho <jorge@bestway.com.br>
 .\"
@@ -212,7 +213,7 @@ O socket está ativamente tentando estabelecer uma conexão.
 .TP
 .I
 SYN_RECV
-A conexão está sendo inicializada.
+Uma requisição de conexão foi recebida da rede.
 .TP
 .I
 FIN_WAIT1
@@ -225,8 +226,7 @@ máquina remota.
 .TP
 .I
 TIME_WAIT
-O socket está esperando após o fechamento por uma retransmissão da terminação
-pelo lado remoto.
+O socket está esperando após o fechamento para tratar os pacotes ainda na rede.
 .TP
 .I
 FECHADO
@@ -371,6 +371,12 @@ Mostra o caminho (path) do processo do qual está tratando esse socket.
 (Isso precisa ser feito por alguém que saiba fazê-lo.)
 
 .PP
+.SH NOTAS
+Desde o kernel 2.2 o netstat -i não mostra estatísticas para apelidos (aliases)
+de interfaces. Para obter contadores por apelido de interface você precisa
+configurar regras explícitas usando o comando
++.BR ipchains(8)
+.
 .SH FILES
 .ta
 .I /etc/services
@@ -433,6 +439,7 @@ Mostra o caminho (path) do processo do qual está tratando esse socket.
 .BR ipfw (4), 
 .BR ipfw (8), 
 .BR ipfwadm (8)
+.BR ipchains (8)
 
 .PP
 .SH BUGS

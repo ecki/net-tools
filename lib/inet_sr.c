@@ -49,7 +49,7 @@ static int usage(void)
   fprintf(stderr,_("                              [netmask N] [mss Mss] [window W] [irtt I]\n"));
   fprintf(stderr,_("                              [mod] [dyn] [reinstate] [[dev] If]\n"));
   fprintf(stderr,_("       inet_route [-vF] add {-host|-net} Target[/prefix] [metric M] reject\n"));
-  fprintf(stderr,_("       inet_route [-FC] flush      NOT aupported\n"));
+  fprintf(stderr,_("       inet_route [-FC] flush      NOT supported\n"));
   return(E_USAGE);
 }
 
