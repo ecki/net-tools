@@ -8,7 +8,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: arp.c,v 1.21 2001/05/06 02:14:07 ecki Exp $
+ * Version:     $Id: arp.c,v 1.22 2002/12/10 01:01:24 ecki Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -463,7 +463,7 @@ static void arp_disp_2(char *name, int type, int arp_flags, char *hwa, char *mas
 
     if (!(arp_flags & ATF_COM)) {
 	if (arp_flags & ATF_PUBL)
-	    printf("%-8.8s%-20.20s", "*", "*");
+	    printf("%-8.8s%-20.20s", "*", _("<from_interface>"));
 	else
 	    printf("%-8.8s%-20.20s", "", _("(incomplete)"));
     } else {
@@ -486,7 +486,7 @@ static void arp_disp(char *name, char *ip, int type, int arp_flags, char *hwa, c
 
     if (!(arp_flags & ATF_COM)) {
 	if (arp_flags & ATF_PUBL)
-	    printf("* ");
+	    printf("<from_interface> ");
 	else
 	    printf(_("<incomplete> "));
     } else {
@@ -613,9 +613,8 @@ static void usage(void)
 {
     fprintf(stderr, _("Usage:\n  arp [-vn]  [<HW>] [-i <if>] [-a] [<hostname>]             <-Display ARP cache\n"));
     fprintf(stderr, _("  arp [-v]          [-i <if>] -d  <hostname> [pub][nopub]    <-Delete ARP entry\n"));
-    fprintf(stderr, _("  arp [-vnD] [<HW>] [-i <if>] -f  [<filename>]              <-Add entry from file\n"));
+    fprintf(stderr, _("  arp [-vnD] [<HW>] [-i <if>] -f  [<filename>]            <-Add entry from file\n"));
     fprintf(stderr, _("  arp [-v]   [<HW>] [-i <if>] -s  <hostname> <hwaddr> [temp][nopub] <-Add entry\n"));
-    fprintf(stderr, _("  arp [-v]   [<HW>] [-i <if>] -s  <hostname> <hwaddr> [netmask <nm>] pub  <-''-\n"));
     fprintf(stderr, _("  arp [-v]   [<HW>] [-i <if>] -Ds <hostname> <if> [netmask <nm>] pub      <-''-\n\n"));
     
     fprintf(stderr, _("        -a                       display (all) hosts in alternative (BSD) style\n"));
