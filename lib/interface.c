@@ -7,7 +7,7 @@
    8/2000  Andi Kleen make the list operations a bit more efficient.
    People are crazy enough to use thousands of aliases now.
 
-   $Id: interface.c,v 1.15 2001/07/17 07:21:57 pb Exp $
+   $Id: interface.c,v 1.16 2001/07/17 07:24:36 pb Exp $
  */
 
 #include "config.h"
@@ -848,7 +848,7 @@ void ife_print_long(struct interface *ptr)
 	    Rext = "MB";
 	} else if (rx > 1024) {
 	    short_rx /= 1024;
-	    Rext = "KB";
+	    Rext = "kB";
 	}
 	if (tx > 1048576) {
 	    short_tx /= 1048576;
@@ -856,7 +856,7 @@ void ife_print_long(struct interface *ptr)
 	}
 	else if (tx > 1024) {
 	    short_tx /= 1024;
-	    Text = "KB";
+	    Text = "kB";
 	}
 
 	printf("          ");
