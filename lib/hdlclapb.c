@@ -35,9 +35,6 @@
 #include <unistd.h>
 #include "net-support.h"
 #include "pathnames.h"
-#define  EXTERN
-#include "net-locale.h"
-
 
 struct hwtype hdlc_hwtype = {
   "hdlc",	NULL, /*"(Cisco) HDLC",*/	ARPHRD_HDLC,	0,

@@ -43,9 +43,9 @@
 * on GNU gettext, only a brazilian portuguese catalog (translation)
 * is present, but others are *highly* welcome!
 *
-* (answer 'n' if you haye no system with GNU gettext support)
+* (answer 'n' if you have no system with GNU gettext support)
 *
-bool 'Does your system support GNU gettext?' I18N y
+bool 'Does your system support GNU gettext?' I18N n
 *
 *
 *             Protocol Families.

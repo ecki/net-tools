@@ -30,7 +30,11 @@
 #include <sys/ioctl.h>
 #include <sys/socket.h>
 #include <net/if_arp.h>
+#if (__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 1)
+#include <netax25/ax25.h>
+#else
 #include <linux/ax25.h>
+#endif
 #include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>

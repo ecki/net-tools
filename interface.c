@@ -16,7 +16,11 @@
 #include <ctype.h>
 
 #if HAVE_AFIPX
+#if (__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 1)
+#include <netipx/ipx.h>
+#else
 #include "ipx.h"
+#endif
 #endif
 
 #if HAVE_AFECONET

@@ -87,7 +87,11 @@ static const char *if_port_text[][4] = {
 #endif
 
 #if HAVE_AFIPX
+#if (__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 1)
+#include <netipx/ipx.h>
+#else
 #include "ipx.h"
+#endif
 #endif
 #include "net-support.h"
 #include "pathnames.h"
@@ -97,7 +101,7 @@ static const char *if_port_text[][4] = {
 #include "sockets.h"
 
 char *Release = RELEASE,
-     *Version = "ifconfig 1.34 (1998-06-30)";
+     *Version = "ifconfig 1.35 (1998-08-29)";
 
 int opt_a = 0;				/* show all interfaces		*/
 int opt_i = 0;				/* show the statistics		*/
@@ -258,12 +262,6 @@ ife_print(struct interface *ptr)
   if (ptr->flags & IFF_MULTICAST) printf(_("MULTICAST "));
   printf(_(" MTU:%d  Metric:%d\n"),
 	 ptr->mtu, ptr->metric?ptr->metric:1);
-  if (ptr->tx_queue_len != -1)
-    printf(_("          txqueuelen:%d\n"), ptr->tx_queue_len);
-#if 0
-  else
-    printf(_("          txqueuelen not available\n"));
-#endif
 
   /* If needed, display the interface statistics. */
   printf("          ");
@@ -281,9 +279,11 @@ ife_print(struct interface *ptr)
 	ptr->stats.tx_packets, ptr->stats.tx_errors,
 	ptr->stats.tx_dropped, ptr->stats.tx_fifo_errors,
 	ptr->stats.tx_carrier_errors);
-  printf(_("          Collisions:%lu "), ptr->stats.collisions);
+  printf(_("          collisions:%lu "), ptr->stats.collisions);
   if (can_compress)
     printf(_("compressed:%lu "), ptr->stats.tx_compressed);
+  if (ptr->tx_queue_len != -1)
+    printf(_("txqueuelen:%d "), ptr->tx_queue_len);
   printf("\n");
 
   if ((ptr->map.irq || ptr->map.mem_start || ptr->map.dma || 

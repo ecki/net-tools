@@ -25,7 +25,6 @@
 #error "No HIPPI Support in your current Kernelsource Tree."
 #error "Disable HW Type HIPPI"
 #endif
-#include <linux/if_hippi.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
@@ -34,9 +33,13 @@
 #include <unistd.h>
 #include "net-support.h"
 #include "pathnames.h"
-#define  EXTERN
-#include "net-locale.h"
+#include "intl.h"
 
+/*
+ *	HIPPI magic constants.
+ */
+
+#define HIPPI_ALEN	6		/* Bytes in one HIPPI hw-addr	   */
 
 extern struct hwtype hippi_hwtype;
 
@@ -62,7 +65,7 @@ pr_shippi(struct sockaddr *sap)
   static char buf[64];
 
   if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-    return(NLS_CATBUFF (catfd, hippiSet, hippi_none, "[NONE SET]", buf, 64));
+    return(strncpy(buf, _("[NONE SET]"), 64));
   return(pr_hippi(sap->sa_data));
 }
 
@@ -88,8 +91,7 @@ in_hippi(char *bufp, struct sockaddr *sap)
 	  else if (c >= 'A' && c <= 'F') val = c - 'A' + 10;
 	  else {
 #ifdef DEBUG
-		fprintf(stderr, NLS_CATGETS(catfd, hippiSet, hippi_debug1,
-					    "in_hippi(%s): invalid hippi address!\n"), orig);
+		fprintf(stderr, _("in_hippi(%s): invalid hippi address!\n"), orig);
 #endif
 		errno = EINVAL;
 		return(-1);
@@ -101,8 +103,7 @@ in_hippi(char *bufp, struct sockaddr *sap)
 	  else if (c >= 'A' && c <= 'F') val |= c - 'A' + 10;
 	  else {
 #ifdef DEBUG
-		fprintf(stderr, NLS_CATGETS(catfd, hippiSet, hippi_debug2,
-					    "in_hippi(%s): invalid hippi address!\n"), orig);
+		fprintf(stderr, _("in_hippi(%s): invalid hippi address!\n"), orig);
 #endif
 		errno = EINVAL;
 		return(-1);
@@ -114,9 +115,7 @@ in_hippi(char *bufp, struct sockaddr *sap)
 	if (*bufp == ':') {
 		if (i == HIPPI_ALEN) {
 #ifdef DEBUG
-			fprintf(stderr, NLS_CATGETS(catfd, hippiSet, hippi_debug3,
-						    "in_hippi(%s): trailing : ignored!\n"),
-									orig)
+			fprintf(stderr, _("in_hippi(%s): trailing : ignored!\n"), orig)
 #endif
 						; /* nothing */
 		}
@@ -127,7 +126,7 @@ in_hippi(char *bufp, struct sockaddr *sap)
   /* That's it.  Any trailing junk? */
   if ((i == HIPPI_ALEN) && (*bufp != '\0')) {
 #ifdef DEBUG
-	fprintf(stderr, NLS_CATGETS(catfd, hippiSet, hippi_debug4, "in_hippi(%s): trailing junk!\n"), orig);
+	fprintf(stderr, _("in_hippi(%s): trailing junk!\n"), orig);
 	errno = EINVAL;
 	return(-1);
 #endif

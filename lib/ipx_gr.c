@@ -11,7 +11,11 @@
 #include <asm/types.h>
 #include <sys/types.h>
 #include <sys/socket.h>
+#if (__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 1)
+#include <netipx/ipx.h>
+#else
 #include "ipx.h"
+#endif
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
