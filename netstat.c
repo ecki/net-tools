@@ -7,7 +7,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.11 1998/11/18 13:46:16 philip Exp $
+ * Version:     $Id: netstat.c,v 1.12 1998/11/29 13:29:11 philip Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -1281,8 +1281,11 @@ int main
     if (flag_int + flag_rou + flag_nlp + flag_mas > 1)
 	usage();
 
-    if (flag_inet || flag_inet6)
+    if ((flag_inet || flag_inet6) && !(flag_tcp || flag_udp || flag_raw))
 	flag_tcp = flag_udp = flag_raw = 1;
+
+    if ((flag_tcp || flag_udp || flag_raw) && !(flag_inet || flag_inet6))
+        flag_inet = flag_inet6 = 1;
 
     flag_arg = flag_tcp + flag_udp + flag_raw + flag_unx + flag_ipx
 	+ flag_ax25 + flag_netrom;
