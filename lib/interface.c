@@ -7,7 +7,7 @@
    8/2000  Andi Kleen make the list operations a bit more efficient.
    People are crazy enough to use thousands of aliases now.
 
-   $Id: interface.c,v 1.19 2001/11/12 01:36:48 ecki Exp $
+   $Id: interface.c,v 1.20 2001/11/24 05:23:35 ecki Exp $
  */
 
 #include "config.h"
@@ -895,7 +895,7 @@ void ife_print_long(struct interface *ptr)
     }
 
     if ((ptr->map.irq || ptr->map.mem_start || ptr->map.dma ||
-	 ptr->map.base_addr)) {
+	 ptr->map.base_addr >= 0x100)) {
 	printf("          ");
 	if (ptr->map.irq)
 	    printf(_("Interrupt:%d "), ptr->map.irq);
