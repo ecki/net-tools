@@ -1,6 +1,6 @@
 /*
  * Copyright 1997,1999,2000 Andi Kleen. Subject to the GPL. 
- * $Id: statistics.c,v 1.13 2000/07/03 23:39:27 ak Exp $
+ * $Id: statistics.c,v 1.14 2001/02/02 18:01:23 pb Exp $
  * 19980630 - i18n - Arnaldo Carvalho de Melo <acme@conectiva.com.br> 
  * 19981113 - i18n fixes - Arnaldo Carvalho de Melo <acme@conectiva.com.br> 
  * 19990101 - added net/netstat, -t, -u, -w supprt - Bernd Eckenfels 
@@ -291,7 +291,7 @@ struct tabtab *newtable(struct tabtab *tabs, char *title)
 
 void process_fd(FILE *f)
 {
-    char buf1[512], buf2[512];
+    char buf1[1024], buf2[1024];
     char *sp, *np, *p;
     while (fgets(buf1, sizeof buf1, f)) {
 	int endflag;
