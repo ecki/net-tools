@@ -27,7 +27,11 @@
 #include <resolv.h>
 
 #include "intl.h"
-#include "utils.h"
+#include "util-ank.h"
+
+#ifndef AF_INET6
+#define AF_INET6	10
+#endif
 
 int scan_number(char *arg, unsigned *val)
 {
