@@ -26,9 +26,7 @@
 #include <netinet/in.h>
 #include "net-support.h"
 #include "pathnames.h"
-#define  EXTERN
-#include "net-locale.h"
-
+#include "intl.h"
 
 /* Display a ddp domain address. */
 static char *
@@ -48,7 +46,7 @@ ddp_sprint(struct sockaddr *sap, int numeric)
   static char buf[64];
 
   if (sap->sa_family != AF_APPLETALK)
-    return(NLS_CATBUFF (catfd, ddpSet, ddp_none, "[NONE SET]", buf, 64));
+	return strncpy (buf, _("[NONE SET]"), sizeof (buf));
   return(ddp_print(sap->sa_data));
 }
 

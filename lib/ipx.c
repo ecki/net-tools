@@ -9,6 +9,9 @@
  *		Public  License as  published  by  the  Free  Software
  *		Foundation;  either  version 2 of the License, or  (at
  *		your option) any later version.
+ * Modifications:
+ * 1998-07-01 - Arnaldo Carvalho de Melo - GNU gettext instead of catgets,
+ *                                         snprintf instead of sprintf
  */
 #include "config.h"
 
@@ -27,8 +30,7 @@
 #include "version.h"
 #include "net-support.h"
 #include "pathnames.h"
-#define  EXTERN
-#include "net-locale.h"
+#include "intl.h"
 
 #if (IPX_NODE_LEN != 6)
 #error "IPX_NODE_LEN != 6"
@@ -48,15 +50,15 @@ IPX_print(unsigned char *ptr)
       break;
 
   if (t && ntohl(sipx->sipx_network))   
-    sprintf(buff,"%08lX:%02X%02X%02X%02X%02X%02X",
+    snprintf(buff,sizeof(buff),"%08lX:%02X%02X%02X%02X%02X%02X",
   	(long int)ntohl(sipx->sipx_network),
   	(int)sipx->sipx_node[0],(int)sipx->sipx_node[1],
   	(int)sipx->sipx_node[2],(int)sipx->sipx_node[3],
   	(int)sipx->sipx_node[4],(int)sipx->sipx_node[5]);
   else if (!t && ntohl(sipx->sipx_network))
-    sprintf(buff,"%08lX", (long int)ntohl(sipx->sipx_network));
+    snprintf(buff,sizeof(buff),"%08lX", (long int)ntohl(sipx->sipx_network));
   else if (t && !ntohl(sipx->sipx_network))
-    sprintf(buff,"%02X%02X%02X%02X%02X%02X",
+    snprintf(buff,sizeof(buff),"%02X%02X%02X%02X%02X%02X",
   	(int)sipx->sipx_node[0],(int)sipx->sipx_node[1],
   	(int)sipx->sipx_node[2],(int)sipx->sipx_node[3],
   	(int)sipx->sipx_node[4],(int)sipx->sipx_node[5]);
@@ -73,7 +75,7 @@ IPX_sprint(struct sockaddr *sap, int numeric)
   static char buf[64];
 
   if (sap->sa_family != AF_IPX)
-    return(NLS_CATBUFF (catfd, ipxSet, ipx_none, "[NONE SET]", buf, 64));
+	return strncpy (buf, _("[NONE SET]"), sizeof (buf));
   return(IPX_print(sap->sa_data));
 }
 

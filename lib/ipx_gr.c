@@ -1,4 +1,9 @@
 /* support for ap->rresolv missing */
+/*
+  Modifications:
+  1998-07-01 - Arnaldo Carvalho de Melo - GNU gettext instead of catgets,
+                                          snprintf instead of sprintf
+*/
 
 #include "config.h"
 
@@ -17,8 +22,7 @@
 #include "version.h"
 #include "net-support.h"
 #include "pathnames.h"
-#define  EXTERN
-#include "net-locale.h"
+#include "intl.h"
 
 /* UGLY */
 
@@ -34,15 +38,14 @@ int IPX_rprint(int options)
   struct aftype *ap;
   struct sockaddr sa;
   
-  printf(NLS_CATGETS(catfd, ipxSet, ipx_table, "Kernel IPX routing table\n")); /* xxx */
+  printf(_("Kernel IPX routing table\n")); /* xxx */
 
   if ((ap = get_afntype(AF_IPX)) == NULL) {
   	EINTERN("lib/ipx_rt.c","AF_IPX missing");
   	return(-1);
   }
 
-  printf(NLS_CATGETS(catfd, ipxSet, ipx_header1,
-		"Destination               Router Net                Router Node\n"));
+  printf(_("Destination               Router Net                Router Node\n"));
 
   if ((fp = fopen(_PATH_PROCNET_IPX_ROUTE, "r")) == NULL) {
 	perror(_PATH_PROCNET_IPX_ROUTE);

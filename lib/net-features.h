@@ -11,6 +11,7 @@
  *960201 {0.01}	Bernd Eckenfels:	creation
  *960202 {0.02}	Bernd Eckenfels:	HW and AF added
  *960322 {0.03}	Bernd Eckenfels:	moved into the NET-LIB
+ *980630 {0.04} Arnaldo Carvalho de Melo: changed NLS for I18N
  *
  *		This program is free software; you can redistribute it
  *		and/or  modify it under  the terms of  the GNU General
@@ -135,11 +136,11 @@ static char *Features=
 /* ---------------------------------------------------- */
 
 
-#if NLS
-	"+NLS"
+#if I18N
+	"+I18N"
 #else
-	"-NLS"
-#endif /* NLS */
+	"-I18N"
+#endif /* I18N */
 
 
 "\nAF:"

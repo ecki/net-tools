@@ -1,3 +1,8 @@
+/*
+  Modifications:
+  1998-07-01 - Arnaldo Carvalho de Melo - GNU gettext instead of catgets
+*/
+
 #include "config.h"
 
 #if HAVE_AFINET
@@ -21,9 +26,7 @@
 #include "version.h"
 #include "net-support.h"
 #include "pathnames.h"
-#define  EXTERN
-#include "net-locale.h"
-
+#include "intl.h"
 #include "net-features.h"
 
 #if HAVE_NEW_ADDRT
@@ -41,12 +44,12 @@ static int skfd = -1;
 
 static int usage(void)
 {
-  fprintf(stderr,"Usage: inet_route [-vF] del {-host|-net} Target[/prefix] [gw Gw] [metric M] [[dev] If]\n");
-  fprintf(stderr,"       inet_route [-vF] add {-host|-net} Target[/prefix] [gw Gw] [metric M]\n");
-  fprintf(stderr,"                              [netmask N] [mss Mss] [window W] [irtt I]\n");
-  fprintf(stderr,"                              [mod] [dyn] [reinstate] [[dev] If]\n");
-  fprintf(stderr,"       inet_route [-vF] add {-host|-net} Target[/prefix] [metric M] reject\n");
-  fprintf(stderr,"       inet_route [-FC] flush      NOT aupported\n");
+  fprintf(stderr,_("Usage: inet_route [-vF] del {-host|-net} Target[/prefix] [gw Gw] [metric M] [[dev] If]\n"));
+  fprintf(stderr,_("       inet_route [-vF] add {-host|-net} Target[/prefix] [gw Gw] [metric M]\n"));
+  fprintf(stderr,_("                              [netmask N] [mss Mss] [window W] [irtt I]\n"));
+  fprintf(stderr,_("                              [mod] [dyn] [reinstate] [[dev] If]\n"));
+  fprintf(stderr,_("       inet_route [-vF] add {-host|-net} Target[/prefix] [metric M] reject\n"));
+  fprintf(stderr,_("       inet_route [-FC] flush      NOT aupported\n"));
   return(E_USAGE);
 }
 
@@ -157,8 +160,7 @@ static int INET_setroute(int action, int options, char **args)
 			return (E_LOOKUP);
 		}
 		if (isnet) {
-			fprintf(stderr, NLS_CATGETS(catfd, routeSet, route_cant_use,
-						    "route: %s: cannot use a NETWORK as gateway!\n"),
+			fprintf(stderr, _("route: %s: cannot use a NETWORK as gateway!\n"),
 				gateway);
 			return (E_OPTERR);
 		}
@@ -175,7 +177,7 @@ static int INET_setroute(int action, int options, char **args)
 		args++;
 		if(rt.rt_mss<64||rt.rt_mss>32768)
 		{
-			fprintf(stderr, NLS_CATGETS(catfd, routeSet, route_MSS, "route: Invalid MSS.\n"));
+			fprintf(stderr, _("route: Invalid MSS.\n"));
 			return(E_OPTERR);
 		}
 		continue;
@@ -189,7 +191,7 @@ static int INET_setroute(int action, int options, char **args)
 		args++;
 		if(rt.rt_window<128)
 		{
-			fprintf(stderr, NLS_CATGETS(catfd, routeSet, route_window, "route: Invalid window.\n"));
+			fprintf(stderr, _("route: Invalid window.\n"));
 			return(E_OPTERR);
 		}
 		continue;
@@ -206,7 +208,7 @@ static int INET_setroute(int action, int options, char **args)
 #if 0 /* FIXME: do we need to check anything of this? */
 		if(rt.rt_irtt<1||rt.rt_irtt> (120*HZ))
 		{
-			fprintf(stderr, NLS_CATGETS(catfd, routeSet, route_irtt, "route: Invalid initial rtt.\n"));
+			fprintf(stderr, _("route: Invalid initial rtt.\n"));
 			return(E_OPTERR);
 		}
 #endif
@@ -266,19 +268,16 @@ static int INET_setroute(int action, int options, char **args)
   if (mask_in_addr(rt)) {
 	__u32 mask = ~ntohl(mask_in_addr(rt));
 	if ((rt.rt_flags & RTF_HOST) && mask != 0xffffffff) {
-		fprintf(stderr, NLS_CATGETS(catfd, routeSet, route_netmask1,
-					    "route: netmask %.8x doesn't make sense with host route\n"), mask);
+		fprintf(stderr, _("route: netmask %.8x doesn't make sense with host route\n"), mask);
 		return(E_OPTERR);
 	}
 	if (mask & (mask+1)) {
-		fprintf(stderr, NLS_CATGETS(catfd, routeSet, route_netmask2,
-					    "route: bogus netmask %s\n"), netmask);
+		fprintf(stderr, _("route: bogus netmask %s\n"), netmask);
 		return(E_OPTERR);
 	}
 	mask = ((struct sockaddr_in *) &rt.rt_dst)->sin_addr.s_addr;
 	if (mask & ~mask_in_addr(rt)) {
-		fprintf(stderr, NLS_CATGETS(catfd, routeSet, route_netmask3,
-					    "route: netmask doesn't match route address\n"));
+		fprintf(stderr, _("route: netmask doesn't match route address\n"));
 		return(E_OPTERR);
 	}
   }
@@ -316,11 +315,11 @@ static int INET_setroute(int action, int options, char **args)
 int INET_rinput(int action, int options, char **args)
 {
   if (action == RTACTION_FLUSH) {
-  	fprintf(stderr,"Flushing `inet' routing table not supported\n");
+  	fprintf(stderr,_("Flushing `inet' routing table not supported\n"));
   	return(usage());
   }	
   if (options & FLAG_CACHE) {
-  	fprintf(stderr,"Modifying `inet' routing cache not supported\n");
+  	fprintf(stderr,_("Modifying `inet' routing cache not supported\n"));
   	return(usage());
   }	
   if ((*args == NULL) || (action == RTACTION_HELP))

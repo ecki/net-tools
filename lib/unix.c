@@ -27,8 +27,7 @@
 #include <unistd.h>
 #include "net-support.h"
 #include "pathnames.h"
-#define  EXTERN
-#include "net-locale.h"
+#include "intl.h"
 
 
 /* Display an UNSPEC address. */
@@ -55,7 +54,7 @@ UNSPEC_sprint(struct sockaddr *sap, int numeric)
   static char buf[64];
 
   if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-    return(NLS_CATBUFF (catfd, unixSet, unix_none, "[NONE SET]", buf, 64));
+	return strncpy (buf, _("[NONE SET]"), sizeof(buf));
   return(UNSPEC_print(sap->sa_data));
 }
 
@@ -77,7 +76,7 @@ UNIX_sprint(struct sockaddr *sap, int numeric)
   static char buf[64];
 
   if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-    return(NLS_CATBUFF (catfd, unixSet, unix_none, "[NONE SET]", buf, 64));
+	return strncpy (buf, _("[NONE SET]"), sizeof(buf));
   return(UNIX_print(sap->sa_data));
 }
 

@@ -32,9 +32,6 @@
 #include <unistd.h>
 #include "net-support.h"
 #include "pathnames.h"
-#define  EXTERN
-#include "net-locale.h"
-
 
 struct hwtype sit_hwtype = {
   "sit",	NULL, /*"IPv6-in-IPv4",*/		ARPHRD_SIT,	0,

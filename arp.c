@@ -39,7 +39,8 @@
  *					Typo fix (Debian Bug#5728 Giuliano Procida)
  *970803 {1.81} Bernd Eckenfels :	removed junk comment line 1
  *970925 {1.82} Bernd Eckenfels	:	include fix for libc6
- +980213 (1.83) Phil Blundell:		set ATF_COM on new entries
+ *980213 (1.83) Phil Blundell:		set ATF_COM on new entries
+ *980629 (1.84) Arnaldo Carvalho de Melo: gettext instead of catgets
  *
  *
  *		This program is free software; you can redistribute it
@@ -67,7 +68,7 @@
 #include "pathnames.h"
 #include "version.h"
 #include "config.h"
-#include "net-locale.h"
+#include "intl.h"
 
 #define DFLT_AF	"inet"
 #define DFLT_HW	"ether"
@@ -75,9 +76,8 @@
 #define FEATURE_ARP
 #include "lib/net-features.h"
 
-
 char *Release = RELEASE,
-     *Version = "arp 1.83 (1998-02-13)";
+     *Version = "arp 1.84 (1998-06-29)";
 
 int opt_n = 0;				/* do not resolve addresses	*/
 int opt_N = 0;				/* use symbolic names           */
@@ -106,7 +106,7 @@ arp_del(char **args)
 
   /* Resolve the host name. */
   if (*args == NULL) {
-	fprintf(stderr, NLS_CATGETS(catfd, arpSet, arp_hostname, "arp: need host name\n"));
+	fprintf(stderr, _("arp: need host name\n"));
 	return(-1);
   }
   host[(sizeof host)-1] = 0;
@@ -202,8 +202,7 @@ arp_del(char **args)
 		if (errno == ENXIO) {
 			if (flags & 1)
 				goto nopub;
-			printf(NLS_CATGETS(catfd, arpSet, arp_no_arp, 
-				"No ARP entry for %s\n"), host);
+			printf(_("No ARP entry for %s\n"), host);
 			return(-1);
 		}
 		perror("SIOCDARP(priv)");
@@ -216,8 +215,7 @@ nopub:
   	if (opt_v)  fprintf(stderr,"arp: SIOCDARP(pub)\n");
   	if (ioctl(sockfd, SIOCDARP, &req) < 0) {
 		if (errno == ENXIO) {
-			printf(NLS_CATGETS(catfd, arpSet, arp_no_arp, 
-				"No ARP entry for %s\n"), host);
+			printf(_("No ARP entry for %s\n"), host);
 			return(-1);
 		}
 		perror("SIOCDARP(pub)");
@@ -268,7 +266,7 @@ arp_set(char **args)
 
   /* Resolve the host name. */
   if (*args == NULL) {
-	fprintf(stderr, NLS_CATGETS(catfd, arpSet, arp_hostname, "arp: need host name\n"));
+	fprintf(stderr, _("arp: need host name\n"));
 	return(-1);
   }
   host[(sizeof host)-1] = 0; 
@@ -283,7 +281,7 @@ arp_set(char **args)
 
   /* Fetch the hardware address. */
   if (*args == NULL) {
-	fprintf(stderr, NLS_CATGETS(catfd, arpSet, arp_need_hw, "arp: need hardware address\n"));
+	fprintf(stderr, _("arp: need hardware address\n"));
 	return(-1);
   }
 
@@ -292,7 +290,7 @@ arp_set(char **args)
       return(-1);
   } else {
     if (hw->input(*args++, &req.arp_ha) < 0) {
-	fprintf(stderr, NLS_CATGETS(catfd, arpSet, arp_invalidhw, "arp: invalid hardware address\n"));
+	fprintf(stderr, _("arp: invalid hardware address\n"));
 	return(-1);
     }
   }
@@ -393,7 +391,7 @@ arp_file(char *name)
   FILE *fp;
 
   if ((fp = fopen(name, "r")) == NULL) {
-	fprintf(stderr, NLS_CATGETS(catfd, arpSet, arp_cant_open, "arp: cannot open etherfile %s !\n"), name);
+	fprintf(stderr, _("arp: cannot open etherfile %s !\n"), name);
 	return(-1);
   }
 
@@ -407,17 +405,14 @@ arp_file(char *name)
 
 	argc = getargs(buff, args);
 	if (argc < 2) {
-		fprintf(stderr, NLS_CATGETS(catfd, arpSet, arp_formaterr, 
-					    "arp: format error on line %u of etherfile %s !\n"),
+		fprintf(stderr, _("arp: format error on line %u of etherfile %s !\n"),
 			linenr, name);
 		continue;
 	}
 
-	if (arp_set(args) != 0) {
-		fprintf(stderr, NLS_CATGETS(catfd, arpSet, arp_cant_set,
-					    "arp: cannot set entry on line %u of etherfile %s !\n"),
+	if (arp_set(args) != 0)
+		fprintf(stderr, _("arp: cannot set entry on line %u of etherfile %s !\n"),
 			linenr, name);
-	}
   }
 
   (void) fclose(fp);
@@ -438,8 +433,7 @@ arp_disp_2(char *name,int type,int arp_flags,char *hwa,char *mask,char *dev)
     xhw = get_hwtype(DFLT_HW);
     
   if (title++ == 0) {
-    printf(NLS_CATGETS(catfd, arpSet, arp_address,
-		       "Address\t\t\tHWtype\tHWaddress\t    Flags Mask\t\t  Iface\n"));
+    printf(_("Address\t\t\tHWtype\tHWaddress\t    Flags Mask\t\t  Iface\n"));
   }
   /* Setup the flags. */
   flags[0] = '\0';
@@ -590,15 +584,13 @@ arp_show(char *name)
 	}
   }
   if (opt_v)
-	printf(NLS_CATGETS(catfd, arpSet, arp_sum,
-		"Entries: %d\tSkipped: %d\tFound: %d\n"),entries,entries-showed,showed);
+	printf(_("Entries: %d\tSkipped: %d\tFound: %d\n"),entries,entries-showed,showed);
   
   if (!showed) {
   	if (host[0] && !opt_a)
   		printf("%s (%s) -- no entry\n", name, host);
   	else if (hw_set || host[0] || device[0]) {
-		printf(NLS_CATGETS(catfd, arpSet, arp_none,
-			"arp: in %d entries no match found.\n"),entries);
+		printf(_("arp: in %d entries no match found.\n"),entries);
  	}
   }
   (void) fclose(fp);
@@ -609,26 +601,18 @@ static void
 version(void)
 {
   fprintf(stderr, "%s\n%s\n%s\n",Release,Version,Features);
-  NLS_CATCLOSE(catfd)
   exit(-1);
 }
 
 static void
 usage(void)
 {
-  fprintf(stderr, NLS_CATGETS(catfd, arpSet, arp_usage1,
-	"Usage: arp [-vn] [-H type] [-i if] -a [hostname]\n"));
-  fprintf(stderr, NLS_CATGETS(catfd, arpSet, arp_usage2,
-	"       arp [-v] [-i if] -d hostname [pub][nopub]\n"));
-  fprintf(stderr, NLS_CATGETS(catfd, arpSet, arp_usage3,
-	"       arp [-v] [-H type] [-i if] -s  hostname hw_addr [temp][nopub]\n"));
-  fprintf(stderr, NLS_CATGETS(catfd, arpSet, arp_usage4,
-	"       arp [-v] [-H type] [-i if] -s  hostname hw_addr [netmask nm] pub\n"));
-  fprintf(stderr, NLS_CATGETS(catfd, arpSet, arp_usage5,
-	"       arp [-v] [-H type] [-i if] -Ds hostname if [netmask nm] pub\n"));
-  fprintf(stderr, NLS_CATGETS(catfd, arpSet, arp_usage6,
-	"       arp [-vnD] [-H type] [-i if] -f filename\n"));
-  NLS_CATCLOSE(catfd)
+  fprintf(stderr, _("Usage: arp [-vn] [-H type] [-i if] -a [hostname]\n"));
+  fprintf(stderr, _("       arp [-v] [-i if] -d hostname [pub][nopub]\n"));
+  fprintf(stderr, _("       arp [-v] [-H type] [-i if] -s  hostname hw_addr [temp][nopub]\n"));
+  fprintf(stderr, _("       arp [-v] [-H type] [-i if] -s  hostname hw_addr [netmask nm] pub\n"));
+  fprintf(stderr, _("       arp [-v] [-H type] [-i if] -Ds hostname if [netmask nm] pub\n"));
+  fprintf(stderr, _("       arp [-vnD] [-H type] [-i if] -f filename\n"));
   exit(-1);
 }
 
@@ -654,22 +638,18 @@ main(int argc, char **argv)
 	{NULL,		0,	0,	0}
   };	
              
-#if NLS
-  setlocale (LC_MESSAGES, "");
-  catfd = catopen ("nettools", MCLoadBySet);
+#if I18N
+  bindtextdomain("net-tools", "/usr/share/locale");
+  textdomain("net-tools");
 #endif
 
   /* Initialize variables... */
   if ((hw = get_hwtype(DFLT_HW)) == NULL) {
-	fprintf(stderr, NLS_CATGETS(catfd, arpSet, arp_hw_not_supp,
-				    "%s: hardware type not supported!\n"), DFLT_HW);
-	NLS_CATCLOSE(catfd)
+	fprintf(stderr, _("%s: hardware type not supported!\n"), DFLT_HW);
 	return(-1);
   }
   if ((ap = get_aftype(DFLT_AF)) == NULL) {
-	fprintf(stderr, NLS_CATGETS(catfd, arpSet, arp_fam_not_supp,
-				    "%s: address family not supported!\n"), DFLT_AF);
-	NLS_CATCLOSE(catfd)
+	fprintf(stderr, _("%s: address family not supported!\n"), DFLT_AF);
 	return(-1);
   }
   what = 0;
@@ -713,10 +693,8 @@ main(int argc, char **argv)
 	case 'p':
 		ap = get_aftype(optarg);
 		if (ap == NULL) {
-			fprintf(stderr, NLS_CATGETS(catfd, arpSet, arp_unkn_addr,
-						    "arp: %s: unknown address family.\n"),
+			fprintf(stderr, _("arp: %s: unknown address family.\n"),
 				optarg);
-			NLS_CATCLOSE(catfd)
 			exit(-1);
 		}
 		break;
@@ -724,10 +702,8 @@ main(int argc, char **argv)
 	case 't':
 		hw = get_hwtype(optarg);
 		if (hw == NULL) {
-			fprintf(stderr, NLS_CATGETS(catfd, arpSet, arp_unkn_hw,
-						    "arp: %s: unknown hardware type.\n"),
+			fprintf(stderr, _("arp: %s: unknown hardware type.\n"),
 				optarg);
-			NLS_CATCLOSE(catfd)
 			exit(-1);
 		}
 		hw_set = 1;
@@ -746,23 +722,18 @@ main(int argc, char **argv)
   }
 
   if (ap->af != AF_INET) {
-	fprintf(stderr, NLS_CATGETS(catfd, arpSet, arp_wrong_af,
-				    "arp: %s: kernel only supports 'inet'.\n"),
+	fprintf(stderr, _("arp: %s: kernel only supports 'inet'.\n"),
 			ap->name);
-	NLS_CATCLOSE(catfd)
 	exit(-1);
   }
   if (hw->alen <= 0) {
-	fprintf(stderr, NLS_CATGETS(catfd, arpSet, arp_wrong_hw,
-				    "arp: %s: hardware type without ARP support.\n"),
+	fprintf(stderr, _("arp: %s: hardware type without ARP support.\n"),
 			hw->name);
-	NLS_CATCLOSE(catfd)
 	exit(-1);
   }
   if ((sockfd = socket(AF_INET,SOCK_DGRAM,0)) <0)
   {
   	perror("socket");
-	NLS_CATCLOSE(catfd)
   	exit(-1);
   }
 
@@ -793,6 +764,5 @@ main(int argc, char **argv)
 		usage();
   }
 
-  NLS_CATCLOSE(catfd)
   exit(what);
 }

@@ -21,6 +21,7 @@
  *					support in the AF handlers
  *960221 {1.02} Bernd Eckenfels:	renamed from route_info to getroute.c
  *960413 {1.03} Bernd Eckenfels:	new RTACTION support
+ *980701 {1.04} Arnaldo C. Melo:        GNU gettext instead of catgets
  *
  *		This program is free software; you can redistribute it
  *		and/or  modify it under  the terms of  the GNU General
@@ -34,7 +35,7 @@
 #include "pathnames.h"
 #include "version.h"
 #include "config.h"
-#include "net-locale.h"
+#include "intl.h"
 
 extern	struct aftype	unspec_aftype;
 extern	struct aftype	unix_aftype;
@@ -96,13 +97,13 @@ route_info(const char *afname, int options)
   	ap = get_aftype(tmp1);
   
   	if (!ap) {
-		fprintf(stderr,NLS_CATGETS(catfd, netstatSet, netstat_route_no_support, "Address family `%s' not supported.\n"),tmp1);
+		fprintf(stderr,_("Address family `%s' not supported.\n"),tmp1);
 		return(E_OPTERR);
   	}
  	tmp1=tmp2;
   
   	if (!ap->rprint) {
-		fprintf(stderr,NLS_CATGETS(catfd, netstatSet, netstat_type_no_route, "No routing for address family `%s'.\n"),ap->name);
+		fprintf(stderr,_("No routing for address family `%s'.\n"),ap->name);
 		return(E_OPTERR);
   	}
   	

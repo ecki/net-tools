@@ -19,8 +19,7 @@
 #include "version.h"
 #include "net-support.h"
 #include "pathnames.h"
-#define  EXTERN
-#include "net-locale.h"
+#include "intl.h"
 
 #include "net-features.h"
 
@@ -40,7 +39,7 @@ static int usage(void)
 int IPX_rinput(int action, int ext, char **args)
 {
   
-  fprintf(stderr,"IPX: this needs to be written\n");
+  fprintf(stderr,_("IPX: this needs to be written\n"));
   return(0);
 }
 #endif	/* HAVE_AFIPX */

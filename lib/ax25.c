@@ -24,11 +24,7 @@
 #include <sys/types.h>
 #include <sys/ioctl.h>
 #include <sys/socket.h>
-#if __GLIBC__ == 2
-#include <netax25/ax25.h>
-#else
 #include <linux/ax25.h>
-#endif
 #include <net/if_arp.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -40,8 +36,7 @@
 #include <unistd.h>
 #include "net-support.h"
 #include "pathnames.h"
-#define  EXTERN
-#include "net-locale.h"
+#include "intl.h"
 
 static char AX25_errmsg[128];
 
@@ -73,7 +68,7 @@ AX25_sprint(struct sockaddr *sap, int numeric)
   static char buf[64];
 
   if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-    return(NLS_CATBUFF (catfd, ax25Set, ax25_none, "[NONE SET]", buf, 64));
+    return strncpy (buf, _("[NONE SET]"), sizeof (buf));
   return(AX25_print(((struct sockaddr_ax25 *)sap)->sax25_call.ax25_call));
 }
 
@@ -95,7 +90,7 @@ AX25_input(int type, char *bufp, struct sockaddr *sap)
 	c = *bufp++;
 	if (islower(c)) c = toupper(c);
 	if (! (isupper(c) || isdigit(c))) {
-		strcpy(AX25_errmsg, NLS_CATGETS (catfd, ax25Set, ax25_debug1, "Invalid callsign"));
+		strcpy(AX25_errmsg, _("Invalid callsign"));
 #ifdef DEBUG
 		fprintf(stderr, "ax25_input(%s): %s !\n", AX25_errmsg, orig);
 #endif
@@ -108,7 +103,7 @@ AX25_input(int type, char *bufp, struct sockaddr *sap)
 
   /* Callsign too long? */
   if ((i == 6) && (*bufp != '-') && (*bufp != '\0')) {
-	strcpy(AX25_errmsg, NLS_CATGETS (catfd, ax25Set, ax25_debug2, "Callsign too long"));
+	strcpy(AX25_errmsg, _("Callsign too long"));
 #ifdef DEBUG
 	fprintf(stderr, "ax25_input(%s): %s !\n", AX25_errmsg, orig);
 #endif
@@ -156,7 +151,7 @@ AX25_hprint(struct sockaddr *sap)
   static char buf[64];
 
   if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-    return(NLS_CATBUFF (catfd, ax25Set, ax25_none, "[NONE SET]", buf, 64));
+    return strncpy (buf, _("[NONE SET]"), sizeof (buf));
   return(AX25_print(((struct sockaddr_ax25 *)sap)->sax25_call.ax25_call));
 }
 

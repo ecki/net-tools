@@ -2,12 +2,15 @@
  * lib/ppp.c	This file contains the SLIP support for the NET-2 base
  *		distribution.
  *
- * Version:	@(#)slip.c	1.10	10/07/93
+ * Version:	@(#)slip.c	1.12	01/07/98
  *
  * Author:	Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *		Copyright 1993 MicroWalt Corporation
  *
  *		Modified by Alan Cox, May 94 to cover NET-3
+ *                       
+ * Changes:
+ * 980701 {1.12} Arnaldo Carvalho de Melo - GNU gettext instead of catgets
  *
  *		This program is free software; you can redistribute it
  *		and/or  modify it under  the terms of  the GNU General
@@ -33,15 +36,13 @@
 #include <unistd.h>
 #include "net-support.h"
 #include "pathnames.h"
-#define  EXTERN
-#include "net-locale.h"
-
+#include "intl.h"
 
 /* Start the PPP encapsulation on the file descriptor. */
 static int
 do_ppp(int fd)
 {
-	fprintf(stderr,NLS_CATGETS(catfd, pppSet, ppp_cant_start, "You cannot start PPP with this program.\n"));
+	fprintf(stderr,_("You cannot start PPP with this program.\n"));
         return -1;
 }
 

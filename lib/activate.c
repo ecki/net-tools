@@ -15,6 +15,7 @@
  * Modifications:
  *
  *960322 {0.01} Bernd Eckenfels:	creation
+ *980411 {0.01i} Arnaldo Carvalho:      i18n: now uses gettext
  *
  *		This program is free software; you can redistribute it
  *		and/or  modify it under  the terms of  the GNU General
@@ -28,7 +29,7 @@
 #include "pathnames.h"
 #include "version.h"
 #include "config.h"
-#include "net-locale.h"
+#include "intl.h"
 
 extern	struct hwtype	slip_hwtype;
 extern	struct hwtype	cslip_hwtype;
@@ -66,11 +67,11 @@ int activate_ld(const char *hwname, int fd)
   hw = get_hwtype(hwname);
   
   if (!hw) {
-	fprintf(stderr,NLS_CATGETS(catfd, libSet, lib_act_no_support, "Hardware type `%s' not supported.\n"),hwname);
+	fprintf(stderr,_("Hardware type `%s' not supported.\n"),hwname);
 	return(E_NOSUPP);
   }
   if (!hw->activate) {
-	fprintf(stderr,NLS_CATGETS(catfd, libSet, lib_type_no_act, "Cannot change line discipline to `%s'.\n"),hw->name);
+	fprintf(stderr,_("Cannot change line discipline to `%s'.\n"),hw->name);
 	return(E_OPTERR);
   }
   return(hw->activate(fd));

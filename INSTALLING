@@ -26,14 +26,9 @@ To configure the compilation use "make config".
 If you have a recent Kernel you can and SHOULD answer ALL the Configuration
 Options with YES. You only have to decide about the NLS:
 
-If you don't know whether NLS is supported on your system or not, see
-/usr/include/locale.h. If it exists, there is every chance that NLS is
-supported. You also need the "gencat" program if you want to compile with
-National Language Support.
-
-On some BETA Releases NLS is disabled, cause the catalougs are out of sync
-with the development source-tree.
-
+If you don't know whether GNU gettext is supported on your system or not, run
+msgfmt.  If it exists, there is every chance that GNU gettext is
+supported.
 
 
 COMPILE

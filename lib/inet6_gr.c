@@ -1,3 +1,9 @@
+/*
+  Modifications:
+  1998-07-01 - Arnaldo Carvalho de Melo - GNU gettext instead of catgets,
+					  snprintf instead of sprintf
+*/
+
 #include "config.h"
 
 #if HAVE_AFINET6
@@ -23,9 +29,7 @@
 #include "version.h"
 #include "net-support.h"
 #include "pathnames.h"
-#define  EXTERN
-#include "net-locale.h"
-
+#include "intl.h"
 #include "net-features.h"
 
 /* this is from linux/include/net/ndisc.h */
@@ -74,12 +78,11 @@ int rprint_fib6(int ext, int numeric)
 	return 1;
   }
 
-  printf(NLS_CATGETS(catfd, inet6Set, inet6_table, "Kernel IPv6 routing table\n"));
+  printf(_("Kernel IPv6 routing table\n"));
 
-  printf(NLS_CATGETS(catfd, inet6Set, inet6_header2,
-		     "Destination                                 "
-		     "Next Hop                                "
-		     "Flags Metric Ref    Use Iface\n"));
+  printf(_("Destination                                 "
+	   "Next Hop                                "
+	   "Flags Metric Ref    Use Iface\n"));
 
   while (fgets(buff, 1023, fp))
   {
@@ -98,20 +101,20 @@ int rprint_fib6(int ext, int numeric)
 #endif
 	if (!(iflags & RTF_UP)) continue;
 	/* Fetch and resolve the target address. */
-	sprintf(addr6, "%s:%s:%s:%s:%s:%s:%s:%s",
+	snprintf(addr6, sizeof(addr6), "%s:%s:%s:%s:%s:%s:%s:%s",
 		addr6p[0], addr6p[1], addr6p[2], addr6p[3],
 		addr6p[4], addr6p[5], addr6p[6], addr6p[7]);
 	inet6_aftype.input(1, addr6, (struct sockaddr *)&saddr6);
-	sprintf(addr6, "%s/%d",
+	snprintf(addr6, sizeof(addr6), "%s/%d",
 		inet6_aftype.sprint((struct sockaddr *)&saddr6, 1),
 		prefix_len);
 	
 	/* Fetch and resolve the nexthop address. */
-	sprintf(naddr6, "%s:%s:%s:%s:%s:%s:%s:%s",
+	snprintf(naddr6, sizeof(naddr6), "%s:%s:%s:%s:%s:%s:%s:%s",
 		naddr6p[0], naddr6p[1], naddr6p[2], naddr6p[3],
 		naddr6p[4], naddr6p[5], naddr6p[6], naddr6p[7]);
 	inet6_aftype.input(1, naddr6, (struct sockaddr *)&snaddr6);
-	sprintf(naddr6, "%s",
+	snprintf(naddr6, sizeof(naddr6), "%s",
 		inet6_aftype.sprint((struct sockaddr *)&snaddr6, 1));
 	
 	/* Decode the flags. */
@@ -146,18 +149,16 @@ int rprint_cache6(int ext, int numeric)
 	return 1;
   }
 
-  printf(NLS_CATGETS(catfd, inet6ndSet, inet6_ndtable, "Kernel IPv6 Neighbour Cache\n"));
+  printf(_("Kernel IPv6 Neighbour Cache\n"));
 
   if (ext == 2)
-    printf(NLS_CATGETS(catfd, inet6ndSet, inet6_ndheader2,
-		     "Neighbour                                   "
-		     "HW Address        "
-		     "Iface    Flags Ref State\n"));
+    printf(_("Neighbour                                   "
+	     "HW Address        "
+	     "Iface    Flags Ref State\n"));
   else 
-    printf(NLS_CATGETS(catfd, inet6ndSet, inet6_ndheader2,
-		     "Neighbour                                   "
-		     "HW Address        "
-		     "Iface    Flags Ref State            Stale(sec) Delete(sec)\n"));
+    printf(_("Neighbour                                   "
+	     "HW Address        "
+	     "Iface    Flags Ref State            Stale(sec) Delete(sec)\n"));
 
 
   while (fgets(buff, 1023, fp))
@@ -170,16 +171,17 @@ int rprint_cache6(int ext, int numeric)
 		     haddrp[0], haddrp[1], haddrp[2], haddrp[3], haddrp[4], haddrp[5]);
 
 	/* Fetch and resolve the nexthop address. */
-	sprintf(addr6, "%s:%s:%s:%s:%s:%s:%s:%s",
+	snprintf(addr6, sizeof(addr6), "%s:%s:%s:%s:%s:%s:%s:%s",
 		addr6p[0], addr6p[1], addr6p[2], addr6p[3],
 		addr6p[4], addr6p[5], addr6p[6], addr6p[7]);
 	inet6_aftype.input(1, addr6, (struct sockaddr *)&saddr6);
-	sprintf(addr6, "%s/%d",
+	snprintf(addr6, sizeof(addr6), "%s/%d",
 		inet6_aftype.sprint((struct sockaddr *)&saddr6, numeric),
 		prefix_len);
 	
 	/* Fetch the  hardware address. */
-	sprintf(haddr, "%s:%s:%s:%s:%s:%s", haddrp[0],haddrp[1],haddrp[2], haddrp[3],haddrp[4],haddrp[5]);
+	snprintf(haddr, sizeof(haddr), "%s:%s:%s:%s:%s:%s",
+		 haddrp[0],haddrp[1],haddrp[2], haddrp[3],haddrp[4],haddrp[5]);
 	
 	/* Decode the flags. */
 	flags[0] = '\0';
@@ -217,7 +219,7 @@ int rprint_cache6(int ext, int numeric)
 		strcpy(statestr,"IN TIMER");
 		break;
 	default:
-		sprintf(statestr,"UNKNOWN %02x",state);
+		snprintf(statestr,sizeof (statestr),"UNKNOWN %02x",state);
 		break;
 	}
 	

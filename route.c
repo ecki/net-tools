@@ -2,7 +2,7 @@
  * route        This file contains an implementation of the command
  *              that manages the IP routing table in the kernel.
  *
- * Version:     route 1.94 (1997-09-21)
+ * Version:     route 1.95 (1998-06-29)
  *
  * Maintainer:	Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -31,6 +31,7 @@
  *960413 {1.91} Bernd Eckenfels:	new RTACTION support+FLAG_CACHE/FIB
  *960426 {1.92} Bernd Eckenfels:	FLAG_SYM/-N support
  *960823 {x.xx} Frank Strauss:  	INET6 stuff
+ *980629 {1.95} Arnaldo Carvalho de Melo: gettext instead of catgets
  *
  */
 #include <sys/types.h>
@@ -54,7 +55,7 @@
 #include <ctype.h>
 #include "net-support.h"
 #include "config.h"
-#include "net-locale.h"
+#include "intl.h"
 #include "pathnames.h"
 #include "version.h"
 
@@ -64,7 +65,7 @@
 #include "lib/net-features.h" /* needs some of the system includes above! */
 
 char	*Release = RELEASE,
-	*Version = "route 1.94 (1997-09-21)";
+	*Version = "route 1.95 (1998-06-29)";
 
 int             opt_n  = 0;	/* numerical output flag	*/
 int             opt_v  = 0;	/* debugging output flag	*/
@@ -75,19 +76,12 @@ struct aftype   *ap;		/* current address family	*/
 
 static void usage(void)
 {
-	fprintf(stderr, NLS_CATGETS(catfd, routeSet, route_usage1,
-				"Usage: route [-nNvee] [-FC] [Address_families]  List kernel routing tables\n"));
-	fprintf(stderr, NLS_CATGETS(catfd, routeSet, route_usage2,
-				"       route {-V|--version}                  Display command version and exit.\n"));
-	fprintf(stderr, NLS_CATGETS(catfd, routeSet, route_usage3,
-				"       route {-h|--help} [Address_family]    Usage Syntax for specified AF.\n"));
-	fprintf(stderr, NLS_CATGETS(catfd, routeSet, route_usage4,
-				"       route [-v] [-FC] {add|del|flush} ...  Modify routing table for AF.\n\n"));
-	fprintf(stderr, NLS_CATGETS(catfd, routeSet, route_usage5,
-				"  Address_families: inet,inet6,ddp,ipx,netrom,ax25\n"));
-	fprintf(stderr, NLS_CATGETS(catfd, routeSet, route_usage6,
-				"        specify AF: -A af1,af2..  or  --af1 --af2  or  af_route\n"));
-	NLS_CATCLOSE(catfd)
+	fprintf(stderr, _("Usage: route [-nNvee] [-FC] [Address_families]  List kernel routing tables\n"));
+	fprintf(stderr, _("       route {-V|--version}                  Display command version and exit.\n"));
+	fprintf(stderr, _("       route {-h|--help} [Address_family]    Usage Syntax for specified AF.\n"));
+	fprintf(stderr, _("       route [-v] [-FC] {add|del|flush} ...  Modify routing table for AF.\n\n"));
+	fprintf(stderr, _("  Address_families: inet,inet6,ddp,ipx,netrom,ax25\n"));
+	fprintf(stderr, _("        specify AF: -A af1,af2..  or  --af1 --af2  or  af_route\n"));
 	exit(E_USAGE);
 }
 
@@ -95,7 +89,6 @@ static void usage(void)
 static void version(void)
 {
 	fprintf(stderr,"%s\n%s\n%s\n",Release,Version,Features);
-	NLS_CATCLOSE(catfd)
 	exit(E_VERSION);
 }
 
@@ -120,12 +113,10 @@ int main(int argc, char **argv)
 	char **tmp;
 	char *progname;
 	int options;
-
-#if NLS
-	setlocale (LC_MESSAGES, "");
-	catfd = catopen ("nettools", MCLoadBySet);
+#if I18N
+        bindtextdomain("net-tools", "/usr/share/locale");
+        textdomain("net-tools");
 #endif
-
 	getroute_init(); 			/* Set up AF routing support */
 	setroute_init();
 	afname[0] = '\0';
@@ -160,10 +151,8 @@ int main(int argc, char **argv)
 				EINTERN("route.c","longopts 1 range");
 				break;
 			}
-			if ((i = aftrans_opt(longopts[lop].name))) {
-				NLS_CATCLOSE(catfd)
+			if ((i = aftrans_opt(longopts[lop].name))) 
 				exit(i);
-			}
 			break;
 		case 'C':
 			opt_fc |= FLAG_CACHE;
@@ -172,10 +161,8 @@ int main(int argc, char **argv)
 			opt_fc |= FLAG_FIB;
 			break;
 		case 'A':
-			if ((i = aftrans_opt(optarg))) {
-				NLS_CATCLOSE(catfd)
+			if ((i = aftrans_opt(optarg)))
 				exit(i);
-			}
 			break;
 		case 'V':
 			version();
@@ -227,6 +214,5 @@ int main(int argc, char **argv)
 	if (i == E_OPTERR)
 		usage();
 
-	NLS_CATCLOSE(catfd)
 	return (i);
 }

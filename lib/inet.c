@@ -41,8 +41,7 @@
 #include "version.h"
 #include "net-support.h"
 #include "pathnames.h"
-#define  EXTERN
-#include "net-locale.h"
+#include "intl.h"
 
 extern int h_errno;  /* some netdb.h versions don't export this */
 
@@ -120,7 +119,7 @@ INET_rresolve(char *name, struct sockaddr_in *sin, int numeric)
   /* Grmpf. -FvK */
   if (sin->sin_family != AF_INET) {
 #ifdef DEBUG
-	fprintf(stderr, NLS_CATGETS(catfd, inetSet, inet_debug1, "rresolve: unsupport address family %d !\n"), sin->sin_family);
+	fprintf(stderr, _("rresolve: unsupport address family %d !\n"), sin->sin_family);
 #endif
 	errno = EAFNOSUPPORT;
 	return(-1);
@@ -200,7 +199,7 @@ INET_sprint(struct sockaddr *sap, int numeric)
   static char buff[128];
 
   if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-    return(NLS_CATBUFF (catfd, inetSet, inet_none, "[NONE SET]", buff, 128));
+	return strncpy (buff, _("[NONE SET]"), sizeof(buff));
   if (INET_rresolve(buff, (struct sockaddr_in *) sap, numeric) != 0)
 							return(NULL);
   return(buff);

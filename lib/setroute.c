@@ -30,7 +30,7 @@
 #include "pathnames.h"
 #include "version.h"
 #include "config.h"
-#include "net-locale.h"
+#include "intl.h"
 
 extern	struct aftype	unspec_aftype;
 extern	struct aftype	unix_aftype;
@@ -75,12 +75,12 @@ route_edit(int action, const char *afname, int options, char **argv)
   ap = get_aftype(afname);
 
   if (!ap) {
-	fprintf(stderr,NLS_CATGETS(catfd, netstatSet, netstat_route_no_support, "Address family `%s' not supported.\n"),afname);
+	fprintf(stderr,_("Address family `%s' not supported.\n"),afname);
 	return(E_OPTERR);
   }
 
   if (!ap->rinput) {
-	fprintf(stderr,NLS_CATGETS(catfd, netstatSet, netstat_type_no_route, "No routing for address family `%s'.\n"),ap->name);
+	fprintf(stderr,_("No routing for address family `%s'.\n"),ap->name);
 	return(E_OPTERR);
   }
 

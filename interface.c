@@ -26,7 +26,6 @@
 #include "net-support.h"
 #include "pathnames.h"
 #include "version.h"
-#include "net-locale.h"
 
 #include "interface.h"
 #include "sockets.h"

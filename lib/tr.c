@@ -29,7 +29,7 @@
 #include <unistd.h>
 #include "net-support.h"
 #include "pathnames.h"
-
+#include "intl.h"
 
 extern struct hwtype tr_hwtype;
 
@@ -40,7 +40,7 @@ pr_tr(unsigned char *ptr)
 {
   static char buff[64];
 
-  sprintf(buff, "%02X:%02X:%02X:%02X:%02X:%02X",
+  snprintf(buff, sizeof(buff), "%02X:%02X:%02X:%02X:%02X:%02X",
 	(ptr[0] & 0377), (ptr[1] & 0377), (ptr[2] & 0377),
 	(ptr[3] & 0377), (ptr[4] & 0377), (ptr[5] & 0377)
   );
@@ -78,7 +78,7 @@ in_tr(char *bufp, struct sockaddr *sap)
 	  else if (c >= 'A' && c <= 'F') val = c - 'A' + 10;
 	  else {
 #ifdef DEBUG
-		fprintf(stderr, "in_tr(%s): invalid token ring address!\n", orig);
+		fprintf(stderr, _("in_tr(%s): invalid token ring address!\n"), orig);
 #endif
 		errno = EINVAL;
 		return(-1);
@@ -90,7 +90,7 @@ in_tr(char *bufp, struct sockaddr *sap)
 	  else if (c >= 'A' && c <= 'F') val |= c - 'A' + 10;
 	  else {
 #ifdef DEBUG
-		fprintf(stderr, "in_tr(%s): invalid token ring address!\n", orig);
+		fprintf(stderr, _("in_tr(%s): invalid token ring address!\n"), orig);
 #endif
 		errno = EINVAL;
 		return(-1);
@@ -102,7 +102,7 @@ in_tr(char *bufp, struct sockaddr *sap)
 	if (*bufp == ':') {
 		if (i == TR_ALEN) {
 #ifdef DEBUG
-			fprintf(stderr, "in_tr(%s): trailing : ignored!\n",
+			fprintf(stderr, _("in_tr(%s): trailing : ignored!\n"),
 									orig)
 #endif
 						; /* nothing */
@@ -114,7 +114,7 @@ in_tr(char *bufp, struct sockaddr *sap)
   /* That's it.  Any trailing junk? */
   if ((i == TR_ALEN) && (*bufp != '\0')) {
 #ifdef DEBUG
-	fprintf(stderr, "in_tr(%s): trailing junk!\n", orig);
+	fprintf(stderr, _("in_tr(%s): trailing junk!\n"), orig);
 	errno = EINVAL;
 	return(-1);
 #endif

@@ -9,6 +9,7 @@
  *		rarp -f				      Add frop /etc/ethers
  *
  * Rewritten: Phil Blundell <Philip.Blundell@pobox.com>  1997-08-03
+ * gettext instead of catgets: Arnaldo Carvalho de Melo <acme@conectiva.com.br> 1998-06-29
  *
  */
 
@@ -29,14 +30,14 @@
 #include <getopt.h>
 
 #include "config.h"
-#include "net-locale.h"
+#include "intl.h"
 #include "net-support.h"
 #include "version.h"
 #include "pathnames.h"
 
-#define NO_RARP_MESSAGE         "This kernel does not support RARP.\n"
+static char no_rarp_message[] = N_("This kernel does not support RARP.\n");
 
-static char version_string[] = RELEASE "\nrarp 1.01 (1998-01-02)\n";
+static char version_string[] = RELEASE "\nrarp 1.02 (1998-06-30)\n";
 
 static struct hwtype *hardware = NULL;
 
@@ -63,7 +64,7 @@ static int rarp_delete(int fd, struct hostent *hp)
       case ENXIO:
 	break;
       case ENODEV:
-	fputs(NO_RARP_MESSAGE, stderr);
+	fputs(_(no_rarp_message), stderr);
 	return 1;
       default:
 	perror("SIOCDRARP");
@@ -73,8 +74,7 @@ static int rarp_delete(int fd, struct hostent *hp)
   }
 
   if (found == 0) 
-    printf(NLS_CATGETS(catfd, rarpSet, rarp_noentry, 
-		       "no RARP entry for %s.\n"), hp->h_name);
+    printf(_("no RARP entry for %s.\n"), hp->h_name);
   return 0;
 }
 
@@ -87,7 +87,7 @@ static int rarp_set(int fd, struct hostent *hp, char *hw_addr)
   struct sockaddr sap;
 
   if (hardware->input(hw_addr, &sap)) {
-    fprintf(stderr, "%s: bad hardware address\n", hw_addr);
+    fprintf(stderr, _("%s: bad hardware address\n"), hw_addr);
     return 1;
   }
 
@@ -102,7 +102,7 @@ static int rarp_set(int fd, struct hostent *hp, char *hw_addr)
   /* Call the kernel. */
   if (ioctl(fd, SIOCSRARP, &req) < 0) {
     if (errno == ENODEV)
-      fputs(NO_RARP_MESSAGE, stderr);
+      fputs(_(no_rarp_message), stderr);
     else
       perror("SIOCSRARP");
     return  1;
@@ -120,8 +120,7 @@ static int rarp_file(int fd, const char *name)
   struct hostent *hp;
 
   if ((fp = fopen(name, "r")) == NULL) {
-    fprintf(stderr, NLS_CATGETS(catfd, rarpSet, 
-	      rarp_cant_open, "rarp: cannot open file %s:%s.\n"), name, strerror(errno));
+    fprintf(stderr, _("rarp: cannot open file %s:%s.\n"), name, strerror(errno));
     return -1;
   }
 
@@ -134,20 +133,15 @@ static int rarp_file(int fd, const char *name)
     if ((addr = strtok(buff, "\n \t")) == NULL) 
       continue;
     if ((host = strtok(NULL, "\n \t")) == NULL) {
-      fprintf(stderr, NLS_CATGETS(catfd, rarpSet, rarp_formaterr, 
-				  "rarp: format error at %s:%u\n"),
-	      name, linenr);
+      fprintf(stderr, _("rarp: format error at %s:%u\n"), name, linenr);
       continue;
     }
     
     if ((hp = gethostbyname(host)) == NULL) {
-      fprintf(stderr, NLS_CATGETS(catfd, rarpSet, rarp_unkn_host, 
-				  "rarp: %s: unknown host\n"), host);
+      fprintf(stderr, _("rarp: %s: unknown host\n"), host);
     }
     if (rarp_set(fd,hp,addr) != 0) {
-      fprintf(stderr, NLS_CATGETS(catfd, rarpSet, rarp_cant_set,
-				  "rarp: cannot set entry from %s:%u\n"),
-	      name, linenr);
+      fprintf(stderr, _("rarp: cannot set entry from %s:%u\n"), name, linenr);
     }
   }
   
@@ -161,7 +155,7 @@ static int display_cache(void)
   char buffer[256];
   if (fd == NULL) {
     if (errno == ENOENT) 
-      fputs(NO_RARP_MESSAGE, stderr);
+      fputs(_(no_rarp_message), stderr);
     else
       perror(_PATH_PROCNET_RARP);
     return 1;
@@ -176,17 +170,11 @@ static int display_cache(void)
 
 static void usage(void)
 {
-  fprintf(stderr, NLS_CATGETS(catfd, rarpSet, rarp_usage1,
-  "Usage: rarp -a                               list entries in cache.\n"));
-  fprintf(stderr, NLS_CATGETS(catfd, rarpSet, rarp_usage2,
-  "       rarp -d hostname                      delete entry from cache.\n"));
-  fprintf(stderr, NLS_CATGETS(catfd, rarpSet, rarp_usage3,
-  "       rarp [-t hwtype] -s hostname hwaddr   add entry to cache.\n"));
-  fprintf(stderr, NLS_CATGETS(catfd, rarpSet, rarp_usage3a,
-  "       rarp -f                               add entries from ethers.\n"));
-  fprintf(stderr, NLS_CATGETS(catfd, rarpSet, rarp_usage4,
-  "       rarp -V                               display program version.\n"));
-  NLS_CATCLOSE(catfd)
+  fprintf(stderr, _("Usage: rarp -a                               list entries in cache.\n"));
+  fprintf(stderr, _("       rarp -d hostname                      delete entry from cache.\n"));
+  fprintf(stderr, _("       rarp [-t hwtype] -s hostname hwaddr   add entry to cache.\n"));
+  fprintf(stderr, _("       rarp -f                               add entries from ethers.\n"));
+  fprintf(stderr, _("       rarp -V                               display program version.\n"));
   exit(-1);
 }
 
@@ -212,9 +200,9 @@ int main(int argc, char **argv)
   struct hostent *hp;
   int fd;
 
-#if NLS
-  setlocale (LC_MESSAGES, "");
-  catfd = catopen ("nettools", MCLoadBySet);
+#if I18N
+  bindtextdomain("net-tools", "/usr/share/locale");
+  textdomain("net-tools");
 #endif
 
 #if HAVE_HWETHER
@@ -231,7 +219,6 @@ int main(int argc, char **argv)
       usage();
     case 'V':
       fprintf(stderr, version_string);
-      NLS_CATCLOSE(catfd)
       exit(1);
       break;
     case 'v':
@@ -241,7 +228,7 @@ int main(int argc, char **argv)
     case 's':
     case 'd':
       if (mode) {
-	fprintf(stderr, "%s: illegal option mix.\n", argv[0]);
+	fprintf(stderr, _("%s: illegal option mix.\n"), argv[0]);
 	usage();
       } else {
 	mode = (c == 'a'?MODE_DISPLAY:(c == 'd'?MODE_DELETE:MODE_SET));
@@ -271,10 +258,8 @@ int main(int argc, char **argv)
   } while (c != EOF);
 
   if (hardware == NULL) {
-    fprintf(stderr, NLS_CATGETS(catfd, rarpSet, rarp_unkn_hw,
-				"rarp: %s: unknown hardware type.\n"), optarg);
-    NLS_CATCLOSE(catfd)
-      exit(1);
+    fprintf(stderr, _("rarp: %s: unknown hardware type.\n"), optarg);
+    exit(1);
   }
 
   switch (mode) {
@@ -294,14 +279,11 @@ int main(int argc, char **argv)
     usage();
   }
     if ((hp = gethostbyname(args[0])) == NULL) {
-      fprintf(stderr, NLS_CATGETS(catfd, rarpSet, rarp_unkn_host, 
-				  "rarp: %s: unknown host\n"), args[0]);
-      NLS_CATCLOSE(catfd)
+	fprintf(stderr, _("rarp: %s: unknown host\n"), args[0]);
 	exit(1);
     }
     if (fd = socket(PF_INET, SOCK_DGRAM, 0), fd < 0) {
-      perror("socket");
-      NLS_CATCLOSE(catfd)
+	perror("socket");
 	exit (1);
     }
     result = (mode == MODE_DELETE)?rarp_delete(fd, hp):rarp_set(fd, hp, args[1]);
@@ -311,15 +293,12 @@ int main(int argc, char **argv)
   case MODE_ETHERS:
     if (nargs!=0 && nargs!=1) usage();
     if (fd = socket(PF_INET, SOCK_DGRAM, 0), fd < 0) {
-      perror("socket");
-      NLS_CATCLOSE(catfd)
+	perror("socket");
 	exit (1);
     }
     result = rarp_file(fd, nargs ? args[0] : _PATH_ETHERS);
     close(fd);
 
   }
-
-  NLS_CATCLOSE(catfd)
     exit(result);
 }

@@ -17,6 +17,8 @@
  *					Jos Vos' ipfwadm 2.0beta1
  *950218 {0.02} Bernd Eckenfels:	<linux/if.h> added
  *
+ *980405 {0.03} Arnaldo Carvalho:       i18n CATGETS -> gettext
+ *
  *		This program is free software; you can redistribute it
  *		and/or  modify it under  the terms of  the GNU General
  *		Public  License as  published  by  the  Free  Software
@@ -44,8 +46,7 @@
 #include "pathnames.h"
 #include "version.h"
 #include "config.h"
-#include "net-locale.h"
-
+#include "intl.h"
 #include "net-features.h"
 #if HAVE_FW_MASQUERADE
 
@@ -203,13 +204,13 @@ int ip_masq_info(int numeric, int ext)
 	ntotal += nread;
 
 	if (ntotal > 0) {
-		printf(NLS_CATGETS(catfd, libSet, lib_masq, "IP masquerading entries\n"));
+		printf(_("IP masquerading entries\n"));
 		switch(ext) {
 			case 1:
-				printf(NLS_CATGETS(catfd, libSet, lib_masq_tit1, "prot   expire source               destination          ports\n"));
+				printf(_("prot   expire source               destination          ports\n"));
 				break;
 			default:
-				printf(NLS_CATGETS(catfd, libSet, lib_masq_tit2, "prot   expire    initseq delta prevd source               destination          ports\n"));
+				printf(_("prot   expire    initseq delta prevd source               destination          ports\n"));
 				break;
 		}
 		for (i = 0; i < ntotal; i++)

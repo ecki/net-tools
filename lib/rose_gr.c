@@ -36,8 +36,7 @@
 #include <unistd.h>
 #include "net-support.h"
 #include "pathnames.h"
-#define  EXTERN
-#include "net-locale.h"
+#include "intl.h"
 
 int ROSE_rprint(int options)
 {
@@ -47,11 +46,11 @@ int ROSE_rprint(int options)
 
 	if(f==NULL)
 	{
-		printf(NLS_CATGETS(catfd, netstatSet, netstat_norose, "ROSE not configured in this system.\n")); /* xxx */
+		printf(_("ROSE not configured in this system.\n")); /* xxx */
 		return 1;
 	}
-	printf(NLS_CATGETS(catfd, netstatSet, netstat_rose, "Kernel ROSE routing table\n")); /* xxx */
-	printf(NLS_CATGETS(catfd, netstatSet, netstat_header_rose, "Destination  Iface    Use\n")); /* xxx */
+	printf(_("Kernel ROSE routing table\n")); /* xxx */
+	printf(_("Destination  Iface    Use\n")); /* xxx */
 	fgets(buffer,256,f);
 	while(fgets(buffer,256,f))
 	{

@@ -27,9 +27,7 @@
 #include "version.h"
 #include "net-support.h"
 #include "pathnames.h"
-
-#define  EXTERN
-#include "net-locale.h"
+#include "intl.h"
 
 #include <linux/if_ec.h>
 
@@ -48,11 +46,10 @@ ec_print(unsigned char *ptr)
 static char *
 ec_sprint(struct sockaddr *sap, int numeric)
 {
-  static char buf[64];
   struct sockaddr_ec *sec = (struct sockaddr_ec *)sap;
 
   if (sap->sa_family != AF_ECONET)
-    return(NLS_CATBUFF (catfd, ecSet, ec_none, "[NONE SET]", buf, 64));
+    return _("[NONE SET]");
 
   return ec_print((unsigned char *)&sec->addr);
 }

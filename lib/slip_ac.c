@@ -34,8 +34,6 @@
 #include <unistd.h>
 #include "net-support.h"
 #include "pathnames.h"
-#define  EXTERN
-#include "net-locale.h"
 
 
 /* Set the line discipline of a terminal line. */

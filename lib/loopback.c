@@ -6,6 +6,9 @@
  * Author:	Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *		Copyright 1993 MicroWalt Corporation
  *
+ * Modifications:
+ * 1998-07-01 - Arnaldo Carvalho de Melo - GNU gettext instead of catgets
+ *
  *		This program is free software; you can redistribute it
  *		and/or  modify it under  the terms of  the GNU General
  *		Public  License as  published  by  the  Free  Software
@@ -25,9 +28,7 @@
 #include <unistd.h>
 #include "net-support.h"
 #include "pathnames.h"
-#define  EXTERN
-#include "net-locale.h"
-
+#include "intl.h"
 
 /* Display an UNSPEC address. */
 static char *
@@ -53,7 +54,7 @@ pr_sunspec(struct sockaddr *sap)
   static char buf[64];
 
   if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-    return(NLS_CATBUFF (catfd, loopbackSet, loopback_none, "[NONE SET]", buf, 64));
+	return strncpy (buf, _("[NONE SET]"), sizeof (buf));
   return(pr_unspec(sap->sa_data));
 }
 

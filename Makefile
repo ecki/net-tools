@@ -5,7 +5,7 @@
 #		NET-3 Networking Distribution for the LINUX operating
 #		system.
 #
-# Version:	Makefile 1.33 (1996-05-18)
+# Version:	Makefile 1.45 (1996-06-29)
 #
 # Author:	Bernd Eckenfels <net-tools@lina.inka.de>
 #		Copyright 1995-1996 Bernd Eckebnfels, Germany
@@ -69,15 +69,6 @@
 # set the base of the Installation 
 # BASEDIR = /mnt
 
-#
-# DON'T CHANGE ANY of the NLS-Support definitions, it's disabled
-#
-# set default language (DEF_LANG) to en_US.88591 if you don't use NLS
-DEF_LANG = en_US.88591
-
-# install national language support for the following languages
-# ADD_LANG = fr_FR.88591 de_DE.88591
-
 # path to the net-lib support library. Default: lib
 NET-LIB-PATH = lib
 NET-LIB-NAME = support
@@ -93,7 +84,7 @@ RESLIB = # -L/usr/inet6/lib -linet6
 # -------- end of user definitions --------
 
 MAINTAINER = Philip.Blundell@pobox.com
-RELEASE	   = 980126
+RELEASE	   = 980810
 
 .EXPORT_ALL_VARIABLES:
 
@@ -115,11 +106,9 @@ LD	= gcc
 
 NLIB	= -l$(NET-LIB-NAME)
 
-USE_NLS := $(shell grep -s 'define NLS 1' config.h)
-
 MDEFINES = COPTS='$(COPTS)' LOPTS='$(LOPTS)' TOPDIR='$(TOPDIR)'
 
-%.o:		%.c config.h version.h net-locale.h net-features.h $<
+%.o:		%.c config.h version.h intl.h net-features.h $<
 		$(CC) $(CFLAGS) -c $<
 
 all:		config.h version.h subdirs $(PROGS)
@@ -159,15 +148,15 @@ version.h:	Makefile
 		@echo "#define RELEASE \"net-tools $(RELEASE)\"" >version.h
 
 
-$(NET-LIB):	config.h version.h net-locale.h libdir
+$(NET-LIB):	config.h version.h intl.h libdir
 
-net-locale.h:		nlsdir
+i18n.h:		i18ndir
 
 libdir:
 		@$(MAKE) -C $(NET-LIB-PATH) $(MDEFINES)
 
-nlsdir:
-		@$(MAKE) -C nls
+i18ndir:
+		@$(MAKE) -C po
 
 subdirs:
 		@for i in $(SUBDIRS); do $(MAKE) -C $$i $(MDEFINES) ; done
@@ -191,12 +180,14 @@ netstat:	$(NET-LIB) netstat.o statistics.o interface.o sockets.o
 		$(CC) $(LDFLAGS) -o netstat netstat.o statistics.o interface.o sockets.o $(NLIB) $(RESLIB)
 
 installbin:
-	install -o root -g root -m 0755 arp      ${BASEDIR}/sbin
-	install -o root -g root -m 0755 ifconfig ${BASEDIR}/sbin
-	install -o root -g root -m 0755 netstat  ${BASEDIR}/bin
-	install -o root -g root -m 0755 rarp     ${BASEDIR}/sbin
-	install -o root -g root -m 0755 route    ${BASEDIR}/sbin
-	install -o root -g root -m 0755 hostname ${BASEDIR}/bin
+	install -o 0 -g 0 -m 0755 -d ${BASEDIR}/sbin
+	install -o 0 -g 0 -m 0755 -d ${BASEDIR}/bin
+	install -o 0 -g 0 -m 0755 arp      ${BASEDIR}/sbin
+	install -o 0 -g 0 -m 0755 ifconfig ${BASEDIR}/sbin
+	install -o 0 -g 0 -m 0755 netstat  ${BASEDIR}/bin
+	install -o 0 -g 0 -m 0755 rarp     ${BASEDIR}/sbin
+	install -o 0 -g 0 -m 0755 route    ${BASEDIR}/sbin
+	install -o 0 -g 0 -m 0755 hostname ${BASEDIR}/bin
 	ln -fs hostname $(BASEDIR)/bin/dnsdomainname
 	ln -fs hostname $(BASEDIR)/bin/ypdomainname
 	ln -fs hostname $(BASEDIR)/bin/nisdomainname
@@ -213,39 +204,7 @@ savebin:
 		 [ -f $$i ] && cp -f $$i $$i.old ; done ; echo Saved.
 
 installdata:
-	install -o root -g root -m 0644 man/${DEF_LANG}/arp.8           ${BASEDIR}/usr/man/man8
-	install -o root -g root -m 0644 man/${DEF_LANG}/ifconfig.8      ${BASEDIR}/usr/man/man8
-	install -o root -g root -m 0644 man/${DEF_LANG}/netstat.8       ${BASEDIR}/usr/man/man8
-	install -o root -g root -m 0644 man/${DEF_LANG}/rarp.8          ${BASEDIR}/usr/man/man8
-	install -o root -g root -m 0644 man/${DEF_LANG}/route.8         ${BASEDIR}/usr/man/man8
-	install -o root -g root -m 0644 man/${DEF_LANG}/hostname.1      ${BASEDIR}/usr/man/man1
-	install -o root -g root -m 0644 man/${DEF_LANG}/dnsdomainname.1 ${BASEDIR}/usr/man/man1
-	install -o root -g root -m 0644 man/${DEF_LANG}/ypdomainname.1  ${BASEDIR}/usr/man/man1
-	install -o root -g root -m 0644 man/${DEF_LANG}/nisdomainname.1 ${BASEDIR}/usr/man/man1
-	install -o root -g root -m 0644 man/${DEF_LANG}/domainname.1    ${BASEDIR}/usr/man/man1
-	install -o root -g root -m 0644 man/${DEF_LANG}/ethers.5        ${BASEDIR}/usr/man/man5
-#ifneq ($(USE_NLS), "")
-#	if [ "${DEF_LANG}" != "en_US.88591" ]; then \
-#		install -o root -g root -m 0755 -d ${BASEDIR}/usr/lib/locale/${DEF_LANG} ;\
-#		install -o root -g root -m 0644 nls/${DEF_LANG}/nettools.cat ${BASEDIR}/usr/lib/locale/${DEF_LANG} ;\
-#	fi
-#	for i in $(ADD_LANG); do \
-#	install -o root -g root -m 0755 -d ${BASEDIR}/usr/lib/locale/$$i ;\
-#	install -o root -g root -m 0644 nls/$$i/nettools.cat ${BASEDIR}/usr/lib/locale/$$i ;\
-#	if [ -d man/$$i ]; then \
-#	install -o root -g root -m 0755 -d ${BASEDIR}/usr/man/$$i/man8 ;\
-#	install -o root -g root -m 0644 man/$$i/arp.8           ${BASEDIR}/usr/man/$$i/man8 ;\
-#	install -o root -g root -m 0644 man/$$i/ifconfig.8      ${BASEDIR}/usr/man/$$i/man8 ;\
-#	install -o root -g root -m 0644 man/$$i/netstat.8       ${BASEDIR}/usr/man/$$i/man8 ;\
-#	install -o root -g root -m 0644 man/$$i/rarp.8          ${BASEDIR}/usr/man/$$i/man8 ;\
-#	install -o root -g root -m 0644 man/$$i/route.8         ${BASEDIR}/usr/man/$$i/man8 ;\
-#	install -o root -g root -m 0644 man/$$i/hostname.1      ${BASEDIR}/usr/man/$$i/man1 ;\
-#	install -o root -g root -m 0644 man/$$i/dnsdomainname.1 ${BASEDIR}/usr/man/$$i/man1 ;\
-#	install -o root -g root -m 0644 man/$$i/ypdomainname.1  ${BASEDIR}/usr/man/$$i/man1 ;\
-#	install -o root -g root -m 0644 man/$$i/nisdomainname.1 ${BASEDIR}/usr/man/$$i/man1 ;\
-#	install -o root -g root -m 0644 man/$$i/domainname.1    ${BASEDIR}/usr/man/$$i/man1 ;\
-#	fi ;\
-#	done
-#endif
+	$(MAKE) -C man install
+	$(MAKE) -C po install
 
 # End of Makefile.

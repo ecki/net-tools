@@ -5,6 +5,7 @@
 
 #include "config.h"
 #include "sockets.h"
+#include "intl.h"
 
 int skfd = -1;				/* generic raw socket desc.	*/
 #if HAVE_AFIPX
@@ -92,6 +93,6 @@ int sockets_open(void)
 #endif
 
   /* We have no address families.  */
-  fprintf(stderr, "No usable address families found.\n");
+  fprintf(stderr, _("No usable address families found.\n"));
   return -1;
 }

@@ -3,13 +3,14 @@
  *		support functions for the net-tools.
  *		(most of it copied from lib/inet.c 1.26).
  *
- * Version:	lib/inet6.c 0.01 1996-08-08
+ * Version:	lib/inet6.c 0.02 1998-07-01
  *
  * Author:	Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *		Copyright 1993 MicroWalt Corporation
  *
  * Modified:
  *960808 {0.01}	Frank Strauss :         adapted for IPv6 support
+ *980701 {0.02} Arnaldo C. Melo:        GNU gettext instead of catgets
  *
  *		This program is free software; you can redistribute it
  *		and/or  modify it under  the terms of  the GNU General
@@ -37,8 +38,7 @@
 #include "version.h"
 #include "net-support.h"
 #include "pathnames.h"
-#define  EXTERN
-#include "net-locale.h"
+#include "intl.h"
 
 extern int h_errno;  /* some netdb.h versions don't export this */
 
@@ -70,7 +70,7 @@ INET6_rresolve(char *name, struct sockaddr_in6 *sin6, int numeric)
   /* Grmpf. -FvK */
   if (sin6->sin6_family != AF_INET6) {
 #ifdef DEBUG
-	fprintf(stderr, NLS_CATGETS(catfd, inetSet, inet_debug1, "rresolve: unsupport address family %d !\n"),
+	fprintf(stderr, _("rresolve: unsupport address family %d !\n"),
 							sin6->sin6_family);
 #endif
 	errno = EAFNOSUPPORT;
@@ -118,7 +118,7 @@ INET6_sprint(struct sockaddr *sap, int numeric)
   static char buff[128];
 
   if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-    return(NLS_CATBUFF (catfd, inetSet, inet_none, "[NONE SET]", buff, 128));
+	return strncpy (buff, _("[NONE SET]"), sizeof (buff));
   if (INET6_rresolve(buff, (struct sockaddr_in6 *) sap, numeric) != 0)
 							return(NULL);
   return(buff);

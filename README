@@ -35,9 +35,14 @@ of net-tools should be 1.5.
 You need kernel 2.0 or later to use these programs.  These programs
 should compile cleanly with either glibc or libc5.
 
-There is no NLS support in this distribution.  The files are out of date.
-Unless a volunteer is found soon to maintain the translations, NLS will be
-dropped altogether.
+The NLS support was changed from catgets to GNU gettext by Arnaldo
+Carvalho de Melo <acme@conectiva.com.br> in June, 1998, to make the
+source more readable. A translation to brazilian portuguese (pt_BR) is
+available and others are welcome!
+
+If your system has no support for GNU gettext then `make install' will
+probably fail in the po directory.  This is harmless and can be ignored;
+all the tools and manual pages are already installed at this point.
 
 ipfw has been removed from the distribution.  Use ipfwadm instead; get
 it at <ftp://ftp.xos.nl/pub/linux/ipfwadm/>.
@@ -57,5 +62,5 @@ glibc 2.0.
 
 
 Phil Blundell
-philb@gnu.ai.mit.edu
-21st September 1997
+philb@gnu.org
+10th August 1998

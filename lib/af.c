@@ -24,8 +24,7 @@
 #include "config.h"
 #include "net-support.h"
 #include "pathnames.h"
-#define  EXTERN
-#include "net-locale.h"
+#include "intl.h"
 
 
 int flag_unx = 0;
@@ -103,30 +102,30 @@ static struct aftype *aftypes[] = {
 
 void afinit ()
 {
-  unspec_aftype.title = NLS_CATSAVE (catfd, unixSet, unix_unspec, "UNSPEC");
+  unspec_aftype.title = _("UNSPEC");
 #if HAVE_AFINET
-  unix_aftype.title = NLS_CATSAVE (catfd, unixSet, unix_unix, "UNIX Domain");
+  unix_aftype.title = _("UNIX Domain");
 #endif
 #if HAVE_AFINET
-  inet_aftype.title = NLS_CATSAVE (catfd, inetSet, inet_darpa, "DARPA Internet");
+  inet_aftype.title = _("DARPA Internet");
 #endif
 #if HAVE_AFINET6
-  inet6_aftype.title = NLS_CATSAVE (catfd, inetSet, inet_darpa, "IPv6");
+  inet6_aftype.title = _("IPv6");
 #endif
 #if HAVE_AFAX25
-  ax25_aftype.title = NLS_CATSAVE (catfd, ax25Set, ax25_ax25, "AMPR AX.25");
+  ax25_aftype.title = _("AMPR AX.25");
 #endif
 #if HAVE_AFNETROM
-  netrom_aftype.title = NLS_CATSAVE (catfd, netromSet, netrom_netrom, "AMPR NET/ROM");
+  netrom_aftype.title = _("AMPR NET/ROM");
 #endif
 #if HAVE_AFIPX
-  ipx_aftype.title = NLS_CATSAVE (catfd, ipxSet, ipx_ipx, "IPX");
+  ipx_aftype.title = _("IPX");
 #endif
 #if HAVE_AFATALK
-  ddp_aftype.title = NLS_CATSAVE (catfd, ddpSet, ddp_ddp, "Appletalk DDP");
+  ddp_aftype.title = _("Appletalk DDP");
 #endif
 #if HAVE_AFCONET
-  ec_aftype.title = NLS_CATSAVE (catfd, ecSet, ec_ec, "Econet");
+  ec_aftype.title = _("Econet");
 #endif
   sVafinit = 1;
 }
@@ -186,7 +185,7 @@ get_aftype(const char *name)
 	afp++;
   }
   if (index(name,','))
-  	fprintf(stderr,NLS_CATGETS(catfd, libSet, lib_toomuch, "Please don't supply more than one address family.\n"));
+  	fprintf(stderr,_("Please don't supply more than one address family.\n"));
   return(NULL);
 }
 
@@ -232,7 +231,7 @@ int aftrans_opt(const char *arg)
 			if (strcmp(tmp1,paft->alias))
 				continue;
 			if (strlen(paft->name)+strlen(afname)+1 >= sizeof(afname)) {
-				fprintf(stderr,NLS_CATGETS(catfd, libSet, lib_toomuch_af, "Too much address family arguments.\n"));				
+				fprintf(stderr,_("Too much address family arguments.\n"));				
 				return(0);
 			}
 			if (paft->flag)
@@ -243,7 +242,7 @@ int aftrans_opt(const char *arg)
 			break;
 		}
 		if (!paft->alias) {
-			fprintf(stderr,NLS_CATGETS(catfd, libSet, lib_unknown_af, "Unknown address family `%s'.\n"),tmp1);			
+			fprintf(stderr,_("Unknown address family `%s'.\n"),tmp1);			
 			return(1);
 		}
 		tmp1=tmp2;

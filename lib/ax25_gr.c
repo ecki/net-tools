@@ -34,8 +34,7 @@
 #include <unistd.h>
 #include "net-support.h"
 #include "pathnames.h"
-#define  EXTERN
-#include "net-locale.h"
+#include "intl.h"
 
 int AX25_rprint(int options)
 {
@@ -45,11 +44,11 @@ int AX25_rprint(int options)
 
 	if(f==NULL)
 	{
-		printf(NLS_CATGETS(catfd, netstatSet, netstat_noax25, "AX.25 not configured in this system.\n")); /* xxx */
+		printf(_("AX.25 not configured in this system.\n")); /* xxx */
 		return 1;
 	}
-	printf(NLS_CATGETS(catfd, netstatSet, netstat_ax25, "Kernel AX.25 routing table\n")); /* xxx */
-	printf(NLS_CATGETS(catfd, netstatSet, netstat_header_ax25, "Destination  Iface    Use\n")); /* xxx */
+	printf(_("Kernel AX.25 routing table\n")); /* xxx */
+	printf(_("Destination  Iface    Use\n")); /* xxx */
 	fgets(buffer,256,f);
 	while(fgets(buffer,256,f))
 	{

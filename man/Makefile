@@ -5,12 +5,15 @@
 #		NET-3 Networking Distribution for the LINUX operating
 #		system.
 #
-# Version:	Makefile 0.01 (1996-03-22)
+# Version:	Makefile 0.02 (1998-07-01)
 #
-# Author:	Bernd Eckenfels <net-tools@lina.inka.de>
+# Authors:	Bernd Eckenfels <net-tools@lina.inka.de>
+#               Arnaldo Carvalhoa de Melo <acme@conectiva.com.br>
 #		Copyright 1995-1996 Bernd Eckebnfels, Germany
+#                              1998 Arnaldo Carvalho de Melo, Brazil
 #
 #960322	{0.01}	Bernd Eckenfels:	creation to make main Makefile cleaner
+#980701	{0.02}	Arnaldo C. Melo:	making the main Makefile *more* cleaner :)
 #
 #	This program is free software; you can redistribute it
 #	and/or  modify it under  the terms of  the GNU General
@@ -19,6 +22,7 @@
 #	your option) any later version.
 #
 
+INSTALL=install
 
 all:
 
@@ -27,5 +31,24 @@ clean:
 		rm -f */DEADJOE */*~ */*.orig
 
 clobber:	clean
+
+install:
+		LANGS=`ls -d * | grep -v Makefile` ; \
+		for LANG in $$LANGS; do \
+			cd $$LANG; \
+			for SECTION in 1 8; do \
+				if [ "$$LANG" = "en_US" ] ; then \
+					MAN_DIR=${BASEDIR}/usr/man/man$$SECTION; \
+				else \
+					MAN_DIR=${BASEDIR}/usr/man/$$LANG/man$$SECTION; \
+				fi ; \
+				$(INSTALL) -d -m 755 -o 0 -g 0 $$MAN_DIR; \
+				CMDS=`ls *.$$SECTION`; \
+				for CMD in $$CMDS; do \
+					$(INSTALL) -m 644 -o 0 -g 0 $$CMD $$MAN_DIR; \
+				done; \
+			done; \
+			cd ..; \
+		done
 
 # End of man/Makefile.

@@ -1,0 +1,1839 @@
+msgid ""
+msgstr ""
+"Date: 1998-06-30 11:15:49-0300\n"
+"From: root <root@plucky.conectiva.com.br>\n"
+"Content-Type: text/plain; charset=\n"
+"Xgettext-Options: --default-domain=net-tools --add-comments --keyword=_ --keyword=N_\n"
+"Files: ../arp.c ../hostname.c ../ifconfig.c ../rarp.c ../lib/ax25.c ../lib/activate.c ../lib/af.c ../lib/arcnet.c ../lib/econet.c ../lib/ax25_gr.c ../lib/ddp.c ../lib/ddp_gr.c ../lib/ether.c ../lib/fddi.c ../lib/getroute.c ../lib/hw.c ../lib/inet.c ../lib/inet6.c ../lib/inet6_gr.c ../lib/inet6_sr.c ../lib/inet_gr.c ../lib/inet_sr.c ../lib/ipx.c ../lib/ipx_gr.c ../lib/loopback.c ../lib/masq_info.c ../lib/netrom.c ../lib/netrom_gr.c ../lib/netrom_sr.c ../lib/ppp.c ../lib/ppp_ac.c ../lib/rose.c ../lib/rose_gr.c ../lib/setroute.c ../lib/tr.c ../lib/unix.c ../netstat.c ../route.c ../sockets.c ../statistics.c\n"
+
+#. Resolve the host name.
+#: ../arp.c:111 ../arp.c:304
+msgid "arp: need host name\n"
+msgstr ""
+
+#: ../arp.c:217 ../arp.c:242
+msgid "No ARP entry for %s\n"
+msgstr ""
+
+#: ../arp.c:318
+msgid "arp: need hardware address\n"
+msgstr ""
+
+#: ../arp.c:327
+msgid "arp: invalid hardware address\n"
+msgstr ""
+
+#: ../arp.c:422
+msgid "Probably route to destination points to interface. See arp(8)\n"
+msgstr ""
+
+#: ../arp.c:424
+msgid "No ARP Support or route to destination points to other interface. See arp(8)\n"
+msgstr ""
+
+#: ../arp.c:451
+msgid "arp: cannot open etherfile %s !\n"
+msgstr ""
+
+#: ../arp.c:465
+msgid "arp: format error on line %u of etherfile %s !\n"
+msgstr ""
+
+#: ../arp.c:471
+msgid "arp: cannot set entry on line %u of etherfile %s !\n"
+msgstr ""
+
+#: ../arp.c:493
+msgid "Address\t\t\tHWtype\tHWaddress\t    Flags Mask\t\t  Iface\n"
+msgstr ""
+
+#: ../arp.c:643
+msgid "Entries: %d\tSkipped: %d\tFound: %d\n"
+msgstr ""
+
+#: ../arp.c:649
+msgid "arp: in %d entries no match found.\n"
+msgstr ""
+
+#: ../arp.c:666
+msgid "Usage: arp [-vn] [-H type] [-i if] -a [hostname]\n"
+msgstr ""
+
+#: ../arp.c:667
+msgid "       arp [-v] [-i if] -d hostname [pub][nopub]\n"
+msgstr ""
+
+#: ../arp.c:668
+msgid "       arp [-v] [-H type] [-i if] -s  hostname hw_addr [temp][nopub]\n"
+msgstr ""
+
+#: ../arp.c:669
+msgid "       arp [-v] [-H type] [-i if] -s  hostname hw_addr [netmask nm] pub\n"
+msgstr ""
+
+#: ../arp.c:670
+msgid "       arp [-v] [-H type] [-i if] -Ds hostname if [netmask nm] pub\n"
+msgstr ""
+
+#: ../arp.c:671
+msgid "       arp [-vnD] [-H type] [-i if] -f filename\n"
+msgstr ""
+
+#. Initialize variables...
+#: ../arp.c:704
+msgid "%s: hardware type not supported!\n"
+msgstr ""
+
+#: ../arp.c:708
+msgid "%s: address family not supported!\n"
+msgstr ""
+
+#: ../arp.c:752
+msgid "arp: %s: unknown address family.\n"
+msgstr ""
+
+#: ../arp.c:761
+msgid "arp: %s: unknown hardware type.\n"
+msgstr ""
+
+#: ../arp.c:781
+msgid "arp: %s: kernel only supports 'inet'.\n"
+msgstr ""
+
+#: ../arp.c:786
+msgid "arp: %s: hardware type without ARP support.\n"
+msgstr ""
+
+#: ../hostname.c:63
+msgid "Setting hostname to `%s'\n"
+msgstr ""
+
+#: ../hostname.c:68
+msgid "%s: you must be root to change the host name\n"
+msgstr ""
+
+#: ../hostname.c:71 ../hostname.c:90
+msgid "%s: name too long\n"
+msgstr ""
+
+#: ../hostname.c:82
+msgid "Setting domainname to `%s'\n"
+msgstr ""
+
+#: ../hostname.c:87
+msgid "%s: you must be root to change the domain name\n"
+msgstr ""
+
+#: ../hostname.c:105
+msgid "Resolving `%s' ...\n"
+msgstr ""
+
+#: ../hostname.c:112
+msgid "Result: h_name=`%s'\n"
+msgstr ""
+
+#: ../hostname.c:117
+msgid "Result: h_aliases=`%s'\n"
+msgstr ""
+
+#: ../hostname.c:122
+msgid "Result: h_addr_list=`%s'\n"
+msgstr ""
+
+#: ../hostname.c:174
+msgid "%s: can't open `%s'\n"
+msgstr ""
+
+#: ../hostname.c:188
+msgid "Usage: hostname [-v] {hostname|-F file}      set hostname (from file)\n"
+msgstr ""
+
+#: ../hostname.c:189
+msgid "       domainname [-v] {nisdomain|-F file}   set NIS domainname (from file)\n"
+msgstr ""
+
+#: ../hostname.c:190
+msgid "       hostname [-v] [-d|-f|-s|-a|-i|-y]     display formated name\n"
+msgstr ""
+
+#: ../hostname.c:191
+msgid ""
+"       hostname [-v]                         display hostname\n"
+"\n"
+msgstr ""
+
+#: ../hostname.c:192
+msgid ""
+"       hostname -V|--version|-h|--help       print info and exit\n"
+"\n"
+msgstr ""
+
+#: ../hostname.c:193
+msgid ""
+"    dnsdomainname=hostname -d, {yp,nis,}domainname=hostname -y\n"
+"\n"
+msgstr ""
+
+#: ../hostname.c:194
+msgid "    -s, --short           short host name\n"
+msgstr ""
+
+#: ../hostname.c:195
+msgid "    -a, --alias           alias names\n"
+msgstr ""
+
+#: ../hostname.c:196
+msgid "    -i, --ip-address      addresses for the hostname\n"
+msgstr ""
+
+#: ../hostname.c:197
+msgid "    -f, --fqdn, --long    long host name (FQDN)\n"
+msgstr ""
+
+#: ../hostname.c:198
+msgid "    -d, --domain          DNS domain name\n"
+msgstr ""
+
+#: ../hostname.c:199
+msgid "    -y, --yp, --nis       NIS/YP domainname\n"
+msgstr ""
+
+#: ../hostname.c:200
+msgid ""
+"    -F, --file            read hostname or nis domainname from given File\n"
+"\n"
+msgstr ""
+
+#: ../hostname.c:201
+msgid "   This comand can get or set the hostname or the NIS domainname. You can\n"
+msgstr ""
+
+#: ../hostname.c:202
+msgid "   also get the DNS domain or the FQDN (fully qualified domain name).\n"
+msgstr ""
+
+#: ../hostname.c:203
+msgid "   Unless you are using bind or NIS for host lookups you can change the\n"
+msgstr ""
+
+#: ../hostname.c:204
+msgid "   FQDN (Fully Qualified Domain Name) and the DNS domain name (which is\n"
+msgstr ""
+
+#: ../hostname.c:205
+msgid "   part of the FQDN) in the /etc/hosts file.\n"
+msgstr ""
+
+#: ../hostname.c:283
+msgid "%s: You can't change the DNS domain name with this command\n"
+msgstr ""
+
+#: ../hostname.c:284
+msgid ""
+"\n"
+"Unless you are using bind or NIS for host lookups you can change the DNS\n"
+msgstr ""
+
+#: ../hostname.c:285
+msgid "domain name (which is part of the FQDN) in the /etc/hosts file.\n"
+msgstr ""
+
+#: ../hostname.c:302
+msgid "gethostname()=`%s'\n"
+msgstr ""
+
+#: ../hostname.c:319
+msgid "getdomainname()=`%s'\n"
+msgstr ""
+
+#: ../ifconfig.c:150
+msgid "%-8.8s  Link encap:%s  "
+msgstr ""
+
+#: ../ifconfig.c:156
+msgid "HWaddr %s  "
+msgstr ""
+
+#: ../ifconfig.c:159
+msgid "Media:%s%s"
+msgstr ""
+
+#: ../ifconfig.c:160
+msgid "(auto)"
+msgstr ""
+
+#: ../ifconfig.c:166
+msgid "          %s addr:%s "
+msgstr ""
+
+#: ../ifconfig.c:169
+msgid " P-t-P:%s "
+msgstr ""
+
+#: ../ifconfig.c:172
+msgid " Bcast:%s "
+msgstr ""
+
+#: ../ifconfig.c:174
+msgid " Mask:%s\n"
+msgstr ""
+
+#: ../ifconfig.c:187
+msgid "          inet6 addr: %s/%d"
+msgstr ""
+
+#: ../ifconfig.c:189
+msgid " Scope:"
+msgstr ""
+
+#: ../ifconfig.c:191
+msgid "Global"
+msgstr ""
+
+#: ../ifconfig.c:192
+msgid "Link"
+msgstr ""
+
+#: ../ifconfig.c:193
+msgid "Site"
+msgstr ""
+
+#: ../ifconfig.c:194
+msgid "Compat"
+msgstr ""
+
+#: ../ifconfig.c:195
+msgid "Host"
+msgstr ""
+
+#: ../ifconfig.c:196
+msgid "Unknown"
+msgstr ""
+
+#: ../ifconfig.c:211
+msgid "          IPX/Ethernet II addr:%s\n"
+msgstr ""
+
+#: ../ifconfig.c:214
+msgid "          IPX/Ethernet SNAP addr:%s\n"
+msgstr ""
+
+#: ../ifconfig.c:217
+msgid "          IPX/Ethernet 802.2 addr:%s\n"
+msgstr ""
+
+#: ../ifconfig.c:220
+msgid "          IPX/Ethernet 802.3 addr:%s\n"
+msgstr ""
+
+#: ../ifconfig.c:230
+msgid "          EtherTalk Phase 2 addr:%s\n"
+msgstr ""
+
+#: ../ifconfig.c:239
+msgid "          econet addr:%s\n"
+msgstr ""
+
+#: ../ifconfig.c:244
+msgid "[NO FLAGS] "
+msgstr ""
+
+#: ../ifconfig.c:245
+msgid "UP "
+msgstr ""
+
+#: ../ifconfig.c:246
+msgid "BROADCAST "
+msgstr ""
+
+#: ../ifconfig.c:247
+msgid "DEBUG "
+msgstr ""
+
+#: ../ifconfig.c:248
+msgid "LOOPBACK "
+msgstr ""
+
+#: ../ifconfig.c:249
+msgid "POINTOPOINT "
+msgstr ""
+
+#: ../ifconfig.c:250
+msgid "NOTRAILERS "
+msgstr ""
+
+#: ../ifconfig.c:251
+msgid "RUNNING "
+msgstr ""
+
+#: ../ifconfig.c:252
+msgid "NOARP "
+msgstr ""
+
+#: ../ifconfig.c:253
+msgid "PROMISC "
+msgstr ""
+
+#: ../ifconfig.c:254
+msgid "ALLMULTI "
+msgstr ""
+
+#: ../ifconfig.c:255
+msgid "SLAVE "
+msgstr ""
+
+#: ../ifconfig.c:256
+msgid "MASTER "
+msgstr ""
+
+#: ../ifconfig.c:257
+msgid "MULTICAST "
+msgstr ""
+
+#: ../ifconfig.c:258
+msgid " MTU:%d  Metric:%d\n"
+msgstr ""
+
+#: ../ifconfig.c:261
+msgid "          txqueuelen:%d\n"
+msgstr ""
+
+#: ../ifconfig.c:264
+msgid "          txqueuelen not available\n"
+msgstr ""
+
+#: ../ifconfig.c:270
+msgid "RX packets:%lu errors:%lu dropped:%lu overruns:%lu frame:%lu\n"
+msgstr ""
+
+#: ../ifconfig.c:275
+msgid "             compressed:%lu\n"
+msgstr ""
+
+#: ../ifconfig.c:279
+msgid "TX packets:%lu errors:%lu dropped:%lu overruns:%lu carrier:%lu\n"
+msgstr ""
+
+#: ../ifconfig.c:283
+msgid "          Collisions:%lu "
+msgstr ""
+
+#: ../ifconfig.c:285
+msgid "compressed:%lu "
+msgstr ""
+
+#: ../ifconfig.c:292
+msgid "Interrupt:%d "
+msgstr ""
+
+#. Only print devices using it for
+#. I/O maps
+#: ../ifconfig.c:295
+msgid "Base address:0x%x "
+msgstr ""
+
+#: ../ifconfig.c:297
+msgid "Memory:%lx-%lx "
+msgstr ""
+
+#: ../ifconfig.c:300
+msgid "DMA chan:%x "
+msgstr ""
+
+#: ../ifconfig.c:327 ../ifconfig.c:337 ../ifconfig.c:352 ../ifconfig.c:373 ../netstat.c:1121
+msgid "%s: unknown interface.\n"
+msgstr ""
+
+#: ../ifconfig.c:389
+msgid "Usage: ifconfig [-a] [-i] [-v] interface\n"
+msgstr ""
+
+#: ../ifconfig.c:390
+msgid "                [[family] address]\n"
+msgstr ""
+
+#: ../ifconfig.c:392
+msgid "                [add inet6address/prefixlen]\n"
+msgstr ""
+
+#: ../ifconfig.c:394
+msgid "                [del inet6address/prefixlen]\n"
+msgstr ""
+
+#: ../ifconfig.c:396
+msgid "                [tunnel aa.bb.cc.dd]\n"
+msgstr ""
+
+#: ../ifconfig.c:399
+msgid "                [[-]broadcast [aa.bb.cc.dd]]\n"
+msgstr ""
+
+#: ../ifconfig.c:400
+msgid "                [[-]pointopoint [aa.bb.cc.dd]]\n"
+msgstr ""
+
+#: ../ifconfig.c:401
+msgid "                [netmask aa.bb.cc.dd]\n"
+msgstr ""
+
+#: ../ifconfig.c:402
+msgid "                [dstaddr aa.bb.cc.dd]\n"
+msgstr ""
+
+#: ../ifconfig.c:404
+msgid "                [hw class address]\n"
+msgstr ""
+
+#: ../ifconfig.c:405
+msgid "                [metric NN] [mtu NN]\n"
+msgstr ""
+
+#: ../ifconfig.c:406
+msgid "                [[-]trailers] [[-]arp]\n"
+msgstr ""
+
+#: ../ifconfig.c:407
+msgid "                [[-]allmulti] [[-]promisc]\n"
+msgstr ""
+
+#: ../ifconfig.c:408
+msgid "                [multicast]\n"
+msgstr ""
+
+#: ../ifconfig.c:409
+msgid "                [mem_start NN] [io_addr NN] [irq NN]\n"
+msgstr ""
+
+#: ../ifconfig.c:410
+msgid "                [media type]\n"
+msgstr ""
+
+#: ../ifconfig.c:412
+msgid "                [txqueuelen len]\n"
+msgstr ""
+
+#: ../ifconfig.c:414
+msgid "                [up] [down] ...\n"
+msgstr ""
+
+#: ../ifconfig.c:530
+msgid "Unknown media type.\n"
+msgstr ""
+
+#: ../ifconfig.c:791
+msgid "%s: invalid %s address.\n"
+msgstr ""
+
+#: ../ifconfig.c:880
+msgid "Address deletion not supported on this system.\n"
+msgstr ""
+
+#: ../ifconfig.c:947
+msgid "Don't know how to set addresses for this family.\n"
+msgstr ""
+
+#: ../rarp.c:37
+msgid "This kernel does not support RARP.\n"
+msgstr ""
+
+#: ../rarp.c:76
+msgid "no RARP entry for %s.\n"
+msgstr ""
+
+#: ../rarp.c:89
+msgid "%s: bad hardware address\n"
+msgstr ""
+
+#: ../rarp.c:122
+msgid "rarp: cannot open file %s:%s.\n"
+msgstr ""
+
+#: ../rarp.c:135
+msgid "rarp: format error at %s:%u\n"
+msgstr ""
+
+#: ../rarp.c:140 ../rarp.c:280
+msgid "rarp: %s: unknown host\n"
+msgstr ""
+
+#: ../rarp.c:143
+msgid "rarp: cannot set entry from %s:%u\n"
+msgstr ""
+
+#: ../rarp.c:172
+msgid "Usage: rarp -a                               list entries in cache.\n"
+msgstr ""
+
+#: ../rarp.c:173
+msgid "       rarp -d hostname                      delete entry from cache.\n"
+msgstr ""
+
+#: ../rarp.c:174
+msgid "       rarp [-t hwtype] -s hostname hwaddr   add entry to cache.\n"
+msgstr ""
+
+#: ../rarp.c:175
+msgid "       rarp -V                               display program version.\n"
+msgstr ""
+
+#: ../rarp.c:229
+msgid "%s: illegal option mix.\n"
+msgstr ""
+
+#: ../rarp.c:259
+msgid "rarp: %s: unknown hardware type.\n"
+msgstr ""
+
+#: ../lib/arcnet.c:56 ../lib/ax25.c:72 ../lib/ax25.c:155 ../lib/ddp.c:51 ../lib/econet.c:54 ../lib/ether.c:59 ../lib/fddi.c:68 ../lib/inet.c:203 ../lib/inet6.c:121 ../lib/ipx.c:76 ../lib/loopback.c:56 ../lib/netrom.c:71 ../lib/rose.c:62 ../lib/rose.c:118 ../lib/unix.c:58 ../lib/unix.c:80
+msgid "[NONE SET]"
+msgstr ""
+
+#: ../lib/ax25.c:94 ../lib/netrom.c:93
+msgid "Invalid callsign"
+msgstr ""
+
+#. Callsign too long?
+#: ../lib/ax25.c:107 ../lib/netrom.c:106
+msgid "Callsign too long"
+msgstr ""
+
+#: ../lib/activate.c:70
+msgid "Hardware type `%s' not supported.\n"
+msgstr ""
+
+#: ../lib/activate.c:74
+msgid "Cannot change line discipline to `%s'.\n"
+msgstr ""
+
+#: ../lib/af.c:106 ../lib/hw.c:119
+msgid "UNSPEC"
+msgstr ""
+
+#: ../lib/af.c:108
+msgid "UNIX Domain"
+msgstr ""
+
+#: ../lib/af.c:111
+msgid "DARPA Internet"
+msgstr ""
+
+#: ../lib/af.c:114
+msgid "IPv6"
+msgstr ""
+
+#: ../lib/af.c:117 ../lib/hw.c:137
+msgid "AMPR AX.25"
+msgstr ""
+
+#: ../lib/af.c:120 ../lib/hw.c:143
+msgid "AMPR NET/ROM"
+msgstr ""
+
+#: ../lib/af.c:123
+msgid "IPX"
+msgstr ""
+
+#: ../lib/af.c:126
+msgid "Appletalk DDP"
+msgstr ""
+
+#: ../lib/af.c:129
+msgid "Econet"
+msgstr ""
+
+#: ../lib/af.c:189
+msgid "Please don't supply more than one address family.\n"
+msgstr ""
+
+#: ../lib/af.c:235
+msgid "Too much address family arguments.\n"
+msgstr ""
+
+#: ../lib/af.c:246
+msgid "Unknown address family `%s'.\n"
+msgstr ""
+
+#: ../lib/arcnet.c:82 ../lib/arcnet.c:94
+msgid "in_arcnet(%s): invalid arcnet address!\n"
+msgstr ""
+
+#: ../lib/arcnet.c:106
+msgid "in_arcnet(%s): trailing : ignored!\n"
+msgstr ""
+
+#. That's it.  Any trailing junk?
+#: ../lib/arcnet.c:118
+msgid "in_arcnet(%s): trailing junk!\n"
+msgstr ""
+
+#: ../lib/ax25_gr.c:48
+msgid "AX.25 not configured in this system.\n"
+msgstr ""
+
+#: ../lib/ax25_gr.c:51
+msgid "Kernel AX.25 routing table\n"
+msgstr ""
+
+#: ../lib/ax25_gr.c:52 ../lib/rose_gr.c:54
+msgid "Destination  Iface    Use\n"
+msgstr ""
+
+#: ../lib/ddp_gr.c:22
+msgid "Routing table for `ddp' not yet supported.\n"
+msgstr ""
+
+#: ../lib/ether.c:85 ../lib/ether.c:97
+msgid "in_ether(%s): invalid ether address!\n"
+msgstr ""
+
+#: ../lib/ether.c:109
+msgid "in_ether(%s): trailing : ignored!\n"
+msgstr ""
+
+#. That's it.  Any trailing junk?
+#: ../lib/ether.c:121
+msgid "in_ether(%s): trailing junk!\n"
+msgstr ""
+
+#: ../lib/fddi.c:94 ../lib/fddi.c:106
+msgid "in_fddi(%s): invalid fddi address!\n"
+msgstr ""
+
+#: ../lib/fddi.c:118
+msgid "in_fddi(%s): trailing : ignored!\n"
+msgstr ""
+
+#: ../lib/fddi.c:130
+msgid "in_fddi(%s): trailing junk!\n"
+msgstr ""
+
+#: ../lib/getroute.c:99 ../lib/setroute.c:78
+msgid "Address family `%s' not supported.\n"
+msgstr ""
+
+#: ../lib/getroute.c:105 ../lib/setroute.c:83
+msgid "No routing for address family `%s'.\n"
+msgstr ""
+
+#: ../lib/hw.c:118
+msgid "Local Loopback"
+msgstr ""
+
+#: ../lib/hw.c:121
+msgid "Serial Line IP"
+msgstr ""
+
+#: ../lib/hw.c:122
+msgid "VJ Serial Line IP"
+msgstr ""
+
+#: ../lib/hw.c:123
+msgid "6-bit Serial Line IP"
+msgstr ""
+
+#: ../lib/hw.c:124
+msgid "VJ 6-bit Serial Line IP"
+msgstr ""
+
+#: ../lib/hw.c:125
+msgid "Adaptive Serial Line IP"
+msgstr ""
+
+#: ../lib/hw.c:128
+msgid "Ethernet"
+msgstr ""
+
+#: ../lib/hw.c:131
+msgid "Ash"
+msgstr ""
+
+#: ../lib/hw.c:134
+msgid "Fiber Distributed Data Interface"
+msgstr ""
+
+#: ../lib/hw.c:140
+msgid "AMPR ROSE"
+msgstr ""
+
+#: ../lib/hw.c:146
+msgid "IPIP Tunnel"
+msgstr ""
+
+#: ../lib/hw.c:149
+msgid "Point-to-Point Protocol"
+msgstr ""
+
+#: ../lib/hw.c:152
+msgid "1.5Mbps ARCnet"
+msgstr ""
+
+#: ../lib/hw.c:155
+msgid "Frame Relay DLCI"
+msgstr ""
+
+#: ../lib/hw.c:156
+msgid "Frame Relay Access Device"
+msgstr ""
+
+#: ../lib/hw.c:159
+msgid "IPv6-in-IPv4"
+msgstr ""
+
+#. Grmpf. -FvK
+#: ../lib/inet.c:123 ../lib/inet6.c:73
+msgid "rresolve: unsupport address family %d !\n"
+msgstr ""
+
+#: ../lib/inet6_gr.c:77
+msgid "Kernel IPv6 routing table\n"
+msgstr ""
+
+#: ../lib/inet6_gr.c:79
+msgid "Destination                                 Next Hop                                Flags Metric Ref    Use Iface\n"
+msgstr ""
+
+#: ../lib/inet6_gr.c:148
+msgid "Kernel IPv6 Neighbour Cache\n"
+msgstr ""
+
+#: ../lib/inet6_gr.c:151
+msgid "Neighbour                                   HW Address        Iface    Flags Ref State\n"
+msgstr ""
+
+#: ../lib/inet6_gr.c:155
+msgid "Neighbour                                   HW Address        Iface    Flags Ref State            Stale(sec) Delete(sec)\n"
+msgstr ""
+
+#: ../lib/inet6_sr.c:40
+msgid "Usage: inet6_route [-vF] del Target\n"
+msgstr ""
+
+#: ../lib/inet6_sr.c:41
+msgid "       inet6_route [-vF] add Target [gw Gw] [metric M] [[dev] If]\n"
+msgstr ""
+
+#: ../lib/inet6_sr.c:42
+msgid "       inet6_route [-FC] flush      NOT supported\n"
+msgstr ""
+
+#: ../lib/inet6_sr.c:179
+msgid "Flushing `inet6' routing table not supported\n"
+msgstr ""
+
+#: ../lib/inet_gr.c:43
+msgid "Kernel IP routing table\n"
+msgstr ""
+
+#: ../lib/inet_gr.c:46
+msgid "Destination     Gateway         Genmask         Flags Metric Ref    Use Iface\n"
+msgstr ""
+
+#: ../lib/inet_gr.c:49
+msgid "Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface\n"
+msgstr ""
+
+#: ../lib/inet_gr.c:52
+msgid "Destination     Gateway         Genmask         Flags Metric Ref    Use Iface    MSS   Window irtt\n"
+msgstr ""
+
+#: ../lib/inet_gr.c:148
+msgid "Destination     Gateway         Source          Flags Metric Ref    Use Iface\n"
+msgstr ""
+
+#: ../lib/inet_gr.c:151
+msgid "Destination     Gateway         Source          Flags   MSS Window  irtt Iface\n"
+msgstr ""
+
+#: ../lib/inet_gr.c:154
+msgid "Destination     Gateway         Source          Flags Metric Ref    Use Iface    MSS   Window irtt   HH  Arp\n"
+msgstr ""
+
+#: ../lib/inet_sr.c:44
+msgid "Usage: inet_route [-vF] del {-host|-net} Target [gw Gw] [metric M] [[dev] If]\n"
+msgstr ""
+
+#: ../lib/inet_sr.c:45
+msgid "       inet_route [-vF] add {-host|-net} Target [gw Gw] [metric M]\n"
+msgstr ""
+
+#: ../lib/inet_sr.c:46
+msgid "                              [netmask N] [mss Mss] [window W] [irtt I]\n"
+msgstr ""
+
+#: ../lib/inet_sr.c:47
+msgid "                              [mod] [dyn] [reinstate] [[dev] If]\n"
+msgstr ""
+
+#: ../lib/inet_sr.c:48
+msgid "       inet_route [-vF] add {-host|-net} Target [metric M] reject\n"
+msgstr ""
+
+#: ../lib/inet_sr.c:49
+msgid "       inet_route [-FC] flush      NOT supported\n"
+msgstr ""
+
+#: ../lib/inet_sr.c:143
+msgid "route: %s: cannot use a NETWORK as gateway!\n"
+msgstr ""
+
+#: ../lib/inet_sr.c:160
+msgid "route: Invalid MSS.\n"
+msgstr ""
+
+#: ../lib/inet_sr.c:174
+msgid "route: Invalid window.\n"
+msgstr ""
+
+#: ../lib/inet_sr.c:191
+msgid "route: Invalid initial rtt.\n"
+msgstr ""
+
+#: ../lib/inet_sr.c:246
+msgid "route: netmask doesn't make sense with host route\n"
+msgstr ""
+
+#: ../lib/inet_sr.c:250
+msgid "route: bogus netmask %s\n"
+msgstr ""
+
+#: ../lib/inet_sr.c:255
+msgid "route: netmask doesn't match route address\n"
+msgstr ""
+
+#: ../lib/inet_sr.c:293
+msgid "Flushing `inet' routing table not supported\n"
+msgstr ""
+
+#: ../lib/inet_sr.c:297
+msgid "Modifying `inet' routing cache not supported\n"
+msgstr ""
+
+#: ../lib/ipx_gr.c:37
+msgid "Kernel IPX routing table\n"
+msgstr ""
+
+#: ../lib/ipx_gr.c:44
+msgid "Destination               Router Net                Router Node\n"
+msgstr ""
+
+#: ../lib/masq_info.c:207
+msgid "IP masquerading entries\n"
+msgstr ""
+
+#: ../lib/masq_info.c:210
+msgid "prot   expire source               destination          ports\n"
+msgstr ""
+
+#: ../lib/masq_info.c:213
+msgid "prot   expire    initseq delta prevd source               destination          ports\n"
+msgstr ""
+
+#: ../lib/netrom_gr.c:41
+msgid "NET/ROM not configured in this system.\n"
+msgstr ""
+
+#: ../lib/netrom_gr.c:44
+msgid "Kernel NET/ROM routing table\n"
+msgstr ""
+
+#. xxx
+#: ../lib/netrom_gr.c:45
+msgid "Destination  Mnemonic  Quality  Neighbour  Iface\n"
+msgstr ""
+
+#: ../lib/netrom_sr.c:43
+msgid "NET/ROM: this needs to be written\n"
+msgstr ""
+
+#: ../lib/ppp.c:44
+msgid "You cannot start PPP with this program.\n"
+msgstr ""
+
+#: ../lib/ppp_ac.c:40
+msgid "Sorry, use pppd!\n"
+msgstr ""
+
+#: ../lib/rose.c:79
+msgid "Node address must be ten digits"
+msgstr ""
+
+#: ../lib/rose_gr.c:50
+msgid "ROSE not configured in this system.\n"
+msgstr ""
+
+#: ../lib/rose_gr.c:53
+msgid "Kernel ROSE routing table\n"
+msgstr ""
+
+#: ../lib/tr.c:82 ../lib/tr.c:94
+msgid "in_tr(%s): invalid token ring address!\n"
+msgstr ""
+
+#: ../lib/tr.c:106
+msgid "in_tr(%s): trailing : ignored!\n"
+msgstr ""
+
+#. That's it.  Any trailing junk?
+#: ../lib/tr.c:118
+msgid "in_tr(%s): trailing junk!\n"
+msgstr ""
+
+#: ../netstat.c:205
+msgid "Netlink Kernel Messages"
+msgstr ""
+
+#: ../netstat.c:207
+msgid " (continous)"
+msgstr ""
+
+#: ../netstat.c:217
+msgid "netlink message size mismatch"
+msgstr ""
+
+#: ../netstat.c:282 ../netstat.c:862 ../netstat.c:920
+msgid "LISTENING"
+msgstr ""
+
+#: ../netstat.c:283
+msgid "CONN SENT"
+msgstr ""
+
+#: ../netstat.c:284 ../netstat.c:922
+msgid "DISC SENT"
+msgstr ""
+
+#: ../netstat.c:285 ../netstat.c:348 ../netstat.c:570 ../netstat.c:923
+msgid "ESTABLISHED"
+msgstr ""
+
+#: ../netstat.c:308
+msgid "Activate NET/ROM sockets\n"
+msgstr ""
+
+#: ../netstat.c:309
+msgid "User       Dest       Source     Device  State        Vr/Vs  Send-Q  Recv-Q\n"
+msgstr ""
+
+#: ../netstat.c:349
+msgid "SYN_SENT"
+msgstr ""
+
+#: ../netstat.c:350
+msgid "SYN_RECV"
+msgstr ""
+
+#: ../netstat.c:351
+msgid "FIN_WAIT1"
+msgstr ""
+
+#: ../netstat.c:352
+msgid "FIN_WAIT2"
+msgstr ""
+
+#: ../netstat.c:353
+msgid "TIME_WAIT"
+msgstr ""
+
+#: ../netstat.c:354
+msgid "CLOSE"
+msgstr ""
+
+#: ../netstat.c:355
+msgid "CLOSE_WAIT"
+msgstr ""
+
+#: ../netstat.c:356
+msgid "LAST_ACK"
+msgstr ""
+
+#: ../netstat.c:357
+msgid "LISTEN"
+msgstr ""
+
+#: ../netstat.c:358
+msgid "CLOSING"
+msgstr ""
+
+#: ../netstat.c:424
+msgid "warning, got bogus tcp line.\n"
+msgstr ""
+
+#: ../netstat.c:429 ../netstat.c:563 ../netstat.c:698 ../netstat.c:703
+msgid "netstat: unsupported address family %d !\n"
+msgstr ""
+
+#: ../netstat.c:463
+msgid "off (0.00/%ld)"
+msgstr ""
+
+#: ../netstat.c:467
+msgid "on (%2.2f/%ld)"
+msgstr ""
+
+#: ../netstat.c:472
+msgid "unkn-%d (%2.2f/%ld)"
+msgstr ""
+
+#: ../netstat.c:558
+msgid "warning, got bogus udp line.\n"
+msgstr ""
+
+#: ../netstat.c:578 ../netstat.c:848 ../netstat.c:881
+msgid "UNKNOWN"
+msgstr ""
+
+#: ../netstat.c:613 ../netstat.c:748
+msgid "off (0.00/%ld) %c"
+msgstr ""
+
+#: ../netstat.c:617 ../netstat.c:752
+msgid "on (%2.2f/%ld) %c"
+msgstr ""
+
+#: ../netstat.c:621 ../netstat.c:757
+msgid "unkn-%d (%2.2f/%ld) %c"
+msgstr ""
+
+#: ../netstat.c:712
+msgid "warning, got bogus raw line.\n"
+msgstr ""
+
+#: ../netstat.c:806
+msgid "warning, got bogus unix line.\n"
+msgstr ""
+
+#: ../netstat.c:828
+msgid "STREAM"
+msgstr ""
+
+#: ../netstat.c:832
+msgid "DGRAM"
+msgstr ""
+
+#: ../netstat.c:836
+msgid "RAW"
+msgstr ""
+
+#: ../netstat.c:840
+msgid "RDM"
+msgstr ""
+
+#: ../netstat.c:844
+msgid "SEQPACKET"
+msgstr ""
+
+#: ../netstat.c:853
+msgid "FREE"
+msgstr ""
+
+#: ../netstat.c:869
+msgid "CONNECTING"
+msgstr ""
+
+#: ../netstat.c:873
+msgid "CONNECTED"
+msgstr ""
+
+#: ../netstat.c:877
+msgid "DISCONNECTING"
+msgstr ""
+
+#: ../netstat.c:899
+msgid "Active UNIX domain sockets "
+msgstr ""
+
+#. xxx
+#: ../netstat.c:900 ../netstat.c:1368
+msgid "(including servers)"
+msgstr ""
+
+#. xxx
+#: ../netstat.c:901 ../netstat.c:1369
+msgid "(w/o servers)"
+msgstr ""
+
+#. xxx
+#: ../netstat.c:903
+msgid ""
+"\n"
+"Proto RefCnt Flags       Type       State         I-Node Path\n"
+msgstr ""
+
+#: ../netstat.c:921
+msgid "SABM SENT"
+msgstr ""
+
+#: ../netstat.c:924
+msgid "RECOVERY"
+msgstr ""
+
+#: ../netstat.c:939
+msgid "Activate AX.25 sockets\n"
+msgstr ""
+
+#: ../netstat.c:940
+msgid "Dest       Source     Device  State        Vr/Vs  Send-Q  Recv-Q\n"
+msgstr ""
+
+#: ../netstat.c:989
+msgid ""
+"Active IPX sockets\n"
+"Proto Recv-Q Send-Q Local Address              Foreign Address            State"
+msgstr ""
+
+#. xxx
+#: ../netstat.c:991
+msgid " User"
+msgstr ""
+
+#: ../netstat.c:1028
+msgid "ESTAB"
+msgstr ""
+
+#: ../netstat.c:1036
+msgid "UNK."
+msgstr ""
+
+#: ../netstat.c:1078
+msgid "[NO FLAGS]"
+msgstr ""
+
+#: ../netstat.c:1099
+msgid "Kernel Interface table\n"
+msgstr ""
+
+#: ../netstat.c:1100
+msgid "Iface   MTU Met  RX-OK RX-ERR RX-DRP RX-OVR  TX-OK TX-ERR TX-DRP TX-OVR Flags\n"
+msgstr ""
+
+#: ../netstat.c:1148
+msgid "usage: netstat [-veenNcCF] [<Af>] -r         netstat {-V|--version|-h|--help}\n"
+msgstr ""
+
+#: ../netstat.c:1149
+msgid "       netstat [-vnNcaeo] [<Socket>]\n"
+msgstr ""
+
+#: ../netstat.c:1150
+msgid ""
+"       netstat { [-veenNac] -i | [-vnNc] -L | [-cnNe] -M }\n"
+"\n"
+msgstr ""
+
+#: ../netstat.c:1151
+msgid "        -r, --route              display routing table\n"
+msgstr ""
+
+#: ../netstat.c:1152
+msgid "        -L, --netlink            display netlink kernel messages\n"
+msgstr ""
+
+#: ../netstat.c:1153
+msgid "        -i, --interfaces         display interface table\n"
+msgstr ""
+
+#: ../netstat.c:1154
+msgid ""
+"        -M, --masquerade         display masqueraded connections\n"
+"\n"
+msgstr ""
+
+#: ../netstat.c:1155
+msgid "        -v, --verbose            be verbose\n"
+msgstr ""
+
+#: ../netstat.c:1156
+msgid "        -n, --numeric            dont resolve names\n"
+msgstr ""
+
+#: ../netstat.c:1157
+msgid "        -e, --extend             display other/more informations\n"
+msgstr ""
+
+#: ../netstat.c:1158
+msgid ""
+"        -c, --continuous         continuous listing\n"
+"\n"
+msgstr ""
+
+#: ../netstat.c:1159
+msgid "        -a, --all, --listening   display all\n"
+msgstr ""
+
+#: ../netstat.c:1160
+msgid ""
+"        -o, --timers             display timers\n"
+"\n"
+msgstr ""
+
+#: ../netstat.c:1161
+msgid "<Socket>={-t|--tcp} {-u|--udp} {-w|--raw} {-x|--unix} --ax25 --ipx --netrom\n"
+msgstr ""
+
+#: ../netstat.c:1163
+msgid "<Af>= -A {inet|inet6|ipx|netrom|ddp|ax25},... --inet --inet6 --ipx --netrom --ddp --ax25\n"
+msgstr ""
+
+#: ../netstat.c:1165
+msgid "<Af>= -A {inet|ipx|netrom|ddp|ax25},... --inet --ipx --netrom --ddp --ax25\n"
+msgstr ""
+
+#: ../netstat.c:1367
+msgid "Active Internet connections "
+msgstr ""
+
+#: ../netstat.c:1371
+msgid ""
+"\n"
+"Proto Recv-Q Send-Q Local Address           Foreign Address         State      "
+msgstr ""
+
+#: ../netstat.c:1373
+msgid " User      "
+msgstr ""
+
+#. xxx
+#: ../netstat.c:1375
+msgid " Timer"
+msgstr ""
+
+#: ../route.c:79
+msgid "Usage: route [-nNvee] [-FC] [Address_families]  List kernel routing tables\n"
+msgstr ""
+
+#: ../route.c:80
+msgid "       route {-V|--version}                  Display command version and exit.\n"
+msgstr ""
+
+#: ../route.c:81
+msgid "       route {-h|--help} [Address_family]    Usage Syntax for specified AF.\n"
+msgstr ""
+
+#: ../route.c:82
+msgid ""
+"       route [-v] [-FC] {add|del|flush} ...  Modify routing table for AF.\n"
+"\n"
+msgstr ""
+
+#: ../route.c:83
+msgid "  Address_families: inet,inet6,ddp,ipx,netrom,ax25\n"
+msgstr ""
+
+#: ../route.c:84
+msgid "        specify AF: -A af1,af2..  or  --af1 --af2  or  af_route\n"
+msgstr ""
+
+#. We have no address families.
+#: ../sockets.c:96
+msgid "No usable address families found.\n"
+msgstr ""
+
+#. for each state
+#: ../statistics.c:37
+msgid "ICMP input histogram:"
+msgstr ""
+
+#: ../statistics.c:38
+msgid "ICMP output histogram:"
+msgstr ""
+
+#: ../statistics.c:45
+msgid "Forwarding"
+msgstr ""
+
+#: ../statistics.c:45
+msgid "Forwarding is %s"
+msgstr ""
+
+#: ../statistics.c:46
+msgid "DefaultTTL"
+msgstr ""
+
+#: ../statistics.c:46
+msgid "Default TTL is %d"
+msgstr ""
+
+#: ../statistics.c:47
+msgid "InReceives"
+msgstr ""
+
+#: ../statistics.c:47
+msgid "%d total packets received"
+msgstr ""
+
+#: ../statistics.c:48
+msgid "InHdrErrors"
+msgstr ""
+
+#: ../statistics.c:48
+msgid "%d with invalid headers"
+msgstr ""
+
+#: ../statistics.c:49
+msgid "InAddrErrors"
+msgstr ""
+
+#: ../statistics.c:49
+msgid "%d with invalid addresses"
+msgstr ""
+
+#: ../statistics.c:50
+msgid "ForwDatagrams"
+msgstr ""
+
+#: ../statistics.c:50
+msgid "%d forwarded"
+msgstr ""
+
+#: ../statistics.c:51
+msgid "InUnknownProtos"
+msgstr ""
+
+#: ../statistics.c:51
+msgid "%d with unknown protocol"
+msgstr ""
+
+#: ../statistics.c:52
+msgid "InDiscards"
+msgstr ""
+
+#: ../statistics.c:52
+msgid "%d incoming packets discarded"
+msgstr ""
+
+#: ../statistics.c:53
+msgid "InDelivers"
+msgstr ""
+
+#: ../statistics.c:53
+msgid "%d incoming packets delivered"
+msgstr ""
+
+#: ../statistics.c:54
+msgid "OutRequests"
+msgstr ""
+
+#: ../statistics.c:54
+msgid "%d requests sent out"
+msgstr ""
+
+#. ?
+#: ../statistics.c:55
+msgid "OutDiscards"
+msgstr ""
+
+#: ../statistics.c:55
+msgid "%d outgoing packets dropped"
+msgstr ""
+
+#: ../statistics.c:56
+msgid "OutNoRoutes"
+msgstr ""
+
+#: ../statistics.c:56
+msgid "%d dropped because of missing route"
+msgstr ""
+
+#: ../statistics.c:57
+msgid "ReasmTimeout"
+msgstr ""
+
+#: ../statistics.c:57
+msgid "%d fragments dropped after timeout"
+msgstr ""
+
+#: ../statistics.c:58
+msgid "ReasmReqds"
+msgstr ""
+
+#: ../statistics.c:58
+msgid "%d reassemblies required"
+msgstr ""
+
+#. ?
+#: ../statistics.c:59
+msgid "ReasmOKs"
+msgstr ""
+
+#: ../statistics.c:59
+msgid "%d packets reassembled ok"
+msgstr ""
+
+#: ../statistics.c:60
+msgid "ReasmFails"
+msgstr ""
+
+#: ../statistics.c:60
+msgid "%d packet reassembles failed"
+msgstr ""
+
+#: ../statistics.c:61
+msgid "FragOKs"
+msgstr ""
+
+#: ../statistics.c:61
+msgid "%d fragments received ok"
+msgstr ""
+
+#: ../statistics.c:62
+msgid "FragFails"
+msgstr ""
+
+#: ../statistics.c:62
+msgid "%d fragments failed"
+msgstr ""
+
+#: ../statistics.c:63
+msgid "FragCreates"
+msgstr ""
+
+#: ../statistics.c:63
+msgid "%d fragments created"
+msgstr ""
+
+#: ../statistics.c:67
+msgid "InMsgs"
+msgstr ""
+
+#: ../statistics.c:67
+msgid "%d ICMP messages received"
+msgstr ""
+
+#: ../statistics.c:68 ../statistics.c:115
+msgid "InErrors"
+msgstr ""
+
+#: ../statistics.c:68
+msgid "%d input ICMP message failed."
+msgstr ""
+
+#: ../statistics.c:69
+msgid "InDestUnreachs"
+msgstr ""
+
+#: ../statistics.c:69 ../statistics.c:82
+msgid "destination unreachable: %d"
+msgstr ""
+
+#: ../statistics.c:70
+msgid "InTimeExcds"
+msgstr ""
+
+#: ../statistics.c:70
+msgid "timeout in transit: %d"
+msgstr ""
+
+#: ../statistics.c:71
+msgid "InParmProbs"
+msgstr ""
+
+#: ../statistics.c:71 ../statistics.c:84
+msgid "wrong parameters: %d"
+msgstr ""
+
+#: ../statistics.c:72
+msgid "InSrcQuenchs"
+msgstr ""
+
+#: ../statistics.c:72
+msgid "source quenchs: %d"
+msgstr ""
+
+#: ../statistics.c:73
+msgid "InRedirects"
+msgstr ""
+
+#: ../statistics.c:73
+msgid "redirects: %d"
+msgstr ""
+
+#: ../statistics.c:74
+msgid "InEchos"
+msgstr ""
+
+#: ../statistics.c:74
+msgid "echo requests: %d"
+msgstr ""
+
+#: ../statistics.c:75
+msgid "InEchoReps"
+msgstr ""
+
+#: ../statistics.c:75 ../statistics.c:88
+msgid "echo replies: %d"
+msgstr ""
+
+#: ../statistics.c:76
+msgid "InTimestamps"
+msgstr ""
+
+#: ../statistics.c:76
+msgid "timestamp request: %d"
+msgstr ""
+
+#: ../statistics.c:77
+msgid "InTimestampReps"
+msgstr ""
+
+#: ../statistics.c:77
+msgid "timestamp reply: %d"
+msgstr ""
+
+#: ../statistics.c:78
+msgid "InAddrMasks"
+msgstr ""
+
+#: ../statistics.c:78
+msgid "address mask request: %d"
+msgstr ""
+
+#. ?
+#: ../statistics.c:79
+msgid "InAddrMaskReps"
+msgstr ""
+
+#: ../statistics.c:79
+msgid "address mask replies"
+msgstr ""
+
+#. ?
+#: ../statistics.c:80
+msgid "OutMsgs"
+msgstr ""
+
+#: ../statistics.c:80
+msgid "%d ICMP messages sent"
+msgstr ""
+
+#: ../statistics.c:81
+msgid "OutErrors"
+msgstr ""
+
+#: ../statistics.c:81
+msgid "%d ICMP messages failed"
+msgstr ""
+
+#: ../statistics.c:82
+msgid "OutDestUnreachs"
+msgstr ""
+
+#: ../statistics.c:83
+msgid "OutTimeExcds"
+msgstr ""
+
+#: ../statistics.c:83
+msgid "time exceeded: %d"
+msgstr ""
+
+#: ../statistics.c:84
+msgid "OutParmProbs"
+msgstr ""
+
+#. ?
+#: ../statistics.c:85
+msgid "OutSrcQuenchs"
+msgstr ""
+
+#: ../statistics.c:85
+msgid "source quench: %d"
+msgstr ""
+
+#: ../statistics.c:86
+msgid "OutRedirects"
+msgstr ""
+
+#: ../statistics.c:86
+msgid "redirect: %d"
+msgstr ""
+
+#: ../statistics.c:87
+msgid "OutEchos"
+msgstr ""
+
+#: ../statistics.c:87
+msgid "echo request: %d"
+msgstr ""
+
+#: ../statistics.c:88
+msgid "OutEchoReps"
+msgstr ""
+
+#: ../statistics.c:89
+msgid "OutTimestamps"
+msgstr ""
+
+#: ../statistics.c:89
+msgid "timestamp requests: %d"
+msgstr ""
+
+#: ../statistics.c:90
+msgid "OutTimestampReps"
+msgstr ""
+
+#: ../statistics.c:90
+msgid "timestamp replies: %d"
+msgstr ""
+
+#: ../statistics.c:91
+msgid "OutAddrMasks"
+msgstr ""
+
+#: ../statistics.c:91
+msgid "address mask requests: %d"
+msgstr ""
+
+#: ../statistics.c:92
+msgid "OutAddrMaskReps"
+msgstr ""
+
+#: ../statistics.c:92
+msgid "address mask replies: %d"
+msgstr ""
+
+#: ../statistics.c:96
+msgid "RtoAlgorithm"
+msgstr ""
+
+#: ../statistics.c:96
+msgid "RTO algorithm is %s"
+msgstr ""
+
+#: ../statistics.c:97
+msgid "RtoMin"
+msgstr ""
+
+#: ../statistics.c:98
+msgid "RtoMax"
+msgstr ""
+
+#: ../statistics.c:99
+msgid "MaxConn"
+msgstr ""
+
+#: ../statistics.c:100
+msgid "ActiveOpens"
+msgstr ""
+
+#: ../statistics.c:100
+msgid "%d active opens"
+msgstr ""
+
+#: ../statistics.c:101
+msgid "PassiveOpens"
+msgstr ""
+
+#: ../statistics.c:101
+msgid "%d passive opens"
+msgstr ""
+
+#: ../statistics.c:102
+msgid "AttemptFails"
+msgstr ""
+
+#: ../statistics.c:102
+msgid "%d failed connection attempts"
+msgstr ""
+
+#: ../statistics.c:103
+msgid "EstabResets"
+msgstr ""
+
+#: ../statistics.c:103
+msgid "%d connection resets received"
+msgstr ""
+
+#: ../statistics.c:104
+msgid "CurrEstab"
+msgstr ""
+
+#: ../statistics.c:104
+msgid "%d connections established"
+msgstr ""
+
+#: ../statistics.c:105
+msgid "InSegs"
+msgstr ""
+
+#: ../statistics.c:105
+msgid "%d segments received"
+msgstr ""
+
+#: ../statistics.c:106
+msgid "OutSegs"
+msgstr ""
+
+#: ../statistics.c:106
+msgid "%d segments send out"
+msgstr ""
+
+#: ../statistics.c:107
+msgid "RetransSegs"
+msgstr ""
+
+#: ../statistics.c:107
+msgid "%d segments retransmited"
+msgstr ""
+
+#: ../statistics.c:108
+msgid "InErrs"
+msgstr ""
+
+#: ../statistics.c:108
+msgid "%d bad segments received."
+msgstr ""
+
+#: ../statistics.c:109
+msgid "OutRsts"
+msgstr ""
+
+#: ../statistics.c:109
+msgid "%d resets sent"
+msgstr ""
+
+#: ../statistics.c:113
+msgid "InDatagrams"
+msgstr ""
+
+#: ../statistics.c:113
+msgid "%d packets received"
+msgstr ""
+
+#: ../statistics.c:114
+msgid "NoPorts"
+msgstr ""
+
+#: ../statistics.c:114
+msgid "%d packets to unknown port received."
+msgstr ""
+
+#: ../statistics.c:115
+msgid "%d packet receive errors"
+msgstr ""
+
+#: ../statistics.c:116
+msgid "OutDatagrams"
+msgstr ""
+
+#: ../statistics.c:116
+msgid "%d packets send"
+msgstr ""
+
+#: ../statistics.c:183
+msgid "enabled"
+msgstr ""
+
+#: ../statistics.c:183
+msgid "disabled"
+msgstr ""
+
+#: ../statistics.c:223
+msgid "cannot open /proc/net/snmp"
+msgstr ""
+
+#: ../statistics.c:238
+msgid "unknown title %s\n"
+msgstr ""
+
+#: ../statistics.c:264
+msgid "error parsing /proc/net/snmp"
+msgstr ""

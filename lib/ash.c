@@ -18,8 +18,7 @@
 #include <unistd.h>
 #include "net-support.h"
 #include "pathnames.h"
-#define  EXTERN
-#include "net-locale.h"
+#include "intl.h"
 
 #ifndef ARPHRD_ASH
 #error No support for Ash on this system
@@ -85,7 +84,7 @@ in_ash(char *bufp, struct sockaddr *sap)
       bufp = NULL;
       break;
     default:
-      fprintf (stderr, "Malformed Ash address");
+      fprintf (stderr, _("Malformed Ash address"));
       memset (ptr, 0xc9, ASH_ALEN);
       return -1;
     }

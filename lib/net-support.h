@@ -136,11 +136,12 @@ extern char afname[];
 #define EINTERN(file, text) fprintf(stderr, \
 	"%s: Internal Error `%s'.\n",file,text);
 
-#define ENOSUPP(A,B)	fprintf(stderr, NLS_CATGETS(catfd, libSet, lib_nofeature, \
-				"%s: feature `%s' not supported.\nPlease recompile `net-tools' with newer kernel source or full configuration.\n"),A,B)
+#define ENOSUPP(A,B)	fprintf(stderr,\
+                                _("%s: feature `%s' not supported.\n" \
+				  "Please recompile `net-tools' with "\
+				  "newer kernel source or full configuration.\n"),A,B)
 
-#define ESYSNOT(A,B)	fprintf(stderr, NLS_CATGETS(catfd, libSet, lib_sysnot, \
-				"%s: no support for `%s' on this system.\n"),A,B)
+#define ESYSNOT(A,B)	fprintf(stderr, _("%s: no support for `%s' on this system.\n"),A,B)
 
 #define E_NOTFOUND	8
 #define E_SOCK		7

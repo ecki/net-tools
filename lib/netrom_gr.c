@@ -2,11 +2,15 @@
  * lib/netrom_gr.c	This file contains an implementation of the NET/ROM
  *			route support functions.
  *
- * Version:	lib/netrom_gr.c 0.01 (1996-02-15)
+ * Version:	lib/netrom_gr.c 0.02 (1998-07-01)
  *
  * Author:	Bernd Eckenfels, <ecki@lina.inka.de>
  *		Copyright 1999 Bernd Eckenfels, Germany
  *		base on Code from Jonathan Naylor <jsn@Cs.Nott.AC.UK>
+ *
+ * Changes:
+ * 980701 {0.02} Arnaldo Carvalho de Melo   GNU gettext instead of catgets
+ * 
  *
  *		This program is free software; you can redistribute it
  *		and/or  modify it under  the terms of  the GNU General
@@ -22,8 +26,7 @@
 #include <unistd.h>
 #include "net-support.h"
 #include "pathnames.h"
-#define  EXTERN
-#include "net-locale.h"
+#include "intl.h"
 
 /* UGLY */
 
@@ -38,11 +41,11 @@ int NETROM_rprint(int options)
 
 	if(f1==NULL||f2==NULL)
 	{
-		printf(NLS_CATGETS(catfd, netstatSet, netstat_nonetrom, "NET/ROM not configured in this system.\n")); /* xxx */
+		printf(_("NET/ROM not configured in this system.\n")); /* xxx */
 		return 1;
 	}
-	printf(NLS_CATGETS(catfd, netstatSet, netstat_netrom, "Kernel NET/ROM routing table\n")); /* xxx */
-	printf(NLS_CATGETS(catfd, netstatSet, netstat_header_netrom, "Destination  Mnemonic  Quality  Neighbour  Iface\n")); /* xxx */
+	printf(_("Kernel NET/ROM routing table\n")); /* xxx */
+	printf(_("Destination  Mnemonic  Quality  Neighbour  Iface\n")); /* xxx */
 	fgets(buffer,256,f1);
 	while(fgets(buffer,256,f1))
 	{

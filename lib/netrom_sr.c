@@ -20,27 +20,28 @@
 #include "version.h"
 #include "net-support.h"
 #include "pathnames.h"
-#define  EXTERN
-#include "net-locale.h"
-
+#include "intl.h"
 #include "net-features.h"
 
 extern     struct aftype   netrom_aftype;
 
 /* static int skfd = -1; */
 
+/* acme: orphaned... */
+#if 0
 static int usage(void)
 {
-  fprintf(stderr,"netrom usage\n");
+  fprintf(stderr,_("netrom usage\n"));
 
   return(E_USAGE);
 }
+#endif
 
 
 int NETROM_rinput(int action, int ext, char **args)
 {
   
-  fprintf(stderr,"NET/ROM: this needs to be written\n");
+  fprintf(stderr,_("NET/ROM: this needs to be written\n"));
   return(0);
 }
 #endif	/* HAVE_AFNETROM */

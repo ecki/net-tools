@@ -1,5 +1,7 @@
 TODO for net-tools
 
+[ ] pt_BR man pages translation revision, it was done for net-tools 1.33...
+[ ] more translations! see the contents of the po directory and ABOUT-NLS
 [ ] netstat ddp support
 [ ] lib/netrom_rt.c rprint should not rewind _PATH_PROCNET_NR_NEIGH
 [ ] ARPHRD_METRICOM [1.3.82]
@@ -29,5 +31,4 @@ TODO for net-tools
 [ ] dummy NOARP?! (2. default route for preveting hostunreachables on linedrop)
 [ ] ppp_dev_stat called for each dev in ifconfig, why? (1.3.17)
 [ ] linux/include/net/br.h?
-[ ] update fr/de translations (or drop NLS entirely)
 [ ] get rid of local ipx.h copy

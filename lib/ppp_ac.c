@@ -30,14 +30,12 @@
 #include <unistd.h>
 #include "net-support.h"
 #include "pathnames.h"
-#define  EXTERN
-#include "net-locale.h"
-
+#include "intl.h"
 
 /* Start the VJ-SLIP encapsulation on the file descriptor. */
 int PPP_activate(int fd)
 {
-  fprintf(stderr,"Sorry, use pppd!\n"); /* FIXME */
+  fprintf(stderr,_("Sorry, use pppd!\n")); /* FIXME */
   return(-1);
 }
 

@@ -17,7 +17,6 @@
  *
  * Tuned for NET3 by:
  *		Alan Cox, <A.Cox@swansea.ac.uk>
- *
  *		Copyright (c) 1993  Fred Baumgarten
  *
  * Modified:
@@ -43,6 +42,8 @@
  *					(relly needs to be kernel hooked but 
  *					this will do in the meantime)
  *					minor header file misplacement tidy up.
+ *980411 {1.34} Arnaldo Carvalho        i18n: catgets -> gnu gettext, substitution
+ *					of sprintf for snprintf
  *
  *		This program is free software; you can redistribute it
  *		and/or  modify it under  the terms of  the GNU General
@@ -73,7 +74,7 @@
 #include "pathnames.h"
 #include "version.h"
 #include "config.h"
-#include "net-locale.h"
+#include "intl.h"
 #include "sockets.h"
 #include "interface.h"
 
@@ -99,7 +100,7 @@ typedef enum {
 #include "lib/net-features.h"
 
 char *Release   = RELEASE,
-     *Version   = "netstat 1.26 (1998-03-02)",
+     *Version   = "netstat 1.34 (1998-06-29)",
      *Signature = "Fred Baumgarten <dc6iq@insu1.etec.uni-karlsruhe.de> and Alan Cox.";
 
 
@@ -201,9 +202,9 @@ netlink_print(void)
   }
 
   if (flag_ver) {
-    printf(NLS_CATGETS(catfd, netstatSet, netstat_nlp_title, "Netlink Kernel Messages"));
+    printf(_("Netlink Kernel Messages"));
     if (flag_cnt)
-      printf(NLS_CATGETS(catfd, netstatSet, netstat_nlp_cnt, " (continous)"));
+      printf(_(" (continous)"));
     printf("\n");  	
   }  	
   	
@@ -213,7 +214,7 @@ netlink_print(void)
       return(-1);
     }
     if (ret != sizeof(buf)) {
-      EINTERN("netstat.c", "netlink message size mismatch");
+      EINTERN("netstat.c", _("netlink message size mismatch"));
       return(-1);
     }
     
@@ -278,10 +279,10 @@ netlink_print(void)
 #if HAVE_AFNETROM
 static const char *netrom_state[]=
 {
-  "LISTENING",
-  "CONN SENT",
-  "DISC SENT",
-  "ESTABLISHED"
+  N_("LISTENING"),
+  N_("CONN SENT"),
+  N_("DISC SENT"),
+  N_("ESTABLISHED")
 };
 
 static int netrom_info(void)
@@ -304,8 +305,8 @@ static int netrom_info(void)
       return(0);
   }
   
-  printf(NLS_CATGETS(catfd, netstatSet, netstat_netrom, "Activate NET/ROM sockets\n"));
-  printf(NLS_CATGETS(catfd, netstatSet, netstat_header_netrom, "User       Dest       Source     Device  State        Vr/Vs  Send-Q  Recv-Q\n"));
+  printf(_("Activate NET/ROM sockets\n"));
+  printf(_("User       Dest       Source     Device  State        Vr/Vs  Send-Q  Recv-Q\n"));
   fgets(buffer,256,f);
  
   while (fgets(buffer,256,f)) {
@@ -317,7 +318,7 @@ static int netrom_info(void)
     printf("%-9s  %-9s  %-9s  %-6s  %-11s  %02d/%02d  %-6d  %-6d\n",
 	   buffer,buffer+10,buffer+20,
 	   dev,
-	   netrom_state[st],
+	   _(netrom_state[st]),
 	   vr,vs,sendq,recvq);
   }
   fclose(f);
@@ -344,17 +345,17 @@ enum {
 
 static const char *tcp_state[] = {
   "",
-  "ESTABLISHED",
-  "SYN_SENT",
-  "SYN_RECV",
-  "FIN_WAIT1",
-  "FIN_WAIT2",
-  "TIME_WAIT",
-  "CLOSE",
-  "CLOSE_WAIT",
-  "LAST_ACK",
-  "LISTEN",
-  "CLOSING"
+  N_("ESTABLISHED"),
+  N_("SYN_SENT"),
+  N_("SYN_RECV"),
+  N_("FIN_WAIT1"),
+  N_("FIN_WAIT2"),
+  N_("TIME_WAIT"),
+  N_("CLOSE"),
+  N_("CLOSE_WAIT"),
+  N_("LAST_ACK"),
+  N_("LISTEN"),
+  N_("CLOSING")
 };
 
 static void tcp_do_one(int lnr, const char *line)
@@ -389,7 +390,7 @@ static void tcp_do_one(int lnr, const char *line)
 	   addr6p[4], addr6p[5], addr6p[6], addr6p[7],
 	   addr6p[8], addr6p[9], addr6p[10], addr6p[11],
 	   addr6p[12], addr6p[13], addr6p[14], addr6p[15]);
-    sprintf(addr6, "%s%s:%s%s:%s%s:%s%s:%s%s:%s%s:%s%s:%s%s",
+    snprintf(addr6, sizeof(addr6), "%s%s:%s%s:%s%s:%s%s:%s%s:%s%s:%s%s:%s%s",
 	    addr6p[3], addr6p[2], addr6p[1], addr6p[0],
 	    addr6p[7], addr6p[6], addr6p[5], addr6p[4],
 	    addr6p[11], addr6p[10], addr6p[9], addr6p[8],
@@ -401,7 +402,7 @@ static void tcp_do_one(int lnr, const char *line)
 		 addr6p[4], addr6p[5], addr6p[6], addr6p[7],
 		 addr6p[8], addr6p[9], addr6p[10], addr6p[11],
 		 addr6p[12], addr6p[13], addr6p[14], addr6p[15]);
-	  sprintf(addr6, "%s%s:%s%s:%s%s:%s%s:%s%s:%s%s:%s%s:%s%s",
+	  snprintf(addr6, sizeof(addr6), "%s%s:%s%s:%s%s:%s%s:%s%s:%s%s:%s%s:%s%s",
 		  addr6p[3], addr6p[2], addr6p[1], addr6p[0],
 		  addr6p[7], addr6p[6], addr6p[5], addr6p[4],
 		  addr6p[11], addr6p[10], addr6p[9], addr6p[8],
@@ -420,13 +421,12 @@ static void tcp_do_one(int lnr, const char *line)
   }
 
   if (num < 11) {
-    fprintf(stderr, "warning, got bogus tcp line.\n");
+    fprintf(stderr, _("warning, got bogus tcp line.\n"));
     return; 
   }
 
   if ((ap = get_afntype(((struct sockaddr *)&localaddr)->sa_family)) == NULL) {
-    fprintf(stderr, NLS_CATGETS(catfd, netstatSet, netstat_netstat,
-				"netstat: unsupported address family %d !\n"),
+    fprintf(stderr, _("netstat: unsupported address family %d !\n"),
 	    ((struct sockaddr *)&localaddr)->sa_family);
     return;
   }
@@ -441,14 +441,14 @@ static void tcp_do_one(int lnr, const char *line)
   strcpy(local_addr, ap->sprint((struct sockaddr *)&localaddr, flag_not));
   strcpy(rem_addr, ap->sprint((struct sockaddr *)&remaddr, flag_not));
   if (flag_all || rem_port) {
-    sprintf(buffer, "%s", get_sname(htons(local_port), "tcp", flag_not));
+    snprintf(buffer, sizeof (buffer), "%s", get_sname(htons(local_port), "tcp", flag_not));
 
     if ((strlen(local_addr) + strlen(buffer)) > 22) 
       local_addr[22-strlen(buffer)] = '\0';
 
     strcat(local_addr, ":");
     strcat(local_addr, buffer);
-    sprintf(buffer,  "%s", get_sname(htons(rem_port), "tcp", flag_not));
+    snprintf(buffer, sizeof(buffer), "%s", get_sname(htons(rem_port), "tcp", flag_not));
 
     if ((strlen(rem_addr) + strlen(buffer)) > 22)
       rem_addr[22-strlen(buffer)] = '\0';
@@ -460,24 +460,21 @@ static void tcp_do_one(int lnr, const char *line)
     if (flag_opt) 
       switch (timer_run) {
       case 0:
-	sprintf(timers, NLS_CATGETS(catfd, netstatSet, netstat_off,
-				    "off (0.00/%ld)"), retr);
+	snprintf(timers, sizeof(timers), _("off (0.00/%ld)"), retr);
 	break;
 	
       case 1:
-	sprintf(timers, NLS_CATGETS(catfd, netstatSet, netstat_on,
-				    "on (%2.2f/%ld)"),
-		(double)time_len / 100, retr);
+	snprintf(timers, sizeof(timers), _("on (%2.2f/%ld)"),
+			 (double)time_len / 100, retr);
 	break;
 	
       default:
-	sprintf(timers, NLS_CATGETS(catfd, netstatSet, netstat_unkn,
-				    "unkn-%d (%2.2f/%ld)"),
-		timer_run, (double)time_len / 100, retr);
+	snprintf(timers, sizeof(timers), _("unkn-%d (%2.2f/%ld)"),
+			 timer_run, (double)time_len / 100, retr);
 	break;
       }
     printf("tcp   %6ld %6ld %-23s %-23s %-12s",
-	   rxq, txq, local_addr, rem_addr, tcp_state[state]);
+	   rxq, txq, local_addr, rem_addr, _(tcp_state[state]));
     
     if (flag_exp > 1) {
       if (!flag_not && ((pw = getpwuid(uid)) != NULL))
@@ -530,14 +527,14 @@ static void udp_do_one(int lnr, const char *line)
     sscanf(local_addr, "%4s%4s%4s%4s%4s%4s%4s%4s",
 	   addr6p[0], addr6p[1], addr6p[2], addr6p[3],
 	   addr6p[4], addr6p[5], addr6p[6], addr6p[7]);
-    sprintf(addr6, "%s:%s:%s:%s:%s:%s:%s:%s",
+    snprintf(addr6, sizeof(addr6), "%s:%s:%s:%s:%s:%s:%s:%s",
 	    addr6p[0], addr6p[1], addr6p[2], addr6p[3],
 	    addr6p[4], addr6p[5], addr6p[6], addr6p[7]);
     inet6_aftype.input(1, addr6, (struct sockaddr *)&localaddr);
     sscanf(rem_addr, "%4s%4s%4s%4s%4s%4s%4s%4s",
 	   addr6p[0], addr6p[1], addr6p[2], addr6p[3],
 	   addr6p[4], addr6p[5], addr6p[6], addr6p[7]);
-    sprintf(addr6, "%s:%s:%s:%s:%s:%s:%s:%s",
+    snprintf(addr6, sizeof(addr6), "%s:%s:%s:%s:%s:%s:%s:%s",
 	    addr6p[0], addr6p[1], addr6p[2], addr6p[3],
 	    addr6p[4], addr6p[5], addr6p[6], addr6p[7]);
     inet6_aftype.input(1, addr6, (struct sockaddr *)&remaddr);
@@ -558,20 +555,19 @@ static void udp_do_one(int lnr, const char *line)
     more[0] = '\0';
   
   if (num < 10) {
-    fprintf(stderr, "warning, got bogus udp line.\n");
+    fprintf(stderr, _("warning, got bogus udp line.\n"));
     return;
   }
   
   if ((ap = get_afntype(((struct sockaddr *)&localaddr)->sa_family)) == NULL) {
-    fprintf(stderr, NLS_CATGETS(catfd, netstatSet, netstat_netstat,
-				"netstat: unsupported address family %d !\n"),
+    fprintf(stderr, _("netstat: unsupported address family %d !\n"),
 	    ((struct sockaddr *)&localaddr)->sa_family);
     return;
   }
   
   switch (state) {
   case TCP_ESTABLISHED:
-    udp_state = "ESTABLISHED";
+    udp_state = _("ESTABLISHED");
     break;
     
   case TCP_CLOSE:
@@ -579,7 +575,7 @@ static void udp_do_one(int lnr, const char *line)
     break;
     
   default:
-    udp_state = "UNKNOWN";
+    udp_state = _("UNKNOWN");
     break;
   }
   
@@ -598,13 +594,13 @@ static void udp_do_one(int lnr, const char *line)
   if (flag_all || localaddr.sin_addr.s_addr) 
 #endif
   {
-    sprintf(buffer, "%s", get_sname(htons(local_port), "udp", flag_not));
+    snprintf(buffer, sizeof(buffer), "%s", get_sname(htons(local_port), "udp", flag_not));
     if ((strlen(local_addr) + strlen(buffer)) > 22) 
       local_addr[22-strlen(buffer)] = '\0';
     
     strcat(local_addr, ":");
     strcat(local_addr, buffer);
-    sprintf(buffer, "%s", get_sname(htons(rem_port), "udp", flag_not));
+    snprintf(buffer, sizeof(buffer), "%s", get_sname(htons(rem_port), "udp", flag_not));
     if ((strlen(rem_addr) + strlen(buffer)) > 22) 
       rem_addr[22-strlen(buffer)] = '\0';
     
@@ -614,21 +610,15 @@ static void udp_do_one(int lnr, const char *line)
     timers[0] = '\0';
     if (flag_opt) switch (timer_run) {
     case 0:
-      sprintf(timers, NLS_CATGETS(catfd, netstatSet, netstat_off2,
-				  "off (0.00/%ld) %c"),
-	      retr, timer_queued);
+      snprintf(timers, sizeof(timers), _("off (0.00/%ld) %c"), retr, timer_queued);
       break;
       
     case 1:
-      sprintf(timers, NLS_CATGETS(catfd, netstatSet, netstat_on2,
-				  "on (%2.2f/%ld) %c"),
-	      (double)time_len / 100, retr, timer_queued);
+      snprintf(timers, sizeof(timers), _("on (%2.2f/%ld) %c"), (double)time_len / 100, retr, timer_queued);
       break;
       
     default:
-      sprintf(timers, NLS_CATGETS(catfd, netstatSet, netstat_unkn2,
-				  "unkn-%d (%2.2f/%ld) %c"),
-	      timer_run, (double)time_len / 100,
+      snprintf(timers, sizeof(timers), _("unkn-%d (%2.2f/%ld) %c"), timer_run, (double)time_len / 100,
 	      retr, timer_queued);
       break;
     }
@@ -681,14 +671,14 @@ static void raw_do_one(int lnr, const char *line)
     sscanf(local_addr, "%4s%4s%4s%4s%4s%4s%4s%4s",
 	   addr6p[0], addr6p[1], addr6p[2], addr6p[3],
 	   addr6p[4], addr6p[5], addr6p[6], addr6p[7]);
-    sprintf(addr6, "%s:%s:%s:%s:%s:%s:%s:%s",
+    snprintf(addr6, sizeof(addr6), "%s:%s:%s:%s:%s:%s:%s:%s",
 	    addr6p[0], addr6p[1], addr6p[2], addr6p[3],
 	    addr6p[4], addr6p[5], addr6p[6], addr6p[7]);
     inet6_aftype.input(1, addr6, (struct sockaddr *)&localaddr);
     sscanf(rem_addr, "%4s%4s%4s%4s%4s%4s%4s%4s",
 	   addr6p[0], addr6p[1], addr6p[2], addr6p[3],
 	   addr6p[4], addr6p[5], addr6p[6], addr6p[7]);
-    sprintf(addr6, "%s:%s:%s:%s:%s:%s:%s:%s",
+    snprintf(addr6, sizeof(addr6), "%s:%s:%s:%s:%s:%s:%s:%s",
 	    addr6p[0], addr6p[1], addr6p[2], addr6p[3],
 	    addr6p[4], addr6p[5], addr6p[6], addr6p[7]);
     inet6_aftype.input(1, addr6, (struct sockaddr *)&remaddr);
@@ -705,16 +695,12 @@ static void raw_do_one(int lnr, const char *line)
   }
 #if HAVE_AFINET6
   if ((ap = get_afntype(localaddr.sin6_family)) == NULL) {
-    fprintf(stderr, NLS_CATGETS(catfd, netstatSet, netstat_netstat,
-				"netstat: unsupported address family %d !\n"),
-	    localaddr.sin6_family);
+    fprintf(stderr, _("netstat: unsupported address family %d !\n"), localaddr.sin6_family);
     return;
   }
 #else
   if ((ap = get_afntype(localaddr.sin_family)) == NULL) {
-    fprintf(stderr, NLS_CATGETS(catfd, netstatSet, netstat_netstat,
-				"netstat: unsupported address family %d !\n"),
-	    localaddr.sin_family);
+    fprintf(stderr, _("netstat: unsupported address family %d !\n"), localaddr.sin_family);
     return;
   }
 #endif  
@@ -723,7 +709,7 @@ static void raw_do_one(int lnr, const char *line)
     more[0] = '\0';
 
   if (num < 10) {
-    fprintf(stderr, "warning, got bogus raw line.\n");
+    fprintf(stderr, _("warning, got bogus raw line.\n"));
     return;
   }
 
@@ -743,13 +729,13 @@ static void raw_do_one(int lnr, const char *line)
   if (flag_all || localaddr.sin_addr.s_addr) 
 #endif
   {
-    sprintf(buffer, "%s", get_sname(htons(local_port), "raw", flag_not));
+    snprintf(buffer, sizeof(buffer), "%s", get_sname(htons(local_port), "raw", flag_not));
     if ((strlen(local_addr) + strlen(buffer)) > 22) 
       local_addr[22-strlen(buffer)] = '\0';
    
     strcat(local_addr, ":");
     strcat(local_addr, buffer);
-    sprintf(buffer, "%s", get_sname(htons(rem_port), "raw", flag_not));
+    snprintf(buffer, sizeof(buffer), "%s", get_sname(htons(rem_port), "raw", flag_not));
     if ((strlen(rem_addr) + strlen(buffer)) > 22) 
       rem_addr[22-strlen(buffer)] = '\0';
     
@@ -759,21 +745,16 @@ static void raw_do_one(int lnr, const char *line)
     timers[0] = '\0';
     if (flag_opt) switch (timer_run) {
     case 0:
-      sprintf(timers, NLS_CATGETS(catfd, netstatSet, netstat_off3,
-				  "off (0.00/%ld) %c"),
-	      retr, timer_queued);
+      snprintf(timers, sizeof(timers), _("off (0.00/%ld) %c"), retr, timer_queued);
       break;
       
     case 1:
-      sprintf(timers, NLS_CATGETS(catfd, netstatSet, netstat_on3,
-				  "on (%2.2f/%ld) %c"),
-	      (double)time_len / 100, retr,
-	      timer_queued);
-	break;
+      snprintf(timers, sizeof(timers), _("on (%2.2f/%ld) %c"), (double)time_len / 100,
+		      retr, timer_queued);
+      break;
 	
     default:
-      sprintf(timers, NLS_CATGETS(catfd, netstatSet, netstat_unkn3,
-				  "unkn-%d (%2.2f/%ld) %c"),
+      snprintf(timers, sizeof(timers), _("unkn-%d (%2.2f/%ld) %c"),
 	      timer_run, (double)time_len / 100,
 	      retr, timer_queued);
       break;
@@ -822,7 +803,7 @@ static void unix_do_one(int nr, const char *line)
   num = sscanf(line, "%p: %lX %lX %lX %X %X %s %s",
 	       &d, &refcnt, &proto, &flags, &type, &state, inode, path);
   if (num < 6) {
-    fprintf(stderr, "warning, got bogus unix line.\n");
+    fprintf(stderr, _("warning, got bogus unix line.\n"));
     return;
   }
 
@@ -844,32 +825,32 @@ static void unix_do_one(int nr, const char *line)
   
   switch(type) {
   case SOCK_STREAM:
-    ss_type = "STREAM";
+    ss_type = _("STREAM");
     break;
     
   case SOCK_DGRAM:
-    ss_type = "DGRAM";
+    ss_type = _("DGRAM");
     break;
     
   case SOCK_RAW:
-    ss_type = "RAW";
+    ss_type = _("RAW");
     break;
     
   case SOCK_RDM:
-    ss_type = "RDM";
+    ss_type = _("RDM");
     break;
     
   case SOCK_SEQPACKET:
-    ss_type = "SEQPACKET";
+    ss_type = _("SEQPACKET");
     break;
     
   default:
-    ss_type = "UNKNOWN";
+    ss_type = _("UNKNOWN");
   }
   
   switch(state) {
   case SS_FREE:
-    ss_state = "FREE";
+    ss_state = _("FREE");
     break;
     
   case SS_UNCONNECTED:
@@ -878,26 +859,26 @@ static void unix_do_one(int nr, const char *line)
      * for something.
      */
     if (flags & SO_ACCEPTCON) {
-      ss_state = "LISTENING";
+      ss_state = _("LISTENING");
     } else {
       ss_state = "";
     }
     break;
     
   case SS_CONNECTING:
-    ss_state = "CONNECTING";
+    ss_state = _("CONNECTING");
     break;
     
   case SS_CONNECTED:
-    ss_state = "CONNECTED";
+    ss_state = _("CONNECTED");
     break;
     
   case SS_DISCONNECTING:
-    ss_state = "DISCONNECTING";
+    ss_state = _("DISCONNECTING");
     break;
     
   default:
-    ss_state = "UNKNOWN";
+    ss_state = _("UNKNOWN");
   }
   
   strcpy(ss_flags, "[ ");
@@ -915,12 +896,11 @@ static int
 unix_info(void)
 {
   
-  printf(NLS_CATGETS(catfd, netstatSet, netstat_unix, "Active UNIX domain sockets ")); /* xxx */
-  if (flag_all) printf(NLS_CATGETS(catfd, netstatSet, netstat_servers, "(including servers)")); /* xxx */
-           else printf(NLS_CATGETS(catfd, netstatSet, netstat_noservers, "(w/o servers)")); /* xxx */
+  printf(_("Active UNIX domain sockets ")); /* xxx */
+  if (flag_all) printf(_("(including servers)")); /* xxx */
+           else printf(_("(w/o servers)")); /* xxx */
 
-  printf(NLS_CATGETS(catfd, netstatSet, netstat_header_unix,
-		     "\nProto RefCnt Flags       Type       State         I-Node Path\n")); /* xxx */
+  printf(_("\nProto RefCnt Flags       Type       State         I-Node Path\n")); /* xxx */
 
   {
     INFO_GUTS(_PATH_PROCNET_UNIX, "AF UNIX", unix_do_one);
@@ -937,11 +917,11 @@ static int ax25_info(void)
 	int st,vs,vr,sendq,recvq;
 	static char *ax25_state[5]=
  	{
-		"LISTENING",
- 		"SABM SENT",
- 		"DISC SENT",
-		"ESTABLISHED",
-		"RECOVERY"
+		N_("LISTENING"),
+ 		N_("SABM SENT"),
+ 		N_("DISC SENT"),
+		N_("ESTABLISHED"),
+		N_("RECOVERY")
  	};
 	if(!(f=fopen(_PATH_PROCNET_AX25, "r")))
 	{
@@ -956,8 +936,8 @@ static int ax25_info(void)
 		else
 			return(0);
   	}
-	printf(NLS_CATGETS(catfd, netstatSet, netstat_ax25, "Activate AX.25 sockets\n"));
-	printf(NLS_CATGETS(catfd, netstatSet, netstat_header_ax25, "Dest       Source     Device  State        Vr/Vs  Send-Q  Recv-Q\n"));
+	printf(_("Activate AX.25 sockets\n"));
+	printf(_("Dest       Source     Device  State        Vr/Vs  Send-Q  Recv-Q\n"));
  	fgets(buffer,256,f);
  	while(fgets(buffer,256,f))
  	{
@@ -968,7 +948,7 @@ static int ax25_info(void)
 		printf("%-9s  %-9s  %-6s  %-11s  %02d/%02d  %-6d  %-6d\n",
  			buffer,buffer+10,
 			dev,
- 			ax25_state[st],
+ 			_(ax25_state[st]),
 			vr,vs,sendq,recvq);
  	}
  	fclose(f);
@@ -1006,11 +986,9 @@ static int ipx_info(void)
 		else
 			return(0);
   	}
-	printf(NLS_CATGETS(catfd, netstatSet, netstat_header_ipx,
-		   "Active IPX sockets\nProto Recv-Q Send-Q Local Address              Foreign Address            State")); /* xxx */
+	printf(_("Active IPX sockets\nProto Recv-Q Send-Q Local Address              Foreign Address            State")); /* xxx */
 	if (flag_exp>1)
-		printf(NLS_CATGETS(catfd, netstatSet, netstat_header_ipx2,
-			" User")); /* xxx */
+		printf(_(" User")); /* xxx */
 	printf("\n");
 	if ((ap = get_afntype(AF_IPX)) == NULL) {
 		EINTERN("netstat.c","AF_IPX missing");
@@ -1047,7 +1025,7 @@ static int ipx_info(void)
 		switch(state)
 		{
 			case TCP_ESTABLISHED:
-				st = "ESTAB";
+				st = _("ESTAB");
 				break;
 
 			case TCP_CLOSE:
@@ -1055,20 +1033,20 @@ static int ipx_info(void)
 				break;
 
 			default:
-				st = "UNK.";
+				st = _("UNK.");
 				break;
 		}
 
 		/* Fetch and resolve the Source */
 		(void)ap->input(4,sad,&sa);
 		strcpy(buf, ap->sprint(&sa, flag_not));
-		sprintf(sad,"%s:%04X",buf,sport);
+		snprintf(sad,sizeof(sad),"%s:%04X",buf,sport);
 
 		if (!nc) {
 			/* Fetch and resolve the Destination */
 			(void)ap->input(4,dad,&sa);
 			strcpy(buf, ap->sprint(&sa, flag_not));
-			sprintf(dad,"%s:%04X",buf,dport);
+			snprintf(dad,sizeof(dad),"%s:%04X",buf,dport);
 		} else strcpy(dad,"-");
 
 		printf("IPX   %6ld %6ld %-26s %-26s %-5s", txq, rxq, sad, dad, st);
@@ -1097,7 +1075,7 @@ ife_print(struct interface *ptr)
   printf("%6lu %6lu %6lu %6lu ",
 	 ptr->stats.tx_packets, ptr->stats.tx_errors,
 	 ptr->stats.tx_dropped, ptr->stats.tx_fifo_errors);
-  if (ptr->flags == 0) printf(NLS_CATGETS(catfd, netstatSet, netstat_noflags, "[NO FLAGS]"));
+  if (ptr->flags == 0) printf(_("[NO FLAGS]"));
   if (ptr->flags & IFF_ALLMULTI) printf("A");
   if (ptr->flags & IFF_BROADCAST) printf("B");
   if (ptr->flags & IFF_DEBUG) printf("D");
@@ -1118,14 +1096,12 @@ iface_info(void)
   char buffer[256];
   FILE *fd;
   
-  printf(NLS_CATGETS(catfd, netstatSet, netstat_interface, "Kernel Interface table\n"));
-  printf(NLS_CATGETS(catfd, netstatSet, netstat_header_iface,
-		     "Iface   MTU Met  RX-OK RX-ERR RX-DRP RX-OVR  TX-OK TX-ERR TX-DRP TX-OVR Flags\n"));
+  printf(_("Kernel Interface table\n"));
+  printf(_("Iface   MTU Met  RX-OK RX-ERR RX-DRP RX-OVR  TX-OK TX-ERR TX-DRP TX-OVR Flags\n"));
   
   /* Create a channel to the NET kernel. */
   if ((skfd = sockets_open()) < 0) {
     perror("socket");
-    NLS_CATCLOSE(catfd)
     exit(1);
   }
 
@@ -1142,8 +1118,7 @@ iface_info(void)
       *sep = 0;
     while (*name == ' ') name++;
     if (if_fetch(name, &ife) < 0) {
-      fprintf(stderr, NLS_CATGETS(catfd, ifconfigSet, 
-				  ifconfig_unkn, "%s: unknown interface.\n"),
+      fprintf(stderr, _("%s: unknown interface.\n"),
 	      name);
       continue;
     }
@@ -1163,7 +1138,6 @@ static void
 version(void) 
 {
   printf("%s\n%s\n%s\n%s\n", Release, Version, Signature, Features);
-  NLS_CATCLOSE(catfd)
   exit(1);
 }
 
@@ -1171,26 +1145,25 @@ version(void)
 static void
 usage(void)
 {
-  fprintf(stderr, NLS_CATGETS(catfd, netstatSet, netstat_usage1,  "usage: netstat [-veenNcCF] [<Af>] -r         netstat {-V|--version|-h|--help}\n"));
-  fprintf(stderr, NLS_CATGETS(catfd, netstatSet, netstat_usage2,  "       netstat [-vnNcaeo] [<Socket>]\n"));
-  fprintf(stderr, NLS_CATGETS(catfd, netstatSet, netstat_usage3,  "       netstat { [-veenNac] -i | [-vnNc] -L | [-cnNe] -M }\n\n"));
-  fprintf(stderr, NLS_CATGETS(catfd, netstatSet, netstat_usage4,  "        -r, --route              display routing table\n")); /* xxx */
-  fprintf(stderr, NLS_CATGETS(catfd, netstatSet, netstat_usage5,  "        -L, --netlink            display netlink kernel messages\n"));
-  fprintf(stderr, NLS_CATGETS(catfd, netstatSet, netstat_usage6,  "        -i, --interfaces         display interface table\n"));
-  fprintf(stderr, NLS_CATGETS(catfd, netstatSet, netstat_usage7,  "        -M, --masquerade         display masqueraded connections\n\n"));
-  fprintf(stderr, NLS_CATGETS(catfd, netstatSet, netstat_usage8,  "        -v, --verbose            be verbose\n"));
-  fprintf(stderr, NLS_CATGETS(catfd, netstatSet, netstat_usage9,  "        -n, --numeric            dont resolve names\n"));
-  fprintf(stderr, NLS_CATGETS(catfd, netstatSet, netstat_usage10, "        -e, --extend             display other/more informations\n"));
-  fprintf(stderr, NLS_CATGETS(catfd, netstatSet, netstat_usage11, "        -c, --continuous         continuous listing\n\n"));
-  fprintf(stderr, NLS_CATGETS(catfd, netstatSet, netstat_usage12, "        -a, --all, --listening   display all\n"));
-  fprintf(stderr, NLS_CATGETS(catfd, netstatSet, netstat_usage13, "        -o, --timers             display timers\n\n"));
-  fprintf(stderr, NLS_CATGETS(catfd, netstatSet, netstat_usage14, "<Socket>={-t|--tcp} {-u|--udp} {-w|--raw} {-x|--unix} --ax25 --ipx --netrom\n"));
+  fprintf(stderr, _("usage: netstat [-veenNcCF] [<Af>] -r         netstat {-V|--version|-h|--help}\n"));
+  fprintf(stderr, _("       netstat [-vnNcaeo] [<Socket>]\n"));
+  fprintf(stderr, _("       netstat { [-veenNac] -i | [-vnNc] -L | [-cnNe] -M }\n\n"));
+  fprintf(stderr, _("        -r, --route              display routing table\n")); /* xxx */
+  fprintf(stderr, _("        -L, --netlink            display netlink kernel messages\n"));
+  fprintf(stderr, _("        -i, --interfaces         display interface table\n"));
+  fprintf(stderr, _("        -M, --masquerade         display masqueraded connections\n\n"));
+  fprintf(stderr, _("        -v, --verbose            be verbose\n"));
+  fprintf(stderr, _("        -n, --numeric            dont resolve names\n"));
+  fprintf(stderr, _("        -e, --extend             display other/more informations\n"));
+  fprintf(stderr, _("        -c, --continuous         continuous listing\n\n"));
+  fprintf(stderr, _("        -a, --all, --listening   display all\n"));
+  fprintf(stderr, _("        -o, --timers             display timers\n\n"));
+  fprintf(stderr, _("<Socket>={-t|--tcp} {-u|--udp} {-w|--raw} {-x|--unix} --ax25 --ipx --netrom\n"));
 #if HAVE_AFINET6
-  fprintf(stderr, NLS_CATGETS(catfd, netstatSet, netstat_usage15, "<Af>= -A {inet|inet6|ipx|netrom|ddp|ax25},... --inet --inet6 --ipx --netrom --ddp --ax25\n"));
+  fprintf(stderr, _("<Af>= -A {inet|inet6|ipx|netrom|ddp|ax25},... --inet --inet6 --ipx --netrom --ddp --ax25\n"));
 #else
-  fprintf(stderr, NLS_CATGETS(catfd, netstatSet, netstat_usage15, "<Af>= -A {inet|ipx|netrom|ddp|ax25},... --inet --ipx --netrom --ddp --ax25\n"));
+  fprintf(stderr, _("<Af>= -A {inet|ipx|netrom|ddp|ax25},... --inet --ipx --netrom --ddp --ax25\n"));
 #endif
-  NLS_CATCLOSE(catfd)
   exit(1);
 }
 
@@ -1228,11 +1201,10 @@ int main
     {NULL,		0,	0,	0}
   };
   
-#if NLS
-  setlocale (LC_MESSAGES, "");
-  catfd = catopen ("nettools", MCLoadBySet);
+#if I18N
+  bindtextdomain("net-tools", "/usr/share/locale");
+  textdomain("net-tools");
 #endif
-
   getroute_init(); 			/* Set up AF routing support */
 
   afname[0]='\0';
@@ -1244,16 +1216,12 @@ int main
       EINTERN("netstat.c","longopts 1 range");
       break;
     }
-    if (aftrans_opt(longopts[lop].name)) {
-      NLS_CATCLOSE(catfd)
+    if (aftrans_opt(longopts[lop].name))
 	exit(1);
-    }
     break;
   case 'A':
-    if (aftrans_opt(optarg)) {
-      NLS_CATCLOSE(catfd)
+    if (aftrans_opt(optarg))
 	exit(1);
-    }
     break;
   case 'L':
     flag_nlp++;
@@ -1314,10 +1282,8 @@ int main
     flag_raw++;
     break;
   case 'x':
-    if (aftrans_opt("unix")) {
-      NLS_CATCLOSE(catfd)
+    if (aftrans_opt("unix"))
 	exit(1);
-    }
     break;
   case '?':
   case 'h':
@@ -1344,7 +1310,6 @@ int main
     ENOSUPP("netstat.c","RT_NETLINK");
     i=-1;
 #endif	
-    NLS_CATCLOSE(catfd)
       return(i);
   }
   if (flag_mas) {
@@ -1362,7 +1327,6 @@ int main
     ENOSUPP("netstat.c","FW_MASQUERADE");
     i=-1;
 #endif
-    NLS_CATCLOSE(catfd)
       return(i);
   }
   if (flag_rou) {
@@ -1385,7 +1349,6 @@ int main
       if (i || !flag_cnt) break;
       sleep(1);
     }
-    NLS_CATCLOSE(catfd)
       return(i);
   }
   
@@ -1395,25 +1358,21 @@ int main
       if (!flag_cnt || i) break;
       sleep(1);
     }
-    NLS_CATCLOSE(catfd)
       return(i);
   }
   
   for (;;) {
     if (!flag_arg || flag_tcp || flag_udp || flag_raw) {
 #if HAVE_AFINET
-      printf(NLS_CATGETS(catfd, netstatSet, netstat_internet, "Active Internet connections ")); /* xxx */
-      if (flag_all) printf(NLS_CATGETS(catfd, netstatSet, netstat_servers, "(including servers)")); /* xxx */
-      else printf(NLS_CATGETS(catfd, netstatSet, netstat_noservers, "(w/o servers)")); /* xxx */
+      printf(_("Active Internet connections ")); /* xxx */
+      if (flag_all) printf(_("(including servers)")); /* xxx */
+      else printf(_("(w/o servers)")); /* xxx */
       
-      printf(NLS_CATGETS(catfd, netstatSet, netstat_header_internet,
-			 "\nProto Recv-Q Send-Q Local Address           Foreign Address         State      ")); /* xxx */
+      printf(_("\nProto Recv-Q Send-Q Local Address           Foreign Address         State      ")); /* xxx */
       if (flag_exp > 1)
-	printf(NLS_CATGETS(catfd, netstatSet, netstat_header_internet2,
-			   " User      ")); /* xxx */
+	printf(_(" User      ")); /* xxx */
       if (flag_opt)
-	printf(NLS_CATGETS(catfd, netstatSet, netstat_header_internet3,
-			   " Timer")); /* xxx */
+	printf(_(" Timer")); /* xxx */
       printf("\n");
 #else
       if (flag_arg) { 
@@ -1425,24 +1384,24 @@ int main
 #if HAVE_AFINET
     if (!flag_arg || flag_tcp) {
       i = tcp_info();
-      if (i) {  NLS_CATCLOSE(catfd)  return(i); }
+      if (i) return(i);
     }
     
     if (!flag_arg || flag_udp) {
       i = udp_info();
-      if (i) {  NLS_CATCLOSE(catfd)  return(i); }
+      if (i) return(i);
     }
     
     if (!flag_arg || flag_raw) {
       i = raw_info();
-      if (i) {  NLS_CATCLOSE(catfd)  return(i); }
+      if (i) return(i);
     }
 #endif
     
     if (!flag_arg || flag_unx) {
 #if HAVE_AFUNIX
       i = unix_info();
-      if (i) {  NLS_CATCLOSE(catfd)  return(i); }
+      if (i) return(i);
 #else
       if (flag_arg)
 	{ i=1; ENOSUPP("netstat","AF UNIX"); }
@@ -1452,7 +1411,7 @@ int main
     if(!flag_arg || flag_ipx) {
 #if HAVE_AFIPX
       i = ipx_info();
-      if(i) {  NLS_CATCLOSE(catfd)  return(i); }
+      if(i) return(i);
 #else
       if (flag_arg)
 	{ i=1; ENOSUPP("netstat","AF IPX"); }
@@ -1462,7 +1421,7 @@ int main
     if(!flag_arg || flag_ax25) {
 #if HAVE_AFAX25
       i = ax25_info();
-      if(i) {  NLS_CATCLOSE(catfd)  return(i); }
+      if(i) return(i);
 #else
       if (flag_arg)
 	{ i=1; ENOSUPP("netstat","AF AX25"); }
@@ -1472,7 +1431,7 @@ int main
     if(!flag_arg || flag_netrom) {
 #if HAVE_AFNETROM
       i = netrom_info();
-      if(i) {  NLS_CATCLOSE(catfd)  return(i); }
+      if(i) return(i);
 #else
       if (flag_arg)
 	{ i=1; ENOSUPP("netstat","AF NETROM"); }
@@ -1482,7 +1441,5 @@ int main
     if (!flag_cnt || i) break;
     sleep(1);
   }
-  
-  NLS_CATCLOSE(catfd)
     return(i);
 }

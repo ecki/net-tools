@@ -28,9 +28,7 @@
 #include <unistd.h>
 #include "net-support.h"
 #include "pathnames.h"
-#define  EXTERN
-#include "net-locale.h"
-
+#include "intl.h"
 
 extern struct hwtype ether_hwtype;
 
@@ -41,7 +39,7 @@ pr_ether(unsigned char *ptr)
 {
   static char buff[64];
 
-  sprintf(buff, "%02X:%02X:%02X:%02X:%02X:%02X",
+  snprintf(buff, sizeof(buff), "%02X:%02X:%02X:%02X:%02X:%02X",
 	(ptr[0] & 0377), (ptr[1] & 0377), (ptr[2] & 0377),
 	(ptr[3] & 0377), (ptr[4] & 0377), (ptr[5] & 0377)
   );
@@ -56,7 +54,7 @@ pr_sether(struct sockaddr *sap)
   static char buf[64];
 
   if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-    return(NLS_CATBUFF (catfd, etherSet, ether_none, "[NONE SET]", buf, 64));
+    return strncpy (buf, _("[NONE SET]"), sizeof (buf));
   return(pr_ether(sap->sa_data));
 }
 
@@ -83,8 +81,7 @@ in_ether(char *bufp, struct sockaddr *sap)
 	  else if (c >= 'A' && c <= 'F') val = c - 'A' + 10;
 	  else {
 #ifdef DEBUG
-		fprintf(stderr, NLS_CATGETS(catfd, etherSet, ether_debug1,
-					    "in_ether(%s): invalid ether address!\n"), orig);
+		fprintf(stderr, _("in_ether(%s): invalid ether address!\n"), orig);
 #endif
 		errno = EINVAL;
 		return(-1);
@@ -97,8 +94,7 @@ in_ether(char *bufp, struct sockaddr *sap)
 	  else if (c == ':' || c == 0) val >>= 4;
 	  else {
 #ifdef DEBUG
-		fprintf(stderr, NLS_CATGETS(catfd, etherSet, ether_debug2,
-					    "in_ether(%s): invalid ether address!\n"), orig);
+		fprintf(stderr, _("in_ether(%s): invalid ether address!\n"), orig);
 #endif
 		errno = EINVAL;
 		return(-1);
@@ -111,8 +107,7 @@ in_ether(char *bufp, struct sockaddr *sap)
 	if (*bufp == ':') {
 		if (i == ETH_ALEN) {
 #ifdef DEBUG
-			fprintf(stderr, NLS_CATGETS(catfd, etherSet, ether_debug3,
-						    "in_ether(%s): trailing : ignored!\n"),
+			fprintf(stderr, _("in_ether(%s): trailing : ignored!\n"),
 									orig)
 #endif
 						; /* nothing */
@@ -124,7 +119,7 @@ in_ether(char *bufp, struct sockaddr *sap)
   /* That's it.  Any trailing junk? */
   if ((i == ETH_ALEN) && (*bufp != '\0')) {
 #ifdef DEBUG
-	fprintf(stderr, NLS_CATGETS(catfd, etherSet, ether_debug4, "in_ether(%s): trailing junk!\n"), orig);
+	fprintf(stderr, _("in_ether(%s): trailing junk!\n"), orig);
 	errno = EINVAL;
 	return(-1);
 #endif

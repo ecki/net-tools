@@ -2,7 +2,7 @@
  * lib/netrom.c	This file contains an implementation of the "NET/ROM"
  *		support functions for the NET-2 base distribution.
  *
- * Version:	@(#)netrom.c	1.20	12/16/93
+ * Version:	@(#)netrom.c	1.21	07/01/98
  *
  * NOTE:	I will redo this module as soon as I got the libax25.a
  *		library sorted out.  This library contains some useful
@@ -11,6 +11,11 @@
  *
  * Author:	Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *		Copyright 1993 MicroWalt Corporation
+ * 
+ * Changes:
+ * 980701 {1.21} Arnaldo Carvalho de Melo - GNU gettext instead of catgets,
+ *                                          strncpy instead of strcpy for
+ *					    i18n strings
  *
  *		This program is free software; you can redistribute it
  *		and/or  modify it under  the terms of  the GNU General
@@ -36,14 +41,11 @@
 #include <unistd.h>
 #include "net-support.h"
 #include "pathnames.h"
-#define EXTERN
-#include "net-locale.h"
+#include "intl.h"
 
 static char netrom_errmsg[128];
 
-
 extern struct aftype netrom_aftype;
-
 
 static char *
 NETROM_print(unsigned char *ptr)
@@ -68,7 +70,7 @@ NETROM_sprint(struct sockaddr *sap, int numeric)
 {
   char buf[64];
   if (sap->sa_family == 0xFFFF || sap->sa_family == 0) 
-    return(NLS_CATBUFF (catfd, netromSet, netrom_none, "[NONE SET]", buf, 64));
+	return strncpy (buf, _("[NONE SET]"), sizeof (buf));
   return(NETROM_print(((struct sockaddr_ax25 *)sap)->sax25_call.ax25_call));
 }
 
@@ -90,7 +92,7 @@ NETROM_input(int type, char *bufp, struct sockaddr *sap)
 	c = *bufp++;
 	if (islower(c)) c = toupper(c);
 	if (! (isupper(c) || isdigit(c))) {
-		strcpy(netrom_errmsg, NLS_CATGETS (catfd, netromSet, netrom_debug1, "Invalid callsign"));
+		strncpy(netrom_errmsg, _("Invalid callsign"), sizeof(netrom_errmsg));
 #ifdef DEBUG
 		fprintf(stderr, "netrom_input(%s): %s !\n", netrom_errmsg, orig);
 #endif
@@ -103,7 +105,7 @@ NETROM_input(int type, char *bufp, struct sockaddr *sap)
 
   /* Callsign too long? */
   if ((i == 6) && (*bufp != '-') && (*bufp != '\0')) {
-	strcpy(netrom_errmsg, NLS_CATGETS (catfd, netromSet, netrom_debug2, "Callsign too long"));
+	strncpy(netrom_errmsg, _("Callsign too long"), sizeof(netrom_errmsg));
 #ifdef DEBUG
 	fprintf(stderr, "netrom_input(%s): %s !\n", netrom_errmsg, orig);
 #endif

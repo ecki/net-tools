@@ -8,12 +8,14 @@
 #		NET-3 Networking Distribution for the LINUX operating
 #		system.
 #
-# Version:	config.in 1.20	(98-01-25)
+# Version:	config.in 1.21	(98-06-30)
 #
 # Author:	Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
 #		Copyright 1988-1993 MicroWalt Corporation
 #
 #		Bernd 'eckes' Eckenfels <net-tools@lina.inka.de>
+#		Arnaldo Carvalho de Melo <acme@conectiva.com.br>
+#		  GNU gettext - I18N
 #
 #		This program is free software; you can redistribute it
 #		and/or  modify it under  the terms of  the GNU General
@@ -31,24 +33,19 @@
 =  *		DO  NOT  EDIT  DIRECTLY
 =  *
 =  */
-#*
-#*
-#*                     NLS
-#*
-#*           (National Language Support)
-#*
-#* In this BETA Release the NLS is disabled, cause the catalougs
-#* are completely outdated.
-#*
-#
-#
-#= #define NLS 0
-#
-#
-# * (answer 'n' if you haye no system with national language support)
-# *
-# bool 'Does your system support NLS?' NLS n
-#: Does your system support NLS? (NLS) [n] NO
+*
+*
+*                     I18N
+*
+*              (Internationalization)
+*
+* In this BETA Release the I18N (NLS) is enabled and now based
+* on GNU gettext, only a brazilian portuguese catalog (translation)
+* is present, but others are *highly* welcome!
+*
+* (answer 'n' if you haye no system with GNU gettext support)
+*
+bool 'Does your system support GNU gettext?' I18N y
 *
 *
 *             Protocol Families.

@@ -14,13 +14,11 @@
 #include <netinet/in.h>
 #include "net-support.h"
 #include "pathnames.h"
-#define  EXTERN
-#include "net-locale.h"
+#include "intl.h"
 
 int DDP_rprint(int options)
 {
-	fprintf(stderr,NLS_CATGETS(catfd, ddpSet, ddp_notyet,
-		"Routing table for `ddp' not yet supported.\n"));
+	fprintf(stderr, _("Routing table for `ddp' not yet supported.\n"));
 	return(1);
 }
 #endif

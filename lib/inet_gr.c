@@ -1,3 +1,8 @@
+/*
+  Modifications:
+  1998-07-01 - Arnaldo Carvalho de Melo - GNU gettext instead of catgets
+*/
+
 #include "config.h"
 
 #if HAVE_AFINET
@@ -18,9 +23,7 @@
 #include "version.h"
 #include "net-support.h"
 #include "pathnames.h"
-#define  EXTERN
-#include "net-locale.h"
-
+#include "intl.h"
 #include "net-features.h"
 #include "proc.h"
 
@@ -42,21 +45,18 @@ int rprint_fib(int ext, int numeric)
 	return 1;
   }
 
-  printf(NLS_CATGETS(catfd, inetSet, inet_table, "Kernel IP routing table\n"));
+  printf(_("Kernel IP routing table\n"));
 
   if (ext == 1)
-	printf(NLS_CATGETS(catfd, inetSet, inet_header1,
-		"Destination     Gateway         Genmask         "
-		"Flags Metric Ref    Use Iface\n"));
+	printf(_("Destination     Gateway         Genmask         "
+		 "Flags Metric Ref    Use Iface\n"));
   if (ext == 2)
-	printf(NLS_CATGETS(catfd, inetSet, inet_header2,
-		"Destination     Gateway         Genmask         "
-		"Flags   MSS Window  irtt Iface\n"));
+	printf(_("Destination     Gateway         Genmask         "
+		 "Flags   MSS Window  irtt Iface\n"));
   if (ext >= 3)
-	printf(NLS_CATGETS(catfd, inetSet, inet_header3,
-		"Destination     Gateway         Genmask         "
-		"Flags Metric Ref    Use Iface    "
-		"MSS   Window irtt\n"));
+	printf(_("Destination     Gateway         Genmask         "
+		 "Flags Metric Ref    Use Iface    "
+		 "MSS   Window irtt\n"));
 
   irtt=0;
   window=0;
@@ -171,18 +171,15 @@ int rprint_cache(int ext, int numeric)
   }
 
   if (ext == 1)
-	printf(NLS_CATGETS(catfd, inetSet, inet_header1,
-		"Destination     Gateway         Source          "
-		"Flags Metric Ref    Use Iface\n"));
+	printf(_("Destination     Gateway         Source          "
+		 "Flags Metric Ref    Use Iface\n"));
   if (ext == 2)
-	printf(NLS_CATGETS(catfd, inetSet, inet_header2,
-		"Destination     Gateway         Source          "
-		"Flags   MSS Window  irtt Iface\n"));
+	printf(_("Destination     Gateway         Source          "
+		 "Flags   MSS Window  irtt Iface\n"));
   if (ext >= 3)
-	printf(NLS_CATGETS(catfd, inetSet, inet_header3,
-		"Destination     Gateway         Source          "
-		"Flags Metric Ref    Use Iface    "
-		"MSS   Window irtt   HH  Arp\n"));
+	printf(_("Destination     Gateway         Source          "
+		 "Flags Metric Ref    Use Iface    "
+		 "MSS   Window irtt   HH  Arp\n"));
 
   fmt = proc_gen_fmt(_PATH_PROCNET_ROUTE, fp,
 					 "Iface", "%16s",

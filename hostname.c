@@ -20,6 +20,7 @@
  *960120 {1.95}	Bernd Eckenfels :	-y/nisdomainname - support for get/
  *					setdomainname added 
  *960218 {1.96} Bernd Eckenfels :	netinet/in.h added
+ *980629 {1.97} Arnaldo Carvalho de Melo : gettext instead of catgets for i18n
  *
  *		This program is free software; you can redistribute it
  *		and/or  modify it under  the terms of  the GNU General
@@ -38,10 +39,10 @@
 #include <arpa/inet.h>
 #include "config.h"
 #include "version.h"
-#include "net-locale.h"
+#include "../intl.h"
 
 char *Release = RELEASE,
-     *Version = "hostname 1.96 (1996-02-18)";
+     *Version = "hostname 1.97 (1998-06-29)";
      
 static char *program_name;
 static int  opt_v;
@@ -59,21 +60,18 @@ static void setfilename(char *,int);
 static void sethname(char *hname)
 {
 	if (opt_v)
-		fprintf(stderr,NLS_CATGETS(catfd, hostnameSet, hostname_verb_set, "Setting hostname to `%s'\n"),
+		fprintf(stderr,_("Setting hostname to `%s'\n"),
 			hname);
 	if(sethostname(hname, strlen(hname))) {
 		switch(errno) {
 			case EPERM:
-				fprintf(stderr,NLS_CATGETS(catfd, hostnameSet, hostname_root,
-							   "%s: you must be root to change the host name\n"), program_name);
+				fprintf(stderr,_("%s: you must be root to change the host name\n"), program_name);
 				break;
 			case EINVAL:
-				fprintf(stderr,NLS_CATGETS(catfd, hostnameSet, hostname_toolong,
-							   "%s: name too long\n"), program_name);
+				fprintf(stderr,_("%s: name too long\n"), program_name);
 				break;
 			default:
 		}
-		NLS_CATCLOSE(catfd)
 		exit(1);
 	};
 }
@@ -81,21 +79,18 @@ static void sethname(char *hname)
 static void setdname(char *dname)
 {
 	if (opt_v)
-		fprintf(stderr,NLS_CATGETS(catfd, hostnameSet, hostname_verb_dset, "Setting domainname to `%s'\n"),
+		fprintf(stderr,_("Setting domainname to `%s'\n"),
 			dname);
 	if(setdomainname(dname, strlen(dname))) {
 		switch(errno) {
 			case EPERM:
-				fprintf(stderr,NLS_CATGETS(catfd, hostnameSet, hostname_dname_root,
-							   "%s: you must be root to change the domain name\n"), program_name);
+				fprintf(stderr,_("%s: you must be root to change the domain name\n"), program_name);
 				break;
 			case EINVAL:
-				fprintf(stderr,NLS_CATGETS(catfd, hostnameSet, hostname_dname_toolong,
-							   "%s: name too long\n"), program_name);
+				fprintf(stderr,_("%s: name too long\n"), program_name);
 				break;
 			default:
 		}
-		NLS_CATCLOSE(catfd)
 		exit(1);
 	};
 }
@@ -107,25 +102,24 @@ static void showhname(char *hname, int c)
 	struct in_addr **ip;
 	
 	if (opt_v)
-		fprintf(stderr,NLS_CATGETS(catfd, hostnameSet, hostname_verb_res, "Resolving `%s' ...\n"),hname);
+		fprintf(stderr,_("Resolving `%s' ...\n"),hname);
 	if (!(hp = gethostbyname(hname))) {
 		herror(program_name);
-		NLS_CATCLOSE(catfd)
 		exit(1);
 	}
 
 	if (opt_v) { 
-		fprintf(stderr,NLS_CATGETS(catfd, hostnameSet, hostname_verb_fnd, "Result: h_name=`%s'\n"),
+		fprintf(stderr,_("Result: h_name=`%s'\n"),
 			hp->h_name);
 			
 		alias=hp->h_aliases;
 		while(alias[0])
-			fprintf(stderr,NLS_CATGETS(catfd, hostnameSet, hostname_verb_ali, "Result: h_aliases=`%s'\n"),
+			fprintf(stderr,_("Result: h_aliases=`%s'\n"),
 				*alias++);
 				
 		ip=(struct in_addr **)hp->h_addr_list;
 		while(ip[0])
-			fprintf(stderr,NLS_CATGETS(catfd, hostnameSet, hostname_verb_ipn, "Result: h_addr_list=`%s'\n"),
+			fprintf(stderr,_("Result: h_addr_list=`%s'\n"),
 				inet_ntoa(**ip++));
 	}
 
@@ -177,9 +171,8 @@ static void setfilename(char * name,int what)
 	}
 	(void) fclose(fd);
   } else {
-	fprintf(stderr,NLS_CATGETS(catfd, hostnameSet, hostname_cant_open, "%s: can't open `%s'\n"),
+	fprintf(stderr,_("%s: can't open `%s'\n"),
 			program_name, optarg);
-	NLS_CATCLOSE(catfd)
 	exit(1);
   }
 }
@@ -187,49 +180,29 @@ static void setfilename(char * name,int what)
 static void version(void)
 {
 	fprintf(stderr,"%s\n%s\n",Release,Version);
-	NLS_CATCLOSE(catfd)
 	exit(-1);
 }
 
 static void usage(void)
 {
-	fprintf(stderr,NLS_CATGETS(catfd, hostnameSet, hostname_usage1, 
-		"Usage: hostname [-v] {hostname|-F file}      set hostname (from file)\n"));
-	fprintf(stderr,NLS_CATGETS(catfd, hostnameSet, hostname_usage2, 
-		"       domainname [-v] {nisdomain|-F file}   set NIS domainname (from file)\n"));
-	fprintf(stderr,NLS_CATGETS(catfd, hostnameSet, hostname_usage3, 
-		"       hostname [-v] [-d|-f|-s|-a|-i|-y]     display formated name\n"));
-	fprintf(stderr,NLS_CATGETS(catfd, hostnameSet, hostname_usage4, 
-		"       hostname [-v]                         display hostname\n\n"));
-	fprintf(stderr,NLS_CATGETS(catfd, hostnameSet, hostname_usage5, 
-		"       hostname -V|--version|-h|--help       print info and exit\n\n"));
-	fprintf(stderr,NLS_CATGETS(catfd, hostnameSet, hostname_usage6, 
-		"    dnsdomainname=hostname -d, {yp,nis,}domainname=hostname -y\n\n"));
-	fprintf(stderr,NLS_CATGETS(catfd, hostnameSet, hostname_usage7, 
-		"    -s, --short           short host name\n"));
-	fprintf(stderr,NLS_CATGETS(catfd, hostnameSet, hostname_usage8, 
-		"    -a, --alias           alias names\n"));
-	fprintf(stderr,NLS_CATGETS(catfd, hostnameSet, hostname_usage9, 
-		"    -i, --ip-address      addresses for the hostname\n"));
-	fprintf(stderr,NLS_CATGETS(catfd, hostnameSet, hostname_usage10, 
-		"    -f, --fqdn, --long    long host name (FQDN)\n"));
-	fprintf(stderr,NLS_CATGETS(catfd, hostnameSet, hostname_usage11, 
-		"    -d, --domain          DNS domain name\n"));
-	fprintf(stderr,NLS_CATGETS(catfd, hostnameSet, hostname_usage12, 
-		"    -y, --yp, --nis       NIS/YP domainname\n"));
-	fprintf(stderr,NLS_CATGETS(catfd, hostnameSet, hostname_usage13, 
-		"    -F, --file            read hostname or nis domainname from given File\n\n"));
-	fprintf(stderr,NLS_CATGETS(catfd, hostnameSet, hostname_usage14, 
-		"   This comand can get or set the hostname or the NIS domainname. You can\n"));
-	fprintf(stderr,NLS_CATGETS(catfd, hostnameSet, hostname_usage15, 
-		"   also get the DNS domain or the FQDN (fully qualified domain name).\n"));
-	fprintf(stderr,NLS_CATGETS(catfd, hostnameSet, hostname_usage16, 
-		"   Unless you are using bind or NIS for host lookups you can change the\n"));
-	fprintf(stderr,NLS_CATGETS(catfd, hostnameSet, hostname_usage17, 
-		"   FQDN (Fully Qualified Domain Name) and the DNS domain name (which is\n"));
-	fprintf(stderr,NLS_CATGETS(catfd, hostnameSet, hostname_usage18, 
-		"   part of the FQDN) in the /etc/hosts file.\n"));
-	NLS_CATCLOSE(catfd)
+	fprintf(stderr,_("Usage: hostname [-v] {hostname|-F file}      set hostname (from file)\n"));
+	fprintf(stderr,_("       domainname [-v] {nisdomain|-F file}   set NIS domainname (from file)\n"));
+	fprintf(stderr,_("       hostname [-v] [-d|-f|-s|-a|-i|-y]     display formated name\n"));
+	fprintf(stderr,_("       hostname [-v]                         display hostname\n\n"));
+	fprintf(stderr,_("       hostname -V|--version|-h|--help       print info and exit\n\n"));
+	fprintf(stderr,_("    dnsdomainname=hostname -d, {yp,nis,}domainname=hostname -y\n\n"));
+	fprintf(stderr,_("    -s, --short           short host name\n"));
+	fprintf(stderr,_("    -a, --alias           alias names\n"));
+	fprintf(stderr,_("    -i, --ip-address      addresses for the hostname\n"));
+	fprintf(stderr,_("    -f, --fqdn, --long    long host name (FQDN)\n"));
+	fprintf(stderr,_("    -d, --domain          DNS domain name\n"));
+	fprintf(stderr,_("    -y, --yp, --nis       NIS/YP domainname\n"));
+	fprintf(stderr,_("    -F, --file            read hostname or nis domainname from given File\n\n"));
+	fprintf(stderr,_("   This comand can get or set the hostname or the NIS domainname. You can\n"));
+	fprintf(stderr,_("   also get the DNS domain or the FQDN (fully qualified domain name).\n"));
+	fprintf(stderr,_("   Unless you are using bind or NIS for host lookups you can change the\n"));
+	fprintf(stderr,_("   FQDN (Fully Qualified Domain Name) and the DNS domain name (which is\n"));
+	fprintf(stderr,_("   part of the FQDN) in the /etc/hosts file.\n"));
 	exit(-1);
 }
 
@@ -259,12 +232,10 @@ int main(int argc, char **argv)
 		{"yp", no_argument, 0, 'y'},
 		{0, 0, 0, 0}
 	};
-
-#if NLS
-	setlocale (LC_MESSAGES, "");
-	catfd = catopen ("nettools", MCLoadBySet);
+#if I18N
+	bindtextdomain("net-tools", "/usr/share/locale");
+	textdomain("net-tools");
 #endif
-
 	program_name = (rindex(argv[0], '/')) ? rindex(argv[0], '/') + 1 : argv[0];
 
 	if (!strcmp(program_name,"ypdomainname") || 
@@ -309,13 +280,9 @@ int main(int argc, char **argv)
 	switch(what) {
 		case 2:
 			if (file || (optind < argc)) {
-				fprintf(stderr,NLS_CATGETS(catfd, hostnameSet, hostname_nodns1,
-					   "%s: You can't change the DNS domain name with this command\n"), program_name);
-				fprintf(stderr,NLS_CATGETS(catfd, hostnameSet, hostname_nodns2,
-					   "\nUnless you are using bind or NIS for host lookups you can change the DNS\n"));
-				fprintf(stderr,NLS_CATGETS(catfd, hostnameSet, hostname_nodns3,
-					   "domain name (which is part of the FQDN) in the /etc/hosts file.\n"));
-				NLS_CATCLOSE(catfd)
+				fprintf(stderr,_("%s: You can't change the DNS domain name with this command\n"), program_name);
+				fprintf(stderr,_("\nUnless you are using bind or NIS for host lookups you can change the DNS\n"));
+				fprintf(stderr,_("domain name (which is part of the FQDN) in the /etc/hosts file.\n"));
 				exit(1);
 			}
 			type='d';			
@@ -332,8 +299,7 @@ int main(int argc, char **argv)
 		case 1:
 			gethostname(myname, sizeof(myname));
 			if (opt_v)
-				fprintf(stderr,NLS_CATGETS(catfd, hostnameSet, hostname_verb_get, 
-					"gethostname()=`%s'\n"),myname);
+				fprintf(stderr,_("gethostname()=`%s'\n"),myname);
 			if (!type)
 				printf("%s\n",myname);
 			else
@@ -350,11 +316,9 @@ int main(int argc, char **argv)
 			}
 			getdomainname(myname,sizeof(myname));
 			if (opt_v)
-				fprintf(stderr,NLS_CATGETS(catfd, hostnameSet, hostname_verb_dget, 
-					"getdomainname()=`%s'\n"),myname);
+				fprintf(stderr,_("getdomainname()=`%s'\n"),myname);
 			printf("%s\n",myname);
 			break;
 	}
-	NLS_CATCLOSE(catfd)
 	exit(0);
 }

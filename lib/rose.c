@@ -33,8 +33,7 @@
 #include <unistd.h>
 #include "net-support.h"
 #include "pathnames.h"
-#define  EXTERN
-#include "net-locale.h"
+#include "intl.h"
 
 #if __GLIBC__ >= 2
 #include <netrose/rose.h>
@@ -49,7 +48,7 @@ ROSE_print(unsigned char *ptr)
 {
   static char buff[12];
 
-  sprintf(buff,"%02x%02x%02x%02x%02x",ptr[0],ptr[1],ptr[2],ptr[3],ptr[4]);
+  snprintf(buff,sizeof(buff),"%02x%02x%02x%02x%02x",ptr[0],ptr[1],ptr[2],ptr[3],ptr[4]);
   buff[10] = '\0';
   return(buff);
 }
@@ -58,10 +57,9 @@ ROSE_print(unsigned char *ptr)
 static char *
 ROSE_sprint(struct sockaddr *sap, int numeric)
 {
-  static char buf[64];
-
   if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-    return(NLS_CATBUFF (catfd, roseSet, rose_none, "[NONE SET]", buf, 64));
+    return _("[NONE SET]");
+
   return(ROSE_print(((struct sockaddr_rose *)sap)->srose_addr.rose_addr));
 }
 
@@ -77,7 +75,7 @@ ROSE_input(int type, char *bufp, struct sockaddr *sap)
 
   /* Node address the correct length ? */
   if (strlen(bufp)!=10) {
-	strcpy(ROSE_errmsg, NLS_CATGETS (catfd, roseSet, rose_debug2, "Node address must be ten digits"));
+	strcpy(ROSE_errmsg, _("Node address must be ten digits"));
 #ifdef DEBUG
 	fprintf(stderr, "rose_input(%s): %s !\n", ROSE_errmsg, orig);
 #endif
@@ -115,10 +113,9 @@ ROSE_herror(char *text)
 static char *
 ROSE_hprint(struct sockaddr *sap)
 {
-  static char buf[64];
-
   if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-    return(NLS_CATBUFF (catfd, roseSet, rose_none, "[NONE SET]", buf, 64));
+    return _("[NONE SET]");
+
   return(ROSE_print(((struct sockaddr_rose *)sap)->srose_addr.rose_addr));
 }
 

@@ -2,9 +2,11 @@
  * lib/fddi.c	This file contains an implementation of the "FDDI"
  *		support functions for the NET-2 base distribution.
  *
- * Version:	@(#)fddi.c	1.00	08/13/96
+ * Version:	@(#)fddi.c	1.01	07/01/1998
  *
  * Author:	Lawrence V. Stefani, <stefani@lkg.dec.com>
+ *
+ * 1998-07-01 - Arnaldo Carvalho de Melo <acme@conectiva.com.br> GNU gettext
  *
  *		This program is free software; you can redistribute it
  *		and/or  modify it under  the terms of  the GNU General
@@ -37,9 +39,7 @@
 #include <unistd.h>
 #include "net-support.h"
 #include "pathnames.h"
-#define  EXTERN
-#include "net-locale.h"
-
+#include "intl.h"
 
 extern struct hwtype fddi_hwtype;
 
@@ -50,7 +50,7 @@ pr_fddi(unsigned char *ptr)
 {
   static char buff[64];
 
-  sprintf(buff, "%02X-%02X-%02X-%02X-%02X-%02X",
+  snprintf(buff, sizeof(buff), "%02X-%02X-%02X-%02X-%02X-%02X",
 	(ptr[0] & 0377), (ptr[1] & 0377), (ptr[2] & 0377),
 	(ptr[3] & 0377), (ptr[4] & 0377), (ptr[5] & 0377)
   );
@@ -65,7 +65,7 @@ pr_sfddi(struct sockaddr *sap)
   static char buf[64];
 
   if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-    return(NLS_CATBUFF (catfd, fddiSet, fddi_none, "[NONE SET]", buf, 64));
+	return strncpy (buf, _("[NONE SET]"), sizeof (buf));
   return(pr_fddi(sap->sa_data));
 }
 
@@ -91,8 +91,7 @@ in_fddi(char *bufp, struct sockaddr *sap)
 	  else if (c >= 'A' && c <= 'F') val = c - 'A' + 10;
 	  else {
 #ifdef DEBUG
-		fprintf(stderr, NLS_CATGETS(catfd, fddiSet, fddi_debug1,
-					    "in_fddi(%s): invalid fddi address!\n"), orig);
+		fprintf(stderr, _("in_fddi(%s): invalid fddi address!\n"), orig);
 #endif
 		errno = EINVAL;
 		return(-1);
@@ -104,8 +103,7 @@ in_fddi(char *bufp, struct sockaddr *sap)
 	  else if (c >= 'A' && c <= 'F') val |= c - 'A' + 10;
 	  else {
 #ifdef DEBUG
-		fprintf(stderr, NLS_CATGETS(catfd, fddiSet, fddi_debug2,
-					    "in_fddi(%s): invalid fddi address!\n"), orig);
+		fprintf(stderr, _("in_fddi(%s): invalid fddi address!\n"), orig);
 #endif
 		errno = EINVAL;
 		return(-1);
@@ -117,8 +115,7 @@ in_fddi(char *bufp, struct sockaddr *sap)
 	if (*bufp == ':') {
 		if (i == FDDI_K_ALEN) {
 #ifdef DEBUG
-			fprintf(stderr, NLS_CATGETS(catfd, fddiSet, fddi_debug3,
-						    "in_fddi(%s): trailing : ignored!\n"),
+			fprintf(stderr, _("in_fddi(%s): trailing : ignored!\n"),
 									orig)
 #endif
 						; /* nothing */
@@ -130,7 +127,7 @@ in_fddi(char *bufp, struct sockaddr *sap)
   /* That's it.  Any trailing junk? */
   if ((i == FDDI_K_ALEN) && (*bufp != '\0')) {
 #ifdef DEBUG
-	fprintf(stderr, NLS_CATGETS(catfd, fddiSet, fddi_debug4, "in_fddi(%s): trailing junk!\n"), orig);
+	fprintf(stderr, _("in_fddi(%s): trailing junk!\n"), orig);
 	errno = EINVAL;
 	return(-1);
 #endif

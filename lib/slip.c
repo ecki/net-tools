@@ -32,8 +32,6 @@
 #include <unistd.h>
 #include "net-support.h"
 #include "pathnames.h"
-#define  EXTERN
-#include "net-locale.h"
 
 
 struct hwtype slip_hwtype = {

@@ -36,14 +36,12 @@
 #include <unistd.h>
 #include "net-support.h"
 #include "pathnames.h"
-#define  EXTERN
-#include "net-locale.h"
 
 char *pr_dlci(unsigned char *ptr)
 {
    static char buf[12];
 
-   sprintf(buf, "%i", *(short *)ptr);
+   snprintf(buf, sizeof(buf), "%i", *(short *)ptr);
    return(buf);
 }
 

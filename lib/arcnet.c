@@ -28,9 +28,7 @@
 #include <unistd.h>
 #include "net-support.h"
 #include "pathnames.h"
-#define  EXTERN
-#include "net-locale.h"
-
+#include "intl.h"
 
 extern struct hwtype arcnet_hwtype;
 
@@ -41,7 +39,7 @@ pr_arcnet(unsigned char *ptr)
 {
   static char buff[64];
 
-  sprintf(buff, "%02X",(ptr[0] & 0377));
+  snprintf(buff, sizeof(buff), "%02X",(ptr[0] & 0377));
   return(buff);
 }
 
@@ -53,7 +51,7 @@ pr_sarcnet(struct sockaddr *sap)
   static char buf[64];
 
   if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
-    return(NLS_CATBUFF (catfd, arcnetSet, arcnet_none, "[NONE SET]", buf, 64));
+	return strncpy (buf, _("[NONE SET]"), sizeof (buf));
   return(pr_arcnet(sap->sa_data));
 }
 
@@ -79,8 +77,7 @@ in_arcnet(char *bufp, struct sockaddr *sap)
 	  else if (c >= 'A' && c <= 'F') val = c - 'A' + 10;
 	  else {
 #ifdef DEBUG
-		fprintf(stderr, NLS_CATGETS(catfd, arcnetSet, arcnet_debug1,
-					    "in_arcnet(%s): invalid arcnet address!\n"), orig);
+		fprintf(stderr, _("in_arcnet(%s): invalid arcnet address!\n"), orig);
 #endif
 		errno = EINVAL;
 		return(-1);
@@ -92,8 +89,7 @@ in_arcnet(char *bufp, struct sockaddr *sap)
 	  else if (c >= 'A' && c <= 'F') val |= c - 'A' + 10;
 	  else {
 #ifdef DEBUG
-		fprintf(stderr, NLS_CATGETS(catfd, arcnetSet, arcnet_debug2,
-					    "in_arcnet(%s): invalid arcnet address!\n"), orig);
+		fprintf(stderr, _("in_arcnet(%s): invalid arcnet address!\n"), orig);
 #endif
 		errno = EINVAL;
 		return(-1);
@@ -105,8 +101,7 @@ in_arcnet(char *bufp, struct sockaddr *sap)
 	if (*bufp == ':') {
 		if (i == ETH_ALEN) {
 #ifdef DEBUG
-			fprintf(stderr, NLS_CATGETS(catfd, arcnetSet, arcnet_debug3,
-						    "in_arcnet(%s): trailing : ignored!\n"),
+			fprintf(stderr, _("in_arcnet(%s): trailing : ignored!\n"),
 									orig)
 #endif
 						; /* nothing */
@@ -118,7 +113,7 @@ in_arcnet(char *bufp, struct sockaddr *sap)
   /* That's it.  Any trailing junk? */
   if ((i == ETH_ALEN) && (*bufp != '\0')) {
 #ifdef DEBUG
-	fprintf(stderr, NLS_CATGETS(catfd, arcnetSet, arcnet_debug4, "in_arcnet(%s): trailing junk!\n"), orig);
+	fprintf(stderr, _("in_arcnet(%s): trailing junk!\n"), orig);
 	errno = EINVAL;
 	return(-1);
 #endif

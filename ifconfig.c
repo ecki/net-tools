@@ -3,7 +3,7 @@
  *		that either displays or sets the characteristics of
  *		one or more of the system's networking interfaces.
  *
- * Version:	ifconfig 1.33 (1998-03-02)
+ * Version:	ifconfig 1.34 (1998-06-30)
  *
  * Author:	Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -13,6 +13,8 @@
  *		Public  License as  published  by  the  Free  Software
  *		Foundation;  either  version 2 of the License, or  (at
  *		your option) any later version.
+ * {1.34} - 19980630 - Arnaldo Carvalho de Melo <acme@conectiva.com.br>
+ *                     - gettext instead of catgets for i18n
  */
 
 #include "config.h"
@@ -70,7 +72,7 @@ struct in6_ifreq {
 
 #endif  /* HAVE_AFINET6 */
 
-
+#ifdef IFF_PORTSEL
 static const char *if_port_text[][4] = {
   /* Keep in step with <linux/netdevice.h> */
   { "unknown", NULL , NULL, NULL },
@@ -82,6 +84,7 @@ static const char *if_port_text[][4] = {
   { "100baseFX", NULL, NULL, NULL },
   { NULL, NULL, NULL, NULL },
 };
+#endif
 
 #if HAVE_AFIPX
 #include "ipx.h"
@@ -89,12 +92,12 @@ static const char *if_port_text[][4] = {
 #include "net-support.h"
 #include "pathnames.h"
 #include "version.h"
-#include "net-locale.h"
+#include "../intl.h"
 #include "interface.h"
 #include "sockets.h"
 
 char *Release = RELEASE,
-     *Version = "ifconfig 1.33 (1998-03-02)";
+     *Version = "ifconfig 1.34 (1998-06-30)";
 
 int opt_a = 0;				/* show all interfaces		*/
 int opt_i = 0;				/* show the statistics		*/
@@ -145,37 +148,31 @@ ife_print(struct interface *ptr)
   hw = get_hwntype(hf);
   if (hw == NULL) hw = get_hwntype(-1);
 
-  printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_link, 
-		     "%-8.8s  Link encap:%s  "), ptr->name, hw->title);
+  printf(_("%-8.8s  Link encap:%s  "), ptr->name, hw->title);
   /* Don't print the hardware address for ATM or Ash if it's null. */
   if (hw->sprint != NULL && ((strncmp(ptr->name, "atm", 3) &&
 			      strncmp(ptr->name, "ash", 3)) || 
    (ptr->hwaddr[0] || ptr->hwaddr[1] || ptr->hwaddr[2] || ptr->hwaddr[3] || 
    ptr->hwaddr[4] || ptr->hwaddr[5]))) 
-    printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_hw, "HWaddr %s  ")
-	   , hw->print(ptr->hwaddr));
+    printf(_("HWaddr %s  "), hw->print(ptr->hwaddr));
 #ifdef IFF_PORTSEL
   if (ptr->flags & IFF_PORTSEL) 
-    printf("Media:%s%s", if_port_text[ptr->map.port][0], 
-	   (ptr->flags & IFF_AUTOMEDIA)?"(auto)":"");
+    printf(_("Media:%s%s"), if_port_text[ptr->map.port][0], 
+	   (ptr->flags & IFF_AUTOMEDIA)?_("(auto)"):"");
 #endif
   printf("\n");
 #if HAVE_AFINET6  
   if (ap->af != AF_INET6) {
 #endif
-    printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_adr,
-		       "          %s addr:%s "), ap->name,
+    printf(_("          %s addr:%s "), ap->name,
 	   ap->sprint(&ptr->addr, 1));
     if (ptr->flags & IFF_POINTOPOINT) {
-      printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_pap, " P-t-P:%s "),
-	     ap->sprint(&ptr->dstaddr, 1));
+      printf(_(" P-t-P:%s "), ap->sprint(&ptr->dstaddr, 1));
     } 
     if (ptr->flags & IFF_BROADCAST) {
-      printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_bcast, " Bcast:%s "),
-	     ap->sprint(&ptr->broadaddr, 1));
+      printf(_(" Bcast:%s "), ap->sprint(&ptr->broadaddr, 1));
     }
-    printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_mask, " Mask:%s\n"),
-	   ap->sprint(&ptr->netmask, 1));
+    printf(_(" Mask:%s\n"), ap->sprint(&ptr->netmask, 1));
 #if HAVE_AFINET6
   }
   if ((f = fopen(_PATH_PROCNET_IFINET6, "r")) != NULL) {
@@ -188,18 +185,16 @@ ife_print(struct interface *ptr)
 		addr6p[0], addr6p[1], addr6p[2], addr6p[3],
 		addr6p[4], addr6p[5], addr6p[6], addr6p[7]);
 	inet6_aftype.input(1, addr6, (struct sockaddr *)&sap);
-	printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_adr6,
-			   "          inet6 addr: %s/%d"),
+	printf(_("          inet6 addr: %s/%d"),
 	       inet6_aftype.sprint((struct sockaddr *)&sap, 1), plen);
-	printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_scope,
-				   " Scope:"));
+	printf(_(" Scope:"));
 	switch (scope) {
-	case 0: printf("Global"); break;
-	case IPV6_ADDR_LINKLOCAL: printf("Link"); break;
-	case IPV6_ADDR_SITELOCAL: printf("Site"); break;
-	case IPV6_ADDR_COMPATv4: printf("Compat"); break;
-	case IPV6_ADDR_LOOPBACK: printf("Host"); break;
-	default: printf("Unknown");
+	case 0: printf(_("Global")); break;
+	case IPV6_ADDR_LINKLOCAL: printf(_("Link")); break;
+	case IPV6_ADDR_SITELOCAL: printf(_("Site")); break;
+	case IPV6_ADDR_COMPATv4: printf(_("Compat")); break;
+	case IPV6_ADDR_LOOPBACK: printf(_("Host")); break;
+	default: printf(_("Unknown"));
 	}
 	printf("\n");
       }
@@ -214,20 +209,16 @@ ife_print(struct interface *ptr)
 
   if (ipxtype!=NULL) {
     if(ptr->has_ipx_bb)
-      printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_etherII,
-			 "          IPX/Ethernet II addr:%s\n"),
+      printf(_("          IPX/Ethernet II addr:%s\n"),
 	     ipxtype->sprint(&ptr->ipxaddr_bb,1));
     if(ptr->has_ipx_sn)
-      printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_SNAP,
-			 "          IPX/Ethernet SNAP addr:%s\n"),
+      printf(_("          IPX/Ethernet SNAP addr:%s\n"),
 	     ipxtype->sprint(&ptr->ipxaddr_sn,1));
     if(ptr->has_ipx_e2)
-      printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_8022,
-			 "          IPX/Ethernet 802.2 addr:%s\n"),
+      printf(_("          IPX/Ethernet 802.2 addr:%s\n"),
 	     ipxtype->sprint(&ptr->ipxaddr_e2,1));
     if(ptr->has_ipx_e3)
-      printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_8023,
-			 "          IPX/Ethernet 802.3 addr:%s\n"),
+      printf(_("          IPX/Ethernet 802.3 addr:%s\n"),
 	     ipxtype->sprint(&ptr->ipxaddr_e3,1));
   }
 #endif
@@ -237,9 +228,7 @@ ife_print(struct interface *ptr)
     ddptype=get_afntype(AF_APPLETALK);
   if (ddptype!=NULL) {
     if (ptr->has_ddp)
-      printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_talk,
-			 "          EtherTalk Phase 2 addr:%s\n"),
-	     ddptype->sprint(&ptr->ddpaddr,1));
+      printf(_("          EtherTalk Phase 2 addr:%s\n"), ddptype->sprint(&ptr->ddpaddr,1));
   }
 #endif
 
@@ -248,77 +237,68 @@ ife_print(struct interface *ptr)
     ectype = get_afntype(AF_ECONET);
   if (ectype != NULL) {
     if (ptr->has_econet)
-      printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_ec,
-			 "          econet addr:%s\n"),
-	     ectype->sprint(&ptr->ecaddr,1));
+      printf(_("          econet addr:%s\n"), ectype->sprint(&ptr->ecaddr,1));
   }
 #endif
 
   printf("          ");
-  if (ptr->flags == 0) printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_noflags,
-					  "[NO FLAGS] "));
-  if (ptr->flags & IFF_UP) printf("UP ");
-  if (ptr->flags & IFF_BROADCAST) printf("BROADCAST ");
-  if (ptr->flags & IFF_DEBUG) printf("DEBUG ");
-  if (ptr->flags & IFF_LOOPBACK) printf("LOOPBACK ");
-  if (ptr->flags & IFF_POINTOPOINT) printf("POINTOPOINT ");
-  if (ptr->flags & IFF_NOTRAILERS) printf("NOTRAILERS ");
-  if (ptr->flags & IFF_RUNNING) printf("RUNNING ");
-  if (ptr->flags & IFF_NOARP) printf("NOARP ");
-  if (ptr->flags & IFF_PROMISC) printf("PROMISC ");
-  if (ptr->flags & IFF_ALLMULTI) printf("ALLMULTI ");
-  if (ptr->flags & IFF_SLAVE) printf("SLAVE ");
-  if (ptr->flags & IFF_MASTER) printf("MASTER ");
-  if (ptr->flags & IFF_MULTICAST) printf("MULTICAST ");
-  printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_mtu, " MTU:%d  Metric:%d\n"),
+  if (ptr->flags == 0) printf(_("[NO FLAGS] "));
+  if (ptr->flags & IFF_UP) printf(_("UP "));
+  if (ptr->flags & IFF_BROADCAST) printf(_("BROADCAST "));
+  if (ptr->flags & IFF_DEBUG) printf(_("DEBUG "));
+  if (ptr->flags & IFF_LOOPBACK) printf(_("LOOPBACK "));
+  if (ptr->flags & IFF_POINTOPOINT) printf(_("POINTOPOINT "));
+  if (ptr->flags & IFF_NOTRAILERS) printf(_("NOTRAILERS "));
+  if (ptr->flags & IFF_RUNNING) printf(_("RUNNING "));
+  if (ptr->flags & IFF_NOARP) printf(_("NOARP "));
+  if (ptr->flags & IFF_PROMISC) printf(_("PROMISC "));
+  if (ptr->flags & IFF_ALLMULTI) printf(_("ALLMULTI "));
+  if (ptr->flags & IFF_SLAVE) printf(_("SLAVE "));
+  if (ptr->flags & IFF_MASTER) printf(_("MASTER "));
+  if (ptr->flags & IFF_MULTICAST) printf(_("MULTICAST "));
+  printf(_(" MTU:%d  Metric:%d\n"),
 	 ptr->mtu, ptr->metric?ptr->metric:1);
   if (ptr->tx_queue_len != -1)
-    printf("          txqueuelen:%d\n", ptr->tx_queue_len);
+    printf(_("          txqueuelen:%d\n"), ptr->tx_queue_len);
 #if 0
   else
-    printf("          txqueuelen not available\n");
+    printf(_("          txqueuelen not available\n"));
 #endif
 
   /* If needed, display the interface statistics. */
   printf("          ");
 
-  printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_rx,
-	"RX packets:%lu errors:%lu dropped:%lu overruns:%lu frame:%lu\n"),
+  printf(_("RX packets:%lu errors:%lu dropped:%lu overruns:%lu frame:%lu\n"),
 	ptr->stats.rx_packets, ptr->stats.rx_errors,
 	ptr->stats.rx_dropped, ptr->stats.rx_fifo_errors,
         ptr->stats.rx_frame_errors);
   if (can_compress)
-    printf("             compressed:%lu\n", ptr->stats.rx_compressed);
+    printf(_("             compressed:%lu\n"), ptr->stats.rx_compressed);
 	 
   printf("          ");
 
-  printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_tx,
-	"TX packets:%lu errors:%lu dropped:%lu overruns:%lu carrier:%lu\n"),
+  printf(_("TX packets:%lu errors:%lu dropped:%lu overruns:%lu carrier:%lu\n"),
 	ptr->stats.tx_packets, ptr->stats.tx_errors,
 	ptr->stats.tx_dropped, ptr->stats.tx_fifo_errors,
 	ptr->stats.tx_carrier_errors);
-  printf("          Collisions:%lu ", ptr->stats.collisions);
+  printf(_("          Collisions:%lu "), ptr->stats.collisions);
   if (can_compress)
-    printf("compressed:%lu ", ptr->stats.tx_compressed);
+    printf(_("compressed:%lu "), ptr->stats.tx_compressed);
   printf("\n");
 
   if ((ptr->map.irq || ptr->map.mem_start || ptr->map.dma || 
 		ptr->map.base_addr)) {
     printf("          ");
     if (ptr->map.irq)
-      printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_interrupt,
-			 "Interrupt:%d "), ptr->map.irq);
+      printf(_("Interrupt:%d "), ptr->map.irq);
     if (ptr->map.base_addr>=0x100)      /* Only print devices using it for 
 					  I/O maps */
-      printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_base,
-			 "Base address:0x%x "), ptr->map.base_addr);
+      printf(_("Base address:0x%x "), ptr->map.base_addr);
     if (ptr->map.mem_start) {
-      printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_mem, "Memory:%lx-%lx "),
-	     ptr->map.mem_start,ptr->map.mem_end);
+      printf(_("Memory:%lx-%lx "), ptr->map.mem_start,ptr->map.mem_end);
     }
     if (ptr->map.dma)
-      printf(NLS_CATGETS(catfd, ifconfigSet, ifconfig_dma, "DMA chan:%x "),
-	     ptr->map.dma);
+      printf(_("DMA chan:%x "), ptr->map.dma);
     printf("\n");
   }
   
@@ -345,9 +325,7 @@ if_print(char *ifname)
 	*sep = 0;
       while (*name == ' ') name++;
       if (if_fetch(name, &ife) < 0) {
-	fprintf(stderr, NLS_CATGETS(catfd, ifconfigSet, 
-		      ifconfig_unkn, "%s: unknown interface.\n"),
-		name);
+	fprintf (stderr, _("%s: unknown interface.\n"), name);
 	continue;
       }
       
@@ -357,8 +335,7 @@ if_print(char *ifname)
     fclose(fd);
   } else {
     if (if_fetch(ifname, &ife) < 0)
-      fprintf(stderr, NLS_CATGETS(catfd, ifconfigSet, 
-		      ifconfig_unkn, "%s: unknown interface.\n"), ifname);
+      fprintf(stderr, _("%s: unknown interface.\n"), ifname);
     else 
       ife_print(&ife);
   }
@@ -373,7 +350,7 @@ set_flag(char *ifname, short flag)
 
   strcpy(ifr.ifr_name, ifname);
   if (ioctl(skfd, SIOCGIFFLAGS, &ifr) < 0) {
-    fprintf(stderr, "%s: unknown interface.\n", ifname);
+    fprintf(stderr, _("%s: unknown interface.\n"), ifname);
     return(-1);
   }
   strcpy(ifr.ifr_name, ifname);
@@ -394,7 +371,7 @@ clr_flag(char *ifname, short flag)
 
   strcpy(ifr.ifr_name, ifname);
   if (ioctl(skfd, SIOCGIFFLAGS, &ifr) < 0) {
-    fprintf(stderr, "%s: unknown interface.\n", ifname);
+    fprintf(stderr, _("%s: unknown interface.\n"), ifname);
     return -1;
   }
   strcpy(ifr.ifr_name, ifname);
@@ -410,37 +387,35 @@ clr_flag(char *ifname, short flag)
 static void
 usage(void)
 {
-  fprintf(stderr, NLS_CATGETS(catfd, ifconfigSet, ifconfig_usage1,
-			      "Usage: ifconfig [-a] [-i] [-v] interface\n"));
-  fprintf(stderr, "                [[family] address]\n");
+  fprintf(stderr, _("Usage: ifconfig [-a] [-i] [-v] interface\n"));
+  fprintf(stderr, _("                [[family] address]\n"));
   /* XXX: it would be useful to have the add/del syntax even without IPv6.
 	 the 2.1 interface address lists make this natural */ 
 #ifdef HAVE_AFINET6
-  fprintf(stderr, "                [add address[/prefixlen]]\n");
+  fprintf(stderr, _("                [add address[/prefixlen]]\n"));
 #ifdef SIOCDIFADDR
-  fprintf(stderr, "                [del address[/prefixlen]]\n");
+  fprintf(stderr, _("                [del address[/prefixlen]]\n"));
 #endif
   /* XXX the kernel supports tunneling even without ipv6 */ 
-  fprintf(stderr, "                [tunnel aa.bb.cc.dd]\n");
+  fprintf(stderr, _("                [tunnel aa.bb.cc.dd]\n"));
 #endif
 #if HAVE_AFINET
-  fprintf(stderr, "                [[-]broadcast [aa.bb.cc.dd]]\n");
-  fprintf(stderr, "                [[-]pointopoint [aa.bb.cc.dd]]\n");
-  fprintf(stderr, "                [netmask aa.bb.cc.dd]\n");
-  fprintf(stderr, "                [dstaddr aa.bb.cc.dd]\n");
+  fprintf(stderr, _("                [[-]broadcast [aa.bb.cc.dd]]\n"));
+  fprintf(stderr, _("                [[-]pointopoint [aa.bb.cc.dd]]\n"));
+  fprintf(stderr, _("                [netmask aa.bb.cc.dd]\n"));
+  fprintf(stderr, _("                [dstaddr aa.bb.cc.dd]\n"));
 #endif
-  fprintf(stderr, "                [hw class address]\n");
-  fprintf(stderr, "                [metric NN] [mtu NN]\n");
-  fprintf(stderr, "                [[-]trailers] [[-]arp]\n");
-  fprintf(stderr, "                [[-]allmulti] [[-]promisc]\n");
-  fprintf(stderr, "                [multicast]\n");
-  fprintf(stderr, "                [mem_start NN] [io_addr NN] [irq NN]\n");
-  fprintf(stderr, "                [media type]\n");
+  fprintf(stderr, _("                [hw class address]\n"));
+  fprintf(stderr, _("                [metric NN] [mtu NN]\n"));
+  fprintf(stderr, _("                [[-]trailers] [[-]arp]\n"));
+  fprintf(stderr, _("                [[-]allmulti] [[-]promisc]\n"));
+  fprintf(stderr, _("                [multicast]\n"));
+  fprintf(stderr, _("                [mem_start NN] [io_addr NN] [irq NN]\n"));
+  fprintf(stderr, _("                [media type]\n"));
 #ifdef HAVE_TXQUEUELEN
-  fprintf(stderr, "                [txqueuelen len]\n");
+  fprintf(stderr, _("                [txqueuelen len]\n"));
 #endif
-  fprintf(stderr, "                [up] [down] ...\n");
-  NLS_CATCLOSE(catfd)
+  fprintf(stderr, _("                [up] [down] ...\n"));
   exit(1);
 }
 
@@ -448,7 +423,6 @@ static void
 version(void)
 {
   fprintf(stderr,"%s\n%s\n",Release,Version);
-  NLS_CATCLOSE(catfd)
   exit(1);
 }
 
@@ -485,15 +459,14 @@ main(int argc, char **argv)
   char *cp;
 #endif
   
-#if NLS
-  setlocale (LC_MESSAGES, "");
-  catfd = catopen ("nettools", MCLoadBySet);
+#if I18N
+  bindtextdomain("net-tools", "/usr/share/locale");
+  textdomain("net-tools");
 #endif
 
   /* Create a channel to the NET kernel. */
   if ((skfd = sockets_open()) < 0) {
     perror("socket");
-    NLS_CATCLOSE(catfd)
     exit(1);
   }
 
@@ -518,7 +491,6 @@ main(int argc, char **argv)
   if (argc == 0) {
     if_print((char *)NULL);
     (void) close(skfd);
-    NLS_CATCLOSE(catfd)
     exit(0);
   }
 
@@ -528,7 +500,6 @@ main(int argc, char **argv)
   if (*spp == (char *)NULL) {
     if_print(ifr.ifr_name);
     (void) close(skfd);
-    NLS_CATCLOSE(catfd)
     exit(0);
   }
 
@@ -575,7 +546,7 @@ main(int argc, char **argv)
 	}
 	spp++;
 	if (newport == -1) {
-	  fprintf(stderr, "Unknown media type.\n");
+	  fprintf(stderr, _("Unknown media type.\n"));
 	  goterr = 1;
 	} else {
 	  if (ioctl(skfd, SIOCGIFMAP, &ifr) < 0) {
@@ -836,7 +807,7 @@ main(int argc, char **argv)
 		  host[(sizeof host)-1] = 0; 
 		  strncpy(host, *spp, (sizeof host)-1);
       if (hw->input(host, &sa) < 0) {
-	fprintf(stderr, "%s: invalid %s address.\n", host, hw->name);
+	fprintf(stderr, _("%s: invalid %s address.\n"), host, hw->name);
 	goterr = 1;
 	spp++;
 	continue;
@@ -927,7 +898,7 @@ main(int argc, char **argv)
 	goterr = 1;
       }
 #else
-      fprintf(stderr, "Address deletion not supported on this system.\n");
+      fprintf(stderr, _("Address deletion not supported on this system.\n"));
 #endif
       spp++;
       continue;
@@ -1011,7 +982,7 @@ main(int argc, char **argv)
 	break;
 #endif
       default:
-	printf("Don't know how to set addresses for this family.\n");
+	printf(_("Don't know how to set addresses for this family.\n"));
 	exit(1);
       }
       if (r < 0) {
@@ -1026,6 +997,5 @@ main(int argc, char **argv)
   /* Close the socket. */
   (void) close(skfd);
 
-  NLS_CATCLOSE(catfd)
   return(goterr);
 }

@@ -2,12 +2,14 @@
  * lib/hw.c	This file contains the top-level part of the hardware
  *		support functions module for the NET-2 base distribution.
  *
- * Version:	lib/hw.c 1.20 (1998-01-25)
+ * Version:	lib/hw.c 1.21 (1998-07-01)
  *
  * Maintainer:	Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
  * Author:	Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *		Copyright 1993 MicroWalt Corporation
+ *
+ *980701 {1.21}  Arnaldo C. Melo       GNU gettext instead of catgets
  *
  *		This program is free software; you can redistribute it
  *		and/or  modify it under  the terms of  the GNU General
@@ -26,9 +28,7 @@
 #include "config.h"
 #include "net-support.h"
 #include "pathnames.h"
-#define  EXTERN
-#include "net-locale.h"
-
+#include "intl.h"
 
 extern	struct hwtype	unspec_hwtype;
 extern	struct hwtype	loop_hwtype;
@@ -126,55 +126,55 @@ static short sVhwinit = 0;
 
 void hwinit ()
 {
-  loop_hwtype.title = NLS_CATSAVE (catfd, loopbackSet, loopback_loop, "Local Loopback");
-  unspec_hwtype.title = NLS_CATSAVE (catfd, loopbackSet, loopback_unspec, "UNSPEC");
+  loop_hwtype.title = _("Local Loopback");
+  unspec_hwtype.title = _("UNSPEC");
 #if HAVE_HWSLIP
-  slip_hwtype.title = NLS_CATSAVE (catfd, slipSet, slip_slip, "Serial Line IP");
-  cslip_hwtype.title = NLS_CATSAVE (catfd, slipSet, slip_cslip, "VJ Serial Line IP");
-  slip6_hwtype.title = NLS_CATSAVE (catfd, slipSet, slip_slip6, "6-bit Serial Line IP");
-  cslip6_hwtype.title = NLS_CATSAVE (catfd, slipSet, slip_cslip6, "VJ 6-bit Serial Line IP");
-  adaptive_hwtype.title = NLS_CATSAVE (catfd, slipSet, slip_adaptive, "Adaptive Serial Line IP");
+  slip_hwtype.title = _("Serial Line IP");
+  cslip_hwtype.title = _("VJ Serial Line IP");
+  slip6_hwtype.title = _("6-bit Serial Line IP");
+  cslip6_hwtype.title = _("VJ 6-bit Serial Line IP");
+  adaptive_hwtype.title = _("Adaptive Serial Line IP");
 #endif
 #if HAVE_HWETHER
-  ether_hwtype.title = NLS_CATSAVE (catfd, etherSet, ether_ether, "Ethernet");
+  ether_hwtype.title = _("Ethernet");
 #endif
 #if HAVE_HWASH
-  ash_hwtype.title = NLS_CATSAVE (catfd, ashSet, ash_hw, "Ash");
+  ash_hwtype.title = _("Ash");
 #endif
 #if HAVE_HWFDDI
-  fddi_hwtype.title = NLS_CATSAVE (catfd, fddiSet, fddi_fddi, "Fiber Distributed Data Interface");
+  fddi_hwtype.title = _("Fiber Distributed Data Interface");
 #endif
 #if HAVE_HWHIPPI
-  hippi_hwtype.title = NLS_CATSAVE (catfd, hippiSet, hippi_hippi, "HIPPI");
+  hippi_hwtype.title = _("HIPPI");
 #endif
 #if HAVE_HWAX25
-  ax25_hwtype.title = NLS_CATSAVE (catfd, ax25Set, ax25_hw, "AMPR AX.25");
+  ax25_hwtype.title = _("AMPR AX.25");
 #endif
 #if HAVE_HWROSE
-  rose_hwtype.title = NLS_CATSAVE (catfd, roseSet, rose_hw, "AMPR ROSE");
+  rose_hwtype.title = _("AMPR ROSE");
 #endif
 #if HAVE_HWNETROM
-  netrom_hwtype.title = NLS_CATSAVE (catfd, netromSet, netrom_hw, "AMPR NET/ROM");
+  netrom_hwtype.title = _("AMPR NET/ROM");
 #endif
 #if HAVE_HWTUNNEL
-  tunnel_hwtype.title = NLS_CATSAVE (catfd, tunnelSet, tunnel_hw, "IPIP Tunnel");
+  tunnel_hwtype.title = _("IPIP Tunnel");
 #endif
 #if HAVE_HWPPP
-  ppp_hwtype.title = NLS_CATSAVE (catfd, pppSet, ppp_ppp, "Point-to-Point Protocol");
+  ppp_hwtype.title = _("Point-to-Point Protocol");
 #endif  
 #if HAVE_HWHDLCLAPB
-  hdlc_hwtype.title = NLS_CATSAVE (catfd, hdlcSet, hdlc_hw, "(Cisco)-HDLC");
-  lapb_hwtype.title = NLS_CATSAVE (catfd, lapbSet, lapb_hw, "LAPB");
+  hdlc_hwtype.title = _("(Cisco)-HDLC");
+  lapb_hwtype.title = _("LAPB");
 #endif
 #if HAVE_HWARC
-  arcnet_hwtype.title = NLS_CATSAVE (catfd, arcnetSet, arcnet_arcnet, "1.5Mbps ARCnet");
+  arcnet_hwtype.title = _("1.5Mbps ARCnet");
 #endif
 #if HAVE_HWFR
-  dlci_hwtype.title = NLS_CATSAVE(catfd, dlciSet, dlci_hw, "Frame Relay DLCI");
-  frad_hwtype.title = NLS_CATSAVE(catfd, fradSet, frad_hw, "Frame Relay Access Device");
+  dlci_hwtype.title = _("Frame Relay DLCI");
+  frad_hwtype.title = _("Frame Relay Access Device");
 #endif
 #if HAVE_HWSIT
-  sit_hwtype.title = NLS_CATSAVE(catfd, sitSet, sit_hw, "IPv6-in-IPv4");
+  sit_hwtype.title = _("IPv6-in-IPv4");
 #endif
   sVhwinit = 1;
 }
