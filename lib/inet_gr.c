@@ -22,6 +22,7 @@
 #include "net-locale.h"
 
 #include "net-features.h"
+#include "proc.h"
 
 extern     struct aftype   inet_aftype;
 
@@ -34,6 +35,7 @@ int rprint_fib(int ext, int numeric)
   struct sockaddr snet, sgate, smask;
   int num, iflags, metric, refcnt, use, mss, window, irtt;
   FILE *fp=fopen(_PATH_PROCNET_ROUTE, "r");
+  char *fmt;	
 
   if (!fp) {
 	ESYSNOT("getroute","INET FIB");
@@ -59,9 +61,28 @@ int rprint_fib(int ext, int numeric)
   irtt=0;
   window=0;
   mss=0;
+
+  fmt = proc_gen_fmt(_PATH_PROCNET_ROUTE, fp,
+					 "Iface", "%16s",
+					 "Destination", "%128s",
+					 "Gateway", "%128s",
+					 "Flags", "%X",
+					 "RefCnt", "%d", 
+					 "Use",  "%d", 
+					 "Metric", "%d", 
+					 "Mask", "%128s",
+					 "MTU", "%d", 
+					 "Window", "%d",
+					 "IRTT", "%d", 
+					 NULL); 
+  /* "%16s %128s %128s %X %d %d %d %128s %d %d %d\n" */ 
+
+  if (!fmt) 
+	  return 1; 
+
   while (fgets(buff, 1023, fp))
   {
-	num = sscanf(buff, "%16s %128s %128s %X %d %d %d %128s %d %d %d\n",
+	num = sscanf(buff, fmt, 
 		iface, net_addr, gate_addr,
 		&iflags, &refcnt, &use, &metric, mask_addr,
  		&mss,&window,&irtt);
