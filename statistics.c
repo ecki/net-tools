@@ -1,6 +1,6 @@
 /*
  * Copyright 1997,1999,2000 Andi Kleen. Subject to the GPL. 
- * $Id: statistics.c,v 1.14 2001/02/02 18:01:23 pb Exp $
+ * $Id: statistics.c,v 1.15 2001/10/19 09:28:01 ak Exp $
  * 19980630 - i18n - Arnaldo Carvalho de Melo <acme@conectiva.com.br> 
  * 19981113 - i18n fixes - Arnaldo Carvalho de Melo <acme@conectiva.com.br> 
  * 19990101 - added net/netstat, -t, -u, -w supprt - Bernd Eckenfels 
@@ -222,7 +222,8 @@ void printval(struct tabtab *tab, char *title, int val)
 	    ent = bsearch(&key, tab->tab, tab->size / sizeof(struct entry),
 			  sizeof(struct entry), cmpentries);
     if (!ent) {			/* try our best */
-	printf("%*s%s: %d\n", states[state].indent, "", title, val);
+	if (val) 
+		printf("%*s%s: %d\n", states[state].indent, "", title, val);
 	return;
     }
     type = ent->type;
