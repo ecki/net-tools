@@ -2,7 +2,7 @@
  * lib/hw.c   This file contains the top-level part of the hardware
  *              support functions module.
  *
- * Version:     $Id: hw.c,v 1.13 1999/04/21 09:00:02 philip Exp $
+ * Version:     $Id: hw.c,v 1.14 1999/05/16 16:41:12 philip Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -65,6 +65,8 @@ extern struct hwtype sit_hwtype;
 
 extern struct hwtype irda_hwtype;
 
+extern struct hwtype ec_hwtype;
+
 static struct hwtype *hwtypes[] =
 {
 
@@ -123,6 +125,9 @@ static struct hwtype *hwtypes[] =
 #endif
 #if HAVE_HWIRDA
     &irda_hwtype,
+#endif
+#if HAVE_HWEC
+    &ec_hwtype,
 #endif
     &unspec_hwtype,
     NULL
@@ -184,6 +189,12 @@ void hwinit()
 #endif
 #if HAVE_HWIRDA
     irda_hwtype.title = _("IrLAP");
+#endif
+#if HAVE_HWTR
+    tr_hwtype.title = _("16/4 Mbps Token Ring");
+#endif
+#if HAVE_HWEC
+    ec_hwtype.title = _("Econet");
 #endif
     sVhwinit = 1;
 }
