@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.45 2001/02/19 21:42:43 ecki Exp $
+ * Version:     $Id: ifconfig.c,v 1.46 2001/04/01 14:50:24 pb Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -84,7 +84,7 @@ struct in6_ifreq {
 #include "sockets.h"
 #include "util.h"
 
-char *Release = RELEASE, *Version = "ifconfig 1.40 (2000-05-21)";
+char *Release = RELEASE, *Version = "ifconfig 1.41 (2001-04-01)";
 
 int opt_a = 0;			/* show all interfaces          */
 int opt_i = 0;			/* show the statistics          */
@@ -254,7 +254,6 @@ int main(int argc, char **argv)
     textdomain("net-tools");
 #endif
 
-
     /* Find any options. */
     argc--;
     argv++;
@@ -277,8 +276,9 @@ int main(int argc, char **argv)
 	    usage();
 
 	else {
-	    fprintf(stderr, "ifconfig: unknown option %s\n", argv[0]);
-	    fprintf(stderr, "(Use --help for usage information.\n)");
+	    fprintf(stderr, _("ifconfig: option `%s' not recognised.\n"), 
+		    argv[0]);
+	    fprintf(stderr, _("ifconfig: `--help' gives usage information.\n"));
 	    exit(1);
 	}
 
@@ -306,6 +306,7 @@ int main(int argc, char **argv)
 	(void) close(skfd);
 	exit(err < 0);
     }
+
     /* The next argument is either an address family name, or an option. */
     if ((ap = get_aftype(*spp)) != NULL)
 	spp++; /* it was a AF name */
@@ -314,13 +315,7 @@ int main(int argc, char **argv)
 	
     if (ap) {
 	addr_family = ap->af;
-    	if ((fd=sockets_open(addr_family)) < 0) {
-		perror("family socket");
-		exit(1);
-    	} else {
-    		if (skfd >= 0 && skfd != fd) close(skfd);
-    		skfd = fd;
-    	}
+	skfd = ap->fd;
     }
 
     /* Process the remaining arguments. */
@@ -924,7 +919,7 @@ int main(int argc, char **argv)
 	}
 	if (ap->input(0, host, &sa) < 0) {
 	    ap->herror(host);
-	    usage();
+	    fprintf(stderr, _("ifconfig: `--help' gives usage information.\n"));
 	}
 	memcpy((char *) &ifr.ifr_addr, (char *) &sa, sizeof(struct sockaddr));
 	{
