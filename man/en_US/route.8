@@ -141,7 +141,7 @@ set the metric field in the routing table (used by routing daemons) to M.
 set the TCP Maximum Segment Size (MSS) for connections over this route
 to M bytes. 
 The default is the device MTU minus headers, or a lower MTU when path mtu 
-discovery occured. This setting can be used to force smaller TCP packets on the
+discovery occurred. This setting can be used to force smaller TCP packets on the
 other end when path mtu discovery does not work (usually because of
 misconfigured firewalls that block ICMP Fragmentation Needed)
 .TP 
@@ -182,7 +182,7 @@ modifiers (metric - netmask - gw - dev) doesn't matter.
 .B route add -net 127.0.0.0
 adds the normal loopback entry, using netmask 255.0.0.0 (class A net,
 determined from the destination address) and associated with the 
-"lo" device (assuming this device was prviously set up correctly with
+"lo" device (assuming this device was previously set up correctly with
 .BR ifconfig (8)). 
 
 .TP 
