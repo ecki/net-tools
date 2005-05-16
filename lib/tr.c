@@ -2,7 +2,7 @@
  * lib/tr.c   This file contains an implementation of the "Tokenring"
  *              support functions.
  *
- * Version:     $Id: tr.c,v 1.8 2000/02/02 08:56:30 freitag Exp $
+ * Version:     $Id: tr.c,v 1.9 2005/05/16 03:15:12 ecki Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -30,8 +30,14 @@
 #include "net-support.h"
 #include "pathnames.h"
 #include "intl.h"
+#include "util.h"
 
+
+/* actual definition at the end of file */
 extern struct hwtype tr_hwtype;
+#ifdef ARPHRD_IEEE802_TR
+extern struct hwtype tr_hwtype1;
+#endif
 
 static char *pr_tr(unsigned char *ptr)
 {
@@ -42,7 +48,7 @@ static char *pr_tr(unsigned char *ptr)
 	     (ptr[3] & 0377), (ptr[4] & 0377), (ptr[5] & 0377)
 	);
     return (buff);
-}
+      }
 
 
 static int in_tr(char *bufp, struct sockaddr *sap)
@@ -51,7 +57,17 @@ static int in_tr(char *bufp, struct sockaddr *sap)
     char c, *orig;
     int i, val;
 
+#ifdef ARPHRD_IEEE802_TR
+    if (kernel_version() < KRELEASE(2,3,30)) { 
+        sap->sa_family = tr_hwtype.type;
+    } else { 
+        sap->sa_family = tr_hwtype1.type;
+    } 	
+#else
     sap->sa_family = tr_hwtype.type;
+    #warning "Limited functionality, no support for ARPHRD_IEEE802_TR (old kernel headers?)"
+#endif
+
     ptr = sap->sa_data;
 
     i = 0;
