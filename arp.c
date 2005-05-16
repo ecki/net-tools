@@ -8,7 +8,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: arp.c,v 1.23 2003/02/08 19:56:25 ecki Exp $
+ * Version:     $Id: arp.c,v 1.24 2005/05/16 04:30:17 ecki Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -148,7 +148,7 @@ static int arp_del(char **args)
 	    continue;
 	}
 	if (!strcmp(*args, "dontpub")) {
-#ifdef HAVE_ATF_DONTPUB
+#ifdef ATF_DONTPUB
 	    req.arp_flags |= ATF_DONTPUB;
 #else
 	    ENOSUPP("arp", "ATF_DONTPUB");
@@ -157,7 +157,7 @@ static int arp_del(char **args)
 	    continue;
 	}
 	if (!strcmp(*args, "auto")) {
-#ifdef HAVE_ATF_MAGIC
+#ifdef ATF_MAGIC
 	    req.arp_flags |= ATF_MAGIC;
 #else
 	    ENOSUPP("arp", "ATF_MAGIC");
@@ -205,21 +205,21 @@ static int arp_del(char **args)
     /* Call the kernel. */
     if (flags & 2) {
 	if (opt_v)
-	    fprintf(stderr, "arp: SIOCDARP(nopub)\n");
+	    fprintf(stderr, "arp: SIOCDARP(dontpub)\n");
 	if (ioctl(sockfd, SIOCDARP, &req) < 0) {
 	    if ((errno == ENXIO) || (errno == ENOENT)) {
 		if (flags & 1)
-		    goto nopub;
+		    goto dontpub;
 		printf(_("No ARP entry for %s\n"), host);
 		return (-1);
 	    }
-	    perror("SIOCDARP(nopub)");
+	    perror("SIOCDARP(dontpub)");
 	    return (-1);
 	} else
 	  deleted = 1;
     }
     if (!deleted && (flags & 1)) {
-      nopub:
+      dontpub:
 	req.arp_flags |= ATF_PUBL;
 	if (opt_v)
 	    fprintf(stderr, "arp: SIOCDARP(pub)\n");
@@ -323,7 +323,7 @@ static int arp_set(char **args)
 	    continue;
 	}
 	if (!strcmp(*args, "dontpub")) {
-#ifdef HAVE_ATF_DONTPUB
+#ifdef ATF_DONTPUB
 	    flags |= ATF_DONTPUB;
 #else
 	    ENOSUPP("arp", "ATF_DONTPUB");
@@ -332,7 +332,7 @@ static int arp_set(char **args)
 	    continue;
 	}
 	if (!strcmp(*args, "auto")) {
-#ifdef HAVE_ATF_MAGIC
+#ifdef ATF_MAGIC
 	    flags |= ATF_MAGIC;
 #else
 	    ENOSUPP("arp", "ATF_MAGIC");
@@ -451,11 +451,11 @@ static void arp_disp_2(char *name, int type, int arp_flags, char *hwa, char *mas
 	strcat(flags, "M");
     if (arp_flags & ATF_PUBL)
 	strcat(flags, "P");
-#ifdef HAVE_ATF_MAGIC
+#ifdef ATF_MAGIC
     if (arp_flags & ATF_MAGIC)
 	strcat(flags, "A");
 #endif
-#ifdef HAVE_ATF_DONTPUB
+#ifdef ATF_DONTPUB
     if (arp_flags & ATF_DONTPUB)
 	strcat(flags, "!");
 #endif
@@ -506,11 +506,11 @@ static void arp_disp(char *name, char *ip, int type, int arp_flags, char *hwa, c
 	printf("PERM ");
     if (arp_flags & ATF_PUBL)
 	printf("PUB ");
-#ifdef HAVE_ATF_MAGIC
+#ifdef ATF_MAGIC
     if (arp_flags & ATF_MAGIC)
 	printf("AUTO ");
 #endif
-#ifdef HAVE_ATF_DONTPUB
+#ifdef ATF_DONTPUB
     if (arp_flags & ATF_DONTPUB)
 	printf("DONTPUB ");
 #endif
@@ -618,10 +618,10 @@ static void version(void)
 static void usage(void)
 {
     fprintf(stderr, _("Usage:\n  arp [-vn]  [<HW>] [-i <if>] [-a] [<hostname>]             <-Display ARP cache\n"));
-    fprintf(stderr, _("  arp [-v]          [-i <if>] -d  <hostname> [pub][nopub]    <-Delete ARP entry\n"));
+    fprintf(stderr, _("  arp [-v]          [-i <if>] -d  <host> [pub]               <-Delete ARP entry\n"));
     fprintf(stderr, _("  arp [-vnD] [<HW>] [-i <if>] -f  [<filename>]            <-Add entry from file\n"));
-    fprintf(stderr, _("  arp [-v]   [<HW>] [-i <if>] -s  <hostname> <hwaddr> [temp][nopub] <-Add entry\n"));
-    fprintf(stderr, _("  arp [-v]   [<HW>] [-i <if>] -Ds <hostname> <if> [netmask <nm>] pub      <-''-\n\n"));
+    fprintf(stderr, _("  arp [-v]   [<HW>] [-i <if>] -s  <host> <hwaddr> [temp]            <-Add entry\n"));
+    fprintf(stderr, _("  arp [-v]   [<HW>] [-i <if>] -Ds <host> <if> [netmask <nm>] pub          <-''-\n\n"));
     
     fprintf(stderr, _("        -a                       display (all) hosts in alternative (BSD) style\n"));
     fprintf(stderr, _("        -s, --set                set a new ARP entry\n"));

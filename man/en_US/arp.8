@@ -1,4 +1,4 @@
-.TH ARP 8 "5 Jan 1999" "net-tools" "Linux Programmer's Manual"
+.TH ARP 8 "2005-05-16" "net-tools" "Linux Programmer's Manual"
 .SH NAME
 arp \- manipulate the system ARP cache
 .SH SYNOPSIS
@@ -111,8 +111,8 @@ datagrams will be routed.
 Manually create an ARP address mapping entry for host
 .B hostname
 with hardware address set to
-.BR hw_addr .
-The format of the hardware address is dependent on the hardware
+.B hw_addr
+.  The format of the hardware address is dependent on the hardware
 class, but for most classes one can assume that the usual presentation
 can be used.  For the Ethernet class, this is 6 bytes in hexadecimal,
 separated by colons. When adding proxy arp entries (that is those with
@@ -132,14 +132,17 @@ As of kernel 2.2.0 it is no longer possible to set an ARP entry for an
 entire subnet. Linux instead does automagic proxy arp when a route
 exists and it is forwarding. See 
 .BR arp (7)
-for details.
+for details. Also the
+.B dontpub
+option which is available for delete and set operations cannot be 
+used with 2.4 and newer kernels.
 .TP
 .B "\-f filename, \-\-file filename"
 Similar to the
 .B \-s
 option, only this time the address info is taken from file
-.BR filename .
-This can be used if ARP entries for a lot of hosts have to be
+.B filename
+.  This can be used if ARP entries for a lot of hosts have to be
 set up.  The name of the data file is very often
 .IR /etc/ethers , 
 but this is not official. If no filename is specified /etc/ethers
