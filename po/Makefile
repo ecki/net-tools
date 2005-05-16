@@ -3,7 +3,7 @@ INSTALL_PROGRAM= ${INSTALL}
 INSTALL_DATA= ${INSTALL} -m 644
 INSTALLNLSDIR=${BASEDIR}/usr/share/locale
 
-TUPDATE = tupdate
+TUPDATE = msgmerge
 
 NLSPACKAGE = net-tools
 
@@ -49,7 +49,7 @@ update-po: Makefile
 		lang=`echo $$cat | sed 's/.mo//'`; \
 		mv $$lang.po $$lang.old.po; \
 		echo "$$lang:"; \
-		if $(TUPDATE) $(NLSPACKAGE).pot $$lang.old.po > $$lang.po; then \
+		if $(TUPDATE) $$lang.old.po $(NLSPACKAGE).pot > $$lang.po; then \
 		rm -f $$lang.old.po; \
 	else \
 	 	echo "tupdate for $$cat failed!"; \
