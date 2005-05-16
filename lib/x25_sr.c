@@ -76,8 +76,8 @@ static int X25_setroute(int action, int options, char **args)
   }
   rt.sigdigits=sigdigits;
 
-  /* x25_route_struct.address isn't type struct sockaddr_x25, Why? */
-  memcpy(&rt.address, &sx25.sx25_addr, sizeof(struct x25_address));
+  /* this works with 2.4 and 2.6 headers struct x25_address vs. typedef */
+  memcpy(&rt.address, &sx25.sx25_addr, sizeof(sx25.sx25_addr));
 
   while (*args) {
 	if (!strcmp(*args,"device") || !strcmp(*args,"dev")) {
