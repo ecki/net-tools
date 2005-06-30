@@ -1,4 +1,4 @@
-.TH IFCONFIG 8 "2003-05-25" "net-tools" "Linux Programmer's Manual"
+.TH IFCONFIG 8 "2005-06-30" "net-tools" "Linux Programmer's Manual"
 .SH NAME
 ifconfig \- configure a network interface
 .SH SYNOPSIS
@@ -190,6 +190,8 @@ are shared with all alias addresses on the same device. If you want per-address
 statistics you should add explicit accounting
 rules for the address using the 
 .BR ipchains(8)
+or
+.BR iptables(8)
 command.
 .LP
 Since net-tools 1.61 ifconfig is printing byte counters and human readable
