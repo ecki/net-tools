@@ -38,19 +38,25 @@ int IPX_rprint(int options)
     char net[128], router_net[128];
     char router_node[128];
     int num;
-    FILE *fp = fopen(_PATH_PROCNET_IPX_ROUTE, "r");
+    FILE *fp;
     struct aftype *ap;
     struct sockaddr sa;
+
+    fp = fopen(_PATH_PROCNET_IPX_ROUTE1, "r");
+
+    if (!fp) {
+        fp = fopen(_PATH_PROCNET_IPX_ROUTE2, "r");
+    }
+    
+    if (!fp) {
+        perror(NULL);
+        printf(_("IPX routing not in file %s or %s found.\n"), _PATH_PROCNET_IPX_ROUTE1, _PATH_PROCNET_IPX_ROUTE2);
+	return 1;
+    }
 
     if ((ap = get_afntype(AF_IPX)) == NULL) {
 	EINTERN("lib/ipx_rt.c", "AF_IPX missing");
 	return (-1);
-    }
-
-    if (!fp) {
-        perror(_PATH_PROCNET_IPX_ROUTE);
-        printf(_("IPX not configured in this system.\n"));
-	return 1;
     }
 
     printf(_("Kernel IPX routing table\n"));	/* xxx */

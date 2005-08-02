@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.51 2004/06/03 22:27:37 ecki Exp $
+ * Version:     $Id: netstat.c,v 1.52 2005/08/02 22:28:10 ecki Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -1363,18 +1363,37 @@ static int ipx_info(void)
     char sad[50], dad[50];
     struct sockaddr sa;
     unsigned sport = 0, dport = 0;
+    struct stat s;
+    
+    f = fopen(_PATH_PROCNET_IPX_SOCKET1, "r");
+    if (!f) {
+        if (errno != ENOENT) {
+            perror(_PATH_PROCNET_IPX_SOCKET1);
+            return (-1);
+        }
+        f = fopen(_PATH_PROCNET_IPX_SOCKET2, "r");
 
-    if (!(f = fopen(_PATH_PROCNET_IPX, "r"))) {
-	if (errno != ENOENT) {
-	    perror(_PATH_PROCNET_IPX);
-	    return (-1);
-	}
-	if (flag_arg || flag_ver)
-	    ESYSNOT("netstat", "AF IPX");
-	if (flag_arg)
-	    return (1);
-	else
-	    return (0);
+        /* We need to check for directory */
+        if (f) {
+            fstat(fileno(f), &s);
+            if (!S_ISREG(s.st_mode)) {
+                fclose(f);
+                f=NULL;
+            }
+        }
+
+        if (!f) {
+            if (errno != ENOENT) {
+	        perror(_PATH_PROCNET_IPX_SOCKET2);
+	        return (-1);
+	    }
+	    if (flag_arg || flag_ver)
+	        ESYSNOT("netstat", "AF IPX");
+	    if (flag_arg)
+	        return (1);
+ 	    else
+	        return (0);
+        }
     }
     printf(_("Active IPX sockets\nProto Recv-Q Send-Q Local Address              Foreign Address            State"));	/* xxx */
     if (flag_exp > 1)
@@ -1394,7 +1413,7 @@ static int ipx_info(void)
 	    sscanf(st, "%X", &sport);	/* net byt order */
 	    sport = ntohs(sport);
 	} else {
-	    EINTERN("netstat.c", _PATH_PROCNET_IPX " sport format error");
+	    EINTERN("netstat.c", "ipx socket format error in source port");
 	    return (-1);
 	}
 	nc = 0;
@@ -1404,7 +1423,7 @@ static int ipx_info(void)
 		sscanf(st, "%X", &dport);	/* net byt order */
 		dport = ntohs(dport);
 	    } else {
-		EINTERN("netstat.c", _PATH_PROCNET_IPX " dport format error");
+		EINTERN("netstat.c", "ipx soket format error in destination port");
 		return (-1);
 	    }
 	} else
