@@ -7,7 +7,7 @@
    8/2000  Andi Kleen make the list operations a bit more efficient.
    People are crazy enough to use thousands of aliases now.
 
-   $Id: interface.c,v 1.29 2003/06/28 02:03:31 ecki Exp $
+   $Id: interface.c,v 1.30 2005/08/23 22:46:51 ecki Exp $
  */
 
 #include "config.h"
@@ -651,8 +651,8 @@ void ife_print_long(struct interface *ptr)
     int hf;
     int can_compress = 0;
     unsigned long long rx, tx, short_rx, short_tx;
-    const char *Rext = "b";
-    const char *Text = "b";
+    const char *Rext = "B";
+    const char *Text = "B";
     static char flags[200];
     
 #if HAVE_AFIPX
