@@ -28,11 +28,17 @@ Contents:
 
    TODO			Some things that need to be done.
 
+The  Homepage (including CVS repository, release downloads and a form to
+request enhancements) is hosted by BerliOS Developer. Please consider to
+join the project if you want to contribute:
+
+                  http://net-tools.berlios.de/
+
 
                           Notes
                           -----
 
-This is net-tools 1.60.
+This is net-tools 1.6x.
 
 You need kernel 2.0 or later to use these programs.  These programs
 should compile cleanly with both glibc (version 2.0 or 2.1) and libc5,
