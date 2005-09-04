@@ -67,7 +67,7 @@ static int X25_setroute(int action, int options, char **args)
   strcpy(target, *args++);
 
   /* Clean out the x25_route_struct structure. */
-  memset((char *) &rt, 0, sizeof(struct x25_route_struct));
+  memset((char *) &rt, 0, sizeof(rt));
 
 
   if ((sigdigits = x25_aftype.input(0, target, (struct sockaddr *)&sx25)) < 0) {
