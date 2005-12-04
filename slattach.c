@@ -115,7 +115,7 @@ int		opt_h = 0;		/* "hangup" on carrier loss	*/
 int		opt_k = 0;		/* "keepalive" value		*/
 #endif
 int		opt_l = 0;		/* "lock it" flag		*/
-int		opt_L = 0;		/* clocal flag			*/
+int		opt_L = 0;		/* 3-wire mode flag		*/
 int		opt_m = 0;		/* "set RAW mode" flag		*/
 int		opt_n = 0;		/* "set No Mesg" flag		*/
 #ifdef SIOCSOUTFILL
@@ -342,9 +342,11 @@ tty_set_raw(struct termios *tty)
   tty->c_oflag = (0);				/* output flags		*/
   tty->c_lflag = (0);				/* local flags		*/
   speed = (tty->c_cflag & CBAUD);		/* save current speed	*/
-  tty->c_cflag = (CRTSCTS | HUPCL | CREAD);	/* UART flags		*/
+  tty->c_cflag = (HUPCL | CREAD);		/* UART flags		*/
   if (opt_L) 
 	tty->c_cflag |= CLOCAL;
+  else
+	tty->c_cflag |= CRTSCTS;
   tty->c_cflag |= speed;			/* restore speed	*/
   return(0);
 }
