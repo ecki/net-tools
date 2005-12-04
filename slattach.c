@@ -73,7 +73,7 @@
 
 
 const char *Release = RELEASE,
-	   *Version = "@(#) slattach 1.21 (1999-11-21)",
+	   *Version = "$Id: slattach.c,v 1.11 2005/12/04 05:15:36 ecki Exp $",
 	   *Signature = "net-tools, Fred N. van Kempen et al.";
 
 
