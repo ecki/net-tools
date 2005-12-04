@@ -8,7 +8,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: arp.c,v 1.24 2005/05/16 04:30:17 ecki Exp $
+ * Version:     $Id: arp.c,v 1.25 2005/12/04 02:57:15 ecki Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -100,7 +100,8 @@ static int arp_del(char **args)
 {
     char host[128];
     struct arpreq req;
-    struct sockaddr sa;
+    struct sockaddr_storage ss;
+    struct sockaddr *sa;
     int flags = 0;
     int deleted = 0;
 
@@ -112,12 +113,13 @@ static int arp_del(char **args)
 	return (-1);
     }
     safe_strncpy(host, *args, (sizeof host));
-    if (ap->input(0, host, &sa) < 0) {
+    sa = (struct sockaddr *)&ss;
+    if (ap->input(0, host, sa) < 0) {
 	ap->herror(host);
 	return (-1);
     }
     /* If a host has more than one address, use the correct one! */
-    memcpy((char *) &req.arp_pa, (char *) &sa, sizeof(struct sockaddr));
+    memcpy((char *) &req.arp_pa, (char *) sa, sizeof(struct sockaddr));
 
     if (hw_set)
 	req.arp_ha.sa_family = hw->type;
@@ -177,11 +179,11 @@ static int arp_del(char **args)
 		usage();
 	    if (strcmp(*args, "255.255.255.255") != 0) {
 		strcpy(host, *args);
-		if (ap->input(0, host, &sa) < 0) {
+		if (ap->input(0, host, sa) < 0) {
 		    ap->herror(host);
 		    return (-1);
 		}
-		memcpy((char *) &req.arp_netmask, (char *) &sa,
+		memcpy((char *) &req.arp_netmask, (char *) sa,
 		       sizeof(struct sockaddr));
 		req.arp_flags |= ATF_NETMASK;
 	    }
@@ -266,7 +268,8 @@ static int arp_set(char **args)
 {
     char host[128];
     struct arpreq req;
-    struct sockaddr sa;
+    struct sockaddr_storage ss;
+    struct sockaddr *sa;
     int flags;
 
     memset((char *) &req, 0, sizeof(req));
@@ -277,12 +280,13 @@ static int arp_set(char **args)
 	return (-1);
     }
     safe_strncpy(host, *args++, (sizeof host));
-    if (ap->input(0, host, &sa) < 0) {
+    sa = (struct sockaddr *)&ss;
+    if (ap->input(0, host, sa) < 0) {
 	ap->herror(host);
 	return (-1);
     }
     /* If a host has more than one address, use the correct one! */
-    memcpy((char *) &req.arp_pa, (char *) &sa, sizeof(struct sockaddr));
+    memcpy((char *) &req.arp_pa, (char *) sa, sizeof(struct sockaddr));
 
     /* Fetch the hardware address. */
     if (*args == NULL) {
@@ -352,11 +356,11 @@ static int arp_set(char **args)
 		usage();
 	    if (strcmp(*args, "255.255.255.255") != 0) {
 		strcpy(host, *args);
-		if (ap->input(0, host, &sa) < 0) {
+		if (ap->input(0, host, sa) < 0) {
 		    ap->herror(host);
 		    return (-1);
 		}
-		memcpy((char *) &req.arp_netmask, (char *) &sa,
+		memcpy((char *) &req.arp_netmask, (char *) sa,
 		       sizeof(struct sockaddr));
 		flags |= ATF_NETMASK;
 	    }
@@ -525,7 +529,8 @@ static void arp_disp(char *name, char *ip, int type, int arp_flags, char *hwa, c
 static int arp_show(char *name)
 {
     char host[100];
-    struct sockaddr sa;
+    struct sockaddr_storage ss;
+    struct sockaddr *sa;
     char ip[100];
     char hwa[100];
     char mask[100];
@@ -538,14 +543,15 @@ static int arp_show(char *name)
 
     host[0] = '\0';
 
+    sa = (struct sockaddr *)&ss;
     if (name != NULL) {
 	/* Resolve the host name. */
 	safe_strncpy(host, name, (sizeof host));
-	if (ap->input(0, host, &sa) < 0) {
+	if (ap->input(0, host, sa) < 0) {
 	    ap->herror(host);
 	    return (-1);
 	}
-	safe_strncpy(host, ap->sprint(&sa, 1), sizeof(host));
+	safe_strncpy(host, ap->sprint(sa, 1), sizeof(host));
     }
     /* Open the PROCps kernel table. */
     if ((fp = fopen(_PATH_PROCNET_ARP, "r")) == NULL) {
@@ -581,10 +587,10 @@ static int arp_show(char *name)
 	    if (opt_n)
 		hostname = "?";
 	    else {
-		if (ap->input(0, ip, &sa) < 0)
+		if (ap->input(0, ip, sa) < 0)
 		    hostname = ip;
 		else
-		    hostname = ap->sprint(&sa, opt_n | 0x8000);
+		    hostname = ap->sprint(sa, opt_n | 0x8000);
 		if (strcmp(hostname, ip) == 0)
 		    hostname = "?";
 	    }
