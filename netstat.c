@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.52 2005/08/02 22:28:10 ecki Exp $
+ * Version:     $Id: netstat.c,v 1.53 2006/03/16 08:59:42 ecki Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -531,9 +531,9 @@ static void finish_this_one(int uid, unsigned long inode, const char *timers)
 
     if (flag_exp > 1) {
 	if (!(flag_not & FLAG_NUM_USER) && ((pw = getpwuid(uid)) != NULL))
-	    printf("%-10s ", pw->pw_name);
+	    printf(" %-10s ", pw->pw_name);
 	else
-	    printf("%-10d ", uid);
+	    printf(" %-10d ", uid);
 	printf("%-10lu ",inode);
     }
     if (flag_prg)
