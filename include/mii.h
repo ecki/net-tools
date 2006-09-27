@@ -41,6 +41,7 @@ struct mii_data {
 #define  MII_BMCR_RESTART	0x0200
 #define  MII_BMCR_DUPLEX	0x0100
 #define  MII_BMCR_COLTEST	0x0080
+#define  MII_BMCR_SPEED1000	0x0040
 
 /* Basic Mode Status Register */
 #define MII_BMSR		0x01
@@ -85,5 +86,18 @@ struct mii_data {
 #define  MII_ANER_NP_ABLE	0x0004
 #define  MII_ANER_PAGE_RX	0x0002
 #define  MII_ANER_LP_AN_ABLE	0x0001
+
+#define MII_CTRL1000		0x09
+#define   MII_BMCR2_1000FULL	0x0200
+#define   MII_BMCR2_1000HALF	0x0100
+
+#define MII_STAT1000		0x0a
+#define   MII_LPA2_1000LOCALOK  0x2000
+#define   MII_LPA2_1000REMRXOK	0x1000
+#define   MII_LPA2_1000FULL	0x0800
+#define   MII_LPA2_1000HALF	0x0400
+
+/* Last register we need for show_basic_mii() */
+#define MII_BASIC_MAX          (MII_STAT1000+1)
 
 #endif /* _NETTOOLS_MII_H */
