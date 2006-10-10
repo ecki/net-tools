@@ -1,4 +1,4 @@
-.TH SLATTACH 8 "4 Sep 2005" "" ""
+.TH SLATTACH 8 "10 Oct 2006" "" ""
 .SH NAME
 slattach \- attach a network interface to a serial line
 .SH SYNOPSIS
@@ -24,6 +24,7 @@ setup doesn't work.
 .B "[-h]"
 Exit when the carrier is lost. This works on both /dev/tty and /dev/cua
 devices by directly monitoring the carrier status every 15 seconds.
+.TP
 .B "[-v]"
 Enable verbose output.  Useful in shell scripts.
 .TP
@@ -50,8 +51,8 @@ carrier watching is disabled.
 .B "[-p proto]"
 Set a specific kind of protocol to use on the line.  The default
 is set to
-.B "cslip"
-, i.e. compressed SLIP.  Other possible values are
+.BR "cslip" ,
+i.e. compressed SLIP.  Other possible values are
 .B "slip"
 (normal SLIP), 
 .B "adaptive"
