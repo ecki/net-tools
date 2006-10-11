@@ -75,6 +75,6 @@ extern int do_qdisc(int argc, char **argv);
 extern int do_class(int argc, char **argv);
 extern int do_filter(int argc, char **argv);
 
-extern const char *format_host(int af, void *addr, __u8 *abuf, int alen);
+extern const char *format_host(int af, void *addr, char *abuf, int alen);
 
 #endif /* __UTILS_H__ */
