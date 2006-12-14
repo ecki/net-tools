@@ -2,7 +2,7 @@
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Arnaldo Carvalho de Melo <acme@conectiva.com.br>, 2000.
 #
-# $Id: pt_BR.po,v 1.7 2000/02/13 22:28:11 ralf Exp $
+# $Id: pt_BR.po,v 1.8 2006/12/14 23:36:24 ecki Exp $
 # Brazilian portuguese translation for net-tools 1.54
 # Copyright (C) 1998, 1999 Free Software Foundation, Inc.
 # Arnaldo Carvalho de Melo <acme@conectiva.com.br>, 1998-2000
@@ -2361,17 +2361,15 @@ msgstr "atenção: nenhum socket inet disponível: %s\n"
 msgid "Warning: cannot open %s (%s). Limited output.\n"
 msgstr "Atenção: não foi possível abrir %s (%s). Saída limitada.\n"
 
-#. Give better error message for this case.
+#. better translation?
 #: ../lib/interface.c:504
 msgid "Device not found"
-msgstr "%s: dispositivo não encontrado"
+msgstr "dispositivo não encontrado"
 
 #: ../lib/interface.c:508
 #, c-format
 msgid "%s: error fetching interface information: %s\n"
-msgstr ""
-"%s: erro obtendo informações da interface: %s\n"
-"\n"
+msgstr "%s: erro obtendo informações da interface: %s\n"
 
 #: ../lib/sockets.c:59
 msgid "No usable address families found.\n"
