@@ -661,14 +661,14 @@ int main(int argc, char **argv)
 	    spp++;
 	    continue;
 	}
-	if (!strcmp(*spp, "-pointopoint")) {
+	if (!strcmp(*spp, "-pointopoint") || !strcmp(*spp, "-pointtopoint")) {
 	    goterr |= clr_flag(ifr.ifr_name, IFF_POINTOPOINT);
 	    spp++;
 	    if (test_flag(ifr.ifr_name, IFF_POINTOPOINT) > 0)
 	    	fprintf(stderr, _("Warning: Interface %s still in POINTOPOINT mode.\n"), ifr.ifr_name);
 	    continue;
 	}
-	if (!strcmp(*spp, "pointopoint")) {
+	if (!strcmp(*spp, "pointopoint") || !strcmp(*spp, "pointtopoint")) {
 	    if (*(spp + 1) != NULL) {
 		spp++;
 		safe_strncpy(host, *spp, (sizeof host));
