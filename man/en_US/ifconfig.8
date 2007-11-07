@@ -1,4 +1,4 @@
-.TH IFCONFIG 8 "2005-06-30" "net-tools" "Linux Programmer's Manual"
+.TH IFCONFIG 8 "2007-11-07" "net-tools" "Linux Programmer's Manual"
 .SH NAME
 ifconfig \- configure a network interface
 .SH SYNOPSIS
@@ -59,8 +59,8 @@ you can specify them with
 .B eth0:0
 for the first alias of eth0. You can use them to assign a second address. To
 delete an alias interface use
-.B ifconfig eth0:0 down
-. Note: for every scope (i.e. same net with address/netmask combination) all
+.BR "ifconfig eth0:0 down" .
+Note: for every scope (i.e. same net with address/netmask combination) all
 aliases are deleted, if you delete the first (primary).
 .TP
 .B up
