@@ -1,11 +1,12 @@
 /* Tolerant /proc file parser. Copyright 1998 Andi Kleen */
-/* $Id: proc.c,v 1.4 1999/01/05 20:54:00 philip Exp $ */ 
+/* $Id: proc.c,v 1.5 2007/12/01 18:44:57 ecki Exp $ */ 
 /* Fixme: cannot currently cope with removed fields */ 
 
 #include <string.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <ctype.h>
+#include <unistd.h>
 
 /* Caller must free return string. */
 
@@ -71,4 +72,23 @@ int proc_guess_fmt(char *name, FILE *fh, ...)
     }
     va_end(ap);
     return flag;
+}
+
+
+FILE *proc_fopen(const char *name)
+{
+    static char *buffer;
+    static size_t pagesz;
+    FILE *fd = fopen(name, "r");
+
+    if (fd == NULL)
+      return NULL;
+      
+    if (!buffer) {
+      pagesz = getpagesize();
+      buffer = malloc(pagesz);
+    }
+    
+    setvbuf(fd, buffer, _IOFBF, pagesz);
+    return fd;
 }

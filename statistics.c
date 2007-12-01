@@ -1,6 +1,6 @@
 /*
  * Copyright 1997,1999,2000 Andi Kleen. Subject to the GPL. 
- * $Id: statistics.c,v 1.19 2007/12/01 18:29:05 ecki Exp $
+ * $Id: statistics.c,v 1.20 2007/12/01 18:44:56 ecki Exp $
  * 19980630 - i18n - Arnaldo Carvalho de Melo <acme@conectiva.com.br> 
  * 19981113 - i18n fixes - Arnaldo Carvalho de Melo <acme@conectiva.com.br> 
  * 19990101 - added net/netstat, -t, -u, -w supprt - Bernd Eckenfels 
@@ -11,6 +11,7 @@
 #include <string.h>
 #include "config.h"
 #include "intl.h"
+#include "proc.h"
 
 /* #define WARN 1 */
 
@@ -387,7 +388,7 @@ void parsesnmp(int flag_raw, int flag_tcp, int flag_udp)
 
     f_raw = flag_raw; f_tcp = flag_tcp; f_udp = flag_udp;
     
-    f = fopen("/proc/net/snmp", "r");
+    f = proc_fopen("/proc/net/snmp");
     if (!f) {
 	perror(_("cannot open /proc/net/snmp"));
 	return;
@@ -401,7 +402,7 @@ void parsesnmp(int flag_raw, int flag_tcp, int flag_udp)
 
     fclose(f);
 
-    f = fopen("/proc/net/netstat", "r");
+    f = proc_fopen("/proc/net/netstat");
 
     if (f) {
     	if (process_fd(f) <0)
