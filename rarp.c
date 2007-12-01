@@ -3,7 +3,7 @@
  *              that maintains the kernel's RARP cache.  It is derived
  *              from Fred N. van Kempen's arp command.
  *
- * Version:	$Id: rarp.c,v 1.6 2001/04/08 17:05:05 pb Exp $
+ * Version:	$Id: rarp.c,v 1.7 2007/12/01 18:51:09 ecki Exp $
  *
  * Usage:       rarp -d hostname                      Delete entry
  *              rarp -s hostname ethernet_address     Add entry
@@ -40,6 +40,7 @@
 #include "net-support.h"
 #include "version.h"
 #include "pathnames.h"
+#include "proc.h"
 
 static char no_rarp_message[] = N_("This kernel does not support RARP.\n");
 
@@ -124,7 +125,7 @@ static int rarp_file(int fd, const char *name)
     FILE *fp;
     struct hostent *hp;
 
-    if ((fp = fopen(name, "r")) == NULL) {
+    if ((fp = proc_fopen(name)) == NULL) {
 	fprintf(stderr, _("rarp: cannot open file %s:%s.\n"), name, strerror(errno));
 	return -1;
     }
@@ -154,7 +155,7 @@ static int rarp_file(int fd, const char *name)
 
 static int display_cache(void)
 {
-    FILE *fd = fopen(_PATH_PROCNET_RARP, "r");
+    FILE *fd = proc_fopen(_PATH_PROCNET_RARP);
     char buffer[256];
     if (fd == NULL) {
 	if (errno == ENOENT)
