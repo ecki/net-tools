@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.54 2007/12/01 18:12:34 ecki Exp $
+ * Version:     $Id: netstat.c,v 1.55 2007/12/01 19:00:40 ecki Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -94,6 +94,7 @@
 #include "sockets.h"
 #include "interface.h"
 #include "util.h"
+#include "proc.h"
 
 #define PROGNAME_WIDTH 20
 
@@ -153,7 +154,7 @@ int flag_ver = 0;
 FILE *procinfo;
 
 #define INFO_GUTS1(file,name,proc)			\
-  procinfo = fopen((file), "r");			\
+  procinfo = proc_fopen((file));			\
   if (procinfo == NULL) {				\
     if (errno != ENOENT) {				\
       perror((file));					\
@@ -174,7 +175,7 @@ FILE *procinfo;
 #if HAVE_AFINET6
 #define INFO_GUTS2(file,proc)				\
   lnr = 0;						\
-  procinfo = fopen((file), "r");		       	\
+  procinfo = proc_fopen((file));		       	\
   if (procinfo != NULL) {				\
     do {						\
       if (fgets(buffer, sizeof(buffer), procinfo))	\
@@ -454,7 +455,7 @@ static int netrom_info(void)
     char buffer[256], dev[16];
     int st, vs, vr, sendq, recvq, ret;
 
-    f = fopen(_PATH_PROCNET_NR, "r");
+    f = proc_fopen(_PATH_PROCNET_NR);
     if (f == NULL) {
 	if (errno != ENOENT) {
 	    perror(_PATH_PROCNET_NR);
@@ -650,7 +651,7 @@ static void igmp_do_one(int lnr, const char *line)
 #if HAVE_AFX25
 static int x25_info(void)
 {
-       FILE *f=fopen(_PATH_PROCNET_X25, "r");
+       FILE *f=proc_fopen(_PATH_PROCNET_X25);
        char buffer[256],dev[16];
        int st,vs,vr,sendq,recvq,lci;
        static char *x25_state[5]=
@@ -661,7 +662,7 @@ static int x25_info(void)
                "ESTABLISHED",
                "RECOVERY"
        };
-       if(!(f=fopen(_PATH_PROCNET_X25, "r")))
+       if(!(f=proc_fopen(_PATH_PROCNET_X25)))
        {
                if (errno != ENOENT) {
                        perror(_PATH_PROCNET_X25);
@@ -1269,7 +1270,7 @@ static int ax25_info(void)
 	N_("ESTABLISHED"),
 	N_("RECOVERY")
     };
-    if (!(f = fopen(_PATH_PROCNET_AX25, "r"))) {
+    if (!(f = proc_fopen(_PATH_PROCNET_AX25))) {
 	if (errno != ENOENT) {
 	    perror(_PATH_PROCNET_AX25);
 	    return (-1);
@@ -1365,13 +1366,13 @@ static int ipx_info(void)
     unsigned sport = 0, dport = 0;
     struct stat s;
     
-    f = fopen(_PATH_PROCNET_IPX_SOCKET1, "r");
+    f = proc_fopen(_PATH_PROCNET_IPX_SOCKET1);
     if (!f) {
         if (errno != ENOENT) {
             perror(_PATH_PROCNET_IPX_SOCKET1);
             return (-1);
         }
-        f = fopen(_PATH_PROCNET_IPX_SOCKET2, "r");
+        f = proc_fopen(_PATH_PROCNET_IPX_SOCKET2);
 
         /* We need to check for directory */
         if (f) {
