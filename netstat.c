@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.53 2006/03/16 08:59:42 ecki Exp $
+ * Version:     $Id: netstat.c,v 1.54 2007/12/01 18:12:34 ecki Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -1705,7 +1705,7 @@ int main
         flag_inet = flag_inet6 = 1;
 
     flag_arg = flag_tcp + flag_udp + flag_raw + flag_unx + flag_ipx
-	+ flag_ax25 + flag_netrom + flag_igmp + flag_x25;
+	+ flag_ax25 + flag_netrom + flag_igmp + flag_x25 + flag_rose;
 
     if (flag_mas) {
 #if HAVE_FW_MASQUERADE && HAVE_AFINET
@@ -1885,6 +1885,19 @@ int main
 	    }
 #endif
 	}
+	if (!flag_arg || flag_rose) {
+#if 0 && HAVE_AFROSE
+          i = rose_info();
+          if (i)
+            return (i);
+#else
+          if (flag_arg) {
+            i = 1;
+            ENOSUPP("netstat", "AF ROSE");
+          }
+#endif
+        }
+	            
 	if (!flag_cnt || i)
 	    break;
 	sleep(1);
