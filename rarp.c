@@ -3,7 +3,7 @@
  *              that maintains the kernel's RARP cache.  It is derived
  *              from Fred N. van Kempen's arp command.
  *
- * Version:	$Id: rarp.c,v 1.7 2007/12/01 18:51:09 ecki Exp $
+ * Version:	$Id: rarp.c,v 1.8 2007/12/01 19:36:55 ecki Exp $
  *
  * Usage:       rarp -d hostname                      Delete entry
  *              rarp -s hostname ethernet_address     Add entry
@@ -125,7 +125,7 @@ static int rarp_file(int fd, const char *name)
     FILE *fp;
     struct hostent *hp;
 
-    if ((fp = proc_fopen(name)) == NULL) {
+    if ((fp = fopen(name)) == NULL) {
 	fprintf(stderr, _("rarp: cannot open file %s:%s.\n"), name, strerror(errno));
 	return -1;
     }
