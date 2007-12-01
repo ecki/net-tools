@@ -1,6 +1,6 @@
 /*
  * Copyright 1997,1999,2000 Andi Kleen. Subject to the GPL. 
- * $Id: statistics.c,v 1.18 2003/02/12 03:30:57 ak Exp $
+ * $Id: statistics.c,v 1.19 2007/12/01 18:29:05 ecki Exp $
  * 19980630 - i18n - Arnaldo Carvalho de Melo <acme@conectiva.com.br> 
  * 19981113 - i18n fixes - Arnaldo Carvalho de Melo <acme@conectiva.com.br> 
  * 19990101 - added net/netstat, -t, -u, -w supprt - Bernd Eckenfels 
@@ -330,14 +330,17 @@ struct tabtab *newtable(struct tabtab *tabs, char *title)
 	return &dummytab;
 }
 
-void process_fd(FILE *f)
+int process_fd(FILE *f)
 {
-    char buf1[1024], buf2[1024];
+    char buf1[2048], buf2[2048];
     char *sp, *np, *p;
     while (fgets(buf1, sizeof buf1, f)) {
 	int endflag;
 	struct tabtab *tab;
 
+        if (buf1[0] == '\n') // skip empty first line in 2.6 kernels
+            continue;
+            
 	if (!fgets(buf2, sizeof buf2, f))
 	    break;
 	sp = strchr(buf1, ':');
@@ -371,11 +374,10 @@ void process_fd(FILE *f)
 	    sp = p + 1;
 	}
     }
-  return;
+  return 0;
   
 formaterr:
-  perror(_("error parsing /proc/net/snmp"));
-  return;
+  return -1;
 }
 
 
@@ -390,7 +392,9 @@ void parsesnmp(int flag_raw, int flag_tcp, int flag_udp)
 	perror(_("cannot open /proc/net/snmp"));
 	return;
     }
-    process_fd(f);
+
+    if (process_fd(f) < 0)
+      fprintf(stderr, _("Problem while parsing /proc/net/snmp\n"));
 
     if (ferror(f))
 	perror("/proc/net/snmp");
@@ -400,7 +404,8 @@ void parsesnmp(int flag_raw, int flag_tcp, int flag_udp)
     f = fopen("/proc/net/netstat", "r");
 
     if (f) {
-    	process_fd(f);
+    	if (process_fd(f) <0)
+          fprintf(stderr, _("Problem while parsing /proc/net/netstat\n"));
 
         if (ferror(f))
 	    perror("/proc/net/netstat");
