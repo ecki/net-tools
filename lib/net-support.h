@@ -119,6 +119,7 @@ extern int IPX_rinput(int action, int flags, char **argv);
 extern int NETROM_rinput(int action, int flags, char **argv);
 extern int AX25_rinput(int action, int flags, char **argv);
 extern int X25_rinput(int action, int flags, char **argv);
+extern int ROSE_rinput(int action, int flags, char **argv);
 
 extern int aftrans_opt(const char *arg);
 extern void aftrans_def(char *tool, char *argv0, char *dflt);
@@ -131,6 +132,7 @@ extern int flag_ax25;
 extern int flag_ddp;
 extern int flag_netrom;
 extern int flag_x25;
+extern int flag_rose;
 extern int flag_inet;
 extern int flag_inet6;
 
@@ -146,9 +148,10 @@ extern char afname[];
 	{"inet",	0,	0,	1}, \
 	{"inet6",	0,	0,	1}, \
 	{"ddp",		0,	0,	1}, \
+	{"rose",		0,	0,	1}, \
 	{"unix",	0,	0,	1}, \
 	{"tcpip",	0,	0,	1}
-#define AFTRANS_CNT 11
+#define AFTRANS_CNT 12
 
 #define EINTERN(file, text) fprintf(stderr, \
 	_("%s: Internal Error `%s'.\n"),file,text);

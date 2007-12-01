@@ -2,7 +2,7 @@
  * lib/af.c   This file contains the top-level part of the protocol
  *              support functions module for the NET-2 base distribution.
  *
- * Version:     $Id: af.c,v 1.13 2000/05/20 13:38:10 pb Exp $
+ * Version:     $Id: af.c,v 1.14 2007/12/01 17:49:35 ecki Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -35,6 +35,7 @@ int flag_netrom;
 int flag_inet;
 int flag_inet6;
 int flag_econet;
+int flag_rose;
 int flag_x25 = 0;
 int flag_ash;
 
@@ -56,6 +57,9 @@ struct aftrans_t {
     },
     {
 	"ipx", "ipx", &flag_ipx
+    },
+    {
+	"rose", "rose", &flag_rose
     },
     {
 	"appletalk", "ddp", &flag_ddp
