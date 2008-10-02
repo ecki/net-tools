@@ -8,7 +8,7 @@
 .\" Modified: Tuan Hoang tqhoang@bigfoot.com 
 .\"
 .\"
-.TH NETSTAT 8 "2007-12-02" "net-tools" "Linux Programmer's Manual"
+.TH NETSTAT 8 "2008-10-04" "net-tools" "Linux System Administrator's Manual"
 
 .SH NAME
 netstat \- Print network connections, routing tables, interface statistics, masquerade connections, and multicast memberships
@@ -183,9 +183,11 @@ Print routing information from the route cache.
 .SS "Proto" 
 The protocol (tcp, udp, raw) used by the socket. 
 .SS "Recv-Q"
-The count of bytes not copied by the user program connected to this socket.
+Established: The count of bytes not copied by the user program connected to this socket.
+Listening: Since Kernel 2.6.18 this column contains the current syn backlog.
 .SS "Send-Q"
-The count of bytes not acknowledged by the remote host.
+Established: The count of bytes not acknowledged by the remote host.
+Listening: Since Kernel 2.6.18 this column contains the maximum size of the syn backlog.
 .SS "Local Address" 
 Address and port number of the local end of the socket.  Unless the
 .BR \-\-numeric " (" \-n )
