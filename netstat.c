@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.55 2007/12/01 19:00:40 ecki Exp $
+ * Version:     $Id: netstat.c,v 1.56 2008/10/02 22:05:54 ecki Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -764,12 +764,6 @@ static void tcp_do_one(int lnr, const char *line)
 	fprintf(stderr, _("netstat: unsupported address family %d !\n"),
 		((struct sockaddr *) &localaddr)->sa_family);
 	return;
-    }
-    if (state == TCP_LISTEN) {
-	time_len = 0;
-	retr = 0L;
-	rxq = 0L;
-	txq = 0L;
     }
     safe_strncpy(local_addr, ap->sprint((struct sockaddr *) &localaddr, 
 					flag_not), sizeof(local_addr));
