@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.57 2002/12/10 00:56:41 ecki Exp $
+ * Version:     $Id: ifconfig.c,v 1.58 2008/10/02 23:31:04 ecki Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -112,6 +112,9 @@ static int if_print(char *ifname)
 	struct interface *ife;
 
 	ife = lookup_interface(ifname);
+	if (!ife) {
+		return -1;
+	}
 	res = do_if_fetch(ife); 
 	if (res >= 0) 
 	    ife_print(ife);
