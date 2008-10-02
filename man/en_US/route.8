@@ -205,6 +205,12 @@ deletes the current default route, which is labeled "default" or 0.0.0.0
 in the destination field of the current routing table.
 
 .TP
+.B route del \-net 192.56.76.0 netmask 255.255.255.0
+deletes the route. Since the Linux routing kernel uses classless
+addressing, you pretty much always have to specify the netmask that is
+same as as seen in 'route -n' listing.
+
+.TP
 .B route add default gw mango 
 adds a default route (which will be used if no other route matches).
 All packets using this route will be gatewayed through the address of a node
