@@ -1,8 +1,8 @@
-.TH SLATTACH 8 "10 Oct 2006" "" ""
+.TH SLATTACH 8 "2008\-10\-03" "net\-tools" "Linux System Administrator's Manual"
 .SH NAME
 slattach \- attach a network interface to a serial line
 .SH SYNOPSIS
-.B "slattach [-dehlLmnqv] [-c command] [-p proto] [-s speed] [tty]"
+.B "slattach [\-dehlLmnqv] [\-c command] [\-p proto] [\-s speed] [tty]"
 .br
 .SH DESCRIPTION
 .B Slattach
@@ -11,44 +11,44 @@ is a tiny little program that can be used to put a normal terminal
 you to use it for point-to-point links to other computers.
 .SH OPTIONS
 .TP
-.B "[-c command]"
+.B "[\-c command]"
 Execute
 .B command
 when the line is hung up. This can be used to run scripts or re-establish
 connections when a link goes down.
 .TP
-.B "[-d]"
+.B "[\-d]"
 Enable debugging output.  Useful when determining why a given
 setup doesn't work.
 .TP
-.B "[-h]"
+.B "[\-h]"
 Exit when the carrier is lost. This works on both /dev/tty and /dev/cua
 devices by directly monitoring the carrier status every 15 seconds.
 .TP
-.B "[-v]"
+.B "[\-v]"
 Enable verbose output.  Useful in shell scripts.
 .TP
-.B "[-q]"
+.B "[\-q]"
 Operate in quiet mode - no messages at all.
 .TP
-.B "[-l]"
+.B "[\-l]"
 Create an UUCP-style lockfile for the device in /var/lock.
 .TP
-.B "[-n]"
+.B "[\-n]"
 Equivalent to the "mesg n" command.
 .TP
-.B "[-m]"
+.B "[\-m]"
 Do \fBnot\fP initialize the line into 8 bits raw mode.
 .TP
-.B "[-e]"
+.B "[\-e]"
 Exit right after initializing device, instead of waiting for the
 line to hang up.
 .TP
-.B "[-L]"
+.B "[\-L]"
 Enable 3 wire operation. The terminal is moved into CLOCAL mode, 
 carrier watching is disabled.
 .TP
-.B "[-p proto]"
+.B "[\-p proto]"
 Set a specific kind of protocol to use on the line.  The default
 is set to
 .BR "cslip" ,
@@ -71,7 +71,7 @@ to be active on the line. For kiss connections the
 .B axattach
 program should be used.
 .TP
-.B "[-s speed]"
+.B "[\-s speed]"
 Set a specific line speed, other than the default.
 .PP
 If no arguments are given, the current terminal line (usually: the

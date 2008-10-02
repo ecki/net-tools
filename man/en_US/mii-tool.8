@@ -1,13 +1,13 @@
 .\" Copyright (C) 2000 David A. Hinds -- dhinds@pcmcia.sourceforge.org
 .\" mii-tool.8 1.5 2000/04/25 22:58:19
 .\"
-.TH MII-TOOL 8 "2004/03/28 23:30:00" "net-tools"
+.TH MII\-TOOL 8 "2008\-10\-03" "net\-tools" "Linux System Administrator's Manual"
 
 .SH NAME
-mii-tool \- view, manipulate media-independent interface status
+mii\-tool \- view, manipulate media-independent interface status
 
 .SH SYNOPSIS
-.B mii-tool
+.B mii\-tool
 [\fB\-v\fR, \fB\-\-verbose\fR]
 [\fB\-V\fR, \fB\-\-version\fR]
 [\fB\-R\fR, \fB\-\-reset\fR]
@@ -32,12 +32,12 @@ single-speed hubs, are unable to autonegotiate.  To handle such
 devices, the MII protocol also allows for establishing a link by
 simply detecting either a 10baseT or 100baseT link beat.  The \fB\-F\fR
 or \fB\-\-force\fR options can be used to force the MII to operate in
-one mode, instead of autonegotiating.  The \fB\-A\fR and \fB-F\fR
+one mode, instead of autonegotiating.  The \fB\-A\fR and \fB\-F\fR
 options are mutually exclusive.
 .PP
 The default short output reports the negotiated link speed and link
 status for each interface.  If an interface or interfaces are not
-specified on the command line, then \fBmii-tool\fR will check any
+specified on the command line, then \fBmii\-tool\fR will check any
 available interfaces from \fBeth0\fR through \fBeth7\fR.
 .SH OPTIONS
 .TP
@@ -59,7 +59,7 @@ Watch interface(s) and report changes in link status.  The MII
 interfaces are polled at one second intervals.
 .TP
 \fB\-l\fR, \fB\-\-log\fR
-Used with \fB-w\fR, records link status changes in the system log
+Used with \fB\-w\fR, records link status changes in the system log
 instead of printing on standard output.
 .TP
 \fB\-F\fI media\fR, \fB\-\-force=\fImedia\fR

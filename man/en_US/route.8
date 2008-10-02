@@ -1,4 +1,4 @@
-.TH ROUTE 8 "02 October 2003" "net-tools" "Linux Programmer's Manual"
+.TH ROUTE 8 "2008\-10\-03" "net\-tools" "Linux System Administrator's Manual"
 .SH NAME
 route \- show / manipulate the IP routing table
 .SH SYNOPSIS
@@ -51,7 +51,7 @@ If]
 .RB [ \-V ] 
 .RB [ \-\-version ]
 .RB [ \-h ]
-.RB [ \--help ]
+.RB [ \-\-help ]
 .SH DESCRIPTION
 .B Route
 manipulates the kernel's IP routing tables.  Its primary use is to set
@@ -73,16 +73,16 @@ displays the current contents of the routing tables.
 .SH OPTIONS
 .TP
 .B \-A family
-use the specified address family (eg `inet'; use `route --help' for a full 
+use the specified address family (eg `inet'; use `route \-\-help' for a full 
 list).
 
 .TP 
-.B -F
+.B \-F
 operate on the kernel's FIB (Forwarding Information Base) routing
 table. 
 This is the default.
 .TP 
-.B -C
+.B \-C
 operate on the kernel's routing cache.
 
 .TP
@@ -96,7 +96,7 @@ nameserver has vanished.
 .TP
 .B \-e
 use
-.BR netstat (8)-format
+.BR netstat (8)\-format
 for displaying the routing table.
 .B \-ee 
 will generate a very long line with all parameters from the routing table.
@@ -117,7 +117,7 @@ the
 .B target
 is a network.
 .TP
-.B -host
+.B \-host
 the
 .B target 
 is a host.
@@ -179,24 +179,27 @@ modifiers (metric - netmask - gw - dev) doesn't matter.
 
 .SH EXAMPLES
 .TP
-.B route add -net 127.0.0.0
-adds the normal loopback entry, using netmask 255.0.0.0 (class A net,
-determined from the destination address) and associated with the 
+.B route add \-net 127.0.0.0 netmask 255.0.0.0 dev lo
+adds the normal loopback entry, using netmask 255.0.0.0 and associated with the 
 "lo" device (assuming this device was previously set up correctly with
 .BR ifconfig (8)). 
 
 .TP 
-.B route add -net 192.56.76.0 netmask 255.255.255.0 dev eth0
-adds a route to the network 192.56.76.x via 
-"eth0". The Class C netmask modifier is not really necessary here because
-192.* is a Class C IP address. The word "dev" can be omitted here. 
+.B route add \-net 192.56.76.0 netmask 255.255.255.0 dev eth0
+adds a route to the local network 192.56.76.x via 
+"eth0".  The word "dev" can be omitted here. 
 
 .TP
-.B route add default gw mango-gw
+.B route del default
+deletes the current default route, which is labeled "default" or 0.0.0.0
+in the destination field of the current routing table.
+
+.TP
+.B route add default gw mango\-gw
 adds a default route (which will be used if no other route matches).
-All packets using this route will be gatewayed through "mango-gw". The
+All packets using this route will be gatewayed through "mango\-gw". The
 device which will actually be used for that route depends on how we
-can reach "mango-gw" - the static route to "mango-gw" will have to be
+can reach "mango\-gw" - the static route to "mango\-gw" will have to be
 set up before. 
 
 .TP
@@ -205,18 +208,18 @@ Adds the route to the "ipx4" host via the SLIP interface (assuming that
 "ipx4" is the SLIP host).
 
 .TP
-.B route add -net 192.57.66.0 netmask 255.255.255.0 gw ipx4
+.B route add \-net 192.57.66.0 netmask 255.255.255.0 gw ipx4
 This command adds the net "192.57.66.x" to be gatewayed through the former
 route to the SLIP interface.
 
 .TP
-.B route add -net 224.0.0.0 netmask 240.0.0.0 dev eth0
+.B route add \-net 224.0.0.0 netmask 240.0.0.0 dev eth0
 This is an obscure one documented so people know how to do it. This sets
 all of the class D (multicast) IP routes to go via "eth0". This is the
 correct normal configuration line with a multicasting kernel. 
 
 .TP
-.B route add -net 10.0.0.0 netmask 255.0.0.0 reject
+.B route add \-net 10.0.0.0 netmask 255.0.0.0 reject
 This installs a rejecting route for the private network "10.x.x.x."
 
 .LP
@@ -282,8 +285,8 @@ recent kernels, but may be needed by routing daemons.
 Number of references to this route. (Not used in the Linux kernel.)
 .TP
 .B Use
-Count of lookups for the route.  Depending on the use of -F and -C this will
-be either route cache misses (-F) or hits (-C).
+Count of lookups for the route.  Depending on the use of \-F and \-C this will
+be either route cache misses (\-F) or hits (\-C).
 .TP
 .B Iface
 Interface to which packets for this route will be sent.
@@ -323,4 +326,4 @@ for Linux was originally written by Fred N.  van Kempen,
 Linus Torvalds for pl15. Alan Cox added the mss and window options for
 Linux 1.1.22. irtt support and merged with netstat from Bernd Eckenfels.
 .SH AUTHOR
-Currently maintained by Phil Blundell <Philip.Blundell@pobox.com>.
+Currently maintained by Phil Blundell <Philip.Blundell@pobox.com> and Bernd Eckenfels <net-tools@lina.inka.de>.

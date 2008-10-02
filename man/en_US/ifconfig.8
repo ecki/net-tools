@@ -1,4 +1,4 @@
-.TH IFCONFIG 8 "2007-11-07" "net-tools" "Linux Programmer's Manual"
+.TH IFCONFIG 8 "2008\-10\-03" "net\-tools" "Linux System Administrator's Manual"
 .SH NAME
 ifconfig \- configure a network interface
 .SH SYNOPSIS
@@ -18,7 +18,7 @@ a single
 .B interface
 argument is given, it displays the status of the given interface
 only; if a single
-.B -a
+.B \-a
 argument is given, it displays the status of all interfaces, even
 those that are down.  Otherwise, it configures an interface.
 
@@ -138,13 +138,13 @@ are
 can be used to tell the driver to auto-sense the media.  Again, not
 all drivers can do this.
 .TP
-.B "[-]broadcast [addr]"
+.B "[\-]broadcast [addr]"
 If the address argument is given, set the protocol broadcast
 address for this interface.  Otherwise, set (or clear) the
 .B IFF_BROADCAST
 flag for the interface.
 .TP
-.B "[-]pointopoint [addr]"
+.B "[\-]pointopoint [addr]"
 This keyword enables the
 .B point-to-point
 mode of an interface, meaning that it is a direct link between two
@@ -194,7 +194,7 @@ or
 .BR iptables (8)
 command.
 .LP
-Since net-tools 1.61 ifconfig is printing byte counters and human readable
+Since net\-tools 1.60\-4 ifconfig is printing byte counters and human readable
 counters with IEC 60027-2 units. So 1 KiB are 2^10 byte. Note, the numbers 
 are truncated to one decimal (which can by quite a large error if you 
 consider 0.1 PiB is 112.589.990.684.262 bytes :)
@@ -202,7 +202,7 @@ consider 0.1 PiB is 112.589.990.684.262 bytes :)
 Interrupt problems with Ethernet device drivers fail with EAGAIN
 .I (SIOCSIIFLAGS: Resource temporarily unavailable)
 it is most likely a interrupt conflict. See
-.I http://www.scyld.com/expert/irq-conflict.html
+.I http://www.scyld.com/expert/irq\-conflict.html
 for more information.
 .SH FILES
 .I /proc/net/socket 
@@ -214,7 +214,7 @@ for more information.
 While appletalk DDP and IPX addresses will be displayed they cannot be
 altered by this command.
 .SH SEE ALSO
-route(8), netstat(8), arp(8), rarp(8), ipchains(8), iptables(8)
+route(8), netstat(8), arp(8), rarp(8), ipchains(8), iptables(8), ifup(8), interfaces(5).
 .br
 http://physics.nist.gov/cuu/Units/binary.html - Prefixes for binary multiples
 .SH AUTHORS
@@ -226,4 +226,4 @@ Phil Blundell, <Philip.Blundell@pobox.com>
 .br
 Andi Kleen
 .br
-Bernd Eckenfels, <net-tools@lina.inka.de>
+Bernd Eckenfels, <net\-tools@lina.inka.de>

@@ -8,7 +8,7 @@
 .\" Modified: Tuan Hoang tqhoang@bigfoot.com 
 .\"
 .\"
-.TH NETSTAT 8 "2008-10-04" "net-tools" "Linux System Administrator's Manual"
+.TH NETSTAT 8 "2008\-10\-03" "net\-tools" "Linux System Administrator's Manual"
 
 .SH NAME
 netstat \- Print network connections, routing tables, interface statistics, masquerade connections, and multicast memberships
@@ -23,7 +23,7 @@ netstat \- Print network connections, routing tables, interface statistics, masq
 .RB [ \-\-listening | \-l ]
 .RB [ \-\-all | \-a ]
 .RB [ \-\-numeric | \-n ]
-.RB [ \-\-numeric-hosts "] [" \-\-numeric-ports "] [" \-\-numeric-users ]
+.RB [ \-\-numeric\-hosts "] [" \-\-numeric\-ports "] [" \-\-numeric\-users ]
 .RB [ \-\-symbolic | \-N ]
 .RB [ \-\-extend | \-e  [ \-\-extend | \-e] ]
 .RB [ \-\-timers | \-o ]
@@ -37,7 +37,7 @@ netstat \- Print network connections, routing tables, interface statistics, masq
 .RB [ \-\-extend | \-e  [ \-\-extend | \-e] ]
 .RB [ \-\-verbose | \-v ]
 .RB [ \-\-numeric | \-n ]
-.RB [ \-\-numeric-hosts "] [" \-\-numeric-ports "] [" \-\-numeric-users ]
+.RB [ \-\-numeric\-hosts "] [" \-\-numeric\-ports "] [" \-\-numeric\-users ]
 .RB [ \-\-continuous | \-c]
 .P
 .B netstat
@@ -53,14 +53,14 @@ netstat \- Print network connections, routing tables, interface statistics, masq
 .B netstat
 .RB { \-\-groups | \-g }
 .RB [ \-\-numeric | \-n ]
-.RB [ \-\-numeric-hosts "] [" \-\-numeric-ports "] [" \-\-numeric-users ]
+.RB [ \-\-numeric\-hosts "] [" \-\-numeric\-ports "] [" \-\-numeric\-users ]
 .RB [ \-\-continuous | \-c]
 .P
 .B netstat
 .RB { \-\-masquerade | \-M }
 .RB [ \-\-extend | \-e ]
 .RB [ \-\-numeric | \-n ]
-.RB [ \-\-numeric-hosts "] [" \-\-numeric-ports "] [" \-\-numeric-users ]
+.RB [ \-\-numeric\-hosts "] [" \-\-numeric\-ports "] [" \-\-numeric\-users ]
 .RB [ \-\-continuous | \-c]
 .P
 .B netstat
@@ -121,13 +121,13 @@ useful information about unconfigured address families.
 .SS "\-\-numeric , \-n"
 Show numerical addresses instead of trying to determine symbolic host, port
 or user names.
-.SS "\-\-numeric-hosts"
+.SS "\-\-numeric\-hosts"
 shows numerical host addresses but does not affect the resolution of
 port or user names.
-.SS "\-\-numeric-ports"
+.SS "\-\-numeric\-ports"
 shows numerical port numbers but does not affect the resolution of
 host or user names.
-.SS "\-\-numeric-users"
+.SS "\-\-numeric\-users"
 shows numerical user IDs but does not affect the resolution of host or
 port names.
 
@@ -170,7 +170,7 @@ Show the PID and name of the program to which each socket belongs.
 Show only listening sockets.  (These are omitted by default.)
 .SS "\-a, \-\-all"
 Show both listening and non-listening sockets.  With the
-.B --interfaces
+.B \-\-interfaces
 option, show interfaces that are not up
 .SS "\-F"
 Print routing information from the FIB.  (This is the default.)
@@ -182,10 +182,10 @@ Print routing information from the route cache.
 .SS Active Internet connections \fR(TCP, UDP, raw)\fR
 .SS "Proto" 
 The protocol (tcp, udp, raw) used by the socket. 
-.SS "Recv-Q"
+.SS "Recv\-Q"
 Established: The count of bytes not copied by the user program connected to this socket.
 Listening: Since Kernel 2.6.18 this column contains the current syn backlog.
-.SS "Send-Q"
+.SS "Send\-Q"
 Established: The count of bytes not acknowledged by the remote host.
 Listening: Since Kernel 2.6.18 this column contains the maximum size of the syn backlog.
 .SS "Local Address" 
@@ -262,7 +262,7 @@ The username or the user id (UID) of the owner of the socket.
 .SS "PID/Program name"
 Slash-separated pair of the process id (PID) and process name of the 
 process that owns the socket.
-.B --program
+.B \-\-program
 causes this column to be included.  You will also need
 .I superuser
 privileges to see this information on sockets you don't own.  This
@@ -365,7 +365,7 @@ to the socket.
 .PP
 .SH NOTES
 Starting with Linux release 2.2 
-.B netstat -i 
+.B netstat \-i 
 does not show interface statistics for alias interfaces. To get per
 alias interface counters you need to setup explicit rules using the
 .BR ipchains(8) 
@@ -445,12 +445,12 @@ as it is viewed. This is unlikely to occur.
 .P
 .SH AUTHORS
 The netstat user interface was written by Fred Baumgarten
-<dc6iq@insu1.etec.uni-karlsruhe.de>, the man page basically
+<dc6iq@insu1.etec.uni\-karlsruhe.de>, the man page basically
 by Matt Welsh <mdw@tc.cornell.edu>. It was updated by
 Alan Cox <Alan.Cox@linux.org> but could do with a bit more
 work.  It was updated again by Tuan Hoang
 <tqhoang@bigfoot.com>.
 .br
-The man page and the command included in the net-tools
+The man page and the command included in the net\-tools
 package is totally rewritten by Bernd Eckenfels 
 <ecki@linux.de>.
