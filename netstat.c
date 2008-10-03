@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.58 2008/10/03 01:06:33 ecki Exp $
+ * Version:     $Id: netstat.c,v 1.59 2008/10/03 01:39:06 ecki Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -229,7 +229,7 @@ static char prg_cache_loaded = 0;
 
 #define PROGNAME_BANNER "PID/Program name"
 
-#define print_progname_banner() do { if (flag_prg) printf("%-" PROGNAME_WIDTHs "s"," " PROGNAME_BANNER); } while (0)
+#define print_progname_banner() do { if (flag_prg) printf(" %-" PROGNAME_WIDTHs "s",PROGNAME_BANNER); } while (0)
 
 #define PRG_LOCAL_ADDRESS "local_address"
 #define PRG_INODE	 "inode"
@@ -249,8 +249,6 @@ static char prg_cache_loaded = 0;
 #define PATH_PROC_X_FD      PATH_PROC "/%s/" PATH_FD_SUFF
 #define PATH_CMDLINE	"cmdline"
 #define PATH_CMDLINEl       strlen(PATH_CMDLINE)
-/* NOT working as of glibc-2.0.7: */
-#undef  DIRENT_HAVE_D_TYPE_WORKS
 
 static void prg_cache_add(unsigned long inode, char *name)
 {
@@ -362,9 +360,6 @@ static void prg_cache_load(void)
     cmdlbuf[sizeof(cmdlbuf)-1]='\0';
     if (!(dirproc=opendir(PATH_PROC))) goto fail;
     while (errno=0,direproc=readdir(dirproc)) {
-#ifdef DIRENT_HAVE_D_TYPE_WORKS
-	if (direproc->d_type!=DT_DIR) continue;
-#endif
 	for (cs=direproc->d_name;*cs;cs++)
 	    if (!isdigit(*cs)) 
 		break;
@@ -383,10 +378,9 @@ static void prg_cache_load(void)
 	line[procfdlen] = '/';
 	cmdlp = NULL;
 	while ((direfd = readdir(dirfd))) {
-#ifdef DIRENT_HAVE_D_TYPE_WORKS
-	    if (direfd->d_type!=DT_LNK) 
-		continue;
-#endif
+           /* Skip . and .. */
+           if (!isdigit(direfd->d_name[0]))
+               continue;
 	    if (procfdlen+1+strlen(direfd->d_name)+1>sizeof(line)) 
 		continue;
 	    memcpy(line + procfdlen - PATH_FD_SUFFl, PATH_FD_SUFF "/",
@@ -537,12 +531,12 @@ static void finish_this_one(int uid, unsigned long inode, const char *timers)
 	    printf(" %-10s ", pw->pw_name);
 	else
 	    printf(" %-10d ", uid);
-	printf("%-10lu ",inode);
+	printf("%-10lu",inode);
     }
     if (flag_prg)
-	printf("%-" PROGNAME_WIDTHs "s",prg_cache_get(inode));
+	printf(" %-" PROGNAME_WIDTHs "s",prg_cache_get(inode));
     if (flag_opt)
-	printf("%s", timers);
+	printf(" %s", timers);
     putchar('\n');
 }
 
@@ -1218,12 +1212,13 @@ static void unix_do_one(int nr, const char *line)
     printf("%-5s %-6ld %-11s %-10s %-13s ",
 	   ss_proto, refcnt, ss_flags, ss_type, ss_state);
     if (has & HAS_INODE)
-	printf("%-8lu ",inode);
+	printf("%-8lu",inode);
     else
-	printf("-        ");
+	printf("-       ");
     if (flag_prg)
-	printf("%-" PROGNAME_WIDTHs "s",(has & HAS_INODE?prg_cache_get(inode):"-"));
-    puts(path);
+	printf(" %-" PROGNAME_WIDTHs "s",(has & HAS_INODE?prg_cache_get(inode):"-"));
+	
+    printf(" %s\n", path);
 }
 
 static int unix_info(void)
@@ -1239,7 +1234,7 @@ static int unix_info(void)
 	printf(_("(w/o servers)"));
     }
 
-    printf(_("\nProto RefCnt Flags       Type       State         I-Node"));
+    printf(_("\nProto RefCnt Flags       Type       State         I-Node  "));
     print_progname_banner();
     printf(_(" Path\n"));	/* xxx */
 
