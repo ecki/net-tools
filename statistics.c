@@ -1,6 +1,6 @@
 /*
  * Copyright 1997,1999,2000 Andi Kleen. Subject to the GPL. 
- * $Id: statistics.c,v 1.21 2008/10/03 00:05:20 ecki Exp $
+ * $Id: statistics.c,v 1.22 2008/10/03 01:07:47 ecki Exp $
  * 19980630 - i18n - Arnaldo Carvalho de Melo <acme@conectiva.com.br> 
  * 19981113 - i18n fixes - Arnaldo Carvalho de Melo <acme@conectiva.com.br> 
  * 19990101 - added net/netstat, -t, -u, -w supprt - Bernd Eckenfels 
@@ -494,7 +494,8 @@ void process6_fd(FILE *f)
              cpytitle(buf2, buf3);
              tab = newtable(snmp6tabs, buf3);
           }
-          printval(tab, buf2, val);
+          if (*(tab->flag))
+             printval(tab, buf2, val);
    }
 
 }
