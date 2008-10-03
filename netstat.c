@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.57 2008/10/03 00:05:20 ecki Exp $
+ * Version:     $Id: netstat.c,v 1.58 2008/10/03 01:06:33 ecki Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -1507,7 +1507,7 @@ static void usage(void)
 {
     fprintf(stderr, _("usage: netstat [-veenNcCF] [<Af>] -r         netstat {-V|--version|-h|--help}\n"));
     fprintf(stderr, _("       netstat [-vnNcaeol] [<Socket> ...]\n"));
-    fprintf(stderr, _("       netstat { [-veenNac] -i | [-cnNe] -M | -s }\n\n"));
+    fprintf(stderr, _("       netstat { [-veenNac] -i | [-cnNe] -M | -s [-6tuw] }\n\n"));
 
     fprintf(stderr, _("        -r, --route              display routing table\n"));
     fprintf(stderr, _("        -i, --interfaces         display interface table\n"));
@@ -1718,35 +1718,35 @@ int main
 	    sleep(1);
 	}
 #else
-	ENOSUPP("netstat.c", "FW_MASQUERADE");
+	ENOSUPP("netstat", "FW_MASQUERADE");
 	i = -1;
 #endif
 	return (i);
     }
 
     if (flag_sta) {
-        char *tmp1, *tmp2;
-        char buf[256];
-        if (!afname[0]) {
+        if (!afname[0])
+            strcpy(afname, DFLT_AF);
+            
+        if (!strcmp(afname, "inet")) {
+#if HAVE_AFINET
             inittab();
             parsesnmp(flag_raw, flag_tcp, flag_udp);
-        } else {
-            safe_strncpy(buf, afname, sizeof(buf));
-            tmp1 = buf;
-            if ((tmp2 = index(tmp1, ',')))
-                 printf("Multiple interface\n");
-            else if(!strncmp(buf,"inet6",5)) {
-#if HAVE_AFINET6
-                 inittab6();
-                 parsesnmp6(flag_raw, flag_tcp, flag_udp);
 #else
-                 printf("Address type not supported for stats\n");
+            ENOSUPP("netstat", "AF INET");
 #endif
-            }
-            else
-                 printf("Address type not supported for stats\n");
+        } else if(!strcmp(afname, "inet6")) {
+#if HAVE_AFINET6
+            inittab6();
+            parsesnmp6(flag_raw, flag_tcp, flag_udp);
+#else
+            ENOSUPP("netstat", "AF INET6");
+#endif
+        } else {
+          printf(_("netstat: No statistics support for specified address family: %s\n"), afname);
+          exit(1);
         }
-        exit(1);
+        exit(0);
     }
     
     if (flag_rou) {
