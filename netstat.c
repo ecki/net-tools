@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.56 2008/10/02 22:05:54 ecki Exp $
+ * Version:     $Id: netstat.c,v 1.57 2008/10/03 00:05:20 ecki Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -105,6 +105,8 @@
 /* prototypes for statistics.c */
 void parsesnmp(int, int, int);
 void inittab(void);
+void parsesnmp6(int, int, int);
+void inittab6(void);
 
 typedef enum {
     SS_FREE = 0,		/* not allocated                */
@@ -1723,9 +1725,28 @@ int main
     }
 
     if (flag_sta) {
-        inittab();
-	parsesnmp(flag_raw, flag_tcp, flag_udp);
-	exit(0);
+        char *tmp1, *tmp2;
+        char buf[256];
+        if (!afname[0]) {
+            inittab();
+            parsesnmp(flag_raw, flag_tcp, flag_udp);
+        } else {
+            safe_strncpy(buf, afname, sizeof(buf));
+            tmp1 = buf;
+            if ((tmp2 = index(tmp1, ',')))
+                 printf("Multiple interface\n");
+            else if(!strncmp(buf,"inet6",5)) {
+#if HAVE_AFINET6
+                 inittab6();
+                 parsesnmp6(flag_raw, flag_tcp, flag_udp);
+#else
+                 printf("Address type not supported for stats\n");
+#endif
+            }
+            else
+                 printf("Address type not supported for stats\n");
+        }
+        exit(1);
     }
     
     if (flag_rou) {
