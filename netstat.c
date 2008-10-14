@@ -1044,6 +1044,11 @@ static void tcp_do_one(int lnr, const char *line, const char *prot)
 			 (double) time_len / HZ, retr, timeout);
 		break;
 
+	    case 4:
+		snprintf(timers, sizeof(timers), _("probe (%2.2f/%ld/%d)"),
+			 (double) time_len / HZ, retr, timeout);
+		break;
+
 	    default:
 		snprintf(timers, sizeof(timers), _("unkn-%d (%2.2f/%ld/%d)"),
 			 timer_run, (double) time_len / HZ, retr, timeout);
