@@ -8,7 +8,7 @@
 .\" Modified: Tuan Hoang tqhoang@bigfoot.com 
 .\"
 .\"
-.TH NETSTAT 8 "2008\-10\-03" "net\-tools" "Linux System Administrator's Manual"
+.TH NETSTAT 8 "2008\-11\-16" "net\-tools" "Linux System Administrator's Manual"
 
 .SH NAME
 netstat \- Print network connections, routing tables, interface statistics, masquerade connections, and multicast memberships
@@ -118,6 +118,9 @@ Display summary statistics for each protocol.
 .SS "\-\-verbose , \-v"
 Tell the user what is going on by being verbose. Especially print some
 useful information about unconfigured address families.
+.SS "\-\-wide , \-W"
+Do not truncate IP addresses by using output as wide as needed. This is
+optional for now to not break existing scripts.
 .SS "\-\-numeric , \-n"
 Show numerical addresses instead of trying to determine symbolic host, port
 or user names.

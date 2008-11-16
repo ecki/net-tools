@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.59 2008/10/03 01:39:06 ecki Exp $
+ * Version:     $Id: netstat.c,v 1.60 2008/11/16 16:45:08 luk Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -149,6 +149,7 @@ int flag_udp = 0;
 int flag_igmp= 0;
 int flag_rom = 0;
 int flag_exp = 1;
+int flag_wide= 0;
 int flag_prg = 0;
 int flag_arg = 0;
 int flag_ver = 0;
@@ -770,16 +771,20 @@ static void tcp_do_one(int lnr, const char *line)
 		 get_sname(htons(local_port), "tcp",
 			   flag_not & FLAG_NUM_PORT));
 
-	if ((strlen(local_addr) + strlen(buffer)) > 22)
-	    local_addr[22 - strlen(buffer)] = '\0';
+	if (!flag_wide) {
+	    if ((strlen(local_addr) + strlen(buffer)) > 22)
+		local_addr[22 - strlen(buffer)] = '\0';
+	}
 
 	strcat(local_addr, ":");
 	strcat(local_addr, buffer);
 	snprintf(buffer, sizeof(buffer), "%s",
 		 get_sname(htons(rem_port), "tcp", flag_not & FLAG_NUM_PORT));
 
-	if ((strlen(rem_addr) + strlen(buffer)) > 22)
-	    rem_addr[22 - strlen(buffer)] = '\0';
+	if (!flag_wide) {
+	    if ((strlen(rem_addr) + strlen(buffer)) > 22)
+		rem_addr[22 - strlen(buffer)] = '\0';
+	}
 
 	strcat(rem_addr, ":");
 	strcat(rem_addr, buffer);
@@ -1500,9 +1505,9 @@ static void version(void)
 
 static void usage(void)
 {
-    fprintf(stderr, _("usage: netstat [-veenNcCF] [<Af>] -r         netstat {-V|--version|-h|--help}\n"));
-    fprintf(stderr, _("       netstat [-vnNcaeol] [<Socket> ...]\n"));
-    fprintf(stderr, _("       netstat { [-veenNac] -i | [-cnNe] -M | -s [-6tuw] }\n\n"));
+    fprintf(stderr, _("usage: netstat [-vWeenNcCF] [<Af>] -r         netstat {-V|--version|-h|--help}\n"));
+    fprintf(stderr, _("       netstat [-vWnNcaeol] [<Socket> ...]\n"));
+    fprintf(stderr, _("       netstat { [-vWeenNac] -i | [-cnNe] -M | -s [-6tuw] }\n\n"));
 
     fprintf(stderr, _("        -r, --route              display routing table\n"));
     fprintf(stderr, _("        -i, --interfaces         display interface table\n"));
@@ -1512,6 +1517,7 @@ static void usage(void)
     fprintf(stderr, _("        -M, --masquerade         display masqueraded connections\n\n"));
 #endif
     fprintf(stderr, _("        -v, --verbose            be verbose\n"));
+    fprintf(stderr, _("        -W, --wide               don't truncate IP addresses\n"));
     fprintf(stderr, _("        -n, --numeric            don't resolve names\n"));
     fprintf(stderr, _("        --numeric-hosts          don't resolve host names\n"));
     fprintf(stderr, _("        --numeric-ports          don't resolve port names\n"));
@@ -1561,6 +1567,7 @@ int main
 	{"programs", 0, 0, 'p'},
 	{"verbose", 0, 0, 'v'},
 	{"statistics", 0, 0, 's'},
+	{"wide", 0, 0, 'W'},
 	{"numeric", 0, 0, 'n'},
 	{"numeric-hosts", 0, 0, '!'},
 	{"numeric-ports", 0, 0, '@'},
@@ -1580,7 +1587,7 @@ int main
     getroute_init();		/* Set up AF routing support */
 
     afname[0] = '\0';
-    while ((i = getopt_long(argc, argv, "MCFA:acdegphinNorstuVv?wxl64", longopts, &lop)) != EOF)
+    while ((i = getopt_long(argc, argv, "MCFA:acdegphinNorstuWVv?wxl64", longopts, &lop)) != EOF)
 	switch (i) {
 	case -1:
 	    break;
@@ -1623,6 +1630,9 @@ int main
 	    break;
 	case 'i':
 	    flag_int++;
+	    break;
+	case 'W':
+	    flag_wide++;
 	    break;
 	case 'n':
 	    flag_not |= FLAG_NUM;
