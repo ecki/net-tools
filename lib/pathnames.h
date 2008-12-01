@@ -16,6 +16,8 @@
 #define _PATH_PROCNET_TCP6		"/proc/net/tcp6"
 #define _PATH_PROCNET_UDP		"/proc/net/udp"
 #define _PATH_PROCNET_UDP6		"/proc/net/udp6"
+#define _PATH_PROCNET_UDPLITE           "/proc/net/udplite"
+#define _PATH_PROCNET_UDPLITE6          "/proc/net/udplite6"
 #define _PATH_PROCNET_RAW		"/proc/net/raw"
 #define _PATH_PROCNET_RAW6		"/proc/net/raw6"
 #define _PATH_PROCNET_UNIX		"/proc/net/unix"

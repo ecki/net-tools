@@ -19,6 +19,7 @@ netstat \- Print network connections, routing tables, interface statistics, masq
 .RI [ address_family_options ]
 .RB [ \-\-tcp | \-t ]
 .RB [ \-\-udp | \-u ]
+.RB [ \-\-udplite | \-U ]
 .RB [ \-\-raw | \-w ]
 .RB [ \-\-listening | \-l ]
 .RB [ \-\-all | \-a ]
@@ -67,6 +68,7 @@ netstat \- Print network connections, routing tables, interface statistics, masq
 .RB { \-\-statistics | -s }
 .RB [ \-\-tcp | \-t ]
 .RB [ \-\-udp | \-u ]
+.RB [ \-\-udplite | \-U ]
 .RB [ \-\-raw | \-w ]
 .P
 .B netstat 
@@ -158,7 +160,7 @@ options.
 .P
 The address family
 .B inet
-includes raw, udp and tcp protocol sockets.
+includes raw, udp, udplite and tcp protocol sockets.
 .SS "\-c, \-\-continuous"
 This will cause
 .B netstat
@@ -182,9 +184,9 @@ Print routing information from the route cache.
 .P
 .SH OUTPUT
 .P
-.SS Active Internet connections \fR(TCP, UDP, raw)\fR
+.SS Active Internet connections \fR(TCP, UDP, UDPLite, raw)\fR
 .SS "Proto" 
-The protocol (tcp, udp, raw) used by the socket. 
+The protocol (tcp, udp, udpl, raw) used by the socket. 
 .SS "Recv\-Q"
 Established: The count of bytes not copied by the user program connected to this socket.
 Listening: Since Kernel 2.6.18 this column contains the current syn backlog.
@@ -202,7 +204,7 @@ Address and port number of the remote end of the socket.
 Analogous to "Local Address."
 .SS "State"
 The state of the socket. Since there are no states in raw mode and usually no
-states used in UDP, this column may be left blank. Normally this can be one
+states used in UDP and UDPLite, this column may be left blank. Normally this can be one
 of several values:
 .TP
 .I
@@ -395,6 +397,9 @@ status information via the following files.
 .I /proc/net/udp
 -- UDP socket information
 
+.I /proc/net/udplite
+-- UDPLite socket information
+
 .I /proc/net/igmp
 -- IGMP multicast information
 
@@ -456,4 +461,5 @@ work.  It was updated again by Tuan Hoang
 .br
 The man page and the command included in the net\-tools
 package is totally rewritten by Bernd Eckenfels 
-<ecki@linux.de>.
+<ecki@linux.de>.  UDPLite options were added by Brian Micek
+<bmicek@gmail.com>
