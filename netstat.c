@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.61 2008/12/01 23:15:35 ecki Exp $
+ * Version:     $Id: netstat.c,v 1.62 2008/12/02 01:53:48 ecki Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -1587,7 +1587,7 @@ int main
     getroute_init();		/* Set up AF routing support */
 
     afname[0] = '\0';
-    while ((i = getopt_long(argc, argv, "MCFA:acdegphinNorstuWVv?wxl64U", longopts, &lop)) != EOF)
+    while ((i = getopt_long(argc, argv, "A:CFMacdeghilnNoprstuUvVWwx64?", longopts, &lop)) != EOF)
 	switch (i) {
 	case -1:
 	    break;
@@ -1675,11 +1675,9 @@ int main
 	case 'r':
 	    flag_rou++;
 	    break;
-
 	case 't':
 	    flag_tcp++;
 	    break;
-
 	case 'u':
 	    flag_udp++;
 	    break;
