@@ -1,5 +1,5 @@
 /*
-   $Id: inet_gr.c,v 1.13 2000/10/08 01:00:44 ecki Exp $
+   $Id: inet_gr.c,v 1.14 2009/07/08 00:24:03 ecki Exp $
 
    Modifications:
    1998-07-01 - Arnaldo Carvalho de Melo - GNU gettext instead of catgets
@@ -38,7 +38,7 @@ extern char *INET_sprintmask(struct sockaddr *sap, int numeric,
 
 int rprint_fib(int ext, int numeric)
 {
-    char buff[1024], iface[16], flags[64];
+    char buff[1024], iface[17], flags[64];
     char gate_addr[128], net_addr[128];
     char mask_addr[128];
     int num, iflags, metric, refcnt, use, mss, window, irtt;
@@ -69,18 +69,18 @@ int rprint_fib(int ext, int numeric)
 
     fmt = proc_gen_fmt(_PATH_PROCNET_ROUTE, 0, fp,
 		       "Iface", "%16s",
-		       "Destination", "%128s",
-		       "Gateway", "%128s",
+		       "Destination", "%127s",
+		       "Gateway", "%127s",
 		       "Flags", "%X",
 		       "RefCnt", "%d",
 		       "Use", "%d",
 		       "Metric", "%d",
-		       "Mask", "%128s",
+		       "Mask", "%127s",
 		       "MTU", "%d",
 		       "Window", "%d",
 		       "IRTT", "%d",
 		       NULL);
-    /* "%16s %128s %128s %X %d %d %d %128s %d %d %d\n" */
+    /* "%16s %127s %127s %X %d %d %d %127s %d %d %d\n" */
 
     if (!fmt)
 	return 1;
@@ -205,7 +205,7 @@ int rprint_fib(int ext, int numeric)
 
 int rprint_cache(int ext, int numeric)
 {
-    char buff[1024], iface[16], flags[64];
+    char buff[1024], iface[17], flags[64];
     char gate_addr[128], dest_addr[128], specdst[128];
     char src_addr[128];
     struct sockaddr snet;
@@ -269,20 +269,20 @@ int rprint_cache(int ext, int numeric)
 
       fmt = proc_gen_fmt(_PATH_PROCNET_RTCACHE, 0, fp,
 		       "Iface", "%16s",
-		       "Destination", "%128s",
-		       "Gateway", "%128s",
+		       "Destination", "%127s",
+		       "Gateway", "%127s",
 		       "Flags", "%X",
 		       "RefCnt", "%d",
 		       "Use", "%d",
 		       "Metric", "%d",
-		       "Source", "%128s",
+		       "Source", "%127s",
 		       "MTU", "%d",
 		       "Window", "%d",
 		       "IRTT", "%d",
 		       "HH", "%d",
 		       "ARP", "%d",
 		       NULL);
-      /* "%16s %128s %128s %X %d %d %d %128s %d %d %d %d %d\n" */
+      /* "%16s %127s %127s %X %d %d %d %127s %d %d %d %d %d\n" */
     }
 
     if (format == 2) {
@@ -292,22 +292,22 @@ int rprint_cache(int ext, int numeric)
 		 "MSS   Window irtt  TOS HHRef HHUptod     SpecDst\n"));
         fmt = proc_gen_fmt(_PATH_PROCNET_RTCACHE, 0, fp,
 		       "Iface", "%16s",
-		       "Destination", "%128s",
-		       "Gateway", "%128s",
+		       "Destination", "%127s",
+		       "Gateway", "%127s",
 		       "Flags", "%X",
 		       "RefCnt", "%d",
 		       "Use", "%d",
 		       "Metric", "%d",
-		       "Source", "%128s",
+		       "Source", "%127s",
 		       "MTU", "%d",
 		       "Window", "%d",
 		       "IRTT", "%d",
 		       "TOS", "%d",
 		       "HHRef", "%d",
 		       "HHUptod", "%d",
-		       "SpecDst", "%128s",
+		       "SpecDst", "%127s",
 		       NULL);
-      /* "%16s %128s %128s %X %d %d %d %128s %d %d %d %d %d %128s\n" */
+      /* "%16s %127s %127s %X %d %d %d %127s %d %d %d %d %d %127s\n" */
     }
 
 

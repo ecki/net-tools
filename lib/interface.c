@@ -7,7 +7,7 @@
    8/2000  Andi Kleen make the list operations a bit more efficient.
    People are crazy enough to use thousands of aliases now.
 
-   $Id: interface.c,v 1.30 2005/08/23 22:46:51 ecki Exp $
+   $Id: interface.c,v 1.31 2009/07/08 00:24:03 ecki Exp $
  */
 
 #include "config.h"
@@ -666,7 +666,7 @@ void ife_print_long(struct interface *ptr)
 #endif
 #if HAVE_AFINET6
     FILE *f;
-    char addr6[40], devname[20];
+    char addr6[40], devname[21];
     struct sockaddr_in6 sap;
     int plen, scope, dad_status, if_idx;
     extern struct aftype inet6_aftype;

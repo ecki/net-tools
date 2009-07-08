@@ -8,7 +8,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: arp.c,v 1.25 2005/12/04 02:57:15 ecki Exp $
+ * Version:     $Id: arp.c,v 1.26 2009/07/08 00:24:03 ecki Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -564,7 +564,7 @@ static int arp_show(char *name)
 	strcpy(dev, "-");
 	/* Read the ARP cache entries. */
 	for (; fgets(line, sizeof(line), fp);) {
-	    num = sscanf(line, "%s 0x%x 0x%x %100s %100s %100s\n",
+	    num = sscanf(line, "%s 0x%x 0x%x %99s %99s %99s\n",
 			 ip, &type, &flags, hwa, mask, dev);
 	    if (num < 4)
 		break;

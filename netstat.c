@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.62 2008/12/02 01:53:48 ecki Exp $
+ * Version:     $Id: netstat.c,v 1.63 2009/07/08 00:24:03 ecki Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -849,7 +849,7 @@ static void udp_do_one(int lnr, const char *line,const char *prot)
 
     more[0] = '\0';
     num = sscanf(line,
-		 "%d: %64[0-9A-Fa-f]:%X %64[0-9A-Fa-f]:%X %X %lX:%lX %X:%lX %lX %d %d %lu %512s\n",
+		 "%d: %64[0-9A-Fa-f]:%X %64[0-9A-Fa-f]:%X %X %lX:%lX %X:%lX %lX %d %d %lu %511s\n",
 		 &d, local_addr, &local_port,
 		 rem_addr, &rem_port, &state,
 	  &txq, &rxq, &timer_run, &time_len, &retr, &uid, &timeout, &inode, more);
@@ -995,7 +995,7 @@ static void raw_do_one(int lnr, const char *line,const char *prot)
 
     more[0] = '\0';
     num = sscanf(line,
-		 "%d: %64[0-9A-Fa-f]:%X %64[0-9A-Fa-f]:%X %X %lX:%lX %X:%lX %lX %d %d %lu %512s\n",
+		 "%d: %64[0-9A-Fa-f]:%X %64[0-9A-Fa-f]:%X %X %lX:%lX %X:%lX %lX %d %d %lu %511s\n",
 		 &d, local_addr, &local_port, rem_addr, &rem_port, &state,
 	  &txq, &rxq, &timer_run, &time_len, &retr, &uid, &timeout, &inode, more);
 
