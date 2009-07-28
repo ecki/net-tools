@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.63 2009/07/08 00:24:03 ecki Exp $
+ * Version:     $Id: netstat.c,v 1.64 2009/07/28 01:40:17 ecki Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -727,6 +727,9 @@ static void tcp_do_one(int lnr, const char *line, const char *prot)
 		 &d, local_addr, &local_port, rem_addr, &rem_port, &state,
 		 &txq, &rxq, &timer_run, &time_len, &retr, &uid, &timeout, &inode, more);
 
+    if (!flag_all && ((flag_lst && rem_port) || (!flag_lst && !rem_port)))
+      return;
+
     if (strlen(local_addr) > 8) {
 #if HAVE_AFINET6
 	/* Demangle what the kernel gives us */
@@ -765,7 +768,7 @@ static void tcp_do_one(int lnr, const char *line, const char *prot)
 					flag_not), sizeof(local_addr));
     safe_strncpy(rem_addr, ap->sprint((struct sockaddr *) &remaddr, flag_not),
 		 sizeof(rem_addr));
-    if (flag_all || (flag_lst && !rem_port) || (!flag_lst && rem_port)) {
+
 	snprintf(buffer, sizeof(buffer), "%s",
 		 get_sname(htons(local_port), "tcp",
 			   flag_not & FLAG_NUM_PORT));
@@ -819,7 +822,6 @@ static void tcp_do_one(int lnr, const char *line, const char *prot)
 	       prot, rxq, txq, netmax(23,strlen(local_addr)), local_addr, netmax(23,strlen(rem_addr)), rem_addr, _(tcp_state[state]));
 
 	finish_this_one(uid,inode,timers);
-    }
 }
 
 static int tcp_info(void)
