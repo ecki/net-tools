@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.64 2009/07/28 01:40:17 ecki Exp $
+ * Version:     $Id: netstat.c,v 1.65 2009/08/27 20:29:19 ecki Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -297,6 +297,12 @@ static void prg_cache_clear(void)
 		free(pn);
 	    }
     prg_cache_loaded=0;
+}
+
+static void wait_continous(void)
+{
+    fflush(stdout);
+    sleep(1);
 }
 
 static int extract_type_1_socket_inode(const char lname[], unsigned long * inode_p) {
@@ -1725,7 +1731,7 @@ int main
 			     flag_not & FLAG_NUM_PORT, flag_exp);
 	    if (i || !flag_cnt)
 		break;
-	    sleep(1);
+	    wait_continous();
 	}
 #else
 	ENOSUPP("netstat", "FW_MASQUERADE");
@@ -1778,7 +1784,7 @@ int main
 	    i = route_info(afname, options);
 	    if (i || !flag_cnt)
 		break;
-	    sleep(1);
+            wait_continous();
 	}
 	return (i);
     }
@@ -1787,7 +1793,7 @@ int main
 	    i = iface_info();
 	    if (!flag_cnt || i)
 		break;
-	    sleep(1);
+            wait_continous();
 	}
 	return (i);
     }
@@ -1934,7 +1940,7 @@ int main
 	            
 	if (!flag_cnt || i)
 	    break;
-	sleep(1);
+        wait_continous();
 	prg_cache_clear();
     }
     return (i);
