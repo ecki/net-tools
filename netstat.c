@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.66 2009/09/06 22:47:46 vapier Exp $
+ * Version:     $Id: netstat.c,v 1.67 2009/09/06 23:05:28 vapier Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -59,6 +59,7 @@
  *990420 {1.38} Tuan Hoang              removed a useless assignment from igmp_do_one()
  *20010404 {1.39} Arnaldo Carvalho de Melo - use setlocale
  *20081201 {1.42} Brian Micek           added -L|--udplite options for RFC 3828 
+ *20020722 {1.51} Thomas Preusser       added SCTP over IPv4 support
  *
  *              This program is free software; you can redistribute it
  *              and/or  modify it under  the terms of  the GNU General
@@ -146,6 +147,7 @@ int flag_cf  = 0;
 int flag_opt = 0;
 int flag_raw = 0;
 int flag_tcp = 0;
+int flag_sctp= 0;
 int flag_udp = 0;
 int flag_udplite = 0;
 int flag_igmp= 0;
@@ -708,6 +710,163 @@ static int igmp_info(void)
 {
     INFO_GUTS6(_PATH_PROCNET_IGMP, _PATH_PROCNET_IGMP6, "AF INET (igmp)",
 	       igmp_do_one, "igmp", "igmp6");
+}
+
+static int ip_parse_dots(uint32_t *addr, char const *src) {
+  unsigned  a, b, c, d;
+  unsigned  ret = 4-sscanf(src, "%u.%u.%u.%u", &a, &b, &c, &d);
+  *addr = htonl((a << 24)|(b << 16)|(c << 8)|d);
+  return  ret;
+}
+
+static void print_ip_service(struct sockaddr_in *addr, char const *protname,
+			     char *buf, unsigned size) {
+  struct aftype *ap;
+
+  if(size == 0)  return;
+
+  /* print host */
+  if((ap = get_afntype(addr->sin_family)) == NULL) {
+    fprintf(stderr, _("netstat: unsupported address family %d !\n"),
+	    addr->sin_family);
+    return;
+  }
+  safe_strncpy(buf, ap->sprint((struct sockaddr*)addr, flag_not), size);
+
+  /* print service */
+  if(flag_all || (flag_lst && !addr->sin_port) || (!flag_lst && addr->sin_port)) {
+    char  bfs[32];
+
+    snprintf(bfs, sizeof(bfs), "%s",
+	     get_sname(addr->sin_port, (char*)protname, flag_not & FLAG_NUM_PORT));
+
+    /* check if we must cut on host and/or service name */
+    {
+      unsigned const  bufl = strlen(buf);
+      unsigned const  bfsl = strlen(bfs);
+
+      if(bufl+bfsl+2 > size) {
+	unsigned const  half = (size-2)>>1;
+	if(bufl > half) {
+	  if(bfsl > half) {
+	    buf[size-2-half] = '\0';
+	    bfs[half+1]      = '\0';
+	  }
+	  else  buf[size-2-bfsl] = '\0';
+	}
+	else  bfs[size-2-bufl] = '\0';
+      }  
+    }
+    strcat(buf, ":");
+    strcat(buf, bfs);
+  }
+}
+
+/* process single SCTP endpoint */
+static void sctp_do_ept(int lnr, char const *line, const char *prot)
+{
+  struct sockaddr_in  laddr, raddr;
+  unsigned            uid, inode;
+
+  char        l_addr[23], r_addr[23];
+
+  /* fill sockaddr_in structures */
+  {
+    unsigned  lport;
+    unsigned  ate;
+
+    if(lnr == 0)  return;
+    if(sscanf(line, "%*X %*X %*u %*u %*u %u %u %u %n",
+	      &lport, &uid, &inode, &ate) < 3)  goto err;
+
+    /* decode IP address */
+    if(ip_parse_dots(&laddr.sin_addr.s_addr, line+ate))  goto err;
+    raddr.sin_addr.s_addr = htonl(0);
+    laddr.sin_family = raddr.sin_family = AF_INET;
+    laddr.sin_port = htons(lport);
+    raddr.sin_port = htons(0);
+  }
+
+  /* print IP:service to l_addr and r_addr */
+  print_ip_service(&laddr, prot, l_addr, sizeof(l_addr));
+  print_ip_service(&raddr, prot, r_addr, sizeof(r_addr));
+
+  /* Print line */
+  printf("%-4s  %6d %6d %-*s %-*s %-11s",
+	 prot, 0, 0,
+	 (int)netmax(23,strlen(l_addr)), l_addr,
+	 (int)netmax(23,strlen(r_addr)), r_addr,
+	 _(tcp_state[TCP_LISTEN]));
+  finish_this_one(uid, inode, "");
+  return;
+ err:
+  fprintf(stderr, "SCTP error in line: %d\n", lnr);
+}
+
+/* process single SCTP association */
+static void sctp_do_assoc(int lnr, char const *line, const char *prot)
+{
+  struct sockaddr_in  laddr, raddr;
+  unsigned long       rxq, txq;
+  unsigned            uid, inode;
+
+  char        l_addr[23], r_addr[23];
+
+  /* fill sockaddr_in structures */
+  {
+    unsigned    lport, rport;
+    unsigned    ate;
+    char const *addr;
+
+    if(lnr == 0)  return;
+    if(sscanf(line, "%*X %*X %*u %*u %*u %*u %*u %lu %lu %u %u %u %u %n",
+	      &txq, &rxq, &uid, &inode, &lport, &rport, &ate) < 6)  goto err;
+
+    /* decode IP addresses */
+    addr = strchr(line+ate, '*');
+    if(addr == 0)  goto err;
+    if(ip_parse_dots(&laddr.sin_addr.s_addr, ++addr))  goto err;
+    addr = strchr(addr, '*');
+    if(addr == 0)  goto err;
+    if(ip_parse_dots(&raddr.sin_addr.s_addr, ++addr))  goto err;
+
+    /* complete sockaddr_in structures */
+    laddr.sin_family = raddr.sin_family = AF_INET;
+    laddr.sin_port = htons(lport);
+    raddr.sin_port = htons(rport);
+  }
+
+  /* print IP:service to l_addr and r_addr */
+  print_ip_service(&laddr, prot, l_addr, sizeof(l_addr));
+  print_ip_service(&raddr, prot, r_addr, sizeof(r_addr));
+
+  /* Print line */
+  printf("%-4s  %6ld %6ld %-*s %-*s %-11s",
+	 prot, rxq, txq,
+	 (int)netmax(23,strlen(l_addr)), l_addr,
+	 (int)netmax(23,strlen(r_addr)), r_addr,
+	 _(tcp_state[TCP_ESTABLISHED]));
+  finish_this_one(uid, inode, "");
+  return;
+ err:
+  fprintf(stderr, "SCTP error in line: %d\n", lnr);
+}
+
+static int sctp_info_epts(void) {
+  INFO_GUTS6(_PATH_PROCNET_SCTPEPTS, _PATH_PROCNET_SCTP6EPTS, "AF INET (sctp)",
+	     sctp_do_ept, "sctp", "sctp6");
+}
+
+static int sctp_info_assocs(void) {
+  INFO_GUTS6(_PATH_PROCNET_SCTPASSOCS, _PATH_PROCNET_SCTP6ASSOCS, "AF INET (sctp)",
+	     sctp_do_assoc, "sctp", "sctp6");
+}
+
+static int sctp_info(void) {
+  int  res;
+  res = sctp_info_epts();
+  if(res)  return  res;
+  return  sctp_info_assocs();
 }
 
 static void tcp_do_one(int lnr, const char *line, const char *prot)
@@ -1563,6 +1722,7 @@ int main
 #endif
 	{"protocol", 1, 0, 'A'},
 	{"tcp", 0, 0, 't'},
+	{"sctp", 0, 0, 'S'},
 	{"udp", 0, 0, 'u'},
         {"udplite", 0, 0, 'U'},
 	{"raw", 0, 0, 'w'},
@@ -1595,7 +1755,7 @@ int main
     getroute_init();		/* Set up AF routing support */
 
     afname[0] = '\0';
-    while ((i = getopt_long(argc, argv, "A:CFMacdeghilnNoprstuUvVWwx64?", longopts, &lop)) != EOF)
+    while ((i = getopt_long(argc, argv, "A:CFMacdeghilnNoprsStuUvVWwx64?", longopts, &lop)) != EOF)
 	switch (i) {
 	case -1:
 	    break;
@@ -1686,6 +1846,9 @@ int main
 	case 't':
 	    flag_tcp++;
 	    break;
+	case 'S':
+	    flag_sctp++;
+	    break;
 	case 'u':
 	    flag_udp++;
 	    break;
@@ -1710,14 +1873,14 @@ int main
 	usage();
 
     if ((flag_inet || flag_inet6 || flag_sta) && 
-        !(flag_tcp || flag_udp || flag_udplite || flag_raw))
-	   flag_tcp = flag_udp = flag_udplite = flag_raw = 1;
+        !(flag_tcp || flag_sctp || flag_udp || flag_udplite || flag_raw))
+	   flag_tcp = flag_sctp = flag_udp = flag_udplite = flag_raw = 1;
 
-    if ((flag_tcp || flag_udp || flag_udplite || flag_raw || flag_igmp) && 
+    if ((flag_tcp || flag_sctp || flag_udp || flag_udplite || flag_raw || flag_igmp) && 
         !(flag_inet || flag_inet6))
         flag_inet = flag_inet6 = 1;
 
-    flag_arg = flag_tcp + flag_udplite + flag_udp + flag_raw + flag_unx 
+    flag_arg = flag_tcp + flag_sctp + flag_udplite + flag_udp + flag_raw + flag_unx 
         + flag_ipx + flag_ax25 + flag_netrom + flag_igmp + flag_x25 + flag_rose;
 
     if (flag_mas) {
@@ -1798,7 +1961,7 @@ int main
 	return (i);
     }
     for (;;) {
-	if (!flag_arg || flag_tcp || flag_udp || flag_udplite || flag_raw) {
+	if (!flag_arg || flag_tcp || flag_sctp || flag_udp || flag_udplite || flag_raw) {
 #if HAVE_AFINET
 	    prg_cache_load();
 	    printf(_("Active Internet connections "));	/* xxx */
@@ -1828,6 +1991,12 @@ int main
 #if HAVE_AFINET
 	if (!flag_arg || flag_tcp) {
 	    i = tcp_info();
+	    if (i)
+		return (i);
+	}
+
+	if (!flag_arg || flag_sctp) {
+	    i = sctp_info();
 	    if (i)
 		return (i);
 	}
