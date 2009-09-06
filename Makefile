@@ -112,7 +112,7 @@ endif
 
 NET_LIB = $(NET_LIB_PATH)/lib$(NET_LIB_NAME).a
 
-CPPFLAGS += -I. -idirafter ./include/ -I$(NET_LIB_PATH)
+CPPFLAGS += -I. -I$(TOPDIR)/include -I$(NET_LIB_PATH)
 LDFLAGS  += -L$(NET_LIB_PATH)
 
 SUBDIRS	= man/ $(NET_LIB_PATH)/
