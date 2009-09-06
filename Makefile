@@ -88,10 +88,9 @@ endif
 
 # Compiler and Linker Options
 # You may need to uncomment and edit these if you are using libc5 and IPv6.
-COPTS = -D_GNU_SOURCE -O2 -Wall -g # -I/usr/inet6/include
-ifeq ($(origin LOPTS), undefined)
-LOPTS = 
-endif
+CFLAGS ?= -O2 -g
+CFLAGS += -Wall
+CPPFLAGS += -D_GNU_SOURCE
 RESLIB = # -L/usr/inet6/lib -linet6
 
 ifeq ($(HAVE_AFDECnet),1)
@@ -113,8 +112,8 @@ endif
 
 NET_LIB = $(NET_LIB_PATH)/lib$(NET_LIB_NAME).a
 
-CFLAGS	= $(COPTS) -I. -idirafter ./include/ -I$(NET_LIB_PATH)
-LDFLAGS	= $(LOPTS) -L$(NET_LIB_PATH)
+CPPFLAGS += -I. -idirafter ./include/ -I$(NET_LIB_PATH)
+LDFLAGS  += -L$(NET_LIB_PATH)
 
 SUBDIRS	= man/ $(NET_LIB_PATH)/
 
@@ -124,8 +123,6 @@ endif
 LD	= $(CC)
 
 NLIB	= -l$(NET_LIB_NAME)
-
-MDEFINES = COPTS='$(COPTS)' LOPTS='$(LOPTS)' TOPDIR='$(TOPDIR)'
 
 %.o:		%.c config.h version.h intl.h net-features.h $<
 		$(CC) $(CFLAGS) -c $<
@@ -176,13 +173,13 @@ $(NET_LIB):	config.h version.h intl.h libdir
 i18n.h:		i18ndir
 
 libdir:
-		@$(MAKE) -C $(NET_LIB_PATH) $(MDEFINES)
+		@$(MAKE) -C $(NET_LIB_PATH)
 
 i18ndir:
 		@$(MAKE) -C po
 
 subdirs:
-		@for i in $(SUBDIRS); do $(MAKE) -C $$i $(MDEFINES) ; done
+		@for i in $(SUBDIRS); do $(MAKE) -C $$i || exit $$? ; done
 
 ifconfig:	$(NET_LIB) ifconfig.o
 		$(CC) $(LDFLAGS) -o ifconfig ifconfig.o $(NLIB) $(RESLIB)
