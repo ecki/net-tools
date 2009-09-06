@@ -73,7 +73,7 @@
 
 
 const char *Release = RELEASE,
-	   *Version = "$Id: slattach.c,v 1.11 2005/12/04 05:15:36 ecki Exp $",
+	   *Version = "$Id: slattach.c,v 1.12 2009/09/06 22:59:43 vapier Exp $",
 	   *Signature = "net-tools, Fred N. van Kempen et al.";
 
 
@@ -195,15 +195,17 @@ tty_lock(char *path, int mode)
 		return(-1);
 	}
 
-	(void) close(fd);
-
 	/* Make sure UUCP owns the lockfile.  Required by some packages. */
 	if ((pw = getpwnam(_UID_UUCP)) == NULL) {
 		if (opt_q == 0) fprintf(stderr, _("slattach: tty_lock: UUCP user %s unknown!\n"),
 					_UID_UUCP);
+		(void) close(fd);
 		return(0);	/* keep the lock anyway */
 	}
-	(void) chown(saved_path, pw->pw_uid, pw->pw_gid);
+	(void) fchown(fd, pw->pw_uid, pw->pw_gid);
+
+	(void) close(fd);
+
 	saved_lock = 1;
   } else {	/* unlock */
 	if (saved_lock != 1) return(0);
