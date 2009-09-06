@@ -90,6 +90,7 @@ endif
 # You may need to uncomment and edit these if you are using libc5 and IPv6.
 CFLAGS ?= -O2 -g
 CFLAGS += -Wall
+CFLAGS += -fno-strict-aliasing # code needs a lot of work before strict aliasing is safe
 CPPFLAGS += -D_GNU_SOURCE
 RESLIB = # -L/usr/inet6/lib -linet6
 
