@@ -7,7 +7,7 @@
    8/2000  Andi Kleen make the list operations a bit more efficient.
    People are crazy enough to use thousands of aliases now.
 
-   $Id: interface.c,v 1.31 2009/07/08 00:24:03 ecki Exp $
+   $Id: interface.c,v 1.32 2009/09/06 23:01:16 vapier Exp $
  */
 
 #include "config.h"
@@ -382,14 +382,17 @@ int if_readlist(void)
     /* caller will/should check not to call this too often 
      *   (i.e. only if if_list_all == 0 
      */
-    int err = 0;
+    int proc_err, conf_err;
 
-    err |= if_readlist_proc(NULL); 
-    err |= if_readconf();
+    proc_err = if_readlist_proc(NULL);
+    conf_err = if_readconf();
 
     if_list_all = 1;
 
-    return err;
+    if (proc_err < 0 && conf_err < 0)
+        return -1;
+    else
+        return 0;
 } 
 
 /* Support for fetching an IPX address */
