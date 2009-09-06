@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.65 2009/08/27 20:29:19 ecki Exp $
+ * Version:     $Id: netstat.c,v 1.66 2009/09/06 22:47:46 vapier Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -973,7 +973,7 @@ static void udp_do_one(int lnr, const char *line,const char *prot)
 static int udp_info(void)
 {
     INFO_GUTS6(_PATH_PROCNET_UDP, _PATH_PROCNET_UDP6, "AF INET (udp)",
-	       udp_do_one, "upd", "udp6");
+	       udp_do_one, "udp", "udp6");
 }
 
 static int udplite_info(void)
