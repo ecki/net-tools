@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system. (net-tools, net-drivers)
  *
- * Version:     $Id: masq_info.c,v 1.7 2000/10/08 01:00:44 ecki Exp $
+ * Version:     $Id: masq_info.c,v 1.8 2009/09/06 22:52:01 vapier Exp $
  *
  * Author:      Bernd 'eckes' Eckenfels <net-tools@lina.inka.de>
  *              Copyright 1999 Bernd Eckenfels, Germany
@@ -119,7 +119,9 @@ static int read_masqinfo(FILE * f, struct masq *mslist, int nmslist)
 	ms->src.sin_family = AF_INET;
 	ms->dst.sin_family = AF_INET;
 
-	if (strcmp("TCP", buf) == 0)
+	if (strcmp("IP", buf) == 0)
+	    ms->proto = "ip";
+	else if (strcmp("TCP", buf) == 0)
 	    ms->proto = "tcp";
 	else if (strcmp("UDP", buf) == 0)
 	    ms->proto = "udp";
