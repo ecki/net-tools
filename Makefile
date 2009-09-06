@@ -172,7 +172,7 @@ $(NET_LIB):	config.h version.h intl.h libdir
 
 i18n.h:		i18ndir
 
-libdir:
+libdir:		version.h
 		@$(MAKE) -C $(NET_LIB_PATH)
 
 i18ndir:
