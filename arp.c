@@ -8,7 +8,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: arp.c,v 1.26 2009/07/08 00:24:03 ecki Exp $
+ * Version:     $Id: arp.c,v 1.27 2009/09/06 22:50:11 vapier Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
@@ -630,6 +630,7 @@ static void usage(void)
     fprintf(stderr, _("  arp [-v]   [<HW>] [-i <if>] -Ds <host> <if> [netmask <nm>] pub          <-''-\n\n"));
     
     fprintf(stderr, _("        -a                       display (all) hosts in alternative (BSD) style\n"));
+    fprintf(stderr, _("        -e                       display (all) hosts in default (Linux) style\n"));
     fprintf(stderr, _("        -s, --set                set a new ARP entry\n"));
     fprintf(stderr, _("        -d, --delete             delete a specified entry\n"));
     fprintf(stderr, _("        -v, --verbose            be verbose\n"));

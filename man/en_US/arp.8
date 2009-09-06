@@ -8,7 +8,7 @@ arp \- manipulate the system ARP cache
 .IR type ] 
 .RB [ \-i
 .IR if ] 
-.RB [ \-a ] 
+.RB [ \-ae ]
 .RI [ hostname ]
 .PP
 .B arp 
@@ -115,7 +115,7 @@ Tell the user what is going on by being verbose.
 shows numerical addresses instead of trying to determine symbolic host, port
 or user names.
 .TP
-.B "\-H type, \-\-hw\-type type"
+.B "\-H type, \-\-hw\-type type, \-t type"
 When setting or reading the ARP cache, this optional parameter tells
 .B arp
 which class of entries it should check for.  The default value of
@@ -133,6 +133,9 @@ and
 .TP
 .B \-a
 Use alternate BSD style output format (with no fixed columns).
+.TP
+.B \-e
+Use default Linux style output format (with fixed columns).
 .TP
 .B "\-D, \-\-use-device"
 Instead of a hw_addr, the given argument is the name of an interface. 
