@@ -7,7 +7,7 @@
    8/2000  Andi Kleen make the list operations a bit more efficient.
    People are crazy enough to use thousands of aliases now.
 
-   $Id: interface.c,v 1.32 2009/09/06 23:01:16 vapier Exp $
+   $Id: interface.c,v 1.33 2009/12/31 19:51:31 vapier Exp $
  */
 
 #include "config.h"
@@ -446,14 +446,14 @@ int if_fetch(struct interface *ife)
 	if (ioctl(skfd, SIOCGOUTFILL, &ifr) < 0)
 	    ife->outfill = 0;
 	else
-	    ife->outfill = (unsigned int) ifr.ifr_data;
+	    ife->outfill = (unsigned long) ifr.ifr_data;
 #endif
 #ifdef SIOCGKEEPALIVE
 	strcpy(ifr.ifr_name, ifname);
 	if (ioctl(skfd, SIOCGKEEPALIVE, &ifr) < 0)
 	    ife->keepalive = 0;
 	else
-	    ife->keepalive = (unsigned int) ifr.ifr_data;
+	    ife->keepalive = (unsigned long) ifr.ifr_data;
 #endif
     }
 #endif
