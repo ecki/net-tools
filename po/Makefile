@@ -8,8 +8,9 @@ TUPDATE = msgmerge
 NLSPACKAGE = net-tools
 
 -include ../config.make
+ALL_CATALOGS = de.mo fr.mo pt_BR.mo et_EE.mo cs.mo
 ifeq ($(I18N),1)
-CATALOGS = de.mo fr.mo pt_BR.mo et_EE.mo cs.mo
+CATALOGS = $(ALL_CATALOGS)
 else
 CATALOGS =
 endif
@@ -60,6 +61,8 @@ update-po: Makefile
 
 clean:
 	rm -f *mo
+
+dist: $(ALL_CATALOGS)
 
 distclean: clean
 	rm -f .depend Makefile

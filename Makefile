@@ -154,8 +154,12 @@ clobber: 	clean
 
 
 dist: 		clobber
+		@$(MAKE) -C po $@
 		@echo Creating net-tools-$(RELEASE) in ..
-		@tar -cvz -f ../net-tools-$(RELEASE).tar.gz -C .. net-tools
+		@tar -cvz -f ../net-tools-$(RELEASE).tar.gz . \
+			--transform='s,^[.],net-tools-$(RELEASE),' \
+			--exclude=CVS --exclude=.cvsignore \
+			--exclude='.git*'
 
 
 config.h: 	config.in Makefile 
