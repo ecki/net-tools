@@ -179,8 +179,9 @@ libdir:		version.h
 i18ndir:
 		@$(MAKE) -C po
 
-subdirs:
-		@for i in $(SUBDIRS); do $(MAKE) -C $$i || exit $$? ; done
+# use libdir target for lib/ to avoid parallel build issues
+subdirs:	libdir
+		@for i in $(SUBDIRS:$(NET_LIB_PATH)/=); do $(MAKE) -C $$i || exit $$? ; done
 
 ifconfig:	$(NET_LIB) ifconfig.o
 		$(CC) $(LDFLAGS) -o ifconfig ifconfig.o $(NLIB) $(RESLIB)
