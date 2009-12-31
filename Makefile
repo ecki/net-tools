@@ -71,6 +71,7 @@
 
 # set the base of the Installation 
 # BASEDIR = /mnt
+BASEDIR ?= $(DESTDIR)
 
 # path to the net-lib support library. Default: lib
 NET_LIB_PATH = lib
