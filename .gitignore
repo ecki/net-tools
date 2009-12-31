@@ -11,6 +11,8 @@
 
 /lib/libnet-tools.a
 
+/po/*.mo
+
 /version.h
 
 /arp
