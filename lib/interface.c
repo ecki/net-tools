@@ -7,7 +7,7 @@
    8/2000  Andi Kleen make the list operations a bit more efficient.
    People are crazy enough to use thousands of aliases now.
 
-   $Id: interface.c,v 1.33 2009/12/31 19:51:31 vapier Exp $
+   $Id: interface.c,v 1.34 2010/01/01 06:35:30 vapier Exp $
  */
 
 #include "config.h"
@@ -760,7 +760,7 @@ void ife_print_long(struct interface *ptr)
     /* FIXME: should be integrated into interface.c.   */
 
     if ((f = fopen(_PATH_PROCNET_IFINET6, "r")) != NULL) {
-	while (fscanf(f, "%4s%4s%4s%4s%4s%4s%4s%4s %02x %02x %02x %02x %20s\n",
+	while (fscanf(f, "%4s%4s%4s%4s%4s%4s%4s%4s %08x %02x %02x %02x %20s\n",
 		      addr6p[0], addr6p[1], addr6p[2], addr6p[3],
 		      addr6p[4], addr6p[5], addr6p[6], addr6p[7],
 		  &if_idx, &plen, &scope, &dad_status, devname) != EOF) {
