@@ -29,9 +29,14 @@ mandir=/usr/share/man
 
 -include ../config.make
 ifeq ($(I18N),1)
-LANGS=`ls -d * | grep -v Makefile`
+ALL_LANGS = $(filter-out Makefile,$(wildcard *))
+ifeq ($(LINGUAS),)
+LANGS = $(ALL_LANGS)
 else
-LANGS=en_US
+LANGS = $(sort $(filter $(LINGUAS),$(ALL_LANGS)) en_US)
+endif
+else
+LANGS = en_US
 endif
 
 all:
@@ -43,7 +48,7 @@ clean:
 clobber:	clean
 
 install:
-		LANGS=$(LANGS) ; \
+		LANGS='$(LANGS)' ; \
 		for LANG in $$LANGS; do \
 			cd $$LANG; \
 			for SECTION in 1 5 8; do \
