@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.68 2009/12/31 19:54:16 vapier Exp $
+ * Version:     $Id: netstat.c,v 1.69 2010-03-05 15:35:02 ecki Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -326,7 +326,7 @@ static int extract_type_1_socket_inode(const char lname[], unsigned long * inode
         strncpy(inode_str, lname+PRG_SOCKET_PFXl, inode_str_len);
         inode_str[inode_str_len] = '\0';
         *inode_p = strtol(inode_str,&serr,0);
-        if (!serr || *serr || *inode_p < 0 || *inode_p >= INT_MAX) 
+        if (!serr || *serr || *inode_p < 0 || *inode_p >= LONG_MAX) 
             return(-1);
     }
     return(0);
@@ -347,7 +347,7 @@ static int extract_type_2_socket_inode(const char lname[], unsigned long * inode
         char *serr;
 
         *inode_p=strtol(lname + PRG_SOCKET_PFX2l,&serr,0);
-        if (!serr || *serr || *inode_p < 0 || *inode_p >= INT_MAX) 
+        if (!serr || *serr || *inode_p < 0 || *inode_p >= LONG_MAX) 
             return(-1);
     }
     return(0);
