@@ -2253,12 +2253,14 @@ int main
             parsesnmp(flag_raw, flag_tcp, flag_udp, flag_sctp);
 #else
             ENOSUPP("netstat", "AF INET");
+            exit(1);
 #endif
         } else if(!strcmp(afname, "inet6")) {
 #if HAVE_AFINET6
             parsesnmp6(flag_raw, flag_tcp, flag_udp);
 #else
             ENOSUPP("netstat", "AF INET6");
+            exit(1);
 #endif
         } else {
           printf(_("netstat: No statistics support for specified address family: %s\n"), afname);
