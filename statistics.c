@@ -1,6 +1,6 @@
 /*
  * Copyright 1997,1999,2000 Andi Kleen. Subject to the GPL. 
- * $Id: statistics.c,v 1.22 2008/10/03 01:07:47 ecki Exp $
+ * $Id: statistics.c,v 1.23 2010-10-29 19:24:36 ecki Exp $
  * 19980630 - i18n - Arnaldo Carvalho de Melo <acme@conectiva.com.br> 
  * 19981113 - i18n fixes - Arnaldo Carvalho de Melo <acme@conectiva.com.br> 
  * 19990101 - added net/netstat, -t, -u, -w supprt - Bernd Eckenfels 
@@ -199,7 +199,9 @@ struct entry Udptab[] =
     {"NoPorts", N_("%u packets to unknown port received."), number},
     {"InErrors", N_("%u packet receive errors"), number},
     {"OutDatagrams", N_("%u packets sent"), number},
-};
+    {"RcvbufErrors", N_("%u receive buffer errors"), number},
+    {"SndbufErrors", N_("%u send buffer errors"), number},
+ };
 
 struct entry Udp6tab[] =
 {
