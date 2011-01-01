@@ -3,7 +3,7 @@
  *              that either displays or sets the characteristics of
  *              one or more of the system's networking interfaces.
  *
- * Version:     $Id: ifconfig.c,v 1.58 2008/10/02 23:31:04 ecki Exp $
+ * Version:     $Id: ifconfig.c,v 1.59 2011-01-01 03:22:31 ecki Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              and others.  Copyright 1993 MicroWalt Corporation
@@ -49,7 +49,7 @@
 #include <asm/types.h>
 
 
-#ifdef HAVE_HWSLIP
+#if HAVE_HWSLIP
 #include <linux/if_slip.h>
 #endif
 
@@ -778,7 +778,7 @@ int main(int argc, char **argv)
 		continue;
 	    }
 #endif
-#ifdef HAVE_AFINET
+#if HAVE_AFINET
 	    { /* ipv4 address a.b.c.d */
 		unsigned long ip, nm, bc;
 		safe_strncpy(host, *spp, (sizeof host));
@@ -871,7 +871,7 @@ int main(int argc, char **argv)
 		continue;
 	    }
 #endif
-#ifdef HAVE_AFINET
+#if HAVE_AFINET
 	    {
 		/* ipv4 address a.b.c.d */
 		unsigned long ip, nm, bc;

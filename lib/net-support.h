@@ -237,7 +237,7 @@ extern char afname[];
 /* this is a 2.0.36 flag from /usr/src/linux/include/linux/route.h */
 #define RTF_NOTCACHED   0x0400          /* this route isn't cached        */
 
-#ifdef HAVE_AFECONET
+#if HAVE_AFECONET
 #ifndef AF_ECONET
 #define AF_ECONET       19      /* Acorn Econet */
 #endif

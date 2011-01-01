@@ -7,7 +7,7 @@
    8/2000  Andi Kleen make the list operations a bit more efficient.
    People are crazy enough to use thousands of aliases now.
 
-   $Id: interface.c,v 1.34 2010/01/01 06:35:30 vapier Exp $
+   $Id: interface.c,v 1.35 2011-01-01 03:22:31 ecki Exp $
  */
 
 #include "config.h"
@@ -37,7 +37,7 @@
 #include <neteconet/ec.h>
 #endif
 
-#ifdef HAVE_HWSLIP
+#if HAVE_HWSLIP
 #include <linux/if_slip.h>
 #include <net/if_arp.h>
 #endif
@@ -437,7 +437,7 @@ int if_fetch(struct interface *ife)
     else
 	ife->mtu = ifr.ifr_mtu;
 
-#ifdef HAVE_HWSLIP
+#if HAVE_HWSLIP
     if (ife->type == ARPHRD_SLIP || ife->type == ARPHRD_CSLIP ||
 	ife->type == ARPHRD_SLIP6 || ife->type == ARPHRD_CSLIP6 ||
 	ife->type == ARPHRD_ADAPT) {
@@ -682,8 +682,10 @@ void ife_print_long(struct interface *ptr)
 
     hf = ptr->type;
 
+#if HAVE_HWSLIP
     if (hf == ARPHRD_CSLIP || hf == ARPHRD_CSLIP6)
 	can_compress = 1;
+#endif
 
     hw = get_hwntype(hf);
     if (hw == NULL)
