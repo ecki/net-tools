@@ -140,7 +140,7 @@ extern char afname[];
 
 #define AFTRANS_OPTS \
 	{"ax25",	0,	0,	1}, \
-       {"x25",         0,      0,      1}, \
+	{"x25",         0,      0,      1}, \
 	{"ip",		0,	0,	1}, \
 	{"ipx",         0,	0,	1}, \
 	{"appletalk",	0,	0,	1}, \
@@ -148,7 +148,7 @@ extern char afname[];
 	{"inet",	0,	0,	1}, \
 	{"inet6",	0,	0,	1}, \
 	{"ddp",		0,	0,	1}, \
-	{"rose",		0,	0,	1}, \
+	{"rose",	0,	0,	1}, \
 	{"unix",	0,	0,	1}, \
 	{"tcpip",	0,	0,	1}
 #define AFTRANS_CNT 12
