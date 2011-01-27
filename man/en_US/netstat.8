@@ -9,7 +9,7 @@
 .\" Modified: Brian Micek bmicek@gmail.com
 .\"
 .\"
-.TH NETSTAT 8 "2008\-12\-02" "net\-tools" "Linux System Administrator's Manual"
+.TH NETSTAT 8 "2011\-01\-27" "net\-tools" "Linux System Administrator's Manual"
 
 .SH NAME
 netstat \- Print network connections, routing tables, interface statistics, masquerade connections, and multicast memberships
@@ -85,11 +85,15 @@ netstat \- Print network connections, routing tables, interface statistics, masq
 .RB [ -6 ]
 .RB [ \-\-protocol= { inet , unix , ipx , ax25 , netrom , ddp }[, ...] ]
 .RB [ \-\-unix | \-x ] 
-.RB [ \-\-inet | \-\-ip ]
+.RB [ \-\-inet | \-\-ip | \-\-tcpip ]
 .RB [ \-\-ax25 ]
+.RB [ \-\-x25 ]
+.RB [ \-\-rose ]
+.RB [ \-\-ash ]
 .RB [ \-\-ipx ] 
 .RB [ \-\-netrom ]
-.RB [ \-\-ddp ]
+.RB [ \-\-ddp | \-\-appletalk ]
+.RB [ \-\-econet | \-\-ec ]
 
 .SH DESCRIPTION
 .B Netstat
@@ -148,6 +152,7 @@ is a comma (',') separated list of address family keywords like
 .BR ipx , 
 .BR ax25 , 
 .BR netrom ,
+.BR econet ,
 and
 .BR ddp .
 This has the same effect as using the 
