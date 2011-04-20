@@ -6,7 +6,7 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.72 2011-04-09 13:57:28 vapier Exp $
+ * Version:     $Id: netstat.c,v 1.73 2011-04-20 01:35:22 ecki Exp $
  *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
@@ -420,7 +420,7 @@ static void prg_cache_load(void)
 		    continue;
 		if (cmdllen < sizeof(cmdlbuf) - 1) 
 		    cmdlbuf[cmdllen]='\0';
-		if ((cmdlp = strrchr(cmdlbuf, '/'))) 
+		if (cmdlbuf[0] == '/' && (cmdlp = strrchr(cmdlbuf, '/'))) 
 		    cmdlp++;
 		else 
 		    cmdlp = cmdlbuf;
