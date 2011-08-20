@@ -126,8 +126,8 @@ LD	= $(CC)
 
 NLIB	= -l$(NET_LIB_NAME)
 
-%.o:		%.c config.h version.h intl.h net-features.h $<
-		$(CC) $(CFLAGS) -c $<
+%.o:		%.c config.h version.h intl.h lib/net-features.h $<
+		$(CC) $(CFLAGS) $(CPPFLAGS) -c $<
 
 all:		config.h version.h subdirs $(PROGS)
 
