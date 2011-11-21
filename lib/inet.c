@@ -423,10 +423,9 @@ const char *get_sname(int socknumber, const char *proto, int numeric)
 
     if (socknumber == 0)
 	return ("*");
-    if (numeric) {
-	sprintf(buffer, "%d", ntohs(socknumber));
-	return (buffer);
-    }
+    if (numeric)
+	goto do_ntohs;
+
     if (!init) {
 	(void) read_services();
 	init = 1;
@@ -443,8 +442,11 @@ const char *get_sname(int socknumber, const char *proto, int numeric)
 	    sprintf(buffer, "%s", item->name);
 
     }
-    if (!buffer[0])
+
+    if (!buffer[0]) {
+ do_ntohs:
 	sprintf(buffer, "%d", ntohs(socknumber));
+    }
     return (buffer);
 }
 
