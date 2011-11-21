@@ -431,16 +431,17 @@ const char *get_sname(int socknumber, const char *proto, int numeric)
 	init = 1;
     }
     buffer[0] = '\0';
-    if (!strcmp(proto, "tcp")) {
-	if ((item = searchlist(tcp_name, socknumber)) != NULL)
-	    sprintf(buffer, "%s", item->name);
-    } else if (!strcmp(proto, "udp")) {
-	if ((item = searchlist(udp_name, socknumber)) != NULL)
-	    sprintf(buffer, "%s", item->name);
-    } else if (!strcmp(proto, "raw")) {
-	if ((item = searchlist(raw_name, socknumber)) != NULL)
-	    sprintf(buffer, "%s", item->name);
-
+    if (!strcmp(proto, "tcp"))
+	item = searchlist(tcp_name, socknumber);
+    else if (!strcmp(proto, "udp"))
+	item = searchlist(udp_name, socknumber);
+    else if (!strcmp(proto, "raw"))
+	item = searchlist(raw_name, socknumber);
+    else
+	item = NULL;
+    if (item) {
+	strncpy(buffer, item->name, sizeof(buffer));
+	buffer[sizeof(buffer) - 1] = '\0';
     }
 
     if (!buffer[0]) {
