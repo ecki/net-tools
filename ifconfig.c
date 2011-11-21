@@ -497,7 +497,7 @@ int main(int argc, char **argv)
 	if (!strcmp(*spp, "keepalive")) {
 	    if (*++spp == NULL)
 		usage();
-	    ifr.ifr_data = (caddr_t) atoi(*spp);
+	    ifr.ifr_data = (caddr_t) (uintptr_t) atoi(*spp);
 	    if (ioctl(skfd, SIOCSKEEPALIVE, &ifr) < 0) {
 		fprintf(stderr, "SIOCSKEEPALIVE: %s\n", strerror(errno));
 		goterr = 1;
@@ -511,7 +511,7 @@ int main(int argc, char **argv)
 	if (!strcmp(*spp, "outfill")) {
 	    if (*++spp == NULL)
 		usage();
-	    ifr.ifr_data = (caddr_t) atoi(*spp);
+	    ifr.ifr_data = (caddr_t) (uintptr_t) atoi(*spp);
 	    if (ioctl(skfd, SIOCSOUTFILL, &ifr) < 0) {
 		fprintf(stderr, "SIOCSOUTFILL: %s\n", strerror(errno));
 		goterr = 1;
