@@ -84,7 +84,7 @@ static const char *
 
 static int AX25_input(int type, char *bufp, struct sockaddr *sap)
 {
-    unsigned char *ptr;
+    char *ptr;
     char *orig, c;
     int i;
 

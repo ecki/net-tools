@@ -66,7 +66,7 @@ static const char *pr_fddi(const char *ptr)
 /* Input an FDDI address and convert to binary. */
 static int in_fddi(char *bufp, struct sockaddr *sap)
 {
-    unsigned char *ptr;
+    char *ptr;
     char c, *orig;
     int i, val;
 

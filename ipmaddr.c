@@ -75,7 +75,7 @@ static void print_lla(FILE *fp, int len, unsigned char *addr)
 	}
 }
 
-static int parse_lla(char *str, unsigned char *addr)
+static int parse_lla(char *str, char *addr)
 {
 	int len=0;
 

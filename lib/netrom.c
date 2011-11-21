@@ -87,7 +87,7 @@ static const char *NETROM_sprint(struct sockaddr *sap, int numeric)
 
 static int NETROM_input(int type, char *bufp, struct sockaddr *sap)
 {
-    unsigned char *ptr;
+    char *ptr;
     char *orig, c;
     unsigned int i;
 

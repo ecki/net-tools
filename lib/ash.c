@@ -60,7 +60,7 @@ struct hwtype ash_hwtype;
 static int 
 in_ash(char *bufp, struct sockaddr *sap)
 {
-    unsigned char *ptr;
+    char *ptr;
     unsigned int i = 0;
 
     sap->sa_family = ash_hwtype.type;

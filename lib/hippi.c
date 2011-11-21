@@ -66,7 +66,7 @@ static const char *pr_hippi(const char *ptr)
 /* Input an HIPPI address and convert to binary. */
 static int in_hippi(char *bufp, struct sockaddr *sap)
 {
-    unsigned char *ptr;
+    char *ptr;
     char c, *orig;
     int i, val;
 

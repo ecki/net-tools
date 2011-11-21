@@ -78,7 +78,7 @@ X25_sprint(struct sockaddr *sap, int numeric)
 static int
 X25_input(int type, char *bufp, struct sockaddr *sap)
 {
-  unsigned char *ptr;
+  char *ptr;
   char *p;
   unsigned int sigdigits;
 

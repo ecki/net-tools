@@ -52,7 +52,7 @@ static const char *pr_arcnet(const char *ptr)
 /* Input an ARCnet address and convert to binary. */
 static int in_arcnet(char *bufp, struct sockaddr *sap)
 {
-    unsigned char *ptr;
+    char *ptr;
     char c, *orig;
     int i, val;
 

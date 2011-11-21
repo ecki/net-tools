@@ -58,7 +58,7 @@ static const char *pr_tr(const char *ptr)
 
 static int in_tr(char *bufp, struct sockaddr *sap)
 {
-    unsigned char *ptr;
+    char *ptr;
     char c, *orig;
     int i, val;
 

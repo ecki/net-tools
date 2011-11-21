@@ -65,7 +65,7 @@ static const char *pr_ib(const char *ptr)
 /* Input an Infiniband address and convert to binary. */
 static int in_ib(char *bufp, struct sockaddr *sap)
 {
-    unsigned char *ptr;
+    char *ptr;
     char c, *orig;
     int i;
     unsigned val;
