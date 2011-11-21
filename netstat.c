@@ -870,11 +870,39 @@ static int sctp_info(void) {
   return  sctp_info_assocs();
 }
 
+static void addr_do_one(char *buf, size_t buf_len, size_t short_len, struct aftype *ap,
+#if HAVE_AFINET6
+			struct sockaddr_in6 *addr,
+#else
+			struct sockaddr_in *addr,
+#endif
+			int port, const char *proto
+)
+{
+    const char *sport, *saddr;
+    size_t port_len, addr_len;
+
+    saddr = ap->sprint((struct sockaddr *)addr, flag_not & FLAG_NUM_HOST);
+    sport = get_sname(htons(port), proto, flag_not & FLAG_NUM_PORT);
+    addr_len = strlen(saddr);
+    port_len = strlen(sport);
+    if (!flag_wide && (addr_len + port_len > short_len)) {
+	/* Assume port name is short */
+	port_len = netmin(port_len, short_len - 4);
+	addr_len = short_len - port_len;
+	strncpy(buf, saddr, addr_len);
+	buf[addr_len] = '\0';
+	strcat(buf, ":");
+	strncat(buf, sport, port_len);
+    } else
+	snprintf(buf, buf_len, "%s:%s", saddr, sport);
+}
+
 static void tcp_do_one(int lnr, const char *line, const char *prot)
 {
     unsigned long rxq, txq, time_len, retr, inode;
     int num, local_port, rem_port, d, state, uid, timer_run, timeout;
-    char rem_addr[128], local_addr[128], timers[64], buffer[1024], more[512];
+    char rem_addr[128], local_addr[128], timers[64], more[512];
     struct aftype *ap;
 #if HAVE_AFINET6
     struct sockaddr_in6 localaddr, remaddr;
@@ -930,34 +958,11 @@ static void tcp_do_one(int lnr, const char *line, const char *prot)
 		((struct sockaddr *) &localaddr)->sa_family);
 	return;
     }
-    safe_strncpy(local_addr, ap->sprint((struct sockaddr *) &localaddr, 
-					flag_not & FLAG_NUM_HOST), sizeof(local_addr));
-    safe_strncpy(rem_addr, ap->sprint((struct sockaddr *) &remaddr, flag_not & FLAG_NUM_HOST),
-		 sizeof(rem_addr));
 
-	snprintf(buffer, sizeof(buffer), "%s",
-		 get_sname(htons(local_port), "tcp",
-			   flag_not & FLAG_NUM_PORT));
+	addr_do_one(local_addr, sizeof(local_addr), 22, ap, &localaddr, local_port, "tcp");
+	addr_do_one(rem_addr, sizeof(rem_addr), 22, ap, &remaddr, rem_port, "tcp");
 
-	if (!flag_wide) {
-	    if ((strlen(local_addr) + strlen(buffer)) > 22)
-		local_addr[22 - strlen(buffer)] = '\0';
-	}
-
-	strcat(local_addr, ":");
-	strcat(local_addr, buffer);
-	snprintf(buffer, sizeof(buffer), "%s",
-		 get_sname(htons(rem_port), "tcp", flag_not & FLAG_NUM_PORT));
-
-	if (!flag_wide) {
-	    if ((strlen(rem_addr) + strlen(buffer)) > 22)
-		rem_addr[22 - strlen(buffer)] = '\0';
-	}
-
-	strcat(rem_addr, ":");
-	strcat(rem_addr, buffer);
 	timers[0] = '\0';
-
 	if (flag_opt)
 	    switch (timer_run) {
 	    case 0:
@@ -984,6 +989,7 @@ static void tcp_do_one(int lnr, const char *line, const char *prot)
 			 timer_run, (double) time_len / HZ, retr, timeout);
 		break;
 	    }
+
 	printf("%-4s  %6ld %6ld %-*s %-*s %-11s",
 	       prot, rxq, txq, (int)netmax(23,strlen(local_addr)), local_addr, (int)netmax(23,strlen(rem_addr)), rem_addr, _(tcp_state[state]));
 
@@ -998,7 +1004,7 @@ static int tcp_info(void)
 
 static void udp_do_one(int lnr, const char *line,const char *prot)
 {
-    char buffer[8192], local_addr[64], rem_addr[64];
+    char local_addr[64], rem_addr[64];
     char *udp_state, timers[64], more[512];
     int num, local_port, rem_port, d, state, timer_run, uid, timeout;
 #if HAVE_AFINET6
@@ -1087,24 +1093,8 @@ static void udp_do_one(int lnr, const char *line,const char *prot)
 
     if (flag_all || (notnull(remaddr) && !flag_lst) || (!notnull(remaddr) && flag_lst))
     {
-        safe_strncpy(local_addr, ap->sprint((struct sockaddr *) &localaddr, 
-					    flag_not & FLAG_NUM_HOST), sizeof(local_addr));
-	snprintf(buffer, sizeof(buffer), "%s",
-		 get_sname(htons(local_port), "udp",
-			   flag_not & FLAG_NUM_PORT));
-	if ((strlen(local_addr) + strlen(buffer)) > 22)
-	    local_addr[22 - strlen(buffer)] = '\0';
-	strcat(local_addr, ":");
-	strcat(local_addr, buffer);
-
-	snprintf(buffer, sizeof(buffer), "%s",
-		 get_sname(htons(rem_port), "udp", flag_not & FLAG_NUM_PORT));
-        safe_strncpy(rem_addr, ap->sprint((struct sockaddr *) &remaddr, 
-					  flag_not & FLAG_NUM_HOST), sizeof(rem_addr));
-	if ((strlen(rem_addr) + strlen(buffer)) > 22)
-	    rem_addr[22 - strlen(buffer)] = '\0';
-	strcat(rem_addr, ":");
-	strcat(rem_addr, buffer);
+	addr_do_one(local_addr, sizeof(local_addr), 22, ap, &localaddr, local_port, "udp");
+	addr_do_one(rem_addr, sizeof(rem_addr), 22, ap, &remaddr, rem_port, "udp");
 
 	timers[0] = '\0';
 	if (flag_opt)
@@ -1144,7 +1134,7 @@ static int udplite_info(void)
 
 static void raw_do_one(int lnr, const char *line,const char *prot)
 {
-    char buffer[8192], local_addr[64], rem_addr[64];
+    char local_addr[64], rem_addr[64];
     char timers[64], more[512];
     int num, local_port, rem_port, d, state, timer_run, uid, timeout;
 #if HAVE_AFINET6
@@ -1212,24 +1202,8 @@ static void raw_do_one(int lnr, const char *line,const char *prot)
 
     if (flag_all || (notnull(remaddr) && !flag_lst) || (!notnull(remaddr) && flag_lst))
     {
-	snprintf(buffer, sizeof(buffer), "%s",
-		 get_sname(htons(local_port), "raw",
-			   flag_not & FLAG_NUM_PORT));
-        safe_strncpy(local_addr, ap->sprint((struct sockaddr *) &localaddr, 
-					    flag_not & FLAG_NUM_HOST), sizeof(local_addr));
-	if ((strlen(local_addr) + strlen(buffer)) > 22)
-	    local_addr[22 - strlen(buffer)] = '\0';
-	strcat(local_addr, ":");
-	strcat(local_addr, buffer);
-
-	snprintf(buffer, sizeof(buffer), "%s",
-		 get_sname(htons(rem_port), "raw", flag_not & FLAG_NUM_PORT));
-        safe_strncpy(rem_addr, ap->sprint((struct sockaddr *) &remaddr, 
-					  flag_not & FLAG_NUM_HOST), sizeof(rem_addr));
-	if ((strlen(rem_addr) + strlen(buffer)) > 22)
-	    rem_addr[22 - strlen(buffer)] = '\0';
-	strcat(rem_addr, ":");
-	strcat(rem_addr, buffer);
+	addr_do_one(local_addr, sizeof(local_addr), 22, ap, &localaddr, local_port, "raw");
+	addr_do_one(rem_addr, sizeof(rem_addr), 22, ap, &remaddr, rem_port, "raw");
 
 	timers[0] = '\0';
 	if (flag_opt)
