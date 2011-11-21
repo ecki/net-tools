@@ -124,7 +124,7 @@ extern int ROSE_rinput(int action, int flags, char **argv);
 extern int aftrans_opt(const char *arg);
 extern void aftrans_def(char *tool, char *argv0, char *dflt);
 
-extern char *get_sname(int socknumber, char *proto, int numeric);
+extern const char *get_sname(int socknumber, const char *proto, int numeric);
 
 extern int flag_unx;
 extern int flag_ipx;
