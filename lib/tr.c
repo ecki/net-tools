@@ -50,6 +50,11 @@ static const char *pr_tr(const char *ptr)
     return (buff);
       }
 
+#ifdef DEBUG
+#define _DEBUG 1
+#else
+#define _DEBUG 0
+#endif
 
 static int in_tr(char *bufp, struct sockaddr *sap)
 {
@@ -82,9 +87,8 @@ static int in_tr(char *bufp, struct sockaddr *sap)
 	else if (c >= 'A' && c <= 'F')
 	    val = c - 'A' + 10;
 	else {
-#ifdef DEBUG
-	    fprintf(stderr, _("in_tr(%s): invalid token ring address!\n"), orig);
-#endif
+	    if (_DEBUG)
+		fprintf(stderr, _("in_tr(%s): invalid token ring address!\n"), orig);
 	    errno = EINVAL;
 	    return (-1);
 	}
@@ -97,9 +101,8 @@ static int in_tr(char *bufp, struct sockaddr *sap)
 	else if (c >= 'A' && c <= 'F')
 	    val |= c - 'A' + 10;
 	else {
-#ifdef DEBUG
-	    fprintf(stderr, _("in_tr(%s): invalid token ring address!\n"), orig);
-#endif
+	    if (_DEBUG)
+		fprintf(stderr, _("in_tr(%s): invalid token ring address!\n"), orig);
 	    errno = EINVAL;
 	    return (-1);
 	}
@@ -108,28 +111,21 @@ static int in_tr(char *bufp, struct sockaddr *sap)
 
 	/* We might get a semicolon here - not required. */
 	if (*bufp == ':') {
-	    if (i == TR_ALEN) {
-#ifdef DEBUG
+	    if (_DEBUG && i == TR_ALEN)
 		fprintf(stderr, _("in_tr(%s): trailing : ignored!\n"),
-			orig)
-#endif
-		    ;		/* nothing */
-	    }
+			orig);
 	    bufp++;
 	}
     }
 
     /* That's it.  Any trailing junk? */
-    if ((i == TR_ALEN) && (*bufp != '\0')) {
-#ifdef DEBUG
+    if (_DEBUG && (i == TR_ALEN) && (*bufp != '\0')) {
 	fprintf(stderr, _("in_tr(%s): trailing junk!\n"), orig);
 	errno = EINVAL;
 	return (-1);
-#endif
     }
-#ifdef DEBUG
-    fprintf(stderr, "in_tr(%s): %s\n", orig, pr_tr(sap->sa_data));
-#endif
+    if (_DEBUG)
+	fprintf(stderr, "in_tr(%s): %s\n", orig, pr_tr(sap->sa_data));
 
     return (0);
 }

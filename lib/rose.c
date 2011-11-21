@@ -73,7 +73,6 @@ static const char *
     return (ROSE_print(((struct sockaddr_rose *) sap)->srose_addr.rose_addr));
 }
 
-
 static int ROSE_input(int type, char *bufp, struct sockaddr *sap)
 {
     char *ptr;
@@ -85,9 +84,6 @@ static int ROSE_input(int type, char *bufp, struct sockaddr *sap)
     /* Node address the correct length ? */
     if (strlen(bufp) != 10) {
 	strcpy(ROSE_errmsg, _("Node address must be ten digits"));
-#ifdef DEBUG
-	fprintf(stderr, "rose_input(%s): %s !\n", ROSE_errmsg, orig);
-#endif
 	errno = EINVAL;
 	return (-1);
     }
@@ -98,13 +94,6 @@ static int ROSE_input(int type, char *bufp, struct sockaddr *sap)
     }
 
     /* All done. */
-#ifdef DEBUG
-    fprintf(stderr, "rose_input(%s): ", orig);
-    for (i = 0; i < sizeof(rose_address); i++)
-	fprintf(stderr, "%02X ", sap->sa_data[i] & 0377);
-    fprintf(stderr, "\n");
-#endif
-
     return (0);
 }
 

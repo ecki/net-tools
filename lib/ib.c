@@ -56,6 +56,11 @@ static const char *pr_ib(const char *ptr)
     return (buff);
 }
 
+#ifdef DEBUG
+#define _DEBUG 1
+#else
+#define _DEBUG 0
+#endif
 
 /* Input an Infiniband address and convert to binary. */
 static int in_ib(char *bufp, struct sockaddr *sap)
@@ -80,9 +85,8 @@ static int in_ib(char *bufp, struct sockaddr *sap)
 	else if (c >= 'A' && c <= 'F')
 	    val = c - 'A' + 10;
 	else {
-#ifdef DEBUG
-	    fprintf(stderr, _("in_ib(%s): invalid infiniband address!\n"), orig);
-#endif
+	    if (_DEBUG)
+		fprintf(stderr, _("in_ib(%s): invalid infiniband address!\n"), orig);
 	    errno = EINVAL;
 	    return (-1);
 	}

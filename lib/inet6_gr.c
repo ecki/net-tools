@@ -92,10 +92,8 @@ int rprint_fib6(int ext, int numeric)
 		     naddr6p[0], naddr6p[1], naddr6p[2], naddr6p[3],
 		     naddr6p[4], naddr6p[5], naddr6p[6], naddr6p[7],
 		     &metric, &refcnt, &use, &iflags, iface);
-#if 0
-	if (num < 23)
+	if (0 && num < 23)
 	    continue;
-#endif
 	if (iflags & RTF_CACHE) {
 		if (!(numeric & RTF_CACHE))
 			continue;
@@ -163,7 +161,7 @@ int rprint_cache6(int ext, int numeric)
     char buff[4096], iface[16], flags[16];
     char addr6[128], haddr[20], statestr[20];
     struct sockaddr_in6 saddr6;
-    int type, num, refcnt, prefix_len, location, state, gc;
+    int type, refcnt, prefix_len, location, state, gc;
     long tstamp, expire, ndflags, reachable, stale, delete;
     FILE *fp = fopen(_PATH_PROCNET_NDISC, "r");
     char addr6p[8][5], haddrp[6][3];
@@ -184,7 +182,7 @@ int rprint_cache6(int ext, int numeric)
 
 
     while (fgets(buff, 1023, fp)) {
-	num = sscanf(buff, "%4s%4s%4s%4s%4s%4s%4s%4s %02x %02x %02x %02x %08lx %08lx %08lx %04x %04x %04lx %8s %2s%2s%2s%2s%2s%2s\n",
+	sscanf(buff, "%4s%4s%4s%4s%4s%4s%4s%4s %02x %02x %02x %02x %08lx %08lx %08lx %04x %04x %04lx %8s %2s%2s%2s%2s%2s%2s\n",
 		     addr6p[0], addr6p[1], addr6p[2], addr6p[3],
 		     addr6p[4], addr6p[5], addr6p[6], addr6p[7],
 		     &location, &prefix_len, &type, &state, &expire, &tstamp, &reachable, &gc, &refcnt,

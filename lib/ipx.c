@@ -87,12 +87,10 @@ static int IPX_getsock(char *bufp, struct sockaddr *sap)
 {
     char *sp = bufp, *bp;
     unsigned int i;
-    unsigned char val;
     struct sockaddr_ipx *sipx = (struct sockaddr_ipx *) sap;
 
     sipx->sipx_port = 0;
 
-    val = 0;
     bp = (char *) sipx->sipx_node;
     for (i = 0; i < sizeof(sipx->sipx_node); i++) {
 	*sp = toupper(*sp);

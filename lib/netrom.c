@@ -79,6 +79,11 @@ static const char *NETROM_sprint(struct sockaddr *sap, int numeric)
     return (NETROM_print(((struct sockaddr_ax25 *) sap)->sax25_call.ax25_call));
 }
 
+#ifdef DEBUG
+#define _DEBUG 1
+#else
+#define _DEBUG 0
+#endif
 
 static int NETROM_input(int type, char *bufp, struct sockaddr *sap)
 {
@@ -98,9 +103,8 @@ static int NETROM_input(int type, char *bufp, struct sockaddr *sap)
 	    c = toupper(c);
 	if (!(isupper(c) || isdigit(c))) {
 	    safe_strncpy(netrom_errmsg, _("Invalid callsign"), sizeof(netrom_errmsg));
-#ifdef DEBUG
-	    fprintf(stderr, "netrom_input(%s): %s !\n", netrom_errmsg, orig);
-#endif
+	    if (_DEBUG)
+		fprintf(stderr, "netrom_input(%s): %s !\n", netrom_errmsg, orig);
 	    errno = EINVAL;
 	    return (-1);
 	}
@@ -111,9 +115,8 @@ static int NETROM_input(int type, char *bufp, struct sockaddr *sap)
     /* Callsign too long? */
     if ((i == 6) && (*bufp != '-') && (*bufp != '\0')) {
 	safe_strncpy(netrom_errmsg, _("Callsign too long"), sizeof(netrom_errmsg));
-#ifdef DEBUG
-	fprintf(stderr, "netrom_input(%s): %s !\n", netrom_errmsg, orig);
-#endif
+	if (_DEBUG)
+	    fprintf(stderr, "netrom_input(%s): %s !\n", netrom_errmsg, orig);
 	errno = E2BIG;
 	return (-1);
     }
@@ -131,12 +134,12 @@ static int NETROM_input(int type, char *bufp, struct sockaddr *sap)
     }
 
     /* All done. */
-#ifdef DEBUG
-    fprintf(stderr, "netrom_input(%s): ", orig);
-    for (i = 0; i < sizeof(ax25_address); i++)
-	fprintf(stderr, "%02X ", sap->sa_data[i] & 0377);
-    fprintf(stderr, "\n");
-#endif
+    if (_DEBUG) {
+	fprintf(stderr, "netrom_input(%s): ", orig);
+	for (i = 0; i < sizeof(ax25_address); i++)
+	    fprintf(stderr, "%02X ", sap->sa_data[i] & 0377);
+	fprintf(stderr, "\n");
+    }
 
     return (0);
 }

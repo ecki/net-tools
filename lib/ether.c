@@ -46,6 +46,11 @@ static const char *pr_ether(const char *ptr)
     return (buff);
 }
 
+#ifdef DEBUG
+#define _DEBUG 1
+#else
+#define _DEBUG 0
+#endif
 
 /* Input an Ethernet address and convert to binary. */
 static int in_ether(char *bufp, struct sockaddr *sap)
@@ -70,9 +75,8 @@ static int in_ether(char *bufp, struct sockaddr *sap)
 	else if (c >= 'A' && c <= 'F')
 	    val = c - 'A' + 10;
 	else {
-#ifdef DEBUG
-	    fprintf(stderr, _("in_ether(%s): invalid ether address!\n"), orig);
-#endif
+	    if (_DEBUG)
+		fprintf(stderr, _("in_ether(%s): invalid ether address!\n"), orig);
 	    errno = EINVAL;
 	    return (-1);
 	}
@@ -87,9 +91,8 @@ static int in_ether(char *bufp, struct sockaddr *sap)
 	else if (c == ':' || c == 0)
 	    val >>= 4;
 	else {
-#ifdef DEBUG
-	    fprintf(stderr, _("in_ether(%s): invalid ether address!\n"), orig);
-#endif
+	    if (_DEBUG)
+		fprintf(stderr, _("in_ether(%s): invalid ether address!\n"), orig);
 	    errno = EINVAL;
 	    return (-1);
 	}
@@ -100,28 +103,21 @@ static int in_ether(char *bufp, struct sockaddr *sap)
 
 	/* We might get a semicolon here - not required. */
 	if (*bufp == ':') {
-	    if (i == ETH_ALEN) {
-#ifdef DEBUG
+	    if (_DEBUG && i == ETH_ALEN)
 		fprintf(stderr, _("in_ether(%s): trailing : ignored!\n"),
-			orig)
-#endif
-		    ;		/* nothing */
-	    }
+			orig);
 	    bufp++;
 	}
     }
 
     /* That's it.  Any trailing junk? */
-    if ((i == ETH_ALEN) && (*bufp != '\0')) {
-#ifdef DEBUG
+    if (_DEBUG && (i == ETH_ALEN) && (*bufp != '\0')) {
 	fprintf(stderr, _("in_ether(%s): trailing junk!\n"), orig);
 	errno = EINVAL;
 	return (-1);
-#endif
     }
-#ifdef DEBUG
-    fprintf(stderr, "in_ether(%s): %s\n", orig, pr_ether(sap->sa_data));
-#endif
+    if (_DEBUG)
+	fprintf(stderr, "in_ether(%s): %s\n", orig, pr_ether(sap->sa_data));
 
     return (0);
 }
