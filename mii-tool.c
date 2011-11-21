@@ -271,7 +271,7 @@ int show_basic_mii(int sock, int phy_id)
 
     if (opt_watch) {
 	if (opt_log) {
-	    syslog(LOG_INFO, buf);
+	    syslog(LOG_INFO, "%s", buf);
 	} else {
 	    char s[20];
 	    time_t t = time(NULL);

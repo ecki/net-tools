@@ -569,7 +569,7 @@ usage(void)
 	  "[-c cmd] [-s speed] [-p protocol] tty | -\n"
 	  "       slattach -V | --version\n";
 
-  fprintf(stderr, usage_msg);
+  fputs(usage_msg, stderr);
   exit(1);
 }
 

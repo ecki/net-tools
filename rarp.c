@@ -226,7 +226,7 @@ int main(int argc, char **argv)
 	case 'h':
 	    usage();
 	case 'V':
-	    fprintf(stderr, version_string);
+	    fputs(version_string, stderr);
 	    exit(E_VERSION);
 	    break;
 	case 'v':
