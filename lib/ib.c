@@ -36,7 +36,7 @@ extern struct hwtype ib_hwtype;
 
 
 /* Display an InfiniBand address in readable format. */
-static char *pr_ib(unsigned char *ptr)
+static const char *pr_ib(const char *ptr)
 {
     static char buff[128];
     char *pos;

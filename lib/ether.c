@@ -35,7 +35,7 @@ extern struct hwtype ether_hwtype;
 
 
 /* Display an Ethernet address in readable format. */
-static char *pr_ether(unsigned char *ptr)
+static const char *pr_ether(const char *ptr)
 {
     static char buff[64];
 

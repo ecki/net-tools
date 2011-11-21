@@ -52,7 +52,7 @@ static char netrom_errmsg[128];
 
 extern struct aftype netrom_aftype;
 
-static char *NETROM_print(unsigned char *ptr)
+static const char *NETROM_print(const char *ptr)
 {
     static char buff[8];
     int i;
@@ -71,7 +71,7 @@ static char *NETROM_print(unsigned char *ptr)
 
 
 /* Display an AX.25 socket address. */
-static char *NETROM_sprint(struct sockaddr *sap, int numeric)
+static const char *NETROM_sprint(struct sockaddr *sap, int numeric)
 {
     char buf[64];
     if (sap->sa_family == 0xFFFF || sap->sa_family == 0)

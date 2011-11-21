@@ -46,7 +46,7 @@ extern struct hwtype hippi_hwtype;
 
 
 /* Display an HIPPI address in readable format. */
-static char *pr_hippi(unsigned char *ptr)
+static const char *pr_hippi(const char *ptr)
 {
     static char buff[64];
 

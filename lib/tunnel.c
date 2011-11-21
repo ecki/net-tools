@@ -21,7 +21,7 @@
 
 extern struct hwtype ether_hwtype;
 
-static char *pr_tunnel(unsigned char *ptr)
+static const char *pr_tunnel(const char *ptr)
 {
     return ("");
 }

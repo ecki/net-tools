@@ -35,7 +35,7 @@ extern struct hwtype arcnet_hwtype;
 
 
 /* Display an ARCnet address in readable format. */
-static char *pr_arcnet(unsigned char *ptr)
+static const char *pr_arcnet(const char *ptr)
 {
     static char buff[64];
 

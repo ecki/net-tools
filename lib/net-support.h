@@ -38,8 +38,8 @@ struct aftype {
     char *title;
     int af;
     int alen;
-    char *(*print) (unsigned char *);
-    char *(*sprint) (struct sockaddr *, int numeric);
+    const char *(*print) (const char *);
+    const char *(*sprint) (struct sockaddr *, int numeric);
     int (*input) (int type, char *bufp, struct sockaddr *);
     void (*herror) (char *text);
     int (*rprint) (int options);
@@ -60,7 +60,7 @@ struct hwtype {
     char *title;
     int type;
     int alen;
-    char *(*print) (unsigned char *);
+    const char *(*print) (const char *);
     int (*input) (char *, struct sockaddr *);
     int (*activate) (int fd);
     int suppress_null_addr;

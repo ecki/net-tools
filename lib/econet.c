@@ -32,8 +32,8 @@
 
 
 /* Display an Econet address */
-static char *
-ec_print(unsigned char *ptr)
+static const char *
+ec_print(const char *ptr)
 {
     static char buff[64];
     struct ec_addr *ec = (struct ec_addr *) ptr;
@@ -43,7 +43,7 @@ ec_print(unsigned char *ptr)
 
 
 /* Display an Econet socket address */
-static char *
+static const char *
 ec_sprint(struct sockaddr *sap, int numeric)
 {
     struct sockaddr_ec *sec = (struct sockaddr_ec *) sap;
@@ -51,7 +51,7 @@ ec_sprint(struct sockaddr *sap, int numeric)
     if (sap->sa_family != AF_ECONET)
 	return _("[NONE SET]");
 
-    return ec_print((unsigned char *) &sec->addr);
+    return ec_print((const char *) &sec->addr);
 }
 
 static int 

@@ -59,7 +59,7 @@
  *    Print hardware address of interface
  *
  */
-static char *irda_print(unsigned char *ptr)
+static const char *irda_print(const char *ptr)
 {
     static char buff[12];
 

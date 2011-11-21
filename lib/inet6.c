@@ -126,7 +126,7 @@ static void INET6_reserror(char *text)
 
 
 /* Display an Internet socket address. */
-static char *INET6_print(unsigned char *ptr)
+static const char *INET6_print(const char *ptr)
 {
     static char name[80];
 
@@ -137,7 +137,7 @@ static char *INET6_print(unsigned char *ptr)
 
 /* Display an Internet socket address. */
 /* dirty! struct sockaddr usually doesn't suffer for inet6 addresses, fst. */
-static char *INET6_sprint(struct sockaddr *sap, int numeric)
+static const char *INET6_sprint(struct sockaddr *sap, int numeric)
 {
     static char buff[128];
 

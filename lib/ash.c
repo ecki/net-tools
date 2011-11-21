@@ -31,8 +31,8 @@ static unsigned char hamming[16] =
 };
 
 /* Display an Ash address in readable format. */
-static char *
-pr_ash(unsigned char *ptr)
+static const char *
+pr_ash(const char *ptr)
 {
     static char buff[128];
     char *p = buff;
@@ -102,7 +102,7 @@ struct hwtype ash_hwtype =
 #if HAVE_AFASH
 
 /* Display an Ash socket address. */
-static char *
+static const char *
 pr_sash(struct sockaddr *sap, int numeric)
 {
     static char buf[64];

@@ -53,8 +53,8 @@ static char ROSE_errmsg[128];
 
 extern struct aftype rose_aftype;
 
-static char *
- ROSE_print(unsigned char *ptr)
+static const char *
+ ROSE_print(const char *ptr)
 {
     static char buff[12];
 
@@ -64,7 +64,7 @@ static char *
 }
 
 /* Display a ROSE socket address. */
-static char *
+static const char *
  ROSE_sprint(struct sockaddr *sap, int numeric)
 {
     if (sap->sa_family == 0xFFFF || sap->sa_family == 0)

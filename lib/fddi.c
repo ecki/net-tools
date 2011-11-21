@@ -46,7 +46,7 @@ extern struct hwtype fddi_hwtype;
 
 
 /* Display an FDDI address in readable format. */
-static char *pr_fddi(unsigned char *ptr)
+static const char *pr_fddi(const char *ptr)
 {
     static char buff[64];
 

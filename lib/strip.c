@@ -38,8 +38,8 @@
 
 extern struct hwtype strip_hwtype;
 
-static char *
-pr_strip(unsigned char *ptr)
+static const char *
+pr_strip(const char *ptr)
 {
   static char buff[64];
   if(ptr[1])

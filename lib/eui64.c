@@ -49,7 +49,7 @@
 struct hwtype eui64_hwtype;
 
 /* Display an EUI-64 address in readable format. */
-static char *pr_eui64( unsigned char *ptr )
+static const char *pr_eui64(const char *ptr)
 {
 	static char buff[64];
 

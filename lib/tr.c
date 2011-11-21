@@ -39,7 +39,7 @@ extern struct hwtype tr_hwtype;
 extern struct hwtype tr_hwtype1;
 #endif
 
-static char *pr_tr(unsigned char *ptr)
+static const char *pr_tr(const char *ptr)
 {
     static char buff[64];
 

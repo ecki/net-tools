@@ -42,7 +42,7 @@
 #endif
 
 /* Display a ipx domain address. */
-static char *IPX_print(unsigned char *ptr)
+static const char *IPX_print(const char *ptr)
 {
     static char buff[64];
     struct sockaddr_ipx *sipx = (struct sockaddr_ipx *) (ptr - 2);
@@ -73,7 +73,7 @@ static char *IPX_print(unsigned char *ptr)
 
 
 /* Display a ipx domain address. */
-static char *IPX_sprint(struct sockaddr *sap, int numeric)
+static const char *IPX_sprint(struct sockaddr *sap, int numeric)
 {
     static char buf[64];
 

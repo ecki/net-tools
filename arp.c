@@ -434,7 +434,7 @@ static int arp_file(char *name)
 
 
 /* Print the contents of an ARP request block. */
-static void arp_disp_2(char *name, int type, int arp_flags, char *hwa, char *mask, char *dev)
+static void arp_disp_2(const char *name, int type, int arp_flags, const char *hwa, const char *mask, const char *dev)
 {
     static int title = 0;
     struct hwtype *xhw;
@@ -484,7 +484,7 @@ static void arp_disp_2(char *name, int type, int arp_flags, char *hwa, char *mas
 }
 
 /* Print the contents of an ARP request block. */
-static void arp_disp(char *name, char *ip, int type, int arp_flags, char *hwa, char *mask, char *dev)
+static void arp_disp(const char *name, const char *ip, int type, int arp_flags, const char *hwa, const char *mask, const char *dev)
 {
     struct hwtype *xhw;
 
@@ -538,7 +538,7 @@ static int arp_show(char *name)
     char dev[100];
     int type, flags;
     FILE *fp;
-    char *hostname;
+    const char *hostname;
     int num, entries = 0, showed = 0;
 
     host[0] = '\0';

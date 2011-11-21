@@ -229,14 +229,14 @@ static void INET_reserror(char *text)
 
 
 /* Display an Internet socket address. */
-static char *INET_print(unsigned char *ptr)
+static const char *INET_print(const char *ptr)
 {
     return (inet_ntoa((*(struct in_addr *) ptr)));
 }
 
 
 /* Display an Internet socket address. */
-static char *INET_sprint(struct sockaddr *sap, int numeric)
+static const char *INET_sprint(struct sockaddr *sap, int numeric)
 {
     static char buff[128];
 

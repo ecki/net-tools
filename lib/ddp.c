@@ -32,7 +32,7 @@
 #include "util.h"
 
 /* Display a ddp domain address. */
-static char *ddp_print(unsigned char *ptr)
+static const char *ddp_print(const char *ptr)
 {
     static char buff[64];
     struct sockaddr_at *sat = (struct sockaddr_at *) (ptr - 2);
@@ -42,7 +42,7 @@ static char *ddp_print(unsigned char *ptr)
 
 
 /* Display a ddp domain address. */
-static char *ddp_sprint(struct sockaddr *sap, int numeric)
+static const char *ddp_sprint(struct sockaddr *sap, int numeric)
 {
     static char buf[64];
 

@@ -47,7 +47,7 @@ static char AX25_errmsg[128];
 
 extern struct aftype ax25_aftype;
 
-static char *AX25_print(unsigned char *ptr)
+static const char *AX25_print(const char *ptr)
 {
     static char buff[8];
     int i;
@@ -66,7 +66,7 @@ static char *AX25_print(unsigned char *ptr)
 
 
 /* Display an AX.25 socket address. */
-static char *
+static const char *
  AX25_sprint(struct sockaddr *sap, int numeric)
 {
     static char buf[64];

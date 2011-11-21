@@ -50,8 +50,8 @@ extern struct aftype x25_aftype;
 #endif
 
 
-static char *
-X25_print(unsigned char *ptr)
+static const char *
+X25_print(const char *ptr)
 {
   static char buff[X25_ADDR_LEN+1];
 
@@ -63,7 +63,7 @@ X25_print(unsigned char *ptr)
 
 
 /* Display an X.25 socket address. */
-static char *
+static const char *
 X25_sprint(struct sockaddr *sap, int numeric)
 {
   if (sap->sa_family == 0xFFFF || sap->sa_family == 0)

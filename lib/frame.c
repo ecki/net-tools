@@ -37,7 +37,7 @@
 #include "net-support.h"
 #include "pathnames.h"
 
-char *pr_dlci(unsigned char *ptr)
+static const char *pr_dlci(const char *ptr)
 {
     static char buf[12];
 
