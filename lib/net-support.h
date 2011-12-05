@@ -135,6 +135,7 @@ extern int flag_x25;
 extern int flag_rose;
 extern int flag_inet;
 extern int flag_inet6;
+extern int flag_bluetooth;
 
 extern char afname[];
 
@@ -150,6 +151,7 @@ extern char afname[];
 	{"ddp",		0,	0,	1}, \
 	{"rose",	0,	0,	1}, \
 	{"unix",	0,	0,	1}, \
+	{"bluetooth",	0,	0,	1}, \
 	{"tcpip",	0,	0,	1}
 #define AFTRANS_CNT 12
 

@@ -38,6 +38,7 @@ int flag_econet;
 int flag_rose;
 int flag_x25 = 0;
 int flag_ash;
+int flag_bluetooth;
 
 
 struct aftrans_t {
@@ -90,6 +91,9 @@ struct aftrans_t {
     },
     {
         "ash", "ash", &flag_ash
+    },
+    {
+        "bluetooth", "bluetooth", &flag_bluetooth
     },
     {
 	0, 0, 0

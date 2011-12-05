@@ -99,6 +99,10 @@
 #include "util.h"
 #include "proc.h"
 
+#if HAVE_BLUETOOTH
+#include <bluetooth/bluetooth.h>
+#endif
+
 #define PROGNAME_WIDTH 20
 
 #if !defined(s6_addr32) && defined(in6a_words)
@@ -158,6 +162,8 @@ int flag_wide= 0;
 int flag_prg = 0;
 int flag_arg = 0;
 int flag_ver = 0;
+int flag_l2cap = 0;
+int flag_rfcomm = 0;
 
 FILE *procinfo;
 
@@ -1611,6 +1617,116 @@ static int ipx_info(void)
 }
 #endif
 
+#if HAVE_BLUETOOTH
+const char *bluetooth_state(int state)
+{
+    switch (state) {
+	case BT_CONNECTED:
+	    return _("CONNECTED");
+	case BT_OPEN:
+	    return _("OPEN");
+	case BT_BOUND:
+	    return _("BOUND");
+	case BT_LISTEN:
+	    return _("LISTEN");
+	case BT_CONNECT:
+	    return _("CONNECT");
+	case BT_CONNECT2:
+	    return _("CONNECT2");
+	case BT_CONFIG:
+	    return _("CONFIG");
+	case BT_DISCONN:
+	    return _("DISCONN");
+	case BT_CLOSED:
+	    return _("CLOSED");
+	default:
+	    return _("UNKNOWN");
+    }
+}
+
+static void l2cap_do_one(int nr, const char *line, const char *prot)
+{
+    char daddr[18], saddr[18];
+    unsigned state, psm, dcid, scid, imtu, omtu, sec_level;
+    int num;
+    const char *bt_state, *bt_sec_level;
+
+    num = sscanf(line, "%17s %17s %d %d 0x%04x 0x%04x %d %d %d",
+	daddr, saddr, &state, &psm, &dcid, &scid, &imtu, &omtu, &sec_level);
+
+    if (num < 9) {
+	fprintf(stderr, _("warning, got bogus l2cap line.\n"));
+	return;
+    }
+
+    if (flag_lst && !(state == BT_LISTEN || state == BT_BOUND))
+	return;
+    if (!(flag_all || flag_lst) && (state == BT_LISTEN || state == BT_BOUND))
+	return;
+
+    bt_state = bluetooth_state(state);
+    switch (sec_level) {
+	case BT_SECURITY_SDP:
+	    bt_sec_level = _("SDP");
+	    break;
+	case BT_SECURITY_LOW:
+	    bt_sec_level = _("LOW");
+	    break;
+	case BT_SECURITY_MEDIUM:
+	    bt_sec_level = _("MEDIUM");
+	    break;
+	case BT_SECURITY_HIGH:
+	    bt_sec_level = _("HIGH");
+	    break;
+	default:
+	    bt_sec_level = _("UNKNOWN");
+    }
+
+    printf("l2cap  %-17s %-17s %-9s %7d 0x%04x 0x%04x %7d %7d %-7s\n",
+	(strcmp (daddr, "00:00:00:00:00:00") == 0 ? "*" : daddr),
+	(strcmp (saddr, "00:00:00:00:00:00") == 0 ? "*" : saddr),
+	bt_state, psm, dcid, scid, imtu, omtu, bt_sec_level);
+}
+
+static int l2cap_info(void)
+{
+    printf("%-6s %-17s %-17s %-9s %7s %-6s %-6s %7s %7s %-7s\n",
+	"Proto", "Destination", "Source", "State", "PSM", "DCID", "SCID", "IMTU", "OMTU", "Security");
+    INFO_GUTS(_PATH_SYS_BLUETOOTH_L2CAP, "AF BLUETOOTH", l2cap_do_one, "l2cap");
+}
+
+static void rfcomm_do_one(int nr, const char *line, const char *prot)
+{
+    char daddr[18], saddr[18];
+    unsigned state, channel;
+    int num;
+    const char *bt_state;
+
+    num = sscanf(line, "%17s %17s %d %d", daddr, saddr, &state, &channel);
+    if (num < 4) {
+	fprintf(stderr, _("warning, got bogus rfcomm line.\n"));
+	return;
+    }
+
+    if (flag_lst && !(state == BT_LISTEN || state == BT_BOUND))
+	return;
+    if (!(flag_all || flag_lst) && (state == BT_LISTEN || state == BT_BOUND))
+	return;
+
+    bt_state = bluetooth_state(state);
+    printf("rfcomm %-17s %-17s %-9s %7d\n",
+	(strcmp (daddr, "00:00:00:00:00:00") == 0 ? "*" : daddr),
+	(strcmp (saddr, "00:00:00:00:00:00") == 0 ? "*" : saddr),
+	bt_state, channel);
+}
+
+static int rfcomm_info(void)
+{
+    printf("%-6s %-17s %-17s %-9s %7s\n", "Proto", "Destination", "Source", "State", "Channel");
+    INFO_GUTS(_PATH_SYS_BLUETOOTH_RFCOMM, "AF BLUETOOTH", rfcomm_do_one, "rfcomm");
+}
+#endif
+
 static int iface_info(void)
 {
     if (skfd < 0) {
@@ -1705,6 +1821,8 @@ int main
         {"udplite", 0, 0, 'U'},
 	{"raw", 0, 0, 'w'},
 	{"unix", 0, 0, 'x'},
+	{"l2cap", 0, 0, '2'},
+	{"rfcomm", 0, 0, 'f'},
 	{"listening", 0, 0, 'l'},
 	{"all", 0, 0, 'a'},
 	{"timers", 0, 0, 'o'},
@@ -1836,6 +1954,12 @@ int main
 	case 'w':
 	    flag_raw++;
 	    break;
+        case '2':
+	    flag_l2cap++;
+	    break;
+        case 'f':
+	    flag_rfcomm++;
+	    break;
 	case 'x':
 	    if (aftrans_opt("unix"))
 		exit(1);
@@ -1858,8 +1982,12 @@ int main
         !(flag_inet || flag_inet6))
         flag_inet = flag_inet6 = 1;
 
+    if (flag_bluetooth && !(flag_l2cap || flag_rfcomm))
+	   flag_l2cap = flag_rfcomm = 1;
+
     flag_arg = flag_tcp + flag_sctp + flag_udplite + flag_udp + flag_raw + flag_unx 
-        + flag_ipx + flag_ax25 + flag_netrom + flag_igmp + flag_x25 + flag_rose;
+        + flag_ipx + flag_ax25 + flag_netrom + flag_igmp + flag_x25 + flag_rose
+	+ flag_l2cap + flag_rfcomm;
 
     if (flag_mas) {
 #if HAVE_FW_MASQUERADE && HAVE_AFINET
@@ -2084,7 +2212,40 @@ int main
           }
 #endif
         }
-	            
+
+	if (!flag_arg || flag_l2cap || flag_rfcomm) {
+#if HAVE_BLUETOOTH
+	    printf(_("Active Bluetooth connections "));	/* xxx */
+
+	    if (flag_all)
+		printf(_("(servers and established)"));
+	    else {
+	      if (flag_lst)
+		printf(_("(only servers)"));
+	      else
+		printf(_("(w/o servers)"));
+	    }
+	    printf("\n");
+#else
+	    if (flag_arg) {
+		i = 1;
+		ENOSUPP("netstat", "AF BLUETOOTH");
+	    }
+#endif
+	}
+#if HAVE_BLUETOOTH
+	if (!flag_arg || flag_l2cap) {
+	    i = l2cap_info();
+	    if (i)
+		return (i);
+	}
+	if (!flag_arg || flag_rfcomm) {
+	    i = rfcomm_info();
+	    if (i)
+		return (i);
+	}
+#endif
+
 	if (!flag_cnt || i)
 	    break;
         wait_continous();
