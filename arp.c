@@ -243,7 +243,7 @@ static int arp_getdevhw(char *ifname, struct sockaddr *sa, struct hwtype *hw)
     struct ifreq ifr;
     struct hwtype *xhw;
 
-    strcpy(ifr.ifr_name, ifname);
+    strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
     if (ioctl(sockfd, SIOCGIFHWADDR, &ifr) < 0) {
 	fprintf(stderr, _("arp: cant get HW-Address for `%s': %s.\n"), ifname, strerror(errno));
 	return (-1);
