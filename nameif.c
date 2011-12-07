@@ -99,8 +99,8 @@ int  setname(char *oldname, char *newname)
 	struct ifreq ifr;
 	opensock(); 
 	memset(&ifr,0,sizeof(struct ifreq));
-	strcpy(ifr.ifr_name, oldname); 
-	strcpy(ifr.ifr_newname, newname); 
+	strncpy(ifr.ifr_name, oldname, IFNAMSIZ);
+	strncpy(ifr.ifr_newname, newname, IFNAMSIZ);
 	return ioctl(ctl_sk, SIOCSIFNAME, &ifr);
 }
 
