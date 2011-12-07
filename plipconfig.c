@@ -43,9 +43,6 @@
 #include "net-support.h"
 #include "version.h"
 
-int opt_a = 0;
-int opt_i = 0;
-int opt_v = 0;
 int skfd = -1;
 
 struct ifreq ifr;
@@ -63,9 +60,9 @@ static void version(void)
 
 void usage(void)
 {
-    fprintf(stderr, _("Usage: plipconfig [-a] [-i] [-v] interface\n"));
-    fprintf(stderr, _("                  [nibble NN] [trigger NN]\n"));
+    fprintf(stderr, _("Usage: plipconfig interface [nibble NN] [trigger NN]\n"));
     fprintf(stderr, _("       plipconfig -V | --version\n"));
+    fprintf(stderr, _("       plipconfig -h | --help\n"));
     exit(-1);
 }
 
@@ -93,12 +90,10 @@ int main(int argc, char **argv)
     argc--;
     argv++;
     while (argv[0] && *argv[0] == '-') {
-	if (!strcmp(*argv, "-a"))
-	    opt_a = 1;
-	if (!strcmp(*argv, "-v"))
-	    opt_v = 1;
 	if (!strcmp(*argv, "-V") || !strcmp(*argv, "--version"))
 	    version();
+	else
+            usage();
 	argv++;
 	argc--;
     }
