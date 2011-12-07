@@ -890,7 +890,9 @@ int main(int argc, char **argv)
 		    continue;
 		}
 		
-		memcpy(&ip, &sin.sin_addr.s_addr, sizeof(unsigned long));
+		/* Clear "ip" in case sizeof(unsigned long) > sizeof(sin.sin_addr.s_addr) */
+		ip = 0;
+		memcpy(&ip, &sin.sin_addr.s_addr, sizeof(sin.sin_addr.s_addr));
 		
 		if (get_nmbc_parent(ifr.ifr_name, &nm, &bc) < 0) {
 		    fprintf(stderr, _("Interface %s not initialized\n"),
