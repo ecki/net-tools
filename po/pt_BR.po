@@ -14,7 +14,7 @@ msgstr ""
 "PO-Revision-Date: 1999-03-01 02:38+0100\n"
 "Last-Translator: Arnaldo Carvalho de Melo <acme@conectiva.com.br>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO8859-9\n"
+"Content-Type: text/plain; charset=iso-8859-9\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../arp.c:110 ../arp.c:269
