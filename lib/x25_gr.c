@@ -37,6 +37,7 @@
 #include <string.h>
 #include "net-support.h"
 #include "pathnames.h"
+#include "proc.h"
 #define  EXTERN
 #if 0
 #include "net-locale.h"
@@ -48,9 +49,18 @@
 #define X25_ADDR_LEN 16
 #endif
 
+static FILE *proc_fopen_x25_route(void)
+{
+	FILE *ret = proc_fopen(_PATH_PROCNET_X25_ROUTE);
+	if (ret)
+		return ret;
+	/* try old linux-2.4 name */
+	return proc_fopen("/proc/net/x25_routes");
+}
+
 int X25_rprint(int options)
 {
-	FILE *f=fopen(_PATH_PROCNET_X25_ROUTE, "r");
+	FILE *f=proc_fopen_x25_route();
 	char buffer[256];
 	char *p;
 	int  digits;
