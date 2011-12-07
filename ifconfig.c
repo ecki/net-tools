@@ -441,7 +441,7 @@ int main(int argc, char **argv)
 	}
 	if (!strcmp(*spp, "-allmulti")) {
 	    goterr |= clr_flag(ifr.ifr_name, IFF_ALLMULTI);
-	    if (test_flag(ifr.ifr_name, IFF_MULTICAST) > 0)
+	    if (test_flag(ifr.ifr_name, IFF_ALLMULTI) > 0)
 	    	fprintf(stderr, _("Warning: Interface %s still in ALLMULTI mode.\n"), ifr.ifr_name);
 	    spp++;
 	    continue;
@@ -465,7 +465,7 @@ int main(int argc, char **argv)
 	if (!strcmp(*spp, "-dynamic")) {
 	    goterr |= clr_flag(ifr.ifr_name, IFF_DYNAMIC);
 	    spp++;
-	    if (test_flag(ifr.ifr_name, IFF_MULTICAST) > 0)
+	    if (test_flag(ifr.ifr_name, IFF_DYNAMIC) > 0)
 	    	fprintf(stderr, _("Warning: Interface %s still in DYNAMIC mode.\n"), ifr.ifr_name);
 	    continue;
 	}
@@ -523,7 +523,7 @@ int main(int argc, char **argv)
 
 	if (!strcmp(*spp, "-broadcast")) {
 	    goterr |= clr_flag(ifr.ifr_name, IFF_BROADCAST);
-	    if (test_flag(ifr.ifr_name, IFF_MULTICAST) > 0)
+	    if (test_flag(ifr.ifr_name, IFF_BROADCAST) > 0)
 	    	fprintf(stderr, _("Warning: Interface %s still in BROADCAST mode.\n"), ifr.ifr_name);
 	    spp++;
 	    continue;
@@ -661,7 +661,7 @@ int main(int argc, char **argv)
 	if (!strcmp(*spp, "-pointopoint")) {
 	    goterr |= clr_flag(ifr.ifr_name, IFF_POINTOPOINT);
 	    spp++;
-	    if (test_flag(ifr.ifr_name, IFF_MULTICAST) > 0)
+	    if (test_flag(ifr.ifr_name, IFF_POINTOPOINT) > 0)
 	    	fprintf(stderr, _("Warning: Interface %s still in POINTOPOINT mode.\n"), ifr.ifr_name);
 	    continue;
 	}
