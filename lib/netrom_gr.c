@@ -39,9 +39,7 @@ int NETROM_rprint(int options)
     /*int ext = options & FLAG_EXT;
        int numeric = options & FLAG_NUM_HOST; */
 
-    f1 = fopen(_PATH_PROCNET_NR_NODES, "r");
     if (!f1) perror(_PATH_PROCNET_NR_NODES);
-    f2 = fopen(_PATH_PROCNET_NR_NEIGH, "r");
     if (!f2) perror(_PATH_PROCNET_NR_NEIGH);
 
     if (f1 == NULL || f2 == NULL) {

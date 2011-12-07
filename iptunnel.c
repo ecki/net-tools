@@ -487,6 +487,7 @@ static int do_tunnels_list(struct ip_tunnel_parm *p)
 		if ((ptr = strchr(buf, ':')) == NULL ||
 		    (*ptr++ = 0, sscanf(buf, "%s", name) != 1)) {
 			fprintf(stderr, _("Wrong format of /proc/net/dev. Sorry.\n"));
+			fclose(fp);
 			return -1;
 		}
 		if (sscanf(ptr, "%ld%ld%ld%ld%ld%ld%ld%*d%ld%ld%ld%ld%ld%ld%ld",
@@ -523,6 +524,7 @@ static int do_tunnels_list(struct ip_tunnel_parm *p)
 			       tx_packets, tx_bytes, tx_errs, tx_colls, tx_carrier, tx_drops);
 		}
 	}
+	fclose(fp);
 	return 0;
 }
 

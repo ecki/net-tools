@@ -105,7 +105,8 @@ X25_input(int type, char *bufp, struct sockaddr *sap)
   }
 
   if (strlen(bufp) < 1 || strlen(bufp) > 15 || sigdigits > strlen(bufp)) {
-	*p = '/';
+        if (p != NULL)
+                *p = '/';
         strcpy(X25_errmsg, _("Invalid address"));
 #ifdef DEBUG
         fprintf(stderr, "x25_input(%s): %s !\n", X25_errmsg, orig);

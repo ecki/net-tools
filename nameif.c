@@ -153,6 +153,7 @@ void readconf(void)
 	FILE *ifh;
 	char *p;
 	int n;
+	struct change *ch = NULL;
 
 	ifh = fopen(fname, "r");
 	if (!ifh) 
@@ -162,7 +163,6 @@ void readconf(void)
 	linel = 0;
 	linenum = 1; 
 	while (getdelim(&line, &linel, '\n', ifh) > 0) {
-		struct change *ch = xmalloc(sizeof(struct change)); 
 		char pos[20]; 
 
 		sprintf(pos, _("line %d"), linenum); 
@@ -177,6 +177,7 @@ void readconf(void)
 		n = strcspn(p, " \t"); 
 		if (n > IFNAMSIZ-1) 
 			complain(_("interface name too long at line %d"), line);  
+		ch = xmalloc(sizeof(struct change));
 		memcpy(ch->ifname, p, n); 
 		ch->ifname[n] = 0; 
 		p += n; 

@@ -405,6 +405,8 @@ static void prg_cache_load(void)
 		   PATH_FD_SUFFl+1);
 	    strcpy(line + procfdlen + 1, direfd->d_name);
 	    lnamelen=readlink(line,lname,sizeof(lname)-1);
+	    if (lnamelen == -1)
+		    continue;
             lname[lnamelen] = '\0';  /*make it a null-terminated string*/
 
             if (extract_type_1_socket_inode(lname, &inode) < 0)
@@ -677,7 +679,7 @@ static int x25_info(void)
                "ESTABLISHED",
                "RECOVERY"
        };
-       if(!(f=proc_fopen(_PATH_PROCNET_X25)))
+       if(!f)
        {
                if (errno != ENOENT) {
                        perror(_PATH_PROCNET_X25);
@@ -1547,6 +1549,7 @@ static int ipx_info(void)
     printf("\n");
     if ((ap = get_afntype(AF_IPX)) == NULL) {
 	EINTERN("netstat.c", "AF_IPX missing");
+	fclose(f);
 	return (-1);
     }
     if (fgets(buf, 255, f))
@@ -1561,6 +1564,7 @@ static int ipx_info(void)
 	    sport = ntohs(sport);
 	} else {
 	    EINTERN("netstat.c", "ipx socket format error in source port");
+	    fclose(f);
 	    return (-1);
 	}
 	nc = 0;
@@ -1571,6 +1575,7 @@ static int ipx_info(void)
 		dport = ntohs(dport);
 	    } else {
 		EINTERN("netstat.c", "ipx soket format error in destination port");
+		fclose(f);
 		return (-1);
 	    }
 	} else

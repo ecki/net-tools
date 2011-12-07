@@ -32,6 +32,7 @@
 
 #include "config.h"
 #include "intl.h"
+#include "util.h"
 #include "util-ank.h"
 #include "net-support.h"
 #include "version.h"
@@ -159,8 +160,7 @@ void read_dev_mcast(struct ma_info **result_p)
 
 		len = parse_hex(hexa, (unsigned char*)&m.addr.data);
 		if (len >= 0) {
-			struct ma_info *ma = malloc(sizeof(m));
-
+			struct ma_info *ma = xmalloc(sizeof(m));
 			memcpy(ma, &m, sizeof(m));
 			ma->addr.bytelen = len;
 			ma->addr.bitlen = len<<3;
@@ -174,7 +174,7 @@ void read_dev_mcast(struct ma_info **result_p)
 
 void read_igmp(struct ma_info **result_p)
 {
-	struct ma_info m;
+	struct ma_info m, *ma = NULL;
 	char buf[256];
 	FILE *fp = fopen(_PATH_PROCNET_IGMP, "r");
 
@@ -189,8 +189,6 @@ void read_igmp(struct ma_info **result_p)
 	m.addr.bytelen = 4;
 
 	while (fgets(buf, sizeof(buf), fp)) {
-		struct ma_info *ma = malloc(sizeof(m));
-
 		if (buf[0] != '\t') {
 			sscanf(buf, "%d%s", &m.index, m.name);
 			continue;
@@ -201,7 +199,7 @@ void read_igmp(struct ma_info **result_p)
 
 		sscanf(buf, "%08x%d", (__u32*)&m.addr.data, &m.users);
 
-		ma = malloc(sizeof(m));
+		ma = xmalloc(sizeof(m));
 		memcpy(ma, &m, sizeof(m));
 		maddr_ins(result_p, ma);
 	}
@@ -232,8 +230,7 @@ void read_igmp6(struct ma_info **result_p)
 
 		len = parse_hex(hexa, (unsigned char*)&m.addr.data);
 		if (len >= 0) {
-			struct ma_info *ma = malloc(sizeof(m));
-
+			struct ma_info *ma = xmalloc(sizeof(m));
 			memcpy(ma, &m, sizeof(m));
 
 			ma->addr.bytelen = len;

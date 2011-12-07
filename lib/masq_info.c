@@ -208,10 +208,9 @@ int ip_masq_info(int numeric_host, int numeric_port, int ext)
 	}
 	for (i = 0; i < ntotal; i++)
 	    print_masq(&(mslist[i]), numeric_host, numeric_port, ext);
-	if (mslist)
-	    free(mslist);
-
     }
+
+    free(mslist);
     return 0;
 }
 #endif
