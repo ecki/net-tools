@@ -82,7 +82,7 @@ int rprint_fib6(int ext, int numeric)
 	     "Flag Met Ref Use If\n"));
 
     while (fgets(buff, 1023, fp)) {
-	num = sscanf(buff, "%4s%4s%4s%4s%4s%4s%4s%4s %02x %4s%4s%4s%4s%4s%4s%4s%4s %02x %4s%4s%4s%4s%4s%4s%4s%4s %08x %08x %08x %08x %s\n",
+	num = sscanf(buff, "%4s%4s%4s%4s%4s%4s%4s%4s %02x %4s%4s%4s%4s%4s%4s%4s%4s %02x %4s%4s%4s%4s%4s%4s%4s%4s %08x %08x %08x %08x %15s\n",
 		     addr6p[0], addr6p[1], addr6p[2], addr6p[3],
 		     addr6p[4], addr6p[5], addr6p[6], addr6p[7],
 		     &prefix_len,

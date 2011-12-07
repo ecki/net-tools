@@ -68,7 +68,7 @@ int rprint_fib(int ext, int numeric)
     mss = 0;
 
     fmt = proc_gen_fmt(_PATH_PROCNET_ROUTE, 0, fp,
-		       "Iface", "%16s",
+		       "Iface", "%15s",
 		       "Destination", "%127s",
 		       "Gateway", "%127s",
 		       "Flags", "%X",
@@ -80,7 +80,7 @@ int rprint_fib(int ext, int numeric)
 		       "Window", "%d",
 		       "IRTT", "%d",
 		       NULL);
-    /* "%16s %127s %127s %X %d %d %d %127s %d %d %d\n" */
+    /* "%15s %127s %127s %X %d %d %d %127s %d %d %d\n" */
 
     if (!fmt)
 	return 1;
@@ -268,7 +268,7 @@ int rprint_cache(int ext, int numeric)
 		 "MSS   Window irtt  HH  Arp\n"));
 
       fmt = proc_gen_fmt(_PATH_PROCNET_RTCACHE, 0, fp,
-		       "Iface", "%16s",
+		       "Iface", "%15s",
 		       "Destination", "%127s",
 		       "Gateway", "%127s",
 		       "Flags", "%X",
@@ -282,7 +282,7 @@ int rprint_cache(int ext, int numeric)
 		       "HH", "%d",
 		       "ARP", "%d",
 		       NULL);
-      /* "%16s %127s %127s %X %d %d %d %127s %d %d %d %d %d\n" */
+      /* "%15s %127s %127s %X %d %d %d %127s %d %d %d %d %d\n" */
     }
 
     if (format == 2) {
@@ -291,7 +291,7 @@ int rprint_cache(int ext, int numeric)
 		 "Flags Metric Ref    Use Iface    "
 		 "MSS   Window irtt  TOS HHRef HHUptod     SpecDst\n"));
         fmt = proc_gen_fmt(_PATH_PROCNET_RTCACHE, 0, fp,
-		       "Iface", "%16s",
+		       "Iface", "%15s",
 		       "Destination", "%127s",
 		       "Gateway", "%127s",
 		       "Flags", "%X",
@@ -307,7 +307,7 @@ int rprint_cache(int ext, int numeric)
 		       "HHUptod", "%d",
 		       "SpecDst", "%127s",
 		       NULL);
-      /* "%16s %127s %127s %X %d %d %d %127s %d %d %d %d %d %127s\n" */
+      /* "%15s %127s %127s %X %d %d %d %127s %d %d %d %d %d %127s\n" */
     }
 
 
