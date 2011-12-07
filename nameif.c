@@ -210,6 +210,7 @@ int main(int ac, char **av)
 	int linenum; 
 	char *line = NULL;
 	size_t linel = 0;
+	int ret = 0;
 
 	for (;;) {
 		int c = getopt_long(ac,av,"c:s",lopt,NULL);
@@ -288,13 +289,15 @@ int main(int ac, char **av)
 	while (clist) { 
 		struct change *ch = clist;
 		clist = clist->next;
-		if (!ch->found)
+		if (!ch->found){
 			warning(_("interface '%s' not found"), ch->ifname); 
+			ret = 1;
+		}
 		free(ch); 
 	}
 
 	if (use_syslog)
 		closelog();
-	return 0;
+	return ret;
 } 
 
