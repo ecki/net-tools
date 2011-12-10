@@ -62,7 +62,8 @@ int IPX_rprint(int options)
     printf(_("Kernel IPX routing table\n"));	/* xxx */
     printf(_("Destination               Router Net                Router Node\n"));
 
-    fgets(buff, 1023, fp);
+    if (fgets(buff, 1023, fp))
+	/* eat line */;
 
     while (fgets(buff, 1023, fp)) {
 	num = sscanf(buff, "%s %s %s", net, router_net, router_node);

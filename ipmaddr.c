@@ -181,7 +181,8 @@ void read_igmp(struct ma_info **result_p)
 	if (!fp)
 		return;
 	memset(&m, 0, sizeof(m));
-	fgets(buf, sizeof(buf), fp);
+	if (fgets(buf, sizeof(buf), fp))
+		/* eat line */;
 
 	m.addr.family = AF_INET;
 	m.addr.bitlen = 32;

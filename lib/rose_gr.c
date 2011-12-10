@@ -53,7 +53,8 @@ int ROSE_rprint(int options)
     }
     printf(_("Kernel ROSE routing table\n"));
     printf(_("Destination  Iface    Use\n"));
-    fgets(buffer, 256, f);
+    if (fgets(buffer, 256, f))
+	/* eat line */;
     while (fgets(buffer, 256, f)) {
 	buffer[9] = 0;
 	buffer[14] = 0;

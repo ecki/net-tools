@@ -73,7 +73,8 @@ int DDP_rprint(int options)
         return 1;
     }
 
-    fscanf(fp, "%as %as %as %as\n", &dest, &gw, &flags, &dev);
+    if (fscanf(fp, "%as %as %as %as\n", &dest, &gw, &flags, &dev))
+		/* eat line */;
     free(dest); free(gw); free(dev); free(flags);
 
     printf("%s\n", hdr);

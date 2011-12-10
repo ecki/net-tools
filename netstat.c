@@ -478,7 +478,8 @@ static int netrom_info(void)
     }
     printf(_("Active NET/ROM sockets\n"));
     printf(_("User       Dest       Source     Device  State        Vr/Vs    Send-Q  Recv-Q\n"));
-    fgets(buffer, 256, f);
+    if (fgets(buffer, 256, f))
+	/* eat line */;
 
     while (fgets(buffer, 256, f)) {
 	buffer[9] = 0;
@@ -686,7 +687,8 @@ static int x25_info(void)
        printf( _("Active X.25 sockets\n"));
        /* IMHO, Vr/Vs is not very usefull --SF */
        printf( _("Dest         Source          Device  LCI  State        Vr/Vs  Send-Q  Recv-Q\n"));
-       fgets(buffer,256,f);
+       if (fgets(buffer,256,f))
+               /* eat line */;
        while(fgets(buffer,256,f))
        {
                buffer[10]=0;
@@ -1541,7 +1543,8 @@ static int ipx_info(void)
 	EINTERN("netstat.c", "AF_IPX missing");
 	return (-1);
     }
-    fgets(buf, 255, f);
+    if (fgets(buf, 255, f))
+	/* eat line */;
 
     while (fgets(buf, 255, f) != NULL) {
 	sscanf(buf, "%s %s %lX %lX %d %d",

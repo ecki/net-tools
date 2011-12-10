@@ -326,8 +326,10 @@ static int if_readlist_proc(char *target)
 			_PATH_PROCNET_DEV, strerror(errno)); 
 		return -2;
 	}	
-    fgets(buf, sizeof buf, fh);	/* eat line */
-    fgets(buf, sizeof buf, fh);
+    if (fgets(buf, sizeof buf, fh))
+		/* eat line */;
+    if (fgets(buf, sizeof buf, fh))
+		/* eat line */;
 
 #if 0				/* pretty, but can't cope with missing fields */
     fmt = proc_gen_fmt(_PATH_PROCNET_DEV, 1, fh,

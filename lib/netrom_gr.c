@@ -50,7 +50,8 @@ int NETROM_rprint(int options)
     }
     printf(_("Kernel NET/ROM routing table\n"));
     printf(_("Destination  Mnemonic  Quality  Neighbour  Iface\n"));
-    fgets(buffer, 256, f1);
+    if (fgets(buffer, 256, f1))
+	/* eat line */;
     while (fgets(buffer, 256, f1)) {
 	buffer[9] = 0;
 	buffer[17] = 0;
@@ -60,7 +61,8 @@ int NETROM_rprint(int options)
 	qual = atoi(buffer + 24 + 15 * w);
 	n = atoi(buffer + 32 + 15 * w);
 	rewind(f2);
-	fgets(buffer, 256, f2);
+	if (fgets(buffer, 256, f2))
+	    /* eat line */;
 	while (fgets(buffer, 256, f2)) {
 	    if (atoi(buffer) == n) {
 		buffer[15] = 0;

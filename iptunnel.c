@@ -476,8 +476,10 @@ static int do_tunnels_list(struct ip_tunnel_parm *p)
 		return -1;
 	}
 
-	fgets(buf, sizeof(buf), fp);
-	fgets(buf, sizeof(buf), fp);
+	if (fgets(buf, sizeof(buf), fp))
+		/* eat line */;
+	if (fgets(buf, sizeof(buf), fp))
+		/* eat line */;
 
 	while (fgets(buf, sizeof(buf), fp) != NULL) {
 		char *ptr;

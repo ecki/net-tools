@@ -62,7 +62,8 @@ int X25_rprint(int options)
 	}
 	printf( _("Kernel X.25 routing table\n")); /* xxx */
 	printf( _("Destination          Iface\n")); /* xxx */
-	fgets(buffer,256,f);
+	if (fgets(buffer,256,f))
+		/* eat line */;
 	while(fgets(buffer,256,f))
 	{
 		p = strchr(buffer,'\n');
