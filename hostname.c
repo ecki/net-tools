@@ -422,7 +422,10 @@ int main(int argc, char **argv)
 	    setdname(argv[optind]);
 	    break;
 	}
-	getdomainname(myname, sizeof(myname));
+	if (getdomainname(myname, sizeof(myname)) < 0) {
+	    perror("getdomainname()");
+	    exit(1);
+	}
 	if (opt_v)
 	    fprintf(stderr, _("getdomainname()=`%s'\n"), myname);
 	printf("%s\n", myname);
