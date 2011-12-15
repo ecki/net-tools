@@ -99,7 +99,7 @@
 #include "util.h"
 #include "proc.h"
 
-#if HAVE_BLUETOOTH
+#if HAVE_AFBLUETOOTH
 #include <bluetooth/bluetooth.h>
 #endif
 
@@ -1617,7 +1617,7 @@ static int ipx_info(void)
 }
 #endif
 
-#if HAVE_BLUETOOTH
+#if HAVE_AFBLUETOOTH
 const char *bluetooth_state(int state)
 {
     switch (state) {
@@ -2214,7 +2214,7 @@ int main
         }
 
 	if (!flag_arg || flag_l2cap || flag_rfcomm) {
-#if HAVE_BLUETOOTH
+#if HAVE_AFBLUETOOTH
 	    printf(_("Active Bluetooth connections "));	/* xxx */
 
 	    if (flag_all)
@@ -2233,7 +2233,7 @@ int main
 	    }
 #endif
 	}
-#if HAVE_BLUETOOTH
+#if HAVE_AFBLUETOOTH
 	if (!flag_arg || flag_l2cap) {
 	    i = l2cap_info();
 	    if (i)

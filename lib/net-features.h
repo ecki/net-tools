@@ -183,6 +183,12 @@ static char *Features =
 "-"
 #endif
 "ROSE "
+#if HAVE_AFBLUETOOTH
+"+"
+#else
+"-"
+#endif
+"BLUETOOTH"
 
 "\nHW: "
 
