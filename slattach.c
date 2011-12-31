@@ -62,10 +62,13 @@
 #include "util.h"
 
 #ifndef _PATH_LOCKD
-#define _PATH_LOCKD		"/var/lock"		/* lock files   */
+#define _PATH_LOCKD	"/var/lock"		/* lock files   */
 #endif
 #ifndef _UID_UUCP
-#define _UID_UUCP		"uucp"			/* owns locks   */
+#define _UID_UUCP	"uucp"			/* owns locks   */
+#endif
+#ifndef _PATH_DEVPTMX
+#define _PATH_DEVPTMX	"/dev/ptmx"		/* pseudo-terminal master */
 #endif
 
 
@@ -108,6 +111,7 @@ struct termios	tty_saved,		/* saved TTY device state	*/
 int		tty_sdisc,		/* saved TTY line discipline	*/
 		tty_ldisc,		/* current TTY line discipline	*/
 		tty_fd = -1;		/* TTY file descriptor		*/
+char *		path_pts = NULL;	/* slave pseudo-terminal device */
 int		opt_c = 0;		/* "command" to run at exit	*/
 int		opt_e = 0;		/* "activate only" flag		*/
 int		opt_h = 0;		/* "hangup" on carrier loss	*/
@@ -492,7 +496,28 @@ tty_open(char *name, const char *speed)
 		return(-errno);
 	}
 	tty_fd = fd;
-	if (opt_d) printf("slattach: tty_open: %s (fd=%d) ", path_open, fd);
+	if (opt_d) printf("slattach: tty_open: %s (fd=%d)\n", path_open, fd);
+	if (!strcmp(path_open, _PATH_DEVPTMX)) {
+		if (opt_d) printf("slattach: tty_open: trying to grantpt and unlockpt\n");
+		if (grantpt(fd) < 0) {
+		    if (opt_q == 0) fprintf(stderr,
+			    "slattach: tty_open: grantpt: %s\n", strerror(errno));
+		    return(-errno);
+		}
+		if (unlockpt(fd) < 0) {
+		    if (opt_q == 0) fprintf(stderr,
+			    "slattach: tty_open: unlockpt: %s\n", strerror(errno));
+		    return(-errno);
+		}
+		path_pts = ptsname(fd);
+		if (path_pts == NULL) {
+		    if (opt_q == 0) fprintf(stderr,
+			    "slattach: tty_open: ptsname: %s\n", strerror(errno));
+		    return(-errno);
+		}
+		if (opt_d) printf("slattach: tty_open: %s: slave pseudo-terminal is %s\n",
+				  path_open, path_pts);
+	}
   } else {
 	tty_fd = 0;
   }
@@ -707,6 +732,7 @@ main(int argc, char *argv[])
         if (tty_get_name(buff)) { return(3); }
 	printf(_("%s started"), proto);
 	if (path_dev != NULL) printf(_(" on %s"), path_dev);
+	if (path_pts != NULL) printf(_(" ptsname %s"), path_pts);
 	printf(_(" interface %s\n"), buff);
   }
 
