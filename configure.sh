@@ -39,6 +39,14 @@ MAKECONFIG=config.make
 
 [ -z "$BASH" ] && { echo "Configure requires bash" 1>&2; exit 1; }
 
+cat <<EOF
+
+######################################################
+Notice: ifconfig and route are now installed into /bin
+######################################################
+
+EOF
+
 # Disable filename globbing once and for all.
 # Enable function cacheing.
 set -f -h
