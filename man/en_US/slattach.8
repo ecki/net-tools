@@ -1,4 +1,4 @@
-.TH SLATTACH 8 "2008\-10\-03" "net\-tools" "Linux System Administrator's Manual"
+.TH SLATTACH 8 "2011\-12\-31" "net\-tools" "Linux System Administrator's Manual"
 .SH NAME
 slattach \- attach a network interface to a serial line
 .SH SYNOPSIS
@@ -10,6 +10,11 @@ is a tiny little program that can be used to put a normal terminal
 ("serial") line into one of several "network" modes, thus allowing
 you to use it for point-to-point links to other computers.
 .SH OPTIONS
+.TP
+.B tty
+Path to a serial device like
+.IR /dev/ttyS* ", " /dev/cua* " or " /dev/ptmx
+to spawn a new pseudo tty.
 .TP
 .B "[\-c command]"
 Execute
@@ -78,7 +83,7 @@ If no arguments are given, the current terminal line (usually: the
 login device) is used.  Otherwise, an attempt is made to claim the
 indicated terminal port, lock it, and open it.
 .SH FILES
-.I /dev/cua* /var/lock/LCK.*
+.I /dev/cua* /var/lock/LCK.* /dev/ttyS* /dev/ptmx
 .SH BUGS
 None known.
 .SH SEE ALSO
