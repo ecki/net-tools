@@ -327,9 +327,9 @@ int show_basic_mii(int sock, int phy_id)
 	    printf("remote fault, ");
 	printf((bmsr & MII_BMSR_LINK_VALID) ? "link ok" : "no link");
 	printf("\n  capabilities:%s", media_list(bmsr >> 6, bmcr2, 0));
-	printf("\n  advertising: %s", media_list(advert, lpa2 >> 2, 0));
+	printf("\n  advertising: %s", media_list(advert, bmcr2, 0));
 	if (lkpar & MII_AN_ABILITY_MASK)
-	    printf("\n  link partner:%s", media_list(lkpar, bmcr2, 0));
+	    printf("\n  link partner:%s", media_list(lkpar, lpa2 >> 2, 0));
 	printf("\n");
     }
     fflush(stdout);
