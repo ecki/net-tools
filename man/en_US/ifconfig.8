@@ -211,6 +211,16 @@ for more information.
 .br
 .I /proc/net/if_inet6
 .SH BUGS
+Ifconfig uses the ioctl access method to get the full address information,
+which limits hardware addresses to 8 bytes.
+Because Infiniband hardware address has 20 bytes,
+only the first 8 bytes are displayed correctly.
+Please use
+.B ip link
+command from
+.B iproute2
+package to display link layer informations including the hardware address.
+.LP
 While appletalk DDP and IPX addresses will be displayed they cannot be
 altered by this command.
 .SH SEE ALSO

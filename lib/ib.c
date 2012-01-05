@@ -47,7 +47,8 @@ static const char *pr_ib(const char *ptr)
 	pos += sprintf(pos, "%02X:", (*ptr++ & 0377));
     }
     buff[strlen(buff) - 1] = '\0';
-
+    char *ib_warning = "Infiniband hardware address can be incorrect! Please read BUGS section in ifconfig(8).";
+    fprintf(stderr, _(ib_warning));
     /* snprintf(buff, sizeof(buff), "%02X:%02X:%02X:%02X:%02X:%02X",
 	     (ptr[0] & 0377), (ptr[1] & 0377), (ptr[2] & 0377),
 	     (ptr[3] & 0377), (ptr[4] & 0377), (ptr[5] & 0377)
