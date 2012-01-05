@@ -440,7 +440,7 @@ static void watch_one_xcvr(int skfd, char *ifname, int index)
 /*--------------------------------------------------------------------*/
 
 const char *usage =
-"usage: %s [-VvRrwl] [-A media,... | -F media] [interface ...]\n"
+"usage: %s [-VvRrwl] [-A media,... | -F media] <interface ...>\n"
 "       -V, --version               display version information\n"
 "       -v, --verbose               more verbose output\n"
 "       -R, --reset                 reset MII to poweron state\n"
@@ -507,13 +507,10 @@ int main(int argc, char **argv)
 
     /* No remaining args means show all interfaces. */
     if (optind == argc) {
-	ret = 1;
-	for (i = 0; i < MAX_ETH; i++) {
-	    sprintf(s, "eth%d", i);
-	    ret &= do_one_xcvr(skfd, s, 1);
-	}
-	if (ret)
-	    fprintf(stderr, "no MII interfaces found\n");
+	fprintf(stderr, "No interface specified\n");
+	fprintf(stderr, usage, argv[0]);
+	close(skfd);
+	return 2;
     } else {
 	ret = 0;
 	for (i = optind; i < argc; i++) {
@@ -524,15 +521,8 @@ int main(int argc, char **argv)
     if (opt_watch && (ret == 0)) {
 	while (1) {
 	    sleep(1);
-	    if (optind == argc) {
-		for (i = 0; i < MAX_ETH; i++) {
-		    sprintf(s, "eth%d", i);
-		    watch_one_xcvr(skfd, s, i);
-		}
-	    } else {
-		for (i = optind; i < argc; i++)
+	    for (i = optind; i < argc; i++)
 		    watch_one_xcvr(skfd, argv[i], i-optind);
-	    }
 	}
     }
 
