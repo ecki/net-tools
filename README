@@ -65,6 +65,8 @@ all common environments but some of the more esoteric hardware and
 protocol families may be more touchy.  Feel free to send patches if
 you have problems.
 
+For this release, the localized man pages are installed with UTF-8 encoding.
+
 Phil Blundell
 philb@gnu.org
 
