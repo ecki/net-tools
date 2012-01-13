@@ -138,12 +138,9 @@ compatibility hack.
 set the metric field in the routing table (used by routing daemons) to M.
 .TP 
 .B mss M
-set the TCP Maximum Segment Size (MSS) for connections over this route
-to M bytes. 
-The default is the device MTU minus headers, or a lower MTU when path mtu 
-discovery occurred. This setting can be used to force smaller TCP packets on the
-other end when path mtu discovery does not work (usually because of
-misconfigured firewalls that block ICMP Fragmentation Needed)
+sets MTU (Maximum Transmission Unit) of the route to M bytes.
+Note that the current implementation of the route command does not allow
+the option to set the Maximum Segment Size (MSS).
 .TP 
 .B window W 
 set the TCP window size for connections over this route to W
