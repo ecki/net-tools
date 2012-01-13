@@ -150,7 +150,7 @@ da sintaxe atualmente não requisitá-lo.
 +are shared with all alias addresses on the same device. If you want per-address
 +statistics you should add explicit accounting
 +rules for the address using the
-+.BR ipchains(8)
++.BR iptables(8)
 +command.
 
 Deste o kernel 2.2 não existem mais estatísticas explícitas para os apelidos (aliases)
@@ -158,7 +158,7 @@ de interfaces. As estatísticas mostradas para o endereço original são compart
 como todos os endereços associados ao mesmo dispositivo. Se desejar estatísticas
 por endereço você deve explicitamente adicionar regras de contabilização para os
 endereços usando o comando
-.BR ipchains(8)
+.BR iptables(8)
 .
 
 .SH ARQUIVOS
@@ -167,7 +167,7 @@ endereços usando o comando
 Os endereços appletalk DDP e IPX serão mostrados, mas não podem ser alterados
 com este comando.
 .SH VEJA TAMBÉM
-route(8), netstat(8), arp(8), rarp(8), ipchains(8)
+route(8), netstat(8), arp(8), rarp(8), iptables(8)
 .SH AUTORES
 Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
 Alan Cox, <Alan.Cox@linux.org>

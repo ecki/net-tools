@@ -135,7 +135,7 @@ séquence et les deltas causés par des réécritures de données sur des
 sessions FTP (commande PORT). Le support de l'IP-Masquerade est utilisé
 pour cacher au monde extérieur des hôtes appartenant à un réseau (et ayant
 des adresses) non officiel, tel que décrit dans
-.BR ipfw (4), ipfwadm "(8) et " ipfw (8).
+.BR iptables (8).
 
 .SS "\-N, \-\-netlink"
 
@@ -409,7 +409,7 @@ Affiche le chemin correspondant à l'attachement des processus à la socket.
 Depuis la version 2.2 du noyau, netstat -i n'affiche plus les statistiques
 des interfaces alias. Pour obtenir les compteurs par interface alias, vous
 devez définir des règles spécifiques à l'aide de la commande
-.BR ipchains (8).
+.BR iptables(8).
 
 .SH FICHIERS
 .ta
@@ -470,10 +470,7 @@ devez définir des règles spécifiques à l'aide de la commande
 .SH VOIR AUSSI
 .BR route (8), 
 .BR ifconfig (8), 
-.BR ipfw (4), 
-.BR ipfw (8), 
-.BR ipfwadm (8)
-.BR ipchains (8)
+.BR iptables (8)
 
 .PP
 .SH BUGS

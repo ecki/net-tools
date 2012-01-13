@@ -124,7 +124,7 @@ você pode incluir mais algumas informações sobre numeração sequencial e del
 , causados por reescritas de dados em sessões FTP (comando PORT).
 O suporte a mascaramento é usado para esconder máquinas em endereços de
 rede não oficiais do resto do mundo, como descrito em
-.BR ipfw (4), ipfwadm "(8) e ipfw (8).
+.BR iptables (8).
 
 .SS "\-s, \-\-statistics"
 
@@ -375,7 +375,7 @@ Mostra o caminho (path) do processo do qual está tratando esse socket.
 Desde o kernel 2.2 o netstat -i não mostra estatísticas para apelidos (aliases)
 de interfaces. Para obter contadores por apelido de interface você precisa
 configurar regras explícitas usando o comando
-+.BR ipchains(8)
++.BR iptables(8)
 .
 .SH FILES
 .ta
@@ -436,10 +436,7 @@ configurar regras explícitas usando o comando
 .SH VEJA TAMBÉM
 .BR route (8), 
 .BR ifconfig (8), 
-.BR ipfw (4), 
-.BR ipfw (8), 
-.BR ipfwadm (8)
-.BR ipchains (8)
+.BR iptables (8)
 
 .PP
 .SH BUGS
