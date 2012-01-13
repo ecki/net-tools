@@ -144,15 +144,6 @@ O nome ou endereço IP da máquina (um nome de máquina será traduzido para
 um  endereço IP) da interface. Este parâmetro é necessário, apesar
 da sintaxe atualmente não requisitá-lo.
 .SH NOTAS
-
-+Since kernel release 2.2 there are no explicit interface statistics for
-+alias interfaces anymore. The statistics printed for the original address
-+are shared with all alias addresses on the same device. If you want per-address
-+statistics you should add explicit accounting
-+rules for the address using the
-+.BR iptables(8)
-+command.
-
 Deste o kernel 2.2 não existem mais estatísticas explícitas para os apelidos (aliases)
 de interfaces. As estatísticas mostradas para o endereço original são compartilhadas
 como todos os endereços associados ao mesmo dispositivo. Se desejar estatísticas
