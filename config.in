@@ -92,3 +92,4 @@ bool 'InfiniBand hardware support' HAVE_HWIB y
 bool 'IP Masquerading support' HAVE_FW_MASQUERADE y
 bool 'Build iptunnel and ipmaddr' HAVE_IP_TOOLS y
 bool 'Build mii-tool' HAVE_MII y
+bool 'SELinux support' HAVE_SELINUX n

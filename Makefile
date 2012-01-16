@@ -114,6 +114,11 @@ endif
 
 NET_LIB = $(NET_LIB_PATH)/lib$(NET_LIB_NAME).a
 
+ifeq ($(HAVE_SELINUX),1)
+LDFLAGS += -lselinux
+CFLAGS += -DHAVE_SELINUX
+endif
+
 CPPFLAGS += -I. -I$(TOPDIR)/include -I$(NET_LIB_PATH)
 LDFLAGS  += -L$(NET_LIB_PATH)
 

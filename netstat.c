@@ -89,6 +89,11 @@
 #include <net/if.h>
 #include <dirent.h>
 
+#if HAVE_SELINUX
+#include <selinux/selinux.h>
+#else
+#define security_context_t char*
+#endif
 #include "net-support.h"
 #include "pathnames.h"
 #include "version.h"
@@ -104,6 +109,7 @@
 #endif
 
 #define PROGNAME_WIDTH 20
+#define SELINUX_WIDTH 50
 
 #if !defined(s6_addr32) && defined(in6a_words)
 #define s6_addr32 in6a_words	/* libinet6			*/
@@ -164,6 +170,7 @@ int flag_arg = 0;
 int flag_ver = 0;
 int flag_l2cap = 0;
 int flag_rfcomm = 0;
+int flag_selinux = 0;
 
 FILE *procinfo;
 
@@ -227,12 +234,17 @@ FILE *procinfo;
 #define PROGNAME_WIDTH1(s) PROGNAME_WIDTH2(s)
 #define PROGNAME_WIDTH2(s) #s
 
+#define SELINUX_WIDTHs SELINUX_WIDTH1(SELINUX_WIDTH)
+#define SELINUX_WIDTH1(s) SELINUX_WIDTH2(s)
+#define SELINUX_WIDTH2(s) #s
+
 #define PRG_HASH_SIZE 211
 
 static struct prg_node {
     struct prg_node *next;
     unsigned long inode;
     char name[PROGNAME_WIDTH];
+    char scon[SELINUX_WIDTH];
 } *prg_hash[PRG_HASH_SIZE];
 
 static char prg_cache_loaded = 0;
@@ -240,8 +252,11 @@ static char prg_cache_loaded = 0;
 #define PRG_HASHIT(x) ((x) % PRG_HASH_SIZE)
 
 #define PROGNAME_BANNER "PID/Program name"
+#define SELINUX_BANNER "Security Context"
 
 #define print_progname_banner() do { if (flag_prg) printf(" %-" PROGNAME_WIDTHs "s",PROGNAME_BANNER); } while (0)
+
+#define print_selinux_banner() do { if (flag_selinux) printf("%-" SELINUX_WIDTHs "s"," " SELINUX_BANNER); } while (0)
 
 #define PRG_LOCAL_ADDRESS "local_address"
 #define PRG_INODE	 "inode"
@@ -262,7 +277,7 @@ static char prg_cache_loaded = 0;
 #define PATH_CMDLINE	"cmdline"
 #define PATH_CMDLINEl       strlen(PATH_CMDLINE)
 
-static void prg_cache_add(unsigned long inode, char *name)
+static void prg_cache_add(unsigned long inode, char *name, const char *scon)
 {
     unsigned hi = PRG_HASHIT(inode);
     struct prg_node **pnp,*pn;
@@ -283,6 +298,15 @@ static void prg_cache_add(unsigned long inode, char *name)
     if (strlen(name) > sizeof(pn->name) - 1) 
 	name[sizeof(pn->name) - 1] = '\0';
     strcpy(pn->name, name);
+
+    {
+	size_t len = (strlen(scon) - sizeof(pn->scon)) + 1;
+	if (len > 0) 
+            strcpy(pn->scon, &scon[len + 1]);
+	else
+            strcpy(pn->scon, scon);
+    }
+
 }
 
 static const char *prg_cache_get(unsigned long inode)
@@ -293,6 +317,17 @@ static const char *prg_cache_get(unsigned long inode)
     for (pn = prg_hash[hi]; pn; pn = pn->next)
 	if (pn->inode == inode)
 	    return (pn->name);
+    return ("-");
+}
+
+static const char *prg_cache_get_con(unsigned long inode)
+{
+    unsigned hi = PRG_HASHIT(inode);
+    struct prg_node *pn;
+
+    for (pn = prg_hash[hi]; pn; pn = pn->next)
+	if (pn->inode == inode)
+	    return (pn->scon);
     return ("-");
 }
 
@@ -373,6 +408,7 @@ static void prg_cache_load(void)
     const char *cs, *cmdlp;
     DIR *dirproc = NULL, *dirfd = NULL;
     struct dirent *direproc, *direfd;
+    security_context_t scon = NULL;
 
     if (prg_cache_loaded || !flag_prg) return;
     prg_cache_loaded = 1;
@@ -436,7 +472,15 @@ static void prg_cache_load(void)
 	    }
 
 	    snprintf(finbuf, sizeof(finbuf), "%s/%s", direproc->d_name, cmdlp);
-	    prg_cache_add(inode, finbuf);
+#if HAVE_SELINUX
+	    if (getpidcon(atoi(direproc->d_name), &scon) == -1) {
+		    scon=strdup("-");
+	    }
+	    prg_cache_add(inode, finbuf, scon);
+	    freecon(scon);
+#else
+	    prg_cache_add(inode, finbuf, "-");
+#endif
 	}
 	closedir(dirfd); 
 	dirfd = NULL;
@@ -557,6 +601,9 @@ static void finish_this_one(int uid, unsigned long inode, const char *timers)
     }
     if (flag_prg)
 	printf(" %-" PROGNAME_WIDTHs "s",prg_cache_get(inode));
+    if (flag_selinux)
+	printf(" %-" SELINUX_WIDTHs "s",prg_cache_get_con(inode));
+
     if (flag_opt)
 	printf(" %s", timers);
     putchar('\n');
@@ -1374,7 +1421,9 @@ static void unix_do_one(int nr, const char *line, const char *prot)
 	printf("-       ");
     if (flag_prg)
 	printf(" %-" PROGNAME_WIDTHs "s",(has & HAS_INODE?prg_cache_get(inode):"-"));
-	
+    if (flag_selinux)
+	printf(" %-" SELINUX_WIDTHs "s",(has & HAS_INODE?prg_cache_get_con(inode):"-"));
+
     printf(" %s\n", path);
 }
 
@@ -1393,6 +1442,7 @@ static int unix_info(void)
 
     printf(_("\nProto RefCnt Flags       Type       State         I-Node  "));
     print_progname_banner();
+    print_selinux_banner();
     printf(_(" Path\n"));	/* xxx */
 
     {
@@ -1797,6 +1847,7 @@ static void usage(void)
     fprintf(stderr, _("        -o, --timers             display timers\n"));
     fprintf(stderr, _("        -F, --fib                display Forwarding Information Base (default)\n"));
     fprintf(stderr, _("        -C, --cache              display routing cache instead of FIB\n\n"));
+    fprintf(stderr, _("        -Z, --context            display SELinux security context for sockets\n\n"));
 
     fprintf(stderr, _("  <Socket>={-t|--tcp} {-u|--udp} {-U|--udplite} {-w|--raw} {-x|--unix} --ax25 --ipx --netrom\n"));
     fprintf(stderr, _("  <AF>=Use '-6|-4' or '-A <af>' or '--<af>'; default: %s\n"), DFLT_AF);
@@ -1846,6 +1897,7 @@ int main
 	{"cache", 0, 0, 'C'},
 	{"fib", 0, 0, 'F'},
 	{"groups", 0, 0, 'g'},
+	{"context", 0, 0, 'Z'},
 	{NULL, 0, 0, 0}
     };
 
@@ -1857,7 +1909,7 @@ int main
     getroute_init();		/* Set up AF routing support */
 
     afname[0] = '\0';
-    while ((i = getopt_long(argc, argv, "A:CFMacdeghilnNoprsStuUvVWwx64?", longopts, &lop)) != EOF)
+    while ((i = getopt_long(argc, argv, "A:CFMacdeghilnNoprsStuUvVWwx64?Z", longopts, &lop)) != EOF)
 	switch (i) {
 	case -1:
 	    break;
@@ -1969,6 +2021,20 @@ int main
 	case 'x':
 	    if (aftrans_opt("unix"))
 		exit(1);
+	    break;
+	case 'Z':
+#if HAVE_SELINUX
+	    if (is_selinux_enabled() <= 0) {
+		fprintf(stderr, _("SELinux is not enabled on this machine.\n"));
+		exit(1);
+	    }
+	    flag_prg++;
+	    flag_selinux++;
+#else
+            fprintf(stderr, _("SELinux is not enabled for this application.\n"));
+	    exit(1);
+#endif
+
 	    break;
 	case '?':
 	case 'h':
@@ -2090,6 +2156,7 @@ int main
 	    if (flag_exp > 1)
 		printf(_(" User       Inode     "));
 	    print_progname_banner();
+	    print_selinux_banner();
 	    if (flag_opt)
 		printf(_(" Timer"));	/* xxx */
 	    printf("\n");
