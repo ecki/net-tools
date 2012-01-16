@@ -267,32 +267,33 @@ static void prg_cache_add(unsigned long inode, char *name)
     unsigned hi = PRG_HASHIT(inode);
     struct prg_node **pnp,*pn;
 
-    prg_cache_loaded=2;
-    for (pnp=prg_hash+hi;(pn=*pnp);pnp=&pn->next) {
-	if (pn->inode==inode) {
+    prg_cache_loaded = 2;
+    for (pnp = prg_hash + hi; (pn = *pnp); pnp = &pn->next) {
+	if (pn->inode == inode) {
 	    /* Some warning should be appropriate here
 	       as we got multiple processes for one i-node */
 	    return;
 	}
     }
-    if (!(*pnp=malloc(sizeof(**pnp)))) 
+    if (!(*pnp = malloc(sizeof(**pnp)))) 
 	return;
-    pn=*pnp;
-    pn->next=NULL;
-    pn->inode=inode;
-    if (strlen(name)>sizeof(pn->name)-1) 
-	name[sizeof(pn->name)-1]='\0';
-    strcpy(pn->name,name);
+    pn = *pnp;
+    pn->next = NULL;
+    pn->inode = inode;
+    if (strlen(name) > sizeof(pn->name) - 1) 
+	name[sizeof(pn->name) - 1] = '\0';
+    strcpy(pn->name, name);
 }
 
 static const char *prg_cache_get(unsigned long inode)
 {
-    unsigned hi=PRG_HASHIT(inode);
+    unsigned hi = PRG_HASHIT(inode);
     struct prg_node *pn;
 
-    for (pn=prg_hash[hi];pn;pn=pn->next)
-	if (pn->inode==inode) return(pn->name);
-    return("-");
+    for (pn = prg_hash[hi]; pn; pn = pn->next)
+	if (pn->inode == inode)
+	    return (pn->name);
+    return ("-");
 }
 
 static void prg_cache_clear(void)
@@ -300,12 +301,12 @@ static void prg_cache_clear(void)
     struct prg_node **pnp,*pn;
 
     if (prg_cache_loaded == 2)
-	for (pnp=prg_hash;pnp<prg_hash+PRG_HASH_SIZE;pnp++)
-	    while ((pn=*pnp)) {
-		*pnp=pn->next;
+	for (pnp = prg_hash; pnp < prg_hash + PRG_HASH_SIZE; pnp++)
+	    while ((pn = *pnp)) {
+		*pnp = pn->next;
 		free(pn);
 	    }
-    prg_cache_loaded=0;
+    prg_cache_loaded = 0;
 }
 
 static void wait_continous(void)
@@ -365,32 +366,32 @@ static int extract_type_2_socket_inode(const char lname[], unsigned long * inode
 
 static void prg_cache_load(void)
 {
-    char line[LINE_MAX],eacces=0;
-    int procfdlen,fd,cmdllen,lnamelen;
-    char lname[30],cmdlbuf[512],finbuf[PROGNAME_WIDTH];
+    char line[LINE_MAX], eacces=0;
+    int procfdlen, fd, cmdllen, lnamelen;
+    char lname[30], cmdlbuf[512], finbuf[PROGNAME_WIDTH];
     unsigned long inode;
-    const char *cs,*cmdlp;
-    DIR *dirproc=NULL,*dirfd=NULL;
-    struct dirent *direproc,*direfd;
+    const char *cs, *cmdlp;
+    DIR *dirproc = NULL, *dirfd = NULL;
+    struct dirent *direproc, *direfd;
 
     if (prg_cache_loaded || !flag_prg) return;
-    prg_cache_loaded=1;
-    cmdlbuf[sizeof(cmdlbuf)-1]='\0';
+    prg_cache_loaded = 1;
+    cmdlbuf[sizeof(cmdlbuf) - 1] = '\0';
     if (!(dirproc=opendir(PATH_PROC))) goto fail;
-    while (errno=0,direproc=readdir(dirproc)) {
-	for (cs=direproc->d_name;*cs;cs++)
+    while (errno = 0, direproc = readdir(dirproc)) {
+	for (cs = direproc->d_name; *cs; cs++)
 	    if (!isdigit(*cs)) 
 		break;
 	if (*cs) 
 	    continue;
-	procfdlen=snprintf(line,sizeof(line),PATH_PROC_X_FD,direproc->d_name);
-	if (procfdlen<=0 || procfdlen>=sizeof(line)-5) 
+	procfdlen = snprintf(line,sizeof(line),PATH_PROC_X_FD,direproc->d_name);
+	if (procfdlen <= 0 || procfdlen >= sizeof(line) - 5) 
 	    continue;
-	errno=0;
-	dirfd=opendir(line);
+	errno = 0;
+	dirfd = opendir(line);
 	if (! dirfd) {
-	    if (errno==EACCES) 
-		eacces=1;
+	    if (errno == EACCES) 
+		eacces = 1;
 	    continue;
 	}
 	line[procfdlen] = '/';
@@ -399,12 +400,12 @@ static void prg_cache_load(void)
            /* Skip . and .. */
            if (!isdigit(direfd->d_name[0]))
                continue;
-	    if (procfdlen+1+strlen(direfd->d_name)+1>sizeof(line)) 
+	    if (procfdlen + 1 + strlen(direfd->d_name) + 1 > sizeof(line)) 
 		continue;
 	    memcpy(line + procfdlen - PATH_FD_SUFFl, PATH_FD_SUFF "/",
-		   PATH_FD_SUFFl+1);
+		   PATH_FD_SUFFl + 1);
 	    strcpy(line + procfdlen + 1, direfd->d_name);
-	    lnamelen=readlink(line,lname,sizeof(lname)-1);
+	    lnamelen = readlink(line, lname, sizeof(lname) - 1);
 	    if (lnamelen == -1)
 		    continue;
             lname[lnamelen] = '\0';  /*make it a null-terminated string*/
