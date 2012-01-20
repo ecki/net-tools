@@ -1794,7 +1794,7 @@ static int iface_info(void)
     }
     if (flag_exp < 2) {
 	ife_short = 1;
-	printf(_("Iface   MTU Met   RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR Flg\n"));
+	printf(_("Iface      MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR Flg\n"));
     }
 
     if (for_all_interfaces(do_if_print, &flag_all) < 0) {

@@ -32,7 +32,6 @@ struct interface {
     char name[IFNAMSIZ];	/* interface name        */
     short type;			/* if type               */
     short flags;		/* various flags         */
-    int metric;			/* routing metric        */
     int mtu;			/* MTU value             */
     int tx_queue_len;		/* transmit queue length */
     struct ifmap map;		/* hardware setup        */

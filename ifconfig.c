@@ -104,7 +104,7 @@ static int if_print(char *ifname)
     int res;
 
     if (ife_short)
-	printf(_("Iface   MTU Met   RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR Flg\n"));
+	printf(_("Iface      MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR Flg\n"));
 
     if (!ifname) {
 	res = for_all_interfaces(do_if_print, &opt_a);
@@ -212,7 +212,7 @@ static void usage(void)
 #ifdef SIOCSKEEPALIVE
     fprintf(stderr, _("  [outfill <NN>] [keepalive <NN>]\n"));
 #endif
-    fprintf(stderr, _("  [hw <HW> <address>]  [metric <NN>]  [mtu <NN>]\n"));
+    fprintf(stderr, _("  [hw <HW> <address>]  [mtu <NN>]\n"));
     fprintf(stderr, _("  [[-]trailers]  [[-]arp]  [[-]allmulti]\n"));
     fprintf(stderr, _("  [multicast]  [[-]promisc]\n"));
     fprintf(stderr, _("  [mem_start <NN>]  [io_addr <NN>]  [irq <NN>]  [media <type>]\n"));
@@ -471,17 +471,6 @@ int main(int argc, char **argv)
 	}
 #endif
 
-	if (!strcmp(*spp, "metric")) {
-	    if (*++spp == NULL)
-		usage();
-	    ifr.ifr_metric = atoi(*spp);
-	    if (ioctl(skfd, SIOCSIFMETRIC, &ifr) < 0) {
-		fprintf(stderr, "SIOCSIFMETRIC: %s\n", strerror(errno));
-		goterr = 1;
-	    }
-	    spp++;
-	    continue;
-	}
 	if (!strcmp(*spp, "mtu")) {
 	    if (*++spp == NULL)
 		usage();

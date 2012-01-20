@@ -428,12 +428,6 @@ int if_fetch(struct interface *ife)
     ife->type = ifr.ifr_hwaddr.sa_family;
 
     strcpy(ifr.ifr_name, ifname);
-    if (ioctl(skfd, SIOCGIFMETRIC, &ifr) < 0)
-	ife->metric = 0;
-    else
-	ife->metric = ifr.ifr_metric;
-
-    strcpy(ifr.ifr_name, ifname);
     if (ioctl(skfd, SIOCGIFMTU, &ifr) < 0)
 	ife->mtu = 0;
     else
@@ -599,8 +593,8 @@ int do_if_print(struct interface *ife, void *cookie)
 
 void ife_print_short(struct interface *ptr)
 {
-    printf("%-5.5s ", ptr->name);
-    printf("%5d %-2d ", ptr->mtu, ptr->metric);
+    printf("%-8.8s ", ptr->name);
+    printf("%5d ", ptr->mtu);
     /* If needed, display the interface statistics. */
     if (ptr->statistics_valid) {
 	printf("%8llu %6lu %6lu %-6lu ",
@@ -734,8 +728,8 @@ void ife_print_long(struct interface *ptr)
       flags[strlen(flags)-1] = 0;
       
 
-    printf(_("%s: %s  mtu %d  metric %d"),
-	   ptr->name, flags, ptr->mtu, ptr->metric ? ptr->metric : 1);
+    printf(_("%s: %s  mtu %d"),
+	   ptr->name, flags, ptr->mtu);
 #ifdef SIOCSKEEPALIVE
     if (ptr->outfill || ptr->keepalive)
 	printf(_("  outfill %d  keepalive %d"),
