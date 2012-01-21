@@ -117,6 +117,9 @@ static char *Features =
 "-I18N"
 #endif				/* I18N */
 
+#if HAVE_SELINUX
+" +SELINUX"
+#endif
 
 "\nAF: "
 #ifdef DFLT_AF

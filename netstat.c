@@ -1846,10 +1846,12 @@ static void usage(void)
     fprintf(stderr, _("        -a, --all, --listening   display all sockets (default: connected)\n"));
     fprintf(stderr, _("        -o, --timers             display timers\n"));
     fprintf(stderr, _("        -F, --fib                display Forwarding Information Base (default)\n"));
-    fprintf(stderr, _("        -C, --cache              display routing cache instead of FIB\n\n"));
-    fprintf(stderr, _("        -Z, --context            display SELinux security context for sockets\n\n"));
+    fprintf(stderr, _("        -C, --cache              display routing cache instead of FIB\n"));
+#if HAVE_SELINUX
+    fprintf(stderr, _("        -Z, --context            display SELinux security context for sockets\n"));
+#endif
 
-    fprintf(stderr, _("  <Socket>={-t|--tcp} {-u|--udp} {-U|--udplite} {-w|--raw} {-x|--unix} --ax25 --ipx --netrom\n"));
+    fprintf(stderr, _("\n  <Socket>={-t|--tcp} {-u|--udp} {-U|--udplite} {-w|--raw} {-x|--unix} --ax25 --ipx --netrom\n"));
     fprintf(stderr, _("  <AF>=Use '-6|-4' or '-A <af>' or '--<af>'; default: %s\n"), DFLT_AF);
     fprintf(stderr, _("  List of possible address families (which support routing):\n"));
     print_aflist(1); /* 1 = routeable */
