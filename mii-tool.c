@@ -465,7 +465,6 @@ static void version(void)
 int main(int argc, char **argv)
 {
     int i, c, ret, errflag = 0;
-    char s[6];
     unsigned ctrl1000 = 0;
     
     while ((c = getopt_long(argc, argv, "A:F:p:lrRvVw?", longopts, 0)) != EOF)
