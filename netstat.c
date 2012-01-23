@@ -91,8 +91,6 @@
 
 #if HAVE_SELINUX
 #include <selinux/selinux.h>
-#else
-#define security_context_t char*
 #endif
 #include "net-support.h"
 #include "pathnames.h"
@@ -300,7 +298,7 @@ static void prg_cache_add(unsigned long inode, char *name, const char *scon)
     strcpy(pn->name, name);
 
     {
-	size_t len = (strlen(scon) - sizeof(pn->scon)) + 1;
+	int len = (strlen(scon) - sizeof(pn->scon)) + 1;
 	if (len > 0) 
             strcpy(pn->scon, &scon[len + 1]);
 	else
@@ -408,7 +406,9 @@ static void prg_cache_load(void)
     const char *cs, *cmdlp;
     DIR *dirproc = NULL, *dirfd = NULL;
     struct dirent *direproc, *direfd;
+#if HAVE_SELINUX
     security_context_t scon = NULL;
+#endif
 
     if (prg_cache_loaded || !flag_prg) return;
     prg_cache_loaded = 1;
