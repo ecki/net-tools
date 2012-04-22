@@ -1,5 +1,5 @@
 #
-# config.in	Configure.sh source for the net-tools.
+# config.in	configure.sh source for the net-tools.
 #		This file contains the definition of what the support
 #		library contains.  Most of all, it defines which types
 #		of address families and hardware we know of.
