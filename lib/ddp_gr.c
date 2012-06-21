@@ -73,17 +73,17 @@ int DDP_rprint(int options)
         return 1;
     }
 
-    if (fscanf(fp, "%as %as %as %as\n", &dest, &gw, &flags, &dev))
+    if (fscanf(fp, "%ms %ms %ms %ms\n", &dest, &gw, &flags, &dev))
 		/* eat line */;
-    free(dest); free(gw); free(dev); free(flags);
+    free(dest); free(gw); free(flags); free(dev);
 
     printf("%s\n", hdr);
 
-    while (fscanf(fp, "%as %as %as %as\n", &dest, &gw, &flags, &dev) == 4) {
+    while (fscanf(fp, "%ms %ms %ms %ms\n", &dest, &gw, &flags, &dev) == 4) {
         int iflags = atoi(flags);
         flags_decode(iflags, oflags);
         printf("%-16s%-16s%-16s%-s\n", dest, gw, dev, oflags);
-        free(dest); free(gw); free(dev); free(flags);
+        free(dest); free(gw); free(flags); free(dev);
     }
 
     fclose(fp);
