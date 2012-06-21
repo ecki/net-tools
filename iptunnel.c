@@ -106,6 +106,7 @@ static int do_ioctl_get_ifindex(char *dev)
 	err = ioctl(fd, SIOCGIFINDEX, &ifr);
 	if (err) {
 		perror("ioctl");
+		close(fd);
 		return 0;
 	}
 	close(fd);
@@ -123,6 +124,7 @@ static int do_ioctl_get_iftype(char *dev)
 	err = ioctl(fd, SIOCGIFHWADDR, &ifr);
 	if (err) {
 		perror("ioctl");
+		close(fd);
 		return -1;
 	}
 	close(fd);
@@ -141,6 +143,7 @@ static char * do_ioctl_get_ifname(int idx)
 	err = ioctl(fd, SIOCGIFNAME, &ifr);
 	if (err) {
 		perror("ioctl");
+		close(fd);
 		return NULL;
 	}
 	close(fd);
