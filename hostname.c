@@ -42,6 +42,7 @@
 #include <arpa/inet.h>
 #include "config.h"
 #include "version.h"
+#include "net-support.h"
 #include "../intl.h"
 
 #if HAVE_AFINET6
@@ -266,7 +267,7 @@ static void setfilename(char *name, int what)
 static void version(void)
 {
     fprintf(stderr, "%s\n%s\n", Release, Version);
-    exit(5); /* E_VERSION */
+    exit(E_VERSION);
 }
 
 static void usage(void)
@@ -297,7 +298,7 @@ static void usage(void)
 "   FQDN (Fully Qualified Domain Name) and the DNS domain name (which is\n"
 "   part of the FQDN) in the /etc/hosts file.\n"));
 
-    exit(4); /* E_USAGE */
+    exit(E_USAGE);
 }
 
 

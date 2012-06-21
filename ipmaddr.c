@@ -62,7 +62,7 @@ static void usage(void)
 	fprintf(stderr, _("Usage: ipmaddr [ add | del ] MULTIADDR dev STRING\n"));
 	fprintf(stderr, _("       ipmaddr show [ dev STRING ] [ ipv4 | ipv6 | link | all ]\n"));
 	fprintf(stderr, _("       ipmaddr -V | -version\n"));
-	exit(-1);
+	exit(E_USAGE);
 }
 
 static void print_lla(FILE *fp, int len, unsigned char *addr)

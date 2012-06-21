@@ -236,7 +236,7 @@ static void usage(void)
 static void version(void)
 {
     fprintf(stderr, "%s\n%s\n", Release, Version);
-    exit(E_USAGE);
+    exit(E_VERSION);
 }
 
 static int set_netmask(int skfd, struct ifreq *ifr, struct sockaddr *sa)

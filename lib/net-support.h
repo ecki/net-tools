@@ -168,8 +168,8 @@ extern char afname[];
 #define E_NOTFOUND	8
 #define E_SOCK		7
 #define E_LOOKUP	6
-#define E_VERSION	5
-#define E_USAGE		4
+#define E_VERSION	EXIT_SUCCESS
+#define E_USAGE		EXIT_SUCCESS
 #define E_OPTERR	3
 #define E_INTERN	2
 #define E_NOSUPP	1

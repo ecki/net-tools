@@ -22,6 +22,7 @@
 #include <linux/sockios.h>
 #include <errno.h>
 #include "intl.h" 
+#include "net-support.h"
 
 const char default_conf[] = "/etc/mactab"; 
 const char *fname = default_conf; 
@@ -200,7 +201,7 @@ struct option lopt[] = {
 void usage(void)
 {
 	fprintf(stderr, _("usage: nameif [-c configurationfile] [-s] {ifname macaddress}\n")); 
-	exit(1); 
+	exit(E_USAGE);
 }
 
 int main(int ac, char **av) 

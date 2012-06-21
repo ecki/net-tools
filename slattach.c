@@ -595,7 +595,7 @@ usage(void)
 	  "       slattach -V | --version\n";
 
   fputs(usage_msg, stderr);
-  exit(1);
+  exit(E_USAGE);
 }
 
 

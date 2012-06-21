@@ -92,7 +92,7 @@ static void usage(void)
 	fprintf(stderr, _("       TOS  := { NUMBER | inherit }\n"));
 	fprintf(stderr, _("       TTL  := { 1..255 | inherit }\n"));
 	fprintf(stderr, _("       KEY  := { DOTTED_QUAD | NUMBER }\n"));
-	exit(-1);
+	exit(E_USAGE);
 }
 
 static int do_ioctl_get_ifindex(char *dev)

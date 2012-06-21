@@ -54,6 +54,7 @@ static char Version[] = "$Id: mii-tool.c,v 1.9 2006/09/27 20:59:18 ecki Exp $\n(
 #include <linux/mii.h>
 #include <linux/sockios.h>
 #include "version.h"
+#include "net-support.h"
 
 #define MAX_ETH		8		/* Maximum # of interfaces */
 #define LPA_ABILITY_MASK	0x07e0
@@ -458,7 +459,7 @@ const char *usage =
 static void version(void)
 {
     fprintf(stderr, "%s\n%s\n", Version, RELEASE);
-    exit(5); /* E_VERSION */
+    exit(E_VERSION);
 }
 
 

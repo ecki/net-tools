@@ -63,7 +63,7 @@ void usage(void)
     fprintf(stderr, _("Usage: plipconfig interface [nibble NN] [trigger NN]\n"));
     fprintf(stderr, _("       plipconfig -V | --version\n"));
     fprintf(stderr, _("       plipconfig -h | --help\n"));
-    exit(-1);
+    exit(E_USAGE);
 }
 
 void print_plip(void)
