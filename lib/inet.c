@@ -396,6 +396,9 @@ static int read_services(void)
 	    add2list(&udp_name, item);
 	} else if (!strcmp(se->s_proto, "raw")) {
 	    add2list(&raw_name, item);
+	} else { /* sctp, ddp, dccp */
+	    free(item->name);
+	    free(item);
 	}
     }
     endservent();
