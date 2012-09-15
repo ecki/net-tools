@@ -9,7 +9,7 @@
 .\" Modified: Brian Micek bmicek@gmail.com
 .\"
 .\"
-.TH NETSTAT 8 "2011\-01\-27" "net\-tools" "Linux System Administrator's Manual"
+.TH NETSTAT 8 "2012\-09\-15" "net\-tools" "Linux System Administrator's Manual"
 
 .SH NAME
 netstat \- Print network connections, routing tables, interface statistics, masquerade connections, and multicast memberships
@@ -81,9 +81,9 @@ netstat \- Print network connections, routing tables, interface statistics, masq
 .P
 .IR address_family_options :
 .PP
-.RB [ -4 ]
-.RB [ -6 ]
-.RB [ \-\-protocol= { inet , unix , ipx , ax25 , netrom , ddp }[, ...] ]
+.RB [ -4 | \-\-inet ]
+.RB [ -6 | \-\-inet6 ]
+.RB [ \-\-protocol= { inet , inet6 , unix , ipx , ax25 , netrom , ddp ", ... } ]"
 .RB [ \-\-unix | \-x ] 
 .RB [ \-\-inet | \-\-ip | \-\-tcpip ]
 .RB [ \-\-ax25 ]
@@ -94,6 +94,13 @@ netstat \- Print network connections, routing tables, interface statistics, masq
 .RB [ \-\-netrom ]
 .RB [ \-\-ddp | \-\-appletalk ]
 .RB [ \-\-econet | \-\-ec ]
+
+.SH NOTES
+This program is obsolete.
+Replacement for \fBnetstat\fR is \fBss\fR.
+Replacement for \fBnetstat -r\fR is \fBip route\fR.
+Replacement for \fBnetstat -i\fR is \fBip -s link\fR.
+Replacement for \fBnetstat -g\fR is \fBip maddr\fR.
 
 .SH DESCRIPTION
 .B Netstat
@@ -148,6 +155,7 @@ protocols) for which connections are to be shown.
 .I family 
 is a comma (',') separated list of address family keywords like
 .BR inet , 
+.BR inet6 ,
 .BR unix , 
 .BR ipx , 
 .BR ax25 , 
@@ -156,8 +164,9 @@ is a comma (',') separated list of address family keywords like
 and
 .BR ddp .
 This has the same effect as using the 
-.BR \-\-inet ,
-.BR \-\-unix " (" \-x ),
+.BR \-\-inet | -4 ,
+.BR \-\-inet6 | -6 ,
+.BR \-\-unix | -x ,
 .BR \-\-ipx ,
 .BR \-\-ax25 ,
 .BR \-\-netrom ,
@@ -167,7 +176,7 @@ options.
 .P
 The address family
 .B inet
-includes raw, udp, udplite and tcp protocol sockets.
+(Iv4) includes raw, udp, udplite and tcp protocol sockets.
 .SS "\-c, \-\-continuous"
 This will cause
 .B netstat
@@ -375,13 +384,6 @@ to the socket.
 .SS Active AX.25 sockets
 (this needs to be done by somebody who knows it)
 .PP
-.SH NOTES
-Starting with Linux release 2.2 
-.B netstat \-i 
-does not show interface statistics for alias interfaces. To get per
-alias interface counters you need to setup explicit rules using the
-.BR iptables(8) 
-command.  
 
 .SH FILES
 .ta
@@ -452,6 +454,8 @@ status information via the following files.
 .BR ifconfig (8), 
 .BR iptables (8),
 .BR proc (5)
+.BR ss (8)
+.BR ip (8)
 .P
 .SH BUGS
 Occasionally strange information may appear if a socket changes
