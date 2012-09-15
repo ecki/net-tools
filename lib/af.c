@@ -304,7 +304,6 @@ int aftrans_opt(const char *arg)
 	if (tmp2)
 	    *(tmp2++) = '\0';
 
-	paft = aftrans;
 	for (paft = aftrans; paft->alias; paft++) {
 	    if (strcmp(tmp1, paft->alias))
 		continue;
