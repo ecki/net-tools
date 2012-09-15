@@ -1832,6 +1832,7 @@ static void usage(void)
 #if HAVE_FW_MASQUERADE
     fprintf(stderr, _("        -M, --masquerade         display masqueraded connections\n\n"));
 #endif
+
     fprintf(stderr, _("        -v, --verbose            be verbose\n"));
     fprintf(stderr, _("        -W, --wide               don't truncate IP addresses\n"));
     fprintf(stderr, _("        -n, --numeric            don't resolve names\n"));
@@ -1841,17 +1842,18 @@ static void usage(void)
     fprintf(stderr, _("        -N, --symbolic           resolve hardware names\n"));
     fprintf(stderr, _("        -e, --extend             display other/more information\n"));
     fprintf(stderr, _("        -p, --programs           display PID/Program name for sockets\n"));
+    fprintf(stderr, _("        -o, --timers             display timers\n"));
     fprintf(stderr, _("        -c, --continuous         continuous listing\n\n"));
     fprintf(stderr, _("        -l, --listening          display listening server sockets\n"));
-    fprintf(stderr, _("        -a, --all, --listening   display all sockets (default: connected)\n"));
-    fprintf(stderr, _("        -o, --timers             display timers\n"));
+    fprintf(stderr, _("        -a, --all                display all sockets (default: connected)\n"));
     fprintf(stderr, _("        -F, --fib                display Forwarding Information Base (default)\n"));
     fprintf(stderr, _("        -C, --cache              display routing cache instead of FIB\n"));
 #if HAVE_SELINUX
     fprintf(stderr, _("        -Z, --context            display SELinux security context for sockets\n"));
 #endif
 
-    fprintf(stderr, _("\n  <Socket>={-t|--tcp} {-u|--udp} {-U|--udplite} {-w|--raw} {-x|--unix} --ax25 --ipx --netrom\n"));
+    fprintf(stderr, _("\n  <Socket>={-t|--tcp} {-u|--udp} {-U|--udplite} {-w|--raw} {-x|--unix}\n"));
+    fprintf(stderr, _("           --ax25 --ipx --netrom\n"));
     fprintf(stderr, _("  <AF>=Use '-6|-4' or '-A <af>' or '--<af>'; default: %s\n"), DFLT_AF);
     fprintf(stderr, _("  List of possible address families (which support routing):\n"));
     print_aflist(1); /* 1 = routeable */
