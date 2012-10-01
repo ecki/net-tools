@@ -768,7 +768,7 @@ main(int argc, char *argv[])
 
 	tty_close();
 	if(extcmd)	/* external command on exit */
-		system(extcmd);
+		exit(system(extcmd));
   }
   exit(0);
 }
