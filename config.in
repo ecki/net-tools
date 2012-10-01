@@ -69,8 +69,8 @@ bool 'ARCnet support' HAVE_HWARC y
 bool 'SLIP (serial line) support' HAVE_HWSLIP y
 bool 'PPP (serial line) support' HAVE_HWPPP y
 bool 'IPIP Tunnel support' HAVE_HWTUNNEL y
-bool 'STRIP (Metricom radio) support' HAVE_HWSTRIP y
-bool 'Token ring (generic) support' HAVE_HWTR y
+bool 'STRIP (Metricom radio) support' HAVE_HWSTRIP n
+bool 'Token ring (generic) support' HAVE_HWTR n
 bool 'AX25 (packet radio) support' HAVE_HWAX25 y
 bool 'Rose (packet radio) support' HAVE_HWROSE y
 bool 'NET/ROM (packet radio) support' HAVE_HWNETROM y
