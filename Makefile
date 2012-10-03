@@ -5,14 +5,10 @@
 #		NET-3 Networking Distribution for the LINUX operating
 #		system.
 #
-# Version:	2001-02-13
-#
 # Author:	Bernd Eckenfels <net-tools@lina.inka.de>
 #		Copyright 1995-1996 Bernd Eckenfels, Germany
 #
-# URLs:		ftp://ftp.inka.de/pub/comp/Linux/networking/NetTools/ 
-#		ftp://ftp.linux.org.uk/pub/linux/Networking/PROGRAMS/NetTools/
-#		http://www.inka.de/sites/lina/linux/NetTools/index_en.html
+# URLs:		http://net-tools.sourceforge.net/
 #
 # Based on:	Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
 #		Copyright 1988-1993 MicroWalt Corporation
@@ -25,48 +21,6 @@
 # Be careful! 
 # This Makefile doesn't describe complete dependencies for all include files.
 # If you change include files you might need to do make clean. 
-#
-#	{1.20}	Bernd Eckenfels:	Even more modifications for the new 
-#					package layout
-#	{1.21}	Bernd Eckenfels:	Check if config.in is newer than 
-#					config.status
-#	{1.22}  Bernd Eckenfels:	Include ypdomainname and nisdomainame
-#
-#	1.3.50-BETA6 private Release
-#				
-#960125	{1.23}	Bernd Eckenfels:	Peter Tobias' rewrite for 
-#					makefile-based installation
-#	1.3.50-BETA6a private Release
-#
-#960201 {1.24}	Bernd Eckenfels:	net-features.h added
-#
-#960201 1.3.50-BETA6b private Release
-#
-#960203 1.3.50-BETA6c private Release
-#
-#960204 1.3.50-BETA6d private Release
-#
-#960204 {1.25}	Bernd Eckenfels:	DISTRIBUTION added
-#
-#960205 1.3.50-BETA6e private Release
-#
-#960206	{1.26}	Bernd Eckenfels:	afrt.o removed (cleaner solution)
-#
-#960215 1.3.50-BETA6f Release
-#
-#960216 {1.30}	Bernd Eckenfels:	net-lib support
-#960322 {1.31}	Bernd Eckenfels:	moveable netlib, TOPDIR
-#960424 {1.32}	Bernd Eckenfels:	included the URLs in the Comment
-#
-#960514 1.31-alpha release
-#
-#960518 {1.33}	Bernd Eckenfels:	-I/usr/src/linux/include comment added
-#
-#	This program is free software; you can redistribute it
-#	and/or  modify it under  the terms of  the GNU General
-#	Public  License as  published  by  the  Free  Software
-#	Foundation;  either  version 2 of the License, or  (at
-#	your option) any later version.
 #
 
 # set the base of the Installation 
@@ -158,14 +112,19 @@ clobber: 	clean
 		@for i in $(SUBDIRS); do (cd $$i && $(MAKE) clobber) ; done
 
 
-dist: 		clobber
-		@$(MAKE) -C po $@
-		@echo Creating net-tools-$(RELEASE) in ..
-		@tar -cvz -f ../net-tools-$(RELEASE).tar.gz . \
-			--transform='s,^[.],net-tools-$(RELEASE),' \
-			--exclude=CVS --exclude=.cvsignore \
-			--exclude='.git*'
+dist:
+		rm -rf net-tools-$(RELEASE)
+		git archive --prefix=net-tools-$(RELEASE)/ HEAD | tar xf -
+		$(MAKE) -C net-tools-$(RELEASE)/po $@
+		tar cf - net-tools-$(RELEASE)/ | xz > net-tools-$(RELEASE).tar.xz
+		rm -rf net-tools-$(RELEASE)
 
+distcheck:	dist
+		tar xf net-tools-$(RELEASE).tar.xz
+		yes "" | $(MAKE) -C net-tools-$(RELEASE) config
+		$(MAKE) -C net-tools-$(RELEASE)
+		rm -rf net-tools-$(RELEASE)
+		@printf "\nThe tarball is ready to go:\n%s\n" "`du -b net-tools-$(RELEASE).tar.xz`"
 
 config.h: 	config.in Makefile 
 		@echo "Configuring the Linux net-tools (NET-3 Base Utilities)..." ; echo
