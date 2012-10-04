@@ -115,7 +115,7 @@ Tell the user what is going on by being verbose.
 shows numerical addresses instead of trying to determine symbolic host, port
 or user names.
 .TP
-.B "\-H type, \-\-hw\-type type, \-t type"
+\fB\-H\fI type\fR, \fB\-\-hw\-type\fI type\fR, \fB\-t\fI type\fR
 When setting or reading the ARP cache, this optional parameter tells
 .B arp
 which class of entries it should check for.  The default value of
@@ -142,7 +142,7 @@ Instead of a hw_addr, the given argument is the name of an interface.
 .B arp
 will use the MAC address of that interface for the table entry. This is usually the best option to set up a proxy ARP entry to yourself.
 .TP
-.B "\-i If, \-\-device If"
+\fB\-i\fI If\fR, \fB\-\-device\fI If\fR
 Select an interface. When dumping the ARP cache only entries matching
 the specified interface will be printed. When setting a permanent or
 .B temp
@@ -166,15 +166,16 @@ for details. Also the
 option which is available for delete and set operations cannot be 
 used with 2.4 and newer kernels.
 .TP
-.B "\-f filename, \-\-file filename"
+\fB\-f\fI filename\fR, \fB\-\-file\fI filename\fR
 Similar to the
 .B \-s
 option, only this time the address info is taken from file
-.B filename
-.  This can be used if ARP entries for a lot of hosts have to be
+.IR filename .
+This can be used if ARP entries for a lot of hosts have to be
 set up.  The name of the data file is very often
 .IR /etc/ethers , 
-but this is not official. If no filename is specified /etc/ethers
+but this is not official. If no filename is specified
+.I /etc/ethers
 is used as default.
 .sp 1
 The format of the file is simple; it
