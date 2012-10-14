@@ -1,4 +1,4 @@
-.TH ARP 8 "6. M\(:arz 1999" "net-tools" "Handbuch f\(:ur Linuxprogrammierer"
+.TH ARP 8 "14. Oktober 2012" "net-tools" "Handbuch f\(:ur Linuxprogrammierer"
 .SH NAME
 arp \- Manipulation des ARP-Caches
 .SH SYNOPSIS
@@ -47,18 +47,22 @@ arp \- Manipulation des ARP-Caches
 .SH BESCHREIBUNG
 .B Arp
 kann den ARP-Cache des Kernels auf verschiedene Arten manipulieren.  Die
-haupts\(:achliche Verwendung ist es Adresszuordnungseintr\(:age zu
+haupts\(:achliche Verwendung ist es, Adresszuordnungseintr\(:age zu
 l\(:oschen und von Hand neue zu erzeugen.  Zum Zweck der Fehlersuche ist
-moeglich mit dem
-.B arp
-Programm den Inhalt des ARP-Caches vollst\(:andig auszugeben.
+es m\(:oglich, mit dem
+.BR arp -Programm
+den Inhalt des ARP-Caches vollst\(:andig auszugeben.
+
+.B ARP
+steht für Address Resolution Protocol, welches dazu verwendet wird, über 
+die IPv4-Adresse die MAC-Adresse von Nachbarn im Netzwerk zu finden.
 .SH OPTIONEN
 .TP
 .B "\-v, \-\-verbose"
 Ausf\(:uhrlichere Ausgaben.
 .TP
 .B "\-n, \-\-numeric"
-macht numerische Adressausgaben anstatt zu versuche, den symbolischen Rechner-,
+Numerische Adressausgaben anstatt zu versuchen, den symbolischen Rechner-,
 Port- oder Benutzernamen zu ermitteln.
 .TP
 .B "\-H type, \-\-hw-type type"
@@ -69,22 +73,16 @@ operieren soll.  Der Standardwert dieses Arguments ist
 .B ether
 (d.h. Hardwarecode 0x01 f\(:ur IEEE 802.3 10Mbps Ethernet).
 Andere m\(:ogliche Werte sind Netzwerkstechnologien so wie z.B.
-.RB "ARCnet (" arcnet ")"
-,
-.RB "PROnet (" pronet ")"
-,
-.RB "AX.25 (" ax25 ")"
-and
-.RB "NET/ROM (" netrom ")."
+.RB "ARCnet (" arcnet "), PROnet (" pronet "), AX.25 (" ax25 ") und NET/ROM (" netrom ")."
 .TP
 .B "\-a [Rechnername], \-\-display [Rechnername]"
 Zeigt die Eintr\(:age der angegebenen Rechner an.  Wird kein
-.B hostname
-Argument verwendet, so werden alle Eintr\(:age aufgelistet.
+.BR hostname -Argument
+verwendet, so werden alle Eintr\(:age aufgelistet.
 .TP
 .B "\-d Rechnername, \-\-delete Rechnername"
-Alle Eintr\(:age f\(:ur den angegebenen Host entfernen.  Dies kann z.B.
-benutzt werden, wenn ein System angehalten wird.
+Alle Eintr\(:age f\(:ur den angegebenen Host entfernen.  Dies kann z.B. benutzt
+werden, wenn ein System angehalten wird.
 .TP
 .B "\-D, \-\-use-device"
 Die Hardwareadresse der Netzwerksschnittstelle
@@ -93,30 +91,30 @@ verwenden.
 .TP
 .B "\-i If, \-\-device Schnittstelle"
 Eine Netzwerksschnittstelle ausw\(:ahlen.  Es werden nur Eintr\(:age
-f\(:ur die angegebene Schnittstelle ausgedruckt.  Beim Setzen von von
+f\(:ur die angegebene Schnittstelle ausgegeben.  Beim Setzen von
 permanenten oder tempor\(:aren Eintr\(:agen wird diese Schnittstelle mit
 dem Eintrag assoziiert.  Wird diese Option nicht verwendet, so versucht der
-Kernel auf Basis der Routentabelle eine Schnittstelle auszuw\(:ahlen.  F\(:ur
-.B pub
-Eintr\(:age ist die angegebene Schnittstelle diejenige, auf der ARP-Anfragen
+Kernel, auf Basis der Routentabelle eine Schnittstelle auszuw\(:ahlen.  F\(:ur
+.BR pub -Eintr\(:age
+ist die angegebene Schnittstelle diejenige, auf der ARP-Anfragen
 beantwortet werden.
 .br
 .B ANMERKUNG:
-Diese Schnittstelle mu\(ss eine andere sein als die, auf die die IP-Datagramme
+Diese Schnittstelle mu\(ss eine andere sein als die, auf welche die IP-Datagramme
 weitergeleitet werden.
 .TP
 .B "\-s Rechnername hw_addr, \-\-set Rechnername"
-Erzeugt manuel einen ARP Adresseintrag f\(:ur den Rechner
-.B Rechnername
+Erzeugt manuell einen ARP-Adresseintrag f\(:ur den Rechner
+.BR Rechnername ,
 in dem die Hardwareadresse auf
 .B hw_addr
 gesetzt ist.  Das genaue Format der Hardwareadresse ist abh\(:angig von der
-Hardwareklasse aber f\(:ur die meisten Klassen kann man davon ausgehen, da\(ss
+Hardwareklasse, aber f\(:ur die meisten Klassen kann man davon ausgehen, da\(ss
 die \(:ubliche Darstellung verwendet wird.  F\(:ur die Ethernetklasse sind
-dies sechs hexadezimale, von Doppelpunkten getrennte Bytes.  Beim Zuf\(:ugen
-von Proxy-ARP-Entr\(:agen (das sind die mit der gesetzten
-.BR pub lizieren
-Flagge) kann
+dies sechs hexadezimale, durch Doppelpunkte getrennte Bytes.  Beim Zuf\(:ugen
+von Proxy-ARP-Entr\(:agen (das sind die mit dem gesetzten
+.BR pub lished-Flag)
+kann die
 .B Netmaske
 f\(:ur ARP-Eintr\(:age f\(:ur ganze Subnetze angegeben werde.  Von dieser
 Praxis wird abgeraten.  Sie wird von \(:alteren Kerneln unterst\(:utzt, da
@@ -125,10 +123,10 @@ Der Eintrag wird permanent im ARP-Cache gespeichert,
 wenn das \fBtemp\fR-Flag nicht angegeben wird.
 .br
 .B ANMERKUNG:
-Ab der Kernelversion 2.2.0 ist es nicht mehr m\(:oglich ARP-Eintr\(:age f\(:ur
-ganze Teilnetze zu erzeugen. Statt dessen wird automatisches Proxy ARP
+Ab der Kernelversion 2.2.0 ist es nicht mehr m\(:oglich, ARP-Eintr\(:age f\(:ur
+ganze Teilnetze zu erzeugen. Stattdessen wird automatisches Proxy ARP
 durchgef\(:uhrt, d.h. wenn eine Route existiert und Forwarding eingeschaltet
-ist wird automatisch ein tempor\(:arer Proxyarpeintrag erzeugt. 
+ist, wird automatisch ein tempor\(:arer Proxyarpeintrag erzeugt. 
 Siehe auch
 .BR arp (7)
 f\(:ur mehr Details.
@@ -159,13 +157,23 @@ in Form eines durch Punkte getrennten Dezimalquadrupels angegeben werden.
 Aus Kompatiblit\(:atsgr\(:unden k\(:onnen Rechnername und die 
 Hardwareadresse auch vertauscht werden.
 .LP 
-Jeder vollst\(:andige Eintrag wird im ARP-Cache mit der
-.B C
-Flagge markiert. Permanente Eintr\(:age werden mit
+Jeder vollst\(:andige Eintrag wird im ARP-Cache mit dem
+.BR C -Flag
+markiert. Permanente Eintr\(:age werden mit
 .B M
-und zu publizierende Eintr\(:age mit der 
+und zu publizierende Eintr\(:age mit
 .B P
-Flagge.
+markiert.
+.SH BEISPIELE
+.B /usr/sbin/arp -i eth0 -Ds 10.0.0.2 eth1 pub
+
+Beantwortet ARP-Anfragen für 10.0.0.2 auf eth0 mit der MAC-Adresse für eth1.
+
+.B /usr/sbin/arp -i eth1 -d 10.0.0.1
+
+Entfernt den ARP-Eintrag für 10.0.0.1 auf dem Interface eth1. Dies betrifft
+sowohl publizierte Proxy-ARP-Einträge als auch auf permanente ARP-Einträge.
+
 .SH DATEIEN
 .I /proc/net/arp,
 .br
@@ -181,3 +189,5 @@ Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org> mit vielen Verbesserungen vom
 Verwalter der Net-Tools Bernd Eckenfels <net-tools@lina.inka.de>.
 .SH \(:Ubersetzung
 Ralf B\(:achle <ralf@gnu.org>
+.br
+Simon A. Eugster <simon.eu@gmail.com>
