@@ -2,65 +2,65 @@
 .SH NAME
 arp \- manipulate the system ARP cache
 .SH SYNOPSIS
-.B arp 
-.RB [ \-vn ] 
-.RB [ \-H 
-.IR type ] 
+.B arp
+.RB [ \-vn ]
+.RB [ \-H
+.IR type ]
 .RB [ \-i
-.IR if ] 
+.IR if ]
 .RB [ \-ae ]
 .RI [ hostname ]
 .PP
-.B arp 
+.B arp
 .RB [ \-v ]
 .RB [ \-i
-.IR if ] 
-.B \-d 
+.IR if ]
+.B \-d
 .I hostname
 .RB [ pub ]
 .PP
-.B arp 
-.RB [ \-v ] 
+.B arp
+.RB [ \-v ]
 .RB [ \-H
-.IR type ] 
+.IR type ]
 .RB [ \-i
-.IR if ] 
+.IR if ]
 .B \-s
 .I hostname hw_addr
-.RB [ temp ] 
+.RB [ temp ]
 .PP
-.B arp 
-.RB [ \-v ] 
+.B arp
+.RB [ \-v ]
 .RB [ \-H
-.IR type ] 
+.IR type ]
 .RB [ \-i
-.IR if ] 
+.IR if ]
 .B \-s
 .I hostname hw_addr
 .RB [ netmask
-.IR nm ] 
+.IR nm ]
 .B pub
 .PP
-.B arp 
-.RB [ \-v ] 
+.B arp
+.RB [ \-v ]
 .RB [ \-H
-.IR type ] 
+.IR type ]
 .RB [ \-i
-.IR if ] 
-.B \-Ds 
+.IR if ]
+.B \-Ds
 .I hostname
 .I ifname
 .RB [ netmask
-.IR nm ] 
+.IR nm ]
 .B pub
 .PP
-.B arp 
+.B arp
 .RB [ \-vnD ]
-.RB [ \-H 
-.IR type ] 
+.RB [ \-H
+.IR type ]
 .RB [ \-i
 .IR if ]
-.B \-f 
+.B \-f
 .RI [ filename ]
 
 .SH DESCRIPTION
@@ -85,15 +85,15 @@ resolved before looking up the entry in the ARP table.
 
 .B arp -s
 .I address hw_addr
-is used to set up a new table entry. The format of the 
+is used to set up a new table entry. The format of the
 .I hw_addr
 parameter is dependent on the hardware class, but for most classes one can
 assume that the usual presentation can be used.  For the Ethernet class,
 this is 6 bytes in hexadecimal, separated by colons. When adding proxy arp
 entries (that is those with the
-.BR pub lish 
-flag set) a 
-.B netmask 
+.BR pub lish
+flag set) a
+.B netmask
 may be specified to proxy arp for entire subnets. This is not good
 practice, but is supported by older kernels because it can be
 useful. If the
@@ -138,7 +138,7 @@ Use alternate BSD style output format (with no fixed columns).
 Use default Linux style output format (with fixed columns).
 .TP
 .B "\-D, \-\-use-device"
-Instead of a hw_addr, the given argument is the name of an interface. 
+Instead of a hw_addr, the given argument is the name of an interface.
 .B arp
 will use the MAC address of that interface for the table entry. This is usually the best option to set up a proxy ARP entry to yourself.
 .TP
@@ -151,19 +151,19 @@ option is not used, the kernel will guess based on the routing
 table. For
 .B pub
 entries the specified interface is the interface on which ARP requests will
-be answered. 
+be answered.
 .br
 .B NOTE:
 This has to be different from the interface to which the IP
 datagrams will be routed.
 .B NOTE:
-As of kernel 2.2.0 it is no longer possible to set an ARP entry for an 
+As of kernel 2.2.0 it is no longer possible to set an ARP entry for an
 entire subnet. Linux instead does automagic proxy arp when a route
-exists and it is forwarding. See 
+exists and it is forwarding. See
 .BR arp (7)
 for details. Also the
 .B dontpub
-option which is available for delete and set operations cannot be 
+option which is available for delete and set operations cannot be
 used with 2.4 and newer kernels.
 .TP
 \fB\-f\fI filename\fR, \fB\-\-file\fI filename\fR
@@ -173,14 +173,14 @@ option, only this time the address info is taken from file
 .IR filename .
 This can be used if ARP entries for a lot of hosts have to be
 set up.  The name of the data file is very often
-.IR /etc/ethers , 
+.IR /etc/ethers ,
 but this is not official. If no filename is specified
 .I /etc/ethers
 is used as default.
 .sp 1
 The format of the file is simple; it
 only contains ASCII text lines with a hostname, and a hardware
-address separated by whitespace. Additionally the 
+address separated by whitespace. Additionally the
 .BR "pub" , " temp" " and" " netmask"
 flags can be used.
 .LP
@@ -190,9 +190,9 @@ is expected, one can also enter an
 .B "IP address"
 in dotted-decimal notation.
 .P
-As a special case for compatibility the order of the hostname and 
+As a special case for compatibility the order of the hostname and
 the hardware address can be exchanged.
-.LP 
+.LP
 Each complete entry in the ARP cache will be marked with the
 .B C
 flag. Permanent entries are marked with

@@ -2,45 +2,45 @@
 .SH NAME
 arp \- Manipulation des ARP-Caches
 .SH SYNOPSIS
-.B arp 
-.RB [ \-vn ] 
-.RB [ "\-H Typ" ] 
-.RB [ "-i Schnittstelle" ] 
-.B -a 
+.B arp
+.RB [ \-vn ]
+.RB [ "\-H Typ" ]
+.RB [ "-i Schnittstelle" ]
+.B -a
 .RB [ Rechnername ]
 .PP
-.B arp 
+.B arp
 .RB [ \-v ]
-.RB [ "\-i if" ] 
+.RB [ "\-i if" ]
 .B "\-d Rechnername"
 .RB [ pub ]
 .PP
-.B arp 
-.RB [ \-v ] 
-.RB [ "\-H Typ" ] 
-.RB [ "\-i Schnittstelle" ] 
+.B arp
+.RB [ \-v ]
+.RB [ "\-H Typ" ]
+.RB [ "\-i Schnittstelle" ]
 .B -s Rechnername hw_adr
-.RB [ temp ] 
+.RB [ temp ]
 .PP
-.B arp 
-.RB [ \-v ] 
-.RB [ "\-H Typ" ] 
-.RB [ "\-i Interface" ] 
+.B arp
+.RB [ \-v ]
+.RB [ "\-H Typ" ]
+.RB [ "\-i Interface" ]
 .B -s Rechnername hw_adr
-.RB [ "netmask nm" ] 
+.RB [ "netmask nm" ]
 .B pub
 .PP
-.B arp 
-.RB [ \-v ] 
-.RB [ "\-H Typ" ] 
-.RB [ "\-i Schnittstelle" ] 
+.B arp
+.RB [ \-v ]
+.RB [ "\-H Typ" ]
+.RB [ "\-i Schnittstelle" ]
 .B -Ds Rechnername ifa
-.RB [ "netmask nm" ] 
+.RB [ "netmask nm" ]
 .B pub
 .PP
-.B arp 
+.B arp
 .RB [ \-vnD ]
-.RB [ "\-H Typ" ] 
+.RB [ "\-H Typ" ]
 .RB [ "-i Schnittstelle" ]
 .B -f [Dateiname]
 
@@ -54,7 +54,7 @@ es m\(:oglich, mit dem
 den Inhalt des ARP-Caches vollst\(:andig auszugeben.
 
 .B ARP
-steht für Address Resolution Protocol, welches dazu verwendet wird, über 
+steht für Address Resolution Protocol, welches dazu verwendet wird, über
 die IPv4-Adresse die MAC-Adresse von Nachbarn im Netzwerk zu finden.
 .SH OPTIONEN
 .TP
@@ -67,7 +67,7 @@ Port- oder Benutzernamen zu ermitteln.
 .TP
 .B "\-H type, \-\-hw-type type"
 Beim Setzen oder Auslesen des ARP-Caches schr\(:ankt diese Option
-ein, auf welcher Klasse von Eintr\(:agen 
+ein, auf welcher Klasse von Eintr\(:agen
 .B arp
 operieren soll.  Der Standardwert dieses Arguments ist
 .B ether
@@ -126,7 +126,7 @@ wenn das \fBtemp\fR-Flag nicht angegeben wird.
 Ab der Kernelversion 2.2.0 ist es nicht mehr m\(:oglich, ARP-Eintr\(:age f\(:ur
 ganze Teilnetze zu erzeugen. Stattdessen wird automatisches Proxy ARP
 durchgef\(:uhrt, d.h. wenn eine Route existiert und Forwarding eingeschaltet
-ist, wird automatisch ein tempor\(:arer Proxyarpeintrag erzeugt. 
+ist, wird automatisch ein tempor\(:arer Proxyarpeintrag erzeugt.
 Siehe auch
 .BR arp (7)
 f\(:ur mehr Details.
@@ -138,8 +138,8 @@ Option, au\(sser, da\(ss diesmal die Adressinformation aus der Datei
 .B Dateiname
 verwendet wird.  Dies kann verwendet werden, wenn ARP-Eintr\(:age f\(:ur
 etliche Rechner erzeugt werden m\(:ussen.  Der Name dieser Datei ist oft
-.IR /etc/ethers , 
-aber dies ist nicht offizieil standardisiert. Wenn kein Dateinamen 
+.IR /etc/ethers ,
+aber dies ist nicht offizieil standardisiert. Wenn kein Dateinamen
 angeben ist wird /etc/ethers benutzt.
 .sp 1
 Das Format der Datei ist einfach; es enth\(:alt nur ASCII-Textzeilen, die
@@ -154,9 +154,9 @@ erwartet wird, kann auch eine
 .B "IP-Adresse"
 in Form eines durch Punkte getrennten Dezimalquadrupels angegeben werden.
 .P
-Aus Kompatiblit\(:atsgr\(:unden k\(:onnen Rechnername und die 
+Aus Kompatiblit\(:atsgr\(:unden k\(:onnen Rechnername und die
 Hardwareadresse auch vertauscht werden.
-.LP 
+.LP
 Jeder vollst\(:andige Eintrag wird im ARP-Cache mit dem
 .BR C -Flag
 markiert. Permanente Eintr\(:age werden mit
