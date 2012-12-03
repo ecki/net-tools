@@ -230,7 +230,7 @@ static const char *media_list(unsigned mask, unsigned mask2, int best)
 
 int show_basic_mii(int sock, int phy_id)
 {
-    char buf[100];
+    char buf[200];
     int i, mii_val[32];
     unsigned bmcr, bmsr, advert, lkpar, bmcr2, lpa2;
 
