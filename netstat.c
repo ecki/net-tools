@@ -1574,8 +1574,8 @@ static int ipx_info(void)
 
         /* We need to check for directory */
         if (f) {
-            fstat(fileno(f), &s);
-            if (!S_ISREG(s.st_mode)) {
+            if (fstat (fileno(f), &s) == -1 ||
+                !S_ISREG(s.st_mode)) {
                 fclose(f);
                 f=NULL;
             }
