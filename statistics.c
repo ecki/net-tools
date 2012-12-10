@@ -291,7 +291,7 @@ struct entry Tcpexttab[] =
     { "TCPAbortOnMemory", N_("%llu connections aborted due to memory pressure"), opt_number },
     { "TCPAbortOnTimeout", N_("%llu connections aborted due to timeout"), opt_number },
     { "TCPAbortOnLinger", N_("%llu connections aborted after user close in linger timeout"), opt_number },
-    { "TCPAbortFailed", N_("%llu times unabled to send RST due to no memory"), opt_number },
+    { "TCPAbortFailed", N_("%llu times unable to send RST due to no memory"), opt_number },
     { "TCPMemoryPressures", N_("TCP ran low on memory %llu times"), opt_number },
     { "TCPLoss", N_("%llu TCP data loss events"), opt_number },
     { "TCPDSACKUndo", N_("%llu congestion windows recovered without slow start by DSACK"),
