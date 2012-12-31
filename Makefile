@@ -55,8 +55,8 @@ endif
 
 # -------- end of user definitions --------
 
-MAINTAINER = Philip.Blundell@pobox.com
-RELEASE	   = 1.60
+MAINTAINER = net-tools-devel@lists.sourceforge.net
+RELEASE	   = 1.70-alpha
 
 .EXPORT_ALL_VARIABLES:
 
