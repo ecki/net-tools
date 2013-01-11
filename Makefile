@@ -56,7 +56,7 @@ endif
 # -------- end of user definitions --------
 
 MAINTAINER = net-tools-devel@lists.sourceforge.net
-RELEASE	   = 1.70-alpha
+RELEASE	   = 2.10-alpha
 
 .EXPORT_ALL_VARIABLES:
 
