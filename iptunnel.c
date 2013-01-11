@@ -68,13 +68,11 @@
 
 #include "util-ank.h"
 
-char *Release = RELEASE,
-     *Version = "iptunnel 1.01",
-     *Signature = "Alexey Kuznetsov, <kuznet@ms2.inr.ac.ru>";
+static char *Release = RELEASE, *Signature = "Alexey Kuznetsov";
 
 static void version(void)
 {
-	printf("%s\n%s\n%s\n", Release, Version, Signature);
+	printf("%s\n%s\n", Release, Signature);
 	exit(E_VERSION);
 }
 

@@ -75,9 +75,7 @@
 #define DEF_PROTO	"cslip"
 
 
-const char *Release = RELEASE,
-	   *Version = "$Id: slattach.c,v 1.12 2009/09/06 22:59:43 vapier Exp $",
-	   *Signature = "net-tools, Fred N. van Kempen et al.";
+static char *Release = RELEASE, *Signature = "Fred N. van Kempen et al.";
 
 
 struct {
@@ -602,7 +600,7 @@ usage(void)
 static void 
 version(void)
 {
-    printf("%s\n%s\n%s\n", Release, Version, Signature);
+    printf("%s\n%s\n", Release, Signature);
     exit(E_VERSION);
 }
 

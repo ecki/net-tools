@@ -45,13 +45,11 @@ int  filter_family;
 #define NEWADDR		1
 #define DELADDR		2
 
-char *Release = RELEASE,
-     *Version = "ipmaddr 1.1",
-     *Signature = "Alexey Kuznetsov, <kuznet@ms2.inr.ac.ru>";
+static char *Release = RELEASE, *Signature = "Alexey Kuznetsov";
 
 static void version(void)
 {
-	printf("%s\n%s\n%s\n", Release, Version, Signature);
+	printf("%s\n%s\n", Release, Signature);
 	exit(E_VERSION);
 }
 

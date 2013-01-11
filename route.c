@@ -66,7 +66,7 @@
 #define FEATURE_ROUTE
 #include "lib/net-features.h"	/* needs some of the system includes above! */
 
-char *Release = RELEASE, *Version = "route 1.98 (2001-04-15)";
+static char *Release = RELEASE;
 
 int opt_n = 0;			/* numerical output flag        */
 int opt_v = 0;			/* debugging output flag        */
@@ -98,7 +98,7 @@ static void usage(void)
 
 static void version(void)
 {
-    fprintf(stderr, "%s\n%s\n%s\n", Release, Version, Features);
+    fprintf(stderr, "%s\n%s\n", Release, Features);
     exit(E_VERSION);
 }
 

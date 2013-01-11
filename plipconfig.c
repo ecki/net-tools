@@ -48,13 +48,11 @@ int skfd = -1;
 struct ifreq ifr;
 struct plipconf *plip;
 
-char *Release = RELEASE,
-     *Version = "plipconfig 0.2",
-     *Signature = "John Paul Morrison, Alan Cox et al.";
+static char *Release = RELEASE, *Signature = "John Paul Morrison, Alan Cox et al.";
 
 static void version(void)
 {
-    printf("%s\n%s\n%s\n", Release, Version, Signature);
+    printf("%s\n%s\n", Release, Signature);
     exit(E_VERSION);
 }
 

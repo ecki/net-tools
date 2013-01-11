@@ -29,7 +29,6 @@
 	http://www.national.com/pf/DP/DP83840.html
 */
 
-static char Version[] = "$Id: mii-tool.c,v 1.9 2006/09/27 20:59:18 ecki Exp $\n(Author: David Hinds based on Donald Becker's mii-diag)";
 
 #include <unistd.h>
 #include <stdlib.h>
@@ -55,6 +54,8 @@ static char Version[] = "$Id: mii-tool.c,v 1.9 2006/09/27 20:59:18 ecki Exp $\n(
 #include <linux/sockios.h>
 #include "version.h"
 #include "net-support.h"
+
+static char *Release = RELEASE, *Signature = "David Hinds based on Donald Becker's mii-diag";
 
 #define MAX_ETH		8		/* Maximum # of interfaces */
 #define LPA_ABILITY_MASK	0x07e0
@@ -458,7 +459,7 @@ const char *usage =
 
 static void version(void)
 {
-    fprintf(stderr, "%s\n%s\n", Version, RELEASE);
+    fprintf(stderr, "%s\n%s\n", Release, Signature);
     exit(E_VERSION);
 }
 

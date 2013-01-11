@@ -80,7 +80,7 @@
 #define FEATURE_ARP
 #include "lib/net-features.h"
 
-char *Release = RELEASE, *Version = "arp 1.88 (2001-04-04)";
+static char *Release = RELEASE;
 
 int opt_n = 0;			/* do not resolve addresses     */
 int opt_N = 0;			/* use symbolic names           */
@@ -617,7 +617,7 @@ static int arp_show(char *name)
 
 static void version(void)
 {
-    fprintf(stderr, "%s\n%s\n%s\n", Release, Version, Features);
+    fprintf(stderr, "%s\n%s\n", Release, Features);
     exit(E_VERSION);
 }
 
