@@ -85,7 +85,7 @@ struct in6_ifreq {
 #include "sockets.h"
 #include "util.h"
 
-char *Release = RELEASE, *Version = "ifconfig 1.42 (2001-04-13)";
+char *Release = RELEASE;
 
 int opt_a = 0;			/* show all interfaces          */
 int opt_v = 0;			/* debugging output flag        */
@@ -235,7 +235,7 @@ static void usage(void)
 
 static void version(void)
 {
-    fprintf(stderr, "%s\n%s\n", Release, Version);
+    fprintf(stderr, "%s\n", Release);
     exit(E_VERSION);
 }
 

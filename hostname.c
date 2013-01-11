@@ -54,7 +54,7 @@
 #include <netdnet/dn.h>
 #endif
 
-char *Release = RELEASE, *Version = "hostname 1.100 (2001-04-14)";
+char *Release = RELEASE;
 
 static char *program_name;
 static int opt_v;
@@ -266,7 +266,7 @@ static void setfilename(char *name, int what)
 
 static void version(void)
 {
-    fprintf(stderr, "%s\n%s\n", Release, Version);
+    fprintf(stderr, "%s\n", Release);
     exit(E_VERSION);
 }
 

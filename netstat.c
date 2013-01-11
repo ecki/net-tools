@@ -136,7 +136,7 @@ typedef enum {
 #define FEATURE_NETSTAT
 #include "lib/net-features.h"
 
-char *Release = RELEASE, *Version = "netstat 1.42 (2001-04-15)", *Signature = "Fred Baumgarten, Alan Cox, Bernd Eckenfels, Phil Blundell, Tuan Hoang, Brian Micek and others";
+char *Release = RELEASE, *Signature = "Fred Baumgarten, Alan Cox, Bernd Eckenfels, Phil Blundell, Tuan Hoang, Brian Micek and others";
 
 
 #define E_READ  -1
@@ -1814,7 +1814,7 @@ static int iface_info(void)
 
 static void version(void)
 {
-    printf("%s\n%s\n%s\n%s\n", Release, Version, Signature, Features);
+    printf("%s\n%s\n%s\n", Release, Signature, Features);
     exit(E_VERSION);
 }
 

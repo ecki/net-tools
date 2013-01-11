@@ -44,7 +44,7 @@
 
 static char no_rarp_message[] = N_("This kernel does not support RARP.\n");
 
-static char version_string[] = RELEASE "\nrarp 1.03 (2001-04-04)\n";
+static char *Release = RELEASE;
 
 static struct hwtype *hardware = NULL;
 
@@ -226,7 +226,7 @@ int main(int argc, char **argv)
 	case 'h':
 	    usage();
 	case 'V':
-	    fputs(version_string, stderr);
+	    fprintf(stderr, "%s\n", Release);
 	    exit(E_VERSION);
 	    break;
 	case 'v':
