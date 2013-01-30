@@ -960,7 +960,7 @@ static void tcp_do_one(int lnr, const char *line, const char *prot)
 {
     unsigned long rxq, txq, time_len, retr, inode;
     int num, local_port, rem_port, d, state, uid, timer_run, timeout;
-    char rem_addr[128], local_addr[128], timers[64], more[512];
+    char rem_addr[128], local_addr[128], timers[64];
     struct aftype *ap;
 #if HAVE_AFINET6
     struct sockaddr_in6 localaddr, remaddr;
@@ -975,9 +975,14 @@ static void tcp_do_one(int lnr, const char *line, const char *prot)
 	return;
 
     num = sscanf(line,
-    "%d: %64[0-9A-Fa-f]:%X %64[0-9A-Fa-f]:%X %X %lX:%lX %X:%lX %lX %d %d %lu %512s\n",
+    "%d: %64[0-9A-Fa-f]:%X %64[0-9A-Fa-f]:%X %X %lX:%lX %X:%lX %lX %d %d %lu %*s\n",
 		 &d, local_addr, &local_port, rem_addr, &rem_port, &state,
-		 &txq, &rxq, &timer_run, &time_len, &retr, &uid, &timeout, &inode, more);
+		 &txq, &rxq, &timer_run, &time_len, &retr, &uid, &timeout, &inode);
+
+    if (num < 11) {
+	fprintf(stderr, _("warning, got bogus tcp line.\n"));
+	return;
+    }
 
     if (!flag_all && ((flag_lst && rem_port) || (!flag_lst && !rem_port)))
       return;
@@ -1007,10 +1012,6 @@ static void tcp_do_one(int lnr, const char *line, const char *prot)
 	((struct sockaddr *) &remaddr)->sa_family = AF_INET;
     }
 
-    if (num < 11) {
-	fprintf(stderr, _("warning, got bogus tcp line.\n"));
-	return;
-    }
     if ((ap = get_afntype(((struct sockaddr *) &localaddr)->sa_family)) == NULL) {
 	fprintf(stderr, _("netstat: unsupported address family %d !\n"),
 		((struct sockaddr *) &localaddr)->sa_family);
@@ -1063,7 +1064,7 @@ static int tcp_info(void)
 static void udp_do_one(int lnr, const char *line,const char *prot)
 {
     char local_addr[64], rem_addr[64];
-    char *udp_state, timers[64], more[512];
+    char *udp_state, timers[64];
     int num, local_port, rem_port, d, state, timer_run, uid, timeout;
 #if HAVE_AFINET6
     struct sockaddr_in6 localaddr, remaddr;
@@ -1079,12 +1080,16 @@ static void udp_do_one(int lnr, const char *line,const char *prot)
     if (lnr == 0)
 	return;
 
-    more[0] = '\0';
     num = sscanf(line,
-		 "%d: %64[0-9A-Fa-f]:%X %64[0-9A-Fa-f]:%X %X %lX:%lX %X:%lX %lX %d %d %lu %511s\n",
+		 "%d: %64[0-9A-Fa-f]:%X %64[0-9A-Fa-f]:%X %X %lX:%lX %X:%lX %lX %d %d %lu %*s\n",
 		 &d, local_addr, &local_port,
 		 rem_addr, &rem_port, &state,
-	  &txq, &rxq, &timer_run, &time_len, &retr, &uid, &timeout, &inode, more);
+	  &txq, &rxq, &timer_run, &time_len, &retr, &uid, &timeout, &inode);
+
+    if (num < 10) {
+	fprintf(stderr, _("warning, got bogus udp line.\n"));
+	return;
+    }
 
     if (strlen(local_addr) > 8) {
 #if HAVE_AFINET6
@@ -1111,13 +1116,7 @@ static void udp_do_one(int lnr, const char *line,const char *prot)
     }
 
     retr = 0L;
-    if (!flag_opt)
-	more[0] = '\0';
 
-    if (num < 10) {
-	fprintf(stderr, _("warning, got bogus udp line.\n"));
-	return;
-    }
     if ((ap = get_afntype(((struct sockaddr *) &localaddr)->sa_family)) == NULL) {
 	fprintf(stderr, _("netstat: unsupported address family %d !\n"),
 		((struct sockaddr *) &localaddr)->sa_family);
@@ -1193,7 +1192,7 @@ static int udplite_info(void)
 static void raw_do_one(int lnr, const char *line,const char *prot)
 {
     char local_addr[64], rem_addr[64];
-    char timers[64], more[512];
+    char timers[64];
     int num, local_port, rem_port, d, state, timer_run, uid, timeout;
 #if HAVE_AFINET6
     struct sockaddr_in6 localaddr, remaddr;
@@ -1209,11 +1208,15 @@ static void raw_do_one(int lnr, const char *line,const char *prot)
     if (lnr == 0)
 	return;
 
-    more[0] = '\0';
     num = sscanf(line,
-		 "%d: %64[0-9A-Fa-f]:%X %64[0-9A-Fa-f]:%X %X %lX:%lX %X:%lX %lX %d %d %lu %511s\n",
+		 "%d: %64[0-9A-Fa-f]:%X %64[0-9A-Fa-f]:%X %X %lX:%lX %X:%lX %lX %d %d %lu %*s\n",
 		 &d, local_addr, &local_port, rem_addr, &rem_port, &state,
-	  &txq, &rxq, &timer_run, &time_len, &retr, &uid, &timeout, &inode, more);
+	  &txq, &rxq, &timer_run, &time_len, &retr, &uid, &timeout, &inode);
+	  
+    if (num < 10) {
+    	fprintf(stderr, _("warning, got bogus raw line.\n"));
+	return;
+    }
 
     if (strlen(local_addr) > 8) {
 #if HAVE_AFINET6
@@ -1249,14 +1252,6 @@ static void raw_do_one(int lnr, const char *line,const char *prot)
 	return;
     }
 #endif
-
-    if (!flag_opt)
-	more[0] = '\0';
-
-    if (num < 10) {
-	fprintf(stderr, _("warning, got bogus raw line.\n"));
-	return;
-    }
 
     if (flag_all || (notnull(remaddr) && !flag_lst) || (!notnull(remaddr) && flag_lst))
     {
