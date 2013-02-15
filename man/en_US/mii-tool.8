@@ -16,6 +16,7 @@ mii\-tool \- view, manipulate media-independent interface status
 [\fB\-l\fR, \fB\-\-log\fR]
 [\fB\-A\fR, \fB\-\-advertise=\fImedia,...\fR]
 [\fB\-F\fR, \fB\-\-force=\fImedia\fR]
+[\fB\-p\fR, \fB\-\-phy=\fIaddr\fR]
 .RI "interface\ ..."
 
 .SH DESCRIPTION
@@ -69,6 +70,9 @@ Enable and restart autonegotiation, and advertise only the specified
 media technologies.  Multiple technologies should be separated by
 commas.  Valid media are \fB100baseT4\fR, \fB100baseTx-FD\fR,
 \fB100baseTx-HD\fR, \fB10baseT-FD\fR, and \fB10baseT-HD\fR.
+.TP
+\fB\-p\fI addr\fR, \fB\-\-phy=\fIaddr\fR
+Override the MII address provided by kernel with value \fBaddr\fR.
 
 .SH DIAGNOSTICS
 .TP

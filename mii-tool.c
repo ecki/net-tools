@@ -96,10 +96,10 @@ static const struct {
 
 struct option longopts[] = {
  /* { name  has_arg  *flag  val } */
-    {"advertise",	1, 0, 'A'},	/* Change capabilities advertised. */
-    {"force",		1, 0, 'F'},	/* Change capabilities advertised. */
+    {"advertise",	1, 0, 'A'},	/* Advertise only specified media. */
+    {"force",		1, 0, 'F'},	/* Force specified media technology. */
     {"phy",		1, 0, 'p'},	/* Set PHY (MII address) to report. */
-    {"log",		0, 0, 'l'},	/* Set PHY (MII address) to report. */
+    {"log",		0, 0, 'l'},	/* With --watch, write events to syslog. */
     {"restart",		0, 0, 'r'},	/* Restart link negotiation */
     {"reset",		0, 0, 'R'},	/* Reset the transceiver. */
     {"verbose", 	0, 0, 'v'},	/* Report each action taken.  */
@@ -448,7 +448,7 @@ static void watch_one_xcvr(int skfd, char *ifname, int index)
 /*--------------------------------------------------------------------*/
 
 const char *usage =
-"usage: %s [-VvRrwl] [-A media,... | -F media] <interface ...>\n"
+"usage: %s [-VvRrwl] [-A media,... | -F media] [-p addr] <interface ...>\n"
 "       -V, --version               display version information\n"
 "       -v, --verbose               more verbose output\n"
 "       -R, --reset                 reset MII to poweron state\n"
@@ -457,6 +457,7 @@ const char *usage =
 "       -l, --log                   with -w, write events to syslog\n"
 "       -A, --advertise=media,...   advertise only specified media\n"
 "       -F, --force=media           force specified media technology\n"
+"       -p, --phy=addr              set PHY (MII address) to report\n"
 "media: 1000baseTx-HD, 1000baseTx-FD,\n"
 "       100baseT4, 100baseTx-FD, 100baseTx-HD,\n"
 "       10baseT-FD, 10baseT-HD,\n"
