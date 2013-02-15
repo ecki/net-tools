@@ -270,7 +270,10 @@ int show_basic_mii(int sock, int phy_id)
 		mii_val[i] = mdio_read(sock, i);
 		break;
 	    default:
-		mii_val[i] = 0;
+		if (verbose > 2)
+		    mii_val[i] = mdio_read(sock, i);
+		else
+		    mii_val[i] = 0;
 		break;
         }
 

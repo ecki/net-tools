@@ -43,6 +43,11 @@ status for each interface.
 \fB\-v\fR, \fB\-\-verbose\fR
 Display more detailed MII status information.  If used twice, also
 display raw MII register contents.
+.br
+\fBAlert:\fR If used three times, will force reading all MII
+registers, including non standard ones. It's not guaranteed any
+valid answer from PHY while PHY communication can even hang.
+With driver e1000e will fail while reading register 0x07.
 .TP
 \fB\-V\fR, \fB\-\-version\fR
 Display program version information.
