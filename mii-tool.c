@@ -70,7 +70,7 @@ static const struct {
     { 0x0000, 0x6b90, "AMD 79C901A HomePNA" },
     { 0x0000, 0x6b70, "AMD 79C901A 10baseT" },
     { 0x0181, 0xb800, "Davicom DM9101" },
-    { 0x0043, 0x7411, "Enable EL40-331" },
+    { 0x0043, 0x7410, "Enable EL40-331" },
     { 0x0015, 0xf410, "ICS 1889" },
     { 0x0015, 0xf420, "ICS 1890" },
     { 0x0015, 0xf430, "ICS 1892" },
