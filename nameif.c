@@ -23,6 +23,7 @@
 #include <errno.h>
 #include "intl.h" 
 #include "net-support.h"
+#include "util.h"
 
 const char default_conf[] = "/etc/mactab"; 
 const char *fname = default_conf; 
@@ -78,13 +79,6 @@ int parsemac(char *str, unsigned char *mac)
 	return 0;
 } 
 
-void *xmalloc(unsigned sz)
-{ 
-	void *p = calloc(sz,1);
-	if (!p) errno=ENOMEM, err("xmalloc"); 
-	return p; 
-} 
-
 void opensock(void)
 {
 	if (ctl_sk < 0) 
@@ -100,8 +94,8 @@ int  setname(char *oldname, char *newname)
 	struct ifreq ifr;
 	opensock(); 
 	memset(&ifr,0,sizeof(struct ifreq));
-	strncpy(ifr.ifr_name, oldname, IFNAMSIZ);
-	strncpy(ifr.ifr_newname, newname, IFNAMSIZ);
+	safe_strncpy(ifr.ifr_name, oldname, IFNAMSIZ);
+	safe_strncpy(ifr.ifr_newname, newname, IFNAMSIZ);
 	return ioctl(ctl_sk, SIOCSIFNAME, &ifr);
 }
 
@@ -111,7 +105,7 @@ int getmac(char *name, unsigned char *mac)
 	struct ifreq ifr;
 	opensock(); 
 	memset(&ifr,0,sizeof(struct ifreq));
-	strcpy(ifr.ifr_name, name); 
+	safe_strncpy(ifr.ifr_name, name, IFNAMSIZ);
 	r = ioctl(ctl_sk, SIOCGIFHWADDR, &ifr);
 	memcpy(mac, ifr.ifr_hwaddr.sa_data, 6); 
 	return r; 

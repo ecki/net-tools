@@ -54,6 +54,7 @@
 #include <linux/sockios.h>
 #include "version.h"
 #include "net-support.h"
+#include "util.h"
 
 static char *Release = RELEASE, *Signature = "David Hinds based on Donald Becker's mii-diag";
 
@@ -384,7 +385,7 @@ static int do_one_xcvr(int skfd, char *ifname, int maybe)
     struct mii_ioctl_data *mii = (struct mii_ioctl_data *)&ifr.ifr_data;
 
     /* Get the vitals from the interface. */
-    strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
+    safe_strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
     if (ioctl(skfd, SIOCGMIIPHY, &ifr) < 0) {
 	if (!maybe || (errno != ENODEV))
 	    fprintf(stderr, "SIOCGMIIPHY on '%s' failed: %s\n",
@@ -434,7 +435,7 @@ static void watch_one_xcvr(int skfd, char *ifname, int index)
     int now;
 
     /* Get the vitals from the interface. */
-    strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
+    safe_strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
     if (ioctl(skfd, SIOCGMIIPHY, &ifr) < 0) {
 	if (errno != ENODEV)
 	    fprintf(stderr, "SIOCGMIIPHY on '%s' failed: %s\n",

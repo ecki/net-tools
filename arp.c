@@ -178,7 +178,7 @@ static int arp_del(char **args)
 	    if (*++args == NULL)
 		usage();
 	    if (strcmp(*args, "255.255.255.255") != 0) {
-		strcpy(host, *args);
+		safe_strncpy(host, *args, (sizeof host));
 		if (ap->input(0, host, sa) < 0) {
 		    ap->herror(host);
 		    return (-1);
@@ -243,7 +243,7 @@ static int arp_getdevhw(char *ifname, struct sockaddr *sa, struct hwtype *hw)
     struct ifreq ifr;
     struct hwtype *xhw;
 
-    strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
+    safe_strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
     if (ioctl(sockfd, SIOCGIFHWADDR, &ifr) < 0) {
 	fprintf(stderr, _("arp: cant get HW-Address for `%s': %s.\n"), ifname, strerror(errno));
 	return (-1);
@@ -355,7 +355,7 @@ static int arp_set(char **args)
 	    if (*++args == NULL)
 		usage();
 	    if (strcmp(*args, "255.255.255.255") != 0) {
-		strcpy(host, *args);
+		safe_strncpy(host, *args, (sizeof host));
 		if (ap->input(0, host, sa) < 0) {
 		    ap->herror(host);
 		    return (-1);

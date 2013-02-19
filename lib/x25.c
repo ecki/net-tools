@@ -38,6 +38,7 @@
 #include "net-locale.h"
 #endif
 #include "intl.h"
+#include "util.h"
 
 static char X25_errmsg[128];
 
@@ -88,7 +89,9 @@ X25_input(int type, char *bufp, struct sockaddr *sap)
 
   /* Address the correct length ? */
   if (strlen(bufp)>18) {
-        strcpy(X25_errmsg, _("Address can't exceed eighteen digits with sigdigits"));
+        safe_strncpy(X25_errmsg,
+                     _("Address can't exceed eighteen digits with sigdigits"),
+                     sizeof(X25_errmsg));
 #ifdef DEBUG
         fprintf(stderr, "x25_input(%s): %s !\n", X25_errmsg, orig);
 #endif
@@ -107,7 +110,7 @@ X25_input(int type, char *bufp, struct sockaddr *sap)
   if (strlen(bufp) < 1 || strlen(bufp) > 15 || sigdigits > strlen(bufp)) {
         if (p != NULL)
                 *p = '/';
-        strcpy(X25_errmsg, _("Invalid address"));
+        safe_strncpy(X25_errmsg, _("Invalid address"), sizeof(X25_errmsg));
 #ifdef DEBUG
         fprintf(stderr, "x25_input(%s): %s !\n", X25_errmsg, orig);
 #endif

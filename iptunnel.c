@@ -99,7 +99,7 @@ static int do_ioctl_get_ifindex(char *dev)
 	int fd;
 	int err;
 
-	strcpy(ifr.ifr_name, dev);
+	safe_strncpy(ifr.ifr_name, dev, IFNAMSIZ);
 	fd = socket(AF_INET, SOCK_DGRAM, 0);
 	err = ioctl(fd, SIOCGIFINDEX, &ifr);
 	if (err) {
@@ -117,7 +117,7 @@ static int do_ioctl_get_iftype(char *dev)
 	int fd;
 	int err;
 
-	strcpy(ifr.ifr_name, dev);
+	safe_strncpy(ifr.ifr_name, dev, IFNAMSIZ);
 	fd = socket(AF_INET, SOCK_DGRAM, 0);
 	err = ioctl(fd, SIOCGIFHWADDR, &ifr);
 	if (err) {
@@ -156,7 +156,7 @@ static int do_get_ioctl(char *basedev, struct ip_tunnel_parm *p)
 	int fd;
 	int err;
 
-	strcpy(ifr.ifr_name, basedev);
+	safe_strncpy(ifr.ifr_name, basedev, IFNAMSIZ);
 	ifr.ifr_ifru.ifru_data = (void*)p;
 	fd = socket(AF_INET, SOCK_DGRAM, 0);
 	err = ioctl(fd, SIOCGETTUNNEL, &ifr);
@@ -172,7 +172,7 @@ static int do_add_ioctl(int cmd, char *basedev, struct ip_tunnel_parm *p)
 	int fd;
 	int err;
 
-	strcpy(ifr.ifr_name, basedev);
+	safe_strncpy(ifr.ifr_name, basedev, IFNAMSIZ);
 	ifr.ifr_ifru.ifru_data = (void*)p;
 	fd = socket(AF_INET, SOCK_DGRAM, 0);
 	err = ioctl(fd, cmd, &ifr);
@@ -188,7 +188,7 @@ static int do_del_ioctl(char *basedev, struct ip_tunnel_parm *p)
 	int fd;
 	int err;
 
-	strcpy(ifr.ifr_name, basedev);
+	safe_strncpy(ifr.ifr_name, basedev, IFNAMSIZ);
 	ifr.ifr_ifru.ifru_data = (void*)p;
 	fd = socket(AF_INET, SOCK_DGRAM, 0);
 	err = ioctl(fd, SIOCDELTUNNEL, &ifr);

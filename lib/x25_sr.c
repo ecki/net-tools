@@ -38,6 +38,7 @@
 #include "net-locale.h"
 #endif
 #include "intl.h"
+#include "util.h"
 
 #include "net-features.h"
 
@@ -64,7 +65,7 @@ static int X25_setroute(int action, int options, char **args)
   if (*args == NULL)
 	return(usage());
 
-  strcpy(target, *args++);
+  safe_strncpy(target, *args++, sizeof(target));
 
   /* Clean out the x25_route_struct structure. */
   memset((char *) &rt, 0, sizeof(rt));
@@ -89,7 +90,7 @@ static int X25_setroute(int action, int options, char **args)
 			return(usage());
 	if (rt.device[0])
 		return(usage());
-	strcpy(rt.device, *args);
+	safe_strncpy(rt.device, *args, sizeof(rt.device));
 	args++;
   }
   if (rt.device[0]=='\0')

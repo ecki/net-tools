@@ -155,8 +155,8 @@ subdirs:	libdir
 ifconfig:	$(NET_LIB) ifconfig.o
 		$(CC) $(LDFLAGS) -o ifconfig ifconfig.o $(NLIB) $(RESLIB)
 		
-nameif:	nameif.o
-		$(CC) $(LDFLAGS) -o nameif nameif.o 
+nameif:		$(NET_LIB) nameif.o
+		$(CC) $(LDFLAGS) -o nameif nameif.o $(NLIB) $(RESLIB)
 
 hostname:	hostname.o
 		$(CC) $(LDFLAGS) -o hostname hostname.o $(DNLIB)
@@ -185,8 +185,8 @@ iptunnel:	$(NET_LIB) iptunnel.o
 ipmaddr:	$(NET_LIB) ipmaddr.o
 		$(CC) $(LDFLAGS) -o ipmaddr ipmaddr.o $(NLIB) $(RESLIB)
 
-mii-tool:	mii-tool.o
-		$(CC) $(LDFLAGS) -o mii-tool mii-tool.o
+mii-tool:	$(NET_LIB) mii-tool.o
+		$(CC) $(LDFLAGS) -o mii-tool mii-tool.o $(NLIB) $(RESLIB)
 
 installbin:
 	@echo
