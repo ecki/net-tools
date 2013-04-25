@@ -33,11 +33,11 @@ void *xrealloc(void *oldp, size_t sz)
 int kernel_version(void)
 {
     struct utsname uts;
-    int major, minor, patch;
+    int major, minor, patch=0;
 
     if (uname(&uts) < 0)
 	return -1;
-    if (sscanf(uts.release, "%d.%d.%d", &major, &minor, &patch) != 3)
+    if (sscanf(uts.release, "%d.%d.%d", &major, &minor, &patch) < 2)
 	return -1;
     return KRELEASE(major, minor, patch);
 }
