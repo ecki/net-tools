@@ -655,30 +655,25 @@ int main(int argc, char **argv)
 	    continue;
 	}
 	if (!strcmp(*spp, "pointopoint")) {
-	    if (*(spp + 1) != NULL) {
-		spp++;
-		safe_strncpy(host, *spp, (sizeof host));
-		if (ap->input(0, host, &sa)) {
-		    if (ap->herror)
-		    	ap->herror(host);
-		    else
-		    	fprintf(stderr, _("ifconfig: Error resolving '%s' for pointopoint\n"), host);
-		    goterr = 1;
-		    spp++;
-		    continue;
-		}
-		memcpy((char *) &ifr.ifr_dstaddr, (char *) &sa,
-		       sizeof(struct sockaddr));
-		if (ioctl(ap->fd, SIOCSIFDSTADDR, &ifr) < 0) {
-		    fprintf(stderr, "SIOCSIFDSTADDR: %s\n",
-			    strerror(errno));
-		    goterr = 1;
-		}
-	    }
+	    if (*++spp == NULL)
+                usage();
+            safe_strncpy(host, *spp, (sizeof host));
+            if (ap->input(0, host, &sa)) {
+                if (ap->herror)
+                    ap->herror(host);
+                else
+                    fprintf(stderr, _("ifconfig: Error resolving '%s' for pointopoint\n"), host);
+                goterr = 1;
+                continue;
+            }
+            memcpy((char *) &ifr.ifr_dstaddr, (char *) &sa, sizeof(struct sockaddr));
+            if (ioctl(ap->fd, SIOCSIFDSTADDR, &ifr) < 0) {
+                fprintf(stderr, "SIOCSIFDSTADDR: %s\n", strerror(errno));
+                goterr = 1;
+            }
 	    goterr |= set_flag(ifr.ifr_name, IFF_POINTOPOINT);
-	    spp++;
 	    continue;
-	};
+	}
 
 	if (!strcmp(*spp, "hw")) {
 	    if (*++spp == NULL)
