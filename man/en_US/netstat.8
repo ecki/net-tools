@@ -21,6 +21,7 @@ netstat \- Print network connections, routing tables, interface statistics, masq
 .RB [ \-\-tcp | \-t ]
 .RB [ \-\-udp | \-u ]
 .RB [ \-\-udplite | \-U ]
+.RB [ \-\-sctp | \-S ]
 .RB [ \-\-raw | \-w ]
 .RB [ \-\-listening | \-l ]
 .RB [ \-\-all | \-a ]
@@ -71,6 +72,7 @@ netstat \- Print network connections, routing tables, interface statistics, masq
 .RB [ \-\-tcp | \-t ]
 .RB [ \-\-udp | \-u ]
 .RB [ \-\-udplite | \-U ]
+.RB [ \-\-sctp | \-S ]
 .RB [ \-\-raw | \-w ]
 .P
 .B netstat 
@@ -176,7 +178,7 @@ options.
 .P
 The address family
 .B inet
-(Iv4) includes raw, udp, udplite and tcp protocol sockets.
+(Iv4) includes raw, udp, udplite, sctp and tcp protocol sockets.
 .SS "\-c, \-\-continuous"
 This will cause
 .B netstat
@@ -197,12 +199,15 @@ option, show interfaces that are not up
 Print routing information from the FIB.  (This is the default.)
 .SS "\-C"
 Print routing information from the route cache.
+.SS "\-S"
+Print SCTP sockets. If S is specified twice all IP addresses of the socket
+is displayed.
 .P
 .SH OUTPUT
 .P
-.SS Active Internet connections \fR(TCP, UDP, UDPLite, raw)\fR
+.SS Active Internet connections \fR(TCP, UDP, UDPLite, SCTP, raw)\fR
 .SS "Proto" 
-The protocol (tcp, udp, udpl, raw) used by the socket. 
+The protocol (tcp, udp, udpl, sctp, raw) used by the socket. 
 .SS "Recv\-Q"
 Established: The count of bytes not copied by the user program connected to this socket.
 Listening: Since Kernel 2.6.18 this column contains the current syn backlog.
@@ -408,6 +413,12 @@ status information via the following files.
 
 .I /proc/net/udplite
 -- UDPLite socket information
+
+.I /proc/net/sctp/eps
+-- SCTP endpoint information
+
+.I /proc/net/sctp/assocs
+-- SCTP association information
 
 .I /proc/net/igmp
 -- IGMP multicast information

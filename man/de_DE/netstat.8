@@ -20,6 +20,7 @@ netstat \- Anzeige von Netzwerksverbindungen, Routentabellen, Schnittstellenstat
 .RB [ \-venaoc ]
 .RB [ \-\-tcp | \-t ]
 .RB [ \-\-udp | \-u ]
+.RB [ \-\-sctp | \-S ]
 .RB [ \-\-raw | \-w ]
 .RB [ \-\-groups | \-g ]
 .RB [ \-\-unix | \-x ] 
@@ -90,7 +91,7 @@ ge\(:offnet hat, aus.
 druckt alle Sockets einschlie\(sslich der auf Verbinungen wartenden
 Serversockets aus.  Die Adressfamilie
 .B inet
-zeigt RAW, UDP und TCP Sockets an.
+zeigt RAW, UDP, SCTP und TCP Sockets an.
 
 .SS "\-r, \-\-route"
 Die
@@ -187,14 +188,18 @@ Mit dieser Option wiederholt
 .B netstat
 im Sekundenabstand die Ausgabe, bis es abgebrochen wird.
 
+.SS "\-S, \-\-sctp"
+Mit dieser Option wird SCTP Sockets angezeigt. Wenn \-S zweimals angegeben ist
+wird alle IP Adressen der Association/Endpoint angezeigt.
+
 .PP
 .SH AUSGABE
 
 .PP
-.SS Aktive Internet-Verbindungen \fR(TCP, UDP, RAW)\fR
+.SS Aktive Internet-Verbindungen \fR(TCP, UDP, SCTP, RAW)\fR
 
 .SS "Proto" 
-Das von Socket verwendete Protokoll (TCP, UDP, RAW).
+Das von Socket verwendete Protokoll (TCP, UDP, SCTP, RAW).
 
 .SS "Recv-Q"
 Die Anzahl von Bytes, die noch nicht von der Anwendung vom Socket abgeholt
@@ -434,6 +439,12 @@ Befehl explizite Regeln zugef\(:ugt werden.
 
 .I /proc/net/udp
 -- Informationen \(:uber UDP-Sockets
+
+.I /proc/net/sctp/eps
+-- Informationen \(:uber SCTP Endpoints
+
+.I /proc/net/sctp/assocs
+-- Informationen \(:uber SCTP Associations
 
 .I /proc/net/igmp
 -- IGMP-bezogene Informationen
