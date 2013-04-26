@@ -60,6 +60,8 @@
  *20010404 {1.39} Arnaldo Carvalho de Melo - use setlocale
  *20081201 {1.42} Brian Micek           added -L|--udplite options for RFC 3828 
  *20020722 {1.51} Thomas Preusser       added SCTP over IPv4 support
+ *20130426        Heikki Hannikainen    added SCTP over IPv6 support
+ *                Ivan Skytte Joergensen SCTP statistics, state display, man page updates
  *
  *              This program is free software; you can redistribute it
  *              and/or  modify it under  the terms of  the GNU General
