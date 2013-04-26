@@ -114,7 +114,7 @@
 #endif
 
 /* prototypes for statistics.c */
-void parsesnmp(int, int, int);
+void parsesnmp(int, int, int, int);
 void inittab(void);
 void parsesnmp6(int, int, int);
 void inittab6(void);
@@ -2164,7 +2164,7 @@ int main
         if (!strcmp(afname, "inet")) {
 #if HAVE_AFINET
             inittab();
-            parsesnmp(flag_raw, flag_tcp, flag_udp);
+            parsesnmp(flag_raw, flag_tcp, flag_udp, flag_sctp);
 #else
             ENOSUPP("netstat", "AF INET");
 #endif

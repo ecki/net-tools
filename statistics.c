@@ -21,7 +21,7 @@
 #define UFWARN(x)
 #endif
 
-int print_static,f_raw,f_tcp,f_udp,f_unknown = 1;
+int print_static,f_raw,f_tcp,f_udp,f_sctp,f_unknown = 1;
 
 enum State {
     number = 0, opt_number, i_forward, i_inp_icmp, i_outp_icmp, i_rto_alg,
@@ -299,6 +299,27 @@ struct entry Tcpexttab[] =
     { "TCPRenoRecoveryFail", N_("%llu classic Reno fast retransmits failed"), opt_number },
 };
 
+struct entry Sctptab[] =
+{
+    {"SctpCurrEstab", N_("%u Current Associations"), number},
+    {"SctpActiveEstabs", N_("%u Active Associations"), number},
+    {"SctpPassiveEstabs", N_("%u Passive Associations"), number},
+    {"SctpAborteds", N_("%u Number of Aborteds "), number},
+    {"SctpShutdowns", N_("%u Number of Graceful Terminations"), number},
+    {"SctpOutOfBlues", N_("%u Number of Out of Blue packets"), number},
+    {"SctpChecksumErrors", N_("%u Number of Packets with invalid Checksum"), number},
+    {"SctpOutCtrlChunks", N_("%u Number of control chunks sent"), number},
+    {"SctpOutOrderChunks", N_("%u Number of ordered chunks sent"), number},
+    {"SctpOutUnorderChunks", N_("%u Number of Unordered chunks sent"), number},
+    {"SctpInCtrlChunks", N_("%u Number of control chunks received"), number},
+    {"SctpInOrderChunks", N_("%u Number of ordered chunks received"), number},
+    {"SctpInUnorderChunks", N_("%u Number of Unordered chunks received"), number},
+    {"SctpFragUsrMsgs", N_("%u Number of messages fragmented"), number},
+    {"SctpReasmUsrMsgs", N_("%u Number of messages reassembled "), number},
+    {"SctpOutSCTPPacks", N_("%u Number of SCTP packets sent"), number},
+    {"SctpInSCTPPacks", N_("%u Number of SCTP packets received"), number},
+};
+
 struct tabtab {
     char *title;
     struct entry *tab;
@@ -312,6 +333,7 @@ struct tabtab snmptabs[] =
     {"Icmp", Icmptab, sizeof(Icmptab), &f_raw},
     {"Tcp", Tcptab, sizeof(Tcptab), &f_tcp},
     {"Udp", Udptab, sizeof(Udptab), &f_udp},
+    {"Sctp", Sctptab, sizeof(Sctptab), &f_sctp},
     {"TcpExt", Tcpexttab, sizeof(Tcpexttab), &f_tcp},
     {NULL}
 };
@@ -502,11 +524,39 @@ void process6_fd(FILE *f)
 
 }
 
-void parsesnmp(int flag_raw, int flag_tcp, int flag_udp)
+/* Process a file with name-value lines (like /proc/net/sctp/snmp) */
+void process_fd2(FILE *f, const char *filename)
+{
+    char buf1[1024];
+    char *sp;
+    struct tabtab *tab;
+    
+    tab = newtable(snmptabs, "Sctp");
+    
+    while (fgets(buf1, sizeof buf1, f)) {
+	sp = buf1 + strcspn(buf1, " \t\n");
+	if (!sp)
+	    goto formaterr;
+	*sp = '\0';
+    	sp++;
+	
+	sp += strspn(sp, " \t\n"); 
+
+	if (*sp != '\0' && *(tab->flag)) 	
+	    printval(tab, buf1, strtoul(sp, 0, 10));
+    }
+  return;
+  
+formaterr:
+  fprintf(stderr,_("error parsing %s\n"), filename);
+  return;
+}
+
+void parsesnmp(int flag_raw, int flag_tcp, int flag_udp, int flag_sctp)
 {
     FILE *f;
 
-    f_raw = flag_raw; f_tcp = flag_tcp; f_udp = flag_udp;
+    f_raw = flag_raw; f_tcp = flag_tcp; f_udp = flag_udp, f_sctp = flag_sctp;
     
     f = proc_fopen("/proc/net/snmp");
     if (!f) {
@@ -533,6 +583,16 @@ void parsesnmp(int flag_raw, int flag_tcp, int flag_udp)
     
         fclose(f);
     }
+
+    f = fopen("/proc/net/sctp/snmp", "r");
+    if (f) {
+	process_fd2(f,"/proc/net/sctp/snmp");
+	if (ferror(f))
+	    perror("/proc/net/sctp/snmp");
+
+	fclose(f);
+    }
+
     return;
 }
     
