@@ -771,79 +771,132 @@ static int igmp_info(void)
 	       igmp_do_one, "igmp", "igmp6");
 }
 
-static int ip_parse_dots(uint32_t *addr, char const *src) {
-  unsigned  a, b, c, d;
-  unsigned  ret = 4-sscanf(src, "%u.%u.%u.%u", &a, &b, &c, &d);
-  *addr = htonl((a << 24)|(b << 16)|(c << 8)|d);
-  return  ret;
+/*
+ *	SCTP support
+ */
+
+union sockaddr_u {
+    struct sockaddr     sa;
+    struct sockaddr_in  si;
+#if HAVE_AFINET6
+    struct sockaddr_in6 si6;
+#endif
+};
+
+static int ip_parse_dots(union sockaddr_u *addr, char const *src)
+{
+    /* SCTP sockets can use IPv6 and IPv4 addresses, at the same time, for
+     * the same socket. Try to parse an IPv4 address first.
+     */
+    unsigned  a, b, c, d;
+    unsigned  el = sscanf(src, "%u.%u.%u.%u", &a, &b, &c, &d);
+    
+    if (el == 4) {
+    	addr->sa.sa_family = AF_INET;
+    	addr->si.sin_addr.s_addr = htonl((a << 24)|(b << 16)|(c << 8)|d);
+    	return 0;
+    }
+
+#if HAVE_AFINET6
+    /* check if it looks right first */
+    el = sscanf(src, "%04X:%04X:%04X:%04X:%04X:%04X:%04X:%04X ",
+           &a, &a, &a, &a, &a, &a, &a, &a);
+    
+    if (el == 8) {
+        addr->sa.sa_family = AF_INET6;
+        
+        if (inet_pton(AF_INET6, src, (void *)&addr->si6.sin6_addr) != 1)
+            return -1;
+        
+        return 0;
+    }
+#endif
+    
+    return -1;
 }
 
-static void print_ip_service(struct sockaddr_in *addr, char const *protname,
-			     char *buf, unsigned size) {
-  struct aftype *ap;
-
-  if(size == 0)  return;
-
-  /* print host */
-  if((ap = get_afntype(addr->sin_family)) == NULL) {
-    fprintf(stderr, _("netstat: unsupported address family %d !\n"),
-	    addr->sin_family);
-    return;
-  }
-  safe_strncpy(buf, ap->sprint((struct sockaddr*)addr, flag_not), size);
-
-  /* print service */
-  if(flag_all || (flag_lst && !addr->sin_port) || (!flag_lst && addr->sin_port)) {
+static void print_ip_service(union sockaddr_u *addr, char const *protname,
+			     char *buf, unsigned size)
+{
+    struct aftype *ap;
+    
+    if (size == 0)
+        return;
+    
+    /* print host */
+    if ((ap = get_afntype(addr->sa.sa_family)) == NULL) {
+        fprintf(stderr, _("netstat: unsupported address family %d !\n"),
+            addr->sa.sa_family);
+        return;
+    }
+    
+    safe_strncpy(buf, ap->sprint((struct sockaddr *)addr, flag_not), size);
+    
+    /* print service */
     char  bfs[32];
-
+    
     snprintf(bfs, sizeof(bfs), "%s",
-	     get_sname(addr->sin_port, (char*)protname, flag_not & FLAG_NUM_PORT));
-
+        get_sname(addr->si.sin_port, (char*)protname, flag_not & FLAG_NUM_PORT));
+    
     /* check if we must cut on host and/or service name */
     {
-      unsigned const  bufl = strlen(buf);
-      unsigned const  bfsl = strlen(bfs);
-
-      if(bufl+bfsl+2 > size) {
-	unsigned const  half = (size-2)>>1;
-	if(bufl > half) {
-	  if(bfsl > half) {
-	    buf[size-2-half] = '\0';
-	    bfs[half+1]      = '\0';
-	  }
-	  else  buf[size-2-bfsl] = '\0';
-	}
-	else  bfs[size-2-bufl] = '\0';
-      }  
+        unsigned const  bufl = strlen(buf);
+        unsigned const  bfsl = strlen(bfs);
+        
+        if (bufl+bfsl+2 > size) {
+            unsigned const  half = (size-2)>>1;
+            if (bufl > half) {
+                if (bfsl > half) {
+                    buf[size-2-half] = '\0';
+                    bfs[half+1]      = '\0';
+                } else {
+                    buf[size-2-bfsl] = '\0';
+                }
+            }
+        } else {
+            bfs[size-2-bufl] = '\0';
+        }
     }
+    
     strcat(buf, ":");
     strcat(buf, bfs);
-  }
 }
 
 /* process single SCTP endpoint */
-static void sctp_do_ept(int lnr, char const *line, const char *prot)
+static void sctp_do_ept(int lnr, char *line, const char *prot)
 {
-  struct sockaddr_in  laddr, raddr;
-  unsigned            uid, inode;
+  union sockaddr_u laddr, raddr;
+  unsigned             uid, inode;
+  
+  memset((void *)&raddr, 0, sizeof(raddr));
 
-  char        l_addr[23], r_addr[23];
+  char l_addr[23] = "";
+  char r_addr[23] = "";
 
   /* fill sockaddr_in structures */
   {
     unsigned  lport;
     unsigned  ate;
+    char *addr, *s;
 
     if(lnr == 0)  return;
     if(sscanf(line, "%*X %*X %*u %*u %*u %u %u %u %n",
 	      &lport, &uid, &inode, &ate) < 3)  goto err;
 
     /* decode IP address */
-    if(ip_parse_dots(&laddr.sin_addr.s_addr, line+ate))  goto err;
-    raddr.sin_addr.s_addr = htonl(0);
-    laddr.sin_family = raddr.sin_family = AF_INET;
-    laddr.sin_port = htons(lport);
-    raddr.sin_port = htons(0);
+    addr = line + ate;
+    s = addr;
+    while (*s != 0 && !isspace(*s))
+        s++;
+    if (*s == 0)
+    	goto err;
+    *s = 0;
+    
+    if (ip_parse_dots(&laddr, addr))
+    	goto err;
+    
+    laddr.si.sin_port = htons(lport);
+    raddr.sa.sa_family = laddr.sa.sa_family;
   }
 
   /* print IP:service to l_addr and r_addr */
@@ -859,23 +912,23 @@ static void sctp_do_ept(int lnr, char const *line, const char *prot)
   finish_this_one(uid, inode, "");
   return;
  err:
-  fprintf(stderr, "SCTP error in line: %d\n", lnr);
+  fprintf(stderr, "Warning: SCTP endpoint parsing failed on line: %d\n", lnr);
 }
 
 /* process single SCTP association */
-static void sctp_do_assoc(int lnr, char const *line, const char *prot)
+static void sctp_do_assoc(int lnr, char *line, const char *prot)
 {
-  struct sockaddr_in  laddr, raddr;
+  union sockaddr_u    laddr, raddr;
   unsigned long       rxq, txq;
   unsigned            uid, inode;
-
   char        l_addr[23], r_addr[23];
 
   /* fill sockaddr_in structures */
   {
     unsigned    lport, rport;
     unsigned    ate;
-    char const *addr;
+    char *addr;
+    char *s;
 
     if(lnr == 0)  return;
     if(sscanf(line, "%*X %*X %*u %*u %*u %*u %*u %lu %lu %u %u %u %u %n",
@@ -884,15 +937,32 @@ static void sctp_do_assoc(int lnr, char const *line, const char *prot)
     /* decode IP addresses */
     addr = strchr(line+ate, '*');
     if(addr == 0)  goto err;
-    if(ip_parse_dots(&laddr.sin_addr.s_addr, ++addr))  goto err;
-    addr = strchr(addr, '*');
+    
+    addr++;
+    s = addr;
+    while (*s != 0 && !isspace(*s))
+            s++;
+    if (*s == 0)
+    	goto err;
+    *s = 0;
+    
+    if( ip_parse_dots(&laddr, addr))  goto err;
+    
+    addr = strchr(s+1, '*');
     if(addr == 0)  goto err;
-    if(ip_parse_dots(&raddr.sin_addr.s_addr, ++addr))  goto err;
+    
+    addr++;
+    s = addr;
+    while (*s != 0 && !isspace(*s))
+            s++;
+    *s = 0;
+    
+    if (ip_parse_dots(&raddr, addr))
+      goto err;
 
-    /* complete sockaddr_in structures */
-    laddr.sin_family = raddr.sin_family = AF_INET;
-    laddr.sin_port = htons(lport);
-    raddr.sin_port = htons(rport);
+    /* complete sockaddr_in structures, port is in the same location for both IPv4 and IPv6 */
+    laddr.si.sin_port = htons(lport);
+    raddr.si.sin_port = htons(rport);
   }
 
   /* print IP:service to l_addr and r_addr */
@@ -908,7 +978,7 @@ static void sctp_do_assoc(int lnr, char const *line, const char *prot)
   finish_this_one(uid, inode, "");
   return;
  err:
-  fprintf(stderr, "SCTP error in line: %d\n", lnr);
+  fprintf(stderr, "Warning: SCTP association parsing failed on line: %d\n", lnr);
 }
 
 static int sctp_info_epts(void) {
@@ -922,11 +992,20 @@ static int sctp_info_assocs(void) {
 }
 
 static int sctp_info(void) {
-  int  res;
-  res = sctp_info_epts();
-  if(res)  return  res;
-  return  sctp_info_assocs();
+    int  res;
+    
+    if (flag_all || flag_lst) {
+        res = sctp_info_epts();
+        if (res)
+            return res;
+    }
+    
+    if (flag_lst && !flag_all)
+    	return 0;
+    	
+    return sctp_info_assocs();
 }
+
 
 static void addr_do_one(char *buf, size_t buf_len, size_t short_len, struct aftype *ap,
 #if HAVE_AFINET6
