@@ -572,6 +572,8 @@ enum {
 
 #if HAVE_AFINET || HAVE_AFINET6
 
+#define TCP_NSTATES 12
+
 static const char *tcp_state[] =
 {
     "",
@@ -775,6 +777,43 @@ static int igmp_info(void)
  *	SCTP support
  */
 
+
+#define SCTP_NSTATES  9         /* The number of states in array */
+
+static const char *sctp_state[] = {
+    N_("EMPTY"),
+    N_("CLOSED"),
+    N_("COOKIE_WAIT"),
+    N_("COOKIE_ECHOED"),
+    N_("ESTABLISHED"),
+    N_("SHUTDOWN_PENDING"),
+    N_("SHUTDOWN_SENT"),
+    N_("SHUTDOWN_RECEIVED"),
+    N_("SHUTDOWN_ACK_SENT")
+};
+
+static const char *sctp_state_str(int state)
+{
+    if (state >= 0 && state < SCTP_NSTATES)
+	return sctp_state[state];
+    else {
+	static char state_str_buf[64];
+	sprintf(state_str_buf, "UNKNOWN(%d)", state);
+	return state_str_buf;
+    }
+}
+
+static const char *sctp_socket_state_str(int state)
+{
+    if (state >= 0 && state < TCP_NSTATES)
+	return tcp_state[state];
+    else {
+	static char state_str_buf[64];
+	sprintf(state_str_buf, "UNKNOWN(%d)", state);
+	return state_str_buf;
+    }
+}
+
 union sockaddr_u {
     struct sockaddr     sa;
     struct sockaddr_in  si;
@@ -866,7 +905,7 @@ static void print_ip_service(union sockaddr_u *addr, char const *protname,
 static void sctp_do_ept(int lnr, char *line, const char *prot)
 {
   union sockaddr_u laddr, raddr;
-  unsigned             uid, inode;
+  unsigned         sstate, uid, inode;
   
   memset((void *)&raddr, 0, sizeof(raddr));
 
@@ -880,8 +919,10 @@ static void sctp_do_ept(int lnr, char *line, const char *prot)
     char *addr, *s;
 
     if(lnr == 0)  return;
-    if(sscanf(line, "%*X %*X %*u %*u %*u %u %u %u %n",
-	      &lport, &uid, &inode, &ate) < 3)  goto err;
+    
+    // ENDPT     SOCK   STY SST HBKT LPORT   UID INODE LADDRS
+    if (sscanf(line, "%*X %*X %*u %u %*u %u %u %u %n",
+        &sstate, &lport, &uid, &inode, &ate) < 3)  goto err;
 
     /* decode IP address */
     addr = line + ate;
@@ -908,7 +949,7 @@ static void sctp_do_ept(int lnr, char *line, const char *prot)
 	 prot, 0, 0,
 	 (int)netmax(23,strlen(l_addr)), l_addr,
 	 (int)netmax(23,strlen(r_addr)), r_addr,
-	 _(tcp_state[TCP_LISTEN]));
+	 sctp_socket_state_str(sstate));
   finish_this_one(uid, inode, "");
   return;
  err:
@@ -920,7 +961,7 @@ static void sctp_do_assoc(int lnr, char *line, const char *prot)
 {
   union sockaddr_u    laddr, raddr;
   unsigned long       rxq, txq;
-  unsigned            uid, inode;
+  unsigned            state, sstate, uid, inode;
   char        l_addr[23], r_addr[23];
 
   /* fill sockaddr_in structures */
@@ -931,8 +972,11 @@ static void sctp_do_assoc(int lnr, char *line, const char *prot)
     char *s;
 
     if(lnr == 0)  return;
-    if(sscanf(line, "%*X %*X %*u %*u %*u %*u %*u %lu %lu %u %u %u %u %n",
-	      &txq, &rxq, &uid, &inode, &lport, &rport, &ate) < 6)  goto err;
+    
+    //  ASSOC     SOCK   STY SST ST HBKT ASSOC-ID TX_QUEUE RX_QUEUE UID INODE LPORT RPORT LADDRS 
+    // ffff8801db760000 ffff8801938bde80 2   1   4  9359    2        0        0    1000 294284017 59651 10152
+    if (sscanf(line, "%*X %*X %*u %u %u %*u %*u %lu %lu %u %u %u %u %n",
+    	      &sstate, &state, &txq, &rxq, &uid, &inode, &lport, &rport, &ate) < 6)  goto err;
 
     /* decode IP addresses */
     addr = strchr(line+ate, '*');
@@ -974,7 +1018,7 @@ static void sctp_do_assoc(int lnr, char *line, const char *prot)
 	 prot, rxq, txq,
 	 (int)netmax(23,strlen(l_addr)), l_addr,
 	 (int)netmax(23,strlen(r_addr)), r_addr,
-	 _(tcp_state[TCP_ESTABLISHED]));
+	 sctp_state_str(state));
   finish_this_one(uid, inode, "");
   return;
  err:
