@@ -982,13 +982,11 @@ static void sctp_do_assoc(int lnr, char *line, const char *prot)
 }
 
 static int sctp_info_epts(void) {
-  INFO_GUTS6(_PATH_PROCNET_SCTPEPTS, _PATH_PROCNET_SCTP6EPTS, "AF INET (sctp)",
-	     sctp_do_ept, "sctp", "sctp6");
+  INFO_GUTS(_PATH_PROCNET_SCTPEPTS, "AF INET (sctp)", sctp_do_ept, "sctp");
 }
 
 static int sctp_info_assocs(void) {
-  INFO_GUTS6(_PATH_PROCNET_SCTPASSOCS, _PATH_PROCNET_SCTP6ASSOCS, "AF INET (sctp)",
-	     sctp_do_assoc, "sctp", "sctp6");
+  INFO_GUTS(_PATH_PROCNET_SCTPASSOCS, "AF INET (sctp)", sctp_do_assoc, "sctp");
 }
 
 static int sctp_info(void) {
