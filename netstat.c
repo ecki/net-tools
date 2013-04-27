@@ -905,7 +905,7 @@ static void print_ip_service(union sockaddr_u *addr, char const *protname,
 #else
             &addr->si,
 #endif
-            addr->si.sin_port, "sctp");
+            ntohs(addr->si.sin_port), "sctp");
 }
 
 /* process single SCTP endpoint */
