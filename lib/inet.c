@@ -67,7 +67,7 @@ struct service {
     struct service *next;
 };
 
-static struct service *tcp_name = NULL, *udp_name = NULL, *raw_name = NULL;
+static struct service *tcp_name = NULL, *udp_name = NULL, *sctp_name = NULL, *raw_name = NULL;
 
 #if HAVE_AFINET
 
@@ -394,9 +394,11 @@ static int read_services(void)
 	    add2list(&tcp_name, item);
 	} else if (!strcmp(se->s_proto, "udp")) {
 	    add2list(&udp_name, item);
+	} else if (!strcmp(se->s_proto, "sctp")) {
+	    add2list(&sctp_name, item);
 	} else if (!strcmp(se->s_proto, "raw")) {
 	    add2list(&raw_name, item);
-	} else { /* sctp, ddp, dccp */
+	} else { /* ddp, dccp */
 	    free(item->name);
 	    free(item);
 	}
@@ -434,6 +436,8 @@ const char *get_sname(int socknumber, const char *proto, int numeric)
 	item = searchlist(tcp_name, socknumber);
     else if (!strcmp(proto, "udp"))
 	item = searchlist(udp_name, socknumber);
+    else if (!strcmp(proto, "sctp"))
+	item = searchlist(sctp_name, socknumber);
     else if (!strcmp(proto, "raw"))
 	item = searchlist(raw_name, socknumber);
     else
