@@ -792,17 +792,16 @@ static void addr_do_one(char *buf, size_t buf_len, size_t short_len, struct afty
     addr_len = strlen(saddr);
     port_len = strlen(sport);
     if (!flag_wide && (addr_len + port_len > short_len)) {
-	/* Assume port name is short */
-	port_len = netmin(port_len, short_len - 4);
-	addr_len = short_len - port_len;
-	strncpy(buf, saddr, addr_len);
-	buf[addr_len] = '\0';
-	strcat(buf, ":");
-	strncat(buf, sport, port_len);
+        /* Assume port name is short */
+        port_len = netmin(port_len, short_len - 4);
+        addr_len = short_len - port_len;
+        strncpy(buf, saddr, addr_len);
+        buf[addr_len] = '\0';
+        strcat(buf, ":");
+        strncat(buf, sport, port_len);
     } else
-	snprintf(buf, buf_len, "%s:%s", saddr, sport);
+        snprintf(buf, buf_len, "%s:%s", saddr, sport);
 }
-
 
 /*
  *	SCTP support
@@ -826,22 +825,22 @@ static const char *sctp_state[] = {
 static const char *sctp_state_str(int state)
 {
     if (state >= 0 && state < SCTP_NSTATES)
-	return sctp_state[state];
+        return sctp_state[state];
     else {
-	static char state_str_buf[64];
-	sprintf(state_str_buf, "UNKNOWN(%d)", state);
-	return state_str_buf;
+        static char state_str_buf[64];
+        sprintf(state_str_buf, "UNKNOWN(%d)", state);
+        return state_str_buf;
     }
 }
 
 static const char *sctp_socket_state_str(int state)
 {
     if (state >= 0 && state < TCP_NSTATES)
-	return tcp_state[state];
+        return tcp_state[state];
     else {
-	static char state_str_buf[64];
-	sprintf(state_str_buf, "UNKNOWN(%d)", state);
-	return state_str_buf;
+        static char state_str_buf[64];
+        sprintf(state_str_buf, "UNKNOWN(%d)", state);
+        return state_str_buf;
     }
 }
 
@@ -862,9 +861,9 @@ static int ip_parse_dots(union sockaddr_u *addr, char const *src)
     unsigned  el = sscanf(src, "%u.%u.%u.%u", &a, &b, &c, &d);
     
     if (el == 4) {
-    	addr->sa.sa_family = AF_INET;
-    	addr->si.sin_addr.s_addr = htonl((a << 24)|(b << 16)|(c << 8)|d);
-    	return 0;
+        addr->sa.sa_family = AF_INET;
+        addr->si.sin_addr.s_addr = htonl((a << 24)|(b << 16)|(c << 8)|d);
+        return 0;
     }
 
 #if HAVE_AFINET6
@@ -902,11 +901,11 @@ static void print_ip_service(union sockaddr_u *addr, char const *protname,
     
     return addr_do_one(buf, size, 22, ap,
 #if HAVE_AFINET6
-	    &addr->si6,
+            &addr->si6,
 #else
-	    &addr->si,
+            &addr->si,
 #endif
-	    addr->si.sin_port, "sctp");
+            addr->si.sin_port, "sctp");
 }
 
 /* process single SCTP endpoint */
@@ -938,11 +937,11 @@ static void sctp_do_ept(int lnr, char *line, const char *prot)
     while (*s != 0 && !isspace(*s))
         s++;
     if (*s == 0)
-    	goto err;
+        goto err;
     *s = 0;
     
     if (ip_parse_dots(&laddr, addr))
-    	goto err;
+        goto err;
     
     laddr.si.sin_port = htons(lport);
     raddr.sa.sa_family = laddr.sa.sa_family;
@@ -1002,7 +1001,7 @@ static char *sctp_addr(char *dst, int dlen, char *src, int slen)
     safe_strncpy(addrs, src, slen + 1);
     
     if (ip_parse_dots(&addr, addrs) != 0)
-    	return NULL;
+        return NULL;
     
     if (!(ap = get_afntype(addr.sa.sa_family)))
         return NULL;
@@ -1032,7 +1031,7 @@ static void sctp_do_assoc(int lnr, char *line, const char *prot)
     char *s;
 
     if (lnr == 0)
-      return;
+        return;
     
     //  ASSOC     SOCK   STY SST ST HBKT ASSOC-ID TX_QUEUE RX_QUEUE UID INODE LPORT RPORT LADDRS <-> RADDRS HBINT INS OUTS MAXRT T1X T2X RTXC
     if (sscanf(line, "%*X %*X %*u %u %u %*u %*u %lu %lu %u %u %u %u %n",
@@ -1058,12 +1057,12 @@ static void sctp_do_assoc(int lnr, char *line, const char *prot)
     s = strchr(addr, ' ');
     if (!s) goto err;
     if (s-addr+1 > sizeof(l_addr))
-    	goto err;
-    	
+        goto err;
+        
     safe_strncpy(l_addr, addr, s-addr+1);
     
     if (ip_parse_dots(&laddr, l_addr))
-      goto err;
+        goto err;
     
     /* find primary remote address */
     addr = strchr(r_addrs, '*');
@@ -1073,12 +1072,12 @@ static void sctp_do_assoc(int lnr, char *line, const char *prot)
     s = strchr(addr, ' ');
     if (!s) goto err;
     if (s-addr+1 > sizeof(r_addr))
-    	goto err;
-    	
+        goto err;
+    
     safe_strncpy(r_addr, addr, s-addr+1);
     
     if (ip_parse_dots(&raddr, r_addr))
-      goto err;
+        goto err;
 
     /* complete sockaddr_in structures, port is in the same location for both IPv4 and IPv6 */
     laddr.si.sin_port = htons(lport);
@@ -1141,8 +1140,8 @@ static int sctp_info(void) {
     }
     
     if (flag_lst && !flag_all)
-    	return 0;
-    	
+        return 0;
+        
     return sctp_info_assocs();
 }
 
