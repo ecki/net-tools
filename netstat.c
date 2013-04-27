@@ -775,6 +775,35 @@ static int igmp_info(void)
 	       igmp_do_one, "igmp", "igmp6");
 }
 
+static void addr_do_one(char *buf, size_t buf_len, size_t short_len, struct aftype *ap,
+#if HAVE_AFINET6
+			struct sockaddr_in6 *addr,
+#else
+			struct sockaddr_in *addr,
+#endif
+			int port, const char *proto
+)
+{
+    const char *sport, *saddr;
+    size_t port_len, addr_len;
+
+    saddr = ap->sprint((struct sockaddr *)addr, flag_not & FLAG_NUM_HOST);
+    sport = get_sname(htons(port), proto, flag_not & FLAG_NUM_PORT);
+    addr_len = strlen(saddr);
+    port_len = strlen(sport);
+    if (!flag_wide && (addr_len + port_len > short_len)) {
+	/* Assume port name is short */
+	port_len = netmin(port_len, short_len - 4);
+	addr_len = short_len - port_len;
+	strncpy(buf, saddr, addr_len);
+	buf[addr_len] = '\0';
+	strcat(buf, ":");
+	strncat(buf, sport, port_len);
+    } else
+	snprintf(buf, buf_len, "%s:%s", saddr, sport);
+}
+
+
 /*
  *	SCTP support
  */
@@ -871,36 +900,13 @@ static void print_ip_service(union sockaddr_u *addr, char const *protname,
         return;
     }
     
-    safe_strncpy(buf, ap->sprint((struct sockaddr *)addr, flag_not), size);
-    
-    /* print service */
-    char  bfs[32];
-    
-    snprintf(bfs, sizeof(bfs), "%s",
-        get_sname(addr->si.sin_port, (char*)protname, flag_not & FLAG_NUM_PORT));
-    
-    /* check if we must cut on host and/or service name */
-    {
-        unsigned const  bufl = strlen(buf);
-        unsigned const  bfsl = strlen(bfs);
-        
-        if (bufl+bfsl+2 > size) {
-            unsigned const  half = (size-2)>>1;
-            if (bufl > half) {
-                if (bfsl > half) {
-                    buf[size-2-half] = '\0';
-                    bfs[half+1]      = '\0';
-                } else {
-                    buf[size-2-bfsl] = '\0';
-                }
-            }
-        } else {
-            bfs[size-2-bufl] = '\0';
-        }
-    }
-    
-    strcat(buf, ":");
-    strcat(buf, bfs);
+    return addr_do_one(buf, size, 22, ap,
+#if HAVE_AFINET6
+	    &addr->si6,
+#else
+	    &addr->si,
+#endif
+	    addr->si.sin_port, "sctp");
 }
 
 /* process single SCTP endpoint */
@@ -953,9 +959,60 @@ static void sctp_do_ept(int lnr, char *line, const char *prot)
 	 (int)netmax(23,strlen(r_addr)), r_addr,
 	 sctp_socket_state_str(sstate));
   finish_this_one(uid, inode, "");
+  
   return;
  err:
   fprintf(stderr, "Warning: SCTP endpoint parsing failed on line: %d\n", lnr);
+}
+
+static char *sctp_next_nonprimary(char *s, char **end)
+{
+    while (*s) {
+       while (*s == ' ')
+           s++;
+       
+       char *start = s;
+       
+       while (*s && *s != ' ')
+           s++;
+       
+       if (*start != '*') {
+           *end = s;
+           return start;
+       }
+    }
+    
+    return s;
+}
+
+static char *sctp_addr(char *dst, int dlen, char *src, int slen)
+{
+    union sockaddr_u addr;
+    struct aftype *ap;
+    char addrs[42];
+    
+    dst[0] = 0;
+    
+    if (slen <= 0)
+        return NULL;
+    
+    if (slen >= sizeof(addrs)-1)
+        return NULL;
+    
+    safe_strncpy(addrs, src, slen + 1);
+    
+    if (ip_parse_dots(&addr, addrs) != 0)
+    	return NULL;
+    
+    if (!(ap = get_afntype(addr.sa.sa_family)))
+        return NULL;
+    
+    if (dlen > 24)
+        dlen = 24;
+    
+    safe_strncpy(dst, ap->sprint((struct sockaddr *)&addr, flag_not), dlen);
+    
+    return dst;
 }
 
 /* process single SCTP association */
@@ -964,7 +1021,8 @@ static void sctp_do_assoc(int lnr, char *line, const char *prot)
   union sockaddr_u    laddr, raddr;
   unsigned long       rxq, txq;
   unsigned            state, sstate, uid, inode;
-  char        l_addr[23], r_addr[23];
+  char                l_addr[64], r_addr[64];
+  char                *l_addrs, *r_addrs;
 
   /* fill sockaddr_in structures */
   {
@@ -973,37 +1031,53 @@ static void sctp_do_assoc(int lnr, char *line, const char *prot)
     char *addr;
     char *s;
 
-    if(lnr == 0)  return;
+    if (lnr == 0)
+      return;
     
-    //  ASSOC     SOCK   STY SST ST HBKT ASSOC-ID TX_QUEUE RX_QUEUE UID INODE LPORT RPORT LADDRS 
-    // ffff8801db760000 ffff8801938bde80 2   1   4  9359    2        0        0    1000 294284017 59651 10152
+    //  ASSOC     SOCK   STY SST ST HBKT ASSOC-ID TX_QUEUE RX_QUEUE UID INODE LPORT RPORT LADDRS <-> RADDRS HBINT INS OUTS MAXRT T1X T2X RTXC
     if (sscanf(line, "%*X %*X %*u %u %u %*u %*u %lu %lu %u %u %u %u %n",
     	      &sstate, &state, &txq, &rxq, &uid, &inode, &lport, &rport, &ate) < 6)  goto err;
 
     /* decode IP addresses */
-    addr = strchr(line+ate, '*');
-    if(addr == 0)  goto err;
+    
+    /* split out local and remote address sets */
+    l_addrs = line + ate;
+    r_addrs = strstr(l_addrs, "<->");
+    if (!r_addrs) goto err;
+    *r_addrs = 0;
+    r_addrs += 3;
+    s = strchr(r_addrs, '\t');
+    if (!s) goto err;
+    *s = 0;
+    
+    /* find primary local address */
+    addr = strchr(l_addrs, '*');
+    if (addr == 0) goto err;
     
     addr++;
-    s = addr;
-    while (*s != 0 && !isspace(*s))
-            s++;
-    if (*s == 0)
+    s = strchr(addr, ' ');
+    if (!s) goto err;
+    if (s-addr+1 > sizeof(l_addr))
     	goto err;
-    *s = 0;
+    	
+    safe_strncpy(l_addr, addr, s-addr+1);
     
-    if( ip_parse_dots(&laddr, addr))  goto err;
+    if (ip_parse_dots(&laddr, l_addr))
+      goto err;
     
-    addr = strchr(s+1, '*');
-    if(addr == 0)  goto err;
+    /* find primary remote address */
+    addr = strchr(r_addrs, '*');
+    if (addr == 0) goto err;
     
     addr++;
-    s = addr;
-    while (*s != 0 && !isspace(*s))
-            s++;
-    *s = 0;
+    s = strchr(addr, ' ');
+    if (!s) goto err;
+    if (s-addr+1 > sizeof(r_addr))
+    	goto err;
+    	
+    safe_strncpy(r_addr, addr, s-addr+1);
     
-    if (ip_parse_dots(&raddr, addr))
+    if (ip_parse_dots(&raddr, r_addr))
       goto err;
 
     /* complete sockaddr_in structures, port is in the same location for both IPv4 and IPv6 */
@@ -1014,7 +1088,7 @@ static void sctp_do_assoc(int lnr, char *line, const char *prot)
   /* print IP:service to l_addr and r_addr */
   print_ip_service(&laddr, prot, l_addr, sizeof(l_addr));
   print_ip_service(&raddr, prot, r_addr, sizeof(r_addr));
-
+  
   /* Print line */
   printf("%-4s  %6ld %6ld %-*s %-*s %-11s",
 	 prot, rxq, txq,
@@ -1022,6 +1096,28 @@ static void sctp_do_assoc(int lnr, char *line, const char *prot)
 	 (int)netmax(23,strlen(r_addr)), r_addr,
 	 sctp_state_str(state));
   finish_this_one(uid, inode, "");
+  
+    if (flag_sctp > 1) {
+        /* print non-primary addresses */
+        while (*l_addrs || *r_addrs) {
+            char *le = l_addrs;
+            char *re = r_addrs;
+            l_addrs = sctp_next_nonprimary(l_addrs, &le);
+            r_addrs = sctp_next_nonprimary(r_addrs, &re);
+            
+            if (le == l_addrs && re == r_addrs)
+                break;
+            
+            sctp_addr(l_addr, sizeof(l_addr), l_addrs, le-l_addrs);
+            sctp_addr(r_addr, sizeof(r_addr), r_addrs, re-r_addrs);
+            
+            printf("                    %-*s %-*s\n", (int)netmax(23,strlen(l_addr)), l_addr, (int)netmax(23,strlen(r_addr)), r_addr);
+            
+            l_addrs = le;
+            r_addrs = re;
+        }
+    }
+  
   return;
  err:
   fprintf(stderr, "Warning: SCTP association parsing failed on line: %d\n", lnr);
@@ -1051,33 +1147,6 @@ static int sctp_info(void) {
 }
 
 
-static void addr_do_one(char *buf, size_t buf_len, size_t short_len, struct aftype *ap,
-#if HAVE_AFINET6
-			struct sockaddr_in6 *addr,
-#else
-			struct sockaddr_in *addr,
-#endif
-			int port, const char *proto
-)
-{
-    const char *sport, *saddr;
-    size_t port_len, addr_len;
-
-    saddr = ap->sprint((struct sockaddr *)addr, flag_not & FLAG_NUM_HOST);
-    sport = get_sname(htons(port), proto, flag_not & FLAG_NUM_PORT);
-    addr_len = strlen(saddr);
-    port_len = strlen(sport);
-    if (!flag_wide && (addr_len + port_len > short_len)) {
-	/* Assume port name is short */
-	port_len = netmin(port_len, short_len - 4);
-	addr_len = short_len - port_len;
-	strncpy(buf, saddr, addr_len);
-	buf[addr_len] = '\0';
-	strcat(buf, ":");
-	strncat(buf, sport, port_len);
-    } else
-	snprintf(buf, buf_len, "%s:%s", saddr, sport);
-}
 
 static void tcp_do_one(int lnr, const char *line, const char *prot)
 {
