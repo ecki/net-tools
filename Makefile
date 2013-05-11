@@ -69,8 +69,7 @@ endif
 NET_LIB = $(NET_LIB_PATH)/lib$(NET_LIB_NAME).a
 
 ifeq ($(HAVE_SELINUX),1)
-LDFLAGS += -lselinux
-CFLAGS += -DHAVE_SELINUX
+SELIB += -lselinux
 endif
 
 CPPFLAGS += -I. -I$(TOPDIR)/include -I$(NET_LIB_PATH)
@@ -177,7 +176,7 @@ plipconfig:	$(NET_LIB) plipconfig.o
 		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ plipconfig.o $(NLIB)
 
 netstat:	$(NET_LIB) netstat.o statistics.o
-		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ netstat.o statistics.o $(NLIB) $(RESLIB)
+		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ netstat.o statistics.o $(NLIB) $(RESLIB) $(SELIB)
 
 iptunnel:	$(NET_LIB) iptunnel.o
 		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ iptunnel.o $(NLIB) $(RESLIB)
