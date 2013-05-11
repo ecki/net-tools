@@ -5,6 +5,11 @@
 *.rej
 *.orig
 
+.gdb_history
+.gdbinit
+core
+*.gdb
+
 /config.h
 /config.make
 /config.status
