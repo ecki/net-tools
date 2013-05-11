@@ -53,6 +53,12 @@ ifeq ($(HAVE_AFDECnet),1)
 DNLIB = -ldnet
 endif
 
+ifeq ($(origin CC), undefined)
+CC	= gcc
+endif
+LD	= $(CC)
+PKG_CONFIG ?= pkg-config
+
 # -------- end of user definitions --------
 
 MAINTAINER = net-tools-devel@lists.sourceforge.net
@@ -69,18 +75,16 @@ endif
 NET_LIB = $(NET_LIB_PATH)/lib$(NET_LIB_NAME).a
 
 ifeq ($(HAVE_SELINUX),1)
-SELIB += -lselinux
+SE_PC_CFLAGS := $(shell $(PKG_CONFIG) --cflags libselinux)
+SE_PC_LIBS := $(shell $(PKG_CONFIG) --libs libselinux || echo -lselinux)
+SELIB = $(PC_SELINUX)
+CPPFLAGS += $(SE_PC_CFLAGS)
 endif
 
 CPPFLAGS += -I. -I$(TOPDIR)/include -I$(NET_LIB_PATH)
 LDFLAGS  += -L$(NET_LIB_PATH)
 
 SUBDIRS	= man/ $(NET_LIB_PATH)/
-
-ifeq ($(origin CC), undefined)
-CC	= gcc
-endif
-LD	= $(CC)
 
 NLIB	= -l$(NET_LIB_NAME)
 
