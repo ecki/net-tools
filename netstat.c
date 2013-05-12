@@ -89,9 +89,6 @@
 #include <net/if.h>
 #include <dirent.h>
 
-#if HAVE_SELINUX
-#include <selinux/selinux.h>
-#endif
 #include "net-support.h"
 #include "pathnames.h"
 #include "version.h"
@@ -101,6 +98,10 @@
 #include "interface.h"
 #include "util.h"
 #include "proc.h"
+
+#if HAVE_SELINUX
+#include <selinux/selinux.h>
+#endif
 
 #if HAVE_AFBLUETOOTH
 #include <bluetooth/bluetooth.h>

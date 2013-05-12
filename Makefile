@@ -77,7 +77,7 @@ NET_LIB = $(NET_LIB_PATH)/lib$(NET_LIB_NAME).a
 ifeq ($(HAVE_SELINUX),1)
 SE_PC_CFLAGS := $(shell $(PKG_CONFIG) --cflags libselinux)
 SE_PC_LIBS := $(shell $(PKG_CONFIG) --libs libselinux || echo -lselinux)
-SELIB = $(PC_SELINUX)
+SELIB = $(SE_PC_LIBS)
 CPPFLAGS += $(SE_PC_CFLAGS)
 endif
 
