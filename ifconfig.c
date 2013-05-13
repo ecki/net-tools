@@ -241,8 +241,7 @@ static int set_netmask(int skfd, struct ifreq *ifr, struct sockaddr *sa)
 {
     int err = 0;
 
-    memcpy((char *) &ifr->ifr_netmask, (char *) sa,
-	   sizeof(struct sockaddr));
+    memcpy(&ifr->ifr_netmask, sa, sizeof(struct sockaddr));
     if (ioctl(skfd, SIOCSIFNETMASK, ifr) < 0) {
 	fprintf(stderr, "SIOCSIFNETMASK: %s\n",
 		strerror(errno));
@@ -253,9 +252,10 @@ static int set_netmask(int skfd, struct ifreq *ifr, struct sockaddr *sa)
 
 int main(int argc, char **argv)
 {
-    struct sockaddr sa;
-    struct sockaddr samask;
-    struct sockaddr_in sin;
+    struct sockaddr_storage _sa, _samask;
+    struct sockaddr *sa = (struct sockaddr *)&_sa;
+    struct sockaddr *samask = (struct sockaddr *)&_samask;
+    struct sockaddr_in *sin = (struct sockaddr_in *)sa;
     char host[128];
     struct aftype *ap;
     struct hwtype *hw;
@@ -265,7 +265,7 @@ int main(int argc, char **argv)
     int fd;
 #if HAVE_AFINET6
     extern struct aftype inet6_aftype;
-    struct sockaddr_in6 sa6;
+    struct sockaddr_in6 *sin6 = (struct sockaddr_in6 *)sa;
     struct in6_ifreq ifr6;
     unsigned long prefix_len;
     char *cp;
@@ -518,7 +518,7 @@ int main(int argc, char **argv)
 	if (!strcmp(*spp, "broadcast")) {
 	    if (*++spp != NULL) {
 		safe_strncpy(host, *spp, (sizeof host));
-		if (ap->input(0, host, &sa) < 0) {
+		if (ap->input(0, host, sa) < 0) {
 		    if (ap->herror)
 		    	ap->herror(host);
 		    else
@@ -527,8 +527,7 @@ int main(int argc, char **argv)
 		    spp++;
 		    continue;
 		}
-		memcpy((char *) &ifr.ifr_broadaddr, (char *) &sa,
-		       sizeof(struct sockaddr));
+		memcpy(&ifr.ifr_broadaddr, sa, sizeof(struct sockaddr));
 		if (ioctl(ap->fd, SIOCSIFBRDADDR, &ifr) < 0) {
 		    fprintf(stderr, "SIOCSIFBRDADDR: %s\n",
 			    strerror(errno));
@@ -543,7 +542,7 @@ int main(int argc, char **argv)
 	    if (*++spp == NULL)
 		usage();
 	    safe_strncpy(host, *spp, (sizeof host));
-	    if (ap->input(0, host, &sa) < 0) {
+	    if (ap->input(0, host, sa) < 0) {
 		    if (ap->herror)
 		    	ap->herror(host);
 		    else
@@ -552,8 +551,7 @@ int main(int argc, char **argv)
 		spp++;
 		continue;
 	    }
-	    memcpy((char *) &ifr.ifr_dstaddr, (char *) &sa,
-		   sizeof(struct sockaddr));
+	    memcpy(&ifr.ifr_dstaddr, sa, sizeof(struct sockaddr));
 	    if (ioctl(ap->fd, SIOCSIFDSTADDR, &ifr) < 0) {
 		fprintf(stderr, "SIOCSIFDSTADDR: %s\n",
 			strerror(errno));
@@ -566,7 +564,7 @@ int main(int argc, char **argv)
 	    if (*++spp == NULL || didnetmask)
 		usage();
 	    safe_strncpy(host, *spp, (sizeof host));
-	    if (ap->input(0, host, &sa) < 0) {
+	    if (ap->input(0, host, sa) < 0) {
 		    if (ap->herror)
 		    	ap->herror(host);
 		    else
@@ -576,7 +574,7 @@ int main(int argc, char **argv)
 		continue;
 	    }
 	    didnetmask++;
-	    goterr |= set_netmask(ap->fd, &ifr, &sa);
+	    goterr |= set_netmask(ap->fd, &ifr, sa);
 	    spp++;
 	    continue;
 	}
@@ -656,7 +654,7 @@ int main(int argc, char **argv)
 	    if (*(spp + 1) != NULL) {
 		spp++;
 		safe_strncpy(host, *spp, (sizeof host));
-		if (ap->input(0, host, &sa)) {
+		if (ap->input(0, host, sa)) {
 		    if (ap->herror)
 		    	ap->herror(host);
 		    else
@@ -665,8 +663,7 @@ int main(int argc, char **argv)
 		    spp++;
 		    continue;
 		}
-		memcpy((char *) &ifr.ifr_dstaddr, (char *) &sa,
-		       sizeof(struct sockaddr));
+		memcpy(&ifr.ifr_dstaddr, sa, sizeof(struct sockaddr));
 		if (ioctl(ap->fd, SIOCSIFDSTADDR, &ifr) < 0) {
 		    fprintf(stderr, "SIOCSIFDSTADDR: %s\n",
 			    strerror(errno));
@@ -692,14 +689,13 @@ int main(int argc, char **argv)
 	    if (*++spp == NULL)
 		usage();
 	    safe_strncpy(host, *spp, (sizeof host));
-	    if (hw->input(host, &sa) < 0) {
+	    if (hw->input(host, sa) < 0) {
 		fprintf(stderr, _("%s: invalid %s address.\n"), host, hw->name);
 		goterr = 1;
 		spp++;
 		continue;
 	    }
-	    memcpy((char *) &ifr.ifr_hwaddr, (char *) &sa,
-		   sizeof(struct sockaddr));
+	    memcpy(&ifr.ifr_hwaddr, sa, sizeof(struct sockaddr));
 	    if (ioctl(skfd, SIOCSIFHWADDR, &ifr) < 0) {
 		if (errno == EBUSY)
 			fprintf(stderr, "SIOCSIFHWADDR: %s - you may need to down the interface\n",
@@ -728,8 +724,7 @@ int main(int argc, char **argv)
 		    prefix_len = 128;
 		}
 		safe_strncpy(host, *spp, (sizeof host));
-		if (inet6_aftype.input(1, host,
-				       (struct sockaddr *) &sa6) < 0) {
+		if (inet6_aftype.input(1, host, sa) < 0) {
 		    if (inet6_aftype.herror)
 		    	inet6_aftype.herror(host);
 		    else
@@ -738,8 +733,7 @@ int main(int argc, char **argv)
 		    spp++;
 		    continue;
 		}
-		memcpy((char *) &ifr6.ifr6_addr, (char *) &sa6.sin6_addr,
-		       sizeof(struct in6_addr));
+		memcpy(&ifr6.ifr6_addr, &sin6->sin6_addr, sizeof(struct in6_addr));
 
 		fd = get_socket_for_af(AF_INET6);
 		if (fd < 0) {
@@ -769,7 +763,7 @@ int main(int argc, char **argv)
 	    { /* ipv4 address a.b.c.d */
 		in_addr_t ip, nm, bc;
 		safe_strncpy(host, *spp, (sizeof host));
-		if (inet_aftype.input(0, host, (struct sockaddr *)&sin) < 0) {
+		if (inet_aftype.input(0, host, sa) < 0) {
 		    ap->herror(host);
 		    goterr = 1;
 		    spp++;
@@ -784,7 +778,7 @@ int main(int argc, char **argv)
 		    continue;
 		}
 
-		memcpy(&ip, &sin.sin_addr.s_addr, sizeof(ip));
+		memcpy(&ip, &sin->sin_addr.s_addr, sizeof(ip));
 
 		if (get_nmbc_parent(ifr.ifr_name, &nm, &bc) < 0) {
 			fprintf(stderr, _("Interface %s not initialized\n"),
@@ -821,14 +815,13 @@ int main(int argc, char **argv)
 		    prefix_len = 128;
 		}
 		safe_strncpy(host, *spp, (sizeof host));
-		if (inet6_aftype.input(1, host,
-				       (struct sockaddr *) &sa6) < 0) {
+		if (inet6_aftype.input(1, host, sa) < 0) {
 		    inet6_aftype.herror(host);
 		    goterr = 1;
 		    spp++;
 		    continue;
 		}
-		memcpy((char *) &ifr6.ifr6_addr, (char *) &sa6.sin6_addr,
+		memcpy(&ifr6.ifr6_addr, &sin6->sin6_addr,
 		       sizeof(struct in6_addr));
 
 		fd = get_socket_for_af(AF_INET6);
@@ -863,7 +856,7 @@ int main(int argc, char **argv)
 		/* ipv4 address a.b.c.d */
 		in_addr_t ip, nm, bc;
 		safe_strncpy(host, *spp, (sizeof host));
-		if (inet_aftype.input(0, host, (struct sockaddr *)&sin) < 0) {
+		if (inet_aftype.input(0, host, sa) < 0) {
 		    ap->herror(host);
 		    goterr = 1;
 		    spp++;
@@ -879,7 +872,7 @@ int main(int argc, char **argv)
 
 		/* Clear "ip" in case sizeof(unsigned long) > sizeof(sin.sin_addr.s_addr) */
 		ip = 0;
-		memcpy(&ip, &sin.sin_addr.s_addr, sizeof(ip));
+		memcpy(&ip, &sin->sin_addr.s_addr, sizeof(ip));
 
 		if (get_nmbc_parent(ifr.ifr_name, &nm, &bc) < 0) {
 		    fprintf(stderr, _("Interface %s not initialized\n"),
@@ -913,14 +906,13 @@ int main(int argc, char **argv)
 		prefix_len = 128;
 	    }
 	    safe_strncpy(host, *spp, (sizeof host));
-	    if (inet6_aftype.input(1, host, (struct sockaddr *) &sa6) < 0) {
+	    if (inet6_aftype.input(1, host, sa) < 0) {
 		inet6_aftype.herror(host);
 		goterr = 1;
 		spp++;
 		continue;
 	    }
-	    memcpy((char *) &ifr6.ifr6_addr, (char *) &sa6.sin6_addr,
-		   sizeof(struct in6_addr));
+	    memcpy(&ifr6.ifr6_addr, &sin6->sin6_addr, sizeof(struct in6_addr));
 
 	    fd = get_socket_for_af(AF_INET6);
 	    if (fd < 0) {
@@ -954,7 +946,7 @@ int main(int argc, char **argv)
 	/* FIXME: sa is too small for INET6 addresses, inet6 should use that too,
 	   broadcast is unexpected */
 	if (ap->getmask) {
-	    switch (ap->getmask(host, &samask, NULL)) {
+	    switch (ap->getmask(host, samask, NULL)) {
 	    case -1:
 		usage();
 		break;
@@ -971,14 +963,14 @@ int main(int argc, char **argv)
 	   fprintf(stderr, _("ifconfig: Cannot set address for this protocol family.\n"));
 	   exit(1);
 	}
-	if (ap->input(0, host, &sa) < 0) {
+	if (ap->input(0, host, sa) < 0) {
 	    if (ap->herror)
 	    	ap->herror(host);
 	    else
 	    	fprintf(stderr,_("ifconfig: error resolving '%s' to set address for af=%s\n"), host, ap->name); fprintf(stderr,
 	    _("ifconfig: `--help' gives usage information.\n")); exit(1);
 	}
-	memcpy((char *) &ifr.ifr_addr, (char *) &sa, sizeof(struct sockaddr));
+	memcpy(&ifr.ifr_addr, sa, sizeof(struct sockaddr));
 	{
 	    int r = 0;		/* to shut gcc up */
 	    switch (ap->af) {
@@ -1034,7 +1026,7 @@ int main(int argc, char **argv)
     }
 
     if (neednetmask) {
-	goterr |= set_netmask(skfd, &ifr, &samask);
+	goterr |= set_netmask(skfd, &ifr, samask);
 	didnetmask++;
     }
 
