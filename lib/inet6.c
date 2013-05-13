@@ -44,20 +44,20 @@
 
 extern int h_errno;		/* some netdb.h versions don't export this */
 
-char * fix_v4_address(char *buf, struct in6_addr *in6) 
-{ 
-	if (IN6_IS_ADDR_V4MAPPED(in6->s6_addr)) { 
-			char *s =strchr(buf, '.'); 
-			if (s) { 
+char * fix_v4_address(char *buf, struct in6_addr *in6)
+{
+	if (IN6_IS_ADDR_V4MAPPED(in6->s6_addr)) {
+			char *s =strchr(buf, '.');
+			if (s) {
 				while (s > buf && *s != ':')
 					--s;
-				if (*s == ':') ++s; 	
-				else s = NULL; 
-			} 	
+				if (*s == ':') ++s;
+				else s = NULL;
+			}
 			if (s) return s;
-	} 
-	return buf; 
-} 
+	}
+	return buf;
+}
 
 static int INET6_resolve(char *name, struct sockaddr_in6 *sin6)
 {
@@ -163,8 +163,8 @@ static int INET6_getsock(char *bufp, struct sockaddr *sap)
     if (inet_pton(AF_INET6, bufp, sin6->sin6_addr.s6_addr) <= 0)
 	return (-1);
     p = fix_v4_address(bufp, &sin6->sin6_addr);
-    if (p != bufp) 
-        memcpy(bufp, p, strlen(p)+1); 
+    if (p != bufp)
+        memcpy(bufp, p, strlen(p)+1);
     return 16;			/* ?;) */
 }
 

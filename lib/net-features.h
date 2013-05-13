@@ -20,7 +20,7 @@
  *              your option) any later version.
  */
 
-/* 
+/*
  *    This needs to be included AFTER the KErnel Header Files
  *      one of the FEATURE_ should be defined to get the Feature Variable
  *      definition included

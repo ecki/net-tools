@@ -46,7 +46,7 @@ struct aftype {
     int (*rinput) (int typ, int ext, char **argv);
 
     /* may modify src */
-    int (*getmask) (char *src, struct sockaddr * mask, char *name);
+    int (*getmask) (char *src, struct sockaddr *mask, char *name);
 
     int fd;
     char *flag_file;

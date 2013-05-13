@@ -63,7 +63,7 @@ int rprint_fib6(int ext, int numeric)
     struct sockaddr_in6 saddr6, snaddr6;
     int num, iflags, metric, refcnt, use, prefix_len, slen;
     FILE *fp = fopen(_PATH_PROCNET_ROUTE6, "r");
-    
+
     char addr6p[8][5], saddr6p[8][5], naddr6p[8][5];
 
     if (!fp) {
@@ -101,7 +101,7 @@ int rprint_fib6(int ext, int numeric)
 		if (numeric & RTF_CACHE)
 			continue;
 	}
-			
+
 	/* Fetch and resolve the target address. */
 	snprintf(addr6, sizeof(addr6), "%s:%s:%s:%s:%s:%s:%s:%s",
 		 addr6p[0], addr6p[1], addr6p[2], addr6p[3],

@@ -40,7 +40,7 @@
 #include <limits.h>
 #include <pwd.h>
 #include <signal.h>
-#include <stdlib.h>          
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <getopt.h>
@@ -82,7 +82,7 @@ struct {
   const char	*speed;
   int	code;
 } tty_speeds[] = {			/* table of usable baud rates	*/
-  { "50",	B50	}, { "75",	B75  	},	
+  { "50",	B50	}, { "75",	B75  	},
   { "110",	B110	}, { "300",	B300	},
   { "600",	B600	}, { "1200",	B1200	},
   { "2400",	B2400	}, { "4800",	B4800	},
@@ -151,7 +151,7 @@ tty_already_locked(char *nam)
   /* that lock.                                   */
   i = fscanf(fd, "%d", &pid);
   (void) fclose(fd);
- 
+
   if (i != 1) /* Lock file format's wrong! Kill't */
     return(0);
 
@@ -298,7 +298,7 @@ tty_set_parity(struct termios *tty, char *parity)
   switch(toupper(*parity)) {
 	case 'N':
 		tty->c_cflag &= ~(PARENB | PARODD);
-		break;  
+		break;
 
 	case 'O':
 		tty->c_cflag &= ~(PARENB | PARODD);
@@ -347,7 +347,7 @@ tty_set_raw(struct termios *tty)
   tty->c_lflag = (0);				/* local flags		*/
   speed = (tty->c_cflag & CBAUD);		/* save current speed	*/
   tty->c_cflag = (HUPCL | CREAD);		/* UART flags		*/
-  if (opt_L) 
+  if (opt_L)
 	tty->c_cflag |= CLOCAL;
   else
 	tty->c_cflag |= CRTSCTS;
@@ -416,7 +416,7 @@ static int
 tty_get_name(char *name)
 {
   if (ioctl(tty_fd, SIOCGIFNAME, name) < 0) {
-	if (opt_q == 0) 
+	if (opt_q == 0)
 	    perror("tty_get_name");
 	return(-errno);
   }
@@ -470,7 +470,7 @@ tty_open(char *name, const char *speed)
   if (name != NULL) {
 	if (name[0] != '/') {
 		if (strlen(name + 6) > sizeof(pathbuf)) {
-			if (opt_q == 0) fprintf(stderr, 
+			if (opt_q == 0) fprintf(stderr,
 				_("slattach: tty name too long\n"));
 			return (-1);
 		}
@@ -531,7 +531,7 @@ tty_open(char *name, const char *speed)
   if (tty_get_disc(&tty_sdisc) < 0) {
 	if (opt_q == 0) fprintf(stderr, _("slattach: tty_open: cannot get current line disc!\n"));
 	return(-errno);
-  } 
+  }
   tty_ldisc = tty_sdisc;
 
   /* Put this terminal line in a 8-bit transparent mode. */
@@ -597,7 +597,7 @@ usage(void)
 }
 
 
-static void 
+static void
 version(void)
 {
     printf("%s\n%s\n", Release, Signature);
@@ -694,7 +694,7 @@ main(int argc, char *argv[])
 		usage();
 		/*NOTREACHED*/
   }
-  
+
   if (setvbuf(stdout,0,_IOLBF,0)) {
 	if (opt_q == 0) fprintf(stderr, _("slattach: setvbuf(stdout,0,_IOLBF,0) : %s\n"),
 				strerror(errno));

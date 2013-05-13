@@ -33,7 +33,7 @@
 #include "proc.h"
 extern struct aftype inet_aftype;
 
-extern char *INET_sprintmask(struct sockaddr *sap, int numeric, 
+extern char *INET_sprintmask(struct sockaddr *sap, int numeric,
 			     unsigned int netmask);
 
 int rprint_fib(int ext, int numeric)
@@ -104,9 +104,9 @@ int rprint_fib(int ext, int numeric)
 
 	/* Fetch and resolve the genmask. */
 	(void) inet_aftype.input(1, mask_addr, &snet_mask);
-	
+
 	sin_netmask = (struct sockaddr_in *)&snet_mask;
-	strcpy(net_addr, INET_sprintmask(&snet_target, 
+	strcpy(net_addr, INET_sprintmask(&snet_target,
 					 (numeric | 0x8000 | (iflags & RTF_HOST? 0x4000: 0)),
 					 sin_netmask->sin_addr.s_addr));
 	net_addr[15] = '\0';
@@ -221,17 +221,17 @@ int rprint_cache(int ext, int numeric)
 	return 1;
     }
 
-   /* Okay, first thing we need to know is the format of the rt_cache. 
+   /* Okay, first thing we need to know is the format of the rt_cache.
     * I am aware of two possible layouts:
     * 2.2.0
     * "Iface\tDestination\tGateway \tFlags\t\tRefCnt\tUse\tMetric\tSource\t\tMTU\tWindow\tIRTT\tTOS\tHHRef\tHHUptod\tSpecDst"
-    * "%s\t%08lX\t%08lX\t%8X\t%d\t%u\t%d\t%08lX\t%d\t%u\t%u\t%02X\t%d\t%1d\t%08X" 
+    * "%s\t%08lX\t%08lX\t%8X\t%d\t%u\t%d\t%08lX\t%d\t%u\t%u\t%02X\t%d\t%1d\t%08X"
     *
     * 2.0.36
     * "Iface\tDestination\tGateway \tFlags\tRefCnt\tUse\tMetric\tSource\t\tMTU\tWindow\tIRTT\tHH\tARP"
     * "%s\t%08lX\t%08lX\t%02X\t%d\t%u\t%d\t%08lX\t%d\t%lu\t%u\t%d\t%1d"
     */
-    
+
     format = proc_guess_fmt(_PATH_PROCNET_RTCACHE, fp, "IRTT",1,"TOS",2,"HHRef",4,"HHUptod",8,"SpecDst",16,"HH",32,"ARP",64,NULL);
 
     printf(_("Kernel IP routing cache\n"));
@@ -251,7 +251,7 @@ int rprint_cache(int ext, int numeric)
     	  printf("ERROR: proc_guess_fmt(%s,... returned: %d\n",_PATH_PROCNET_RTCACHE, format);
 	  break;
     }
-    
+
     rewind(fp);
 
     if (ext == 1)
@@ -333,7 +333,7 @@ int rprint_cache(int ext, int numeric)
 	  if (num < 12)
 	    continue;
 	}
-	
+
 
 	/* Fetch and resolve the target address. */
 	(void) inet_aftype.input(1, dest_addr, &snet);

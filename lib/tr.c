@@ -63,11 +63,11 @@ static int in_tr(char *bufp, struct sockaddr *sap)
     int i, val;
 
 #ifdef ARPHRD_IEEE802_TR
-    if (kernel_version() < KRELEASE(2,3,30)) { 
+    if (kernel_version() < KRELEASE(2,3,30)) {
         sap->sa_family = tr_hwtype.type;
-    } else { 
+    } else {
         sap->sa_family = tr_hwtype1.type;
-    } 	
+    }
 #else
     sap->sa_family = tr_hwtype.type;
     #warning "Limited functionality, no support for ARPHRD_IEEE802_TR (old kernel headers?)"

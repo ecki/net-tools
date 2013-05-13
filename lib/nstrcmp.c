@@ -1,6 +1,6 @@
 /* Copyright 1998 by Andi Kleen. Subject to the GPL. */
 /* rewritten by bernd eckenfels because of complicated alias semantic */
-/* $Id: nstrcmp.c,v 1.4 2004/06/03 22:49:17 ecki Exp $ */ 
+/* $Id: nstrcmp.c,v 1.4 2004/06/03 22:49:17 ecki Exp $ */
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
@@ -12,7 +12,7 @@ char* cutalias(char* name)
 {
 	int digit = 0;
 	int pos;
-	
+
 	for(pos=strlen(name); pos>0; pos--)
 	{
 		if (name[pos-1]==':' && digit)
@@ -58,41 +58,41 @@ int nstrcmp(const char *ap, const char *bp)
 
 	if (res != 0)
 		{ free(a); free(b); return res; }
-		
+
 	if (aindex > bindex)
 		{ free(a); free(b); return 1; }
-		
+
 	if (aindex < bindex)
 		{ free(a); free(b); return -1; }
-		
+
 	an = a+aindex;
 	bn = b+bindex;
-	
+
 	av = atoi(an);
 	bv = atoi(bn);
-	
+
 	if (av < bv)
 		{ free(a); free(b); return -1; }
-		
+
 	if (av > bv)
 		{ free(a); free(b); return 1; }
-		
+
 	av = -1;
 	if (aalias != NULL)
 		av = atoi(aalias);
-	
+
 	bv = -1;
 	if (balias != NULL)
 		bv = atoi(balias);
-	
+
 	free(a); free(b);
-	
+
 	if (av < bv)
 		return -1;
-		
+
 	if (av > bv)
 		return 1;
-		
+
 	return 0;
 }
 
@@ -118,7 +118,7 @@ int dotest(char* a, char* b, int exp)
 int main()
 {
 	int err = 0;
-	
+
 	err |= dotest("eth1", "eth1", 0);
 	err |= dotest("eth0:1", "eth0:1", 0);
 	err |= dotest("lan", "lan", 0);
@@ -129,7 +129,7 @@ int main()
 	err |= dotest("a:", "a:", 0);
 	err |= dotest(":a", ":a", 0);
 
-	err |= dotest("a", "aa", -1);	
+	err |= dotest("a", "aa", -1);
 	err |= dotest("eth0", "eth1", -1);
 	err |= dotest("eth1", "eth20", -1);
 	err |= dotest("eth20", "eth100", -1);
@@ -139,10 +139,10 @@ int main()
 	err |= dotest("eth1:10", "eth13:10", -1);
 	err |= dotest("eth1:1", "eth1:13", -1);
 	err |= dotest("a", "a:", -1);
-	
+
 	err |= dotest("aa", "a", 1);
 	err |= dotest("eth2", "eth1", 1);
-	err |= dotest("eth13", "eth1", 1);	
+	err |= dotest("eth13", "eth1", 1);
 	err |= dotest("eth2", "eth", 1);
 	err |= dotest("eth2:10", "eth2:1", 1);
 	err |= dotest("eth2:5", "eth2:4", 1);

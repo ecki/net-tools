@@ -400,7 +400,7 @@ int main(int argc, char **argv)
 		basename = argv[0];
 	else
 		basename++;
-	
+
 	while (argc > 1) {
 		if (argv[1][0] != '-')
 			break;

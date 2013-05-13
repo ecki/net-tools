@@ -1,9 +1,9 @@
 /*
- * Copyright 1997,1999,2000 Andi Kleen. Subject to the GPL. 
+ * Copyright 1997,1999,2000 Andi Kleen. Subject to the GPL.
  * $Id: statistics.c,v 1.23 2010-10-29 19:24:36 ecki Exp $
- * 19980630 - i18n - Arnaldo Carvalho de Melo <acme@conectiva.com.br> 
- * 19981113 - i18n fixes - Arnaldo Carvalho de Melo <acme@conectiva.com.br> 
- * 19990101 - added net/netstat, -t, -u, -w supprt - Bernd Eckenfels 
+ * 19980630 - i18n - Arnaldo Carvalho de Melo <acme@conectiva.com.br>
+ * 19981113 - i18n fixes - Arnaldo Carvalho de Melo <acme@conectiva.com.br>
+ * 19990101 - added net/netstat, -t, -u, -w supprt - Bernd Eckenfels
  */
 #include <ctype.h>
 #include <stdio.h>
@@ -36,26 +36,26 @@ struct entry {
     enum State type;
 };
 
-struct statedesc { 
+struct statedesc {
     int indent;
-    char *title; 
-}; 
+    char *title;
+};
 
-struct statedesc states[] = { 
+struct statedesc states[] = {
     [number] = { 4, NULL },
-    [opt_number] = { 4, NULL }, 
+    [opt_number] = { 4, NULL },
     [i_forward] = { 4, NULL },
     [i_inp_icmp] = { 8, N_("ICMP input histogram:") },
     [i_outp_icmp] = { 8, N_("ICMP output histogram:") },
     [MaxState] = {0},
-}; 
+};
 
 static enum State state;
 
 #define I_STATIC (1<<16)	/* static configuration option. */
 #define I_TITLE  (1<<17)
 
-/* 
+/*
  * XXX check against the snmp mib rfc.
  *
  * Don't mark the first field as translatable! It's a snmp MIB standard.
@@ -218,19 +218,19 @@ struct entry Tcpexttab[] =
     {"SyncookiesFailed", N_("%llu invalid SYN cookies received"), opt_number},
 
     { "EmbryonicRsts", N_("%llu resets received for embryonic SYN_RECV sockets"),
-      opt_number },  
+      opt_number },
     { "PruneCalled", N_("%llu packets pruned from receive queue because of socket"
-			" buffer overrun"), opt_number },  
+			" buffer overrun"), opt_number },
     /* obsolete: 2.2.0 doesn't do that anymore */
     { "RcvPruned", N_("%llu packets pruned from receive queue"), opt_number },
     { "OfoPruned", N_("%llu packets dropped from out-of-order queue because of"
-		      " socket buffer overrun"), opt_number }, 
+		      " socket buffer overrun"), opt_number },
     { "OutOfWindowIcmps", N_("%llu ICMP packets dropped because they were "
-			     "out-of-window"), opt_number }, 
+			     "out-of-window"), opt_number },
     { "LockDroppedIcmps", N_("%llu ICMP packets dropped because"
 			     " socket was locked"), opt_number },
     { "TW", N_("%llu TCP sockets finished time wait in fast timer"), opt_number },
-    { "TWRecycled", N_("%llu time wait sockets recycled by time stamp"), opt_number }, 
+    { "TWRecycled", N_("%llu time wait sockets recycled by time stamp"), opt_number },
     { "TWKilled", N_("%llu TCP sockets finished time wait in slow timer"), opt_number },
     { "PAWSPassive", N_("%llu passive connections rejected because of"
 			" time stamp"), opt_number },
@@ -254,8 +254,8 @@ struct entry Tcpexttab[] =
     { "TCPHPHits", N_("%llu packet headers predicted"), number },
     { "TCPHPHitsToUser", N_("%llu packets header predicted and "
 			    "directly queued to user"), opt_number },
-    { "SockMallocOOM", N_("Ran %llu times out of system memory during " 
-			  "packet sending"), opt_number }, 
+    { "SockMallocOOM", N_("Ran %llu times out of system memory during "
+			  "packet sending"), opt_number },
     { "TCPPureAcks", N_("%llu acknowledgments not containing data payload received"), opt_number },
     { "TCPHPAcks", N_("%llu predicted acknowledgments"), opt_number },
     { "TCPRenoRecovery", N_("%llu times recovered from packet loss due to fast retransmit"), opt_number },
@@ -303,7 +303,7 @@ struct tabtab {
     char *title;
     struct entry *tab;
     size_t size;
-    int *flag; 
+    int *flag;
 };
 
 struct tabtab snmptabs[] =
@@ -339,11 +339,11 @@ void printval(struct tabtab *tab, char *title, unsigned long long val)
     char buf[512];
 
     key.title = title;
-	if (tab->tab) 
+	if (tab->tab)
 	    ent = bsearch(&key, tab->tab, tab->size / sizeof(struct entry),
 			  sizeof(struct entry), cmpentries);
     if (!ent) {			/* try our best */
-	if (val) 
+	if (val)
 		printf("%*s%s: %llu\n", states[state].indent, "", title, val);
 	return;
     }
@@ -364,7 +364,7 @@ void printval(struct tabtab *tab, char *title, unsigned long long val)
     buf[0] = '\0';
     switch (type) {
     case opt_number:
-	if (val == 0) 
+	if (val == 0)
 	    break;
 	/*FALL THOUGH*/
     case number:
@@ -394,7 +394,7 @@ struct tabtab *newtable(struct tabtab *tabs, char *title)
 {
     struct tabtab *t;
 	static struct tabtab dummytab;
-	
+
     for (t = tabs; t->title; t++) {
 		if (!strcmp(title, t->title)) {
 	    	if (*(t->flag))
@@ -403,11 +403,11 @@ struct tabtab *newtable(struct tabtab *tabs, char *title)
 	   		return t;
 		}
 	}
-	if (!f_unknown) 
-		return NULL; 
+	if (!f_unknown)
+		return NULL;
 	printf("%s:\n", _(title));
 	dummytab.title = title;
-	dummytab.flag = &f_unknown; 
+	dummytab.flag = &f_unknown;
 	return &dummytab;
 }
 
@@ -421,7 +421,7 @@ int process_fd(FILE *f, int all, char *filter)
 
         if (buf1[0] == '\n') // skip empty first line in 2.6 kernels
             continue;
-            
+
 	if (!fgets(buf2, sizeof buf2, f))
 	    break;
 	sp = strchr(buf1, ':');
@@ -444,8 +444,8 @@ int process_fd(FILE *f, int all, char *filter)
 
 	endflag = 0;
 	while (!endflag) {
-	    sp += strspn(sp, " \t\n"); 
-	    np += strspn(np, " \t\n"); 
+	    sp += strspn(sp, " \t\n");
+	    np += strspn(np, " \t\n");
 	    /*if (*np == '\0') goto formaterr; */
 
 	    p = sp+strcspn(sp, " \t\n");
@@ -453,14 +453,14 @@ int process_fd(FILE *f, int all, char *filter)
 		endflag = 1;
 	    *p = '\0';
 
-	    if (*sp != '\0' && *(tab->flag)) 	
+	    if (*sp != '\0' && *(tab->flag))
 		printval(tab, sp, strtoull(np, &np, 10));
 
 	    sp = p + 1;
 	}
     }
   return 0;
-  
+
 formaterr:
   return -1;
 }
@@ -507,7 +507,7 @@ void parsesnmp(int flag_raw, int flag_tcp, int flag_udp)
     FILE *f;
 
     f_raw = flag_raw; f_tcp = flag_tcp; f_udp = flag_udp;
-    
+
     f = proc_fopen("/proc/net/snmp");
     if (!f) {
 	perror(_("cannot open /proc/net/snmp"));
@@ -530,12 +530,12 @@ void parsesnmp(int flag_raw, int flag_tcp, int flag_udp)
 
         if (ferror(f))
 	    perror("/proc/net/netstat");
-    
+
         fclose(f);
     }
     return;
 }
-    
+
 void parsesnmp6(int flag_raw, int flag_tcp, int flag_udp)
 {
     FILE *f;

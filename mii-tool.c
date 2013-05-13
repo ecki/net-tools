@@ -169,7 +169,7 @@ const struct {
     { "1000baseT",	{0, ADVERTISE_1000HALF|ADVERTISE_1000FULL} },
 };
 #define NMEDIA (sizeof(media)/sizeof(media[0]))
-	
+
 /* Parse an argument list of media types */
 static int parse_media(char *arg, unsigned *bmcr2)
 {
@@ -479,7 +479,7 @@ int main(int argc, char **argv)
 {
     int i, c, ret, errflag = 0;
     unsigned ctrl1000 = 0;
-    
+
     while ((c = getopt_long(argc, argv, "A:F:p:lrRvVw?", longopts, 0)) != EOF)
 	switch (c) {
 	case 'A': nway_advertise = parse_media(optarg, &ctrl1000); break;
@@ -515,7 +515,7 @@ int main(int argc, char **argv)
     }
 
     if (verbose > 1)
-    	printf("Using SIOCGMIIPHY=0x%x\n", SIOCGMIIPHY);	
+    	printf("Using SIOCGMIIPHY=0x%x\n", SIOCGMIIPHY);
 
     /* No remaining args means show all interfaces. */
     if (optind == argc) {

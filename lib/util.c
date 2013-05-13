@@ -1,4 +1,4 @@
-/* Copyright 1998 by Andi Kleen. Subject to the GPL. */ 
+/* Copyright 1998 by Andi Kleen. Subject to the GPL. */
 /* $Id: util.c,v 1.4 1998/11/17 15:17:02 freitag Exp $ */
 #include <stdio.h>
 #include <stdlib.h>
@@ -43,9 +43,9 @@ int kernel_version(void)
 }
 
 
-/* Like strncpy but make sure the resulting string is always 0 terminated. */  
+/* Like strncpy but make sure the resulting string is always 0 terminated. */
 char *safe_strncpy(char *dst, const char *src, size_t size)
-{   
+{
     dst[size-1] = '\0';
-    return strncpy(dst,src,size-1);   
+    return strncpy(dst,src,size-1);
 }

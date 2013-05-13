@@ -29,7 +29,7 @@
 /* Split the input string into multiple fields. */
 int getargs(char *string, char *arguments[])
 {
-    int len = strlen(string); 
+    int len = strlen(string);
     char temp[len+1];
     char *sp, *ptr;
     int i, argc;

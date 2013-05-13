@@ -112,7 +112,7 @@ static int X25_setroute(int action, int options, char **args)
 	perror("socket");
 	return(E_SOCK);
   }
-  
+
   /* Tell the kernel to accept this route. */
   if (action==RTACTION_DEL) {
 	if (ioctl(skfd, SIOCDELRT, &rt) < 0) {
@@ -138,14 +138,14 @@ int X25_rinput(int action, int options, char **args)
   if (action == RTACTION_FLUSH) {
   	fprintf(stderr,"Flushing `x25' routing table not supported\n");
   	return(usage());
-  }	
+  }
   if (options & FLAG_CACHE) {
   	fprintf(stderr,"Modifying `x25' routing cache not supported\n");
   	return(usage());
-  }	
+  }
   if ((*args == NULL) || (action == RTACTION_HELP))
 	return(usage());
-  
+
   return(X25_setroute(action, options, args));
 }
 #endif	/* HAVE_AFX25 */

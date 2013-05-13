@@ -14,11 +14,11 @@
  *960203 {1.23} Bernd Eckenfels :       net-features support
  *960217 {1.24} Bernd Eckenfels :       get_sname
  *960219 {1.25} Bernd Eckenfels :       extern int h_errno
- *960329 {1.26} Bernd Eckenfels :       resolve 255.255.255.255 
+ *960329 {1.26} Bernd Eckenfels :       resolve 255.255.255.255
  *980101 {1.27} Bernd Eckenfels :	resolve raw sockets in /etc/protocols
  *990302 {1.28} Phil Blundell   :       add netmask to INET_rresolve
  *991007        Kurt Garloff	:	rresolve, resolve: may be hosts
- *		<garloff@suse.de>	store type (host?) in cache 
+ *		<garloff@suse.de>	store type (host?) in cache
  *
  *              This program is free software; you can redistribute it
  *              and/or  modify it under  the terms of  the GNU General
@@ -96,9 +96,9 @@ static int INET_resolve(char *name, struct sockaddr_in *sin, int hostfirst)
 #ifdef DEBUG
     if (hostfirst) fprintf (stderr, "gethostbyname (%s)\n", name);
 #endif
-    if (hostfirst && 
+    if (hostfirst &&
 	(hp = gethostbyname(name)) != (struct hostent *) NULL) {
-	memcpy((char *) &sin->sin_addr, (char *) hp->h_addr_list[0], 
+	memcpy((char *) &sin->sin_addr, (char *) hp->h_addr_list[0],
 		sizeof(struct in_addr));
 	return 0;
     }
@@ -127,18 +127,18 @@ static int INET_resolve(char *name, struct sockaddr_in *sin, int hostfirst)
 	errno = h_errno;
 	return -1;
     }
-    memcpy((char *) &sin->sin_addr, (char *) hp->h_addr_list[0], 
+    memcpy((char *) &sin->sin_addr, (char *) hp->h_addr_list[0],
 	   sizeof(struct in_addr));
 
     return 0;
 }
 
 
-/* numeric: & 0x8000: default instead of *, 
- *	    & 0x4000: host instead of net, 
+/* numeric: & 0x8000: default instead of *,
+ *	    & 0x4000: host instead of net,
  *	    & 0x0fff: don't resolve
  */
-static int INET_rresolve(char *name, size_t len, struct sockaddr_in *sin, 
+static int INET_rresolve(char *name, size_t len, struct sockaddr_in *sin,
 			 int numeric, unsigned int netmask)
 {
     struct hostent *ent;
@@ -243,21 +243,21 @@ static const char *INET_sprint(struct sockaddr *sap, int numeric)
     if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
 	return safe_strncpy(buff, _("[NONE SET]"), sizeof(buff));
 
-    if (INET_rresolve(buff, sizeof(buff), (struct sockaddr_in *) sap, 
+    if (INET_rresolve(buff, sizeof(buff), (struct sockaddr_in *) sap,
 		      numeric, 0xffffff00) != 0)
 	return (NULL);
 
     return (buff);
 }
 
-char *INET_sprintmask(struct sockaddr *sap, int numeric, 
+char *INET_sprintmask(struct sockaddr *sap, int numeric,
 		      unsigned int netmask)
 {
     static char buff[128];
 
     if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
 	return safe_strncpy(buff, _("[NONE SET]"), sizeof(buff));
-    if (INET_rresolve(buff, sizeof(buff), (struct sockaddr_in *) sap, 
+    if (INET_rresolve(buff, sizeof(buff), (struct sockaddr_in *) sap,
 		      numeric, netmask) != 0)
 	return (NULL);
     return (buff);

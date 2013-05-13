@@ -23,24 +23,24 @@
  * Modified:
  *
  *960116 {1.01} Bernd Eckenfels:        verbose, cleanups
- *960204 {1.10} Bernd Eckenfels:        aftrans, usage, new route_info, 
+ *960204 {1.10} Bernd Eckenfels:        aftrans, usage, new route_info,
  *                                      DLFT_AF
  *960204 {1.11} Bernd Eckenfels:        netlink support
  *960204 {1.12} Bernd Eckenfels:        route_init()
  *960215 {1.13} Bernd Eckenfels:        netlink_print honors HAVE_
- *960217 {1.14} Bernd Eckenfels:        masq_info from Jos Vos and 
+ *960217 {1.14} Bernd Eckenfels:        masq_info from Jos Vos and
  *                                      ax25_info from Jonathan Naylor.
  *960218 {1.15} Bernd Eckenfels:        ipx_info rewritten, -e for tcp/ipx
  *960220 {1.16} Bernd Eckenfels:        minor output reformats, -a for -x
  *960221 {1.17} Bernd Eckenfels:        route_init->getroute_init
  *960426 {1.18} Bernd Eckenfels:        new RTACTION, SYM/NUM, FIB/CACHE
- *960517 {1.19} Bernd Eckenfels:        usage() spelling fix and --unix inode, 
+ *960517 {1.19} Bernd Eckenfels:        usage() spelling fix and --unix inode,
  *                                      ':' is part of sock_addr for --inet
  *960822 {x.xx} Frank Strauss:          INET6 support
  *
  *970406 {1.33} Philip Copeland         Added snmp reporting support module -s
  *                                      code provided by Andi Kleen
- *                                      (relly needs to be kernel hooked but 
+ *                                      (relly needs to be kernel hooked but
  *                                      this will do in the meantime)
  *                                      minor header file misplacement tidy up.
  *980815 {1.xx} Stephane Fillod:       X.25 support
@@ -58,7 +58,7 @@
  *
  *990420 {1.38} Tuan Hoang              removed a useless assignment from igmp_do_one()
  *20010404 {1.39} Arnaldo Carvalho de Melo - use setlocale
- *20081201 {1.42} Brian Micek           added -L|--udplite options for RFC 3828 
+ *20081201 {1.42} Brian Micek           added -L|--udplite options for RFC 3828
  *20020722 {1.51} Thomas Preusser       added SCTP over IPv4 support
  *
  *              This program is free software; you can redistribute it
@@ -289,18 +289,18 @@ static void prg_cache_add(unsigned long inode, char *name, const char *scon)
 	    return;
 	}
     }
-    if (!(*pnp = malloc(sizeof(**pnp)))) 
+    if (!(*pnp = malloc(sizeof(**pnp))))
 	return;
     pn = *pnp;
     pn->next = NULL;
     pn->inode = inode;
-    if (strlen(name) > sizeof(pn->name) - 1) 
+    if (strlen(name) > sizeof(pn->name) - 1)
 	name[sizeof(pn->name) - 1] = '\0';
     strcpy(pn->name, name);
 
     {
 	int len = (strlen(scon) - sizeof(pn->scon)) + 1;
-	if (len > 0) 
+	if (len > 0)
             strcpy(pn->scon, &scon[len + 1]);
 	else
             strcpy(pn->scon, scon);
@@ -356,7 +356,7 @@ static int extract_type_1_socket_inode(const char lname[], unsigned long * inode
        */
 
     if (strlen(lname) < PRG_SOCKET_PFXl+3) return(-1);
-    
+
     if (memcmp(lname, PRG_SOCKET_PFX, PRG_SOCKET_PFXl)) return(-1);
     if (lname[strlen(lname)-1] != ']') return(-1);
 
@@ -417,17 +417,17 @@ static void prg_cache_load(void)
     if (!(dirproc=opendir(PATH_PROC))) goto fail;
     while (errno = 0, direproc = readdir(dirproc)) {
 	for (cs = direproc->d_name; *cs; cs++)
-	    if (!isdigit(*cs)) 
+	    if (!isdigit(*cs))
 		break;
-	if (*cs) 
+	if (*cs)
 	    continue;
 	procfdlen = snprintf(line,sizeof(line),PATH_PROC_X_FD,direproc->d_name);
-	if (procfdlen <= 0 || procfdlen >= sizeof(line) - 5) 
+	if (procfdlen <= 0 || procfdlen >= sizeof(line) - 5)
 	    continue;
 	errno = 0;
 	dirfd = opendir(line);
 	if (! dirfd) {
-	    if (errno == EACCES) 
+	    if (errno == EACCES)
 		eacces = 1;
 	    continue;
 	}
@@ -437,7 +437,7 @@ static void prg_cache_load(void)
            /* Skip . and .. */
            if (!isdigit(direfd->d_name[0]))
                continue;
-	    if (procfdlen + 1 + strlen(direfd->d_name) + 1 > sizeof(line)) 
+	    if (procfdlen + 1 + strlen(direfd->d_name) + 1 > sizeof(line))
 		continue;
 	    memcpy(line + procfdlen - PATH_FD_SUFFl, PATH_FD_SUFF "/",
 		   PATH_FD_SUFFl + 1);
@@ -452,23 +452,23 @@ static void prg_cache_load(void)
                 continue;
 
 	    if (!cmdlp) {
-		if (procfdlen - PATH_FD_SUFFl + PATH_CMDLINEl >= 
-		    sizeof(line) - 5) 
+		if (procfdlen - PATH_FD_SUFFl + PATH_CMDLINEl >=
+		    sizeof(line) - 5)
 		    continue;
 		strcpy(line + procfdlen-PATH_FD_SUFFl, PATH_CMDLINE);
 		fd = open(line, O_RDONLY);
-		if (fd < 0) 
+		if (fd < 0)
 		    continue;
 		cmdllen = read(fd, cmdlbuf, sizeof(cmdlbuf) - 1);
-		if (close(fd)) 
+		if (close(fd))
 		    continue;
-		if (cmdllen == -1) 
+		if (cmdllen == -1)
 		    continue;
-		if (cmdllen < sizeof(cmdlbuf) - 1) 
+		if (cmdllen < sizeof(cmdlbuf) - 1)
 		    cmdlbuf[cmdllen]='\0';
-		if (cmdlbuf[0] == '/' && (cmdlp = strrchr(cmdlbuf, '/'))) 
+		if (cmdlbuf[0] == '/' && (cmdlp = strrchr(cmdlbuf, '/')))
 		    cmdlp++;
-		else 
+		else
 		    cmdlp = cmdlbuf;
 	    }
 
@@ -483,14 +483,14 @@ static void prg_cache_load(void)
 	    prg_cache_add(inode, finbuf, "-");
 #endif
 	}
-	closedir(dirfd); 
+	closedir(dirfd);
 	dirfd = NULL;
     }
-    if (dirproc) 
+    if (dirproc)
 	closedir(dirproc);
-    if (dirfd) 
+    if (dirfd)
 	closedir(dirfd);
-    if (!eacces) 
+    if (!eacces)
 	return;
     if (prg_cache_loaded == 1) {
     fail:
@@ -669,7 +669,7 @@ static void igmp_do_one(int lnr, const char *line,const char *prot)
 		    ((struct sockaddr *) &mcastaddr)->sa_family);
 	    return;
 	}
-	safe_strncpy(mcast_addr, ap->sprint((struct sockaddr *) &mcastaddr, 
+	safe_strncpy(mcast_addr, ap->sprint((struct sockaddr *) &mcastaddr,
 				      flag_not & FLAG_NUM_HOST), sizeof(mcast_addr));
 	printf("%-15s %-6d %s\n", device, refcnt, mcast_addr);
 #endif
@@ -701,13 +701,13 @@ static void igmp_do_one(int lnr, const char *line,const char *prot)
 	    fprintf(stderr, _("warning, got bogus igmp line %d.\n"), lnr);
 	    return;
 	}
-	
+
 	if ((ap = get_afntype(((struct sockaddr *) &mcastaddr)->sa_family)) == NULL) {
 	    fprintf(stderr, _("netstat: unsupported address family %d !\n"),
 		    ((struct sockaddr *) &mcastaddr)->sa_family);
 	    return;
 	}
-	safe_strncpy(mcast_addr, ap->sprint((struct sockaddr *) &mcastaddr, 
+	safe_strncpy(mcast_addr, ap->sprint((struct sockaddr *) &mcastaddr,
 				      flag_not & FLAG_NUM_HOST), sizeof(mcast_addr));
 	printf("%-15s %-6d %s\n", device, refcnt, mcast_addr );
 #endif
@@ -762,7 +762,7 @@ static int x25_info(void)
                        vr,vs,sendq,recvq);
        }
        fclose(f);
-       return 0;               
+       return 0;
 }
 #endif
 
@@ -815,7 +815,7 @@ static void print_ip_service(struct sockaddr_in *addr, char const *protname,
 	  else  buf[size-2-bfsl] = '\0';
 	}
 	else  bfs[size-2-bufl] = '\0';
-      }  
+      }
     }
     strcat(buf, ":");
     strcat(buf, bfs);
@@ -1186,7 +1186,7 @@ static int udp_info(void)
 
 static int udplite_info(void)
 {
-    INFO_GUTS6(_PATH_PROCNET_UDPLITE, _PATH_PROCNET_UDPLITE6, 
+    INFO_GUTS6(_PATH_PROCNET_UDPLITE, _PATH_PROCNET_UDPLITE6,
                "AF INET (udplite)", udp_do_one, "udpl", "udpl6" );
 }
 
@@ -1213,7 +1213,7 @@ static void raw_do_one(int lnr, const char *line,const char *prot)
 		 "%d: %64[0-9A-Fa-f]:%X %64[0-9A-Fa-f]:%X %X %lX:%lX %X:%lX %lX %d %d %lu %*s\n",
 		 &d, local_addr, &local_port, rem_addr, &rem_port, &state,
 	  &txq, &rxq, &timer_run, &time_len, &retr, &uid, &timeout, &inode);
-	  
+
     if (num < 10) {
     	fprintf(stderr, _("warning, got bogus raw line.\n"));
 	return;
@@ -1559,7 +1559,7 @@ static int ipx_info(void)
     struct sockaddr sa;
     unsigned sport = 0, dport = 0;
     struct stat s;
-    
+
     f = proc_fopen(_PATH_PROCNET_IPX_SOCKET1);
     if (!f) {
         if (errno != ENOENT) {
@@ -2046,18 +2046,18 @@ int main
     if (flag_int + flag_rou + flag_mas + flag_sta > 1)
 	usage();
 
-    if ((flag_inet || flag_inet6 || flag_sta) && 
+    if ((flag_inet || flag_inet6 || flag_sta) &&
         !(flag_tcp || flag_sctp || flag_udp || flag_udplite || flag_raw))
 	   flag_tcp = flag_sctp = flag_udp = flag_udplite = flag_raw = 1;
 
-    if ((flag_tcp || flag_sctp || flag_udp || flag_udplite || flag_raw || flag_igmp) && 
+    if ((flag_tcp || flag_sctp || flag_udp || flag_udplite || flag_raw || flag_igmp) &&
         !(flag_inet || flag_inet6))
         flag_inet = flag_inet6 = 1;
 
     if (flag_bluetooth && !(flag_l2cap || flag_rfcomm))
 	   flag_l2cap = flag_rfcomm = 1;
 
-    flag_arg = flag_tcp + flag_sctp + flag_udplite + flag_udp + flag_raw + flag_unx 
+    flag_arg = flag_tcp + flag_sctp + flag_udplite + flag_udp + flag_raw + flag_unx
         + flag_ipx + flag_ax25 + flag_netrom + flag_igmp + flag_x25 + flag_rose
 	+ flag_l2cap + flag_rfcomm;
 
@@ -2084,7 +2084,7 @@ int main
     if (flag_sta) {
         if (!afname[0])
             strcpy(afname, DFLT_AF);
-            
+
         if (!strcmp(afname, "inet")) {
 #if HAVE_AFINET
             inittab();
@@ -2105,7 +2105,7 @@ int main
         }
         exit(0);
     }
-    
+
     if (flag_rou) {
 	int options = 0;
 

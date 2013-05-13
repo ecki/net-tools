@@ -27,7 +27,7 @@ of the other options should work as well.
 
 
 COMPILE
--------  
+-------
 To compile simply use "make".
 
 There should be no warnings or errors.

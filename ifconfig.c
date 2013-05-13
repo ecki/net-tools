@@ -19,8 +19,8 @@
  *
  * {1.34} - 19980630 - Arnaldo Carvalho de Melo <acme@conectiva.com.br>
  *                     - gettext instead of catgets for i18n
- *          10/1998  - Andi Kleen. Use interface list primitives.       
- *	    20001008 - Bernd Eckenfels, Patch from RH for setting mtu 
+ *          10/1998  - Andi Kleen. Use interface list primitives.
+ *	    20001008 - Bernd Eckenfels, Patch from RH for setting mtu
  *			(default AF was wrong)
  *          20010404 - Arnaldo Carvalho de Melo, use setlocale
  */
@@ -93,7 +93,7 @@ int opt_v = 0;			/* debugging output flag        */
 int addr_family = 0;		/* currently selected AF        */
 
 /* for ipv4 add/del modes */
-static int get_nmbc_parent(char *parent, unsigned long *nm, 
+static int get_nmbc_parent(char *parent, unsigned long *nm,
 			   unsigned long *bc);
 static int set_ifstate(char *parent, unsigned long ip,
 		       unsigned long nm, unsigned long bc,
@@ -115,11 +115,11 @@ static int if_print(char *ifname)
 	if (!ife) {
 		return -1;
 	}
-	res = do_if_fetch(ife); 
-	if (res >= 0) 
+	res = do_if_fetch(ife);
+	if (res >= 0)
 	    ife_print(ife);
     }
-    return res; 
+    return res;
 }
 
 /* Set a certain interface flag. */
@@ -129,7 +129,7 @@ static int set_flag(char *ifname, short flag)
 
     safe_strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
     if (ioctl(skfd, SIOCGIFFLAGS, &ifr) < 0) {
-	fprintf(stderr, _("%s: ERROR while getting interface flags: %s\n"), 
+	fprintf(stderr, _("%s: ERROR while getting interface flags: %s\n"),
 		ifname,	strerror(errno));
 	return (-1);
     }
@@ -161,7 +161,7 @@ static int clr_flag(char *ifname, short flag)
 
     safe_strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
     if (ioctl(fd, SIOCGIFFLAGS, &ifr) < 0) {
-	fprintf(stderr, _("%s: ERROR while getting interface flags: %s\n"), 
+	fprintf(stderr, _("%s: ERROR while getting interface flags: %s\n"),
 		ifname, strerror(errno));
 	return -1;
     }
@@ -193,7 +193,7 @@ static int test_flag(char *ifname, short flags)
 
     safe_strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
     if (ioctl(fd, SIOCGIFFLAGS, &ifr) < 0) {
-	fprintf(stderr, _("%s: ERROR while testing interface flags: %s\n"), 
+	fprintf(stderr, _("%s: ERROR while testing interface flags: %s\n"),
 		ifname, strerror(errno));
 	return -1;
     }
@@ -277,7 +277,7 @@ int main(int argc, char **argv)
 #endif
 
 #if I18N
-    setlocale (LC_ALL, "");
+    setlocale(LC_ALL, "");
     bindtextdomain("net-tools", "/usr/share/locale");
     textdomain("net-tools");
 #endif
@@ -294,7 +294,7 @@ int main(int argc, char **argv)
 
 	else if (!strcmp(*argv, "-v"))
 	    opt_v = 1;
-	
+
 	else if (!strcmp(*argv, "-V") || !strcmp(*argv, "-version") ||
 	    !strcmp(*argv, "--version"))
 	    version();
@@ -304,7 +304,7 @@ int main(int argc, char **argv)
 	    usage();
 
 	else {
-	    fprintf(stderr, _("ifconfig: option `%s' not recognised.\n"), 
+	    fprintf(stderr, _("ifconfig: option `%s' not recognised.\n"),
 		    argv[0]);
 	    fprintf(stderr, _("ifconfig: `--help' gives usage information.\n"));
 	    exit(1);
@@ -338,9 +338,9 @@ int main(int argc, char **argv)
     /* The next argument is either an address family name, or an option. */
     if ((ap = get_aftype(*spp)) != NULL)
 	spp++; /* it was a AF name */
-    else 
+    else
 	ap = get_aftype(DFLT_AF);
-	
+
     if (ap) {
 	addr_family = ap->af;
 	skfd = ap->fd;
@@ -385,7 +385,7 @@ int main(int argc, char **argv)
 		    goterr = 1;
 		} else {
 		    if (ioctl(skfd, SIOCGIFMAP, &ifr) < 0) {
-			perror("port: SIOCGIFMAP"); 
+			perror("port: SIOCGIFMAP");
 			goterr = 1;
 			continue;
 		    }
@@ -600,8 +600,8 @@ int main(int argc, char **argv)
 	    if (*++spp == NULL)
 		usage();
 	    if (ioctl(skfd, SIOCGIFMAP, &ifr) < 0) {
-		fprintf(stderr, "mem_start: SIOCGIFMAP: %s\n", strerror(errno)); 
-		spp++; 
+		fprintf(stderr, "mem_start: SIOCGIFMAP: %s\n", strerror(errno));
+		spp++;
 		goterr = 1;
 		continue;
 	    }
@@ -617,8 +617,8 @@ int main(int argc, char **argv)
 	    if (*++spp == NULL)
 		usage();
 	    if (ioctl(skfd, SIOCGIFMAP, &ifr) < 0) {
-		fprintf(stderr, "io_addr: SIOCGIFMAP: %s\n", strerror(errno)); 
-		spp++; 
+		fprintf(stderr, "io_addr: SIOCGIFMAP: %s\n", strerror(errno));
+		spp++;
 		goterr = 1;
 		continue;
 	    }
@@ -634,9 +634,9 @@ int main(int argc, char **argv)
 	    if (*++spp == NULL)
 		usage();
 	    if (ioctl(skfd, SIOCGIFMAP, &ifr) < 0) {
-		fprintf(stderr, "irq: SIOCGIFMAP: %s\n", strerror(errno)); 
+		fprintf(stderr, "irq: SIOCGIFMAP: %s\n", strerror(errno));
 		goterr = 1;
-		spp++; 
+		spp++;
 		continue;
 	    }
 	    ifr.ifr_map.irq = atoi(*spp);
@@ -730,7 +730,7 @@ int main(int argc, char **argv)
 		    prefix_len = 128;
 		}
 		safe_strncpy(host, *spp, (sizeof host));
-		if (inet6_aftype.input(1, host, 
+		if (inet6_aftype.input(1, host,
 				       (struct sockaddr *) &sa6) < 0) {
 		    if (inet6_aftype.herror)
 		    	inet6_aftype.herror(host);
@@ -745,7 +745,7 @@ int main(int argc, char **argv)
 
 		fd = get_socket_for_af(AF_INET6);
 		if (fd < 0) {
-		    fprintf(stderr, 
+		    fprintf(stderr,
 			    _("No support for INET6 on this system.\n"));
 		    goterr = 1;
 		    spp++;
@@ -779,7 +779,7 @@ int main(int argc, char **argv)
 		}
 		fd = get_socket_for_af(AF_INET);
 		if (fd < 0) {
-		    fprintf(stderr, 
+		    fprintf(stderr,
 			    _("No support for INET on this system.\n"));
 		    goterr = 1;
 		    spp++;
@@ -787,7 +787,7 @@ int main(int argc, char **argv)
 		}
 
 		memcpy(&ip, &sin.sin_addr.s_addr, sizeof(unsigned long));
-		
+
 		if (get_nmbc_parent(ifr.ifr_name, &nm, &bc) < 0) {
 			fprintf(stderr, _("Interface %s not initialized\n"),
 				ifr.ifr_name);
@@ -796,7 +796,7 @@ int main(int argc, char **argv)
 			continue;
 		}
 		set_ifstate(ifr.ifr_name, ip, nm, bc, 1);
-		
+
 	    }
 	    spp++;
 	    continue;
@@ -823,7 +823,7 @@ int main(int argc, char **argv)
 		    prefix_len = 128;
 		}
 		safe_strncpy(host, *spp, (sizeof host));
-		if (inet6_aftype.input(1, host, 
+		if (inet6_aftype.input(1, host,
 				       (struct sockaddr *) &sa6) < 0) {
 		    inet6_aftype.herror(host);
 		    goterr = 1;
@@ -832,10 +832,10 @@ int main(int argc, char **argv)
 		}
 		memcpy((char *) &ifr6.ifr6_addr, (char *) &sa6.sin6_addr,
 		       sizeof(struct in6_addr));
-		
+
 		fd = get_socket_for_af(AF_INET6);
 		if (fd < 0) {
-		    fprintf(stderr, 
+		    fprintf(stderr,
 			    _("No support for INET6 on this system.\n"));
 		    goterr = 1;
 		    spp++;
@@ -878,11 +878,11 @@ int main(int argc, char **argv)
 		    spp++;
 		    continue;
 		}
-		
+
 		/* Clear "ip" in case sizeof(unsigned long) > sizeof(sin.sin_addr.s_addr) */
 		ip = 0;
 		memcpy(&ip, &sin.sin_addr.s_addr, sizeof(sin.sin_addr.s_addr));
-		
+
 		if (get_nmbc_parent(ifr.ifr_name, &nm, &bc) < 0) {
 		    fprintf(stderr, _("Interface %s not initialized\n"),
 			    ifr.ifr_name);
@@ -953,7 +953,7 @@ int main(int argc, char **argv)
 	/* If the next argument is a valid hostname, assume OK. */
 	safe_strncpy(host, *spp, (sizeof host));
 
-	/* FIXME: sa is too small for INET6 addresses, inet6 should use that too, 
+	/* FIXME: sa is too small for INET6 addresses, inet6 should use that too,
 	   broadcast is unexpected */
 	if (ap->getmask) {
 	    switch (ap->getmask(host, &samask, NULL)) {
@@ -1020,14 +1020,14 @@ int main(int argc, char **argv)
         * end, since it's deleted already! - Roman
         *
         * Should really use regex.h here, not sure though how well it'll go
-        * with the cross-platform support etc. 
+        * with the cross-platform support etc.
         */
         {
             char *ptr;
             short int found_colon = 0;
             for (ptr = ifr.ifr_name; *ptr; ptr++ )
                 if (*ptr == ':') found_colon++;
-                
+
             if (!(found_colon && *(ptr - 1) == '-'))
                 goterr |= set_flag(ifr.ifr_name, (IFF_UP | IFF_RUNNING));
         }
@@ -1075,7 +1075,7 @@ static int do_ifcmd(struct interface *x, struct ifcmd *ptr)
     char *z, *e;
     struct sockaddr_in *sin;
     int i;
-    
+
     if (do_if_fetch(x) < 0)
 	return 0;
     if (strncmp(x->name, ptr->base, ptr->baselen) != 0)
@@ -1091,13 +1091,13 @@ static int do_ifcmd(struct interface *x, struct ifcmd *ptr)
     if (i < 0 || i > 255)
 	abort();
     searcher[i] = 1;
-    
+
     /* copy */
     sin = (struct sockaddr_in *)&x->dstaddr;
     if (sin->sin_addr.s_addr != ptr->addr) {
 	return 0;
     }
-    
+
     if (ptr->flag) {
 	/* turn UP */
 	if (set_flag(x->name, IFF_UP | IFF_RUNNING) == -1)
@@ -1107,7 +1107,7 @@ static int do_ifcmd(struct interface *x, struct ifcmd *ptr)
 	if (clr_flag(x->name, IFF_UP) == -1)
 	    return -1;
     }
-    
+
     return 1; /* all done! */
 }
 
@@ -1117,7 +1117,7 @@ static int get_nmbc_parent(char *parent,
 {
     struct interface *i;
     struct sockaddr_in *sin;
-    
+
     i = lookup_interface(parent);
     if (!i)
 	return -1;
@@ -1137,19 +1137,19 @@ static int set_ifstate(char *parent, unsigned long ip,
     char buf[IFNAMSIZ];
     struct ifcmd pt;
     int i;
-    
+
     pt.base = parent;
     pt.baselen = strlen(parent);
     pt.addr = ip;
     pt.flag = flag;
     memset(searcher, 0, sizeof(searcher));
-    i = for_all_interfaces((int (*)(struct interface *,void *))do_ifcmd, 
+    i = for_all_interfaces((int (*)(struct interface *,void *))do_ifcmd,
 			   &pt);
     if (i == -1)
 	return -1;
     if (i == 1)
 	return 0;
-    
+
     /* add a new interface */
     for (i = 0; i < 256; i++)
 	if (searcher[i] == 0)
@@ -1157,7 +1157,7 @@ static int set_ifstate(char *parent, unsigned long ip,
 
     if (i == 256)
 	return -1; /* FAILURE!!! out of ip addresses */
-    
+
     if (snprintf(buf, IFNAMSIZ, "%s:%d", parent, i) > IFNAMSIZ)
 	return -1;
     if (set_ip_using(buf, SIOCSIFADDR, ip) == -1)

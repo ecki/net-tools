@@ -54,7 +54,7 @@ ec_sprint(struct sockaddr *sap, int numeric)
     return ec_print((const char *) &sec->addr);
 }
 
-static int 
+static int
 ec_input(int type, char *bufp, struct sockaddr *sap)
 {
     struct sockaddr_ec *sec = (struct sockaddr_ec *) sap;

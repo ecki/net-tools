@@ -18,12 +18,12 @@
 #		Alan Cox <A.Cox@swansea.ac.uk>
 #		Copyright 1993-1994 Swansea University Computer Society
 #
-# Be careful! 
+# Be careful!
 # This Makefile doesn't describe complete dependencies for all include files.
-# If you change include files you might need to do make clean. 
+# If you change include files you might need to do make clean.
 #
 
-# set the base of the Installation 
+# set the base of the Installation
 # BASEDIR = /mnt
 BASEDIR ?= $(DESTDIR)
 
@@ -129,7 +129,7 @@ distcheck:	dist
 		rm -rf net-tools-$(RELEASE)
 		@printf "\nThe tarball is ready to go:\n%s\n" "`du -b net-tools-$(RELEASE).tar.xz`"
 
-config.h: 	config.in Makefile 
+config.h: 	config.in Makefile
 		@echo "Configuring the Linux net-tools (NET-3 Base Utilities)..." ; echo
 		@if [ config.status -nt config.in ]; \
 			then ./configure.sh config.status; \
@@ -157,7 +157,7 @@ subdirs:	libdir
 
 ifconfig:	$(NET_LIB) ifconfig.o
 		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ ifconfig.o $(NLIB) $(RESLIB)
-		
+
 nameif:		$(NET_LIB) nameif.o
 		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ nameif.o $(NLIB) $(RESLIB)
 

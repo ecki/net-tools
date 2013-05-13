@@ -1,6 +1,6 @@
 /* Tolerant /proc file parser. Copyright 1998 Andi Kleen */
-/* $Id: proc.c,v 1.5 2007/12/01 18:44:57 ecki Exp $ */ 
-/* Fixme: cannot currently cope with removed fields */ 
+/* $Id: proc.c,v 1.5 2007/12/01 18:44:57 ecki Exp $ */
+/* Fixme: cannot currently cope with removed fields */
 
 #include <string.h>
 #include <stdarg.h>
@@ -51,7 +51,7 @@ char *proc_gen_fmt(char *name, int more, FILE * fh,...)
     return strdup(format);
 }
 
-/* 
+/*
  * this will generate a bitmask of present/missing fields in the header of
  * a /proc file.
  */
@@ -84,12 +84,12 @@ FILE *proc_fopen(const char *name)
 
     if (fd == NULL)
       return NULL;
-      
+
     if (!buffer) {
       pagesz = getpagesize();
       buffer = malloc(pagesz);
     }
-    
+
     setvbuf(fd, buffer, _IOFBF, pagesz);
     return fd;
 }

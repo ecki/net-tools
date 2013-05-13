@@ -1,5 +1,5 @@
 /*********************************************************************
- *                
+ *
  * Filename:      irda.c
  * Version:       0.2
  * Description:   A second attempt to make ifconfig understand IrDA
@@ -10,22 +10,22 @@
  * Modified by:   Dag Brattli <dagb@cs.uit.no>
  * Modified at:   Wed May  1 11:51:44 CEST 2002
  * Modified by:   Christoph Bartelmus <christoph@bartelmus.de>
- * 
- *     This program is free software; you can redistribute it and/or 
- *     modify it under the terms of the GNU General Public License as 
- *     published by the Free Software Foundation; either version 2 of 
+ *
+ *     This program is free software; you can redistribute it and/or
+ *     modify it under the terms of the GNU General Public License as
+ *     published by the Free Software Foundation; either version 2 of
  *     the License, or (at your option) any later version.
- * 
+ *
  *     This program is distributed in the hope that it will be useful,
  *     but WITHOUT ANY WARRANTY; without even the implied warranty of
  *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  *     GNU General Public License for more details.
- * 
- *     You should have received a copy of the GNU General Public License 
- *     along with this program; if not, write to the Free Software 
- *     Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program; if not, write to the Free Software
+ *     Foundation, Inc., 59 Temple Place, Suite 330, Boston,
  *     MA 02111-1307 USA
- *     
+ *
  ********************************************************************/
 
 #include "config.h"
@@ -63,7 +63,7 @@ static const char *irda_print(const char *ptr)
 {
     static char buff[12];
 
-    snprintf(buff, 12, "%02x:%02x:%02x:%02x", ptr[3], ptr[2], 
+    snprintf(buff, 12, "%02x:%02x:%02x:%02x", ptr[3], ptr[2],
 	    ptr[1], ptr[0]);
 
     return (buff);

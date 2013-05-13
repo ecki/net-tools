@@ -2,7 +2,7 @@
  * lib/ddp_gr.c         Prinbting of DDP (AppleTalk) routing table
  *                      used by the NET-LIB.
  *
- * NET-LIB      
+ * NET-LIB
  *
  * Version:     $Id: ddp_gr.c,v 1.4 2002/06/02 05:25:15 ecki Exp $
  *
@@ -87,7 +87,7 @@ int DDP_rprint(int options)
     }
 
     fclose(fp);
-    
+
     return 0;
 
 }

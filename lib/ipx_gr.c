@@ -47,7 +47,7 @@ int IPX_rprint(int options)
     if (!fp) {
         fp = fopen(_PATH_PROCNET_IPX_ROUTE2, "r");
     }
-    
+
     if (!fp) {
         perror(NULL);
         printf(_("IPX routing not in file %s or %s found.\n"), _PATH_PROCNET_IPX_ROUTE1, _PATH_PROCNET_IPX_ROUTE2);

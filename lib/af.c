@@ -342,7 +342,7 @@ void print_aflist(int type) {
 	if ((type == 1 && ((*afp)->rprint == NULL)) || ((*afp)->af == 0)) {
 		afp++; continue;
 	}
-	if ((count % 3) == 0) fprintf(stderr,count?"\n    ":"    "); 
+	if ((count % 3) == 0) fprintf(stderr,count?"\n    ":"    ");
         txt = (*afp)->name; if (!txt) txt = "..";
 	fprintf(stderr,"%s (%s) ",txt,(*afp)->title);
 	count++;

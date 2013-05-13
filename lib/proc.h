@@ -1,4 +1,4 @@
-/* 
+/*
  * prototypes for proc.c
  */
 char *proc_gen_fmt(char *name, int more, FILE * fh,...);

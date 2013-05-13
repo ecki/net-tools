@@ -156,7 +156,7 @@ struct hwtype x25_hwtype = {
 };
 
 struct aftype x25_aftype =
-{   
+{
     "x25", NULL, /*"CCITT X.25", */ AF_X25, X25_ADDR_LEN,
     X25_print, X25_sprint, X25_input, X25_herror,
     X25_rprint, X25_rinput, NULL /* getmask */,

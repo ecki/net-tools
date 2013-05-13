@@ -20,14 +20,14 @@
  *              Andrew Tridgell :       proxy arp netmasks
  *              Bernd Eckenfels :       -n option
  *              Bernd Eckenfels :       Use only /proc for display
- *       {1.60} Bernd Eckenfels :       new arpcode (-i) for 1.3.42 but works 
+ *       {1.60} Bernd Eckenfels :       new arpcode (-i) for 1.3.42 but works
  *                                      with 1.2.x, too
  *       {1.61} Bernd Eckenfels :       more verbose messages
  *       {1.62} Bernd Eckenfels :       check -t for hw adresses and try to
  *                                      explain EINVAL (jeff)
  *970125 {1.63} Bernd Eckenfels :       -a print hardwarename instead of tiltle
  *970201 {1.64} Bernd Eckenfels :       net-features.h support
- *970203 {1.65} Bernd Eckenfels :       "#define" in "#if", 
+ *970203 {1.65} Bernd Eckenfels :       "#define" in "#if",
  *                                      -H|-A additional to -t|-p
  *970214 {1.66} Bernd Eckenfels :       Fix optarg required for -H and -A
  *970412 {1.67} Bernd Eckenfels :       device=""; is default
@@ -35,7 +35,7 @@
  *970517 {1.69} Bernd Eckenfels :       usage() fixed
  *970622 {1.70} Bernd Eckenfels :       arp -d priv
  *970106 {1.80} Bernd Eckenfels :       new syntax without -D and with "dev <If>",
- *                                      ATF_MAGIC, ATF_DONTPUB support. 
+ *                                      ATF_MAGIC, ATF_DONTPUB support.
  *                                      Typo fix (Debian Bug#5728 Giuliano Procida)
  *970803 {1.81} Bernd Eckenfels :       removed junk comment line 1
  *970925 {1.82} Bernd Eckenfels :       include fix for libc6
@@ -628,7 +628,7 @@ static void usage(void)
     fprintf(stderr, _("  arp [-vnD] [<HW>] [-i <if>] -f  [<filename>]            <-Add entry from file\n"));
     fprintf(stderr, _("  arp [-v]   [<HW>] [-i <if>] -s  <host> <hwaddr> [temp]            <-Add entry\n"));
     fprintf(stderr, _("  arp [-v]   [<HW>] [-i <if>] -Ds <host> <if> [netmask <nm>] pub          <-''-\n\n"));
-    
+
     fprintf(stderr, _("        -a                       display (all) hosts in alternative (BSD) style\n"));
     fprintf(stderr, _("        -e                       display (all) hosts in default (Linux) style\n"));
     fprintf(stderr, _("        -s, --set                set a new ARP entry\n"));

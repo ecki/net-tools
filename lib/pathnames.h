@@ -1,8 +1,8 @@
 /*
- * lib/pathnames.h    This file contains the definitions of the path 
+ * lib/pathnames.h    This file contains the definitions of the path
  *                      names used by the NET-LIB.
  *
- * NET-LIB      
+ * NET-LIB
  *
  * Version:     lib/pathnames.h 1.37 (1997-08-23)
  *

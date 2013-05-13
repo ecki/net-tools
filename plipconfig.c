@@ -4,7 +4,7 @@
    Copyright (c) 1994 John Paul Morrison (VE7JPM).
 
    version 0.2
-   
+
    Changed by Alan Cox, to reflect the way SIOCDEVPRIVATE is meant to work
    and for the extra parameter added by Niibe.
 

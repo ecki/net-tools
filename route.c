@@ -10,7 +10,7 @@
  *              (derived from FvK's 'route.c     1.70    01/04/94')
  *
  * Modifications:
- *              Johannes Stille:        for Net-2Debugged by 
+ *              Johannes Stille:        for Net-2Debugged by
  *                                      <johannes@titan.os.open.de>
  *              Linus Torvalds:         Misc Changes
  *              Alan Cox:               add the new mtu/window stuff
@@ -19,7 +19,7 @@
  *       {1.80} Bernd Eckenfels:        reject, metric, irtt, 1.2.x support.
  *       {1.81} Bernd Eckenfels:        reject routes need a dummy device
  *960127 {1.82} Bernd Eckenfels:        'mod' and 'dyn' 'reinstate' added
- *960129 {1.83} Bernd Eckenfels:        resolve and getsock now in lib/, 
+ *960129 {1.83} Bernd Eckenfels:        resolve and getsock now in lib/,
  *                                      REJECT displays '-' as gatway.
  *960202 {1.84} Bernd Eckenfels:        net-features support added
  *960203 {1.85} Bernd Eckenfels:        "#ifdef' in '#if' for net-features

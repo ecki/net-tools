@@ -6,7 +6,7 @@
  * Author:      Daniel Stodden <stodden@in.tum.de>
  *              Copyright 2001 Daniel Stodden
  *
- *              blueprinted from ether.c 
+ *              blueprinted from ether.c
  *              Copyright 1993 MicroWalt Corporation
  *
  *              This program is free software; you can redistribute it
@@ -54,7 +54,7 @@ static const char *pr_eui64(const char *ptr)
 	static char buff[64];
 
 	snprintf(buff, sizeof(buff), "%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X",
-		 (ptr[0] & 0377), (ptr[1] & 0377), (ptr[2] & 0377), (ptr[3] & 0377), 
+		 (ptr[0] & 0377), (ptr[1] & 0377), (ptr[2] & 0377), (ptr[3] & 0377),
 		 (ptr[4] & 0377), (ptr[5] & 0377), (ptr[6] & 0377), (ptr[7] & 0377)
 		);
 	return (buff);
@@ -79,7 +79,7 @@ static int in_eui64( char *bufp, struct sockaddr *sap )
 
 	i = 0;
 	orig = bufp;
-	
+
 	while ((*bufp != '\0') && (i < EUI64_ALEN)) {
 		val = 0;
 		c = *bufp++;
@@ -120,7 +120,7 @@ static int in_eui64( char *bufp, struct sockaddr *sap )
 
 		*ptr++ = (unsigned char) (val & 0377);
 		i++;
-		
+
 		/* We might get a semicolon here - not required. */
 		if (*bufp == ':') {
 			if (_DEBUG && i == EUI64_ALEN)

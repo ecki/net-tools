@@ -11,7 +11,7 @@
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
- * 
+ *
  * Changes:
  * 980701 {1.21} Arnaldo Carvalho de Melo - GNU gettext instead of catgets,
  *                                          strncpy instead of strcpy for

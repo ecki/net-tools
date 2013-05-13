@@ -6,7 +6,7 @@
  * Usage:       hostname [-d|-f|-s|-a|-i|-y|-n]
  *              hostname [-h|-V]
  *              hostname {name|-F file}
- *              dnsdmoainname   
+ *              dnsdmoainname
  *              nisdomainname {name|-F file}
  *
  * Version:     hostname 1.101 (2003-10-11)
@@ -16,7 +16,7 @@
  * Changes:
  *         {1.90}  Peter Tobias : Added -a and -i options.
  *         {1.91}  Bernd Eckenfels : -v,-V rewritten, long_opts (major rewrite), usage.
- *19960120 {1.95}  Bernd Eckenfels : -y/nisdomainname - support for get/setdomainname added 
+ *19960120 {1.95}  Bernd Eckenfels : -y/nisdomainname - support for get/setdomainname added
  *19960218 {1.96}  Bernd Eckenfels : netinet/in.h added
  *19980629 {1.97}  Arnaldo Carvalho de Melo : gettext instead of catgets for i18n
  *20000213 {1.99}  Arnaldo Carvalho de Melo : fixed some i18n strings

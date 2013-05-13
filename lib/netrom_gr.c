@@ -10,7 +10,7 @@
  *
  * Changes:
  * 980701 {0.02} Arnaldo Carvalho de Melo   GNU gettext instead of catgets
- * 
+ *
  *
  *              This program is free software; you can redistribute it
  *              and/or  modify it under  the terms of  the GNU General

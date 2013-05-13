@@ -57,7 +57,7 @@ pr_ash(const char *ptr)
 
 struct hwtype ash_hwtype;
 
-static int 
+static int
 in_ash(char *bufp, struct sockaddr *sap)
 {
     char *ptr;

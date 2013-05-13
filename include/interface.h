@@ -28,7 +28,7 @@ struct user_net_device_stats {
 };
 
 struct interface {
-    struct interface *next, *prev; 
+    struct interface *next, *prev;
     char name[IFNAMSIZ];	/* interface name        */
     short type;			/* if type               */
     short flags;		/* various flags         */
@@ -87,7 +87,7 @@ extern const char *if_port_text[][4];
 #endif
 
 #if !defined(ifr_qlen)
-/* Actually it is ifru_ivalue, but that is not present in 2.0 kernel headers */   
+/* Actually it is ifru_ivalue, but that is not present in 2.0 kernel headers */
 #define ifr_qlen        ifr_ifru.ifru_mtu
 #endif
 
