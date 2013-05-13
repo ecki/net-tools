@@ -93,10 +93,8 @@ int opt_v = 0;			/* debugging output flag        */
 int addr_family = 0;		/* currently selected AF        */
 
 /* for ipv4 add/del modes */
-static int get_nmbc_parent(char *parent, unsigned long *nm,
-			   unsigned long *bc);
-static int set_ifstate(char *parent, unsigned long ip,
-		       unsigned long nm, unsigned long bc,
+static int get_nmbc_parent(char *parent, in_addr_t *nm, in_addr_t *bc);
+static int set_ifstate(char *parent, in_addr_t ip, in_addr_t nm, in_addr_t bc,
 		       int flag);
 
 static int if_print(char *ifname)
@@ -769,7 +767,7 @@ int main(int argc, char **argv)
 #endif
 #if HAVE_AFINET
 	    { /* ipv4 address a.b.c.d */
-		unsigned long ip, nm, bc;
+		in_addr_t ip, nm, bc;
 		safe_strncpy(host, *spp, (sizeof host));
 		if (inet_aftype.input(0, host, (struct sockaddr *)&sin) < 0) {
 		    ap->herror(host);
@@ -786,7 +784,7 @@ int main(int argc, char **argv)
 		    continue;
 		}
 
-		memcpy(&ip, &sin.sin_addr.s_addr, sizeof(unsigned long));
+		memcpy(&ip, &sin.sin_addr.s_addr, sizeof(ip));
 
 		if (get_nmbc_parent(ifr.ifr_name, &nm, &bc) < 0) {
 			fprintf(stderr, _("Interface %s not initialized\n"),
@@ -863,7 +861,7 @@ int main(int argc, char **argv)
 #if HAVE_AFINET
 	    {
 		/* ipv4 address a.b.c.d */
-		unsigned long ip, nm, bc;
+		in_addr_t ip, nm, bc;
 		safe_strncpy(host, *spp, (sizeof host));
 		if (inet_aftype.input(0, host, (struct sockaddr *)&sin) < 0) {
 		    ap->herror(host);
@@ -881,7 +879,7 @@ int main(int argc, char **argv)
 
 		/* Clear "ip" in case sizeof(unsigned long) > sizeof(sin.sin_addr.s_addr) */
 		ip = 0;
-		memcpy(&ip, &sin.sin_addr.s_addr, sizeof(sin.sin_addr.s_addr));
+		memcpy(&ip, &sin.sin_addr.s_addr, sizeof(ip));
 
 		if (get_nmbc_parent(ifr.ifr_name, &nm, &bc) < 0) {
 		    fprintf(stderr, _("Interface %s not initialized\n"),
@@ -1113,7 +1111,7 @@ static int do_ifcmd(struct interface *x, struct ifcmd *ptr)
 
 
 static int get_nmbc_parent(char *parent,
-			   unsigned long *nm, unsigned long *bc)
+			   in_addr_t *nm, in_addr_t *bc)
 {
     struct interface *i;
     struct sockaddr_in *sin;
@@ -1124,14 +1122,13 @@ static int get_nmbc_parent(char *parent,
     if (do_if_fetch(i) < 0)
 	return 0;
     sin = (struct sockaddr_in *)&i->netmask;
-    memcpy(nm, &sin->sin_addr.s_addr, sizeof(unsigned long));
+    memcpy(nm, &sin->sin_addr.s_addr, sizeof(*nm));
     sin = (struct sockaddr_in *)&i->broadaddr;
-    memcpy(bc, &sin->sin_addr.s_addr, sizeof(unsigned long));
+    memcpy(bc, &sin->sin_addr.s_addr, sizeof(*bc));
     return 0;
 }
 
-static int set_ifstate(char *parent, unsigned long ip,
-		       unsigned long nm, unsigned long bc,
+static int set_ifstate(char *parent, in_addr_t ip, in_addr_t nm, in_addr_t bc,
 		       int flag)
 {
     char buf[IFNAMSIZ];
