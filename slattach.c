@@ -204,7 +204,8 @@ tty_lock(char *path, int mode)
 		(void) close(fd);
 		return(0);	/* keep the lock anyway */
 	}
-	(void) fchown(fd, pw->pw_uid, pw->pw_gid);
+	if (fchown(fd, pw->pw_uid, pw->pw_gid))
+		/* keep the lock anyway */;
 
 	(void) close(fd);
 
