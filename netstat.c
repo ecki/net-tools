@@ -455,7 +455,7 @@ static void prg_cache_load(void)
 		    sizeof(line) - 5)
 		    continue;
         safe_strncpy(line + procfdlen - PATH_FD_SUFFl, PATH_CMDLINE,
-                        sizeof(line) - procfdlen - PATH_FD_SUFFl);
+                        sizeof(line) - procfdlen + PATH_FD_SUFFl);
 		fd = open(line, O_RDONLY);
 		if (fd < 0)
 		    continue;
