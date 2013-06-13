@@ -294,16 +294,14 @@ static void prg_cache_add(unsigned long inode, char *name, const char *scon)
     pn = *pnp;
     pn->next = NULL;
     pn->inode = inode;
-    if (strlen(name) > sizeof(pn->name) - 1)
-	name[sizeof(pn->name) - 1] = '\0';
-    strcpy(pn->name, name);
+    safe_strncpy(pn->name, name, sizeof(pn->name));
 
     {
 	int len = (strlen(scon) - sizeof(pn->scon)) + 1;
 	if (len > 0)
-            strcpy(pn->scon, &scon[len + 1]);
+            safe_strncpy(pn->scon, &scon[len + 1], sizeof(pn->scon));
 	else
-            strcpy(pn->scon, scon);
+            safe_strncpy(pn->scon, scon, sizeof(pn->scon));
     }
 
 }
@@ -441,7 +439,8 @@ static void prg_cache_load(void)
 		continue;
 	    memcpy(line + procfdlen - PATH_FD_SUFFl, PATH_FD_SUFF "/",
 		   PATH_FD_SUFFl + 1);
-	    strcpy(line + procfdlen + 1, direfd->d_name);
+        safe_strncpy(line + procfdlen + 1, direfd->d_name,
+                        sizeof(line) - procfdlen - 1);
 	    lnamelen = readlink(line, lname, sizeof(lname) - 1);
 	    if (lnamelen == -1)
 		    continue;
@@ -455,7 +454,8 @@ static void prg_cache_load(void)
 		if (procfdlen - PATH_FD_SUFFl + PATH_CMDLINEl >=
 		    sizeof(line) - 5)
 		    continue;
-		strcpy(line + procfdlen-PATH_FD_SUFFl, PATH_CMDLINE);
+        safe_strncpy(line + procfdlen - PATH_FD_SUFFl, PATH_CMDLINE,
+                        sizeof(line) - procfdlen + PATH_FD_SUFFl);
 		fd = open(line, O_RDONLY);
 		if (fd < 0)
 		    continue;
@@ -1399,7 +1399,7 @@ static void unix_do_one(int nr, const char *line, const char *prot)
 	ss_state = _("UNKNOWN");
     }
 
-    strcpy(ss_flags, "[ ");
+    safe_strncpy(ss_flags, "[ ", sizeof(ss_flags));
     if (flags & SO_ACCEPTCON)
 	strcat(ss_flags, "ACC ");
     if (flags & SO_WAITDATA)
@@ -1653,7 +1653,7 @@ static int ipx_info(void)
 	    safe_strncpy(buf, ap->sprint(&sa, flag_not & FLAG_NUM_HOST), sizeof(buf));
 	    snprintf(dad, sizeof(dad), "%s:%04X", buf, dport);
 	} else
-	    strcpy(dad, "-");
+        safe_strncpy(dad, "-", sizeof(dad));
 
 	printf("IPX   %6ld %6ld %-26s %-26s %-5s", txq, rxq, sad, dad, st);
 	if (flag_exp > 1) {
@@ -2065,7 +2065,7 @@ int main
 #if HAVE_FW_MASQUERADE && HAVE_AFINET
 #if MORE_THAN_ONE_MASQ_AF
 	if (!afname[0])
-	    strcpy(afname, DFLT_AF);
+        safe_strncpy(afname, DFLT_AF, sizeof(afname));
 #endif
 	for (;;) {
 	    i = ip_masq_info(flag_not & FLAG_NUM_HOST,
@@ -2083,7 +2083,7 @@ int main
 
     if (flag_sta) {
         if (!afname[0])
-            strcpy(afname, DFLT_AF);
+            safe_strncpy(afname, DFLT_AF, sizeof(afname));
 
         if (!strcmp(afname, "inet")) {
 #if HAVE_AFINET
@@ -2110,7 +2110,7 @@ int main
 	int options = 0;
 
 	if (!afname[0])
-	    strcpy(afname, DFLT_AF);
+        safe_strncpy(afname, DFLT_AF, sizeof(afname));
 
 	if (flag_exp == 2)
 	    flag_exp = 1;
