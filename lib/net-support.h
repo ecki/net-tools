@@ -137,7 +137,7 @@ extern int flag_inet;
 extern int flag_inet6;
 extern int flag_bluetooth;
 
-extern char afname[];
+extern char afname[256];
 
 #define AFTRANS_OPTS \
 	{"ax25",	0,	0,	1}, \
