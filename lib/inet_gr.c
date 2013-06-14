@@ -31,6 +31,7 @@
 #include "intl.h"
 #include "net-features.h"
 #include "proc.h"
+#include "util.h"
 extern struct aftype inet_aftype;
 
 extern char *INET_sprintmask(struct sockaddr *sap, int numeric,
@@ -106,16 +107,16 @@ int rprint_fib(int ext, int numeric)
 	(void) inet_aftype.input(1, mask_addr, &snet_mask);
 
 	sin_netmask = (struct sockaddr_in *)&snet_mask;
-	strcpy(net_addr, INET_sprintmask(&snet_target,
+	safe_strncpy(net_addr, INET_sprintmask(&snet_target,
 					 (numeric | 0x8000 | (iflags & RTF_HOST? 0x4000: 0)),
-					 sin_netmask->sin_addr.s_addr));
-	net_addr[15] = '\0';
+					 sin_netmask->sin_addr.s_addr),
+                sizeof(net_addr));
 
-	strcpy(gate_addr, inet_aftype.sprint(&snet_gateway, numeric | 0x4000));
-	gate_addr[15] = '\0';
+	safe_strncpy(gate_addr, inet_aftype.sprint(&snet_gateway, numeric | 0x4000),
+                sizeof(gate_addr));
 
-	strcpy(mask_addr, inet_aftype.sprint(&snet_mask, 1));
-	mask_addr[15] = '\0';
+	safe_strncpy(mask_addr, inet_aftype.sprint(&snet_mask, 1),
+                sizeof(mask_addr));
 
 	/* Decode the flags. */
 	flags[0] = '\0';
@@ -125,7 +126,7 @@ int rprint_fib(int ext, int numeric)
 	    strcat(flags, "G");
 #if HAVE_RTF_REJECT
 	if (iflags & RTF_REJECT)
-	    strcpy(flags, "!");
+	    safe_strncpy(flags, "!", sizeof(flags));
 #endif
 	if (iflags & RTF_HOST)
 	    strcat(flags, "H");
@@ -337,23 +338,19 @@ int rprint_cache(int ext, int numeric)
 
 	/* Fetch and resolve the target address. */
 	(void) inet_aftype.input(1, dest_addr, &snet);
-	strcpy(dest_addr, inet_aftype.sprint(&snet, numeric));
-	dest_addr[15] = '\0';
+	safe_strncpy(dest_addr, inet_aftype.sprint(&snet, numeric), sizeof(dest_addr));
 
 	/* Fetch and resolve the gateway address. */
 	(void) inet_aftype.input(1, gate_addr, &snet);
-	strcpy(gate_addr, inet_aftype.sprint(&snet, numeric));
-	gate_addr[15] = '\0';
+    safe_strncpy(gate_addr, inet_aftype.sprint(&snet, numeric), sizeof(gate_addr));
 
 	/* Fetch and resolve the source. */
 	(void) inet_aftype.input(1, src_addr, &snet);
-	strcpy(src_addr, inet_aftype.sprint(&snet, numeric));
-	src_addr[15] = '\0';
+	safe_strncpy(src_addr, inet_aftype.sprint(&snet, numeric), sizeof(src_addr));
 
 	/* Fetch and resolve the SpecDst addrerss. */
 	(void) inet_aftype.input(1, specdst, &snet);
-	strcpy(specdst, inet_aftype.sprint(&snet, numeric));
-	specdst[15] = '\0';
+	safe_strncpy(specdst, inet_aftype.sprint(&snet, numeric), sizeof(specdst));
 
 	/* Decode the flags. */
 	flags[0] = '\0';
@@ -367,7 +364,7 @@ if (format == 1) {
 	    strcat(flags, "G");
 #if HAVE_RTF_REJECT
 	if (iflags & RTF_REJECT)
-	    strcpy(flags, "!");
+	    safe_strncpy(flags, "!", sizeof(flags));
 #endif
 	if (iflags & RTF_REINSTATE)
 	    strcat(flags, "R");

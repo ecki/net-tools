@@ -33,7 +33,7 @@
 #include "pathnames.h"
 #include "intl.h"
 #include "net-features.h"
-
+#include "util.h"
 
 
 extern struct aftype inet6_aftype;
@@ -63,7 +63,7 @@ static int INET6_setroute(int action, int options, char **args)
     if (*args == NULL)
 	return (usage());
 
-    strcpy(target, *args++);
+    safe_strncpy(target, *args++, sizeof(target));
     if (!strcmp(target, "default")) {
         prefix_len = 0;
 	memset(&sa6, 0, sizeof(sa6));
@@ -112,7 +112,7 @@ static int INET6_setroute(int action, int options, char **args)
 		return (usage());
 	    if (rt.rtmsg_flags & RTF_GATEWAY)
 		return (usage());
-	    strcpy(gateway, *args);
+	    safe_strncpy(gateway, *args, sizeof(gateway));
 	    if (inet6_aftype.input(1, gateway,
 				   (struct sockaddr *) &sa6) < 0) {
 		inet6_aftype.herror(gateway);
@@ -152,7 +152,7 @@ static int INET6_setroute(int action, int options, char **args)
     }
     if (devname) {
 	memset(&ifr, 0, sizeof(ifr));
-	strcpy(ifr.ifr_name, devname);
+	safe_strncpy(ifr.ifr_name, devname, sizeof(ifr.ifr_name));
 
 	if (ioctl(skfd, SIOGIFINDEX, &ifr) < 0) {
 	    perror("SIOGIFINDEX");

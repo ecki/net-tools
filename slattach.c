@@ -621,7 +621,7 @@ main(int argc, char *argv[])
     { NULL, 0, NULL, 0 }
   };
 
-  strcpy(path_buf, "");
+  safe_strncpy(path_buf, "", sizeof(path_buf));
   path_dev = path_buf;
 
   /* Scan command line for any arguments. */

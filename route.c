@@ -60,6 +60,7 @@
 #include "intl.h"
 #include "pathnames.h"
 #include "version.h"
+#include "util.h"
 
 #define DFLT_AF "inet"
 
@@ -136,9 +137,9 @@ int main(int argc, char **argv)
     /* getopts and -net wont work :-/ */
     for (tmp = argv; *tmp; tmp++) {
 	if (!strcmp(*tmp, "-net"))
-	    strcpy(*tmp, "#net");
+	    safe_strncpy(*tmp, "#net", sizeof(*tmp));
 	else if (!strcmp(*tmp, "-host"))
-	    strcpy(*tmp, "#host");
+	    safe_strncpy(*tmp, "#host", sizeof(*tmp));
     }
 
     /* Fetch the command-line arguments. */

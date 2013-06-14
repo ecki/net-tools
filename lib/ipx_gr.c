@@ -27,6 +27,7 @@
 #include "net-support.h"
 #include "pathnames.h"
 #include "intl.h"
+#include "util.h"
 
 /* UGLY */
 
@@ -72,15 +73,15 @@ int IPX_rprint(int options)
 
 	/* Fetch and resolve the Destination */
 	(void) ap->input(5, net, &sa);
-	strcpy(net, ap->sprint(&sa, numeric));
+	safe_strncpy(net, ap->sprint(&sa, numeric), sizeof(net));
 
 	/* Fetch and resolve the Router Net */
 	(void) ap->input(5, router_net, &sa);
-	strcpy(router_net, ap->sprint(&sa, numeric));
+	safe_strncpy(router_net, ap->sprint(&sa, numeric), sizeof(router_net));
 
 	/* Fetch and resolve the Router Node */
 	(void) ap->input(2, router_node, &sa);
-	strcpy(router_node, ap->sprint(&sa, numeric));
+	safe_strncpy(router_node, ap->sprint(&sa, numeric), sizeof(router_node));
 
 	printf("%-25s %-25s %-25s\n", net, router_net, router_node);
     }

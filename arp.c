@@ -197,7 +197,7 @@ static int arp_del(char **args)
     if (flags == 0)
 	flags = 3;
 
-    strcpy(req.arp_dev, device);
+    safe_strncpy(req.arp_dev, device, sizeof(req.arp_dev));
 
     /* unfortuatelly the kernel interface does not allow us to
        delete private entries anlone, so we need this hack
@@ -373,7 +373,7 @@ static int arp_set(char **args)
     /* Fill in the remainder of the request. */
     req.arp_flags = flags;
 
-    strcpy(req.arp_dev, device);
+    safe_strncpy(req.arp_dev, device, sizeof(req.arp_dev));
 
     /* Call the kernel. */
     if (opt_v)
@@ -560,8 +560,8 @@ static int arp_show(char *name)
     }
     /* Bypass header -- read until newline */
     if (fgets(line, sizeof(line), fp) != (char *) NULL) {
-	strcpy(mask, "-");
-	strcpy(dev, "-");
+	safe_strncpy(mask, "-", sizeof(mask));
+	safe_strncpy(dev, "-", sizeof(dev));
 	/* Read the ARP cache entries. */
 	for (; fgets(line, sizeof(line), fp);) {
 	    num = sscanf(line, "%s 0x%x 0x%x %99s %99s %99s\n",

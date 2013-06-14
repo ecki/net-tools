@@ -201,7 +201,7 @@ void aftrans_def(char *tool, char *argv0, char *dflt)
     char *tmp;
     char *buf;
 
-    strcpy(afname, dflt);
+    safe_strncpy(afname, dflt, sizeof(afname));
 
     if (!(tmp = strrchr(argv0, '/')))
 	tmp = argv0;		/* no slash?! */
@@ -227,7 +227,7 @@ void aftrans_def(char *tool, char *argv0, char *dflt)
 
     afname[0] = '\0';
     if (aftrans_opt(buf))
-	strcpy(afname, buf);
+	safe_strncpy(afname, buf, sizeof(afname));
 
     free(buf);
 }
