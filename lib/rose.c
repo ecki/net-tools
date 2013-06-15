@@ -34,6 +34,7 @@
 #include "net-support.h"
 #include "pathnames.h"
 #include "intl.h"
+#include "util.h"
 
 #ifndef _NETROSE_ROSE_H
 #include <linux/ax25.h>
@@ -83,7 +84,7 @@ static int ROSE_input(int type, char *bufp, struct sockaddr *sap)
 
     /* Node address the correct length ? */
     if (strlen(bufp) != 10) {
-	strcpy(ROSE_errmsg, _("Node address must be ten digits"));
+	safe_strncpy(ROSE_errmsg, _("Node address must be ten digits"), sizeof(ROSE_errmsg));
 	errno = EINVAL;
 	return (-1);
     }

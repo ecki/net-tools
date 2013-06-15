@@ -414,12 +414,12 @@ int if_fetch(struct interface *ife)
     int fd;
     char *ifname = ife->name;
 
-    strcpy(ifr.ifr_name, ifname);
+    safe_strncpy(ifr.ifr_name, ifname, sizeof(ifr.ifr_name));
     if (ioctl(skfd, SIOCGIFFLAGS, &ifr) < 0)
 	return (-1);
     ife->flags = ifr.ifr_flags;
 
-    strcpy(ifr.ifr_name, ifname);
+    safe_strncpy(ifr.ifr_name, ifname, sizeof(ifr.ifr_name));
     if (ioctl(skfd, SIOCGIFHWADDR, &ifr) < 0)
 	memset(ife->hwaddr, 0, 32);
     else
@@ -427,7 +427,7 @@ int if_fetch(struct interface *ife)
 
     ife->type = ifr.ifr_hwaddr.sa_family;
 
-    strcpy(ifr.ifr_name, ifname);
+    safe_strncpy(ifr.ifr_name, ifname, sizeof(ifr.ifr_name));
     if (ioctl(skfd, SIOCGIFMTU, &ifr) < 0)
 	ife->mtu = 0;
     else
@@ -438,14 +438,14 @@ int if_fetch(struct interface *ife)
 	ife->type == ARPHRD_SLIP6 || ife->type == ARPHRD_CSLIP6 ||
 	ife->type == ARPHRD_ADAPT) {
 #ifdef SIOCGOUTFILL
-	strcpy(ifr.ifr_name, ifname);
+	safe_strncpy(ifr.ifr_name, ifname, sizeof(ifr.ifr_name));
 	if (ioctl(skfd, SIOCGOUTFILL, &ifr) < 0)
 	    ife->outfill = 0;
 	else
 	    ife->outfill = (unsigned long) ifr.ifr_data;
 #endif
 #ifdef SIOCGKEEPALIVE
-	strcpy(ifr.ifr_name, ifname);
+	safe_strncpy(ifr.ifr_name, ifname, sizeof(ifr.ifr_name));
 	if (ioctl(skfd, SIOCGKEEPALIVE, &ifr) < 0)
 	    ife->keepalive = 0;
 	else
@@ -454,20 +454,20 @@ int if_fetch(struct interface *ife)
     }
 #endif
 
-    strcpy(ifr.ifr_name, ifname);
+    safe_strncpy(ifr.ifr_name, ifname, sizeof(ifr.ifr_name));
     if (ioctl(skfd, SIOCGIFMAP, &ifr) < 0)
 	memset(&ife->map, 0, sizeof(struct ifmap));
     else
 	memcpy(&ife->map, &ifr.ifr_map, sizeof(struct ifmap));
 
-    strcpy(ifr.ifr_name, ifname);
+    safe_strncpy(ifr.ifr_name, ifname, sizeof(ifr.ifr_name));
     if (ioctl(skfd, SIOCGIFMAP, &ifr) < 0)
 	memset(&ife->map, 0, sizeof(struct ifmap));
     else
 	ife->map = ifr.ifr_map;
 
 #ifdef HAVE_TXQUEUELEN
-    strcpy(ifr.ifr_name, ifname);
+    safe_strncpy(ifr.ifr_name, ifname, sizeof(ifr.ifr_name));
     if (ioctl(skfd, SIOCGIFTXQLEN, &ifr) < 0)
 	ife->tx_queue_len = -1;	/* unknown value */
     else
@@ -480,24 +480,24 @@ int if_fetch(struct interface *ife)
     /* IPv4 address? */
     fd = get_socket_for_af(AF_INET);
     if (fd >= 0) {
-	strcpy(ifr.ifr_name, ifname);
+	safe_strncpy(ifr.ifr_name, ifname, sizeof(ifr.ifr_name));
 	ifr.ifr_addr.sa_family = AF_INET;
 	if (ioctl(fd, SIOCGIFADDR, &ifr) == 0) {
 	    ife->has_ip = 1;
 	    ife->addr = ifr.ifr_addr;
-	    strcpy(ifr.ifr_name, ifname);
+	    safe_strncpy(ifr.ifr_name, ifname, sizeof(ifr.ifr_name));
 	    if (ioctl(fd, SIOCGIFDSTADDR, &ifr) < 0)
 	        memset(&ife->dstaddr, 0, sizeof(struct sockaddr));
 	    else
 	        ife->dstaddr = ifr.ifr_dstaddr;
 
-	    strcpy(ifr.ifr_name, ifname);
+	    safe_strncpy(ifr.ifr_name, ifname, sizeof(ifr.ifr_name));
 	    if (ioctl(fd, SIOCGIFBRDADDR, &ifr) < 0)
 	        memset(&ife->broadaddr, 0, sizeof(struct sockaddr));
 	    else
 		ife->broadaddr = ifr.ifr_broadaddr;
 
-	    strcpy(ifr.ifr_name, ifname);
+	    safe_strncpy(ifr.ifr_name, ifname, sizeof(ifr.ifr_name));
 	    if (ioctl(fd, SIOCGIFNETMASK, &ifr) < 0)
 		memset(&ife->netmask, 0, sizeof(struct sockaddr));
 	    else
@@ -511,7 +511,7 @@ int if_fetch(struct interface *ife)
     /* DDP address maybe ? */
     fd = get_socket_for_af(AF_APPLETALK);
     if (fd >= 0) {
-	strcpy(ifr.ifr_name, ifname);
+	safe_strncpy(ifr.ifr_name, ifname, sizeof(ifr.ifr_name));
 	if (ioctl(fd, SIOCGIFADDR, &ifr) == 0) {
 	    ife->ddpaddr = ifr.ifr_addr;
 	    ife->has_ddp = 1;
@@ -523,22 +523,22 @@ int if_fetch(struct interface *ife)
     /* Look for IPX addresses with all framing types */
     fd = get_socket_for_af(AF_IPX);
     if (fd >= 0) {
-	strcpy(ifr.ifr_name, ifname);
+	safe_strncpy(ifr.ifr_name, ifname, sizeof(ifr.ifr_name));
 	if (!ipx_getaddr(fd, IPX_FRAME_ETHERII, &ifr)) {
 	    ife->has_ipx_bb = 1;
 	    ife->ipxaddr_bb = ifr.ifr_addr;
 	}
-	strcpy(ifr.ifr_name, ifname);
+	safe_strncpy(ifr.ifr_name, ifname, sizeof(ifr.ifr_name));
 	if (!ipx_getaddr(fd, IPX_FRAME_SNAP, &ifr)) {
 	    ife->has_ipx_sn = 1;
 	    ife->ipxaddr_sn = ifr.ifr_addr;
 	}
-	strcpy(ifr.ifr_name, ifname);
+	safe_strncpy(ifr.ifr_name, ifname, sizeof(ifr.ifr_name));
 	if (!ipx_getaddr(fd, IPX_FRAME_8023, &ifr)) {
 	    ife->has_ipx_e3 = 1;
 	    ife->ipxaddr_e3 = ifr.ifr_addr;
 	}
-	strcpy(ifr.ifr_name, ifname);
+	safe_strncpy(ifr.ifr_name, ifname, sizeof(ifr.ifr_name));
 	if (!ipx_getaddr(fd, IPX_FRAME_8022, &ifr)) {
 	    ife->has_ipx_e2 = 1;
 	    ife->ipxaddr_e2 = ifr.ifr_addr;
@@ -550,7 +550,7 @@ int if_fetch(struct interface *ife)
     /* Econet address maybe? */
     fd = get_socket_for_af(AF_ECONET);
     if (fd >= 0) {
-	strcpy(ifr.ifr_name, ifname);
+	safe_strncpy(ifr.ifr_name, ifname, sizeof(ifr.ifr_name));
 	if (ioctl(fd, SIOCGIFADDR, &ifr) == 0) {
 	    ife->ecaddr = ifr.ifr_addr;
 	    ife->has_econet = 1;

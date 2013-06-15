@@ -111,7 +111,7 @@ static int AX25_input(int type, char *bufp, struct sockaddr *sap)
 
     /* Callsign too long? */
     if ((i == 6) && (*bufp != '-') && (*bufp != '\0')) {
-	strcpy(AX25_errmsg, _("Callsign too long"));
+	safe_strncpy(AX25_errmsg, _("Callsign too long"), sizeof(AX25_errmsg));
 	if (_DEBUG)
 	    fprintf(stderr, "ax25_input(%s): %s !\n", AX25_errmsg, orig);
 	errno = E2BIG;

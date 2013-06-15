@@ -103,9 +103,9 @@ static int INET6_rresolve(char *name, struct sockaddr_in6 *sin6, int numeric)
     }
     if (IN6_IS_ADDR_UNSPECIFIED(&sin6->sin6_addr)) {
         if (numeric & 0x8000)
-	    strcpy(name, "default");
+	    safe_strncpy(name, "default", sizeof(name));
 	else
-	    strcpy(name, "[::]");
+	    safe_strncpy(name, "[::]", sizeof(name));
 	return (0);
     }
 

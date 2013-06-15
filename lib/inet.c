@@ -215,7 +215,7 @@ static int INET_rresolve(char *name, size_t len, struct sockaddr_in *sin,
     pn->next = INET_nn;
     pn->host = host;
     pn->name = (char *) xmalloc(strlen(name) + 1);
-    strcpy(pn->name, name);
+    safe_strncpy(pn->name, name, sizeof(pn->name));
     INET_nn = pn;
 
     return (0);

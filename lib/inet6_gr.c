@@ -31,6 +31,7 @@
 #include "pathnames.h"
 #include "intl.h"
 #include "net-features.h"
+#include "util.h"
 
 /* neighbour discovery from linux-2.4.0/include/net/neighbour.h */
 
@@ -216,31 +217,31 @@ int rprint_cache6(int ext, int numeric)
 	/* Decode the state */
 	switch (state) {
 	case NUD_NONE:
-	    strcpy(statestr, "NONE");
+	    safe_strncpy(statestr, "NONE", sizeof(statestr));
 	    break;
 	case NUD_INCOMPLETE:
-	    strcpy(statestr, "INCOMPLETE");
+	    safe_strncpy(statestr, "INCOMPLETE", sizeof(statestr));
 	    break;
 	case NUD_REACHABLE:
-	    strcpy(statestr, "REACHABLE");
+	    safe_strncpy(statestr, "REACHABLE", sizeof(statestr));
 	    break;
 	case NUD_STALE:
-	    strcpy(statestr, "STALE");
+	    safe_strncpy(statestr, "STALE", sizeof(statestr));
 	    break;
 	case NUD_DELAY:
-	    strcpy(statestr, "DELAY");
+	    safe_strncpy(statestr, "DELAY", sizeof(statestr));
 	    break;
 	case NUD_PROBE:
-	    strcpy(statestr, "PROBE");
+	    safe_strncpy(statestr, "PROBE", sizeof(statestr));
 	    break;
 	case NUD_FAILED:
-	    strcpy(statestr, "FAILED");
+	    safe_strncpy(statestr, "FAILED", sizeof(statestr));
 	    break;
 	case NUD_NOARP:
-	    strcpy(statestr, "NOARP");
+	    safe_strncpy(statestr, "NOARP", sizeof(statestr));
 	    break;
 	case NUD_PERMANENT:
-	    strcpy(statestr, "PERM");
+	    safe_strncpy(statestr, "PERM", sizeof(statestr));
 	    break;
 	default:
 	    snprintf(statestr, sizeof(statestr), "UNKNOWN(%02x)", state);
