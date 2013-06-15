@@ -235,7 +235,7 @@ int main(int ac, char **av)
 			usage();
 		if (strlen(av[optind])+1>IFNAMSIZ)
 			complain(_("interface name `%s' too long"), av[optind]);
-		strcpy(ch->ifname, av[optind]);
+		safe_strncpy(ch->ifname, av[optind], sizeof(ch->ifname));
 		optind++;
 		sprintf(pos,_("argument %d"),optind);
 		addchange(av[optind], ch, pos);
