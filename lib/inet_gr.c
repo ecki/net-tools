@@ -109,14 +109,15 @@ int rprint_fib(int ext, int numeric)
 	sin_netmask = (struct sockaddr_in *)&snet_mask;
 	safe_strncpy(net_addr, INET_sprintmask(&snet_target,
 					 (numeric | 0x8000 | (iflags & RTF_HOST? 0x4000: 0)),
-					 sin_netmask->sin_addr.s_addr),
-                sizeof(net_addr));
+					 sin_netmask->sin_addr.s_addr), sizeof(net_addr));
+    net_addr[15] = '\0';
 
 	safe_strncpy(gate_addr, inet_aftype.sprint(&snet_gateway, numeric | 0x4000),
                 sizeof(gate_addr));
+    gate_addr[15] = '\0';
 
-	safe_strncpy(mask_addr, inet_aftype.sprint(&snet_mask, 1),
-                sizeof(mask_addr));
+	safe_strncpy(mask_addr, inet_aftype.sprint(&snet_mask, 1), sizeof(mask_addr));
+    mask_addr[15] = '\0';
 
 	/* Decode the flags. */
 	flags[0] = '\0';

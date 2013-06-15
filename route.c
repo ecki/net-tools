@@ -136,10 +136,8 @@ int main(int argc, char **argv)
 
     /* getopts and -net wont work :-/ */
     for (tmp = argv; *tmp; tmp++) {
-	if (!strcmp(*tmp, "-net"))
-	    safe_strncpy(*tmp, "#net", sizeof(*tmp));
-	else if (!strcmp(*tmp, "-host"))
-	    safe_strncpy(*tmp, "#host", sizeof(*tmp));
+        if (!strcmp(*tmp, "-net") || !strcmp(*tmp, "-host"))
+            (*tmp)[0]='#';
     }
 
     /* Fetch the command-line arguments. */

@@ -609,7 +609,7 @@ version(void)
 int
 main(int argc, char *argv[])
 {
-  char path_buf[128];
+  char path_buf[128] = "";
   char *path_dev;
   char buff[128];
   const char *speed = NULL;
@@ -621,7 +621,6 @@ main(int argc, char *argv[])
     { NULL, 0, NULL, 0 }
   };
 
-  safe_strncpy(path_buf, "", sizeof(path_buf));
   path_dev = path_buf;
 
   /* Scan command line for any arguments. */
