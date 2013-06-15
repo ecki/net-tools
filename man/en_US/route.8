@@ -1,14 +1,18 @@
-.TH ROUTE 8 "2008\-10\-03" "net\-tools" "Linux System Administrator's Manual"
+.TH ROUTE 8 "2013\-06\-15" "net\-tools" "Linux System Administrator's Manual"
 .SH NAME
 route \- show / manipulate the IP routing table
 .SH SYNOPSIS
 .B route
-.RB [ \-CFvnee ]
+.RB [ \-CFvnNee ]
+.RB [ \-A
+family
+.RB | \-4 | \-6 ] 
 .TP
 .B route 
 .RB [ \-v ]
 .RB [ \-A
-family] 
+family 
+.RB | \-4 | \-6 ] 
 .B add 
 .RB [ \-net | \-host ] 
 target 
@@ -34,7 +38,8 @@ If]
 .B route 
 .RB [ \-v ] 
 .RB [ \-A
-family]
+family
+.RB | \-4 | \-6 ]
 .B del 
 .RB [ \-net | \-host ] 
 target 
@@ -73,8 +78,17 @@ displays the current contents of the routing tables.
 .SH OPTIONS
 .TP
 .B \-A family
-use the specified address family (eg `inet'; use `route \-\-help' for a full 
-list).
+use the specified address family (eg `inet'). Use 
+.B route \-\-help
+for a full list. You can use 
+.B \-6 
+as an alias for 
+.B \-\-inet6 
+and 
+.B \-4 
+as an alias for 
+.B -A inet
+.
 
 .TP 
 .B \-F

@@ -68,12 +68,12 @@
 
 static char *Release = RELEASE;
 
-int opt_n = 0;			/* numerical output flag        */
-int opt_v = 0;			/* debugging output flag        */
-int opt_e = 1;			/* 1,2,3=type of routetable     */
-int opt_fc = 0;			/* routing cache/FIB */
-int opt_h = 0;			/* help selected                */
-struct aftype *ap;		/* current address family       */
+int opt_n = 0;     // numerical output FLAG_NUM | FLAG_SYM
+int opt_v = 0;     // debugging output flag
+int opt_e = 1;     // 1,2,3=type of routetable
+int opt_fc = 0;    // routing cache/FIB
+int opt_h = 0;     // help selected
+struct aftype *ap; // selected address family
 
 static void usage(void)
 {
@@ -89,7 +89,7 @@ static void usage(void)
     fprintf(stderr, _("        -F, --fib                display Forwarding Information Base (default)\n"));
     fprintf(stderr, _("        -C, --cache              display routing cache instead of FIB\n\n"));
 
-    fprintf(stderr, _("  <AF>=Use '-A <af>' or '--<af>'; default: %s\n"), DFLT_AF);
+    fprintf(stderr, _("  <AF>=Use -4, -6, '-A <af>' or '--<af>'; default: %s\n"), DFLT_AF);
     fprintf(stderr, _("  List of possible address families (which support routing):\n"));
     print_aflist(1); /* 1 = routeable */
     exit(E_USAGE);
