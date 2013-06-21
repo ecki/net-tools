@@ -79,7 +79,7 @@ static void setnname(char *nname)
     if (setnodename(nname, strlen(nname))) {
         switch(errno) {
         case EPERM:
-            fprintf(stderr, _("%s: you must be root to change the node name\n"), program_name);
+            fprintf(stderr, _("%s: you don't have permission to set the node name\n"), program_name);
             break;
         case EINVAL:
             fprintf(stderr, _("%s: name too long\n"), program_name);
@@ -100,7 +100,7 @@ static void sethname(char *hname)
     if (sethostname(hname, strlen(hname))) {
 	switch (errno) {
 	case EPERM:
-	    fprintf(stderr, _("%s: you must be root to change the host name\n"), program_name);
+	    fprintf(stderr, _("%s: you don't have permission to set the host name\n"), program_name);
 	    break;
 	case EINVAL:
 	    fprintf(stderr, _("%s: name too long\n"), program_name);
@@ -118,7 +118,7 @@ static void setdname(char *dname)
     if (setdomainname(dname, strlen(dname))) {
 	switch (errno) {
 	case EPERM:
-	    fprintf(stderr, _("%s: you must be root to change the domain name\n"), program_name);
+	    fprintf(stderr, _("%s: you don't have permission to set the domain name\n"), program_name);
 	    break;
 	case EINVAL:
 	    fprintf(stderr, _("%s: name too long\n"), program_name);
