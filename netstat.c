@@ -946,15 +946,32 @@ static void addr_do_one(char *buf, size_t buf_len, size_t short_len, struct afty
     addr_len = strlen(saddr);
     port_len = strlen(sport);
     if (!flag_wide && (addr_len + port_len > short_len)) {
-	/* Assume port name is short */
-	port_len = netmin(port_len, short_len - 4);
-	addr_len = short_len - port_len;
-	strncpy(buf, saddr, addr_len);
-	buf[addr_len] = '\0';
-	strcat(buf, ":");
-	strncat(buf, sport, port_len);
-    } else
-	snprintf(buf, buf_len, "%s:%s", saddr, sport);
+		/* Assume port name is short */
+		port_len = netmin(port_len, short_len - 4);
+		#if HAVE_AFINET6
+		addr_len = short_len - port_len - 2;
+		strncpy(buf,"[", sizeof(buf));
+		strncat(buf, saddr, addr_len);
+		buf[addr_len] = '\0';
+		strncat(buf, "]:", sizeof(buf));
+		#else
+		addr_len = short_len - port_len;
+		strncpy(buf, saddr, addr_len);
+		buf[addr_len] = '\0';
+		strncat(buf, ":", sizeof(buf));
+		#endif
+		strncat(buf, sport, port_len);
+	} else {
+		#if HAVE_AFINET6
+		if(addr->sin6_family == AF_INET6){
+			snprintf(buf, buf_len, "[%s]:%s", saddr, sport);
+		} else {
+			snprintf(buf, buf_len, "%s:%s", saddr, sport);
+		}
+		#else
+			snprintf(buf, buf_len, "%s:%s", saddr, sport);
+		#endif
+	}
 }
 
 static void tcp_do_one(int lnr, const char *line, const char *prot)
@@ -1049,10 +1066,13 @@ static void tcp_do_one(int lnr, const char *line, const char *prot)
 			 timer_run, (double) time_len / HZ, retr, timeout);
 		break;
 	    }
-
+	if(!flag_wide){
 	printf("%-4s  %6ld %6ld %-*s %-*s %-11s",
-	       prot, rxq, txq, (int)netmax(23,strlen(local_addr)), local_addr, (int)netmax(23,strlen(rem_addr)), rem_addr, _(tcp_state[state]));
-
+			prot, rxq, txq, (int)netmax(23,strlen(local_addr)), local_addr, (int)netmax(23,strlen(rem_addr)), rem_addr, _(tcp_state[state]));
+	} else {
+		printf("%-4s  %6ld %6ld %-*s %*s\n%*s",
+			prot, rxq, txq, (int) strlen(local_addr), local_addr, 58 - (int) strlen(local_addr) - (11 - (int) strlen(_(tcp_state[state]))), _(tcp_state[state]), 20 + (int) strlen(rem_addr), rem_addr);
+	}
 	finish_this_one(uid,inode,timers);
 }
 
