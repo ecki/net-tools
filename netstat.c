@@ -1191,8 +1191,14 @@ static void udp_do_one(int lnr, const char *line,const char *prot)
 			 retr, timeout);
 		break;
 	    }
-	printf("%-5s %6ld %6ld %-23s %-23s %-11s",
+
+	if(!flag_wide){
+	printf("%-4s %6ld %6ld %-23s %-23s %-11s",
 	       prot, rxq, txq, local_addr, rem_addr, udp_state);
+	} else {
+		printf("%-4s  %6ld %6ld %-*s %*s\n%*s",
+			prot, rxq, txq, (int) strlen(local_addr), local_addr, 58 - (int) strlen(local_addr) - (11 - (int) strlen(udp_state)), udp_state, 20 + (int) strlen(rem_addr), rem_addr);
+	}
 
 	finish_this_one(uid,inode,timers);
     }
