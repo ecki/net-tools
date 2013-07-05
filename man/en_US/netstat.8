@@ -33,6 +33,7 @@ netstat \- Print network connections, routing tables, interface statistics, masq
 .RB [ \-\-verbose | \-v ]
 .RB [ \-\-continuous | \-c]
 .RB [ \-\-wide | \-W]
+.RB [ \-\-multi\-line | \-m]
 .P
 .B netstat 
 .RB { \-\-route | \-r }
@@ -136,6 +137,8 @@ useful information about unconfigured address families.
 .SS "\-\-wide , \-W"
 Do not truncate IP addresses by using output as wide as needed. This is
 optional for now to not break existing scripts.
+.SS "\-\-multi-line , \-m"
+Do not truncate IP addresses by using multi-line output.
 .SS "\-\-numeric , \-n"
 Show numerical addresses instead of trying to determine symbolic host, port
 or user names.
