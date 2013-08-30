@@ -157,7 +157,7 @@ static int INET_rresolve(char *name, size_t len, struct sockaddr_in *sin,
     }
     ad = sin->sin_addr.s_addr;
 #ifdef DEBUG
-    fprintf (stderr, "rresolve: %08lx, mask %08x, num %08x \n", ad, netmask, numeric);
+    fprintf (stderr, "rresolve: %08lx, mask %08x, num %08x, len %d\n", ad, netmask, numeric, len);
 #endif
 
     // if no symbolic names are requested we shortcut with ntoa
@@ -193,7 +193,7 @@ static int INET_rresolve(char *name, size_t len, struct sockaddr_in *sin,
 	if (pn->addr.sin_addr.s_addr == ad && pn->host == host) {
 	    safe_strncpy(name, pn->name, len);
 #ifdef DEBUG
-	    fprintf (stderr, "rresolve: found %s %08lx in cache\n", (host? "host": "net"), ad);
+	    fprintf (stderr, "rresolve: found %s %08lx in cache (name=%s, len=%d)\n", (host? "host": "net"), ad, name, len);
 #endif
 	    return (0);
 	}
@@ -224,8 +224,7 @@ static int INET_rresolve(char *name, size_t len, struct sockaddr_in *sin,
     pn->addr = *sin;
     pn->next = INET_nn;
     pn->host = host;
-    pn->name = (char *) xmalloc(strlen(name) + 1);
-    safe_strncpy(pn->name, name, sizeof(pn->name));
+    pn->name = strdup(name);
     INET_nn = pn;
 
     return (0);
