@@ -208,8 +208,7 @@ void aftrans_def(char *tool, char *argv0, char *dflt)
     else
 	tmp++;
 
-    if (!(buf = strdup(tmp)))
-	return;
+    buf = xstrdup(tmp);
 
     if (strlen(tool) >= strlen(tmp)) {
 	free(buf);

@@ -2,6 +2,7 @@
 
 void *xmalloc(size_t sz);
 void *xrealloc(void *p, size_t sz);
+char *xstrdup(char *src);
 
 #define new(p) ((p) = xmalloc(sizeof(*(p))))
 

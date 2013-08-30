@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <unistd.h>
+#include "util.h"
 
 /* Caller must free return string. */
 
@@ -48,7 +49,7 @@ char *proc_gen_fmt(char *name, int more, FILE * fh,...)
 		name, title);
 	return NULL;
     }
-    return strdup(format);
+    return xstrdup(format);
 }
 
 /*
