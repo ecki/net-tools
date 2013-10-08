@@ -1051,9 +1051,17 @@ static void sctp_do_assoc(int lnr, char *line, const char *prot)
     
     /* find primary local address */
     addr = strchr(l_addrs, '*');
-    if (addr == 0) goto err;
-    
-    addr++;
+    if (addr != 0)
+        addr++;
+    else
+    {
+        /* no primary address marked, use first address and skip it */
+        addr = l_addrs;
+        l_addrs = strchr(l_addrs, ' ');
+        if (!l_addrs)
+            goto err;
+    }
+
     s = strchr(addr, ' ');
     if (!s) goto err;
     if (s-addr+1 > sizeof(l_addr))
