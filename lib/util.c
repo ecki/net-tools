@@ -23,7 +23,7 @@ void *xmalloc(size_t sz)
 }
 
 /* Like strdup, but oom() instead of NULL */
-char *xstrdup(char *s)
+char *xstrdup(const char *s)
 {
     char *d = strdup(s);
     if (!d)
