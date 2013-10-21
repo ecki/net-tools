@@ -56,14 +56,19 @@ int nstrcmp(const char *ap, const char *bp)
 	int complen=(aindex<bindex)?aindex:bindex;
 	int res = strncmp(a, b, complen);
 
-	if (res != 0)
-		{ free(a); free(b); return res; }
+	if (res != 0) {
+		goto out;
+	}
 
-	if (aindex > bindex)
-		{ free(a); free(b); return 1; }
+	if (aindex > bindex) {
+		res = 1;
+		goto out;
+	}
 
-	if (aindex < bindex)
-		{ free(a); free(b); return -1; }
+	if (aindex < bindex) {
+		res = -1;
+		goto out;
+	}
 
 	an = a+aindex;
 	bn = b+bindex;
@@ -71,11 +76,20 @@ int nstrcmp(const char *ap, const char *bp)
 	av = atoi(an);
 	bv = atoi(bn);
 
-	if (av < bv)
-		{ free(a); free(b); return -1; }
+	if (av < bv) {
+		res = -1;
+		goto out;
+	}
 
-	if (av > bv)
-		{ free(a); free(b); return 1; }
+	if (av > bv) {
+		res = 1;
+		goto out;
+	}
+
+	res = strcmp(a, b);
+	if (res != 0) {
+		goto out;
+	}
 
 	av = -1;
 	if (aalias != NULL)
@@ -85,15 +99,25 @@ int nstrcmp(const char *ap, const char *bp)
 	if (balias != NULL)
 		bv = atoi(balias);
 
+	if (av < bv) {
+		res = -1;
+		goto out;
+	}
+
+	if (av > bv) {
+		res = 1;
+		goto out;
+	}
+
+	if (aalias && balias) {
+		res = strcmp(aalias, balias);
+	}
+
+out:
+
 	free(a); free(b);
 
-	if (av < bv)
-		return -1;
-
-	if (av > bv)
-		return 1;
-
-	return 0;
+	return res;
 }
 
 
@@ -150,6 +174,15 @@ int main()
 	err |= dotest("eth13:1", "eth1:0", 1);
 	err |= dotest("a:", "a", 1);
 	err |= dotest("a1b12", "a1b2", 1);
+
+	err |= dotest("eth1", "eth01", 1);
+	err |= dotest("eth01", "eth1", -1);
+	err |= dotest("eth1:1", "eth01:1", 1);
+	err |= dotest("eth01:1", "eth1:1", -1);
+	err |= dotest("eth1:1", "eth01:01", 1);
+	err |= dotest("eth1:01", "eth01:1", 1);
+	err |= dotest("eth01:1", "eth1:01", -1);
+	err |= dotest("eth01:01", "eth1:1", -1);
 
 	return err;
 }
