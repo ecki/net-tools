@@ -59,8 +59,12 @@ msgid "arp: cannot set entry on line %u of etherfile %s !\n"
 msgstr "arp: Kann Eintrag auf Zeile %u von Etherdatei %s nicht setzen!\n"
 
 #: ../arp.c:437
-msgid "Address\t\t\tHWtype\tHWaddress\t    Flags Mask\t\t  Iface\n"
-msgstr "Adresse\t\t\tHWTyp\tHWAdresse\t    Flags   Maske\t\t  Iface\n"
+msgid ""
+"Address                  HWtype  HWaddress           Flags Mask            "
+"Iface\n"
+msgstr ""
+"Adresse                  HW-Typ  HW-Adresse          Flags Maske           "
+"Iface\n"
 
 #: ../arp.c:467
 msgid "(incomplete)"
