@@ -78,9 +78,9 @@ int rprint_fib6(int ext, int numeric)
     else
     	printf(_("Kernel IPv6 routing table\n"));
 
-    printf(_("Destination                    "
-	     "Next Hop                   "
-	     "Flag Met Ref Use If\n"));
+    printf(_("Destination                                "
+			 "Next Hop                                   "
+			 "Flag Met Ref Use If\n"));
 
     while (fgets(buff, 1023, fp)) {
 	num = sscanf(buff, "%4s%4s%4s%4s%4s%4s%4s%4s %02x %4s%4s%4s%4s%4s%4s%4s%4s %02x %4s%4s%4s%4s%4s%4s%4s%4s %08x %08x %08x %08x %15s\n",
@@ -149,7 +149,7 @@ int rprint_fib6(int ext, int numeric)
 	    strcat(flags, "f");
 
 	/* Print the info. */
-	printf("%-30s %-26s %-4s %-3d %-1d%6d %s\n",
+	printf("%-42s %-42s %-4s %-3d %-1d%6d %s\n",
 	       addr6, naddr6, flags, metric, refcnt, use, iface);
     }
 
