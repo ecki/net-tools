@@ -157,22 +157,32 @@ static int INET_rresolve(char *name, size_t len, struct sockaddr_in *sin,
     }
     ad = sin->sin_addr.s_addr;
 #ifdef DEBUG
-    fprintf (stderr, "rresolve: %08lx, mask %08x, num %08x \n", ad, netmask, numeric);
+    fprintf (stderr, "rresolve: %08lx, mask %08x, num %08x, len %d\n", ad, netmask, numeric, len);
 #endif
-    if (ad == INADDR_ANY) {
-	if ((numeric & 0x0FFF) == 0) {
-	    if (numeric & 0x8000)
-		safe_strncpy(name, "default", len);
-	    else
-	        safe_strncpy(name, "*", len);
-	    return (0);
-	}
-    }
+
+    // if no symbolic names are requested we shortcut with ntoa
     if (numeric & 0x0FFF) {
         safe_strncpy(name, inet_ntoa(sin->sin_addr), len);
 	return (0);
     }
 
+    // we skip getnetbyaddr for 0.0.0.0/0 and 0.0.0.0/~0
+    if (ad == INADDR_ANY) {
+        if (netmask == INADDR_ANY) {
+            // for 0.0.0.0/0 we hardcode symbolic name
+	    if (numeric & 0x8000)
+		safe_strncpy(name, "default", len);
+	    else
+	        safe_strncpy(name, "*", len);
+	    return (0);
+	} else {
+	    // for 0.0.0.0/1 we skip getnetbyname()
+            safe_strncpy(name, "0.0.0.0", len);
+            return (0);
+	}
+    }
+
+    // it is a host address if flagged or any host bits set
     if ((ad & (~netmask)) != 0 || (numeric & 0x4000))
 	host = 1;
 #if 0
@@ -183,7 +193,7 @@ static int INET_rresolve(char *name, size_t len, struct sockaddr_in *sin,
 	if (pn->addr.sin_addr.s_addr == ad && pn->host == host) {
 	    safe_strncpy(name, pn->name, len);
 #ifdef DEBUG
-	    fprintf (stderr, "rresolve: found %s %08lx in cache\n", (host? "host": "net"), ad);
+	    fprintf (stderr, "rresolve: found %s %08lx in cache (name=%s, len=%d)\n", (host? "host": "net"), ad, name, len);
 #endif
 	    return (0);
 	}
@@ -214,8 +224,7 @@ static int INET_rresolve(char *name, size_t len, struct sockaddr_in *sin,
     pn->addr = *sin;
     pn->next = INET_nn;
     pn->host = host;
-    pn->name = (char *) xmalloc(strlen(name) + 1);
-    safe_strncpy(pn->name, name, sizeof(pn->name));
+    pn->name = xstrdup(name);
     INET_nn = pn;
 
     return (0);
@@ -386,7 +395,7 @@ static int read_services(void)
     while ((se = getservent())) {
 	/* Allocate a service entry. */
 	item = (struct service *) xmalloc(sizeof(struct service));
-	item->name = strdup(se->s_name);
+	item->name = xstrdup(se->s_name);
 	item->number = se->s_port;
 
 	/* Fill it in. */
@@ -406,7 +415,7 @@ static int read_services(void)
     while ((pe = getprotoent())) {
 	/* Allocate a service entry. */
 	item = (struct service *) xmalloc(sizeof(struct service));
-	item->name = strdup(pe->p_name);
+	item->name = xstrdup(pe->p_name);
 	item->number = htons(pe->p_proto);
 	add2list(&raw_name, item);
     }

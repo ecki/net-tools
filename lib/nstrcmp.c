@@ -45,8 +45,8 @@ int rindex_nondigit(char *name)
 /* like strcmp(), but knows about numbers and ':' alias suffix */
 int nstrcmp(const char *ap, const char *bp)
 {
-	char *a = (char*)strdup(ap);
-	char *b = (char*)strdup(bp);
+	char *a = xstrdup(ap);
+	char *b = xstrdup(bp);
 	char *an, *bn;
 	int av = 0, bv = 0;
 	char *aalias=cutalias(a);

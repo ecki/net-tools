@@ -26,6 +26,8 @@
 # set the base of the Installation
 # BASEDIR = /mnt
 BASEDIR ?= $(DESTDIR)
+BINDIR ?= /bin
+SBINDIR ?= /sbin
 
 # path to the net-lib support library. Default: lib
 NET_LIB_PATH = lib
@@ -197,39 +199,39 @@ installbin:
 	@echo "Notice: ifconfig and route are now installed into /bin"
 	@echo "######################################################"
 	@echo
-	install -m 0755 -d ${BASEDIR}/sbin
-	install -m 0755 -d ${BASEDIR}/bin
-	install -m 0755 arp        ${BASEDIR}/sbin
-	install -m 0755 hostname   ${BASEDIR}/bin
-	install -m 0755 ifconfig   ${BASEDIR}/bin
-	install -m 0755 nameif     ${BASEDIR}/sbin
-	install -m 0755 netstat    ${BASEDIR}/bin
-	install -m 0755 plipconfig $(BASEDIR)/sbin
-	install -m 0755 rarp       ${BASEDIR}/sbin
-	install -m 0755 route      ${BASEDIR}/bin
-	install -m 0755 slattach   $(BASEDIR)/sbin
+	install -m 0755 -d ${BASEDIR}${SBINDIR}
+	install -m 0755 -d ${BASEDIR}${BINDIR}
+	install -m 0755 arp        ${BASEDIR}${SBINDIR}
+	install -m 0755 hostname   ${BASEDIR}${BINDIR}
+	install -m 0755 ifconfig   ${BASEDIR}${BINDIR}
+	install -m 0755 nameif     ${BASEDIR}${SBINDIR}
+	install -m 0755 netstat    ${BASEDIR}${BINDIR}
+	install -m 0755 plipconfig $(BASEDIR)${SBINDIR}
+	install -m 0755 rarp       ${BASEDIR}${SBINDIR}
+	install -m 0755 route      ${BASEDIR}${BINDIR}
+	install -m 0755 slattach   $(BASEDIR)${SBINDIR}
 ifeq ($(HAVE_IP_TOOLS),1)
-	install -m 0755 ipmaddr    $(BASEDIR)/sbin
-	install -m 0755 iptunnel   $(BASEDIR)/sbin
+	install -m 0755 ipmaddr    $(BASEDIR)${SBINDIR}
+	install -m 0755 iptunnel   $(BASEDIR)${SBINDIR}
 endif
 ifeq ($(HAVE_MII),1)
-	install -m 0755 mii-tool   $(BASEDIR)/sbin
+	install -m 0755 mii-tool   $(BASEDIR)${SBINDIR}
 endif
-	ln -fs hostname $(BASEDIR)/bin/dnsdomainname
-	ln -fs hostname $(BASEDIR)/bin/ypdomainname
-	ln -fs hostname $(BASEDIR)/bin/nisdomainname
-	ln -fs hostname $(BASEDIR)/bin/domainname
+	ln -fs hostname $(BASEDIR)${BINDIR}/dnsdomainname
+	ln -fs hostname $(BASEDIR)${BINDIR}/ypdomainname
+	ln -fs hostname $(BASEDIR)${BINDIR}/nisdomainname
+	ln -fs hostname $(BASEDIR)${BINDIR}/domainname
 ifeq ($(HAVE_AFDECnet),1)
-	ln -fs hostname $(BASEDIR)/bin/nodename
+	ln -fs hostname $(BASEDIR)${BINDIR}/nodename
 endif
 
 savebin:
-	@for i in ${BASEDIR}/sbin/arp ${BASEDIR}/sbin/ifconfig \
-                 ${BASEDIR}/bin/netstat \
-		 ${BASEDIR}/sbin/rarp ${BASEDIR}/sbin/route \
-		 ${BASEDIR}/bin/hostname ${BASEDIR}/bin/ypdomainname \
-                 ${BASEDIR}/bin/dnsdomainname ${BASEDIR}/bin/nisdomainname \
-		 ${BASEDIR}/bin/domainname ; do \
+	@for i in ${BASEDIR}${SBINDIR}/arp ${BASEDIR}${SBINDIR}/ifconfig \
+                 ${BASEDIR}${BINDIR}/netstat \
+		 ${BASEDIR}${SBINDIR}/rarp ${BASEDIR}${SBINDIR}/route \
+		 ${BASEDIR}${BINDIR}/hostname ${BASEDIR}${BINDIR}/ypdomainname \
+                 ${BASEDIR}${BINDIR}/dnsdomainname ${BASEDIR}${BINDIR}/nisdomainname \
+		 ${BASEDIR}${BINDIR}/domainname ; do \
 		 [ -f $$i ] && cp -f $$i $$i.old ; done ; echo Saved.
 
 installdata:

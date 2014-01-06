@@ -109,7 +109,7 @@ int rprint_fib6(int ext, int numeric)
 		 addr6p[4], addr6p[5], addr6p[6], addr6p[7]);
 	inet6_aftype.input(1, addr6, (struct sockaddr *) &saddr6);
 	snprintf(addr6, sizeof(addr6), "%s/%d",
-		 inet6_aftype.sprint((struct sockaddr *) &saddr6, 1),
+		 inet6_aftype.sprint((struct sockaddr *) &saddr6, numeric),
 		 prefix_len);
 
 	/* Fetch and resolve the nexthop address. */
@@ -118,7 +118,7 @@ int rprint_fib6(int ext, int numeric)
 		 naddr6p[4], naddr6p[5], naddr6p[6], naddr6p[7]);
 	inet6_aftype.input(1, naddr6, (struct sockaddr *) &snaddr6);
 	snprintf(naddr6, sizeof(naddr6), "%s",
-		 inet6_aftype.sprint((struct sockaddr *) &snaddr6, 1));
+		 inet6_aftype.sprint((struct sockaddr *) &snaddr6, numeric));
 
 	/* Decode the flags. */
 
