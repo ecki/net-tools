@@ -1621,7 +1621,7 @@ static int ipx_info(void)
 		sscanf(st, "%X", &dport);	/* net byt order */
 		dport = ntohs(dport);
 	    } else {
-		EINTERN("netstat.c", "ipx soket format error in destination port");
+		EINTERN("netstat.c", "ipx socket format error in destination port");
 		fclose(f);
 		return (-1);
 	    }
