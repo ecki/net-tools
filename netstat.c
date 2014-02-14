@@ -166,6 +166,7 @@ int flag_exp = 1;
 int flag_wide= 0;
 int flag_prg = 0;
 int flag_arg = 0;
+int flag_noprot = 0;
 int flag_ver = 0;
 int flag_l2cap = 0;
 int flag_rfcomm = 0;
@@ -180,9 +181,9 @@ FILE *procinfo;
       perror((file));					\
       return -1;					\
     }							\
-    if (flag_arg || flag_ver)				\
+    if (!flag_noprot && (flag_arg || flag_ver))		\
       ESYSNOT("netstat", (name));			\
-    if (flag_arg)					\
+    if (!flag_noprot && flag_arg)			\
       rc = 1;						\
   } else {						\
     do {						\
@@ -2053,7 +2054,7 @@ int main
 
     if ((flag_inet || flag_inet6 || flag_sta) &&
         !(flag_tcp || flag_sctp || flag_udp || flag_udplite || flag_raw))
-	   flag_tcp = flag_sctp = flag_udp = flag_udplite = flag_raw = 1;
+	   flag_noprot = flag_tcp = flag_sctp = flag_udp = flag_udplite = flag_raw = 1;
 
     if ((flag_tcp || flag_sctp || flag_udp || flag_udplite || flag_raw || flag_igmp) &&
         !(flag_inet || flag_inet6))
