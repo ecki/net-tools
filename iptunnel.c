@@ -491,7 +491,7 @@ static int do_tunnels_list(struct ip_tunnel_parm *p)
 			fclose(fp);
 			return -1;
 		}
-		if (sscanf(ptr, "%ld%ld%ld%ld%ld%ld%ld%*d%ld%ld%ld%ld%ld%ld%ld",
+		if (sscanf(ptr, "%lu%lu%lu%lu%lu%lu%lu%*u%lu%lu%lu%lu%lu%lu%lu",
 			   &rx_bytes, &rx_packets, &rx_errs, &rx_drops,
 			   &rx_fifo, &rx_frame, &rx_multi,
 			   &tx_bytes, &tx_packets, &tx_errs, &tx_drops,

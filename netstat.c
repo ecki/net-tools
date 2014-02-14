@@ -1603,7 +1603,7 @@ static int ipx_info(void)
 	/* eat line */;
 
     while (fgets(buf, 255, f) != NULL) {
-	sscanf(buf, "%s %s %lX %lX %d %d",
+	sscanf(buf, "%s %s %lX %lX %u %u",
 	       sad, dad, &txq, &rxq, &state, &uid);
 	if ((st = rindex(sad, ':'))) {
 	    *st++ = '\0';
