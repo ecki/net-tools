@@ -1848,8 +1848,8 @@ static void usage(void)
     fprintf(stderr, _("        -Z, --context            display SELinux security context for sockets\n"));
 #endif
 
-    fprintf(stderr, _("\n  <Socket>={-t|--tcp} {-u|--udp} {-U|--udplite} {-w|--raw} {-x|--unix}\n"));
-    fprintf(stderr, _("           --ax25 --ipx --netrom\n"));
+    fprintf(stderr, _("\n  <Socket>={-t|--tcp} {-u|--udp} {-U|--udplite} {-S|--sctp} {-w|--raw}\n"));
+    fprintf(stderr, _("           {-x|--unix} --ax25 --ipx --netrom\n"));
     fprintf(stderr, _("  <AF>=Use '-6|-4' or '-A <af>' or '--<af>'; default: %s\n"), DFLT_AF);
     fprintf(stderr, _("  List of possible address families (which support routing):\n"));
     print_aflist(1); /* 1 = routeable */
