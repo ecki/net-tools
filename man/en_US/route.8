@@ -149,7 +149,7 @@ the interface to which the packets should be routed to. This is a BSDism
 compatibility hack.
 .TP
 \fBmetric \fIM\fR
-set the metric field in the routing table (used by routing daemons) to \fIM\fR. If this option is not specified the metric for inet6 (IPv6) address family defaults to '1', for inet (IPv4) no metric will be set to (and the kernel defaults to 1024). You should always specify an explicit metric value to not rely on those defaults.
+set the metric field in the routing table (used by routing daemons) to \fIM\fR. If this option is not specified the metric for inet6 (IPv6) address family defaults to '1', for inet (IPv4) it defaults to '0'. You should always specify an explicit metric value to not rely on those defaults - they also differ from iproute2.
 .TP 
 \fBmss \fIM\fR
 sets MTU (Maximum Transmission Unit) of the route to \fIM\fR bytes.
@@ -333,7 +333,8 @@ Whether or not the hardware address for the cached route is up to date.
 .IR ifconfig (8),
 .IR netstat (8), 
 .IR arp (8), 
-.IR rarp (8)
+.IR rarp (8),
+.IR ip (8)
 .LP
 .SH HISTORY
 .B Route
