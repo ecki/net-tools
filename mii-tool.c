@@ -442,6 +442,9 @@ static void watch_one_xcvr(int skfd, char *ifname, int index)
 		    ifname, strerror(errno));
 	return;
     }
+    if (override_phy >= 0) {
+        mii->phy_id = override_phy;
+    }
     now = (mdio_read(skfd, MII_BMCR) |
 	   (mdio_read(skfd, MII_BMSR) << 16));
     if (status[index] && (status[index] != now))
