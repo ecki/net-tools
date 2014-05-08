@@ -778,7 +778,7 @@ msgid ""
 " will not be shown, you would have to be root to see it all.)\n"
 msgstr ""
 "(Es konnten nicht alle Prozesse identifiziert werden; Informationen über\n"
-"nicht-eigene Processe werden nicht angezeigt; Root kann sie anzeigen.)\n"
+"nicht-eigene Prozesse werden nicht angezeigt; Root kann sie anzeigen.)\n"
 
 #: ../netstat.c:394 ../netstat.c:1089 ../netstat.c:1166
 msgid "LISTENING"
