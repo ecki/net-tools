@@ -1069,8 +1069,19 @@ static int sctp_info_assocs(void)
 
 static int sctp_info(void)
 {
-  int res = sctp_info_eps();
-  return res ? res : sctp_info_assocs();
+    int res;
+
+    if (flag_all || flag_lst) {
+	res = sctp_info_eps();
+	if (res)
+	    return res;
+    }
+
+    if (flag_all || !flag_lst) {
+	res = sctp_info_assocs();
+    }
+
+    return res;
 }
 
 static void addr_do_one(char *buf, size_t buf_len, size_t short_len, const struct aftype *ap,
