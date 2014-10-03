@@ -1909,7 +1909,7 @@ int main
     getroute_init();		/* Set up AF routing support */
 
     afname[0] = '\0';
-    while ((i = getopt_long(argc, argv, "A:CFMacdeghilnNoprsStuUvVWwx64?Z", longopts, &lop)) != EOF)
+    while ((i = getopt_long(argc, argv, "A:CFMacdeghilnNoprsStuUvVWw2fx64?Z", longopts, &lop)) != EOF)
 	switch (i) {
 	case -1:
 	    break;
