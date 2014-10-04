@@ -76,7 +76,7 @@ int opt_fc = 0;    // routing cache/FIB
 int opt_h = 0;     // help selected
 struct aftype *ap; // selected address family
 
-static void usage(void)
+static void usage(int rc)
 {
     fprintf(stderr, _("Usage: route [-nNvee] [-FC] [<AF>]           List kernel routing tables\n"));
     fprintf(stderr, _("       route [-v] [-FC] {add|del|flush} ...  Modify routing table for AF.\n\n"));
@@ -93,7 +93,7 @@ static void usage(void)
     fprintf(stderr, _("  <AF>=Use -4, -6, '-A <af>' or '--<af>'; default: %s\n"), DFLT_AF);
     fprintf(stderr, _("  List of possible address families (which support routing):\n"));
     print_aflist(1); /* 1 = routeable */
-    exit(E_USAGE);
+    exit(rc);
 }
 
 
@@ -190,7 +190,7 @@ int main(int argc, char **argv)
 	    opt_h++;
 	    break;
 	default:
-	    usage();
+	    usage(E_OPTERR);
 	}
 
     argv += optind;
@@ -198,7 +198,7 @@ int main(int argc, char **argv)
 
     if (opt_h) {
 	if (!afname[0])
-	    usage();
+	    usage(E_USAGE);
 	else
 	    what = RTACTION_HELP;
     } else {
@@ -217,7 +217,7 @@ int main(int argc, char **argv)
 	    else if (!strcmp(*argv, "flush"))
 		what = RTACTION_FLUSH;
 	    else
-		usage();
+		usage(E_OPTERR);
 	}
     }
 
@@ -229,9 +229,6 @@ int main(int argc, char **argv)
 	i = route_info(afname, options);
     else
 	i = route_edit(what, afname, options, ++argv);
-
-    if (i == E_OPTERR)
-	usage();
 
     return (i);
 }

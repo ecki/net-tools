@@ -1,9 +1,11 @@
 /*
-   Modifications:
-   1998-07-01 - Arnaldo Carvalho de Melo - GNU gettext instead of catgets
-   1999-10-07 - Kurt Garloff		 - for -host and gws: prefer host names
-						over networks (or even reject)
-   2003-10-11 - Maik Broemme		 - gcc 3.x warnign fixes (default: break;)
+ * inet_sr.c       This files contains INET4 related route manipulation methods.
+ *
+ * Part of net-tools, the Linux base networking tools
+ *
+ * This program is free software; you can redistribute it and/or modif
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License.
  */
 
 #include "config.h"
@@ -46,7 +48,7 @@ extern struct aftype inet_aftype;
 static int skfd = -1;
 
 
-static int usage(void)
+static int usage(const int rc)
 {
     fprintf(stderr, _("Usage: inet_route [-vF] del {-host|-net} Target[/prefix] [gw Gw] [metric M] [[dev] If]\n"));
     fprintf(stderr, _("       inet_route [-vF] add {-host|-net} Target[/prefix] [gw Gw] [metric M]\n"));
@@ -54,7 +56,7 @@ static int usage(void)
     fprintf(stderr, _("                              [mod] [dyn] [reinstate] [[dev] If]\n"));
     fprintf(stderr, _("       inet_route [-vF] add {-host|-net} Target[/prefix] [metric M] reject\n"));
     fprintf(stderr, _("       inet_route [-FC] flush      NOT supported\n"));
-    return (E_USAGE);
+    return (rc);
 }
 
 static int INET_setroute(int action, int options, char **args)
@@ -73,7 +75,7 @@ static int INET_setroute(int action, int options, char **args)
 	args++;
     }
     if (*args == NULL)
-	return (usage());
+	return usage(E_OPTERR);
 
     safe_strncpy(target, *args++, (sizeof target));
 
@@ -90,7 +92,7 @@ static int INET_setroute(int action, int options, char **args)
 
 	n = inet_aftype.getmask(target, &mask.d, netmask);
 	if (n < 0)
-	    return usage();
+	    return usage(E_OPTERR);
 	else if (n)
 	    rt.rt_genmask = full_mask(mask.d);
     }
@@ -98,7 +100,7 @@ static int INET_setroute(int action, int options, char **args)
     /* Prefer hostname lookup is -host flag was given */
     if ((isnet = inet_aftype.input((xflag!=2? 0: 256), target, &rt.rt_dst)) < 0) {
 	inet_aftype.herror(target);
-	return (1);
+	return (E_LOOKUP);
     }
     switch (xflag) {
     case 1:
@@ -118,7 +120,7 @@ static int INET_setroute(int action, int options, char **args)
 
 	    args++;
 	    if (!*args || !isdigit(**args))
-		return (usage());
+		return usage(E_OPTERR);
 	    metric = atoi(*args);
 #if HAVE_NEW_ADDRT
 	    rt.rt_metric = metric + 1;
@@ -133,7 +135,7 @@ static int INET_setroute(int action, int options, char **args)
 
 	    args++;
 	    if (!*args || mask_in_addr(rt))
-		return (usage());
+		return usage(E_OPTERR);
 	    safe_strncpy(netmask, *args, (sizeof netmask));
 	    if ((isnet = inet_aftype.input(0, netmask, &mask)) < 0) {
 		inet_aftype.herror(netmask);
@@ -146,9 +148,9 @@ static int INET_setroute(int action, int options, char **args)
 	if (!strcmp(*args, "gw") || !strcmp(*args, "gateway")) {
 	    args++;
 	    if (!*args)
-		return (usage());
+		return usage(E_OPTERR);
 	    if (rt.rt_flags & RTF_GATEWAY)
-		return (usage());
+		return usage(E_OPTERR);
 	    safe_strncpy(gateway, *args, (sizeof gateway));
 	    if ((isnet = inet_aftype.input(256, gateway, &rt.rt_gateway)) < 0) {
 		inet_aftype.herror(gateway);
@@ -157,7 +159,7 @@ static int INET_setroute(int action, int options, char **args)
 	    if (isnet) {
 		fprintf(stderr, _("route: %s: cannot use a NETWORK as gateway!\n"),
 			gateway);
-		return (E_OPTERR);
+		return usage(E_OPTERR);
 	    }
 	    rt.rt_flags |= RTF_GATEWAY;
 	    args++;
@@ -167,32 +169,32 @@ static int INET_setroute(int action, int options, char **args)
 	    args++;
 	    rt.rt_flags |= RTF_MSS;
 	    if (!*args)
-		return (usage());
+		return usage(E_OPTERR);
 	    rt.rt_mss = atoi(*args);
 	    args++;
 	    if (rt.rt_mss < 64 || rt.rt_mss > 65536) {
 		fprintf(stderr, _("route: Invalid MSS/MTU.\n"));
-		return (E_OPTERR);
+		return usage(E_OPTERR);
 	    }
 	    continue;
 	}
 	if (!strcmp(*args, "window")) {
 	    args++;
 	    if (!*args)
-		return (usage());
+		return usage(E_OPTERR);
 	    rt.rt_flags |= RTF_WINDOW;
 	    rt.rt_window = atoi(*args);
 	    args++;
 	    if (rt.rt_window < 128) {
 		fprintf(stderr, _("route: Invalid window.\n"));
-		return (E_OPTERR);
+		return usage(E_OPTERR);
 	    }
 	    continue;
 	}
 	if (!strcmp(*args, "irtt")) {
 	    args++;
 	    if (!*args)
-		return (usage());
+		return usage(E_OPTERR);
 	    args++;
 #if HAVE_RTF_IRTT
 	    rt.rt_flags |= RTF_IRTT;
@@ -201,7 +203,7 @@ static int INET_setroute(int action, int options, char **args)
 #if 0				/* FIXME: do we need to check anything of this? */
 	    if (rt.rt_irtt < 1 || rt.rt_irtt > (120 * HZ)) {
 		fprintf(stderr, _("route: Invalid initial rtt.\n"));
-		return (E_OPTERR);
+		return usage(E_OPTERR);
 	    }
 #endif
 #else
@@ -236,7 +238,7 @@ static int INET_setroute(int action, int options, char **args)
 	if (!strcmp(*args, "device") || !strcmp(*args, "dev")) {
 	    args++;
 	    if (rt.rt_dev || *args == NULL)
-		return usage();
+		return usage(E_OPTERR);
 	    rt.rt_dev = *args++;
 	    continue;
 	}
@@ -244,9 +246,9 @@ static int INET_setroute(int action, int options, char **args)
 	if (!rt.rt_dev) {
 	    rt.rt_dev = *args++;
 	    if (*args)
-		return usage();	/* must be last to catch typos */
+		return usage(E_OPTERR);	/* must be last to catch typos */
 	} else
-	    return usage();
+	    return usage(E_OPTERR);
     }
 
 #if HAVE_RTF_REJECT
@@ -259,16 +261,16 @@ static int INET_setroute(int action, int options, char **args)
 	__u32 mask = ~ntohl(mask_in_addr(rt));
 	if ((rt.rt_flags & RTF_HOST) && mask != 0xffffffff) {
 	    fprintf(stderr, _("route: netmask %.8x doesn't make sense with host route\n"), mask);
-	    return (E_OPTERR);
+	    return usage(E_OPTERR);
 	}
 	if (mask & (mask + 1)) {
 	    fprintf(stderr, _("route: bogus netmask %s\n"), netmask);
-	    return (E_OPTERR);
+	    return usage(E_OPTERR);
 	}
 	mask = ((struct sockaddr_in *) &rt.rt_dst)->sin_addr.s_addr;
 	if (mask & ~mask_in_addr(rt)) {
 	    fprintf(stderr, _("route: netmask doesn't match route address\n"));
-	    return (E_OPTERR);
+	    return usage(E_OPTERR);
 	}
     }
     /* Fill out netmask if still unset */
@@ -304,14 +306,14 @@ int INET_rinput(int action, int options, char **args)
 {
     if (action == RTACTION_FLUSH) {
 	fprintf(stderr, _("Flushing `inet' routing table not supported\n"));
-	return (usage());
+	return usage(E_OPTERR);
     }
     if (options & FLAG_CACHE) {
 	fprintf(stderr, _("Modifying `inet' routing cache not supported\n"));
-	return (usage());
+	return usage(E_OPTERR);
     }
     if ((*args == NULL) || (action == RTACTION_HELP))
-	return (usage());
+	return usage(E_USAGE);
 
     return (INET_setroute(action, options, args));
 }
