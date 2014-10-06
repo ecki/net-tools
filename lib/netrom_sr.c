@@ -3,7 +3,7 @@
  *
  * Part of net-tools, the Linux base networking tools
  *
- * This program is free software; you can redistribute it and/or modif
+ * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License.
  */
