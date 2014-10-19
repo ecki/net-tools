@@ -92,9 +92,9 @@ int if_list_all = 0;	/* do we have requested the complete proc list, yet? */
 
 static struct interface *int_list, *int_last;
 
-static int if_readlist_proc(char *);
+static int if_readlist_proc(const char *);
 
-static struct interface *if_cache_add(char *name)
+static struct interface *if_cache_add(const char *name)
 {
     struct interface *ife, **nextp, *new;
 
@@ -122,7 +122,7 @@ static struct interface *if_cache_add(char *name)
     return new;
 }
 
-struct interface *lookup_interface(char *name)
+struct interface *lookup_interface(const char *name)
 {
    /* if we have read all, use it */
    if (if_list_all)
@@ -210,7 +210,7 @@ out:
     return err;
 }
 
-char *get_name(char *name, char *p)
+static const char *get_name(char *name, const char *p)
 {
     while (isspace(*p))
 	p++;
@@ -218,7 +218,7 @@ char *get_name(char *name, char *p)
 	if (isspace(*p))
 	    break;
 	if (*p == ':') {	/* could be an alias */
-		char *dot = p++;
+		const char *dot = p++;
  		while (*p && isdigit(*p)) p++;
 		if (*p == ':') {
 			/* Yes it is, backup and copy it. */
@@ -240,7 +240,7 @@ char *get_name(char *name, char *p)
     return p;
 }
 
-int procnetdev_version(char *buf)
+static int procnetdev_version(const char *buf)
 {
     if (strstr(buf, "compressed"))
 	return 3;
@@ -249,7 +249,7 @@ int procnetdev_version(char *buf)
     return 1;
 }
 
-int get_dev_fields(char *bp, struct interface *ife)
+static int get_dev_fields(const char *bp, struct interface *ife)
 {
     switch (procnetdev_vsn) {
     case 3:
@@ -313,7 +313,7 @@ int get_dev_fields(char *bp, struct interface *ife)
     return 0;
 }
 
-static int if_readlist_proc(char *target)
+static int if_readlist_proc(const char *target)
 {
     FILE *fh;
     char buf[512];
@@ -359,7 +359,8 @@ static int if_readlist_proc(char *target)
 
     err = 0;
     while (fgets(buf, sizeof buf, fh)) {
-	char *s, name[IFNAMSIZ];
+	const char *s;
+	char name[IFNAMSIZ];
 	s = get_name(name, buf);
 	ife = if_cache_add(name);
 	get_dev_fields(s, ife);
@@ -412,7 +413,7 @@ int if_fetch(struct interface *ife)
 {
     struct ifreq ifr;
     int fd;
-    char *ifname = ife->name;
+    const char *ifname = ife->name;
 
     safe_strncpy(ifr.ifr_name, ifname, sizeof(ifr.ifr_name));
     if (ioctl(skfd, SIOCGIFFLAGS, &ifr) < 0)
@@ -564,7 +565,7 @@ int if_fetch(struct interface *ife)
 int do_if_fetch(struct interface *ife)
 {
     if (if_fetch(ife) < 0) {
-	char *errmsg;
+	const char *errmsg;
 	if (errno == ENODEV) {
 	    /* Give better error message for this case. */
 	    errmsg = _("Device not found");
