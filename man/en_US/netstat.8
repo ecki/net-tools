@@ -35,7 +35,7 @@ netstat \- Print network connections, routing tables, interface statistics, masq
 .RB [ \-\-program | \-p ]
 .RB [ \-\-verbose | \-v ]
 .RB [ \-\-continuous | \-c]
-.RB [ \-\-wide | \-W]
+.RB [ \-\-wide | \-W ]
 .P
 .B netstat 
 .RB { \-\-route | \-r }
@@ -44,7 +44,7 @@ netstat \- Print network connections, routing tables, interface statistics, masq
 .RB [ \-\-verbose | \-v ]
 .RB [ \-\-numeric | \-n ]
 .RB [ \-\-numeric\-hosts "] [" \-\-numeric\-ports "] [" \-\-numeric\-users ]
-.RB [ \-\-continuous | \-c]
+.RB [ \-\-continuous | \-c ]
 .P
 .B netstat
 .RB { \-\-interfaces | \-i }
@@ -54,20 +54,20 @@ netstat \- Print network connections, routing tables, interface statistics, masq
 .RB [ \-\-program | \-p ]
 .RB [ \-\-numeric | \-n ]
 .RB [ \-\-numeric-hosts "] [" \-\-numeric-ports "] [" \-\-numeric-users ]
-.RB [ \-\-continuous | \-c]
+.RB [ \-\-continuous | \-c ]
 .P
 .B netstat
 .RB { \-\-groups | \-g }
 .RB [ \-\-numeric | \-n ]
 .RB [ \-\-numeric\-hosts "] [" \-\-numeric\-ports "] [" \-\-numeric\-users ]
-.RB [ \-\-continuous | \-c]
+.RB [ \-\-continuous | \-c ]
 .P
 .B netstat
 .RB { \-\-masquerade | \-M }
 .RB [ \-\-extend | \-e ]
 .RB [ \-\-numeric | \-n ]
 .RB [ \-\-numeric\-hosts "] [" \-\-numeric\-ports "] [" \-\-numeric\-users ]
-.RB [ \-\-continuous | \-c]
+.RB [ \-\-continuous | \-c ]
 .P
 .B netstat
 .RB { \-\-statistics | -s }
@@ -118,7 +118,7 @@ netstat
 displays a list of open sockets.  If you don't specify any
 address families, then the active sockets of all configured address
 families will be printed.
-.SS "\-\-route , \-r"
+.SS "\-\-route, \-r"
 Display the kernel routing tables. See the description in 
 .BR route (8) 
 for details. 
@@ -126,22 +126,22 @@ for details.
 and 
 .B route -e 
 produce the same output.
-.SS "\-\-groups , \-g"
+.SS "\-\-groups, \-g"
 Display multicast group membership information for IPv4 and IPv6.
 .SS "\-\-interfaces, \-i"
 Display a table of all network interfaces.
-.SS "\-\-masquerade , \-M"
+.SS "\-\-masquerade, \-M"
 Display a list of masqueraded connections.
-.SS "\-\-statistics , \-s"
+.SS "\-\-statistics, \-s"
 Display summary statistics for each protocol.
 .SH OPTIONS
-.SS "\-\-verbose , \-v"
+.SS "\-\-verbose, \-v"
 Tell the user what is going on by being verbose. Especially print some
 useful information about unconfigured address families.
-.SS "\-\-wide , \-W"
+.SS "\-\-wide, \-W"
 Do not truncate IP addresses by using output as wide as needed. This is
 optional for now to not break existing scripts.
-.SS "\-\-numeric , \-n"
+.SS "\-\-numeric, \-n"
 Show numerical addresses instead of trying to determine symbolic host, port
 or user names.
 .SS "\-\-numeric\-hosts"
@@ -154,7 +154,7 @@ host or user names.
 shows numerical user IDs but does not affect the resolution of host or
 port names.
 
-.SS "\-\-protocol=\fIfamily \fR, \fB\-A"
+.SS "\-\-protocol=\fIfamily\fR, \fB\-A"
 Specifies the address families (perhaps better described as low level
 protocols) for which connections are to be shown.
 .I family 
@@ -176,7 +176,7 @@ This has the same effect as using the
 .BR \-\-ipx ,
 .BR \-\-ax25 ,
 .BR \-\-netrom ,
-.B \-\-ddp ,
+.BR \-\-ddp ,
 and
 .B \-\-bluetooth
 options.
@@ -228,7 +228,7 @@ host name (FQDN), and the port number is translated into the
 corresponding service name.
 .SS "Foreign Address"
 Address and port number of the remote end of the socket.
-Analogous to "Local Address."
+Analogous to "Local Address".
 .SS "State"
 The state of the socket. Since there are no states in raw mode and usually no
 states used in UDP and UDPLite, this column may be left blank. Normally this can be one
