@@ -364,10 +364,9 @@ static int if_readlist_proc(const char *target)
 	s = get_name(name, buf);
 	ife = if_cache_add(name);
 	get_dev_fields(s, ife);
-	if (target && !strcmp(target,name)) {
-		ife->statistics_valid = 1;
+	ife->statistics_valid = 1;
+	if (target && !strcmp(target,name))
 		break;
-	}
     }
     if (ferror(fh)) {
 	perror(_PATH_PROCNET_DEV);
