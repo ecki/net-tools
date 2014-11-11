@@ -177,7 +177,7 @@ FILE *procinfo;
 #define INFO_GUTS1(file,name,proc,prot)			\
   procinfo = proc_fopen((file));			\
   if (procinfo == NULL) {				\
-    if (errno != ENOENT) {				\
+    if (errno != ENOENT && errno != EACCES) {		\
       perror((file));					\
       return -1;					\
     }							\
