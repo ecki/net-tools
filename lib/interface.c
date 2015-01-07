@@ -867,7 +867,10 @@ void ife_print_long(struct interface *ptr)
 	rx = ptr->stats.rx_bytes;
 	short_rx = rx * 10;
 	if (rx > 1125899906842624ull) {
-	    short_rx /= 1125899906842624ull;
+	    if (rx > (9223372036854775807ull / 10))
+		short_rx = rx / 112589990684262ull;
+	    else
+		short_rx /= 1125899906842624ull;
 	    Rext = "PiB";
 	} else if (rx > 1099511627776ull) {
 	    short_rx /= 1099511627776ull;
@@ -885,7 +888,10 @@ void ife_print_long(struct interface *ptr)
 	tx = ptr->stats.tx_bytes;
 	short_tx = tx * 10;
 	if (tx > 1125899906842624ull) {
-	    short_tx /= 1125899906842624ull;
+	    if (tx > (9223372036854775807ull / 10))
+		short_tx = tx / 112589990684262ull;
+	    else
+		short_tx /= 1125899906842624ull;
 	    Text = "PiB";
 	} else 	if (tx > 1099511627776ull) {
 	    short_tx /= 1099511627776ull;
