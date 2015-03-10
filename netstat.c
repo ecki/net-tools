@@ -1755,7 +1755,7 @@ static int l2cap_info(void)
 {
     printf("%-6s %-17s %-17s %-9s %7s %-6s %-6s %7s %7s %-7s\n",
 	"Proto", "Destination", "Source", "State", "PSM", "DCID", "SCID", "IMTU", "OMTU", "Security");
-    INFO_GUTS(_PATH_SYS_BLUETOOTH_L2CAP, "AF BLUETOOTH", l2cap_do_one, "l2cap");
+    INFO_GUTS(_PATH_SYS_BLUETOOTH_L2CAP, "BTPROTO L2CAP", l2cap_do_one, "l2cap");
 }
 
 static void rfcomm_do_one(int nr, const char *line, const char *prot)
@@ -1786,7 +1786,7 @@ static void rfcomm_do_one(int nr, const char *line, const char *prot)
 static int rfcomm_info(void)
 {
     printf("%-6s %-17s %-17s %-9s %7s\n", "Proto", "Destination", "Source", "State", "Channel");
-    INFO_GUTS(_PATH_SYS_BLUETOOTH_RFCOMM, "AF BLUETOOTH", rfcomm_do_one, "rfcomm");
+    INFO_GUTS(_PATH_SYS_BLUETOOTH_RFCOMM, "BTPROTO RFCOMM", rfcomm_do_one, "rfcomm");
 }
 #endif
 
