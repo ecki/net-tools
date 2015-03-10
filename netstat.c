@@ -1705,16 +1705,21 @@ const char *bluetooth_state(int state)
 static void l2cap_do_one(int nr, const char *line, const char *prot)
 {
     char daddr[18], saddr[18];
-    unsigned state, psm, dcid, scid, imtu, omtu, sec_level;
+    unsigned dtype, stype, state, psm, dcid, scid, imtu, omtu, sec_level;
     int num;
     const char *bt_state, *bt_sec_level;
 
-    num = sscanf(line, "%17s %17s %d %d 0x%04x 0x%04x %d %d %d",
-	daddr, saddr, &state, &psm, &dcid, &scid, &imtu, &omtu, &sec_level);
+    num = sscanf(line, "%17s (%u) %17s (%u) %d %d 0x%04x 0x%04x %d %d %d",
+	daddr, &dtype, saddr, &stype, &state, &psm, &dcid, &scid, &imtu, &omtu, &sec_level);
 
-    if (num < 9) {
-	fprintf(stderr, _("warning, got bogus l2cap line.\n"));
-	return;
+    if (num != 11) {
+	num = sscanf(line, "%17s %17s %d %d 0x%04x 0x%04x %d %d %d",
+	    daddr, saddr, &state, &psm, &dcid, &scid, &imtu, &omtu, &sec_level);
+
+	if (num != 9) {
+	    fprintf(stderr, _("warning, got bogus l2cap line.\n"));
+	    return;
+	}
     }
 
     if (flag_lst && !(state == BT_LISTEN || state == BT_BOUND))
