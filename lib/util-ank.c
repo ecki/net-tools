@@ -17,6 +17,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <limits.h>
 #include <syslog.h>
 #include <fcntl.h>
 #include <sys/socket.h>
