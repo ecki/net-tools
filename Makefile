@@ -49,6 +49,8 @@ CFLAGS ?= -O2 -g
 CFLAGS += -Wall
 CFLAGS += -fno-strict-aliasing # code needs a lot of work before strict aliasing is safe
 CPPFLAGS += -D_GNU_SOURCE
+# Turn on transparent support for LFS
+CPPFLAGS += -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE
 RESLIB = # -L/usr/inet6/lib -linet6
 
 ifeq ($(HAVE_AFDECnet),1)
