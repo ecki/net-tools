@@ -10,6 +10,7 @@ char *xstrdup(const char *src);
 int kernel_version(void);
 #define KRELEASE(maj,min,patch) ((maj) * 10000 + (min)*1000 + (patch))
 
+long ticks_per_second(void);
 
 int nstrcmp(const char *, const char *);
 

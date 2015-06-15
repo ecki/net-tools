@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/utsname.h>
+#include <unistd.h>
 
 #include "util.h"
 
@@ -51,6 +52,10 @@ int kernel_version(void)
     return KRELEASE(major, minor, patch);
 }
 
+long ticks_per_second(void)
+{
+    return sysconf(_SC_CLK_TCK);
+}
 
 /* Like strncpy but make sure the resulting string is always 0 terminated. */
 char *safe_strncpy(char *dst, const char *src, size_t size)

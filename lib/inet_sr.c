@@ -64,6 +64,7 @@ static int INET_setroute(int action, int options, char **args)
     struct rtentry rt;
     char target[128], gateway[128] = "NONE", netmask[128] = "default";
     int xflag, isnet;
+    long clk_tck = ticks_per_second();
 
     xflag = 0;
 
@@ -199,9 +200,9 @@ static int INET_setroute(int action, int options, char **args)
 #if HAVE_RTF_IRTT
 	    rt.rt_flags |= RTF_IRTT;
 	    rt.rt_irtt = atoi(*(args - 1));
-	    rt.rt_irtt *= (HZ / 100);	/* FIXME */
+	    rt.rt_irtt *= (clk_tck / 100);	/* FIXME */
 #if 0				/* FIXME: do we need to check anything of this? */
-	    if (rt.rt_irtt < 1 || rt.rt_irtt > (120 * HZ)) {
+	    if (rt.rt_irtt < 1 || rt.rt_irtt > (120 * clk_tck)) {
 		fprintf(stderr, _("route: Invalid initial rtt.\n"));
 		return usage(E_OPTERR);
 	    }

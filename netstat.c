@@ -972,6 +972,7 @@ static void tcp_do_one(int lnr, const char *line, const char *prot)
 #else
     struct sockaddr_in localaddr, remaddr;
 #endif
+    long clk_tck = ticks_per_second();
 
     if (lnr == 0)
 	return;
@@ -1032,27 +1033,27 @@ static void tcp_do_one(int lnr, const char *line, const char *prot)
 
 	    case 1:
 		snprintf(timers, sizeof(timers), _("on (%2.2f/%ld/%d)"),
-			 (double) time_len / HZ, retr, timeout);
+			 (double) time_len / clk_tck, retr, timeout);
 		break;
 
 	    case 2:
 		snprintf(timers, sizeof(timers), _("keepalive (%2.2f/%ld/%d)"),
-			 (double) time_len / HZ, retr, timeout);
+			 (double) time_len / clk_tck, retr, timeout);
 		break;
 
 	    case 3:
 		snprintf(timers, sizeof(timers), _("timewait (%2.2f/%ld/%d)"),
-			 (double) time_len / HZ, retr, timeout);
+			 (double) time_len / clk_tck, retr, timeout);
 		break;
 
 	    case 4:
 		snprintf(timers, sizeof(timers), _("probe (%2.2f/%ld/%d)"),
-			 (double) time_len / HZ, retr, timeout);
+			 (double) time_len / clk_tck, retr, timeout);
 		break;
 
 	    default:
 		snprintf(timers, sizeof(timers), _("unkn-%d (%2.2f/%ld/%d)"),
-			 timer_run, (double) time_len / HZ, retr, timeout);
+			 timer_run, (double) time_len / clk_tck, retr, timeout);
 		break;
 	    }
 

@@ -165,6 +165,7 @@ int rprint_cache6(int ext, int numeric)
     int type, refcnt, prefix_len, location, state, gc;
     long tstamp, expire, ndflags, reachable, stale, delete;
     FILE *fp = fopen(_PATH_PROCNET_NDISC, "r");
+    long clk_tck = ticks_per_second();
     char addr6p[8][5], haddrp[6][3];
 
     if (!fp) {
@@ -257,11 +258,11 @@ int rprint_cache6(int ext, int numeric)
 	    stale = reachable > tstamp ? reachable - tstamp : 0;
 	delete = gc > tstamp ? gc - tstamp : 0;
 	if (ext != 2) {
-	    printf(" %-9ld ", stale / HZ);
+	    printf(" %-9ld ", stale / clk_tck);
 	    if (refcnt)
 		printf(" * ");
 	    else
-		printf(" %-7ld ", delete / HZ);
+		printf(" %-7ld ", delete / clk_tck);
 	}
 	printf("\n");
     }
