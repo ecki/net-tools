@@ -109,6 +109,7 @@ extern int INET6_rprint(int options);
 extern int DDP_rprint(int options);
 extern int IPX_rprint(int options);
 extern int NETROM_rprint(int options);
+extern int ROSE_rprint(int options);
 extern int AX25_rprint(int options);
 extern int X25_rprint(int options);
 
