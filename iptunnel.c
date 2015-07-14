@@ -28,13 +28,8 @@
 #include <netinet/in.h>
 #include <netinet/ip.h>
 #include <arpa/inet.h>
-#if defined(__GLIBC__) && (__GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 1))
 #include <net/if.h>
 #include <net/if_arp.h>
-#else
-#include <linux/if.h>
-#include <linux/if_arp.h>
-#endif
 #include <linux/types.h>
 #include <linux/if_tunnel.h>
 

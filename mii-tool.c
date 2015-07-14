@@ -46,10 +46,6 @@
 #include <net/if.h>
 #include <linux/sockios.h>
 
-#ifndef __GLIBC__
-#include <linux/if_arp.h>
-#include <linux/if_ether.h>
-#endif
 #include <linux/mii.h>
 #include <linux/sockios.h>
 #include "version.h"

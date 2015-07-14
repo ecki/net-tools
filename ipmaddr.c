@@ -24,11 +24,7 @@
 #include <arpa/inet.h>
 #include <string.h>
 
-#if defined(__GLIBC__) && (__GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 1))
 #include <net/if.h>
-#else
-#include <linux/if.h>
-#endif
 
 #include "config.h"
 #include "intl.h"

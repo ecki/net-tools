@@ -42,17 +42,10 @@
 #include <signal.h>
 #include <stdlib.h>
 #include <string.h>
+#include <termios.h>
 #include <unistd.h>
 #include <getopt.h>
 #include <linux/if_slip.h>
-
-#if defined(__GLIBC__)
-#if __GLIBC__ == 2 && __GLIBC_MINOR__ == 0
-# include <termbits.h>
-#else
-# include <termios.h>
-#endif
-#endif
 
 #include "pathnames.h"
 #include "net-support.h"
