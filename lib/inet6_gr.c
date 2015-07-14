@@ -23,9 +23,6 @@
 #include <string.h>
 #include <stdio.h>
 #include <unistd.h>
-#ifndef __GLIBC__
-#include <netinet6/ipv6_route.h>	/* glibc doesn't have this */
-#endif
 #include "version.h"
 #include "net-support.h"
 #include "pathnames.h"

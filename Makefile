@@ -44,14 +44,12 @@ PROGS	+= mii-tool
 endif
 
 # Compiler and Linker Options
-# You may need to uncomment and edit these if you are using libc5 and IPv6.
 CFLAGS ?= -O2 -g
 CFLAGS += -Wall
 CFLAGS += -fno-strict-aliasing # code needs a lot of work before strict aliasing is safe
 CPPFLAGS += -D_GNU_SOURCE
 # Turn on transparent support for LFS
 CPPFLAGS += -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE
-RESLIB = # -L/usr/inet6/lib -linet6
 
 ifeq ($(HAVE_AFDECnet),1)
 DNLIB = -ldnet
@@ -160,19 +158,19 @@ subdirs:	libdir
 		@for i in $(SUBDIRS:$(NET_LIB_PATH)/=); do $(MAKE) -C $$i || exit $$? ; done
 
 ifconfig:	$(NET_LIB) ifconfig.o
-		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ ifconfig.o $(NLIB) $(RESLIB)
+		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ ifconfig.o $(NLIB)
 
 nameif:		$(NET_LIB) nameif.o
-		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ nameif.o $(NLIB) $(RESLIB)
+		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ nameif.o $(NLIB)
 
 hostname:	hostname.o
 		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ hostname.o $(DNLIB)
 
 route:		$(NET_LIB) route.o
-		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ route.o $(NLIB) $(RESLIB)
+		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ route.o $(NLIB)
 
 arp:		$(NET_LIB) arp.o
-		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ arp.o $(NLIB) $(RESLIB)
+		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ arp.o $(NLIB)
 
 rarp:		$(NET_LIB) rarp.o
 		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ rarp.o $(NLIB)
@@ -184,16 +182,16 @@ plipconfig:	$(NET_LIB) plipconfig.o
 		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ plipconfig.o $(NLIB)
 
 netstat:	$(NET_LIB) netstat.o statistics.o
-		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ netstat.o statistics.o $(NLIB) $(RESLIB) $(SELIB)
+		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ netstat.o statistics.o $(NLIB) $(SELIB)
 
 iptunnel:	$(NET_LIB) iptunnel.o
-		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ iptunnel.o $(NLIB) $(RESLIB)
+		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ iptunnel.o $(NLIB)
 
 ipmaddr:	$(NET_LIB) ipmaddr.o
-		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ ipmaddr.o $(NLIB) $(RESLIB)
+		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ ipmaddr.o $(NLIB)
 
 mii-tool:	$(NET_LIB) mii-tool.o
-		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ mii-tool.o $(NLIB) $(RESLIB)
+		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ mii-tool.o $(NLIB)
 
 installbin:
 	@echo
