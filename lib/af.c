@@ -272,18 +272,8 @@ struct aftype *get_afntype(int af)
 /* Check our protocol family table for this family and return its socket */
 int get_socket_for_af(int af)
 {
-    struct aftype **afp;
-
-    if (!sVafinit)
-	afinit();
-
-    afp = aftypes;
-    while (*afp != NULL) {
-	if ((*afp)->af == af)
-	    return (*afp)->fd;
-	afp++;
-    }
-    return -1;
+    const struct aftype *afp = get_afntype(af);
+    return afp ? afp->fd : -1;
 }
 
 int aftrans_opt(const char *arg)
