@@ -274,7 +274,7 @@ struct hwtype *get_hwntype(int type)
 /* type: 0=all, 1=ARPable */
 void print_hwlist(int type) {
     int count = 0;
-    char * txt;
+    const char * txt;
     struct hwtype **hwp;
 
     if (!sVhwinit)

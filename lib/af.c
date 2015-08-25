@@ -320,7 +320,7 @@ int aftrans_opt(const char *arg)
 /* type: 0=all, 1=getroute */
 void print_aflist(int type) {
     int count = 0;
-    char * txt;
+    const char * txt;
     struct aftype **afp;
 
     if (!sVafinit)
