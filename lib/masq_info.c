@@ -31,7 +31,7 @@
 #include <arpa/inet.h>
 #include <errno.h>
 #include <stdio.h>
-#include <malloc.h>
+#include <stdlib.h>
 #include <string.h>
 #include <inttypes.h>
 #include <unistd.h>
