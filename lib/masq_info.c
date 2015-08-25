@@ -33,6 +33,7 @@
 #include <stdio.h>
 #include <malloc.h>
 #include <string.h>
+#include <inttypes.h>
 #include <unistd.h>
 #include "net-support.h"
 #include "pathnames.h"
@@ -92,25 +93,30 @@ static int read_masqinfo(FILE * f, struct masq *mslist, int nmslist)
     int n, nread = 0;
     struct masq *ms;
     char buf[256];
+    uint32_t src_addr, dst_addr;
 
     for (nread = 0; nread < nmslist; nread++) {
 	ms = &mslist[nread];
 	if (has_pdelta) {
-	    if ((n = fscanf(f, " %s %lX:%hX %lX:%hX %hX %lX %hd %hd %lu",
+	    if ((n = fscanf(f, " %s %"PRIx32":%hX %"PRIx32":%hX %hX %lX %hd %hd %lu",
 			    buf,
-		  (unsigned long *) &ms->src.sin_addr.s_addr, &ms->sport,
-		  (unsigned long *) &ms->dst.sin_addr.s_addr, &ms->dport,
+			    &src_addr, &ms->sport,
+			    &dst_addr, &ms->dport,
 			    &ms->mport, &ms->initseq, &ms->delta,
 			    &ms->pdelta, &ms->expires)) == -1)
 		return nread;
+	    memcpy(&ms->src.sin_addr.s_addr, &src_addr, 4);
+	    memcpy(&ms->dst.sin_addr.s_addr, &dst_addr, 4);
 	} else {
-	    if ((n = fscanf(f, " %s %lX:%hX %lX:%hX %hX %lX %hd %lu",
+	    if ((n = fscanf(f, " %s %"PRIx32":%hX %"PRIx32":%hX %hX %lX %hd %lu",
 			    buf,
-		  (unsigned long *) &ms->src.sin_addr.s_addr, &ms->sport,
-		  (unsigned long *) &ms->dst.sin_addr.s_addr, &ms->dport,
+			    &src_addr, &ms->sport,
+			    &dst_addr, &ms->dport,
 			    &ms->mport, &ms->initseq, &ms->delta,
 			    &ms->expires)) == -1)
 		return nread;
+	    memcpy(&ms->src.sin_addr.s_addr, &src_addr, 4);
+	    memcpy(&ms->dst.sin_addr.s_addr, &dst_addr, 4);
 	}
 	if ((has_pdelta && (n != 10)) || (!has_pdelta && (n != 9))) {
 	    EINTERN("masq_info.c", "ip_masquerade format error");
