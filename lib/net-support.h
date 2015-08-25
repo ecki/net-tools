@@ -52,7 +52,7 @@ struct aftype {
     const char *flag_file;
 };
 
-extern struct aftype *aftypes[];
+extern struct aftype * const aftypes[];
 
 /* This structure defines hardware protocols and their handlers. */
 struct hwtype {
@@ -70,8 +70,8 @@ struct hwtype {
 extern struct hwtype *get_hwtype(const char *name);
 extern struct hwtype *get_hwntype(int type);
 extern void          print_hwlist(int type);
-extern struct aftype *get_aftype(const char *name);
-extern struct aftype *get_afntype(int type);
+extern const struct aftype *get_aftype(const char *name);
+extern const struct aftype *get_afntype(int type);
 extern void          print_aflist(int type);
 extern int           hw_null_address(struct hwtype *hw, void *addr);
 

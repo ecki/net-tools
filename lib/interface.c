@@ -646,7 +646,7 @@ void ife_print_short(struct interface *ptr)
 
 void ife_print_long(struct interface *ptr)
 {
-    struct aftype *ap;
+    const struct aftype *ap;
     struct hwtype *hw;
     int hf;
     int can_compress = 0;
@@ -656,13 +656,13 @@ void ife_print_long(struct interface *ptr)
     static char flags[200];
 
 #if HAVE_AFIPX
-    static struct aftype *ipxtype = NULL;
+    static const struct aftype *ipxtype = NULL;
 #endif
 #if HAVE_AFECONET
-    static struct aftype *ectype = NULL;
+    static const struct aftype *ectype = NULL;
 #endif
 #if HAVE_AFATALK
-    static struct aftype *ddptype = NULL;
+    static const struct aftype *ddptype = NULL;
 #endif
 #if HAVE_AFINET6
     FILE *f;

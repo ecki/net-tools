@@ -40,7 +40,7 @@ int IPX_rprint(int options)
     char router_node[128];
     int num;
     FILE *fp;
-    struct aftype *ap;
+    const struct aftype *ap;
     struct sockaddr sa;
 
     fp = fopen(_PATH_PROCNET_IPX_ROUTE1, "r");

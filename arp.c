@@ -88,7 +88,7 @@ int opt_v = 0;			/* debugging output flag        */
 int opt_D = 0;			/* HW-address is devicename     */
 int opt_e = 0;			/* 0=BSD output, 1=new linux    */
 int opt_a = 0;			/* all entries, substring match */
-struct aftype *ap;		/* current address family       */
+const struct aftype *ap;/* current address family       */
 struct hwtype *hw;		/* current hardware type        */
 int sockfd = 0;			/* active socket descriptor     */
 int hw_set = 0;			/* flag if hw-type was set (-H) */

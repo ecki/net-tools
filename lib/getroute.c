@@ -75,7 +75,7 @@ void getroute_init(void)
 
 int route_info(const char *afname, int options)
 {
-    struct aftype *ap;
+    const struct aftype *ap;
     char *tmp1, *tmp2;
     int found = E_NOTFOUND, rc;
     char buf[256];

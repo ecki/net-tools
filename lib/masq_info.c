@@ -54,7 +54,7 @@ struct masq {
     short pdelta;		/* Delta in sequence numbers before last */
 };
 
-static struct aftype *ap;	/* current address family       */
+static const struct aftype *ap;	/* current address family       */
 static int has_pdelta;
 
 static void print_masq(struct masq *ms, int numeric_host, int numeric_port,

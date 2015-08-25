@@ -41,7 +41,7 @@ int flag_ash;
 int flag_bluetooth;
 
 
-struct aftrans_t {
+static const struct aftrans_t {
     char *alias;
     char *name;
     int *flag;
@@ -117,7 +117,7 @@ extern struct aftype ash_aftype;
 
 static short sVafinit = 0;
 
-struct aftype *aftypes[] =
+struct aftype * const aftypes[] =
 {
 #if HAVE_AFUNIX
     &unix_aftype,
@@ -233,9 +233,9 @@ void aftrans_def(char *tool, char *argv0, char *dflt)
 
 
 /* Check our protocol family table for this family. */
-struct aftype *get_aftype(const char *name)
+const struct aftype *get_aftype(const char *name)
 {
-    struct aftype **afp;
+    struct aftype * const *afp;
 
     if (!sVafinit)
 	afinit();
@@ -253,9 +253,9 @@ struct aftype *get_aftype(const char *name)
 
 
 /* Check our protocol family table for this family. */
-struct aftype *get_afntype(int af)
+const struct aftype *get_afntype(int af)
 {
-    struct aftype **afp;
+    struct aftype * const *afp;
 
     if (!sVafinit)
 	afinit();
@@ -278,7 +278,7 @@ int get_socket_for_af(int af)
 
 int aftrans_opt(const char *arg)
 {
-    struct aftrans_t *paft;
+    const struct aftrans_t *paft;
     char *tmp1, *tmp2;
     char buf[256];
 
@@ -321,7 +321,7 @@ int aftrans_opt(const char *arg)
 void print_aflist(int type) {
     int count = 0;
     const char * txt;
-    struct aftype **afp;
+    struct aftype * const *afp;
 
     if (!sVafinit)
 	afinit();

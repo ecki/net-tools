@@ -622,7 +622,7 @@ static void igmp_do_one(int lnr, const char *line,const char *prot)
 #else
     struct sockaddr_in mcastaddr;
 #endif
-    struct aftype *ap;
+    const struct aftype *ap;
     static int idx_flag = 0;
     static int igmp6_flag = 0;
     static char device[16];
@@ -782,7 +782,7 @@ static int ip_parse_dots(uint32_t *addr, char const *src) {
 
 static void print_ip_service(struct sockaddr_in *addr, char const *protname,
 			     char *buf, unsigned size) {
-  struct aftype *ap;
+  const struct aftype *ap;
 
   if(size == 0)  return;
 
@@ -930,7 +930,7 @@ static int sctp_info(void) {
   return  sctp_info_assocs();
 }
 
-static void addr_do_one(char *buf, size_t buf_len, size_t short_len, struct aftype *ap,
+static void addr_do_one(char *buf, size_t buf_len, size_t short_len, const struct aftype *ap,
 #if HAVE_AFINET6
 			struct sockaddr_in6 *addr,
 #else
@@ -963,7 +963,7 @@ static void tcp_do_one(int lnr, const char *line, const char *prot)
     unsigned long rxq, txq, time_len, retr, inode;
     int num, local_port, rem_port, d, state, uid, timer_run, timeout;
     char rem_addr[128], local_addr[128], timers[64];
-    struct aftype *ap;
+    const struct aftype *ap;
 #if HAVE_AFINET6
     struct sockaddr_in6 localaddr, remaddr;
     char addr6[INET6_ADDRSTRLEN];
@@ -1082,7 +1082,7 @@ static void udp_do_one(int lnr, const char *line,const char *prot)
 #else
     struct sockaddr_in localaddr, remaddr;
 #endif
-    struct aftype *ap;
+    const struct aftype *ap;
     unsigned long rxq, txq, time_len, retr, inode;
 
     if (lnr == 0)
@@ -1210,7 +1210,7 @@ static void raw_do_one(int lnr, const char *line,const char *prot)
 #else
     struct sockaddr_in localaddr, remaddr;
 #endif
-    struct aftype *ap;
+    const struct aftype *ap;
     unsigned long rxq, txq, time_len, retr, inode;
 
     if (lnr == 0)
@@ -1560,7 +1560,7 @@ static int ipx_info(void)
     unsigned int uid;
     char *st;
     int nc;
-    struct aftype *ap;
+    const struct aftype *ap;
     struct passwd *pw;
     char sad[50], dad[50];
     struct sockaddr sa;
