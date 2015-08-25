@@ -131,11 +131,18 @@ static void setdname(char *dname)
 static void showhname(char *hname, int c)
 {
     struct hostent *hp;
-#if HAVE_AFINET6
-    struct in6_addr **ip6;
-#endif
     register char *p, **alias;
-    struct in_addr **ip;
+#if HAVE_AFINET6
+    char addr[INET6_ADDRSTRLEN + 1];
+#else
+    char addr[INET_ADDRSTRLEN + 1];
+#endif
+    socklen_t len;
+    char **addrp;
+
+    /* We use -1 so we can guarantee the buffer is NUL terminated. */
+    len = sizeof(addr) - 1;
+    addr[len] = '\0';
 
     if (opt_v)
 	fprintf(stderr, _("Resolving `%s' ...\n"), hname);
@@ -156,27 +163,15 @@ static void showhname(char *hname, int c)
 	while (alias[0])
 	    fprintf(stderr, _("Result: h_aliases=`%s'\n"),
 		    *alias++);
-#if HAVE_AFINET6
-	    if (hp->h_addrtype == PF_INET6) {
-		char addr[INET6_ADDRSTRLEN + 1];
-		addr[INET6_ADDRSTRLEN] = '\0';
-		ip6 = (struct in6_addr **) hp->h_addr_list;
-		while (ip6[0]) {
-		    if (inet_ntop(PF_INET6, *ip6++, addr, INET6_ADDRSTRLEN))
-			fprintf(stderr, _("Result: h_addr_list=`%s'\n"), addr);
-		    else if (errno == EAFNOSUPPORT)
-			fprintf(stderr, _("%s: protocol family not supported\n"),
-				program_name);
-		    else if (errno == ENOSPC)
-			fprintf(stderr, _("%s: name too long\n"), program_name);
-	    }
-	} else
-#endif
-	{
-	    ip = (struct in_addr **) hp->h_addr_list;
-	    while (ip[0])
-		fprintf(stderr, _("Result: h_addr_list=`%s'\n"),
-			inet_ntoa(**ip++));
+
+	for (addrp = hp->h_addr_list; *addrp; ++addrp) {
+	    if (inet_ntop(hp->h_addrtype, *addrp, addr, len))
+		fprintf(stderr, _("Result: h_addr_list=`%s'\n"), addr);
+	    else if (errno == EAFNOSUPPORT)
+		fprintf(stderr, _("%s: protocol family not supported\n"),
+			program_name);
+	    else if (errno == ENOSPC)
+		fprintf(stderr, _("%s: name too long\n"), program_name);
 	}
     }
     if (!(p = strchr(hp->h_name, '.')) && (c == 'd'))
@@ -189,28 +184,14 @@ static void showhname(char *hname, int c)
 	printf("\n");
 	break;
     case 'i':
-#if HAVE_AFINET6
-	if (hp->h_addrtype == PF_INET6) {
-	    char addr[INET6_ADDRSTRLEN + 1];
-	    addr[INET6_ADDRSTRLEN] = '\0';
-	    while (hp->h_addr_list[0]) {
-		if (inet_ntop(PF_INET6, (struct in6_addr *)*hp->h_addr_list++,
-			      addr, INET6_ADDRSTRLEN)) {
-		    printf("%s ", addr);
-		} else if (errno == EAFNOSUPPORT) {
-		    fprintf(stderr, _("\n%s: protocol family not supported\n"),
-			    program_name);
-		    exit(1);
-		} else if (errno == ENOSPC) {
-		    fprintf(stderr, _("\n%s: name too long\n"), program_name);
-		    exit(1);
-		}
-	    }
-	} else
-#endif
-	{
-	    while (hp->h_addr_list[0])
-		printf("%s ", inet_ntoa(*(struct in_addr *)*hp->h_addr_list++));
+	for (addrp = hp->h_addr_list; *addrp; ++addrp) {
+	    if (inet_ntop(hp->h_addrtype, *addrp, addr, len))
+		printf("%s ", addr);
+	    else if (errno == EAFNOSUPPORT)
+		fprintf(stderr, _("%s: protocol family not supported\n"),
+			program_name);
+	    else if (errno == ENOSPC)
+		fprintf(stderr, _("%s: name too long\n"), program_name);
 	}
 	printf("\n");
 	break;
