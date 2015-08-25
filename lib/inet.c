@@ -231,7 +231,7 @@ static int INET_rresolve(char *name, size_t len, struct sockaddr_in *sin,
 }
 
 
-static void INET_reserror(char *text)
+static void INET_reserror(const char *text)
 {
     herror(text);
 }

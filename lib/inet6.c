@@ -116,7 +116,7 @@ static int INET6_rresolve(char *name, size_t namelen,
 }
 
 
-static void INET6_reserror(char *text)
+static void INET6_reserror(const char *text)
 {
     herror(text);
 }

@@ -131,7 +131,7 @@ X25_input(int type, char *bufp, struct sockaddr *sap)
 
 /* Display an error message. */
 static void
-X25_herror(char *text)
+X25_herror(const char *text)
 {
   if (text == NULL) fprintf(stderr, "%s\n", X25_errmsg);
     else fprintf(stderr, "%s: %s\n", text, X25_errmsg);

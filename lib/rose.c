@@ -100,7 +100,7 @@ static int ROSE_input(int type, char *bufp, struct sockaddr *sap)
 
 
 /* Display an error message. */
-static void ROSE_herror(char *text)
+static void ROSE_herror(const char *text)
 {
     if (text == NULL)
 	fprintf(stderr, "%s\n", ROSE_errmsg);

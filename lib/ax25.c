@@ -143,7 +143,7 @@ static int AX25_input(int type, char *bufp, struct sockaddr *sap)
 
 
 /* Display an error message. */
-static void AX25_herror(char *text)
+static void AX25_herror(const char *text)
 {
     if (text == NULL)
 	fprintf(stderr, "%s\n", AX25_errmsg);
