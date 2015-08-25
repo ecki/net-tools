@@ -258,7 +258,7 @@ int main(int argc, char **argv)
     struct sockaddr_in *sin = (struct sockaddr_in *)sa;
     char host[128];
     const struct aftype *ap;
-    struct hwtype *hw;
+    const struct hwtype *hw;
     struct ifreq ifr;
     int goterr = 0, didnetmask = 0, neednetmask=0;
     char **spp;

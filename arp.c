@@ -89,7 +89,7 @@ int opt_D = 0;			/* HW-address is devicename     */
 int opt_e = 0;			/* 0=BSD output, 1=new linux    */
 int opt_a = 0;			/* all entries, substring match */
 const struct aftype *ap;/* current address family       */
-struct hwtype *hw;		/* current hardware type        */
+const struct hwtype *hw;/* current hardware type        */
 int sockfd = 0;			/* active socket descriptor     */
 int hw_set = 0;			/* flag if hw-type was set (-H) */
 char device[16] = "";		/* current device               */
@@ -238,10 +238,10 @@ static int arp_del(char **args)
 }
 
 /* Get the hardware address to a specified interface name */
-static int arp_getdevhw(char *ifname, struct sockaddr *sa, struct hwtype *hw)
+static int arp_getdevhw(char *ifname, struct sockaddr *sa, const struct hwtype *hw)
 {
     struct ifreq ifr;
-    struct hwtype *xhw;
+    const struct hwtype *xhw;
 
     safe_strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
     if (ioctl(sockfd, SIOCGIFHWADDR, &ifr) < 0) {
@@ -437,7 +437,7 @@ static int arp_file(char *name)
 static void arp_disp_2(const char *name, int type, int arp_flags, const char *hwa, const char *mask, const char *dev)
 {
     static int title = 0;
-    struct hwtype *xhw;
+    const struct hwtype *xhw;
     char flags[10];
 
     xhw = get_hwntype(type);
@@ -486,7 +486,7 @@ static void arp_disp_2(const char *name, int type, int arp_flags, const char *hw
 /* Print the contents of an ARP request block. */
 static void arp_disp(const char *name, const char *ip, int type, int arp_flags, const char *hwa, const char *mask, const char *dev)
 {
-    struct hwtype *xhw;
+    const struct hwtype *xhw;
 
     xhw = get_hwntype(type);
     if (xhw == NULL)

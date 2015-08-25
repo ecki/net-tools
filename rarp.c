@@ -46,7 +46,7 @@ static char no_rarp_message[] = N_("This kernel does not support RARP.\n");
 
 static char *Release = RELEASE;
 
-static struct hwtype *hardware = NULL;
+static const struct hwtype *hardware = NULL;
 
 /* Delete an entry from the RARP cache. */
 static int rarp_delete(int fd, struct hostent *hp)

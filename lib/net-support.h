@@ -67,13 +67,13 @@ struct hwtype {
 };
 
 
-extern struct hwtype *get_hwtype(const char *name);
-extern struct hwtype *get_hwntype(int type);
+extern const struct hwtype *get_hwtype(const char *name);
+extern const struct hwtype *get_hwntype(int type);
 extern void          print_hwlist(int type);
 extern const struct aftype *get_aftype(const char *name);
 extern const struct aftype *get_afntype(int type);
 extern void          print_aflist(int type);
-extern int           hw_null_address(struct hwtype *hw, void *addr);
+extern int           hw_null_address(const struct hwtype *hw, void *addr);
 
 extern int getargs(char *string, char *arguments[]);
 

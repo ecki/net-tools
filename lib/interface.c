@@ -647,7 +647,7 @@ void ife_print_short(struct interface *ptr)
 void ife_print_long(struct interface *ptr)
 {
     const struct aftype *ap;
-    struct hwtype *hw;
+    const struct hwtype *hw;
     int hf;
     int can_compress = 0;
     unsigned long long rx, tx, short_rx, short_tx;
