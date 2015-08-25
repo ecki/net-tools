@@ -156,7 +156,7 @@ struct aftype *aftypes[] =
     NULL
 };
 
-void afinit()
+static void afinit(void)
 {
     unspec_aftype.title = _("UNSPEC");
 #if HAVE_AFUNIX

@@ -160,7 +160,7 @@ static struct hwtype *hwtypes[] =
 
 static short sVhwinit = 0;
 
-void hwinit()
+static void hwinit(void)
 {
     loop_hwtype.title = _("Local Loopback");
     unspec_hwtype.title = _("UNSPEC");
