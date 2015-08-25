@@ -103,7 +103,7 @@ struct hwtype ash_hwtype =
 
 /* Display an Ash socket address. */
 static const char *
-pr_sash(struct sockaddr *sap, int numeric)
+pr_sash(const struct sockaddr *sap, int numeric)
 {
     static char buf[64];
 

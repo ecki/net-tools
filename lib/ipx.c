@@ -73,7 +73,7 @@ static const char *IPX_print(const char *ptr)
 
 
 /* Display a ipx domain address. */
-static const char *IPX_sprint(struct sockaddr *sap, int numeric)
+static const char *IPX_sprint(const struct sockaddr *sap, int numeric)
 {
     static char buf[64];
 

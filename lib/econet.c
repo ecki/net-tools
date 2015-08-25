@@ -44,7 +44,7 @@ ec_print(const char *ptr)
 
 /* Display an Econet socket address */
 static const char *
-ec_sprint(struct sockaddr *sap, int numeric)
+ec_sprint(const struct sockaddr *sap, int numeric)
 {
     struct sockaddr_ec *sec = (struct sockaddr_ec *) sap;
 

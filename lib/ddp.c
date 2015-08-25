@@ -42,7 +42,7 @@ static const char *ddp_print(const char *ptr)
 
 
 /* Display a ddp domain address. */
-static const char *ddp_sprint(struct sockaddr *sap, int numeric)
+static const char *ddp_sprint(const struct sockaddr *sap, int numeric)
 {
     static char buf[64];
 

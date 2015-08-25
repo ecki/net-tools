@@ -71,7 +71,7 @@ static const char *NETROM_print(const char *ptr)
 
 
 /* Display an AX.25 socket address. */
-static const char *NETROM_sprint(struct sockaddr *sap, int numeric)
+static const char *NETROM_sprint(const struct sockaddr *sap, int numeric)
 {
     char buf[64];
     if (sap->sa_family == 0xFFFF || sap->sa_family == 0)

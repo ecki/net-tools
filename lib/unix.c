@@ -48,7 +48,7 @@ static const char *UNSPEC_print(const char *ptr)
 
 
 /* Display an UNSPEC socket address. */
-static const char *UNSPEC_sprint(struct sockaddr *sap, int numeric)
+static const char *UNSPEC_sprint(const struct sockaddr *sap, int numeric)
 {
     static char buf[64];
 
@@ -68,7 +68,7 @@ static const char *UNIX_print(const char *ptr)
 
 
 /* Display a UNIX domain address. */
-static const char *UNIX_sprint(struct sockaddr *sap, int numeric)
+static const char *UNIX_sprint(const struct sockaddr *sap, int numeric)
 {
     static char buf[64];
 

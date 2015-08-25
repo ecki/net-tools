@@ -65,7 +65,7 @@ X25_print(const char *ptr)
 
 /* Display an X.25 socket address. */
 static const char *
-X25_sprint(struct sockaddr *sap, int numeric)
+X25_sprint(const struct sockaddr *sap, int numeric)
 {
   if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
     return( _("[NONE SET]"));

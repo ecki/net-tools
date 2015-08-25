@@ -245,7 +245,7 @@ static const char *INET_print(const char *ptr)
 
 
 /* Display an Internet socket address. */
-static const char *INET_sprint(struct sockaddr *sap, int numeric)
+static const char *INET_sprint(const struct sockaddr *sap, int numeric)
 {
     static char buff[128];
 

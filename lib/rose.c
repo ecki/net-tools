@@ -66,7 +66,7 @@ static const char *
 
 /* Display a ROSE socket address. */
 static const char *
- ROSE_sprint(struct sockaddr *sap, int numeric)
+ ROSE_sprint(const struct sockaddr *sap, int numeric)
 {
     if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
 	return _("[NONE SET]");

@@ -39,7 +39,7 @@ struct aftype {
     int af;
     int alen;
     const char *(*print) (const char *);
-    const char *(*sprint) (struct sockaddr *, int numeric);
+    const char *(*sprint) (const struct sockaddr *, int numeric);
     int (*input) (int type, char *bufp, struct sockaddr *);
     void (*herror) (const char *text);
     int (*rprint) (int options);
