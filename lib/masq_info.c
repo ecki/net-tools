@@ -174,7 +174,11 @@ int ip_masq_info(int numeric_host, int numeric_port, int ext)
 	fclose(f);
 	return (-1);
     }
-    fgets(buf, sizeof(buf), f);
+    if (fgets(buf, sizeof(buf), f) == NULL) {
+	EINTERN("masq_info", "fgets() failed");
+	fclose(f);
+	return (-1);
+    }
     has_pdelta = strstr(buf, "PDelta") ? 1 : 0;
 
     mslist = (struct masq *) malloc(16 * sizeof(struct masq));
