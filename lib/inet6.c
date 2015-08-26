@@ -44,7 +44,7 @@
 
 extern int h_errno;		/* some netdb.h versions don't export this */
 
-char * fix_v4_address(char *buf, struct in6_addr *in6)
+static char *fix_v4_address(char *buf, const struct in6_addr *in6)
 {
 	if (IN6_IS_ADDR_V4MAPPED(in6->s6_addr)) {
 			char *s =strchr(buf, '.');
