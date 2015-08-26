@@ -240,7 +240,11 @@ static void INET_reserror(const char *text)
 /* Display an Internet socket address. */
 static const char *INET_print(const char *ptr)
 {
-    return (inet_ntoa((*(struct in_addr *) ptr)));
+    static char name[INET_ADDRSTRLEN + 1];
+    socklen_t len = sizeof(name) - 1;
+    name[len] = '\0';
+    inet_ntop(AF_INET, ptr, name, len);
+    return name;
 }
 
 
