@@ -126,10 +126,11 @@ static void INET6_reserror(const char *text)
 /* Display an Internet socket address. */
 static const char *INET6_print(const char *ptr)
 {
-    static char name[80];
-
-    inet_ntop(AF_INET6, (struct in6_addr *) ptr, name, 80);
-	return fix_v4_address(name, (struct in6_addr *)ptr);
+    static char name[INET6_ADDRSTRLEN + 1];
+    socklen_t len = sizeof(name) - 1;
+    name[len] = '\0';
+    inet_ntop(AF_INET6, ptr, name, len);
+    return fix_v4_address(name, (struct in6_addr *)ptr);
 }
 
 
