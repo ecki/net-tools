@@ -44,7 +44,7 @@ $(NLSPACKAGE).pot: $(POTFILES)
 	xgettext --default-domain=$(NLSPACKAGE) \
 	  --add-comments --keyword=_ --keyword=N_ $(POTFILES)
 	if cmp -s $(NLSPACKAGE).po $(NLSPACKAGE).pot; then \
-	    rm -f $(NLSPACKAGE).po; \
+	    rm -f -- $(NLSPACKAGE).po; \
 	else \
 	    mv $(NLSPACKAGE).po $(NLSPACKAGE).pot; \
 	fi
@@ -58,21 +58,21 @@ update-po: Makefile
 		mv $$lang.po $$lang.old.po; \
 		echo "$$lang:"; \
 		if $(TUPDATE) $$lang.old.po $(NLSPACKAGE).pot > $$lang.po; then \
-		rm -f $$lang.old.po; \
+		rm -f -- $$lang.old.po; \
 	else \
 	 	echo "tupdate for $$cat failed!"; \
-		rm -f $$lang.po; \
+		rm -f -- $$lang.po; \
 		mv $$lang.old.po $$lang.po; \
 	fi; \
 	done
 
 clean:
-	rm -f *mo
+	rm -f -- *mo
 
 dist: $(ALL_CATALOGS)
 
 distclean: clean
-	rm -f .depend Makefile
+	rm -f -- .depend Makefile
 
 depend:
 

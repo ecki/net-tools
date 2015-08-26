@@ -42,8 +42,8 @@ endif
 all:
 
 clean:
-		rm -f DEADJOE *~ *.orig
-		rm -f */DEADJOE */*~ */*.orig
+		rm -f -- DEADJOE *~ *.orig
+		rm -f -- */DEADJOE */*~ */*.orig
 
 clobber:	clean
 

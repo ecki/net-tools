@@ -102,33 +102,33 @@ install:	all savebin installbin installdata
 update: 	all installbin installdata
 
 mostlyclean:
-		rm -f *.o DEADJOE config.new *~ *.orig lib/*.o
+		rm -f -- *.o DEADJOE config.new *~ *.orig lib/*.o
 
 clean: mostlyclean
-		rm -f $(PROGS)
+		rm -f -- $(PROGS)
 		@for i in $(SUBDIRS); do (cd $$i && $(MAKE) clean) ; done
 		@cd po && $(MAKE) clean
 
 cleanconfig:
-		rm -f config.h
+		rm -f -- config.h
 
 clobber: 	clean
-		rm -f $(PROGS) config.h version.h config.status config.make
+		rm -f -- $(PROGS) config.h version.h config.status config.make
 		@for i in $(SUBDIRS); do (cd $$i && $(MAKE) clobber) ; done
 
 
 dist:
-		rm -rf net-tools-$(RELEASE)
+		rm -rf -- net-tools-$(RELEASE)
 		git archive --prefix=net-tools-$(RELEASE)/ HEAD | tar xf -
 		$(MAKE) -C net-tools-$(RELEASE)/po $@
 		tar cf - net-tools-$(RELEASE)/ | xz > net-tools-$(RELEASE).tar.xz
-		rm -rf net-tools-$(RELEASE)
+		rm -rf -- net-tools-$(RELEASE)
 
 distcheck:	dist
 		tar xf net-tools-$(RELEASE).tar.xz
 		yes "" | $(MAKE) -C net-tools-$(RELEASE) config
 		$(MAKE) -C net-tools-$(RELEASE)
-		rm -rf net-tools-$(RELEASE)
+		rm -rf -- net-tools-$(RELEASE)
 		@printf "\nThe tarball is ready to go:\n%s\n" "`du -b net-tools-$(RELEASE).tar.xz`"
 
 config.h: 	config.in Makefile
