@@ -40,8 +40,9 @@
 static const char *pr_dlci(const char *ptr)
 {
     static char buf[12];
-
-    snprintf(buf, sizeof(buf), "%i", *(short *) ptr);
+    short i;
+    memcpy(&i, ptr, sizeof(i));
+    snprintf(buf, sizeof(buf), "%i", i);
     return (buf);
 }
 
