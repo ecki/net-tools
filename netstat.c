@@ -613,7 +613,6 @@ static void igmp_do_one(int lnr, const char *line,const char *prot)
 {
     char mcast_addr[128];
     struct sockaddr_storage sas;
-    struct sockaddr *sa = (struct sockaddr *)&sas;
     struct sockaddr_in *sin = (struct sockaddr_in *)&sas;
 #if HAVE_AFINET6
     char addr6[INET6_ADDRSTRLEN];
@@ -656,7 +655,7 @@ static void igmp_do_one(int lnr, const char *line,const char *prot)
 	    in6.s6_addr32[2] = htonl(in6.s6_addr32[2]);
 	    in6.s6_addr32[3] = htonl(in6.s6_addr32[3]);
         inet_ntop(AF_INET6, &in6, addr6, sizeof(addr6));
-	    inet6_aftype.input(1, addr6, sa);
+	    inet6_aftype.input(1, addr6, &sas);
 	    sas.ss_family = AF_INET6;
 	} else {
 	    fprintf(stderr, _("warning, got bogus igmp6 line %d.\n"), lnr);
@@ -668,7 +667,7 @@ static void igmp_do_one(int lnr, const char *line,const char *prot)
 		    sas.ss_family);
 	    return;
 	}
-	safe_strncpy(mcast_addr, ap->sprint(sa, flag_not & FLAG_NUM_HOST),
+	safe_strncpy(mcast_addr, ap->sprint(&sas, flag_not & FLAG_NUM_HOST),
 		sizeof(mcast_addr));
 	printf("%-15s %-6d %s\n", device, refcnt, mcast_addr);
 #endif
@@ -705,7 +704,7 @@ static void igmp_do_one(int lnr, const char *line,const char *prot)
 		    sas.ss_family);
 	    return;
 	}
-	safe_strncpy(mcast_addr, ap->sprint(sa, flag_not & FLAG_NUM_HOST),
+	safe_strncpy(mcast_addr, ap->sprint(&sas, flag_not & FLAG_NUM_HOST),
 		sizeof(mcast_addr));
 	printf("%-15s %-6d %s\n", device, refcnt, mcast_addr );
 #endif
@@ -781,7 +780,7 @@ static const char *sctp_socket_state_str(int state)
     }
 }
 
-static const struct aftype *process_sctp_addr_str(const char *addr_str, struct sockaddr *sa)
+static const struct aftype *process_sctp_addr_str(const char *addr_str, struct sockaddr_storage *sas)
 {
     if (strchr(addr_str,':')) {
 #if HAVE_AFINET6
@@ -802,15 +801,15 @@ static const struct aftype *process_sctp_addr_str(const char *addr_str, struct s
 	in6.s6_addr16[7] = htons(u7);
 
 	inet_ntop(AF_INET6, &in6, addr6_str, sizeof(addr6_str));
-	inet6_aftype.input(1, addr6_str, sa);
-	sa->sa_family = AF_INET6;
+	inet6_aftype.input(1, addr6_str, sas);
+	sas->ss_family = AF_INET6;
 #endif
     } else {
-	struct sockaddr_in *sin = (struct sockaddr_in *)sa;
+	struct sockaddr_in *sin = (struct sockaddr_in *)sas;
 	sin->sin_addr.s_addr = inet_addr(addr_str);
-	sa->sa_family = AF_INET;
+	sas->ss_family = AF_INET;
     }
-    return get_afntype(sa->sa_family);
+    return get_afntype(sas->ss_family);
 }
 
 static void sctp_eps_do_one(int lnr, char *line, const char *proto)
@@ -821,7 +820,6 @@ static void sctp_eps_do_one(int lnr, char *line, const char *proto)
     unsigned long inode;
     const struct aftype *ap;
     struct sockaddr_storage localsas;
-    struct sockaddr *localsa = (struct sockaddr *)&localsas;
     const char *sst_str;
     const char *lport_str;
     const char *uid_str;
@@ -860,11 +858,11 @@ static void sctp_eps_do_one(int lnr, char *line, const char *proto)
          this_local_addr;
          this_local_addr = strtok(0, " \t\n")) {
 	char local_addr[64];
-	ap = process_sctp_addr_str(this_local_addr, localsa);
+	ap = process_sctp_addr_str(this_local_addr, &localsas);
 	if (ap)
-	    safe_strncpy(local_addr, ap->sprint(localsa, flag_not), sizeof(local_addr));
+	    safe_strncpy(local_addr, ap->sprint(&localsas, flag_not), sizeof(local_addr));
 	else
-	    sprintf(local_addr, _("unsupported address family %d"), localsa->sa_family);
+	    sprintf(local_addr, _("unsupported address family %d"), localsas.ss_family);
 
 	if (first)
 	    printf("sctp                ");
@@ -888,8 +886,6 @@ static void sctp_assoc_do_one(int lnr, char *line, const char *proto)
 
     const struct aftype *ap;
     struct sockaddr_storage localsas, remotesas;
-    struct sockaddr *localsa = (struct sockaddr *)&localsas;
-    struct sockaddr *remotesa = (struct sockaddr *)&remotesas;
     const char *sst_str;
     const char *txqueue_str;
     const char *rxqueue_str;
@@ -959,24 +955,24 @@ static void sctp_assoc_do_one(int lnr, char *line, const char *proto)
 		/* skip * */
 		this_local_addr++;
 	    }
-	    ap = process_sctp_addr_str(this_local_addr, localsa);
+	    ap = process_sctp_addr_str(this_local_addr, &localsas);
 	    if (ap)
 		safe_strncpy(local_addr,
-		             ap->sprint(localsa, flag_not), sizeof(local_addr));
+		             ap->sprint(&localsas, flag_not), sizeof(local_addr));
 	    else
-		sprintf(local_addr, _("unsupported address family %d"), localsa->sa_family);
+		sprintf(local_addr, _("unsupported address family %d"), localsas.ss_family);
 	}
 	if (this_remote_addr) {
 	    if (this_remote_addr[0] == '*') {
 		/* skip * */
 		this_remote_addr++;
 	    }
-	    ap = process_sctp_addr_str(this_remote_addr, remotesa);
+	    ap = process_sctp_addr_str(this_remote_addr, &remotesas);
 	    if (ap)
 		safe_strncpy(remote_addr,
-		             ap->sprint(remotesa, flag_not), sizeof(remote_addr));
+		             ap->sprint(&remotesas, flag_not), sizeof(remote_addr));
 	    else
-		sprintf(remote_addr, _("unsupported address family %d"), remotesa->sa_family);
+		sprintf(remote_addr, _("unsupported address family %d"), remotesas.ss_family);
 	}
 
 	if (first)
@@ -1036,7 +1032,7 @@ static void addr_do_one(char *buf, size_t buf_len, size_t short_len, const struc
     const char *sport, *saddr;
     size_t port_len, addr_len;
 
-    saddr = ap->sprint((const struct sockaddr *)addr, flag_not & FLAG_NUM_HOST);
+    saddr = ap->sprint(addr, flag_not & FLAG_NUM_HOST);
     sport = get_sname(htons(port), proto, flag_not & FLAG_NUM_PORT);
     addr_len = strlen(saddr);
     port_len = strlen(sport);
@@ -1091,12 +1087,12 @@ static void tcp_do_one(int lnr, const char *line, const char *prot)
 	       &in6.s6_addr32[0], &in6.s6_addr32[1],
            &in6.s6_addr32[2], &in6.s6_addr32[3]);
 	inet_ntop(AF_INET6, &in6, addr6, sizeof(addr6));
-	inet6_aftype.input(1, addr6, (struct sockaddr *) &localsas);
+	inet6_aftype.input(1, addr6, &localsas);
 	sscanf(rem_addr, "%08X%08X%08X%08X",
 	       &in6.s6_addr32[0], &in6.s6_addr32[1],
 	       &in6.s6_addr32[2], &in6.s6_addr32[3]);
 	inet_ntop(AF_INET6, &in6, addr6, sizeof(addr6));
-	inet6_aftype.input(1, addr6, (struct sockaddr *) &remsas);
+	inet6_aftype.input(1, addr6, &remsas);
 	localsas.ss_family = AF_INET6;
 	remsas.ss_family = AF_INET6;
 #endif
@@ -1215,12 +1211,12 @@ static void udp_do_one(int lnr, const char *line,const char *prot)
 	       &in6.s6_addr32[0], &in6.s6_addr32[1],
 	       &in6.s6_addr32[2], &in6.s6_addr32[3]);
 	inet_ntop(AF_INET6, &in6, addr6, sizeof(addr6));
-	inet6_aftype.input(1, addr6, (struct sockaddr *) &localsas);
+	inet6_aftype.input(1, addr6, &localsas);
 	sscanf(rem_addr, "%08X%08X%08X%08X",
 	       &in6.s6_addr32[0], &in6.s6_addr32[1],
 	       &in6.s6_addr32[2], &in6.s6_addr32[3]);
 	inet_ntop(AF_INET6, &in6, addr6, sizeof(addr6));
-	inet6_aftype.input(1, addr6, (struct sockaddr *) &remsas);
+	inet6_aftype.input(1, addr6, &remsas);
 	localsas.ss_family = AF_INET6;
 	remsas.ss_family = AF_INET6;
 #endif
@@ -1328,12 +1324,12 @@ static void raw_do_one(int lnr, const char *line,const char *prot)
 	       &in6.s6_addr32[0], &in6.s6_addr32[1],
            &in6.s6_addr32[2], &in6.s6_addr32[3]);
     inet_ntop(AF_INET6, &in6, addr6, sizeof(addr6));
-	inet6_aftype.input(1, addr6, (struct sockaddr *) &localsas);
+	inet6_aftype.input(1, addr6, &localsas);
 	sscanf(rem_addr, "%08X%08X%08X%08X",
 	       &in6.s6_addr32[0], &in6.s6_addr32[1],
            &in6.s6_addr32[2], &in6.s6_addr32[3]);
     inet_ntop(AF_INET6, &in6, addr6, sizeof(addr6));
-	inet6_aftype.input(1, addr6, (struct sockaddr *) &remsas);
+	inet6_aftype.input(1, addr6, &remsas);
 	localsas.ss_family = AF_INET6;
 	remsas.ss_family = AF_INET6;
 #endif
@@ -1651,7 +1647,7 @@ static int ipx_info(void)
     const struct aftype *ap;
     struct passwd *pw;
     char sad[50], dad[50];
-    struct sockaddr sa;
+    struct sockaddr_storage sa;
     unsigned sport = 0, dport = 0;
     struct stat s;
 

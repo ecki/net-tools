@@ -47,7 +47,14 @@
 struct masq {
     unsigned long expires;	/* Expiration timer */
     char *proto;		/* Which protocol are we talking? */
-    struct sockaddr_in src, dst;	/* Source and destination IP addresses */
+    union {
+	struct sockaddr_storage src_sas;
+	struct sockaddr_in src;	/* Source IP address */
+    };
+    union {
+	struct sockaddr_storage dst_sas;
+	struct sockaddr_in dst;	/* Destination IP address */
+    };
     unsigned short sport, dport;	/* Source and destination ports */
     unsigned short mport;	/* Masqueraded port */
     unsigned long initseq;	/* Add delta from this seq. on */
@@ -79,8 +86,8 @@ static void print_masq(struct masq *ms, int numeric_host, int numeric_port,
 	    printf("%10lu %5hd     - ", ms->initseq,
 		   ms->delta);
     }
-    printf("%-20s ", ap->sprint((struct sockaddr *) &(ms->src), numeric_host));
-    printf("%-20s ", ap->sprint((struct sockaddr *) &(ms->dst), numeric_host));
+    printf("%-20s ", ap->sprint(&ms->src_sas, numeric_host));
+    printf("%-20s ", ap->sprint(&ms->dst_sas, numeric_host));
 
     printf("%s -> ", get_sname(ms->sport, ms->proto, numeric_port));
     printf("%s", get_sname(ms->dport, ms->proto, numeric_port));

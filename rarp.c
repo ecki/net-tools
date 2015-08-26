@@ -91,9 +91,10 @@ static int rarp_set(int fd, struct hostent *hp, char *hw_addr)
 {
     struct arpreq req;
     struct sockaddr_in *si;
-    struct sockaddr sap;
+    struct sockaddr_storage sas;
+    struct sockaddr *sap = (struct sockaddr *)&sas;
 
-    if (hardware->input(hw_addr, &sap)) {
+    if (hardware->input(hw_addr, &sas)) {
 	fprintf(stderr, _("%s: bad hardware address\n"), hw_addr);
 	return 1;
     }
@@ -103,7 +104,7 @@ static int rarp_set(int fd, struct hostent *hp, char *hw_addr)
     si->sin_family = hp->h_addrtype;
     memcpy((char *) &si->sin_addr, hp->h_addr_list[0], hp->h_length);
     req.arp_ha.sa_family = hardware->type;
-    memcpy(req.arp_ha.sa_data, sap.sa_data, hardware->alen);
+    memcpy(req.arp_ha.sa_data, sap->sa_data, hardware->alen);
 
     /* Call the kernel. */
     if (ioctl(fd, SIOCSRARP, &req) < 0) {

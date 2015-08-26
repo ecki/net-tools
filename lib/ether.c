@@ -53,8 +53,9 @@ static const char *pr_ether(const char *ptr)
 #endif
 
 /* Input an Ethernet address and convert to binary. */
-static int in_ether(char *bufp, struct sockaddr *sap)
+static int in_ether(char *bufp, struct sockaddr_storage *sasp)
 {
+    struct sockaddr *sap = (struct sockaddr *)sasp;
     char *ptr;
     char c, *orig;
     int i;

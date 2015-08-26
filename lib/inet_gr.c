@@ -34,7 +34,7 @@
 #include "util.h"
 extern struct aftype inet_aftype;
 
-extern char *INET_sprintmask(struct sockaddr *sap, int numeric,
+extern char *INET_sprintmask(const struct sockaddr_storage *sap, int numeric,
 			     unsigned int netmask);
 
 int rprint_fib(int ext, int numeric)
@@ -87,7 +87,7 @@ int rprint_fib(int ext, int numeric)
 	return 1;
 
     while (fgets(buff, 1023, fp)) {
-        struct sockaddr snet_target, snet_gateway, snet_mask;
+	struct sockaddr_storage snet_target, snet_gateway, snet_mask;
 	struct sockaddr_in *sin_netmask;
 
 	num = sscanf(buff, fmt,
@@ -210,7 +210,7 @@ int rprint_cache(int ext, int numeric)
     char buff[1024], iface[17], flags[64];
     char gate_addr[128], dest_addr[128], specdst[128];
     char src_addr[128];
-    struct sockaddr snet;
+    struct sockaddr_storage snet;
     unsigned int iflags;
     int num, format, metric, refcnt, use, mss, window, irtt, hh, hhref, hhuptod, arp, tos;
     char *fmt = NULL;

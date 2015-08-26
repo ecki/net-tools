@@ -255,7 +255,7 @@ int main(int argc, char **argv)
     struct sockaddr_storage _sa, _samask;
     struct sockaddr *sa = (struct sockaddr *)&_sa;
     struct sockaddr *samask = (struct sockaddr *)&_samask;
-    struct sockaddr_in *sin = (struct sockaddr_in *)sa;
+    struct sockaddr_in *sin = (struct sockaddr_in *)&_sa;
     char host[128];
     const struct aftype *ap;
     const struct hwtype *hw;
@@ -265,7 +265,7 @@ int main(int argc, char **argv)
     int fd;
 #if HAVE_AFINET6
     extern struct aftype inet6_aftype;
-    struct sockaddr_in6 *sin6 = (struct sockaddr_in6 *)sa;
+    struct sockaddr_in6 *sin6 = (struct sockaddr_in6 *)&_sa;
     struct in6_ifreq ifr6;
     unsigned long prefix_len;
     char *cp;
@@ -518,7 +518,7 @@ int main(int argc, char **argv)
 	if (!strcmp(*spp, "broadcast")) {
 	    if (*++spp != NULL) {
 		safe_strncpy(host, *spp, (sizeof host));
-		if (ap->input(0, host, sa) < 0) {
+		if (ap->input(0, host, &_sa) < 0) {
 		    if (ap->herror)
 		    	ap->herror(host);
 		    else
@@ -542,7 +542,7 @@ int main(int argc, char **argv)
 	    if (*++spp == NULL)
 		usage();
 	    safe_strncpy(host, *spp, (sizeof host));
-	    if (ap->input(0, host, sa) < 0) {
+	    if (ap->input(0, host, &_sa) < 0) {
 		    if (ap->herror)
 		    	ap->herror(host);
 		    else
@@ -564,7 +564,7 @@ int main(int argc, char **argv)
 	    if (*++spp == NULL || didnetmask)
 		usage();
 	    safe_strncpy(host, *spp, (sizeof host));
-	    if (ap->input(0, host, sa) < 0) {
+	    if (ap->input(0, host, &_sa) < 0) {
 		    if (ap->herror)
 		    	ap->herror(host);
 		    else
@@ -654,7 +654,7 @@ int main(int argc, char **argv)
 	    if (*(spp + 1) != NULL) {
 		spp++;
 		safe_strncpy(host, *spp, (sizeof host));
-		if (ap->input(0, host, sa)) {
+		if (ap->input(0, host, &_sa)) {
 		    if (ap->herror)
 		    	ap->herror(host);
 		    else
@@ -689,7 +689,7 @@ int main(int argc, char **argv)
 	    if (*++spp == NULL)
 		usage();
 	    safe_strncpy(host, *spp, (sizeof host));
-	    if (hw->input(host, sa) < 0) {
+	    if (hw->input(host, &_sa) < 0) {
 		fprintf(stderr, _("%s: invalid %s address.\n"), host, hw->name);
 		goterr = 1;
 		spp++;
@@ -724,7 +724,7 @@ int main(int argc, char **argv)
 		    prefix_len = 128;
 		}
 		safe_strncpy(host, *spp, (sizeof host));
-		if (inet6_aftype.input(1, host, sa) < 0) {
+		if (inet6_aftype.input(1, host, &_sa) < 0) {
 		    if (inet6_aftype.herror)
 		    	inet6_aftype.herror(host);
 		    else
@@ -763,7 +763,7 @@ int main(int argc, char **argv)
 	    { /* ipv4 address a.b.c.d */
 		in_addr_t ip, nm, bc;
 		safe_strncpy(host, *spp, (sizeof host));
-		if (inet_aftype.input(0, host, sa) < 0) {
+		if (inet_aftype.input(0, host, &_sa) < 0) {
 		    ap->herror(host);
 		    goterr = 1;
 		    spp++;
@@ -815,7 +815,7 @@ int main(int argc, char **argv)
 		    prefix_len = 128;
 		}
 		safe_strncpy(host, *spp, (sizeof host));
-		if (inet6_aftype.input(1, host, sa) < 0) {
+		if (inet6_aftype.input(1, host, &_sa) < 0) {
 		    inet6_aftype.herror(host);
 		    goterr = 1;
 		    spp++;
@@ -856,7 +856,7 @@ int main(int argc, char **argv)
 		/* ipv4 address a.b.c.d */
 		in_addr_t ip, nm, bc;
 		safe_strncpy(host, *spp, (sizeof host));
-		if (inet_aftype.input(0, host, sa) < 0) {
+		if (inet_aftype.input(0, host, &_sa) < 0) {
 		    ap->herror(host);
 		    goterr = 1;
 		    spp++;
@@ -906,7 +906,7 @@ int main(int argc, char **argv)
 		prefix_len = 128;
 	    }
 	    safe_strncpy(host, *spp, (sizeof host));
-	    if (inet6_aftype.input(1, host, sa) < 0) {
+	    if (inet6_aftype.input(1, host, &_sa) < 0) {
 		inet6_aftype.herror(host);
 		goterr = 1;
 		spp++;
@@ -946,7 +946,7 @@ int main(int argc, char **argv)
 	/* FIXME: sa is too small for INET6 addresses, inet6 should use that too,
 	   broadcast is unexpected */
 	if (ap->getmask) {
-	    switch (ap->getmask(host, samask, NULL)) {
+	    switch (ap->getmask(host, &_samask, NULL)) {
 	    case -1:
 		usage();
 		break;
@@ -963,7 +963,7 @@ int main(int argc, char **argv)
 	   fprintf(stderr, _("ifconfig: Cannot set address for this protocol family.\n"));
 	   exit(1);
 	}
-	if (ap->input(0, host, sa) < 0) {
+	if (ap->input(0, host, &_sa) < 0) {
 	    if (ap->herror)
 	    	ap->herror(host);
 	    else
@@ -1083,7 +1083,7 @@ static int do_ifcmd(struct interface *x, struct ifcmd *ptr)
     searcher[i] = 1;
 
     /* copy */
-    sin = (struct sockaddr_in *)&x->dstaddr;
+    sin = (struct sockaddr_in *)&x->dstaddr_sas;
     if (sin->sin_addr.s_addr != ptr->addr) {
 	return 0;
     }
@@ -1113,9 +1113,9 @@ static int get_nmbc_parent(char *parent,
 	return -1;
     if (do_if_fetch(i) < 0)
 	return 0;
-    sin = (struct sockaddr_in *)&i->netmask;
+    sin = (struct sockaddr_in *)&i->netmask_sas;
     memcpy(nm, &sin->sin_addr.s_addr, sizeof(*nm));
-    sin = (struct sockaddr_in *)&i->broadaddr;
+    sin = (struct sockaddr_in *)&i->broadaddr_sas;
     memcpy(bc, &sin->sin_addr.s_addr, sizeof(*bc));
     return 0;
 }

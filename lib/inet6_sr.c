@@ -55,7 +55,8 @@ static int INET6_setroute(int action, int options, char **args)
 {
     struct in6_rtmsg rt;
     struct ifreq ifr;
-    struct sockaddr_in6 sa6;
+    struct sockaddr_storage sas;
+    struct sockaddr_in6 *sin6 = (struct sockaddr_in6 *)&sas;
     char target[128], gateway[128] = "NONE";
     int metric, prefix_len;
     char *devname = NULL;
@@ -67,7 +68,7 @@ static int INET6_setroute(int action, int options, char **args)
     safe_strncpy(target, *args++, sizeof(target));
     if (!strcmp(target, "default")) {
         prefix_len = 0;
-	memset(&sa6, 0, sizeof(sa6));
+	memset(&sas, 0, sizeof(sas));
     } else {
         if ((cp = strchr(target, '/'))) {
 	    prefix_len = atol(cp + 1);
@@ -77,8 +78,8 @@ static int INET6_setroute(int action, int options, char **args)
 	} else {
 	    prefix_len = 128;
 	}
-	if (inet6_aftype.input(1, target, (struct sockaddr *) &sa6) < 0
-	    && inet6_aftype.input(0, target, (struct sockaddr *) &sa6) < 0) {
+	if (inet6_aftype.input(1, target, &sas) < 0
+	    && inet6_aftype.input(0, target, &sas) < 0) {
 	    inet6_aftype.herror(target);
 	    return (1);
 	}
@@ -87,7 +88,7 @@ static int INET6_setroute(int action, int options, char **args)
     /* Clean out the RTREQ structure. */
     memset((char *) &rt, 0, sizeof(struct in6_rtmsg));
 
-    memcpy(&rt.rtmsg_dst, sa6.sin6_addr.s6_addr, sizeof(struct in6_addr));
+    memcpy(&rt.rtmsg_dst, sin6->sin6_addr.s6_addr, sizeof(struct in6_addr));
 
     /* Fill in the other fields. */
     rt.rtmsg_flags = RTF_UP;
@@ -114,12 +115,11 @@ static int INET6_setroute(int action, int options, char **args)
 	    if (rt.rtmsg_flags & RTF_GATEWAY)
 		return usage(E_OPTERR);
 	    safe_strncpy(gateway, *args, sizeof(gateway));
-	    if (inet6_aftype.input(1, gateway,
-				   (struct sockaddr *) &sa6) < 0) {
+	    if (inet6_aftype.input(1, gateway, &sas) < 0) {
 		inet6_aftype.herror(gateway);
 		return (E_LOOKUP);
 	    }
-	    memcpy(&rt.rtmsg_gateway, sa6.sin6_addr.s6_addr,
+	    memcpy(&rt.rtmsg_gateway, sin6->sin6_addr.s6_addr,
 		   sizeof(struct in6_addr));
 	    rt.rtmsg_flags |= RTF_GATEWAY;
 	    args++;

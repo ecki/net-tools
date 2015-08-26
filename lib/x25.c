@@ -65,11 +65,12 @@ X25_print(const char *ptr)
 
 /* Display an X.25 socket address. */
 static const char *
-X25_sprint(const struct sockaddr *sap, int numeric)
+X25_sprint(const struct sockaddr_storage *sasp, int numeric)
 {
+  const struct sockaddr *sap = (const struct sockaddr *)sasp;
   if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
     return( _("[NONE SET]"));
-  return(X25_print(((struct sockaddr_x25 *)sap)->sx25_addr.x25_addr));
+  return(X25_print(((struct sockaddr_x25 *)sasp)->sx25_addr.x25_addr));
 }
 
 
@@ -77,8 +78,9 @@ X25_sprint(const struct sockaddr *sap, int numeric)
  * return the sigdigits of the address
  */
 static int
-X25_input(int type, char *bufp, struct sockaddr *sap)
+X25_input(int type, char *bufp, struct sockaddr_storage *sasp)
 {
+  struct sockaddr *sap = (struct sockaddr *)sasp;
   char *ptr;
   char *p;
   unsigned int sigdigits;
@@ -139,9 +141,10 @@ X25_herror(const char *text)
 
 
 static int
-X25_hinput(char *bufp, struct sockaddr *sap)
+X25_hinput(char *bufp, struct sockaddr_storage *sasp)
 {
-  if (X25_input(0, bufp, sap) < 0) return(-1);
+  struct sockaddr *sap = (struct sockaddr *)sasp;
+  if (X25_input(0, bufp, sasp) < 0) return(-1);
   sap->sa_family = ARPHRD_X25;
   return(0);
 }

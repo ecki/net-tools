@@ -39,14 +39,14 @@ struct aftype {
     int af;
     int alen;
     const char *(*print) (const char *);
-    const char *(*sprint) (const struct sockaddr *, int numeric);
-    int (*input) (int type, char *bufp, struct sockaddr *);
+    const char *(*sprint) (const struct sockaddr_storage *, int numeric);
+    int (*input) (int type, char *bufp, struct sockaddr_storage *);
     void (*herror) (const char *text);
     int (*rprint) (int options);
     int (*rinput) (int typ, int ext, char **argv);
 
     /* may modify src */
-    int (*getmask) (char *src, struct sockaddr *mask, char *name);
+    int (*getmask) (char *src, struct sockaddr_storage *mask, char *name);
 
     int fd;
     const char *flag_file;
@@ -61,7 +61,7 @@ struct hwtype {
     int type;
     int alen;
     const char *(*print) (const char *);
-    int (*input) (char *, struct sockaddr *);
+    int (*input) (char *, struct sockaddr_storage *);
     int (*activate) (int fd);
     int suppress_null_addr;
 };

@@ -52,8 +52,9 @@ pr_strip(const char *ptr)
 }
 
 static int
-in_strip(char *bufp, struct sockaddr *sap)
+in_strip(char *bufp, struct sockaddr_storage *sasp)
 {
+  struct sockaddr *sap = (struct sockaddr *)sasp;
   int i,i0;
   MetricomAddress *haddr = (MetricomAddress *) (sap->sa_data);
 

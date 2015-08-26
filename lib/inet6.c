@@ -59,7 +59,7 @@ static char *fix_v4_address(char *buf, const struct in6_addr *in6)
 	return buf;
 }
 
-static int INET6_resolve(char *name, struct sockaddr_in6 *sin6)
+static int INET6_resolve(char *name, struct sockaddr_storage *sasp)
 {
     struct addrinfo req, *ai;
     int s;
@@ -70,7 +70,7 @@ static int INET6_resolve(char *name, struct sockaddr_in6 *sin6)
 	fprintf(stderr, "getaddrinfo: %s: %d\n", name, s);
 	return -1;
     }
-    memcpy(sin6, ai->ai_addr, sizeof(struct sockaddr_in6));
+    memcpy(sasp, ai->ai_addr, sizeof(struct sockaddr_in6));
 
     freeaddrinfo(ai);
 
@@ -85,8 +85,9 @@ static int INET6_resolve(char *name, struct sockaddr_in6 *sin6)
 
 
 static int INET6_rresolve(char *name, size_t namelen,
-			  struct sockaddr_in6 *sin6, int numeric)
+			  const struct sockaddr_storage *sasp, int numeric)
 {
+    const struct sockaddr_in6 *sin6 = (const struct sockaddr_in6 *)sasp;
     /* Grmpf. -FvK */
     if (sin6->sin6_family != AF_INET6) {
 #ifdef DEBUG
@@ -108,7 +109,7 @@ static int INET6_rresolve(char *name, size_t namelen,
 	return (0);
     }
 
-    if (getnameinfo((struct sockaddr *) sin6, sizeof(struct sockaddr_in6),
+    if (getnameinfo((const struct sockaddr *)sasp, sizeof(struct sockaddr_in6),
 		    name, namelen , NULL, 0, 0)) {
 	inet_ntop( AF_INET6, &sin6->sin6_addr, name, namelen);
     }
@@ -136,25 +137,24 @@ static const char *INET6_print(const char *ptr)
 
 /* Display an Internet socket address. */
 /* dirty! struct sockaddr usually doesn't suffer for inet6 addresses, fst. */
-static const char *INET6_sprint(const struct sockaddr *sap, int numeric)
+static const char *INET6_sprint(const struct sockaddr_storage *sasp, int numeric)
 {
     static char buff[128];
 
-    if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
+    if (sasp->ss_family == 0xFFFF || sasp->ss_family == 0)
 	return safe_strncpy(buff, _("[NONE SET]"), sizeof(buff));
-    if (INET6_rresolve(buff, sizeof(buff),
-		       (struct sockaddr_in6 *) sap, numeric) != 0)
+    if (INET6_rresolve(buff, sizeof(buff), sasp, numeric) != 0)
 	return safe_strncpy(buff, _("[UNKNOWN]"), sizeof(buff));
-    return (fix_v4_address(buff, &((struct sockaddr_in6 *)sap)->sin6_addr));
+    return (fix_v4_address(buff, &((struct sockaddr_in6 *)sasp)->sin6_addr));
 }
 
 
-static int INET6_getsock(char *bufp, struct sockaddr *sap)
+static int INET6_getsock(char *bufp, struct sockaddr_storage *sasp)
 {
     struct sockaddr_in6 *sin6;
 	char *p;
 
-    sin6 = (struct sockaddr_in6 *) sap;
+    sin6 = (struct sockaddr_in6 *) sasp;
     sin6->sin6_family = AF_INET6;
     sin6->sin6_port = 0;
     sin6->sin6_scope_id = 0;
@@ -168,13 +168,13 @@ static int INET6_getsock(char *bufp, struct sockaddr *sap)
     return 16;			/* ?;) */
 }
 
-static int INET6_input(int type, char *bufp, struct sockaddr *sap)
+static int INET6_input(int type, char *bufp, struct sockaddr_storage *sasp)
 {
     switch (type) {
     case 1:
-	return (INET6_getsock(bufp, sap));
+	return INET6_getsock(bufp, sasp);
     default:
-	return (INET6_resolve(bufp, (struct sockaddr_in6 *) sap));
+	return INET6_resolve(bufp, sasp);
     }
 }
 

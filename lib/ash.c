@@ -58,8 +58,9 @@ pr_ash(const char *ptr)
 struct hwtype ash_hwtype;
 
 static int
-in_ash(char *bufp, struct sockaddr *sap)
+in_ash(char *bufp, struct sockaddr_storage *sasp)
 {
+    struct sockaddr *sap = (struct sockaddr *)sasp;
     char *ptr;
     unsigned int i = 0;
 
@@ -103,8 +104,9 @@ struct hwtype ash_hwtype =
 
 /* Display an Ash socket address. */
 static const char *
-pr_sash(const struct sockaddr *sap, int numeric)
+pr_sash(const struct sockaddr_storage *sasp, int numeric)
 {
+    const struct sockaddr *sap = (const struct sockaddr *)sasp;
     static char buf[64];
 
     if (sap->sa_family != AF_ASH)

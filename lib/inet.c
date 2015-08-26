@@ -74,8 +74,9 @@ static struct service *tcp_name = NULL, *udp_name = NULL, *raw_name = NULL;
 static struct addr *INET_nn = NULL;	/* addr-to-name cache           */
 
 
-static int INET_resolve(char *name, struct sockaddr_in *sin, int hostfirst)
+static int INET_resolve(char *name, struct sockaddr_storage *sasp, int hostfirst)
 {
+    struct sockaddr_in *sin = (struct sockaddr_in *)sasp;
     struct hostent *hp;
     struct netent *np;
 
@@ -138,9 +139,10 @@ static int INET_resolve(char *name, struct sockaddr_in *sin, int hostfirst)
  *	    & 0x4000: host instead of net,
  *	    & 0x0fff: don't resolve
  */
-static int INET_rresolve(char *name, size_t len, struct sockaddr_in *sin,
+static int INET_rresolve(char *name, size_t len, const struct sockaddr_storage *sasp,
 			 int numeric, unsigned int netmask)
 {
+    const struct sockaddr_in *sin = (const struct sockaddr_in *)sasp;
     struct hostent *ent;
     struct netent *np;
     struct addr *pn;
@@ -249,42 +251,39 @@ static const char *INET_print(const char *ptr)
 
 
 /* Display an Internet socket address. */
-static const char *INET_sprint(const struct sockaddr *sap, int numeric)
+static const char *INET_sprint(const struct sockaddr_storage *sasp, int numeric)
 {
     static char buff[128];
 
-    if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
+    if (sasp->ss_family == 0xFFFF || sasp->ss_family == 0)
 	return safe_strncpy(buff, _("[NONE SET]"), sizeof(buff));
 
-    if (INET_rresolve(buff, sizeof(buff), (struct sockaddr_in *) sap,
-		      numeric, 0xffffff00) != 0)
+    if (INET_rresolve(buff, sizeof(buff), sasp, numeric, 0xffffff00) != 0)
 	return (NULL);
 
     return (buff);
 }
 
-char *INET_sprintmask(struct sockaddr *sap, int numeric,
+char *INET_sprintmask(const struct sockaddr_storage *sasp, int numeric,
 		      unsigned int netmask)
 {
     static char buff[128];
 
-    if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
+    if (sasp->ss_family == 0xFFFF || sasp->ss_family == 0)
 	return safe_strncpy(buff, _("[NONE SET]"), sizeof(buff));
-    if (INET_rresolve(buff, sizeof(buff), (struct sockaddr_in *) sap,
-		      numeric, netmask) != 0)
+    if (INET_rresolve(buff, sizeof(buff), sasp, numeric, netmask) != 0)
 	return (NULL);
     return (buff);
 }
 
 
-static int INET_getsock(char *bufp, struct sockaddr *sap)
+static int INET_getsock(char *bufp, struct sockaddr_storage *sasp)
 {
     char *sp = bufp, *bp;
     unsigned int i;
     unsigned val;
-    struct sockaddr_in *sin;
+    struct sockaddr_in *sin = (struct sockaddr_in *)sasp;
 
-    sin = (struct sockaddr_in *) sap;
     sin->sin_family = AF_INET;
     sin->sin_port = 0;
 
@@ -318,19 +317,19 @@ static int INET_getsock(char *bufp, struct sockaddr *sap)
     return (sp - bufp);
 }
 
-static int INET_input(int type, char *bufp, struct sockaddr *sap)
+static int INET_input(int type, char *bufp, struct sockaddr_storage *sasp)
 {
     switch (type) {
     case 1:
-	return (INET_getsock(bufp, sap));
+	return INET_getsock(bufp, sasp);
     case 256:
-	return (INET_resolve(bufp, (struct sockaddr_in *) sap, 1));
+	return INET_resolve(bufp, sasp, 1);
     default:
-	return (INET_resolve(bufp, (struct sockaddr_in *) sap, 0));
+	return INET_resolve(bufp, sasp, 0);
     }
 }
 
-static int INET_getnetmask(char *adr, struct sockaddr *m, char *name)
+static int INET_getnetmask(char *adr, struct sockaddr_storage *m, char *name)
 {
     struct sockaddr_in *mask = (struct sockaddr_in *) m;
     char *slash, *end;

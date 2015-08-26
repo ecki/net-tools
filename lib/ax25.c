@@ -67,13 +67,14 @@ static const char *AX25_print(const char *ptr)
 
 /* Display an AX.25 socket address. */
 static const char *
- AX25_sprint(const struct sockaddr *sap, int numeric)
+ AX25_sprint(const struct sockaddr_storage *sasp, int numeric)
 {
+    const struct sockaddr *sap = (const struct sockaddr *)sasp;
     static char buf[64];
 
     if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
 	return safe_strncpy(buf, _("[NONE SET]"), sizeof(buf));
-    return (AX25_print(((struct sockaddr_ax25 *) sap)->sax25_call.ax25_call));
+    return (AX25_print(((const struct sockaddr_ax25 *) sasp)->sax25_call.ax25_call));
 }
 
 #ifdef DEBUG
@@ -82,14 +83,15 @@ static const char *
 #define _DEBUG 0
 #endif
 
-static int AX25_input(int type, char *bufp, struct sockaddr *sap)
+static int AX25_input(int type, char *bufp, struct sockaddr_storage *sasp)
 {
+    struct sockaddr *sap = (struct sockaddr *)sasp;
     char *ptr;
     char *orig, c;
     int i;
 
     sap->sa_family = ax25_aftype.af;
-    ptr = ((struct sockaddr_ax25 *) sap)->sax25_call.ax25_call;
+    ptr = ((struct sockaddr_ax25 *) sasp)->sax25_call.ax25_call;
 
     /* First, scan and convert the basic callsign. */
     orig = bufp;
@@ -152,9 +154,10 @@ static void AX25_herror(const char *text)
 }
 
 
-static int AX25_hinput(char *bufp, struct sockaddr *sap)
+static int AX25_hinput(char *bufp, struct sockaddr_storage *sasp)
 {
-    if (AX25_input(0, bufp, sap) < 0)
+    struct sockaddr *sap = (struct sockaddr *)sasp;
+    if (AX25_input(0, bufp, sasp) < 0)
 	return (-1);
     sap->sa_family = ARPHRD_AX25;
     return (0);

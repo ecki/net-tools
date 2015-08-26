@@ -56,7 +56,8 @@ static int usage(const int rc)
 static int X25_setroute(int action, int options, char **args)
 {
   struct x25_route_struct rt;
-  struct sockaddr_x25 sx25;
+  struct sockaddr_storage sas;
+  struct sockaddr_x25 *sx25 = (struct sockaddr_x25 *)&sas;
   char target[128];
   signed int sigdigits;
 
@@ -69,14 +70,14 @@ static int X25_setroute(int action, int options, char **args)
   memset((char *) &rt, 0, sizeof(rt));
 
 
-  if ((sigdigits = x25_aftype.input(0, target, (struct sockaddr *)&sx25)) < 0) {
+  if ((sigdigits = x25_aftype.input(0, target, &sas)) < 0) {
 	x25_aftype.herror(target);
 	return (E_LOOKUP);
   }
   rt.sigdigits=sigdigits;
 
   /* this works with 2.4 and 2.6 headers struct x25_address vs. typedef */
-  memcpy(&rt.address, &sx25.sx25_addr, sizeof(sx25.sx25_addr));
+  memcpy(&rt.address, &sx25->sx25_addr, sizeof(sx25->sx25_addr));
 
   while (*args) {
 	if (!strcmp(*args,"device") || !strcmp(*args,"dev")) {

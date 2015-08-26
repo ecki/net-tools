@@ -42,8 +42,9 @@ static const char *ddp_print(const char *ptr)
 
 
 /* Display a ddp domain address. */
-static const char *ddp_sprint(const struct sockaddr *sap, int numeric)
+static const char *ddp_sprint(const struct sockaddr_storage *sasp, int numeric)
 {
+    const struct sockaddr *sap = (const struct sockaddr *)sasp;
     static char buf[64];
 
     if (sap->sa_family != AF_APPLETALK)

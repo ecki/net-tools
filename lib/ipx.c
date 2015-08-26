@@ -73,8 +73,9 @@ static const char *IPX_print(const char *ptr)
 
 
 /* Display a ipx domain address. */
-static const char *IPX_sprint(const struct sockaddr *sap, int numeric)
+static const char *IPX_sprint(const struct sockaddr_storage *sasp, int numeric)
 {
+    const struct sockaddr *sap = (const struct sockaddr *)sasp;
     static char buf[64];
 
     if (sap->sa_family != AF_IPX)
@@ -83,11 +84,11 @@ static const char *IPX_sprint(const struct sockaddr *sap, int numeric)
 }
 
 
-static int IPX_getsock(char *bufp, struct sockaddr *sap)
+static int IPX_getsock(char *bufp, struct sockaddr_storage *sasp)
 {
     char *sp = bufp, *bp;
     unsigned int i;
-    struct sockaddr_ipx *sipx = (struct sockaddr_ipx *) sap;
+    struct sockaddr_ipx *sipx = (struct sockaddr_ipx *) sasp;
 
     sipx->sipx_port = 0;
 
@@ -124,9 +125,9 @@ static int IPX_getsock(char *bufp, struct sockaddr *sap)
 
 /* XXX define type which makes verbose format checks AF_input */
 
-static int IPX_input(int type, char *bufp, struct sockaddr *sap)
+static int IPX_input(int type, char *bufp, struct sockaddr_storage *sasp)
 {
-    struct sockaddr_ipx *sai = (struct sockaddr_ipx *) sap;
+    struct sockaddr_ipx *sai = (struct sockaddr_ipx *) sasp;
     unsigned long netnum;
     char *ep;
 
@@ -156,7 +157,7 @@ static int IPX_input(int type, char *bufp, struct sockaddr *sap)
 	    return (-3);
 	bufp = ep + 1;
     }
-    return (IPX_getsock(bufp, sap));
+    return IPX_getsock(bufp, sasp);
 }
 
 

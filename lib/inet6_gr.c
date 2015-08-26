@@ -58,7 +58,7 @@ int rprint_fib6(int ext, int numeric)
 {
     char buff[4096], iface[16], flags[16];
     char addr6[128], naddr6[128];
-    struct sockaddr_in6 saddr6, snaddr6;
+    struct sockaddr_storage sas, sasn;
     int num, iflags, metric, refcnt, use, prefix_len, slen;
     FILE *fp = fopen(_PATH_PROCNET_ROUTE6, "r");
 
@@ -104,18 +104,18 @@ int rprint_fib6(int ext, int numeric)
 	snprintf(addr6, sizeof(addr6), "%s:%s:%s:%s:%s:%s:%s:%s",
 		 addr6p[0], addr6p[1], addr6p[2], addr6p[3],
 		 addr6p[4], addr6p[5], addr6p[6], addr6p[7]);
-	inet6_aftype.input(1, addr6, (struct sockaddr *) &saddr6);
+	inet6_aftype.input(1, addr6, &sas);
 	snprintf(addr6, sizeof(addr6), "%s/%d",
-		 inet6_aftype.sprint((struct sockaddr *) &saddr6, numeric),
+		 inet6_aftype.sprint(&sas, numeric),
 		 prefix_len);
 
 	/* Fetch and resolve the nexthop address. */
 	snprintf(naddr6, sizeof(naddr6), "%s:%s:%s:%s:%s:%s:%s:%s",
 		 naddr6p[0], naddr6p[1], naddr6p[2], naddr6p[3],
 		 naddr6p[4], naddr6p[5], naddr6p[6], naddr6p[7]);
-	inet6_aftype.input(1, naddr6, (struct sockaddr *) &snaddr6);
+	inet6_aftype.input(1, naddr6, &sasn);
 	snprintf(naddr6, sizeof(naddr6), "%s",
-		 inet6_aftype.sprint((struct sockaddr *) &snaddr6, numeric));
+		 inet6_aftype.sprint(&sasn, numeric));
 
 	/* Decode the flags. */
 
@@ -158,7 +158,7 @@ int rprint_cache6(int ext, int numeric)
 {
     char buff[4096], iface[16], flags[16];
     char addr6[128], haddr[20], statestr[20];
-    struct sockaddr_in6 saddr6;
+    struct sockaddr_storage sas;
     int type, refcnt, prefix_len, location, state, gc;
     long tstamp, expire, ndflags, reachable, stale, delete;
     FILE *fp = fopen(_PATH_PROCNET_NDISC, "r");
@@ -192,9 +192,9 @@ int rprint_cache6(int ext, int numeric)
 	snprintf(addr6, sizeof(addr6), "%s:%s:%s:%s:%s:%s:%s:%s",
 		 addr6p[0], addr6p[1], addr6p[2], addr6p[3],
 		 addr6p[4], addr6p[5], addr6p[6], addr6p[7]);
-	inet6_aftype.input(1, addr6, (struct sockaddr *) &saddr6);
+	inet6_aftype.input(1, addr6, &sas);
 	snprintf(addr6, sizeof(addr6), "%s/%d",
-	       inet6_aftype.sprint((struct sockaddr *) &saddr6, numeric),
+	       inet6_aftype.sprint(&sas, numeric),
 		 prefix_len);
 
 	/* Fetch the  hardware address. */

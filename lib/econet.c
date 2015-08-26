@@ -44,20 +44,20 @@ ec_print(const char *ptr)
 
 /* Display an Econet socket address */
 static const char *
-ec_sprint(const struct sockaddr *sap, int numeric)
+ec_sprint(const struct sockaddr_storage *sasp, int numeric)
 {
-    struct sockaddr_ec *sec = (struct sockaddr_ec *) sap;
+    const struct sockaddr_ec *sec = (const struct sockaddr_ec *)sasp;
 
-    if (sap->sa_family != AF_ECONET)
+    if (sasp->ss_family != AF_ECONET)
 	return _("[NONE SET]");
 
     return ec_print((const char *) &sec->addr);
 }
 
 static int
-ec_input(int type, char *bufp, struct sockaddr *sap)
+ec_input(int type, char *bufp, struct sockaddr_storage *sasp)
 {
-    struct sockaddr_ec *sec = (struct sockaddr_ec *) sap;
+    struct sockaddr_ec *sec = (struct sockaddr_ec *) sasp;
     int net, stn;
     switch (sscanf(bufp, "%d.%d", &net, &stn)) {
     case 2:

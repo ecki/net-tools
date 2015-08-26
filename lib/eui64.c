@@ -67,8 +67,9 @@ static const char *pr_eui64(const char *ptr)
 #endif
 
 /* Start the PPP encapsulation on the file descriptor. */
-static int in_eui64( char *bufp, struct sockaddr *sap )
+static int in_eui64(char *bufp, struct sockaddr_storage *sasp)
 {
+    struct sockaddr *sap = (struct sockaddr *)sasp;
 	char *ptr;
 	char c, *orig;
 	int i;

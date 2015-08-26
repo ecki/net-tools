@@ -667,7 +667,7 @@ void ife_print_long(struct interface *ptr)
 #if HAVE_AFINET6
     FILE *f;
     char addr6[40], devname[21];
-    struct sockaddr_in6 sap;
+    struct sockaddr_storage sas;
     int plen, scope, dad_status, if_idx;
     extern struct aftype inet6_aftype;
     char addr6p[8][5];
@@ -743,13 +743,13 @@ void ife_print_long(struct interface *ptr)
 #if HAVE_AFINET
     if (ptr->has_ip) {
 	printf(_("        %s %s"), ap->name,
-	       ap->sprint(&ptr->addr, 1));
-	printf(_("  netmask %s"), ap->sprint(&ptr->netmask, 1));
+	       ap->sprint(&ptr->addr_sas, 1));
+	printf(_("  netmask %s"), ap->sprint(&ptr->netmask_sas, 1));
 	if (ptr->flags & IFF_BROADCAST) {
-	    printf(_("  broadcast %s"), ap->sprint(&ptr->broadaddr, 1));
+	    printf(_("  broadcast %s"), ap->sprint(&ptr->broadaddr_sas, 1));
 	}
 	if (ptr->flags & IFF_POINTOPOINT) {
-	    printf(_("  destination %s"), ap->sprint(&ptr->dstaddr, 1));
+	    printf(_("  destination %s"), ap->sprint(&ptr->dstaddr_sas, 1));
 	}
 	printf("\n");
     }
@@ -767,10 +767,10 @@ void ife_print_long(struct interface *ptr)
 		sprintf(addr6, "%s:%s:%s:%s:%s:%s:%s:%s",
 			addr6p[0], addr6p[1], addr6p[2], addr6p[3],
 			addr6p[4], addr6p[5], addr6p[6], addr6p[7]);
-		inet6_aftype.input(1, addr6, (struct sockaddr *) &sap);
+		inet6_aftype.input(1, addr6, &sas);
 		printf(_("        %s %s  prefixlen %d"),
 			inet6_aftype.name,
-			inet6_aftype.sprint((struct sockaddr *) &sap, 1),
+			inet6_aftype.sprint(&sas, 1),
 			plen);
 		printf(_("  scopeid 0x%x"), scope);
 
@@ -805,16 +805,16 @@ void ife_print_long(struct interface *ptr)
     if (ipxtype != NULL) {
 	if (ptr->has_ipx_bb)
 	    printf(_("        %s Ethernet-II   %s\n"),
-		   ipxtype->name, ipxtype->sprint(&ptr->ipxaddr_bb, 1));
+		   ipxtype->name, ipxtype->sprint(&ptr->ipxaddr_bb_sas, 1));
 	if (ptr->has_ipx_sn)
 	    printf(_("        %s Ethernet-SNAP %s\n"),
-		   ipxtype->name, ipxtype->sprint(&ptr->ipxaddr_sn, 1));
+		   ipxtype->name, ipxtype->sprint(&ptr->ipxaddr_sn_sas, 1));
 	if (ptr->has_ipx_e2)
 	    printf(_("        %s Ethernet802.2 %s\n"),
-		   ipxtype->name, ipxtype->sprint(&ptr->ipxaddr_e2, 1));
+		   ipxtype->name, ipxtype->sprint(&ptr->ipxaddr_e2_sas, 1));
 	if (ptr->has_ipx_e3)
 	    printf(_("        %s Ethernet802.3 %s\n"),
-		   ipxtype->name, ipxtype->sprint(&ptr->ipxaddr_e3, 1));
+		   ipxtype->name, ipxtype->sprint(&ptr->ipxaddr_e3_sas, 1));
     }
 #endif
 
@@ -823,7 +823,7 @@ void ife_print_long(struct interface *ptr)
 	ddptype = get_afntype(AF_APPLETALK);
     if (ddptype != NULL) {
 	if (ptr->has_ddp)
-	    printf(_("        %s %s\n"), ddptype->name, ddptype->sprint(&ptr->ddpaddr, 1));
+	    printf(_("        %s %s\n"), ddptype->name, ddptype->sprint(&ptr->ddpaddr_sas, 1));
     }
 #endif
 
@@ -832,7 +832,7 @@ void ife_print_long(struct interface *ptr)
 	ectype = get_afntype(AF_ECONET);
     if (ectype != NULL) {
 	if (ptr->has_econet)
-	    printf(_("        %s %s\n"), ectype->name, ectype->sprint(&ptr->ecaddr, 1));
+	    printf(_("        %s %s\n"), ectype->name, ectype->sprint(&ptr->ecaddr_sas, 1));
     }
 #endif
 

@@ -71,12 +71,14 @@ static const char *NETROM_print(const char *ptr)
 
 
 /* Display an AX.25 socket address. */
-static const char *NETROM_sprint(const struct sockaddr *sap, int numeric)
+static const char *NETROM_sprint(const struct sockaddr_storage *sasp, int numeric)
 {
+    const struct sockaddr_ax25 *ax25_sap = (const struct sockaddr_ax25 *)sasp;
+    const struct sockaddr *sap = (const struct sockaddr *)sasp;
     char buf[64];
     if (sap->sa_family == 0xFFFF || sap->sa_family == 0)
 	return safe_strncpy(buf, _("[NONE SET]"), sizeof(buf));
-    return (NETROM_print(((struct sockaddr_ax25 *) sap)->sax25_call.ax25_call));
+    return NETROM_print(ax25_sap->sax25_call.ax25_call);
 }
 
 #ifdef DEBUG
@@ -85,14 +87,16 @@ static const char *NETROM_sprint(const struct sockaddr *sap, int numeric)
 #define _DEBUG 0
 #endif
 
-static int NETROM_input(int type, char *bufp, struct sockaddr *sap)
+static int NETROM_input(int type, char *bufp, struct sockaddr_storage *sasp)
 {
+    struct sockaddr_ax25 *ax25_sap = (struct sockaddr_ax25 *)sasp;
+    struct sockaddr *sap = (struct sockaddr *)sasp;
     char *ptr;
     char *orig, c;
     unsigned int i;
 
     sap->sa_family = netrom_aftype.af;
-    ptr = ((struct sockaddr_ax25 *) sap)->sax25_call.ax25_call;
+    ptr = ax25_sap->sax25_call.ax25_call;
 
     /* First, scan and convert the basic callsign. */
     orig = bufp;
@@ -155,9 +159,10 @@ static void NETROM_herror(const char *text)
 }
 
 
-static int NETROM_hinput(char *bufp, struct sockaddr *sap)
+static int NETROM_hinput(char *bufp, struct sockaddr_storage *sasp)
 {
-    if (NETROM_input(0, bufp, sap) < 0)
+    struct sockaddr *sap = (struct sockaddr *)sasp;
+    if (NETROM_input(0, bufp, sasp) < 0)
 	return (-1);
     sap->sa_family = ARPHRD_NETROM;
     return (0);

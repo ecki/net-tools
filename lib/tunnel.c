@@ -27,7 +27,7 @@ static const char *pr_tunnel(const char *ptr)
 }
 
 
-static int in_tunnel(char *bufp, struct sockaddr *sap)
+static int in_tunnel(char *bufp, struct sockaddr_storage *sasp)
 {
     return (-1);
 }

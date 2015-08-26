@@ -65,6 +65,7 @@ static int INET_setroute(int action, int options, char **args)
     char target[128], gateway[128] = "NONE", netmask[128] = "default";
     int xflag, isnet;
     long clk_tck = ticks_per_second();
+    struct sockaddr_storage sas;
 
     xflag = 0;
 
@@ -86,12 +87,13 @@ static int INET_setroute(int action, int options, char **args)
     /* Special hack for /prefix syntax */
     {
 	union {
+	    struct sockaddr_storage sas;
 	    struct sockaddr_in m;
 	    struct sockaddr d;
 	} mask;
 	int n;
 
-	n = inet_aftype.getmask(target, &mask.d, netmask);
+	n = inet_aftype.getmask(target, &mask.sas, netmask);
 	if (n < 0)
 	    return usage(E_OPTERR);
 	else if (n)
@@ -99,10 +101,11 @@ static int INET_setroute(int action, int options, char **args)
     }
 
     /* Prefer hostname lookup is -host flag was given */
-    if ((isnet = inet_aftype.input((xflag!=2? 0: 256), target, &rt.rt_dst)) < 0) {
+    if ((isnet = inet_aftype.input((xflag!=2? 0: 256), target, &sas)) < 0) {
 	inet_aftype.herror(target);
 	return (E_LOOKUP);
     }
+    memcpy(&rt.rt_dst, &sas, sizeof(rt.rt_dst));
     switch (xflag) {
     case 1:
        isnet = 1; break;
@@ -132,31 +135,34 @@ static int INET_setroute(int action, int options, char **args)
 	    continue;
 	}
 	if (!strcmp(*args, "netmask")) {
-	    struct sockaddr mask;
+	    struct sockaddr_storage sas;
+	    struct sockaddr *mask = (struct sockaddr *)&sas;
 
 	    args++;
 	    if (!*args || mask_in_addr(rt))
 		return usage(E_OPTERR);
 	    safe_strncpy(netmask, *args, (sizeof netmask));
-	    if ((isnet = inet_aftype.input(0, netmask, &mask)) < 0) {
+	    if ((isnet = inet_aftype.input(0, netmask, &sas)) < 0) {
 		inet_aftype.herror(netmask);
 		return (E_LOOKUP);
 	    }
-	    rt.rt_genmask = full_mask(mask);
+	    rt.rt_genmask = full_mask(*mask);
 	    args++;
 	    continue;
 	}
 	if (!strcmp(*args, "gw") || !strcmp(*args, "gateway")) {
+	    struct sockaddr_storage sas;
 	    args++;
 	    if (!*args)
 		return usage(E_OPTERR);
 	    if (rt.rt_flags & RTF_GATEWAY)
 		return usage(E_OPTERR);
 	    safe_strncpy(gateway, *args, (sizeof gateway));
-	    if ((isnet = inet_aftype.input(256, gateway, &rt.rt_gateway)) < 0) {
+	    if ((isnet = inet_aftype.input(256, gateway, &sas)) < 0) {
 		inet_aftype.herror(gateway);
 		return (E_LOOKUP);
 	    }
+	    memcpy(&rt.rt_gateway, &sas, sizeof(rt.rt_gateway));
 	    if (isnet) {
 		fprintf(stderr, _("route: %s: cannot use a NETWORK as gateway!\n"),
 			gateway);

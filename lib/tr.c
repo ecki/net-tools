@@ -56,8 +56,9 @@ static const char *pr_tr(const char *ptr)
 #define _DEBUG 0
 #endif
 
-static int in_tr(char *bufp, struct sockaddr *sap)
+static int in_tr(char *bufp, struct sockaddr_storage *sasp)
 {
+    struct sockaddr *sap = (struct sockaddr *)sasp;
     char *ptr;
     char c, *orig;
     int i, val;
