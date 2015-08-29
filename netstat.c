@@ -1749,13 +1749,13 @@ static int ipx_info(void)
 	}
 
 	/* Fetch and resolve the Source */
-	(void) ap->input(4, sad, &sa);
+	(void) ap->input(0, sad, &sa);
 	safe_strncpy(buf, ap->sprint(&sa, flag_not & FLAG_NUM_HOST), sizeof(buf));
 	snprintf(sad, sizeof(sad), "%s:%04X", buf, sport);
 
 	if (!nc) {
 	    /* Fetch and resolve the Destination */
-	    (void) ap->input(4, dad, &sa);
+	    (void) ap->input(0, dad, &sa);
 	    safe_strncpy(buf, ap->sprint(&sa, flag_not & FLAG_NUM_HOST), sizeof(buf));
 	    snprintf(dad, sizeof(dad), "%s:%04X", buf, dport);
 	} else

@@ -72,11 +72,11 @@ int IPX_rprint(int options)
 	    continue;
 
 	/* Fetch and resolve the Destination */
-	(void) ap->input(5, net, &sa);
+	(void) ap->input(1, net, &sa);
 	safe_strncpy(net, ap->sprint(&sa, numeric), sizeof(net));
 
 	/* Fetch and resolve the Router Net */
-	(void) ap->input(5, router_net, &sa);
+	(void) ap->input(1, router_net, &sa);
 	safe_strncpy(router_net, ap->sprint(&sa, numeric), sizeof(router_net));
 
 	/* Fetch and resolve the Router Node */

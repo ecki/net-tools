@@ -129,7 +129,6 @@ static int IPX_input(int type, char *bufp, struct sockaddr *sap)
     struct sockaddr_ipx *sai = (struct sockaddr_ipx *) sap;
     unsigned long netnum;
     char *ep;
-    int nbo;
 
     if (!sai)
     	return (-1);
@@ -140,20 +139,12 @@ static int IPX_input(int type, char *bufp, struct sockaddr *sap)
 	sai->sipx_node[3] = sai->sipx_node[4] = sai->sipx_node[5] = '\0';
     sai->sipx_port = 0;
 
-    if (type & 4)
-	nbo = 1;
-    else
-	nbo = 0;
-
     type &= 3;
     if (type <= 1) {
 	netnum = strtoul(bufp, &ep, 16);
 	if ((netnum == 0xffffffffL) || (netnum == 0L))
 	    return (-1);
-	if (nbo)
-	    sai->sipx_network = netnum;
-	else
-	    sai->sipx_network = htonl(netnum);
+	sai->sipx_network = htonl(netnum);
     }
     if (type == 1) {
 	if (*ep != '\0')
