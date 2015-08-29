@@ -410,6 +410,7 @@ static const struct tabtab *newtable(const struct tabtab *tabs, const char *titl
 
 static int process_fd(FILE *f, int all, const char *filter)
 {
+    size_t filter_len = filter ? strlen(filter) : 0;
     char buf1[2048], buf2[2048];
     char *sp, *np, *p;
     while (fgets(buf1, sizeof buf1, f)) {
@@ -428,7 +429,7 @@ static int process_fd(FILE *f, int all, const char *filter)
 	*sp = '\0';
 
         if (!all)
-           if (strncmp(buf1, filter, strlen(filter)))
+           if (strncmp(buf1, filter, filter_len))
                continue;
 
 	tab = newtable(snmptabs, buf1);
