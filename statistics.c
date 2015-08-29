@@ -33,7 +33,7 @@ struct statedesc {
     const char *title;
 };
 
-static struct statedesc states[] = {
+static const struct statedesc states[] = {
     [number] = { 4, NULL },
     [opt_number] = { 4, NULL },
     [i_forward] = { 4, NULL },
@@ -298,7 +298,7 @@ struct tabtab {
     int *flag;
 };
 
-static struct tabtab snmptabs[] =
+static const struct tabtab snmptabs[] =
 {
     {"Ip", Iptab, sizeof(Iptab), &f_raw},
     {"Icmp", Icmptab, sizeof(Icmptab), &f_raw},
@@ -308,7 +308,7 @@ static struct tabtab snmptabs[] =
     {NULL}
 };
 
-static struct tabtab snmp6tabs[] =
+static const struct tabtab snmp6tabs[] =
 {
     {"Ip6", Ip6tab, sizeof(Ip6tab), &f_raw},
     {"Icmp6", Icmp6tab, sizeof(Icmp6tab), &f_raw},
@@ -324,7 +324,7 @@ static int cmpentries(const void *a, const void *b)
     return strcmp(((struct entry *) a)->title, ((struct entry *) b)->title);
 }
 
-static void printval(struct tabtab *tab, const char *title, unsigned long long val)
+static void printval(const struct tabtab *tab, const char *title, unsigned long long val)
 {
     struct entry *ent = NULL, key;
     int type;
@@ -382,9 +382,9 @@ static void printval(struct tabtab *tab, const char *title, unsigned long long v
     state = type;
 }
 
-static struct tabtab *newtable(struct tabtab *tabs, const char *title)
+static const struct tabtab *newtable(const struct tabtab *tabs, const char *title)
 {
-    struct tabtab *t;
+    const struct tabtab *t;
 	static struct tabtab dummytab;
 
     for (t = tabs; t->title; t++) {
@@ -409,7 +409,7 @@ static int process_fd(FILE *f, int all, const char *filter)
     char *sp, *np, *p;
     while (fgets(buf1, sizeof buf1, f)) {
 	int endflag;
-	struct tabtab *tab;
+	const struct tabtab *tab;
 
         if (buf1[0] == '\n') // skip empty first line in 2.6 kernels
             continue;
@@ -474,7 +474,7 @@ static void process6_fd(FILE *f)
 {
    char buf1[1024],buf2[50],buf3[1024];
    unsigned long long val;
-   struct tabtab *tab = NULL;
+   const struct tabtab *tab = NULL;
    int cpflg = 0;
 
    while (fgets(buf1, sizeof buf1, f)) {
@@ -558,17 +558,18 @@ void parsesnmp6(int flag_raw, int flag_tcp, int flag_udp)
 
 void inittab(void)
 {
-    struct tabtab *t;
+    const struct tabtab *t;
 
     /* we sort at runtime because I'm lazy ;) */
-    for (t = snmptabs; t->title; t++)
+    for (t = snmptabs; t->title; t++) {
 	qsort(t->tab, t->size / sizeof(struct entry),
 	      sizeof(struct entry), cmpentries);
+}
 }
 
 void inittab6(void)
 {
-    struct tabtab *t;
+    const struct tabtab *t;
 
     for (t = snmp6tabs; t->title; t++)
         qsort(t->tab, t->size / sizeof(struct entry),
