@@ -23,14 +23,14 @@ enum State {
 #define normal number
 
 struct entry {
-    char *title;
+    const char *title;
     char *out;
     enum State type;
 };
 
 struct statedesc {
     int indent;
-    char *title;
+    const char *title;
 };
 
 static struct statedesc states[] = {
@@ -292,7 +292,7 @@ static struct entry Tcpexttab[] =
 };
 
 struct tabtab {
-    char *title;
+    const char *title;
     struct entry *tab;
     size_t size;
     int *flag;
@@ -324,7 +324,7 @@ static int cmpentries(const void *a, const void *b)
     return strcmp(((struct entry *) a)->title, ((struct entry *) b)->title);
 }
 
-static void printval(struct tabtab *tab, char *title, unsigned long long val)
+static void printval(struct tabtab *tab, const char *title, unsigned long long val)
 {
     struct entry *ent = NULL, key;
     int type;
@@ -382,7 +382,7 @@ static void printval(struct tabtab *tab, char *title, unsigned long long val)
     state = type;
 }
 
-static struct tabtab *newtable(struct tabtab *tabs, char *title)
+static struct tabtab *newtable(struct tabtab *tabs, const char *title)
 {
     struct tabtab *t;
 	static struct tabtab dummytab;
@@ -457,9 +457,9 @@ formaterr:
   return -1;
 }
 
-static void cpytitle(char *original, char *new)
+static void cpytitle(const char *original, char *new)
 {
-     char *ptr = original;
+     const char *ptr = original;
      while(*ptr != '6' && *ptr != '\0') {
            *new = *ptr;
             new++;
