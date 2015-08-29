@@ -116,9 +116,7 @@
 
 /* prototypes for statistics.c */
 void parsesnmp(int, int, int);
-void inittab(void);
 void parsesnmp6(int, int, int);
-void inittab6(void);
 
 typedef enum {
     SS_FREE = 0,		/* not allocated                */
@@ -2099,14 +2097,12 @@ int main
 
         if (!strcmp(afname, "inet")) {
 #if HAVE_AFINET
-            inittab();
             parsesnmp(flag_raw, flag_tcp, flag_udp);
 #else
             ENOSUPP("netstat", "AF INET");
 #endif
         } else if(!strcmp(afname, "inet6")) {
 #if HAVE_AFINET6
-            inittab6();
             parsesnmp6(flag_raw, flag_tcp, flag_udp);
 #else
             ENOSUPP("netstat", "AF INET6");
