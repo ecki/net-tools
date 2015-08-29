@@ -411,16 +411,18 @@ static const struct tabtab *newtable(const struct tabtab *tabs, const char *titl
 static int process_fd(FILE *f, int all, const char *filter)
 {
     size_t filter_len = filter ? strlen(filter) : 0;
-    char buf1[2048], buf2[2048];
+    static char *buf1, *buf2;
+    static size_t buf1_len, buf2_len;
     char *sp, *np, *p;
-    while (fgets(buf1, sizeof buf1, f)) {
+
+    while (getline(&buf1, &buf1_len, f) > 0) {
 	int endflag;
 	const struct tabtab *tab;
 
         if (buf1[0] == '\n') // skip empty first line in 2.6 kernels
             continue;
 
-	if (!fgets(buf2, sizeof buf2, f))
+	if (getline(&buf2, &buf2_len, f) <= 0)
 	    break;
 	sp = strchr(buf1, ':');
 	np = strchr(buf2, ':');
