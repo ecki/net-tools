@@ -13,7 +13,7 @@
 #include "intl.h"
 #include "proc.h"
 
-int print_static,f_raw,f_tcp,f_udp,f_unknown = 1;
+static int print_static,f_raw,f_tcp,f_udp,f_unknown = 1;
 
 enum State {
     number = 0, opt_number, i_forward, i_inp_icmp, i_outp_icmp, i_rto_alg,
@@ -33,7 +33,7 @@ struct statedesc {
     char *title;
 };
 
-struct statedesc states[] = {
+static struct statedesc states[] = {
     [number] = { 4, NULL },
     [opt_number] = { 4, NULL },
     [i_forward] = { 4, NULL },
@@ -53,7 +53,7 @@ static enum State state;
  * Don't mark the first field as translatable! It's a snmp MIB standard.
  * - acme
  */
-struct entry Iptab[] =
+static struct entry Iptab[] =
 {
     {"Forwarding", N_("Forwarding is %s"), i_forward | I_STATIC},
     {"DefaultTTL", N_("Default TTL is %llu"), number | I_STATIC},
@@ -76,7 +76,7 @@ struct entry Iptab[] =
     {"FragCreates", N_("%llu fragments created"), opt_number}
 };
 
-struct entry Ip6tab[] =
+static struct entry Ip6tab[] =
 {
     {"Ip6InReceives", N_("%llu total packets received"), number},
     {"Ip6InHdrErrors", N_("%llu with invalid headers"), opt_number},
@@ -102,7 +102,7 @@ struct entry Ip6tab[] =
     {"Ip6OutMcastPkts", N_("%llu outgoing multicast packets"), opt_number}
 };
 
-struct entry Icmptab[] =
+static struct entry Icmptab[] =
 {
     {"InMsgs", N_("%llu ICMP messages received"), number},
     {"InErrors", N_("%llu input ICMP message failed."), number},
@@ -132,7 +132,7 @@ struct entry Icmptab[] =
     {"OutAddrMaskReps", N_("address mask replies: %llu"), i_outp_icmp | I_TITLE},
 };
 
-struct entry Icmp6tab[] =
+static struct entry Icmp6tab[] =
 {
     {"Icmp6InMsgs", N_("%llu ICMP messages received"), number},
     {"Icmp6InErrors", N_("%llu input ICMP message failed."), number},
@@ -167,7 +167,7 @@ struct entry Icmp6tab[] =
     {"Icmp6OutRedirects", N_("redirects: %llu"), i_outp_icmp | I_TITLE},
 };
 
-struct entry Tcptab[] =
+static struct entry Tcptab[] =
 {
     {"RtoAlgorithm", N_("RTO algorithm is %s"), i_rto_alg | I_STATIC},
     {"RtoMin", "", number},
@@ -185,7 +185,7 @@ struct entry Tcptab[] =
     {"OutRsts", N_("%llu resets sent"), number},
 };
 
-struct entry Udptab[] =
+static struct entry Udptab[] =
 {
     {"InDatagrams", N_("%llu packets received"), number},
     {"NoPorts", N_("%llu packets to unknown port received."), number},
@@ -195,7 +195,7 @@ struct entry Udptab[] =
     {"SndbufErrors", N_("%llu send buffer errors"), number},
  };
 
-struct entry Udp6tab[] =
+static struct entry Udp6tab[] =
 {
     {"Udp6InDatagrams", N_("%llu packets received"), number},
     {"Udp6NoPorts", N_("%llu packets to unknown port received."), number},
@@ -203,7 +203,7 @@ struct entry Udp6tab[] =
     {"Udp6OutDatagrams", N_("%llu packets sent"), number},
 };
 
-struct entry Tcpexttab[] =
+static struct entry Tcpexttab[] =
 {
     {"SyncookiesSent", N_("%llu SYN cookies sent"), opt_number},
     {"SyncookiesRecv", N_("%llu SYN cookies received"), opt_number},
@@ -298,7 +298,7 @@ struct tabtab {
     int *flag;
 };
 
-struct tabtab snmptabs[] =
+static struct tabtab snmptabs[] =
 {
     {"Ip", Iptab, sizeof(Iptab), &f_raw},
     {"Icmp", Icmptab, sizeof(Icmptab), &f_raw},
@@ -308,7 +308,7 @@ struct tabtab snmptabs[] =
     {NULL}
 };
 
-struct tabtab snmp6tabs[] =
+static struct tabtab snmp6tabs[] =
 {
     {"Ip6", Ip6tab, sizeof(Ip6tab), &f_raw},
     {"Icmp6", Icmp6tab, sizeof(Icmp6tab), &f_raw},
@@ -319,12 +319,12 @@ struct tabtab snmp6tabs[] =
 
 /* XXX IGMP */
 
-int cmpentries(const void *a, const void *b)
+static int cmpentries(const void *a, const void *b)
 {
     return strcmp(((struct entry *) a)->title, ((struct entry *) b)->title);
 }
 
-void printval(struct tabtab *tab, char *title, unsigned long long val)
+static void printval(struct tabtab *tab, char *title, unsigned long long val)
 {
     struct entry *ent = NULL, key;
     int type;
@@ -382,7 +382,7 @@ void printval(struct tabtab *tab, char *title, unsigned long long val)
     state = type;
 }
 
-struct tabtab *newtable(struct tabtab *tabs, char *title)
+static struct tabtab *newtable(struct tabtab *tabs, char *title)
 {
     struct tabtab *t;
 	static struct tabtab dummytab;
@@ -403,7 +403,7 @@ struct tabtab *newtable(struct tabtab *tabs, char *title)
 	return &dummytab;
 }
 
-int process_fd(FILE *f, int all, char *filter)
+static int process_fd(FILE *f, int all, const char *filter)
 {
     char buf1[2048], buf2[2048];
     char *sp, *np, *p;
@@ -457,7 +457,7 @@ formaterr:
   return -1;
 }
 
-void cpytitle(char *original, char *new)
+static void cpytitle(char *original, char *new)
 {
      char *ptr = original;
      while(*ptr != '6' && *ptr != '\0') {
@@ -470,7 +470,7 @@ void cpytitle(char *original, char *new)
     *new = '\0';
 }
 
-void process6_fd(FILE *f)
+static void process6_fd(FILE *f)
 {
    char buf1[1024],buf2[50],buf3[1024];
    unsigned long long val;
