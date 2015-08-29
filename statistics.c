@@ -13,14 +13,6 @@
 #include "intl.h"
 #include "proc.h"
 
-/* #define WARN 1 */
-
-#ifdef WARN
-#define UFWARN(x) x
-#else
-#define UFWARN(x)
-#endif
-
 int print_static,f_raw,f_tcp,f_udp,f_unknown = 1;
 
 enum State {
