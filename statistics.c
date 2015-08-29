@@ -13,7 +13,7 @@
 #include "intl.h"
 #include "proc.h"
 
-static int print_static,f_raw,f_tcp,f_udp,f_unknown = 1;
+static int print_static,f_raw,f_tcp,f_udp,f_sctp,f_unknown = 1;
 
 enum State {
     number = 0, opt_number, i_forward, i_inp_icmp, i_outp_icmp, i_rto_alg,
@@ -274,6 +274,27 @@ static const struct entry Tcpexttab[] =
     {"TWRecycled", N_("%llu time wait sockets recycled by time stamp"), opt_number},
 };
 
+static const struct entry Sctptab[] =
+{   /* Keep the entries sorted! */
+    {"SctpAborteds", N_("%llu Number of Aborteds "), number},
+    {"SctpActiveEstabs", N_("%llu Active Associations"), number},
+    {"SctpChecksumErrors", N_("%llu Number of Packets with invalid Checksum"), number},
+    {"SctpCurrEstab", N_("%llu Current Associations"), number},
+    {"SctpFragUsrMsgs", N_("%llu Number of messages fragmented"), number},
+    {"SctpInCtrlChunks", N_("%llu Number of control chunks received"), number},
+    {"SctpInOrderChunks", N_("%llu Number of ordered chunks received"), number},
+    {"SctpInSCTPPacks", N_("%llu Number of SCTP packets received"), number},
+    {"SctpInUnorderChunks", N_("%llu Number of Unordered chunks received"), number},
+    {"SctpOutCtrlChunks", N_("%llu Number of control chunks sent"), number},
+    {"SctpOutOfBlues", N_("%llu Number of Out of Blue packets"), number},
+    {"SctpOutOrderChunks", N_("%llu Number of ordered chunks sent"), number},
+    {"SctpOutSCTPPacks", N_("%llu Number of SCTP packets sent"), number},
+    {"SctpOutUnorderChunks", N_("%llu Number of Unordered chunks sent"), number},
+    {"SctpPassiveEstabs", N_("%llu Passive Associations"), number},
+    {"SctpReasmUsrMsgs", N_("%llu Number of messages reassembled "), number},
+    {"SctpShutdowns", N_("%llu Number of Graceful Terminations"), number},
+};
+
 struct tabtab {
     const char *title;
     const struct entry *tab;
@@ -287,6 +308,7 @@ static const struct tabtab snmptabs[] =
     {"Icmp", Icmptab, sizeof(Icmptab), &f_raw},
     {"Tcp", Tcptab, sizeof(Tcptab), &f_tcp},
     {"Udp", Udptab, sizeof(Udptab), &f_udp},
+    {"Sctp", Sctptab, sizeof(Sctptab), &f_sctp},
     {"TcpExt", Tcpexttab, sizeof(Tcpexttab), &f_tcp},
     {NULL}
 };
@@ -477,11 +499,36 @@ static void process6_fd(FILE *f)
 
 }
 
-void parsesnmp(int flag_raw, int flag_tcp, int flag_udp)
+/* Process a file with name-value lines (like /proc/net/sctp/snmp) */
+static void process_fd2(FILE *f, const char *filename)
+{
+    char buf1[1024];
+    char *sp;
+    const struct tabtab *tab;
+
+    tab = newtable(snmptabs, "Sctp");
+
+    while (fgets(buf1, sizeof buf1, f)) {
+	sp = buf1 + strcspn(buf1, " \t\n");
+	if (!sp) {
+	    fprintf(stderr, _("error parsing %s\n"), filename);
+	    return;
+	}
+	*sp = '\0';
+	sp++;
+
+	sp += strspn(sp, " \t\n");
+
+	if (*sp != '\0' && *(tab->flag))
+	    printval(tab, buf1, strtoul(sp, 0, 10));
+    }
+}
+
+void parsesnmp(int flag_raw, int flag_tcp, int flag_udp, int flag_sctp)
 {
     FILE *f;
 
-    f_raw = flag_raw; f_tcp = flag_tcp; f_udp = flag_udp;
+    f_raw = flag_raw; f_tcp = flag_tcp; f_udp = flag_udp; f_sctp = flag_sctp;
 
     f = proc_fopen("/proc/net/snmp");
     if (!f) {
@@ -508,7 +555,15 @@ void parsesnmp(int flag_raw, int flag_tcp, int flag_udp)
 
         fclose(f);
     }
-    return;
+
+    f = proc_fopen("/proc/net/sctp/snmp");
+    if (f) {
+	process_fd2(f,"/proc/net/sctp/snmp");
+	if (ferror(f)) {
+	    perror("/proc/net/sctp/snmp");
+	    fclose(f);
+	}
+    }
 }
 
 void parsesnmp6(int flag_raw, int flag_tcp, int flag_udp)
