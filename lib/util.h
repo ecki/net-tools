@@ -19,3 +19,5 @@ char *safe_strncpy(char *dst, const char *src, size_t size);
 
 #define netmin(a,b) ((a)<(b) ? (a) : (b))
 #define netmax(a,b) ((a)>(b) ? (a) : (b))
+
+#define ARRAY_SIZE(a) (sizeof(a) / sizeof((a)[0]))

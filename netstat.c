@@ -771,161 +771,262 @@ static int igmp_info(void)
 	       igmp_do_one, "igmp", "igmp6");
 }
 
-static int ip_parse_dots(uint32_t *addr, char const *src) {
-  unsigned  a, b, c, d;
-  unsigned  ret = 4-sscanf(src, "%u.%u.%u.%u", &a, &b, &c, &d);
-  *addr = htonl((a << 24)|(b << 16)|(c << 8)|d);
-  return  ret;
-}
-
-static void print_ip_service(struct sockaddr_in *addr, char const *protname,
-			     char *buf, unsigned size) {
-  const struct aftype *ap;
-
-  if(size == 0)  return;
-
-  /* print host */
-  if((ap = get_afntype(addr->sin_family)) == NULL) {
-    fprintf(stderr, _("netstat: unsupported address family %d !\n"),
-	    addr->sin_family);
-    return;
-  }
-  safe_strncpy(buf, ap->sprint((struct sockaddr*)addr, flag_not), size);
-
-  /* print service */
-  if(flag_all || (flag_lst && !addr->sin_port) || (!flag_lst && addr->sin_port)) {
-    char  bfs[32];
-
-    snprintf(bfs, sizeof(bfs), "%s",
-	     get_sname(addr->sin_port, (char*)protname, flag_not & FLAG_NUM_PORT));
-
-    /* check if we must cut on host and/or service name */
-    {
-      unsigned const  bufl = strlen(buf);
-      unsigned const  bfsl = strlen(bfs);
-
-      if(bufl+bfsl+2 > size) {
-	unsigned const  half = (size-2)>>1;
-	if(bufl > half) {
-	  if(bfsl > half) {
-	    buf[size-2-half] = '\0';
-	    bfs[half+1]      = '\0';
-	  }
-	  else  buf[size-2-bfsl] = '\0';
-	}
-	else  bfs[size-2-bufl] = '\0';
-      }
+static const char *sctp_socket_state_str(int state)
+{
+    if (state >= 0 && state < ARRAY_SIZE(tcp_state))
+	return tcp_state[state];
+    else {
+	static char state_str_buf[64];
+	sprintf(state_str_buf, "UNKNOWN(%d)", state);
+	return state_str_buf;
     }
-    strcat(buf, ":");
-    strcat(buf, bfs);
-  }
 }
 
-/* process single SCTP endpoint */
-static void sctp_do_ept(int lnr, char const *line, const char *prot)
+static const struct aftype *process_sctp_addr_str(const char *addr_str, struct sockaddr *sa)
 {
-  struct sockaddr_in  laddr, raddr;
-  unsigned            uid, inode;
+    if (strchr(addr_str,':')) {
+#if HAVE_AFINET6
+	extern struct aftype inet6_aftype;
+	/* Demangle what the kernel gives us */
+	struct in6_addr in6;
+	char addr6_str[INET6_ADDRSTRLEN];
+	unsigned u0, u1, u2, u3, u4, u5, u6, u7;
+	sscanf(addr_str, "%04X:%04X:%04X:%04X:%04X:%04X:%04X:%04X",
+	       &u0, &u1, &u2, &u3, &u4, &u5, &u6, &u7);
+	in6.s6_addr16[0] = htons(u0);
+	in6.s6_addr16[1] = htons(u1);
+	in6.s6_addr16[2] = htons(u2);
+	in6.s6_addr16[3] = htons(u3);
+	in6.s6_addr16[4] = htons(u4);
+	in6.s6_addr16[5] = htons(u5);
+	in6.s6_addr16[6] = htons(u6);
+	in6.s6_addr16[7] = htons(u7);
 
-  char        l_addr[23], r_addr[23];
-
-  /* fill sockaddr_in structures */
-  {
-    unsigned  lport;
-    unsigned  ate;
-
-    if(lnr == 0)  return;
-    if(sscanf(line, "%*X %*X %*u %*u %*u %u %u %u %n",
-	      &lport, &uid, &inode, &ate) < 3)  goto err;
-
-    /* decode IP address */
-    if(ip_parse_dots(&laddr.sin_addr.s_addr, line+ate))  goto err;
-    raddr.sin_addr.s_addr = htonl(0);
-    laddr.sin_family = raddr.sin_family = AF_INET;
-    laddr.sin_port = htons(lport);
-    raddr.sin_port = htons(0);
-  }
-
-  /* print IP:service to l_addr and r_addr */
-  print_ip_service(&laddr, prot, l_addr, sizeof(l_addr));
-  print_ip_service(&raddr, prot, r_addr, sizeof(r_addr));
-
-  /* Print line */
-  printf("%-4s  %6d %6d %-*s %-*s %-11s",
-	 prot, 0, 0,
-	 (int)netmax(23,strlen(l_addr)), l_addr,
-	 (int)netmax(23,strlen(r_addr)), r_addr,
-	 _(tcp_state[TCP_LISTEN]));
-  finish_this_one(uid, inode, "");
-  return;
- err:
-  fprintf(stderr, "SCTP error in line: %d\n", lnr);
+	inet_ntop(AF_INET6, &in6, addr6_str, sizeof(addr6_str));
+	inet6_aftype.input(1, addr6_str, sa);
+	sa->sa_family = AF_INET6;
+#endif
+    } else {
+	struct sockaddr_in *sin = (struct sockaddr_in *)sa;
+	sin->sin_addr.s_addr = inet_addr(addr_str);
+	sa->sa_family = AF_INET;
+    }
+    return get_afntype(sa->sa_family);
 }
 
-/* process single SCTP association */
-static void sctp_do_assoc(int lnr, char const *line, const char *prot)
+static void sctp_eps_do_one(int lnr, char *line, const char *proto)
 {
-  struct sockaddr_in  laddr, raddr;
-  unsigned long       rxq, txq;
-  unsigned            uid, inode;
+    char buffer[1024];
+    int state, port;
+    int uid;
+    unsigned long inode;
+    const struct aftype *ap;
+    struct sockaddr_storage localsas;
+    struct sockaddr *localsa = (struct sockaddr *)&localsas;
+    const char *sst_str;
+    const char *lport_str;
+    const char *uid_str;
+    const char *inode_str;
+    char *laddrs_str;
 
-  char        l_addr[23], r_addr[23];
+    if (lnr == 0) {
+	/* ENDPT     SOCK   STY SST HBKT LPORT   UID INODE LADDRS */
+	return;
+    }
+    strtok(line, " \t\n");	/* skip endpt */
+    strtok(0, " \t\n");		/* skip sock */
+    strtok(0, " \t\n");		/* skip sty */
+    sst_str = strtok(0, " \t\n");
+    strtok(0, " \t\n");		/* skip hash bucket */
+    lport_str = strtok(0, " \t\n");
+    uid_str = strtok(0, " \t\n");
+    inode_str = strtok(0, " \t\n");
+    laddrs_str = strtok(0, "\t\n");
 
-  /* fill sockaddr_in structures */
-  {
-    unsigned    lport, rport;
-    unsigned    ate;
-    char const *addr;
+    if (!sst_str || !lport_str || !uid_str || !inode_str) {
+	fprintf(stderr, _("warning, got bogus sctp eps line.\n"));
+	return;
+    }
+    state = atoi(sst_str);
+    port = atoi(lport_str);
+    uid = atoi(uid_str);
+    inode = strtoul(inode_str,0,0);
 
-    if(lnr == 0)  return;
-    if(sscanf(line, "%*X %*X %*u %*u %*u %*u %*u %lu %lu %u %u %u %u %n",
-	      &txq, &rxq, &uid, &inode, &lport, &rport, &ate) < 6)  goto err;
+    const char *this_local_addr;
+    int first = 1;
+    char local_port[16];
+    snprintf(local_port, sizeof(local_port), "%s",
+        get_sname(htons(port), proto, flag_not & FLAG_NUM_PORT));
+    for (this_local_addr = strtok(laddrs_str, " \t\n");
+         this_local_addr;
+         this_local_addr = strtok(0, " \t\n")) {
+	char local_addr[64];
+	ap = process_sctp_addr_str(this_local_addr, localsa);
+	if (ap)
+	    safe_strncpy(local_addr, ap->sprint(localsa, flag_not), sizeof(local_addr));
+	else
+	    sprintf(local_addr, _("unsupported address family %d"), localsa->sa_family);
 
-    /* decode IP addresses */
-    addr = strchr(line+ate, '*');
-    if(addr == 0)  goto err;
-    if(ip_parse_dots(&laddr.sin_addr.s_addr, ++addr))  goto err;
-    addr = strchr(addr, '*');
-    if(addr == 0)  goto err;
-    if(ip_parse_dots(&raddr.sin_addr.s_addr, ++addr))  goto err;
-
-    /* complete sockaddr_in structures */
-    laddr.sin_family = raddr.sin_family = AF_INET;
-    laddr.sin_port = htons(lport);
-    raddr.sin_port = htons(rport);
-  }
-
-  /* print IP:service to l_addr and r_addr */
-  print_ip_service(&laddr, prot, l_addr, sizeof(l_addr));
-  print_ip_service(&raddr, prot, r_addr, sizeof(r_addr));
-
-  /* Print line */
-  printf("%-4s  %6ld %6ld %-*s %-*s %-11s",
-	 prot, rxq, txq,
-	 (int)netmax(23,strlen(l_addr)), l_addr,
-	 (int)netmax(23,strlen(r_addr)), r_addr,
-	 _(tcp_state[TCP_ESTABLISHED]));
-  finish_this_one(uid, inode, "");
-  return;
- err:
-  fprintf(stderr, "SCTP error in line: %d\n", lnr);
+	if (first)
+	    printf("sctp                ");
+	else
+	    printf("\n                    ");
+	sprintf(buffer, "%s:%s", local_addr, local_port);
+	printf("%-47s", buffer);
+	printf(" %-11s", first ? sctp_socket_state_str(state) : "");
+	first = 0;
+    }
+    finish_this_one(uid, inode, "");
 }
 
-static int sctp_info_epts(void) {
-  INFO_GUTS6(_PATH_PROCNET_SCTPEPTS, _PATH_PROCNET_SCTP6EPTS, "AF INET (sctp)",
-	     sctp_do_ept, "sctp", "sctp6");
+static void sctp_assoc_do_one(int lnr, char *line, const char *proto)
+{
+    char buffer[1024];
+    int state, lport,rport;
+    int uid;
+    unsigned rxqueue,txqueue;
+    unsigned long inode;
+
+    const struct aftype *ap;
+    struct sockaddr_storage localsas, remotesas;
+    struct sockaddr *localsa = (struct sockaddr *)&localsas;
+    struct sockaddr *remotesa = (struct sockaddr *)&remotesas;
+    const char *sst_str;
+    const char *txqueue_str;
+    const char *rxqueue_str;
+    const char *lport_str, *rport_str;
+    const char *uid_str;
+    const char *inode_str;
+    char *laddrs_str;
+    char *raddrs_str;
+
+    if (lnr == 0) {
+	/* ASSOC     SOCK   STY SST ST HBKT ASSOC-ID TX_QUEUE RX_QUEUE UID INODE LPORT RPORT LADDRS <-> RADDRS */
+	return;
+    }
+
+    strtok(line, " \t\n");	/* skip assoc */
+    strtok(0, " \t\n");		/* skip sock */
+    strtok(0, " \t\n");		/* skip sty */
+    sst_str = strtok(0, " \t\n");
+    strtok(0, " \t\n");
+    strtok(0, " \t\n");		/* skip hash bucket */
+    strtok(0, " \t\n");		/* skip hash assoc-id */
+    txqueue_str =  strtok(0, " \t\n");
+    rxqueue_str =  strtok(0, " \t\n");
+    uid_str = strtok(0, " \t\n");
+    inode_str = strtok(0, " \t\n");
+    lport_str = strtok(0, " \t\n");
+    rport_str = strtok(0, " \t\n");
+    laddrs_str = strtok(0, "<->\t\n");
+    raddrs_str = strtok(0, "<->\t\n");
+
+    if (!sst_str || !txqueue_str || !rxqueue_str || !uid_str ||
+        !inode_str || !lport_str || !rport_str) {
+	fprintf(stderr, _("warning, got bogus sctp assoc line.\n"));
+	return;
+    }
+
+    state = atoi(sst_str);
+    txqueue = atoi(txqueue_str);
+    rxqueue = atoi(rxqueue_str);
+    uid = atoi(uid_str);
+    inode = strtoul(inode_str, 0, 0);
+    lport = atoi(lport_str);
+    rport = atoi(rport_str);
+
+    /*print all addresses*/
+    const char *this_local_addr;
+    const char *this_remote_addr;
+    char *ss1, *ss2;
+    int first = 1;
+    char local_port[16];
+    char remote_port[16];
+    snprintf(local_port, sizeof(local_port), "%s",
+             get_sname(htons(lport), proto,
+             flag_not & FLAG_NUM_PORT));
+    snprintf(remote_port, sizeof(remote_port), "%s",
+             get_sname(htons(rport), proto,
+             flag_not & FLAG_NUM_PORT));
+
+    this_local_addr = strtok_r(laddrs_str, " \t\n", &ss1);
+    this_remote_addr = strtok_r(raddrs_str, " \t\n", &ss2);
+    while (this_local_addr || this_remote_addr) {
+	char local_addr[64];
+	char remote_addr[64];
+
+	if (this_local_addr) {
+	    if (this_local_addr[0] == '*') {
+		/* skip * */
+		this_local_addr++;
+	    }
+	    ap = process_sctp_addr_str(this_local_addr, localsa);
+	    if (ap)
+		safe_strncpy(local_addr,
+		             ap->sprint(localsa, flag_not), sizeof(local_addr));
+	    else
+		sprintf(local_addr, _("unsupported address family %d"), localsa->sa_family);
+	}
+	if (this_remote_addr) {
+	    if (this_remote_addr[0] == '*') {
+		/* skip * */
+		this_remote_addr++;
+	    }
+	    ap = process_sctp_addr_str(this_remote_addr, remotesa);
+	    if (ap)
+		safe_strncpy(remote_addr,
+		             ap->sprint(remotesa, flag_not), sizeof(remote_addr));
+	    else
+		sprintf(remote_addr, _("unsupported address family %d"), remotesa->sa_family);
+	}
+
+	if (first)
+	    printf("sctp  %6u %6u ", rxqueue, txqueue);
+	else
+	    printf("\n                    ");
+	if (this_local_addr) {
+	    if (first)
+		sprintf(buffer, "%s:%s", local_addr, local_port);
+	    else
+		sprintf(buffer, "%s", local_addr);
+	    printf("%-23s", buffer);
+	} else
+	    printf("%-23s", "");
+	printf(" ");
+	if (this_remote_addr) {
+	    if (first)
+		sprintf(buffer, "%s:%s", remote_addr, remote_port);
+	    else
+		sprintf(buffer, "%s", remote_addr);
+	    printf("%-23s", buffer);
+	} else
+	    printf("%-23s", "");
+
+       printf(" %-11s", first ? sctp_socket_state_str(state) : "");
+
+       first = 0;
+       this_local_addr = strtok_r(0, " \t\n", &ss1);
+       this_remote_addr = strtok_r(0, " \t\n", &ss2);
+    }
+    finish_this_one(uid, inode, "");
 }
 
-static int sctp_info_assocs(void) {
-  INFO_GUTS6(_PATH_PROCNET_SCTPASSOCS, _PATH_PROCNET_SCTP6ASSOCS, "AF INET (sctp)",
-	     sctp_do_assoc, "sctp", "sctp6");
+static int sctp_info_eps(void)
+{
+    INFO_GUTS6(_PATH_PROCNET_SCTPEPTS, _PATH_PROCNET_SCTP6EPTS, "AF INET (sctp)",
+               sctp_eps_do_one, "sctp", "sctp6");
 }
 
-static int sctp_info(void) {
-  int  res;
-  res = sctp_info_epts();
-  if(res)  return  res;
-  return  sctp_info_assocs();
+static int sctp_info_assocs(void)
+{
+    INFO_GUTS6(_PATH_PROCNET_SCTPASSOCS, _PATH_PROCNET_SCTP6ASSOCS, "AF INET (sctp)",
+               sctp_assoc_do_one, "sctp", "sctp6");
+}
+
+static int sctp_info(void)
+{
+  int res = sctp_info_eps();
+  return res ? res : sctp_info_assocs();
 }
 
 static void addr_do_one(char *buf, size_t buf_len, size_t short_len, const struct aftype *ap,
