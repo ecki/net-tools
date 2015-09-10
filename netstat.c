@@ -1926,7 +1926,7 @@ static void version(void)
 }
 
 
-static void usage(void)
+static void usage(int rc)
 {
     fprintf(stderr, _("usage: netstat [-vWeenNcCF] [<Af>] -r         netstat {-V|--version|-h|--help}\n"));
     fprintf(stderr, _("       netstat [-vWnNcaeol] [<Socket> ...]\n"));
@@ -1964,7 +1964,7 @@ static void usage(void)
     fprintf(stderr, _("  <AF>=Use '-6|-4' or '-A <af>' or '--<af>'; default: %s\n"), DFLT_AF);
     fprintf(stderr, _("  List of possible address families (which support routing):\n"));
     print_aflist(1); /* 1 = routeable */
-    exit(E_USAGE);
+    exit(rc);
 }
 
 
@@ -2148,14 +2148,15 @@ int main
 
 	    break;
 	case '?':
+	    usage(E_OPTERR);
 	case 'h':
-	    usage();
+	    usage(E_USAGE);
 	case 's':
 	    flag_sta++;
 	}
 
     if (flag_int + flag_rou + flag_mas + flag_sta > 1)
-	usage();
+	usage(E_OPTERR);
 
     if ((flag_inet || flag_inet6 || flag_sta) &&
         !(flag_tcp || flag_sctp || flag_udp || flag_udplite || flag_raw))
