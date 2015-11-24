@@ -1461,11 +1461,6 @@ msgstr "pidurduspakette (source quench): %u"
 msgid "redirect: %u"
 msgstr "ümbersuunamisi: %u"
 
-#: ../statistics.c:108
-#, c-format
-msgid "echo requests: %u"
-msgstr " echo päringuid: %u"
-
 #: ../statistics.c:110
 #, c-format
 msgid "timestamp requests: %u"

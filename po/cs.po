@@ -1723,11 +1723,6 @@ msgstr "Zahlcení zdroje: %u"
 msgid "redirect: %u"
 msgstr "Počet přesměrování: %u"
 
-#: ../statistics.c:135
-#, c-format
-msgid "echo requests: %u"
-msgstr "Žádost o echo: %u"
-
 #: ../statistics.c:137
 #, c-format
 msgid "timestamp requests: %u"

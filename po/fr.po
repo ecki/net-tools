@@ -1647,11 +1647,6 @@ msgstr "Source Quench: %d"
 msgid "redirect: %d"
 msgstr "redirection: %d"
 
-#: ../statistics.c:106
-#, c-format
-msgid "echo requests: %d"
-msgstr "requête echo: %d"
-
 #: ../statistics.c:108
 #, c-format
 msgid "timestamp requests: %d"
