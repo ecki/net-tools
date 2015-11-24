@@ -1465,7 +1465,7 @@ msgstr ""
 
 #: ../statistics.c:80
 #, c-format
-msgid "%u packet reassembles failed"
+msgid "%u packet reassemblies failed"
 msgstr ""
 
 #: ../statistics.c:81
@@ -1490,7 +1490,7 @@ msgstr ""
 
 #: ../statistics.c:89
 #, c-format
-msgid "%u input ICMP message failed."
+msgid "%u input ICMP message failed"
 msgstr ""
 
 #: ../statistics.c:90 ../statistics.c:103
@@ -1579,7 +1579,7 @@ msgstr ""
 
 #: ../statistics.c:108
 #, c-format
-msgid "echo request: %u"
+msgid "echo requests: %u"
 msgstr ""
 
 #: ../statistics.c:110
@@ -1604,7 +1604,7 @@ msgstr ""
 
 #: ../statistics.c:122
 #, c-format
-msgid "%u active connections openings"
+msgid "%u active connection openings"
 msgstr ""
 
 #: ../statistics.c:123
@@ -1634,17 +1634,17 @@ msgstr ""
 
 #: ../statistics.c:128
 #, c-format
-msgid "%u segments send out"
+msgid "%u segments sent out"
 msgstr ""
 
 #: ../statistics.c:129
 #, c-format
-msgid "%u segments retransmited"
+msgid "%u segments retransmitted"
 msgstr ""
 
 #: ../statistics.c:130
 #, c-format
-msgid "%u bad segments received."
+msgid "%u bad segments received"
 msgstr ""
 
 #: ../statistics.c:131
@@ -1659,7 +1659,7 @@ msgstr ""
 
 #: ../statistics.c:137
 #, c-format
-msgid "%u packets to unknown port received."
+msgid "%u packets to unknown port received"
 msgstr ""
 
 #: ../statistics.c:138
@@ -1746,7 +1746,7 @@ msgstr ""
 
 #: ../statistics.c:167
 #, c-format
-msgid "%u packets rejects in established connections because of timestamp"
+msgid "%u packetes rejected in established connections because of timestamp"
 msgstr ""
 
 #: ../statistics.c:169
@@ -1776,7 +1776,7 @@ msgstr ""
 
 #: ../statistics.c:176
 #, c-format
-msgid "%u packets directly queued to recvmsg prequeue."
+msgid "%u packets directly queued to recvmsg prequeue"
 msgstr ""
 
 #: ../statistics.c:178
@@ -1801,7 +1801,7 @@ msgstr ""
 
 #: ../statistics.c:183
 #, c-format
-msgid "%u packets header predicted and directly queued to user"
+msgid "%u packet headers predicted and directly queued to user"
 msgstr ""
 
 #: ../statistics.c:185

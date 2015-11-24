@@ -70,7 +70,7 @@ static const struct entry Iptab[] =
     {"OutDiscards", N_("%llu outgoing packets dropped"), opt_number},
     {"OutNoRoutes", N_("%llu dropped because of missing route"), opt_number},
     {"OutRequests", N_("%llu requests sent out"), number},	/*? */
-    {"ReasmFails", N_("%llu packet reassembles failed"), opt_number},
+    {"ReasmFails", N_("%llu packet reassemblies failed"), opt_number},
     {"ReasmOKs", N_("%llu packets reassembled ok"), opt_number},
     {"ReasmReqds", N_("%llu reassemblies required"), opt_number},	/* ? */
     {"ReasmTimeout", N_("%llu fragments dropped after timeout"), opt_number},
@@ -96,7 +96,7 @@ static const struct entry Ip6tab[] =
     {"Ip6OutMcastPkts", N_("%llu outgoing multicast packets"), opt_number},
     {"Ip6OutNoRoutes", N_("%llu dropped because of missing route"), opt_number},
     {"Ip6OutRequests", N_("%llu requests sent out"), number},     /*? */
-    {"Ip6ReasmFails", N_("%llu packet reassembles failed"), opt_number},
+    {"Ip6ReasmFails", N_("%llu packet reassemblies failed"), opt_number},
     {"Ip6ReasmOKs", N_("%llu packets reassembled ok"), opt_number},
     {"Ip6ReasmReqds", N_("%llu reassemblies required"), opt_number}, /* ? */
     {"Ip6ReasmTimeout", N_("%llu fragments dropped after timeout"), opt_number},
@@ -109,7 +109,7 @@ static const struct entry Icmptab[] =
     {"InDestUnreachs", N_("destination unreachable: %llu"), i_inp_icmp | I_TITLE},
     {"InEchoReps", N_("echo replies: %llu"), i_inp_icmp | I_TITLE},
     {"InEchos", N_("echo requests: %llu"), i_inp_icmp | I_TITLE},
-    {"InErrors", N_("%llu input ICMP message failed."), number},
+    {"InErrors", N_("%llu input ICMP message failed"), number},
     {"InMsgs", N_("%llu ICMP messages received"), number},
     {"InParmProbs", N_("wrong parameters: %llu"), i_inp_icmp | I_TITLE},	/*? */
     {"InRedirects", N_("redirects: %llu"), i_inp_icmp | I_TITLE},
@@ -121,7 +121,7 @@ static const struct entry Icmptab[] =
     {"OutAddrMasks", N_("address mask requests: %llu"), i_outp_icmp | I_TITLE},
     {"OutDestUnreachs", N_("destination unreachable: %llu"), i_outp_icmp | I_TITLE},
     {"OutEchoReps", N_("echo replies: %llu"), i_outp_icmp | I_TITLE},
-    {"OutEchos", N_("echo request: %llu"), i_outp_icmp | I_TITLE},
+    {"OutEchos", N_("echo requests: %llu"), i_outp_icmp | I_TITLE},
     {"OutErrors", N_("%llu ICMP messages failed"), number},
     {"OutMsgs", N_("%llu ICMP messages sent"), number},
     {"OutParmProbs", N_("wrong parameters: %llu"), i_outp_icmp | I_TITLE},	/*? */
@@ -137,7 +137,7 @@ static const struct entry Icmp6tab[] =
     {"Icmp6InDestUnreachs", N_("destination unreachable: %llu"), i_inp_icmp | I_TITLE},
     {"Icmp6InEchoReplies", N_("echo replies: %llu"), i_inp_icmp | I_TITLE},
     {"Icmp6InEchos", N_("echo requests: %llu"), i_inp_icmp | I_TITLE},
-    {"Icmp6InErrors", N_("%llu input ICMP message failed."), number},
+    {"Icmp6InErrors", N_("%llu input ICMP message failed"), number},
     {"Icmp6InGroupMembQueries", N_("group member queries: %llu"), i_inp_icmp | I_TITLE},
     {"Icmp6InGroupMembReductions", N_("group member reductions: %llu"), i_inp_icmp | I_TITLE},
     {"Icmp6InGroupMembResponses", N_("group member responses: %llu"), i_inp_icmp | I_TITLE},
@@ -169,17 +169,17 @@ static const struct entry Icmp6tab[] =
 
 static const struct entry Tcptab[] =
 {   /* Keep the entries sorted! */
-    {"ActiveOpens", N_("%llu active connections openings"), number},
+    {"ActiveOpens", N_("%llu active connection openings"), number},
     {"AttemptFails", N_("%llu failed connection attempts"), number},
     {"CurrEstab", N_("%llu connections established"), number},
     {"EstabResets", N_("%llu connection resets received"), number},
-    {"InErrs", N_("%llu bad segments received."), number},
+    {"InErrs", N_("%llu bad segments received"), number},
     {"InSegs", N_("%llu segments received"), number},
     {"MaxConn", "", number},
     {"OutRsts", N_("%llu resets sent"), number},
-    {"OutSegs", N_("%llu segments send out"), number},
+    {"OutSegs", N_("%llu segments sent out"), number},
     {"PassiveOpens", N_("%llu passive connection openings"), number},
-    {"RetransSegs", N_("%llu segments retransmited"), number},
+    {"RetransSegs", N_("%llu segments retransmitted"), number},
     {"RtoAlgorithm", N_("RTO algorithm is %s"), i_rto_alg | I_STATIC},
     {"RtoMax", "", number},
     {"RtoMin", "", number},
@@ -189,7 +189,7 @@ static const struct entry Udptab[] =
 {   /* Keep the entries sorted! */
     {"InDatagrams", N_("%llu packets received"), number},
     {"InErrors", N_("%llu packet receive errors"), number},
-    {"NoPorts", N_("%llu packets to unknown port received."), number},
+    {"NoPorts", N_("%llu packets to unknown port received"), number},
     {"OutDatagrams", N_("%llu packets sent"), number},
     {"RcvbufErrors", N_("%llu receive buffer errors"), number},
     {"SndbufErrors", N_("%llu send buffer errors"), number},
@@ -199,7 +199,7 @@ static const struct entry Udp6tab[] =
 {   /* Keep the entries sorted! */
     {"Udp6InDatagrams", N_("%llu packets received"), number},
     {"Udp6InErrors", N_("%llu packet receive errors"), number},
-    {"Udp6NoPorts", N_("%llu packets to unknown port received."), number},
+    {"Udp6NoPorts", N_("%llu packets to unknown port received"), number},
     {"Udp6OutDatagrams", N_("%llu packets sent"), number},
 };
 
@@ -215,7 +215,7 @@ static const struct entry Tcpexttab[] =
     {"OfoPruned", N_("%llu packets dropped from out-of-order queue because of socket buffer overrun"), opt_number},
     {"OutOfWindowIcmps", N_("%llu ICMP packets dropped because they were out-of-window"), opt_number},
     {"PAWSActive", N_("%llu active connections rejected because of time stamp"), opt_number},
-    {"PAWSEstab", N_("%llu packets rejects in established connections because of timestamp"), opt_number},
+    {"PAWSEstab", N_("%llu packetes rejected in established connections because of timestamp"), opt_number},
     {"PAWSPassive", N_("%llu passive connections rejected because of time stamp"), opt_number},
     {"PruneCalled", N_("%llu packets pruned from receive queue because of socket buffer overrun"), opt_number},
     {"RcvPruned", N_("%llu packets pruned from receive queue"), opt_number},
@@ -244,14 +244,14 @@ static const struct entry Tcpexttab[] =
     {"TCPFullUndo", N_("%llu congestion windows fully recovered without slow start"), opt_number},
     {"TCPHPAcks", N_("%llu predicted acknowledgments"), opt_number},
     {"TCPHPHits", N_("%llu packet headers predicted"), number},
-    {"TCPHPHitsToUser", N_("%llu packets header predicted and directly queued to user"), opt_number},
+    {"TCPHPHitsToUser", N_("%llu packet headers predicted and directly queued to user"), opt_number},
     {"TCPLossFailures",  N_("%llu timeouts in loss state"), opt_number},
     {"TCPLoss", N_("%llu TCP data loss events"), opt_number},
     {"TCPLossUndo", N_("%llu congestion windows recovered without slow start after partial ack"), opt_number},
     {"TCPLostRetransmits", N_("%llu retransmits lost"), opt_number},
     {"TCPMemoryPressures", N_("TCP ran low on memory %llu times"), opt_number},
     {"TCPPartialUndo", N_("%llu congestion windows partially recovered using Hoe heuristic"), opt_number},
-    {"TCPPrequeued", N_("%llu packets directly queued to recvmsg prequeue."), opt_number},
+    {"TCPPrequeued", N_("%llu packets directly queued to recvmsg prequeue"), opt_number},
     {"TCPPrequeueDropped", N_("%llu packets dropped from prequeue"), opt_number},
     {"TCPPureAcks", N_("%llu acknowledgments not containing data payload received"), opt_number},
     {"TCPRcvCollapsed", N_("%llu packets collapsed in receive queue due to low socket buffer"), opt_number},

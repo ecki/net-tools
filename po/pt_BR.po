@@ -1530,7 +1530,7 @@ msgstr "%d pacotes remontados sem problemas"
 
 #: ../statistics.c:78
 #, c-format
-msgid "%d packet reassembles failed"
+msgid "%d packet reassemblies failed"
 msgstr "%d remontagens de pacotes falharam"
 
 #: ../statistics.c:79
@@ -1555,8 +1555,8 @@ msgstr "%d mensagens ICMP recebidas"
 
 #: ../statistics.c:87
 #, c-format
-msgid "%d input ICMP message failed."
-msgstr "%d mensagens ICMP entrantes falharam."
+msgid "%d input ICMP message failed"
+msgstr "%d mensagens ICMP entrantes falharam"
 
 #: ../statistics.c:88 ../statistics.c:101
 #, c-format
@@ -1643,7 +1643,7 @@ msgstr "redireções: %d"
 
 #: ../statistics.c:106
 #, c-format
-msgid "echo request: %d"
+msgid "echo requests: %d"
 msgstr "requisições de eco: %d"
 
 #: ../statistics.c:108
@@ -1673,7 +1673,7 @@ msgstr "Algorítmo RTO é %s"
 
 #: ../statistics.c:120
 #, c-format
-msgid "%d active connections openings"
+msgid "%d active connection openings"
 msgstr "%d tentativas de conexão falharam"
 
 #: ../statistics.c:121
@@ -1703,18 +1703,18 @@ msgstr "%d segmentos recebidos"
 
 #: ../statistics.c:126
 #, c-format
-msgid "%d segments send out"
+msgid "%d segments sent out"
 msgstr "%d segmentos enviados"
 
 #: ../statistics.c:127
 #, c-format
-msgid "%d segments retransmited"
+msgid "%d segments retransmitted"
 msgstr "%d segmentos retransmitidos"
 
 #: ../statistics.c:128
 #, c-format
-msgid "%d bad segments received."
-msgstr "%d segmentos ruins recebidos."
+msgid "%d bad segments received"
+msgstr "%d segmentos ruins recebidos"
 
 #: ../statistics.c:129
 #, c-format
@@ -1728,8 +1728,8 @@ msgstr "%d pacotes recebidos"
 
 #: ../statistics.c:135
 #, c-format
-msgid "%d packets to unknown port received."
-msgstr "%d pacotes para portas desconhecidas recebidos."
+msgid "%d packets to unknown port received"
+msgstr "%d pacotes para portas desconhecidas recebidos"
 
 #: ../statistics.c:136
 #, c-format

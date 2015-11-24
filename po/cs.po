@@ -1584,7 +1584,7 @@ msgstr "Počet v pořádku znovu sestavených paketů: %u"
 
 #: ../statistics.c:81 ../statistics.c:105
 #, c-format
-msgid "%u packet reassembles failed"
+msgid "%u packet reassemblies failed"
 msgstr "Počet paketů, jež se nepodařilo znovu sestavit: %u"
 
 #: ../statistics.c:82 ../statistics.c:106
@@ -1634,7 +1634,7 @@ msgstr "Počet přijatých ICMP zpráv: %u"
 
 #: ../statistics.c:116 ../statistics.c:146
 #, c-format
-msgid "%u input ICMP message failed."
+msgid "%u input ICMP message failed"
 msgstr "Počet chybných příchozích ICMP zpráv: %u"
 
 #: ../statistics.c:117 ../statistics.c:130 ../statistics.c:147
@@ -1725,7 +1725,7 @@ msgstr "Počet přesměrování: %u"
 
 #: ../statistics.c:135
 #, c-format
-msgid "echo request: %u"
+msgid "echo requests: %u"
 msgstr "Žádost o echo: %u"
 
 #: ../statistics.c:137
@@ -1815,7 +1815,7 @@ msgstr "RTO algoritmus je %s"
 
 #: ../statistics.c:184
 #, c-format
-msgid "%u active connections openings"
+msgid "%u active connection openings"
 msgstr "Počet aktivně navázaných spojení: %u"
 
 #: ../statistics.c:185
@@ -1845,17 +1845,17 @@ msgstr "Počet přijatých segmentů: %u"
 
 #: ../statistics.c:190
 #, c-format
-msgid "%u segments send out"
+msgid "%u segments sent out"
 msgstr "Počet odeslaných segmentů: %u"
 
 #: ../statistics.c:191
 #, c-format
-msgid "%u segments retransmited"
+msgid "%u segments retransmitted"
 msgstr "Počet přenesených segmentů: %u"
 
 #: ../statistics.c:192
 #, c-format
-msgid "%u bad segments received."
+msgid "%u bad segments received"
 msgstr "Počet chybných příchozích segmentů: %u"
 
 #: ../statistics.c:193
@@ -1870,7 +1870,7 @@ msgstr "Počet přijatých paketů: %u"
 
 #: ../statistics.c:199 ../statistics.c:207
 #, c-format
-msgid "%u packets to unknown port received."
+msgid "%u packets to unknown port received"
 msgstr "Počet paketů přijatých pro neznámý port: %u"
 
 #: ../statistics.c:200 ../statistics.c:208
@@ -1965,7 +1965,7 @@ msgstr "Počet odmítnutých aktivních spojení kvůli časovému razítku: %u"
 
 #: ../statistics.c:237
 #, c-format
-msgid "%u packets rejects in established connections because of timestamp"
+msgid "%u packetes rejected in established connections because of timestamp"
 msgstr ""
 "Počet odmítnutých packetů uvnitř navázaného spojení kvůli časovému razítku: %"
 "u"
@@ -1998,7 +1998,7 @@ msgstr "Počet zahozených SYN packetů určených naslouchajícímu socketu: %u
 
 #: ../statistics.c:246
 #, c-format
-msgid "%u packets directly queued to recvmsg prequeue."
+msgid "%u packets directly queued to recvmsg prequeue"
 msgstr "Počet packetů přímo zařazených do předfronty recvmsg: %u"
 
 #: ../statistics.c:248
@@ -2023,7 +2023,7 @@ msgstr "Počet předpovězených hlaviček packetů: %u"
 
 #: ../statistics.c:253
 #, c-format
-msgid "%u packets header predicted and directly queued to user"
+msgid "%u packet headers predicted and directly queued to user"
 msgstr "Počet hlaviček packetů předpovězených a přímo předaných uživateli: %u"
 
 #: ../statistics.c:255

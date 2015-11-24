@@ -1518,7 +1518,7 @@ msgstr "%d Fragmente korrekt empfangen"
 
 #: ../statistics.c:78
 #, c-format
-msgid "%d packet reassembles failed"
+msgid "%d packet reassemblies failed"
 msgstr "%d fehlgeschlagene Paketdefragmentierungen"
 
 #: ../statistics.c:79
@@ -1543,7 +1543,7 @@ msgstr "%d ICMP Nachrichten empfangen"
 
 #: ../statistics.c:87
 #, c-format
-msgid "%d input ICMP message failed."
+msgid "%d input ICMP message failed"
 msgstr "%d eingegangene ICMP Nachrichten fehlgeschlagen"
 
 #: ../statistics.c:88 ../statistics.c:101
@@ -1631,7 +1631,7 @@ msgstr "Umleitungen: %d"
 
 #: ../statistics.c:106
 #, c-format
-msgid "echo request: %d"
+msgid "echo requests: %d"
 msgstr "Echo Anfragen: %d"
 
 #: ../statistics.c:108
@@ -1661,7 +1661,7 @@ msgstr "RTO Algorithmus is %s"
 
 #: ../statistics.c:120
 #, c-format
-msgid "%d active connections openings"
+msgid "%d active connection openings"
 msgstr "%d Verbindungen aktiv geöffnet"
 
 #: ../statistics.c:121
@@ -1691,18 +1691,18 @@ msgstr "%d Segmente empfangen"
 
 #: ../statistics.c:126
 #, c-format
-msgid "%d segments send out"
+msgid "%d segments sent out"
 msgstr "%d Segmente abgeschickt"
 
 #: ../statistics.c:127
 #, c-format
-msgid "%d segments retransmited"
+msgid "%d segments retransmitted"
 msgstr "%d Segmente erneut geschickt"
 
 #: ../statistics.c:128
 #, c-format
-msgid "%d bad segments received."
-msgstr "%d fehlerhafte Segmente empfangen."
+msgid "%d bad segments received"
+msgstr "%d fehlerhafte Segmente empfangen"
 
 #: ../statistics.c:129
 #, c-format
@@ -1716,8 +1716,8 @@ msgstr "%d Pakete empfangen"
 
 #: ../statistics.c:135
 #, c-format
-msgid "%d packets to unknown port received."
-msgstr "%d Pakete für unbekannte Ports empfangen."
+msgid "%d packets to unknown port received"
+msgstr "%d Pakete für unbekannte Ports empfangen"
 
 #: ../statistics.c:136
 #, c-format

@@ -1349,7 +1349,7 @@ msgstr "%u paketti pandi edukalt kokku"
 
 #: ../statistics.c:80
 #, c-format
-msgid "%u packet reassembles failed"
+msgid "%u packet reassemblies failed"
 msgstr "%u pakettide kokkupanekut ebaõnnestus"
 
 #: ../statistics.c:81
@@ -1374,7 +1374,7 @@ msgstr "%u ICMP teadet võeti vastu"
 
 #: ../statistics.c:89
 #, c-format
-msgid "%u input ICMP message failed."
+msgid "%u input ICMP message failed"
 msgstr "%u sisenevat ICMP teadet olid vigased"
 
 #: ../statistics.c:90 ../statistics.c:103
@@ -1463,7 +1463,7 @@ msgstr "ümbersuunamisi: %u"
 
 #: ../statistics.c:108
 #, c-format
-msgid "echo request: %u"
+msgid "echo requests: %u"
 msgstr " echo päringuid: %u"
 
 #: ../statistics.c:110
@@ -1488,7 +1488,7 @@ msgstr "RTO algoritm on %s"
 
 #: ../statistics.c:122
 #, c-format
-msgid "%u active connections openings"
+msgid "%u active connection openings"
 msgstr "%u aktiivset ühenduse avamist"
 
 #: ../statistics.c:123
@@ -1518,17 +1518,17 @@ msgstr "%u segmenti võeti vastu"
 
 #: ../statistics.c:128
 #, c-format
-msgid "%u segments send out"
+msgid "%u segments sent out"
 msgstr "%u segmenti saadeti"
 
 #: ../statistics.c:129
 #, c-format
-msgid "%u segments retransmited"
+msgid "%u segments retransmitted"
 msgstr "%u segmenti saadeti uuesti"
 
 #: ../statistics.c:130
 #, c-format
-msgid "%u bad segments received."
+msgid "%u bad segments received"
 msgstr "%u vigast segmenti võeti vastu"
 
 #: ../statistics.c:131
@@ -1543,7 +1543,7 @@ msgstr "%u paketti võeti vastu"
 
 #: ../statistics.c:137
 #, c-format
-msgid "%u packets to unknown port received."
+msgid "%u packets to unknown port received"
 msgstr "%u sisenevat paketti tundmatule pordile"
 
 #: ../statistics.c:138
@@ -1631,7 +1631,7 @@ msgstr "%u aktiivsest ühendusest keelduti ajatempli tõttu"
 
 #: ../statistics.c:167
 #, c-format
-msgid "%u packets rejects in established connections because of timestamp"
+msgid "%u packetes rejected in established connections because of timestamp"
 msgstr "%u paketist keelduti loodud ühendustes ajatempli tõttu"
 
 #: ../statistics.c:169
@@ -1661,7 +1661,7 @@ msgstr "%u SYN'i kuulavatele soklitele ignoreeriti"
 
 #: ../statistics.c:176
 #, c-format
-msgid "%u packets directly queued to recvmsg prequeue."
+msgid "%u packets directly queued to recvmsg prequeue"
 msgstr "%u paketti pandi otse recvmsg eeljärjekorda"
 
 #: ../statistics.c:178
@@ -1681,12 +1681,12 @@ msgstr "%u paketti kustutati eeljärjekorrast"
 
 #: ../statistics.c:183
 #, c-format
-msgid "%u packets header predicted"
+msgid "%u packet headers predicted"
 msgstr "%u paketti päise õige ennustusega"
 
 #: ../statistics.c:184
 #, c-format
-msgid "%u packets header predicted and directly queued to user"
+msgid "%u packet headers predicted and directly queued to user"
 msgstr "%u paketti päise õige ennustusega pandi otse kasutaja järjekorda"
 
 #: ../statistics.c:186
