@@ -201,11 +201,6 @@ static void showhname(char *hname, int c)
     case 'f':
 	printf("%s\n", hp->h_name);
 	break;
-    case 's':
-	if (p != NULL)
-	    *p = '\0';
-	printf("%s\n", hp->h_name);
-	break;
     }
 }
 
@@ -392,7 +387,12 @@ int main(int argc, char **argv)
 	    fprintf(stderr, _("gethostname()=`%s'\n"), myname);
 	if (!type)
 	    printf("%s\n", myname);
-	else
+	else if (type == 's') {
+	    char *p = strchr(myname, '.');
+	    if (p)
+		*p = '\0';
+	    printf("%s\n", myname);
+	} else
 	    showhname(myname, type);
 	break;
     case 3:
