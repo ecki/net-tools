@@ -1177,7 +1177,7 @@ static int notnull(const struct sockaddr_storage *sas)
 
 static void udp_do_one(int lnr, const char *line,const char *prot)
 {
-    char local_addr[64], rem_addr[64];
+    char local_addr[128], rem_addr[128];
     char *udp_state, timers[64];
     int num, local_port, rem_port, d, state, timer_run, uid, timeout;
     struct sockaddr_storage localsas, remsas;
@@ -1291,7 +1291,7 @@ static int udplite_info(void)
 
 static void raw_do_one(int lnr, const char *line,const char *prot)
 {
-    char local_addr[64], rem_addr[64];
+    char local_addr[128], rem_addr[128];
     char timers[64];
     int num, local_port, rem_port, d, state, timer_run, uid, timeout;
     struct sockaddr_storage localsas, remsas;
