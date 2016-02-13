@@ -60,9 +60,9 @@ The name of the interface.  This is usually a driver name followed by
 a unit number, for example
 .B eth0
 for the first Ethernet interface. If your kernel supports alias interfaces,
-you can specify them with 
+you can specify them with syntax like
 .B eth0:0
-for the first alias of eth0. You can use them to assign a second address. To
+for the first alias of eth0. You can use them to assign more addresses. To
 delete an alias interface use
 .BR "ifconfig eth0:0 down" .
 Note: for every scope (i.e. same net with address/netmask combination) all
@@ -70,7 +70,11 @@ aliases are deleted, if you delete the first (primary).
 .TP
 .B up
 This flag causes the interface to be activated.  It is implicitly
-specified if an address is assigned to the interface.
+specified if an address is assigned to the interface; you can suppress this
+behavior when using an alias interface by appending an
+.BR "-"
+to the alias (e.g.
+.BR "eth0:0-" ).
 .TP
 .B down
 This flag causes the driver for this interface to be shut down.
