@@ -75,6 +75,8 @@ behavior when using an alias interface by appending an
 .BR "-"
 to the alias (e.g.
 .BR "eth0:0-" ).
+It is also suppressed when using the IPv4 0.0.0.0 address as the kernel will
+use this to implicitly delete alias interfaces.
 .TP
 .B down
 This flag causes the driver for this interface to be shut down.

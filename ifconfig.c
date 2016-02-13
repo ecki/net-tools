@@ -1008,6 +1008,8 @@ int main(int argc, char **argv)
        /*
         * Don't do the set_flag() if the address is an alias with a - at the
         * end, since it's deleted already! - Roman
+        * Same goes if they used address 0.0.0.0 as the kernel uses this to
+        * destroy aliases.
         *
         * Should really use regex.h here, not sure though how well it'll go
         * with the cross-platform support etc.
@@ -1015,10 +1017,18 @@ int main(int argc, char **argv)
         {
             char *ptr;
             short int found_colon = 0;
+            short int bring_up = 1;
             for (ptr = ifr.ifr_name; *ptr; ptr++ )
                 if (*ptr == ':') found_colon++;
 
-            if (!(found_colon && *(ptr - 1) == '-'))
+            if (found_colon) {
+                if (ptr[-1] == '-')
+                    bring_up = 0;
+                else if (ap->af == AF_INET && sin->sin_addr.s_addr == 0)
+                    bring_up = 0;
+            }
+
+            if (bring_up)
                 goterr |= set_flag(ifr.ifr_name, (IFF_UP | IFF_RUNNING));
         }
 
