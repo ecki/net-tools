@@ -43,6 +43,15 @@ IGNORE_CMDS = ""
 ifneq ($(HAVE_ARP_TOOLS),1)
 IGNORE_CMDS += |arp.?|rarp.?
 endif
+ifneq ($(HAVE_HOSTNAME_TOOLS),1)
+IGNORE_CMDS += |dnsdomainname.?|hostname.?
+endif
+ifneq ($(HAVE_HOSTNAME_SYMLINKS),1)
+IGNORE_CMDS += |domainname.?|nisdomainname.?|ypdomainname.?
+endif
+ifneq ($(HAVE_AFDECnet),1)
+IGNORE_CMDS += |nodename.?
+endif
 ifneq ($(HAVE_IP_TOOLS),1)
 IGNORE_CMDS += |ipmaddr.?|iptunnel.?
 endif

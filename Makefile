@@ -33,11 +33,14 @@ SBINDIR ?= /sbin
 NET_LIB_PATH = lib
 NET_LIB_NAME = net-tools
 
-PROGS	:= ifconfig hostname netstat route slattach plipconfig nameif
+PROGS	:= ifconfig netstat route slattach plipconfig nameif
 
 -include config.make
 ifeq ($(HAVE_ARP_TOOLS),1)
 PROGS	+= arp rarp
+endif
+ifeq ($(HAVE_HOSTNAME_TOOLS),1)
+PROGS	+= hostname
 endif
 ifeq ($(HAVE_IP_TOOLS),1)
 PROGS   += iptunnel ipmaddr
@@ -204,7 +207,6 @@ installbin:
 	@echo
 	install -m 0755 -d ${BASEDIR}${SBINDIR}
 	install -m 0755 -d ${BASEDIR}${BINDIR}
-	install -m 0755 hostname   ${BASEDIR}${BINDIR}
 	install -m 0755 ifconfig   ${BASEDIR}${BINDIR}
 	install -m 0755 nameif     ${BASEDIR}${SBINDIR}
 	install -m 0755 netstat    ${BASEDIR}${BINDIR}
@@ -215,19 +217,24 @@ ifeq ($(HAVE_ARP_TOOLS),1)
 	install -m 0755 arp        ${BASEDIR}${SBINDIR}
 	install -m 0755 rarp       ${BASEDIR}${SBINDIR}
 endif
+ifeq ($(HAVE_HOSTNAME_TOOLS),1)
+	install -m 0755 hostname   ${BASEDIR}${BINDIR}
+	ln -fs hostname $(BASEDIR)${BINDIR}/dnsdomainname
+ifeq ($(HAVE_HOSTNAME_SYMLINKS),1)
+	ln -fs hostname $(BASEDIR)${BINDIR}/ypdomainname
+	ln -fs hostname $(BASEDIR)${BINDIR}/nisdomainname
+	ln -fs hostname $(BASEDIR)${BINDIR}/domainname
+endif
+ifeq ($(HAVE_AFDECnet),1)
+	ln -fs hostname $(BASEDIR)${BINDIR}/nodename
+endif
+endif
 ifeq ($(HAVE_IP_TOOLS),1)
 	install -m 0755 ipmaddr    $(BASEDIR)${SBINDIR}
 	install -m 0755 iptunnel   $(BASEDIR)${SBINDIR}
 endif
 ifeq ($(HAVE_MII),1)
 	install -m 0755 mii-tool   $(BASEDIR)${SBINDIR}
-endif
-	ln -fs hostname $(BASEDIR)${BINDIR}/dnsdomainname
-	ln -fs hostname $(BASEDIR)${BINDIR}/ypdomainname
-	ln -fs hostname $(BASEDIR)${BINDIR}/nisdomainname
-	ln -fs hostname $(BASEDIR)${BINDIR}/domainname
-ifeq ($(HAVE_AFDECnet),1)
-	ln -fs hostname $(BASEDIR)${BINDIR}/nodename
 endif
 
 savebin:
