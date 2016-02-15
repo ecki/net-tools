@@ -33,7 +33,7 @@ SBINDIR ?= /sbin
 NET_LIB_PATH = lib
 NET_LIB_NAME = net-tools
 
-PROGS	:= ifconfig netstat route slattach plipconfig nameif
+PROGS	:= ifconfig netstat route nameif
 
 -include config.make
 ifeq ($(HAVE_ARP_TOOLS),1)
@@ -47,6 +47,12 @@ PROGS   += iptunnel ipmaddr
 endif
 ifeq ($(HAVE_MII),1)
 PROGS	+= mii-tool
+endif
+ifeq ($(HAVE_PLIP_TOOLS),1)
+PROGS	+= plipconfig
+endif
+ifeq ($(HAVE_SERIAL_TOOLS),1)
+PROGS	+= slattach
 endif
 
 # Compiler and Linker Options
@@ -210,9 +216,7 @@ installbin:
 	install -m 0755 ifconfig   ${BASEDIR}${BINDIR}
 	install -m 0755 nameif     ${BASEDIR}${SBINDIR}
 	install -m 0755 netstat    ${BASEDIR}${BINDIR}
-	install -m 0755 plipconfig $(BASEDIR)${SBINDIR}
 	install -m 0755 route      ${BASEDIR}${BINDIR}
-	install -m 0755 slattach   $(BASEDIR)${SBINDIR}
 ifeq ($(HAVE_ARP_TOOLS),1)
 	install -m 0755 arp        ${BASEDIR}${SBINDIR}
 	install -m 0755 rarp       ${BASEDIR}${SBINDIR}
@@ -235,6 +239,12 @@ ifeq ($(HAVE_IP_TOOLS),1)
 endif
 ifeq ($(HAVE_MII),1)
 	install -m 0755 mii-tool   $(BASEDIR)${SBINDIR}
+endif
+ifeq ($(HAVE_PLIP_TOOLS),1)
+	install -m 0755 plipconfig $(BASEDIR)${SBINDIR}
+endif
+ifeq ($(HAVE_SERIAL_TOOLS),1)
+	install -m 0755 slattach   $(BASEDIR)${SBINDIR}
 endif
 
 savebin:

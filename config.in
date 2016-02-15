@@ -95,4 +95,6 @@ bool 'Build hostname' HAVE_HOSTNAME_TOOLS y
 bool 'Install hostname NIS/YP symlinks' HAVE_HOSTNAME_SYMLINKS y
 bool 'Build iptunnel and ipmaddr' HAVE_IP_TOOLS y
 bool 'Build mii-tool' HAVE_MII y
+bool 'Build plipconfig' HAVE_PLIP_TOOLS y
+bool 'Build slattach' HAVE_SERIAL_TOOLS y
 bool 'SELinux support' HAVE_SELINUX n

@@ -58,6 +58,12 @@ endif
 ifneq ($(HAVE_MII),1)
 IGNORE_CMDS += |mii-tool.?
 endif
+ifneq ($(HAVE_PLIP_TOOLS),1)
+IGNORE_CMDS += |plipconfig.?
+endif
+ifneq ($(HAVE_SERIAL_TOOLS),1)
+IGNORE_CMDS += |slattach.?
+endif
 
 all:
 
