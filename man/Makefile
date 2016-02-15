@@ -57,11 +57,10 @@ install:
 				else \
 					MAN_DIR=${BASEDIR}${mandir}/$$LANG/man$$SECTION; \
 				fi ; \
-				CMDS=`ls *.$$SECTION`; \
-				[ -z "$$CMDS" ] && continue; \
 				$(INSTALL) -d -m 755 $$MAN_DIR; \
-				for CMD in $$CMDS; do \
-					$(INSTALL) -m 644 $$CMD $$MAN_DIR; \
+				for CMD in *.$$SECTION; do \
+					[ -e $$CMD ] || continue; \
+					$(INSTALL) -m 644 $$CMD $$MAN_DIR || exit 1; \
 				done; \
 			done; \
 			cd ..; \
