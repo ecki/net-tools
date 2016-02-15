@@ -40,6 +40,9 @@ LANGS = en_US
 endif
 
 IGNORE_CMDS = ""
+ifneq ($(HAVE_ARP_TOOLS),1)
+IGNORE_CMDS += |arp.?|rarp.?
+endif
 ifneq ($(HAVE_IP_TOOLS),1)
 IGNORE_CMDS += |ipmaddr.?|iptunnel.?
 endif

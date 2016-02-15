@@ -33,9 +33,12 @@ SBINDIR ?= /sbin
 NET_LIB_PATH = lib
 NET_LIB_NAME = net-tools
 
-PROGS	:= ifconfig hostname arp netstat route rarp slattach plipconfig nameif
+PROGS	:= ifconfig hostname netstat route slattach plipconfig nameif
 
 -include config.make
+ifeq ($(HAVE_ARP_TOOLS),1)
+PROGS	+= arp rarp
+endif
 ifeq ($(HAVE_IP_TOOLS),1)
 PROGS   += iptunnel ipmaddr
 endif
@@ -201,15 +204,17 @@ installbin:
 	@echo
 	install -m 0755 -d ${BASEDIR}${SBINDIR}
 	install -m 0755 -d ${BASEDIR}${BINDIR}
-	install -m 0755 arp        ${BASEDIR}${SBINDIR}
 	install -m 0755 hostname   ${BASEDIR}${BINDIR}
 	install -m 0755 ifconfig   ${BASEDIR}${BINDIR}
 	install -m 0755 nameif     ${BASEDIR}${SBINDIR}
 	install -m 0755 netstat    ${BASEDIR}${BINDIR}
 	install -m 0755 plipconfig $(BASEDIR)${SBINDIR}
-	install -m 0755 rarp       ${BASEDIR}${SBINDIR}
 	install -m 0755 route      ${BASEDIR}${BINDIR}
 	install -m 0755 slattach   $(BASEDIR)${SBINDIR}
+ifeq ($(HAVE_ARP_TOOLS),1)
+	install -m 0755 arp        ${BASEDIR}${SBINDIR}
+	install -m 0755 rarp       ${BASEDIR}${SBINDIR}
+endif
 ifeq ($(HAVE_IP_TOOLS),1)
 	install -m 0755 ipmaddr    $(BASEDIR)${SBINDIR}
 	install -m 0755 iptunnel   $(BASEDIR)${SBINDIR}
