@@ -39,6 +39,14 @@ else
 LANGS = en_US
 endif
 
+IGNORE_CMDS = ""
+ifneq ($(HAVE_IP_TOOLS),1)
+IGNORE_CMDS += |ipmaddr.?|iptunnel.?
+endif
+ifneq ($(HAVE_MII),1)
+IGNORE_CMDS += |mii-tool.?
+endif
+
 all:
 
 clean:
@@ -60,6 +68,7 @@ install:
 				$(INSTALL) -d -m 755 $$MAN_DIR; \
 				for CMD in *.$$SECTION; do \
 					[ -e $$CMD ] || continue; \
+					case $$CMD in $(IGNORE_CMDS)) continue;; esac; \
 					$(INSTALL) -m 644 $$CMD $$MAN_DIR || exit 1; \
 				done; \
 			done; \
