@@ -31,6 +31,7 @@
  */
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <getopt.h>
@@ -139,6 +140,7 @@ static void showhname(char *hname, int c)
 #endif
     socklen_t len;
     char **addrp;
+    bool isfirst = true;
 
     /* We use -1 so we can guarantee the buffer is NUL terminated. */
     len = sizeof(addr) - 1;
@@ -179,14 +181,24 @@ static void showhname(char *hname, int c)
 
     switch (c) {
     case 'a':
-	while (hp->h_aliases[0])
-	    printf("%s ", *hp->h_aliases++);
+	while (hp->h_aliases[0]) {
+	    if (isfirst) {
+		printf("%s", *hp->h_aliases++);
+		isfirst = false;
+	    } else
+	        printf(" %s", *hp->h_aliases++);
+	}
 	printf("\n");
 	break;
     case 'i':
 	for (addrp = hp->h_addr_list; *addrp; ++addrp) {
-	    if (inet_ntop(hp->h_addrtype, *addrp, addr, len))
-		printf("%s ", addr);
+	    if (inet_ntop(hp->h_addrtype, *addrp, addr, len)) {
+		if (isfirst) {
+		    printf("%s", addr);
+		    isfirst = false;
+		} else
+		    printf(" %s", addr);
+	    }
 	    else if (errno == EAFNOSUPPORT)
 		fprintf(stderr, _("%s: protocol family not supported\n"),
 			program_name);
