@@ -555,6 +555,55 @@ static int netrom_info(void)
 }
 #endif
 
+#if HAVE_AFROSE
+static const char * const rose_state[] =
+{
+    N_("LISTENING"),
+    N_("CONN SENT"),
+    N_("DISC SENT"),
+    N_("ESTABLISHED"),
+};
+
+static int rose_info(void)
+{
+    FILE *f;
+    char buffer[256], dev[6];
+    int ret, st, lci, neigh;
+    char src_addr[10], src_call[9], dest_addr[10], dest_call[9];
+
+    f = fopen(_PATH_PROCNET_ROSE, "r");
+    if (f == NULL) {
+	if (errno != ENOENT) {
+	    perror(_PATH_PROCNET_ROSE);
+	    return (-1);
+	}
+	if (flag_arg || flag_ver)
+	    ESYSNOT("netstat", "AF ROSE");
+	if (flag_arg)
+	    return (1);
+	else
+	    return (0);
+    }
+    printf(_("Active ROSE sockets\n"));
+    printf(_("dest_addr   dest_call  src_addr    src_call  dev   lci neigh   state\n"));
+    if (fgets(buffer, 256, f))
+	/* eat line */;
+
+    while (fgets(buffer, 256, f)) {
+	ret = sscanf(buffer, "%s %s %s %s %s %d %d %d",
+		dest_addr, dest_call, src_addr, src_call, dev, &lci, &neigh, &st);
+	if (ret != 8) {
+	    printf(_("Problem reading data from %s\n"), _PATH_PROCNET_ROSE);
+	    continue;
+	}
+	printf("%-10s  %-9s  %-10s  %-9s %-5s %3d %5d   %s\n",
+		dest_addr, dest_call, src_addr, src_call, dev, lci, neigh, _(rose_state[st]));
+    }
+    fclose(f);
+    return 0;
+}
+#endif
+
 /* These enums are used by IPX too. :-( */
 enum {
     TCP_ESTABLISHED = 1,
@@ -2369,7 +2418,7 @@ int main
 #endif
 	}
 	if (!flag_arg || flag_rose) {
-#if 0 && HAVE_AFROSE
+#if HAVE_AFROSE
           i = rose_info();
           if (i)
             return (i);
