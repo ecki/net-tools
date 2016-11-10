@@ -26,7 +26,6 @@
 #include <sys/socket.h>
 #include <sys/ioctl.h>
 #include <netinet/in.h>
-#include <netinet/ip.h>
 #include <arpa/inet.h>
 #include <net/if.h>
 #include <net/if_arp.h>
