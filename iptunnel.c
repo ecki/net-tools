@@ -29,7 +29,12 @@
 #include <arpa/inet.h>
 #include <net/if.h>
 #include <net/if_arp.h>
+/* We only care about linux/if_tunnel.h.  Unfortunately, older Linux headers
+ * (pre linux-4.8) did not include all the proper headers leading to missing
+ * structs and types.
+ */
 #include <linux/types.h>
+#include <linux/ip.h>
 #include <linux/if_tunnel.h>
 
 #include "config.h"
