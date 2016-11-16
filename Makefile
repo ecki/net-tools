@@ -170,40 +170,40 @@ subdirs:	libdir
 		@for i in $(SUBDIRS:$(NET_LIB_PATH)/=); do $(MAKE) -C $$i || exit $$? ; done
 
 ifconfig:	$(NET_LIB) ifconfig.o
-		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ ifconfig.o $(NLIB)
+		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ ifconfig.o $(NLIB) $(LDLIBS)
 
 nameif:		$(NET_LIB) nameif.o
-		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ nameif.o $(NLIB)
+		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ nameif.o $(NLIB) $(LDLIBS)
 
 hostname:	hostname.o
-		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ hostname.o $(DNLIB)
+		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ hostname.o $(DNLIB) $(LDLIBS)
 
 route:		$(NET_LIB) route.o
-		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ route.o $(NLIB)
+		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ route.o $(NLIB) $(LDLIBS)
 
 arp:		$(NET_LIB) arp.o
-		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ arp.o $(NLIB)
+		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ arp.o $(NLIB) $(LDLIBS)
 
 rarp:		$(NET_LIB) rarp.o
-		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ rarp.o $(NLIB)
+		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ rarp.o $(NLIB) $(LDLIBS)
 
 slattach:	$(NET_LIB) slattach.o
-		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ slattach.o $(NLIB)
+		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ slattach.o $(NLIB) $(LDLIBS)
 
 plipconfig:	$(NET_LIB) plipconfig.o
-		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ plipconfig.o $(NLIB)
+		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ plipconfig.o $(NLIB) $(LDLIBS)
 
 netstat:	$(NET_LIB) netstat.o statistics.o
-		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ netstat.o statistics.o $(NLIB) $(SELIB)
+		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ netstat.o statistics.o $(NLIB) $(SELIB) $(LDLIBS)
 
 iptunnel:	$(NET_LIB) iptunnel.o
-		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ iptunnel.o $(NLIB)
+		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ iptunnel.o $(NLIB) $(LDLIBS)
 
 ipmaddr:	$(NET_LIB) ipmaddr.o
-		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ ipmaddr.o $(NLIB)
+		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ ipmaddr.o $(NLIB) $(LDLIBS)
 
 mii-tool:	$(NET_LIB) mii-tool.o
-		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ mii-tool.o $(NLIB)
+		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ mii-tool.o $(NLIB) $(LDLIBS)
 
 installbin:
 	@echo
