@@ -6,7 +6,7 @@
 # Brazilian portuguese translation for net-tools 1.54
 # Copyright (C) 1998, 1999 Free Software Foundation, Inc.
 # Arnaldo Carvalho de Melo <acme@conectiva.com.br>, 1998-2000
-# Ralf Baechle <ralf@gnu.org>, 1999
+# Ralf Baechle <ralf@linux-mips.org>, 1999
 msgid ""
 msgstr ""
 "Project-Id-Version: net-tools 1.54\n"
