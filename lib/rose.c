@@ -59,7 +59,8 @@ static const char *
 {
     static char buff[12];
 
-    snprintf(buff, sizeof(buff), "%02x%02x%02x%02x%02x", ptr[0], ptr[1], ptr[2], ptr[3], ptr[4]);
+    snprintf(buff, sizeof(buff), "%02hhx%02hhx%02hhx%02hhx%02hhx",
+	     ptr[0], ptr[1], ptr[2], ptr[3], ptr[4]);
     buff[10] = '\0';
     return (buff);
 }
