@@ -565,6 +565,15 @@ static int arp_show(char *name)
 			 ip, &type, &flags, hwa, mask, dev);
 	    if (num < 4)
 		break;
+	    if (num == 5) {
+		/*
+		 * This happens for incomplete ARP entries for which there is
+		 * no hardware address in the line.
+		 */
+		num = sscanf(line, "%s 0x%x 0x%x %99s %99s\n",
+			     ip, &type, &flags, mask, dev);
+		hwa[0] = 0;
+	    }
 
 	    entries++;
 	    /* if the user specified hw-type differs, skip it */
