@@ -38,7 +38,7 @@ msgstr "arp: chybně zadaný typ protokolu\n"
 #: ../arp.c:261
 #, c-format
 msgid "arp: device `%s' has HW address %s `%s'.\n"
-msgstr "arp: zařízení `%s' má Hw adresu %s `%s'.\n"
+msgstr "arp: zařízení „%s“ má HW adresu %s `%s'.\n"
 
 #: ../arp.c:293
 #, c-format
@@ -163,7 +163,7 @@ msgid ""
 "<-''-\n"
 "\n"
 msgstr ""
-"  arp [-v]   [<HW>] [-i <rozhraní>] -Ds <počítač> <rozhraní> [síťmask <čís>] "
+"  arp [-v]   [<HW>] [-i <rozhraní>] -Ds <počítač> <rozhraní> [netmask <čís>] "
 "pub\n"
 "                                                                 <-Totéž\n"
 
@@ -175,6 +175,15 @@ msgid ""
 msgstr ""
 "        -a                       zobrazí jména všech počítačů alternativním\n"
 "                                 (BSD) způsobem\n"
+
+#: ../arp.c:632
+#, c-format
+msgid ""
+"        -e                       display (all) hosts in default (Linux) "
+"style\n"
+msgstr ""
+"        -e                       zobrazí jména všech počítačů implicitním\n"
+"                                 (Linux) způsobem\n"
 
 #: ../arp.c:633
 #, c-format
@@ -565,7 +574,7 @@ msgstr "  [mem_start <NN>]  [io_addr <NN>]  [irq <NN>]  [media <typ>]\n"
 #: ../ifconfig.c:220
 #, c-format
 msgid "  [txqueuelen <NN>]\n"
-msgstr "  [txqueuelen délka]\n"
+msgstr "  [txqueuelen <délka>]\n"
 
 #: ../ifconfig.c:223
 #, c-format
@@ -610,7 +619,7 @@ msgstr "ifconfig: přepínač „%s“ nebyl rozpoznán.\n"
 #: ../ifconfig.c:309 ../ifconfig.c:990
 #, c-format
 msgid "ifconfig: `--help' gives usage information.\n"
-msgstr "ifconfig: návod na použití lze získat pomocí „--help“\n"
+msgstr "ifconfig: návod na použití lze získat pomocí „--help“.\n"
 
 #: ../ifconfig.c:384
 #, c-format
@@ -737,8 +746,8 @@ msgstr "POZOR: Vyskytla se alespoň jedna chyba. (%d)\n"
 msgid ""
 "(No info could be read for \"-p\": geteuid()=%d but you should be root.)\n"
 msgstr ""
-"(Pro \"-p\" nelze získat žádné informace: geteuid()=%d, ale je třeba, aby "
-"jste\n"
+"(Pro „-p“ nelze získat žádné informace: geteuid()=%d, ale je třeba, "
+"abyste\n"
 "byl superuživatelem)\n"
 
 #: ../netstat.c:438
@@ -748,7 +757,7 @@ msgid ""
 " will not be shown, you would have to be root to see it all.)\n"
 msgstr ""
 "(Všechny procesy nemohly být identifikovány. Budou vypsány informace\n"
-"pouze o procesech, jichž jste vlastníkem. Aby jste mohl vidět vše, musel\n"
+"pouze o procesech, jichž jste vlastníkem. Abyste mohl vidět vše, musel\n"
 "byste být superuživatelem.)\n"
 
 #: ../netstat.c:445 ../netstat.c:1186 ../netstat.c:1264
@@ -825,7 +834,7 @@ msgstr "NASLOUCHÁ"
 
 #: ../netstat.c:525
 msgid "CLOSING"
-msgstr "ZAVíRÁ"
+msgstr "ZAVÍRÁ"
 
 #: ../netstat.c:596
 #, c-format
@@ -1091,7 +1100,7 @@ msgid ""
 "        -M, --masquerade         display masqueraded connections\n"
 "\n"
 msgstr ""
-"         -M, --masquerade         vypíše maskovaná spojení\n"
+"         -M, --masquerade         vypíše maškarádovaná spojení\n"
 "\n"
 
 #: ../netstat.c:1521
@@ -1896,7 +1905,7 @@ msgstr "Počet chybných příchozích SYN cookies: %u"
 #: ../statistics.c:218
 #, c-format
 msgid "%u resets received for embryonic SYN_RECV sockets"
-msgstr "Počet resetů přijatých pro sokety v zárodečném stavu SYN_PŘÍCH: %u"
+msgstr "Počet resetů přijatých pro sokety v zárodečném stavu SYN_RECV: %u"
 
 #: ../statistics.c:220
 #, c-format
@@ -2328,7 +2337,7 @@ msgstr "Bylo zadáno příliš mnoho tříd adres.\n"
 #: ../lib/af.c:319
 #, c-format
 msgid "Unknown address family `%s'.\n"
-msgstr "Třída adres `%s' není známa.\n"
+msgstr "Třída adres „%s“ není známa.\n"
 
 #: ../lib/arcnet.c:70 ../lib/arcnet.c:85
 #, c-format
@@ -2413,12 +2422,12 @@ msgstr "in_fddi(%s): nadbytečné znaky!\n"
 #: ../lib/getroute.c:101 ../lib/setroute.c:80
 #, c-format
 msgid "Address family `%s' not supported.\n"
-msgstr "Třída adres `%s' není podporována.\n"
+msgstr "Třída adres „%s“ není podporována.\n"
 
 #: ../lib/getroute.c:107 ../lib/setroute.c:84
 #, c-format
 msgid "No routing for address family `%s'.\n"
-msgstr "Pro třídu adres `%s' není žádné směrování.\n"
+msgstr "Pro třídu adres „%s“ není žádné směrování.\n"
 
 #: ../lib/hippi.c:84 ../lib/hippi.c:99
 #, c-format
