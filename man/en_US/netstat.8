@@ -198,6 +198,8 @@ Display additional information.  Use this option twice for maximum detail.
 Include information related to networking timers.
 .SS "\-p, \-\-program"
 Show the PID and name of the program to which each socket belongs.
+A hyphen is shown if the socket belongs to the kernel (e.g. a kernel service,
+or the process has exited but the socket hasn't finished closing yet).
 .SS "\-l, \-\-listening"
 Show only listening sockets.  (These are omitted by default.)
 .SS "\-a, \-\-all"
