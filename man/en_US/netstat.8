@@ -302,7 +302,38 @@ causes this column to be included.  You will also need
 privileges to see this information on sockets you don't own.  This
 identification information is not yet available for IPX sockets.
 .SS "Timer"
-(this needs to be written)
+TCP timer associated with this socket. The format is timer(a/b/c).
+The timer is one of the following values:
+.TP
+.I
+off
+There is no timer set for this socket.
+.TP
+.I
+on
+The retransmission timer is active for the socket.
+.TP
+.I
+keepalive
+The keepalive timer is active for the socket.
+.TP
+.I
+timewait
+The connection is closing and the timewait timer is active for the socket.
+.P
+The values in the brackets:
+.TP
+.I
+a
+Timer value.
+.TP
+.I
+b
+Number of retransmissions sent.
+.TP
+.I
+c
+Number of keepalives sent.
 .P
 .SS Active UNIX domain Sockets
 .SS "Proto" 
