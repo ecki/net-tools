@@ -164,7 +164,7 @@ static int INET6_getsock(char *bufp, struct sockaddr_storage *sasp)
 	return (-1);
     p = fix_v4_address(bufp, &sin6->sin6_addr);
     if (p != bufp)
-        memcpy(bufp, p, strlen(p)+1);
+        memmove(bufp, p, strlen(p) + 1);
     return 16;			/* ?;) */
 }
 
