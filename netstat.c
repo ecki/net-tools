@@ -673,6 +673,7 @@ static void igmp_do_one(int lnr, const char *line,const char *prot)
     static int igmp6_flag = 0;
     static char device[16];
     int num, idx, refcnt;
+    char* offset;
 
     if (lnr == 0) {
 	/* IPV6 ONLY */
@@ -724,17 +725,21 @@ static void igmp_do_one(int lnr, const char *line,const char *prot)
 #if HAVE_AFINET
 	if (line[0] != '\t') {
 	    if (idx_flag) {
-		if ((num = sscanf( line, "%d\t%10c", &idx, device)) < 2) {
+		if ((num = sscanf(line, "%d\t%15c", &idx, device)) < 2) {
 		    fprintf(stderr, _("warning, got bogus igmp line %d.\n"), lnr);
 		    return;
 		}
 	    } else {
-		if ( (num = sscanf( line, "%10c", device )) < 1 ) {
+		if ((num = sscanf(line, "%15c", device)) < 1 ) {
 		    fprintf(stderr, _("warning, got bogus igmp line %d.\n"), lnr);
 		    return;
 		}
 	    }
-	    device[10] = '\0';
+
+	    offset = strrchr(device, ':');
+	    if (offset)
+		*offset = 0;
+
 	    return;
 	} else if ( line[0] == '\t' ) {
 	    if ( (num = sscanf(line, "\t%8[0-9A-Fa-f] %d", mcast_addr, &refcnt)) < 2 ) {
