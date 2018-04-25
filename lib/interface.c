@@ -594,7 +594,7 @@ int do_if_print(struct interface *ife, void *cookie)
 
 void ife_print_short(struct interface *ptr)
 {
-    printf("%-8.8s ", ptr->name);
+    printf("%-15.15s ", ptr->name);
     printf("%5d ", ptr->mtu);
     /* If needed, display the interface statistics. */
     if (ptr->statistics_valid) {
