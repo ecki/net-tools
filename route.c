@@ -99,7 +99,7 @@ static void usage(int rc)
 
 static void version(void)
 {
-    fprintf(stderr, "%s\n%s\n", Release, Features);
+    printf("%s\n%s\n", Release, Features);
     exit(E_VERSION);
 }
 

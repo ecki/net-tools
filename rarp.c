@@ -227,7 +227,7 @@ int main(int argc, char **argv)
 	case 'h':
 	    usage();
 	case 'V':
-	    fprintf(stderr, "%s\n", Release);
+	    printf("%s\n", Release);
 	    exit(E_VERSION);
 	    break;
 	case 'v':

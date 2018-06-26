@@ -254,7 +254,7 @@ static void setfilename(char *name, int what)
 
 static void version(void)
 {
-    fprintf(stderr, "%s\n", Release);
+    printf("%s\n", Release);
     exit(E_VERSION);
 }
 

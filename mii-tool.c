@@ -469,7 +469,7 @@ const char *usage =
 
 static void version(void)
 {
-    fprintf(stderr, "%s\n%s\n", Release, Signature);
+    printf("%s\n%s\n", Release, Signature);
     exit(E_VERSION);
 }
 

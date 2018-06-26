@@ -233,7 +233,7 @@ static void usage(void)
 
 static void version(void)
 {
-    fprintf(stderr, "%s\n", Release);
+    printf("%s\n", Release);
     exit(E_VERSION);
 }
 
