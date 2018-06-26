@@ -57,12 +57,13 @@ static void version(void)
     exit(E_VERSION);
 }
 
-void usage(void)
+static void usage(int rc)
 {
-    fprintf(stderr, _("Usage: plipconfig interface [nibble NN] [trigger NN]\n"));
-    fprintf(stderr, _("       plipconfig -V | --version\n"));
-    fprintf(stderr, _("       plipconfig -h | --help\n"));
-    exit(E_USAGE);
+    FILE *fp = rc ? stderr : stdout;
+    fprintf(fp, _("Usage: plipconfig interface [nibble NN] [trigger NN]\n"));
+    fprintf(fp, _("       plipconfig -V | --version\n"));
+    fprintf(fp, _("       plipconfig -h | --help\n"));
+    exit(rc);
 }
 
 void print_plip(void)
@@ -91,14 +92,16 @@ int main(int argc, char **argv)
     while (argv[0] && *argv[0] == '-') {
 	if (!strcmp(*argv, "-V") || !strcmp(*argv, "--version"))
 	    version();
+	else if (!strcmp(*argv, "-h") || !strcmp(*argv, "--help"))
+	    usage(E_USAGE);
 	else
-            usage();
+            usage(E_OPTERR);
 	argv++;
 	argc--;
     }
 
     if (argc == 0)
-	usage();
+	usage(E_OPTERR);
 
     spp = argv;
     safe_strncpy(ifr.ifr_name, *spp++, IFNAMSIZ);
@@ -117,19 +120,19 @@ int main(int argc, char **argv)
     while (*spp != (char *) NULL) {
 	if (!strcmp(*spp, "nibble")) {
 	    if (*++spp == NULL)
-		usage();
+		usage(E_OPTERR);
 	    plip->nibble = atoi(*spp);
 	    spp++;
 	    continue;
 	}
 	if (!strcmp(*spp, "trigger")) {
 	    if (*++spp == NULL)
-		usage();
+		usage(E_OPTERR);
 	    plip->trigger = atoi(*spp);
 	    spp++;
 	    continue;
 	}
-	usage();
+	usage(E_OPTERR);
     }
 
     plip->pcmd = PLIP_SET_TIMEOUT;

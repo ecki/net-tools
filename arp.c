@@ -93,7 +93,7 @@ const struct hwtype *hw;/* current hardware type        */
 int sockfd = 0;			/* active socket descriptor     */
 int hw_set = 0;			/* flag if hw-type was set (-H) */
 char device[16] = "";		/* current device               */
-static void usage(void);
+static void usage(int);
 
 /* Delete an entry from the ARP cache. */
 static int arp_del(char **args)
@@ -168,14 +168,14 @@ static int arp_del(char **args)
 	}
 	if (!strcmp(*args, "dev")) {
 	    if (*++args == NULL)
-		usage();
+		usage(E_OPTERR);
 	    safe_strncpy(device, *args, sizeof(device));
 	    args++;
 	    continue;
 	}
 	if (!strcmp(*args, "netmask")) {
 	    if (*++args == NULL)
-		usage();
+		usage(E_OPTERR);
 	    if (strcmp(*args, "255.255.255.255") != 0) {
 		safe_strncpy(host, *args, (sizeof host));
 		if (ap->input(0, host, &ss) < 0) {
@@ -189,7 +189,7 @@ static int arp_del(char **args)
 	    args++;
 	    continue;
 	}
-	usage();
+	usage(E_OPTERR);
     }
 
     // if neighter priv nor pub is given, work on both
@@ -345,14 +345,14 @@ static int arp_set(char **args)
 	}
 	if (!strcmp(*args, "dev")) {
 	    if (*++args == NULL)
-		usage();
+		usage(E_OPTERR);
 	    safe_strncpy(device, *args, sizeof(device));
 	    args++;
 	    continue;
 	}
 	if (!strcmp(*args, "netmask")) {
 	    if (*++args == NULL)
-		usage();
+		usage(E_OPTERR);
 	    if (strcmp(*args, "255.255.255.255") != 0) {
 		safe_strncpy(host, *args, (sizeof host));
 		if (ap->input(0, host, &ss) < 0) {
@@ -366,7 +366,7 @@ static int arp_set(char **args)
 	    args++;
 	    continue;
 	}
-	usage();
+	usage(E_OPTERR);
     }
 
     /* Fill in the remainder of the request. */
@@ -627,29 +627,30 @@ static void version(void)
     exit(E_VERSION);
 }
 
-static void usage(void)
+static void usage(int rc)
 {
-    fprintf(stderr, _("Usage:\n  arp [-vn]  [<HW>] [-i <if>] [-a] [<hostname>]             <-Display ARP cache\n"));
-    fprintf(stderr, _("  arp [-v]          [-i <if>] -d  <host> [pub]               <-Delete ARP entry\n"));
-    fprintf(stderr, _("  arp [-vnD] [<HW>] [-i <if>] -f  [<filename>]            <-Add entry from file\n"));
-    fprintf(stderr, _("  arp [-v]   [<HW>] [-i <if>] -s  <host> <hwaddr> [temp]            <-Add entry\n"));
-    fprintf(stderr, _("  arp [-v]   [<HW>] [-i <if>] -Ds <host> <if> [netmask <nm>] pub          <-''-\n\n"));
+    FILE *fp = rc ? stderr : stdout;
+    fprintf(fp, _("Usage:\n  arp [-vn]  [<HW>] [-i <if>] [-a] [<hostname>]             <-Display ARP cache\n"));
+    fprintf(fp, _("  arp [-v]          [-i <if>] -d  <host> [pub]               <-Delete ARP entry\n"));
+    fprintf(fp, _("  arp [-vnD] [<HW>] [-i <if>] -f  [<filename>]            <-Add entry from file\n"));
+    fprintf(fp, _("  arp [-v]   [<HW>] [-i <if>] -s  <host> <hwaddr> [temp]            <-Add entry\n"));
+    fprintf(fp, _("  arp [-v]   [<HW>] [-i <if>] -Ds <host> <if> [netmask <nm>] pub          <-''-\n\n"));
 
-    fprintf(stderr, _("        -a                       display (all) hosts in alternative (BSD) style\n"));
-    fprintf(stderr, _("        -e                       display (all) hosts in default (Linux) style\n"));
-    fprintf(stderr, _("        -s, --set                set a new ARP entry\n"));
-    fprintf(stderr, _("        -d, --delete             delete a specified entry\n"));
-    fprintf(stderr, _("        -v, --verbose            be verbose\n"));
-    fprintf(stderr, _("        -n, --numeric            don't resolve names\n"));
-    fprintf(stderr, _("        -i, --device             specify network interface (e.g. eth0)\n"));
-    fprintf(stderr, _("        -D, --use-device         read <hwaddr> from given device\n"));
-    fprintf(stderr, _("        -A, -p, --protocol       specify protocol family\n"));
-    fprintf(stderr, _("        -f, --file               read new entries from file or from /etc/ethers\n\n"));
+    fprintf(fp, _("        -a                       display (all) hosts in alternative (BSD) style\n"));
+    fprintf(fp, _("        -e                       display (all) hosts in default (Linux) style\n"));
+    fprintf(fp, _("        -s, --set                set a new ARP entry\n"));
+    fprintf(fp, _("        -d, --delete             delete a specified entry\n"));
+    fprintf(fp, _("        -v, --verbose            be verbose\n"));
+    fprintf(fp, _("        -n, --numeric            don't resolve names\n"));
+    fprintf(fp, _("        -i, --device             specify network interface (e.g. eth0)\n"));
+    fprintf(fp, _("        -D, --use-device         read <hwaddr> from given device\n"));
+    fprintf(fp, _("        -A, -p, --protocol       specify protocol family\n"));
+    fprintf(fp, _("        -f, --file               read new entries from file or from /etc/ethers\n\n"));
 
-    fprintf(stderr, _("  <HW>=Use '-H <hw>' to specify hardware address type. Default: %s\n"), DFLT_HW);
-    fprintf(stderr, _("  List of possible hardware types (which support ARP):\n"));
+    fprintf(fp, _("  <HW>=Use '-H <hw>' to specify hardware address type. Default: %s\n"), DFLT_HW);
+    fprintf(fp, _("  List of possible hardware types (which support ARP):\n"));
     print_hwlist(1); /* 1 = ARPable */
-    exit(E_USAGE);
+    exit(rc);
 }
 
 int main(int argc, char **argv)
@@ -751,10 +752,11 @@ int main(int argc, char **argv)
 
 	case 'V':
 	    version();
-	case '?':
 	case 'h':
+	    usage(E_USAGE);
+	case '?':
 	default:
-	    usage();
+	    usage(E_OPTERR);
 	}
 
     if (ap->af != AF_INET) {
@@ -803,7 +805,7 @@ int main(int argc, char **argv)
 	break;
 
     default:
-	usage();
+	usage(E_OPTERR);
     }
 
     exit(what);

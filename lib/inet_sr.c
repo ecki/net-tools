@@ -50,12 +50,13 @@ static int skfd = -1;
 
 static int usage(const int rc)
 {
-    fprintf(stderr, _("Usage: inet_route [-vF] del {-host|-net} Target[/prefix] [gw Gw] [metric M] [[dev] If]\n"));
-    fprintf(stderr, _("       inet_route [-vF] add {-host|-net} Target[/prefix] [gw Gw] [metric M]\n"));
-    fprintf(stderr, _("                              [netmask N] [mss Mss] [window W] [irtt I]\n"));
-    fprintf(stderr, _("                              [mod] [dyn] [reinstate] [[dev] If]\n"));
-    fprintf(stderr, _("       inet_route [-vF] add {-host|-net} Target[/prefix] [metric M] reject\n"));
-    fprintf(stderr, _("       inet_route [-FC] flush      NOT supported\n"));
+    FILE *fp = rc ? stderr : stdout;
+    fprintf(fp, _("Usage: inet_route [-vF] del {-host|-net} Target[/prefix] [gw Gw] [metric M] [[dev] If]\n"));
+    fprintf(fp, _("       inet_route [-vF] add {-host|-net} Target[/prefix] [gw Gw] [metric M]\n"));
+    fprintf(fp, _("                              [netmask N] [mss Mss] [window W] [irtt I]\n"));
+    fprintf(fp, _("                              [mod] [dyn] [reinstate] [[dev] If]\n"));
+    fprintf(fp, _("       inet_route [-vF] add {-host|-net} Target[/prefix] [metric M] reject\n"));
+    fprintf(fp, _("       inet_route [-FC] flush      NOT supported\n"));
     return (rc);
 }
 

@@ -49,14 +49,14 @@ static void version(void)
 	exit(E_VERSION);
 }
 
-static void usage(void) __attribute__((noreturn));
-
-static void usage(void)
+__attribute__((noreturn))
+static void usage(int rc)
 {
-	fprintf(stderr, _("Usage: ipmaddr [ add | del ] MULTIADDR dev STRING\n"));
-	fprintf(stderr, _("       ipmaddr show [ dev STRING ] [ ipv4 | ipv6 | link | all ]\n"));
-	fprintf(stderr, _("       ipmaddr -V | -version\n"));
-	exit(E_USAGE);
+	FILE *fp = rc ? stderr : stdout;
+	fprintf(fp, _("Usage: ipmaddr [ add | del ] MULTIADDR dev STRING\n"));
+	fprintf(fp, _("       ipmaddr show [ dev STRING ] [ ipv4 | ipv6 | link | all ]\n"));
+	fprintf(fp, _("       ipmaddr -V | -version\n"));
+	exit(rc);
 }
 
 static void print_lla(FILE *fp, int len, unsigned char *addr)
@@ -290,7 +290,7 @@ static int multiaddr_list(int argc, char **argv)
 			NEXT_ARG();
 			l = strlen(*argv);
 			if (l <= 0 || l >= sizeof(filter_dev))
-				usage();
+				usage(E_OPTERR);
 			strncpy(filter_dev, *argv, sizeof (filter_dev));
 		} else if (strcmp(*argv, "all") == 0) {
 			filter_family = AF_UNSPEC;
@@ -303,7 +303,7 @@ static int multiaddr_list(int argc, char **argv)
 		} else {
 			l = strlen(*argv);
 			if (l <= 0 || l >= sizeof(filter_dev))
-				usage();
+				usage(E_OPTERR);
 			strncpy(filter_dev, *argv, sizeof (filter_dev));
 		}
 		argv++; argc--;
@@ -335,18 +335,18 @@ int multiaddr_modify(int cmd, int argc, char **argv)
 		if (strcmp(*argv, "dev") == 0) {
 			NEXT_ARG();
 			if (ifr.ifr_name[0])
-				usage();
+				usage(E_OPTERR);
 			strncpy(ifr.ifr_name, *argv, IFNAMSIZ);
 		} else {
 			if (ifr.ifr_hwaddr.sa_data[0])
-				usage();
+				usage(E_OPTERR);
 			if (parse_lla(*argv, ifr.ifr_hwaddr.sa_data) < 0)
-				usage();
+				usage(E_OPTERR);
 		}
 		argc--; argv++;
 	}
 	if (ifr.ifr_name[0] == 0)
-		usage();
+		usage(E_OPTERR);
 
 	fd = socket(AF_INET, SOCK_DGRAM, 0);
 	if (fd < 0) {
@@ -374,7 +374,7 @@ int do_multiaddr(int argc, char **argv)
 	if (matches(*argv, "list") == 0 || matches(*argv, "show") == 0
 	    || matches(*argv, "lst") == 0)
 		return multiaddr_list(argc-1, argv+1);
-	usage();
+	usage(E_OPTERR);
 }
 
 int preferred_family = AF_UNSPEC;
@@ -404,13 +404,13 @@ int main(int argc, char **argv)
 			argc--;
 			argv++;
 			if (argc <= 1)
-				usage();
+				usage(E_OPTERR);
 			if (strcmp(argv[1], "inet") == 0)
 				preferred_family = AF_INET;
 			else if (strcmp(argv[1], "inet6") == 0)
 				preferred_family = AF_INET6;
 			else
-				usage();
+				usage(E_OPTERR);
 		} else if (matches(argv[1], "-stats") == 0 ||
 			   matches(argv[1], "-statistics") == 0) {
 			++show_stats;
@@ -418,8 +418,10 @@ int main(int argc, char **argv)
 			++resolve_hosts;
 		} else if ((matches(argv[1], "-V") == 0) || matches(argv[1], "--version") == 0) {
 			version();
+		} else if ((matches(argv[1], "-h") == 0) || matches(argv[1], "--help") == 0) {
+			usage(E_USAGE);
 		} else
-			usage();
+			usage(E_OPTERR);
 		argc--;	argv++;
 	}
 

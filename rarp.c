@@ -173,18 +173,19 @@ static int display_cache(void)
     return 0;
 }
 
-static void usage(void)
+static void usage(int rc)
 {
-    fprintf(stderr, _("Usage: rarp -a                               list entries in cache.\n"));
-    fprintf(stderr, _("       rarp -d <hostname>                    delete entry from cache.\n"));
-    fprintf(stderr, _("       rarp [<HW>] -s <hostname> <hwaddr>    add entry to cache.\n"));
-    fprintf(stderr, _("       rarp -f                               add entries from /etc/ethers.\n"));
-    fprintf(stderr, _("       rarp -V                               display program version.\n\n"));
+    FILE *fp = rc ? stderr : stdout;
+    fprintf(fp, _("Usage: rarp -a                               list entries in cache.\n"));
+    fprintf(fp, _("       rarp -d <hostname>                    delete entry from cache.\n"));
+    fprintf(fp, _("       rarp [<HW>] -s <hostname> <hwaddr>    add entry to cache.\n"));
+    fprintf(fp, _("       rarp -f                               add entries from /etc/ethers.\n"));
+    fprintf(fp, _("       rarp -V                               display program version.\n\n"));
 
-    fprintf(stderr, _("  <HW>=Use '-H <hw>' to specify hardware address type. Default: %s\n"), DFLT_HW);
-    fprintf(stderr, _("  List of possible hardware types (which support ARP):\n"));
+    fprintf(fp, _("  <HW>=Use '-H <hw>' to specify hardware address type. Default: %s\n"), DFLT_HW);
+    fprintf(fp, _("  List of possible hardware types (which support ARP):\n"));
     print_hwlist(1); /* 1 = ARPable */
-    exit(E_USAGE);
+    exit(rc);
 }
 
 #define MODE_DISPLAY   1
@@ -225,7 +226,7 @@ int main(int argc, char **argv)
 	case EOF:
 	    break;
 	case 'h':
-	    usage();
+	    usage(E_USAGE);
 	case 'V':
 	    printf("%s\n", Release);
 	    exit(E_VERSION);
@@ -238,7 +239,7 @@ int main(int argc, char **argv)
 	case 'd':
 	    if (mode) {
 		fprintf(stderr, _("%s: illegal option mix.\n"), argv[0]);
-		usage();
+		usage(E_OPTERR);
 	    } else {
 		mode = (c == 'a' ? MODE_DISPLAY : (c == 'd' ? MODE_DELETE : MODE_SET));
 	    }
@@ -251,19 +252,19 @@ int main(int argc, char **argv)
 	    if (optarg) {
 		hardware = get_hwtype(optarg);
 	    } else {
-		usage();
+		usage(E_OPTERR);
 	    }
 	    break;
 	case 1:
 	    if (nargs == 2) {
-		usage();
+		usage(E_OPTERR);
 		exit(1);
 	    } else {
 		args[nargs++] = optarg;
 	    }
 	    break;
 	default:
-	    usage();
+	    usage(E_OPTERR);
 	}
     } while (c != EOF);
 
@@ -273,11 +274,11 @@ int main(int argc, char **argv)
     }
     switch (mode) {
     case 0:
-	usage();
+	usage(E_OPTERR);
 
     case MODE_DISPLAY:
 	if (nargs != (mode - 1)) {
-	    usage();
+	    usage(E_OPTERR);
 	}
 	result = display_cache();
 	break;
@@ -285,7 +286,7 @@ int main(int argc, char **argv)
     case MODE_DELETE:
     case MODE_SET:
 	if (nargs != (mode - 1)) {
-	    usage();
+	    usage(E_OPTERR);
 	}
 	if ((hp = gethostbyname(args[0])) == NULL) {
 	    fprintf(stderr, _("rarp: %s: unknown host\n"), args[0]);
@@ -301,7 +302,7 @@ int main(int argc, char **argv)
 
     case MODE_ETHERS:
 	if (nargs != 0 && nargs != 1)
-	    usage();
+	    usage(E_OPTERR);
 	if (fd = socket(PF_INET, SOCK_DGRAM, 0), fd < 0) {
 	    perror("socket");
 	    exit(1);

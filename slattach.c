@@ -574,8 +574,9 @@ sig_catch(int sig)
 
 
 static void
-usage(void)
+usage(int rc)
 {
+  FILE *fp = rc ? stderr : stdout;
   char *usage_msg = "Usage: slattach [-ehlLmnqv] "
 #ifdef SIOCSKEEPALIVE
 	  "[-k keepalive] "
@@ -586,8 +587,8 @@ usage(void)
 	  "[-c cmd] [-s speed] [-p protocol] tty | -\n"
 	  "       slattach -V | --version\n";
 
-  fputs(usage_msg, stderr);
-  exit(E_USAGE);
+  fputs(usage_msg, fp);
+  exit(rc);
 }
 
 
@@ -684,7 +685,7 @@ main(int argc, char *argv[])
 		/*NOTREACHED*/
 
 	default:
-		usage();
+		usage(E_OPTERR);
 		/*NOTREACHED*/
   }
 
@@ -700,7 +701,7 @@ main(int argc, char *argv[])
        opt_m++;
 
   /* Is a terminal given? */
-  if (optind != (argc - 1)) usage();
+  if (optind != (argc - 1)) usage(E_OPTERR);
   safe_strncpy(path_buf, argv[optind], sizeof(path_buf));
   if (!strcmp(path_buf, "-")) {
 	opt_e = 1;

@@ -63,7 +63,6 @@ static int opt_v;
 static void sethname(char *);
 static void setdname(char *);
 static void showhname(char *, int);
-static void usage(void);
 static void version(void);
 static void setfilename(char *, int);
 
@@ -258,35 +257,36 @@ static void version(void)
     exit(E_VERSION);
 }
 
-static void usage(void)
+static void usage(int rc)
 {
-    fprintf(stderr, _("Usage: hostname [-v] {hostname|-F file}      set hostname (from file)\n"));
-    fprintf(stderr, _("       domainname [-v] {nisdomain|-F file}   set NIS domainname (from file)\n"));
+    FILE *fp = rc ? stderr : stdout;
+    fprintf(fp, _("Usage: hostname [-v] {hostname|-F file}      set hostname (from file)\n"));
+    fprintf(fp, _("       domainname [-v] {nisdomain|-F file}   set NIS domainname (from file)\n"));
 #if HAVE_AFDECnet
-    fprintf(stderr, _("       nodename [-v] {nodename|-F file}      set DECnet node name (from file)\n"));
+    fprintf(fp, _("       nodename [-v] {nodename|-F file}      set DECnet node name (from file)\n"));
 #endif
-    fprintf(stderr, _("       hostname [-v] [-d|-f|-s|-a|-i|-y|-n]  display formatted name\n"));
-    fprintf(stderr, _("       hostname [-v]                         display hostname\n\n"));
-    fprintf(stderr, _("       hostname -V|--version|-h|--help       print info and exit\n\n"));
-    fprintf(stderr, _("    dnsdomainname=hostname -d, {yp,nis,}domainname=hostname -y\n\n"));
-    fprintf(stderr, _("    -s, --short           short host name\n"));
-    fprintf(stderr, _("    -a, --alias           alias names\n"));
-    fprintf(stderr, _("    -i, --ip-address      addresses for the hostname\n"));
-    fprintf(stderr, _("    -f, --fqdn, --long    long host name (FQDN)\n"));
-    fprintf(stderr, _("    -d, --domain          DNS domain name\n"));
-    fprintf(stderr, _("    -y, --yp, --nis       NIS/YP domainname\n"));
+    fprintf(fp, _("       hostname [-v] [-d|-f|-s|-a|-i|-y|-n]  display formatted name\n"));
+    fprintf(fp, _("       hostname [-v]                         display hostname\n\n"));
+    fprintf(fp, _("       hostname -V|--version|-h|--help       print info and exit\n\n"));
+    fprintf(fp, _("    dnsdomainname=hostname -d, {yp,nis,}domainname=hostname -y\n\n"));
+    fprintf(fp, _("    -s, --short           short host name\n"));
+    fprintf(fp, _("    -a, --alias           alias names\n"));
+    fprintf(fp, _("    -i, --ip-address      addresses for the hostname\n"));
+    fprintf(fp, _("    -f, --fqdn, --long    long host name (FQDN)\n"));
+    fprintf(fp, _("    -d, --domain          DNS domain name\n"));
+    fprintf(fp, _("    -y, --yp, --nis       NIS/YP domainname\n"));
 #if HAVE_AFDECnet
-    fprintf(stderr, _("    -n, --node            DECnet node name\n"));
+    fprintf(fp, _("    -n, --node            DECnet node name\n"));
 #endif /* HAVE_AFDECnet */
-    fprintf(stderr, _("    -F, --file            read hostname or NIS domainname from given file\n\n"));
-    fprintf(stderr, _(
+    fprintf(fp, _("    -F, --file            read hostname or NIS domainname from given file\n\n"));
+    fprintf(fp, _(
 "   This command can read or set the hostname or the NIS domainname. You can\n"
 "   also read the DNS domain or the FQDN (fully qualified domain name).\n"
 "   Unless you are using bind or NIS for host lookups you can change the\n"
 "   FQDN (Fully Qualified Domain Name) and the DNS domain name (which is\n"
 "   part of the FQDN) in the /etc/hosts file.\n"));
 
-    exit(E_USAGE);
+    exit(rc);
 }
 
 
@@ -366,10 +366,12 @@ int main(int argc, char **argv)
 	case 'V':
 	    version();
 	    break; // not reached
-	case '?':
 	case 'h':
+	    usage(E_USAGE);
+	    break; // not reached
+	case '?':
 	default:
-	    usage();
+	    usage(E_OPTERR);
 	    break; // not reached
 	};
 

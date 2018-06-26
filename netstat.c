@@ -1962,41 +1962,42 @@ static void version(void)
 
 static void usage(int rc)
 {
-    fprintf(stderr, _("usage: netstat [-vWeenNcCF] [<Af>] -r         netstat {-V|--version|-h|--help}\n"));
-    fprintf(stderr, _("       netstat [-vWnNcaeol] [<Socket> ...]\n"));
-    fprintf(stderr, _("       netstat { [-vWeenNac] -i | [-cnNe] -M | -s [-6tuw] }\n\n"));
+    FILE *fp = rc ? stderr : stdout;
+    fprintf(fp, _("usage: netstat [-vWeenNcCF] [<Af>] -r         netstat {-V|--version|-h|--help}\n"));
+    fprintf(fp, _("       netstat [-vWnNcaeol] [<Socket> ...]\n"));
+    fprintf(fp, _("       netstat { [-vWeenNac] -i | [-cnNe] -M | -s [-6tuw] }\n\n"));
 
-    fprintf(stderr, _("        -r, --route              display routing table\n"));
-    fprintf(stderr, _("        -i, --interfaces         display interface table\n"));
-    fprintf(stderr, _("        -g, --groups             display multicast group memberships\n"));
-    fprintf(stderr, _("        -s, --statistics         display networking statistics (like SNMP)\n"));
+    fprintf(fp, _("        -r, --route              display routing table\n"));
+    fprintf(fp, _("        -i, --interfaces         display interface table\n"));
+    fprintf(fp, _("        -g, --groups             display multicast group memberships\n"));
+    fprintf(fp, _("        -s, --statistics         display networking statistics (like SNMP)\n"));
 #if HAVE_FW_MASQUERADE
-    fprintf(stderr, _("        -M, --masquerade         display masqueraded connections\n\n"));
+    fprintf(fp, _("        -M, --masquerade         display masqueraded connections\n\n"));
 #endif
 
-    fprintf(stderr, _("        -v, --verbose            be verbose\n"));
-    fprintf(stderr, _("        -W, --wide               don't truncate IP addresses\n"));
-    fprintf(stderr, _("        -n, --numeric            don't resolve names\n"));
-    fprintf(stderr, _("        --numeric-hosts          don't resolve host names\n"));
-    fprintf(stderr, _("        --numeric-ports          don't resolve port names\n"));
-    fprintf(stderr, _("        --numeric-users          don't resolve user names\n"));
-    fprintf(stderr, _("        -N, --symbolic           resolve hardware names\n"));
-    fprintf(stderr, _("        -e, --extend             display other/more information\n"));
-    fprintf(stderr, _("        -p, --programs           display PID/Program name for sockets\n"));
-    fprintf(stderr, _("        -o, --timers             display timers\n"));
-    fprintf(stderr, _("        -c, --continuous         continuous listing\n\n"));
-    fprintf(stderr, _("        -l, --listening          display listening server sockets\n"));
-    fprintf(stderr, _("        -a, --all                display all sockets (default: connected)\n"));
-    fprintf(stderr, _("        -F, --fib                display Forwarding Information Base (default)\n"));
-    fprintf(stderr, _("        -C, --cache              display routing cache instead of FIB\n"));
+    fprintf(fp, _("        -v, --verbose            be verbose\n"));
+    fprintf(fp, _("        -W, --wide               don't truncate IP addresses\n"));
+    fprintf(fp, _("        -n, --numeric            don't resolve names\n"));
+    fprintf(fp, _("        --numeric-hosts          don't resolve host names\n"));
+    fprintf(fp, _("        --numeric-ports          don't resolve port names\n"));
+    fprintf(fp, _("        --numeric-users          don't resolve user names\n"));
+    fprintf(fp, _("        -N, --symbolic           resolve hardware names\n"));
+    fprintf(fp, _("        -e, --extend             display other/more information\n"));
+    fprintf(fp, _("        -p, --programs           display PID/Program name for sockets\n"));
+    fprintf(fp, _("        -o, --timers             display timers\n"));
+    fprintf(fp, _("        -c, --continuous         continuous listing\n\n"));
+    fprintf(fp, _("        -l, --listening          display listening server sockets\n"));
+    fprintf(fp, _("        -a, --all                display all sockets (default: connected)\n"));
+    fprintf(fp, _("        -F, --fib                display Forwarding Information Base (default)\n"));
+    fprintf(fp, _("        -C, --cache              display routing cache instead of FIB\n"));
 #if HAVE_SELINUX
-    fprintf(stderr, _("        -Z, --context            display SELinux security context for sockets\n"));
+    fprintf(fp, _("        -Z, --context            display SELinux security context for sockets\n"));
 #endif
 
-    fprintf(stderr, _("\n  <Socket>={-t|--tcp} {-u|--udp} {-U|--udplite} {-S|--sctp} {-w|--raw}\n"));
-    fprintf(stderr, _("           {-x|--unix} --ax25 --ipx --netrom\n"));
-    fprintf(stderr, _("  <AF>=Use '-6|-4' or '-A <af>' or '--<af>'; default: %s\n"), DFLT_AF);
-    fprintf(stderr, _("  List of possible address families (which support routing):\n"));
+    fprintf(fp, _("\n  <Socket>={-t|--tcp} {-u|--udp} {-U|--udplite} {-S|--sctp} {-w|--raw}\n"));
+    fprintf(fp, _("           {-x|--unix} --ax25 --ipx --netrom\n"));
+    fprintf(fp, _("  <AF>=Use '-6|-4' or '-A <af>' or '--<af>'; default: %s\n"), DFLT_AF);
+    fprintf(fp, _("  List of possible address families (which support routing):\n"));
     print_aflist(1); /* 1 = routeable */
     exit(rc);
 }

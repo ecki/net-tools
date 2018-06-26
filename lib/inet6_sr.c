@@ -44,9 +44,10 @@ static int skfd = -1;
 
 static int usage(const int rc)
 {
-    fprintf(stderr, _("Usage: inet6_route [-vF] del Target\n"));
-    fprintf(stderr, _("       inet6_route [-vF] add Target [gw Gw] [metric M] [[dev] If]\n"));
-    fprintf(stderr, _("       inet6_route [-FC] flush      NOT supported\n"));
+    FILE *fp = rc ? stderr : stdout;
+    fprintf(fp, _("Usage: inet6_route [-vF] del Target\n"));
+    fprintf(fp, _("       inet6_route [-vF] add Target [gw Gw] [metric M] [[dev] If]\n"));
+    fprintf(fp, _("       inet6_route [-FC] flush      NOT supported\n"));
     return (rc);
 }
 

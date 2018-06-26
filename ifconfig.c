@@ -198,37 +198,38 @@ static int test_flag(char *ifname, short flags)
     return (ifr.ifr_flags & flags);
 }
 
-static void usage(void)
+static void usage(int rc)
 {
-    fprintf(stderr, _("Usage:\n  ifconfig [-a] [-v] [-s] <interface> [[<AF>] <address>]\n"));
+    FILE *fp = rc ? stderr : stdout;
+    fprintf(fp, _("Usage:\n  ifconfig [-a] [-v] [-s] <interface> [[<AF>] <address>]\n"));
 #if HAVE_AFINET
-    fprintf(stderr, _("  [add <address>[/<prefixlen>]]\n"));
-    fprintf(stderr, _("  [del <address>[/<prefixlen>]]\n"));
-    fprintf(stderr, _("  [[-]broadcast [<address>]]  [[-]pointopoint [<address>]]\n"));
-    fprintf(stderr, _("  [netmask <address>]  [dstaddr <address>]  [tunnel <address>]\n"));
+    fprintf(fp, _("  [add <address>[/<prefixlen>]]\n"));
+    fprintf(fp, _("  [del <address>[/<prefixlen>]]\n"));
+    fprintf(fp, _("  [[-]broadcast [<address>]]  [[-]pointopoint [<address>]]\n"));
+    fprintf(fp, _("  [netmask <address>]  [dstaddr <address>]  [tunnel <address>]\n"));
 #endif
 #ifdef SIOCSKEEPALIVE
-    fprintf(stderr, _("  [outfill <NN>] [keepalive <NN>]\n"));
+    fprintf(fp, _("  [outfill <NN>] [keepalive <NN>]\n"));
 #endif
-    fprintf(stderr, _("  [hw <HW> <address>]  [mtu <NN>]\n"));
-    fprintf(stderr, _("  [[-]trailers]  [[-]arp]  [[-]allmulti]\n"));
-    fprintf(stderr, _("  [multicast]  [[-]promisc]\n"));
-    fprintf(stderr, _("  [mem_start <NN>]  [io_addr <NN>]  [irq <NN>]  [media <type>]\n"));
+    fprintf(fp, _("  [hw <HW> <address>]  [mtu <NN>]\n"));
+    fprintf(fp, _("  [[-]trailers]  [[-]arp]  [[-]allmulti]\n"));
+    fprintf(fp, _("  [multicast]  [[-]promisc]\n"));
+    fprintf(fp, _("  [mem_start <NN>]  [io_addr <NN>]  [irq <NN>]  [media <type>]\n"));
 #ifdef HAVE_TXQUEUELEN
-    fprintf(stderr, _("  [txqueuelen <NN>]\n"));
+    fprintf(fp, _("  [txqueuelen <NN>]\n"));
 #endif
 #ifdef HAVE_DYNAMIC
-    fprintf(stderr, _("  [[-]dynamic]\n"));
+    fprintf(fp, _("  [[-]dynamic]\n"));
 #endif
-    fprintf(stderr, _("  [up|down] ...\n\n"));
+    fprintf(fp, _("  [up|down] ...\n\n"));
 
-    fprintf(stderr, _("  <HW>=Hardware Type.\n"));
-    fprintf(stderr, _("  List of possible hardware types:\n"));
+    fprintf(fp, _("  <HW>=Hardware Type.\n"));
+    fprintf(fp, _("  List of possible hardware types:\n"));
     print_hwlist(0); /* 1 = ARPable */
-    fprintf(stderr, _("  <AF>=Address family. Default: %s\n"), DFLT_AF);
-    fprintf(stderr, _("  List of possible address families:\n"));
+    fprintf(fp, _("  <AF>=Address family. Default: %s\n"), DFLT_AF);
+    fprintf(fp, _("  List of possible address families:\n"));
     print_aflist(0); /* 1 = routeable */
-    exit(E_USAGE);
+    exit(rc);
 }
 
 static void version(void)
@@ -299,7 +300,7 @@ int main(int argc, char **argv)
 
 	else if (!strcmp(*argv, "-?") || !strcmp(*argv, "-h") ||
 	    !strcmp(*argv, "-help") || !strcmp(*argv, "--help"))
-	    usage();
+	    usage(E_USAGE);
 
 	else {
 	    fprintf(stderr, _("ifconfig: option `%s' not recognised.\n"),
@@ -359,7 +360,7 @@ int main(int argc, char **argv)
 #ifdef IFF_PORTSEL
 	if (!strcmp(*spp, "media") || !strcmp(*spp, "port")) {
 	    if (*++spp == NULL)
-		usage();
+		usage(E_OPTERR);
 	    if (!strcasecmp(*spp, "auto")) {
 		goterr |= set_flag(ifr.ifr_name, IFF_AUTOMEDIA);
 	    } else {
@@ -471,7 +472,7 @@ int main(int argc, char **argv)
 
 	if (!strcmp(*spp, "mtu")) {
 	    if (*++spp == NULL)
-		usage();
+		usage(E_OPTERR);
 	    ifr.ifr_mtu = atoi(*spp);
 	    if (ioctl(skfd, SIOCSIFMTU, &ifr) < 0) {
 		fprintf(stderr, "SIOCSIFMTU: %s\n", strerror(errno));
@@ -483,7 +484,7 @@ int main(int argc, char **argv)
 #ifdef SIOCSKEEPALIVE
 	if (!strcmp(*spp, "keepalive")) {
 	    if (*++spp == NULL)
-		usage();
+		usage(E_OPTERR);
 	    ifr.ifr_data = (caddr_t) (uintptr_t) atoi(*spp);
 	    if (ioctl(skfd, SIOCSKEEPALIVE, &ifr) < 0) {
 		fprintf(stderr, "SIOCSKEEPALIVE: %s\n", strerror(errno));
@@ -497,7 +498,7 @@ int main(int argc, char **argv)
 #ifdef SIOCSOUTFILL
 	if (!strcmp(*spp, "outfill")) {
 	    if (*++spp == NULL)
-		usage();
+		usage(E_OPTERR);
 	    ifr.ifr_data = (caddr_t) (uintptr_t) atoi(*spp);
 	    if (ioctl(skfd, SIOCSOUTFILL, &ifr) < 0) {
 		fprintf(stderr, "SIOCSOUTFILL: %s\n", strerror(errno));
@@ -540,7 +541,7 @@ int main(int argc, char **argv)
 	}
 	if (!strcmp(*spp, "dstaddr")) {
 	    if (*++spp == NULL)
-		usage();
+		usage(E_OPTERR);
 	    safe_strncpy(host, *spp, (sizeof host));
 	    if (ap->input(0, host, &_sa) < 0) {
 		    if (ap->herror)
@@ -562,7 +563,7 @@ int main(int argc, char **argv)
 	}
 	if (!strcmp(*spp, "netmask")) {
 	    if (*++spp == NULL || didnetmask)
-		usage();
+		usage(E_OPTERR);
 	    safe_strncpy(host, *spp, (sizeof host));
 	    if (ap->input(0, host, &_sa) < 0) {
 		    if (ap->herror)
@@ -581,7 +582,7 @@ int main(int argc, char **argv)
 #ifdef HAVE_TXQUEUELEN
 	if (!strcmp(*spp, "txqueuelen")) {
 	    if (*++spp == NULL)
-		usage();
+		usage(E_OPTERR);
 	    ifr.ifr_qlen = strtoul(*spp, NULL, 0);
 	    if (ioctl(skfd, SIOCSIFTXQLEN, &ifr) < 0) {
 		fprintf(stderr, "SIOCSIFTXQLEN: %s\n", strerror(errno));
@@ -594,7 +595,7 @@ int main(int argc, char **argv)
 
 	if (!strcmp(*spp, "mem_start")) {
 	    if (*++spp == NULL)
-		usage();
+		usage(E_OPTERR);
 	    if (ioctl(skfd, SIOCGIFMAP, &ifr) < 0) {
 		fprintf(stderr, "mem_start: SIOCGIFMAP: %s\n", strerror(errno));
 		spp++;
@@ -611,7 +612,7 @@ int main(int argc, char **argv)
 	}
 	if (!strcmp(*spp, "io_addr")) {
 	    if (*++spp == NULL)
-		usage();
+		usage(E_OPTERR);
 	    if (ioctl(skfd, SIOCGIFMAP, &ifr) < 0) {
 		fprintf(stderr, "io_addr: SIOCGIFMAP: %s\n", strerror(errno));
 		spp++;
@@ -628,7 +629,7 @@ int main(int argc, char **argv)
 	}
 	if (!strcmp(*spp, "irq")) {
 	    if (*++spp == NULL)
-		usage();
+		usage(E_OPTERR);
 	    if (ioctl(skfd, SIOCGIFMAP, &ifr) < 0) {
 		fprintf(stderr, "irq: SIOCGIFMAP: %s\n", strerror(errno));
 		goterr = 1;
@@ -677,9 +678,9 @@ int main(int argc, char **argv)
 
 	if (!strcmp(*spp, "hw")) {
 	    if (*++spp == NULL)
-		usage();
+		usage(E_OPTERR);
 	    if ((hw = get_hwtype(*spp)) == NULL)
-		usage();
+		usage(E_OPTERR);
 	    if (hw->input == NULL) {
 	    	fprintf(stderr, _("hw address type `%s' has no handler to set address. failed.\n"), *spp);
 	    	spp+=2;
@@ -687,7 +688,7 @@ int main(int argc, char **argv)
 	    	continue;
 	    }
 	    if (*++spp == NULL)
-		usage();
+		usage(E_OPTERR);
 	    safe_strncpy(host, *spp, (sizeof host));
 	    if (hw->input(host, &_sa) < 0) {
 		fprintf(stderr, _("%s: invalid %s address.\n"), host, hw->name);
@@ -711,14 +712,14 @@ int main(int argc, char **argv)
 #if HAVE_AFINET || HAVE_AFINET6
 	if (!strcmp(*spp, "add")) {
 	    if (*++spp == NULL)
-		usage();
+		usage(E_OPTERR);
 #if HAVE_AFINET6
 	    if (strchr(*spp, ':')) {
 		/* INET6 */
 		if ((cp = strchr(*spp, '/'))) {
 		    prefix_len = atol(cp + 1);
 		    if ((prefix_len < 0) || (prefix_len > 128))
-			usage();
+			usage(E_OPTERR);
 		    *cp = 0;
 		} else {
 		    prefix_len = 128;
@@ -801,7 +802,7 @@ int main(int argc, char **argv)
 #if HAVE_AFINET || HAVE_AFINET6
 	if (!strcmp(*spp, "del")) {
 	    if (*++spp == NULL)
-		usage();
+		usage(E_OPTERR);
 
 #ifdef SIOCDIFADDR
 #if HAVE_AFINET6
@@ -809,7 +810,7 @@ int main(int argc, char **argv)
 		if ((cp = strchr(*spp, '/'))) {
 		    prefix_len = atol(cp + 1);
 		    if ((prefix_len < 0) || (prefix_len > 128))
-			usage();
+			usage(E_OPTERR);
 		    *cp = 0;
 		} else {
 		    prefix_len = 128;
@@ -896,11 +897,11 @@ int main(int argc, char **argv)
 #if HAVE_AFINET6
 	if (!strcmp(*spp, "tunnel")) {
 	    if (*++spp == NULL)
-		usage();
+		usage(E_OPTERR);
 	    if ((cp = strchr(*spp, '/'))) {
 		prefix_len = atol(cp + 1);
 		if ((prefix_len < 0) || (prefix_len > 128))
-		    usage();
+		    usage(E_OPTERR);
 		*cp = 0;
 	    } else {
 		prefix_len = 128;
@@ -948,11 +949,11 @@ int main(int argc, char **argv)
 	if (ap->getmask) {
 	    switch (ap->getmask(host, &_samask, NULL)) {
 	    case -1:
-		usage();
+		usage(E_OPTERR);
 		break;
 	    case 1:
 		if (didnetmask)
-		    usage();
+		    usage(E_OPTERR);
 
 		// remeber to set the netmask from samask later
 		neednetmask = 1;

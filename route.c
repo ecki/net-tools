@@ -78,20 +78,21 @@ struct aftype *ap; // selected address family
 
 static void usage(int rc)
 {
-    fprintf(stderr, _("Usage: route [-nNvee] [-FC] [<AF>]           List kernel routing tables\n"));
-    fprintf(stderr, _("       route [-v] [-FC] {add|del|flush} ...  Modify routing table for AF.\n\n"));
+    FILE *fp = rc ? stderr : stdout;
+    fprintf(fp, _("Usage: route [-nNvee] [-FC] [<AF>]           List kernel routing tables\n"));
+    fprintf(fp, _("       route [-v] [-FC] {add|del|flush} ...  Modify routing table for AF.\n\n"));
 
-    fprintf(stderr, _("       route {-h|--help} [<AF>]              Detailed usage syntax for specified AF.\n"));
-    fprintf(stderr, _("       route {-V|--version}                  Display version/author and exit.\n\n"));
+    fprintf(fp, _("       route {-h|--help} [<AF>]              Detailed usage syntax for specified AF.\n"));
+    fprintf(fp, _("       route {-V|--version}                  Display version/author and exit.\n\n"));
 
-    fprintf(stderr, _("        -v, --verbose            be verbose\n"));
-    fprintf(stderr, _("        -n, --numeric            don't resolve names\n"));
-    fprintf(stderr, _("        -e, --extend             display other/more information\n"));
-    fprintf(stderr, _("        -F, --fib                display Forwarding Information Base (default)\n"));
-    fprintf(stderr, _("        -C, --cache              display routing cache instead of FIB\n\n"));
+    fprintf(fp, _("        -v, --verbose            be verbose\n"));
+    fprintf(fp, _("        -n, --numeric            don't resolve names\n"));
+    fprintf(fp, _("        -e, --extend             display other/more information\n"));
+    fprintf(fp, _("        -F, --fib                display Forwarding Information Base (default)\n"));
+    fprintf(fp, _("        -C, --cache              display routing cache instead of FIB\n\n"));
 
-    fprintf(stderr, _("  <AF>=Use -4, -6, '-A <af>' or '--<af>'; default: %s\n"), DFLT_AF);
-    fprintf(stderr, _("  List of possible address families (which support routing):\n"));
+    fprintf(fp, _("  <AF>=Use -4, -6, '-A <af>' or '--<af>'; default: %s\n"), DFLT_AF);
+    fprintf(fp, _("  List of possible address families (which support routing):\n"));
     print_aflist(1); /* 1 = routeable */
     exit(rc);
 }

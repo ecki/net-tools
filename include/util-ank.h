@@ -23,7 +23,7 @@ extern int resolve_hosts;
 #define NEXT_ARG() \
 argv++; \
 if (--argc <= 0) \
-	usage();
+	usage(E_OPTERR);
 
 typedef struct
 {

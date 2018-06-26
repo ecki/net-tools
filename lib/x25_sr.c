@@ -47,8 +47,9 @@ static int skfd = -1;
 
 static int usage(const int rc)
 {
-  fprintf(stderr,"Usage: x25_route [-v] del Target[/mask] [dev] If\n");
-  fprintf(stderr,"       x25_route [-v] add Target[/mask] [dev] If\n");
+  FILE *fp = rc ? stderr : stdout;
+  fprintf(fp, "Usage: x25_route [-v] del Target[/mask] [dev] If\n");
+  fprintf(fp, "       x25_route [-v] add Target[/mask] [dev] If\n");
   return(rc);
 }
 

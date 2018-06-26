@@ -188,13 +188,14 @@ void readconf(void)
 struct option lopt[] = {
 	{"syslog", 0, NULL, 's' },
 	{"config-file", 1, NULL, 'c' },
-	{"help", 0, NULL, '?' },
+	{"help", 0, NULL, 'h' },
 	{NULL},
 };
 
-void usage(void)
+static void usage(int rc)
 {
-	fprintf(stderr, _("usage: nameif [-c configurationfile] [-s] {ifname macaddress}\n"));
+	FILE *fp = rc ? stderr : stdout;
+	fprintf(fp, _("usage: nameif [-c configurationfile] [-s] {ifname macaddress}\n"));
 	exit(E_USAGE);
 }
 
@@ -209,12 +210,13 @@ int main(int ac, char **av)
 	int ret = 0;
 
 	for (;;) {
-		int c = getopt_long(ac,av,"c:s",lopt,NULL);
+		int c = getopt_long(ac,av,"c:sh",lopt,NULL);
 		if (c == -1) break;
 		switch (c) {
 		default:
-		case '?':
-			usage();
+			usage(E_OPTERR);
+		case 'h':
+			usage(E_USAGE);
 		case 'c':
 			fname = optarg;
 			break;
@@ -232,7 +234,7 @@ int main(int ac, char **av)
 		char pos[30];
 
 		if ((ac-optind) & 1)
-			usage();
+			usage(E_OPTERR);
 		if (strlen(av[optind])+1>IFNAMSIZ)
 			complain(_("interface name `%s' too long"), av[optind]);
 		safe_strncpy(ch->ifname, av[optind], sizeof(ch->ifname));
