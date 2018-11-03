@@ -166,7 +166,7 @@ haben alle dazu n\(:otigen Privilegien.
 .SS "\-A, \-\-af \fIFamilie\fI"
 benutzt einen alternativen Weg, um Adressfamilien zu setzen.
 .I Familie 
-ist eine von Kommatas abgetrennte Liste von Schl\(:usselworten f\(:ur
+ist eine durch Kommas getrennte Auflistung von Schl\(:usselworten f\(:ur
 Adressfamilien wie
 .BR inet , 
 .BR unix , 
@@ -175,7 +175,7 @@ Adressfamilien wie
 .B netrom 
 und
 .BR ddp .
-Dies hat den gleichen Effekt wie die Langoptionen
+Dies hat den gleichen Effekt wie die Optionen
 .BR \-\-inet ,
 .BR \-\-unix ,
 .BR \-\-ipx ,
@@ -196,7 +196,7 @@ im Sekundenabstand die Ausgabe, bis es abgebrochen wird.
 .SS Aktive Internet-Verbindungen \fR(TCP, UDP, RAW)\fR
 
 .SS "Proto" 
-Das von Socket verwendete Protokoll (TCP, UDP, RAW).
+Das vom Socket verwendete Protokoll (TCP, UDP, RAW).
 
 .SS "Recv-Q"
 Die Anzahl von Bytes, die noch nicht von der Anwendung vom Socket abgeholt
@@ -210,13 +210,13 @@ Die lokale Adresse (lokaler Rechnername) und Portnummer des Sockets.  Au\(sser
 bei Verwendung der
 .B -n
 Option wird die Socketadresse nach dem kanonischen Rechnernamen und die
-Portnummer in den zugeh\(:origen Dienstenamen aufgel\(sst.
+Portnummer in den zugeh\(:origen Dienstenamen aufgel\(:ost.
 
 .SS "Gegenadresse"
 Die Adresse und Portnummer der Gegenseite des Sockets.  Wie bei lokalen
-Adressen schaltet der
+Adressen werden mit
 .B -n
-Schalter die Umwandlung von Rechneradresse und Portnummer ab.
+Rechneradresse und Portnummer numerisch angezeigt.
 
 .SS "State"
 Der Zustand des Sockets.  Da RAW-Sockets keinen und UDP-Sockets
@@ -225,11 +225,11 @@ Normalerweise ist sie einer von mehreren Werten:
 .TP
 .I
 VERBUNDEN
-The socket has an established connection.
+Dieser Socket hat eine Verbindung hergestellt.
 .TP
 .I
 SYN_SENT
-Es wird versucht auf dem Socket eine Verbindung aufzubauen.
+Es wird versucht, auf dem Socket eine Verbindung aufzubauen.
 .TP
 .I
 SYN_RECV
@@ -246,7 +246,7 @@ von der Gegenseite ebenfalls geschlo\(ssen wird.
 .TP
 .I
 TIME_WAIT
-Der Socket ist nach dem Schlie\(ssen im Wartezustand um Pakete handzuhaben,
+Der Socket ist nach dem Schlie\(ssen im Wartezustand, um Pakete entgegenzunehmen,
 die sich eventuell noch im Netzwerk befinden.
 .TP
 .I
@@ -266,15 +266,13 @@ die Best\(:atigung wird abgewartet.
 .I
 LISTEN
 Der Socket wartet auf eingehende Verbindungen.  Diese Sockets werden nur
-angezeit, wenn die
-The socket is listening for incoming connections. Those sockets are only
-displayed if the
+angezeigt, wenn die
 .BR -a , --listening
-Option gegeben wird.
+Option gew\(:ahlt wird.
 .TP
 .I
 CLOSING
-Beide Sockets sind geschlo\(ssen es wurden aber noch nicht alle Daten
+Beide Sockets sind geschlo\(ssen, es wurden aber noch nicht alle Daten
 geschickt.
 .TP
 .I
@@ -294,19 +292,19 @@ Privilegien ben\(:otigt um die n\(:otigen Daten zu erhalten.  F\(:ur IPX
 Sockets sind diese Daten nicht verf\(:ugbar.
 
 .SS "Timer"
-(Dies mu\(ss noch geschrieben werden)
+(dies mu\(ss noch geschrieben werden)
 
 .PP
-.SS Aktive Sockets in der UNIX Dom\(:ane
+.SS aktive Sockets in der UNIX Dom\(:ane
 
 .SS "Proto" 
-Das Protokoll (in der Regel unix), das vom Socket verwendet wird.
+das Protokoll (in der Regel unix), welches vom Socket verwendet wird
 
 .SS "RefZ\(:ah"
-Der Referenzz\(:ahler, d.h. die Zahl der Prozesse, die diesen Socket benutzen.
+der Referenzz\(:ahler, d.h. die Zahl der Prozesse, die diesen Socket benutzen
 
 .SS "Flaggen"
-Die Flaggen, die angezeigt werden sind SO_ACCEPTON (angezeigt als
+die Flags, die angezeigt werden sind SO_ACCEPTON (angezeigt als
 .BR ACC ),
 SO_WAITDATA 
 .RB ( W )
@@ -314,7 +312,7 @@ oder SO_NOSPACE
 .RB ( N ). 
 SO_ACCECPTON 
 wird auf unverbundenen Sockets verwendet, wenn die zugeh\(:origen Sockets
-auf Verbindungsanfragen warten.  Die anderen Flaggen sind normalerweise nicht
+auf Verbindungsanfragen warten.  Die anderen Flags sind normalerweise nicht
 von Interesse.
 
 .SS "Typ"
@@ -359,7 +357,7 @@ Der Socket ist unbenutzt
 .TP
 .I
 H\(:Ort
-Der Socket lauscht nach Verbindungsanfragen.  Diese Sockets werden nur
+Der Socket lauscht auf Verbindungsanfragen.  Diese Sockets werden nur
 angezeigt, wenn die
 .BR -a , --listening
 Option gesetzt ist.
@@ -382,7 +380,7 @@ Der Socket hat keine Verbundung zu einem anderen Socket.
 .TP
 .I
 UNKNOWN
-Ein Socket sollte niemals in diesem Zustand sein.
+Unbekannt - ein Socket sollte niemals in diesem Zustand sein.
 
 .SS "PID/Programmname"
 Prozess-ID und Programmname des Programs, das diesen Socket h\(:alt.  Details
@@ -390,25 +388,24 @@ siehe oben unter
 .BR "Aktive Internetverbindungen" .
 
 .SS "Pfad"
-This displays the path name as which the corresponding processes attached
-to the socket.
+Zeigt den Pfad des Prozesses an, welcher den Socket h\(:alt.
 
 .PP
 .SS Aktive IPX-Sockets
 
-(Dieser Abschnitt sollte von jemandem, der davon Ahnung hat geschrieben
+(Dieser Abschnitt sollte von jemandem, der davon Ahnung hat, geschrieben
 werden.)
 
 .PP
-.SS Aktive NET/ROM-Verdingungen
+.SS Aktive NET/ROM-Verbindungen
 
-(Dieser Abschnitt sollte von jemandem, der davon Ahnung hat geschrieben
+(Dieser Abschnitt sollte von jemandem, der davon Ahnung hat, geschrieben
 werden.)
 
 .PP
 .SS Aktive AX.25-Verbindungen
 
-(Dieser Abschnitt sollte von jemandem, der davon Ahnung hat geschrieben
+(Dieser Abschnitt sollte von jemandem, der davon Ahnung hat, geschrieben
 werden.)
 
 .PP
@@ -459,10 +456,10 @@ Befehl explizite Regeln zugef\(:ugt werden.
 -- Informationen zu Kernelrouten
 
 .I /proc/net/ax25_route
--- Kernelinformationen zum AX25-Routen
+-- Kernelinformationen zu AX25-Routen
 
 .I /proc/net/ipx_route
--- Kernelinformationen zum IPX-Routen
+-- Kernelinformationen zu IPX-Routen
 
 .I /proc/net/nr_nodes
 -- Kernelliste der NET/ROM-Knoten
@@ -471,7 +468,7 @@ Befehl explizite Regeln zugef\(:ugt werden.
 -- Kernelliste der NET/ROM-Nachbarn
 
 .I /proc/net/ip_masquerade
--- Liste der maskierten Verbindungen.
+-- Liste der maskierten Verbindungen
 
 .fi
 
@@ -483,13 +480,13 @@ Befehl explizite Regeln zugef\(:ugt werden.
 
 .PP
 .SH PROBLEME
-\(:Andert sich der Zustand des Sockets w\(:ahrend er gerade angezeigt wird,
-so kann unsinnige Information ausgegeben werden.  Dies ist jedoch
+\(:Andert sich der Zustand des Sockets, w\(:ahrend er gerade angezeigt wird,
+so k\(:onnen unsinnige Informationen ausgegeben werden.  Dies ist jedoch
 unwahrscheinlich.
 .br
-Die
+Der beschriebene Parameter
 .B netstat -i
-die beschrieben wird sollte nach einigem S\(:aubern der BETA-Version des
+sollte nach einigem S\(:aubern der BETA-Version des
 Codes des Net-Tools Packets funktionieren.
 
 .PP
