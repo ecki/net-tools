@@ -599,7 +599,7 @@ void ife_print_short(struct interface *ptr)
     /* If needed, display the interface statistics. */
     if (ptr->statistics_valid) {
 	printf("%8llu %6lu %6lu %-6lu ",
-	       ptr->stats.rx_packets, ptr->stats.rx_errors,
+	       ptr->stats.rx_packets + ptr->stats.rx_crc_errors + ptr->stats.rx_frame_errors, ptr->stats.rx_errors,
 	       ptr->stats.rx_dropped, ptr->stats.rx_fifo_errors);
 	printf("%8llu %6lu %6lu %6lu ",
 	       ptr->stats.tx_packets, ptr->stats.tx_errors,
