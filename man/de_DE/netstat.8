@@ -75,7 +75,7 @@ zeigt Informationen des Linux-Netzwerkssystems an.
 .SS "(no option)"
 Ohne Optionen zeigt
 .B netstat
-den Zustand von offenen Sockets an.  Wird keine Adressfamilie angegeben, dann
+den Zustand von offenen Sockets an. Wird keine Adressfamilie angegeben, dann
 werden die offenen Sockets aller konfigurierten Adressfamilien angezeigt.
 Die Option
 .B -e
@@ -109,8 +109,9 @@ F\(:ur Details siehe
 .SS "\-i, \-\-interfaces"
 Wird die
 .BR -i ", " --interfaces
-Option verwendet,  so wird eine Tabelle aller Schnittstellen
-ausgegeben.  Die Ausgabe ist im Format von
+Option verwendet, so wird eine Tabelle aller Schnittstellen
+ausgegeben sowie deren Fehlerquoten beim Senden und Empfangen.
+Die Ausgabe ist im Format von
 .B "ifconfig -e"
 und wird in
 .BR ifconfig (8)
