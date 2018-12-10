@@ -272,7 +272,7 @@ static char prg_cache_loaded = 0;
 #define PATH_PROC	   "/proc"
 #define PATH_FD_SUFF	"fd"
 #define PATH_FD_SUFFl       strlen(PATH_FD_SUFF)
-#define PATH_PROC_X_FD      PATH_PROC "/%s/" PATH_FD_SUFF
+#define PATH_PROC_X_FD      "%s" "/%s/" PATH_FD_SUFF
 #define PATH_CMDLINE	"cmdline"
 #define PATH_CMDLINEl       strlen(PATH_CMDLINE)
 
@@ -419,7 +419,7 @@ static void prg_cache_load(void)
 		break;
 	if (*cs)
 	    continue;
-	procfdlen = snprintf(line,sizeof(line),PATH_PROC_X_FD,direproc->d_name);
+	procfdlen = snprintf(line,sizeof(line),PATH_PROC_X_FD,path_proc,direproc->d_name);
 	if (procfdlen <= 0 || procfdlen >= sizeof(line) - 5)
 	    continue;
 	errno = 0;
