@@ -169,6 +169,7 @@ int flag_ver = 0;
 int flag_l2cap = 0;
 int flag_rfcomm = 0;
 int flag_selinux = 0;
+char *path_proc = NULL;
 
 FILE *procinfo;
 
@@ -411,7 +412,7 @@ static void prg_cache_load(void)
     if (prg_cache_loaded || !flag_prg) return;
     prg_cache_loaded = 1;
     cmdlbuf[sizeof(cmdlbuf) - 1] = '\0';
-    if (!(dirproc=opendir(PATH_PROC))) goto fail;
+    if (!(dirproc=opendir(path_proc))) goto fail;
     while (errno = 0, direproc = readdir(dirproc)) {
 	for (cs = direproc->d_name; *cs; cs++)
 	    if (!isdigit(*cs))
@@ -2069,6 +2070,11 @@ int main
     textdomain("net-tools");
 #endif
     getroute_init();		/* Set up AF routing support */
+
+    path_proc = getenv("PATH_PROC");
+    if ( path_proc == NULL ) {
+        path_proc = PATH_PROC;
+    }
 
     afname[0] = '\0';
     while ((i = getopt_long(argc, argv, "A:CFMacdeghilnNoprsStuUvVWw2fx64?Z", longopts, &lop)) != EOF)
