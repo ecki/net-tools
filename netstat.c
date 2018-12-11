@@ -269,7 +269,7 @@ static char prg_cache_loaded = 0;
 #define LINE_MAX 4096
 #endif
 
-#define PATH_PROC	   "/proc"
+#define DEFAULT_PATH_PROC	   "/proc"
 #define PATH_FD_SUFF	"fd"
 #define PATH_FD_SUFFl       strlen(PATH_FD_SUFF)
 #define PATH_PROC_X_FD      "%s" "/%s/" PATH_FD_SUFF
@@ -2073,7 +2073,7 @@ int main
 
     path_proc = getenv("PATH_PROC");
     if ( path_proc == NULL ) {
-        path_proc = PATH_PROC;
+        path_proc = DEFAULT_PATH_PROC;
     }
 
     afname[0] = '\0';
