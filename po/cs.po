@@ -1969,7 +1969,7 @@ msgstr "Počet odmítnutých aktivních spojení kvůli časovému razítku: %u"
 
 #: ../statistics.c:237
 #, c-format
-msgid "%u packetes rejected in established connections because of timestamp"
+msgid "%u packets rejected in established connections because of timestamp"
 msgstr ""
 "Počet odmítnutých packetů uvnitř navázaného spojení kvůli časovému razítku: %"
 "u"

@@ -215,7 +215,7 @@ static const struct entry Tcpexttab[] =
     {"OfoPruned", N_("%llu packets dropped from out-of-order queue because of socket buffer overrun"), opt_number},
     {"OutOfWindowIcmps", N_("%llu ICMP packets dropped because they were out-of-window"), opt_number},
     {"PAWSActive", N_("%llu active connections rejected because of time stamp"), opt_number},
-    {"PAWSEstab", N_("%llu packetes rejected in established connections because of timestamp"), opt_number},
+    {"PAWSEstab", N_("%llu packets rejected in established connections because of timestamp"), opt_number},
     {"PAWSPassive", N_("%llu passive connections rejected because of time stamp"), opt_number},
     {"PruneCalled", N_("%llu packets pruned from receive queue because of socket buffer overrun"), opt_number},
     {"RcvPruned", N_("%llu packets pruned from receive queue"), opt_number},

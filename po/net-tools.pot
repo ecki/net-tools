@@ -1746,7 +1746,7 @@ msgstr ""
 
 #: ../statistics.c:167
 #, c-format
-msgid "%u packetes rejected in established connections because of timestamp"
+msgid "%u packets rejected in established connections because of timestamp"
 msgstr ""
 
 #: ../statistics.c:169

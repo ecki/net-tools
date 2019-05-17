@@ -1626,7 +1626,7 @@ msgstr "%u aktiivsest ühendusest keelduti ajatempli tõttu"
 
 #: ../statistics.c:167
 #, c-format
-msgid "%u packetes rejected in established connections because of timestamp"
+msgid "%u packets rejected in established connections because of timestamp"
 msgstr "%u paketist keelduti loodud ühendustes ajatempli tõttu"
 
 #: ../statistics.c:169
