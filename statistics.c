@@ -59,8 +59,8 @@ static const struct entry Iptab[] =
     {"Forwarding", N_("Forwarding is %s"), i_forward | I_STATIC},
     {"ForwDatagrams", N_("%llu forwarded"), number},
     {"FragCreates", N_("%llu fragments created"), opt_number},
-    {"FragFails", N_("%llu fragments failed"), opt_number},
-    {"FragOKs", N_("%llu fragments received ok"), opt_number},
+    {"FragFails", N_("%llu outgoing packets failed fragmentation"), opt_number},
+    {"FragOKs", N_("%llu outgoing packets fragmented ok"), opt_number},
     {"InAddrErrors", N_("%llu with invalid addresses"), opt_number},
     {"InDelivers", N_("%llu incoming packets delivered"), number},
     {"InDiscards", N_("%llu incoming packets discarded"), number},
@@ -79,8 +79,8 @@ static const struct entry Iptab[] =
 static const struct entry Ip6tab[] =
 {   /* Keep the entries sorted! */
     {"Ip6FragCreates", N_("%llu fragments created"), opt_number},
-    {"Ip6FragFails", N_("%llu fragments failed"), opt_number},
-    {"Ip6FragOKs", N_("%llu fragments received ok"), opt_number},
+    {"Ip6FragFails", N_("%llu outgoing packets failed fragmentation"), opt_number},
+    {"Ip6FragOKs", N_("%llu outgoing packets fragmented ok"), opt_number},
     {"Ip6InAddrErrors", N_("%llu with invalid addresses"), opt_number},
     {"Ip6InDelivers", N_("%llu incoming packets delivered"), number},
     {"Ip6InDiscards", N_("%llu incoming packets discarded"), number},
