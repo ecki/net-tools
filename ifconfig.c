@@ -218,6 +218,9 @@ static void usage(int rc)
 #ifdef HAVE_TXQUEUELEN
     fprintf(fp, _("  [txqueuelen <NN>]\n"));
 #endif
+#ifdef SIOCSIFNAME
+    fprintf(fp, _("  [name <newname>]\n"));
+#endif
 #ifdef HAVE_DYNAMIC
     fprintf(fp, _("  [[-]dynamic]\n"));
 #endif
@@ -586,6 +589,20 @@ int main(int argc, char **argv)
 	    ifr.ifr_qlen = strtoul(*spp, NULL, 0);
 	    if (ioctl(skfd, SIOCSIFTXQLEN, &ifr) < 0) {
 		fprintf(stderr, "SIOCSIFTXQLEN: %s\n", strerror(errno));
+		goterr = 1;
+	    }
+	    spp++;
+	    continue;
+	}
+#endif
+
+#ifdef SIOCSIFNAME
+	if (!strcmp(*spp, "name")) {
+	    if (*++spp == NULL)
+		usage(E_OPTERR);
+	    safe_strncpy(ifr.ifr_newname, *spp, IFNAMSIZ);
+	    if (ioctl(skfd, SIOCSIFNAME, &ifr) < 0) {
+		fprintf(stderr, "SIOCSIFNAME: %s\n", strerror(errno));
 		goterr = 1;
 	    }
 	    spp++;

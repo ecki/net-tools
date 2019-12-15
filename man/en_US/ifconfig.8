@@ -191,6 +191,10 @@ Set the length of the transmit queue of the device. It is useful to set this
 to small values for slower devices with a high latency (modem links, ISDN)
 to prevent fast bulk transfers from disturbing interactive traffic like
 telnet too much. 
+.TP
+.B name \fInewname\fR
+Change the name of this interface to \fInewname\fR. The interface must be shut
+down first.
 .SH NOTES
 Since kernel release 2.2 there are no explicit interface statistics for
 alias interfaces anymore. The statistics printed for the original address
