@@ -33,6 +33,7 @@ static const char *fname = default_conf;
 static int use_syslog;
 static int ctl_sk = -1;
 
+attribute_printf(1, 2)
 static void complain(const char *fmt, ...)
 {
 	va_list ap;
@@ -47,6 +48,7 @@ static void complain(const char *fmt, ...)
 	exit(1);
 }
 
+attribute_printf(1, 2)
 static void warning(const char *fmt, ...)
 {
 	va_list ap;
@@ -170,7 +172,7 @@ static void readconf(void)
 			continue;
 		n = strcspn(p, " \t");
 		if (n > IFNAMSIZ-1)
-			complain(_("interface name too long at line %d"), line);
+			complain(_("interface name too long at %s"), line);
 		ch = xmalloc(sizeof(struct change));
 		memcpy(ch->ifname, p, n);
 		ch->ifname[n] = 0;

@@ -21,3 +21,7 @@ char *safe_strncpy(char *dst, const char *src, size_t size);
 #define netmax(a,b) ((a)>(b) ? (a) : (b))
 
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof((a)[0]))
+
+/* Positions count starting from 1. */
+#define attribute_printf(fmtpos, varpos) \
+	__attribute__((__format__(__printf__, fmtpos, varpos)))
