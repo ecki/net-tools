@@ -60,18 +60,12 @@ static char *Release = RELEASE;
 static char *program_name;
 static int opt_v;
 
-static void sethname(char *);
-static void setdname(char *);
-static void showhname(char *, int);
-static void version(void);
-static void setfilename(char *, int);
-
 #define SETHOST		1
 #define SETDOMAIN	2
 #define SETNODE		3
 
 #if HAVE_AFDECnet
-static void setnname(char *nname)
+static void setnname(const char *nname)
 {
     if (opt_v)
         fprintf(stderr, _("Setting nodename to `%s'\n"),
@@ -93,7 +87,7 @@ static void setnname(char *nname)
 }
 #endif /* HAVE_AFDECnet */
 
-static void sethname(char *hname)
+static void sethname(const char *hname)
 {
     if (opt_v)
 	fprintf(stderr, _("Setting hostname to `%s'\n"),
@@ -114,7 +108,7 @@ static void sethname(char *hname)
     }
 }
 
-static void setdname(char *dname)
+static void setdname(const char *dname)
 {
     if (opt_v)
 	fprintf(stderr, _("Setting domainname to `%s'\n"),
@@ -135,7 +129,7 @@ static void setdname(char *dname)
     }
 }
 
-static void showhname(char *hname, int c)
+static void showhname(const char *hname, int c)
 {
     struct hostent *hp;
     register char *p, **alias;
@@ -222,7 +216,7 @@ static void showhname(char *hname, int c)
     }
 }
 
-static void setfilename(char *name, int what)
+static void setfilename(const char *name, int what)
 {
     register FILE *fd;
     register char *p;
