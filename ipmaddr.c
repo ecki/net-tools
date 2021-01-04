@@ -336,7 +336,7 @@ int multiaddr_modify(int cmd, int argc, char **argv)
 			NEXT_ARG();
 			if (ifr.ifr_name[0])
 				usage(E_OPTERR);
-			strncpy(ifr.ifr_name, *argv, IFNAMSIZ);
+			safe_strncpy(ifr.ifr_name, *argv, IFNAMSIZ);
 		} else {
 			if (ifr.ifr_hwaddr.sa_data[0])
 				usage(E_OPTERR);
