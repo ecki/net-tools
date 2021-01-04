@@ -109,7 +109,7 @@ static struct interface *if_cache_add(const char *name)
 	    if (n < 0)
 		    break;
     }
-    new(new);
+    new = xmalloc(sizeof(*new));
     safe_strncpy(new->name, name, IFNAMSIZ);
     nextp = ife ? &ife->next : &int_list; // keep sorting
     new->prev = ife;
