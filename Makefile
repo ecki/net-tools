@@ -109,9 +109,7 @@ all:		config.h version.h subdirs $(PROGS)
 
 config: 	cleanconfig config.h
 
-install:	all savebin installbin installdata
-
-update: 	all installbin installdata
+install:	all installbin installdata
 
 mostlyclean:
 		rm -f -- *.o DEADJOE config.new *~ *.orig lib/*.o
@@ -246,15 +244,6 @@ endif
 ifeq ($(HAVE_SERIAL_TOOLS),1)
 	install -m 0755 slattach   $(BASEDIR)${SBINDIR}
 endif
-
-savebin:
-	@for i in ${BASEDIR}${SBINDIR}/arp ${BASEDIR}${SBINDIR}/ifconfig \
-                 ${BASEDIR}${BINDIR}/netstat \
-		 ${BASEDIR}${SBINDIR}/rarp ${BASEDIR}${SBINDIR}/route \
-		 ${BASEDIR}${BINDIR}/hostname ${BASEDIR}${BINDIR}/ypdomainname \
-                 ${BASEDIR}${BINDIR}/dnsdomainname ${BASEDIR}${BINDIR}/nisdomainname \
-		 ${BASEDIR}${BINDIR}/domainname ; do \
-		 [ -f $$i ] && cp -f $$i $$i.old ; done ; echo Saved.
 
 installdata:
 	$(MAKE) -C man install
