@@ -985,8 +985,9 @@ int main(int argc, char **argv)
 	    if (ap->herror)
 	    	ap->herror(host);
 	    else
-	    	fprintf(stderr,_("ifconfig: error resolving '%s' to set address for af=%s\n"), host, ap->name); fprintf(stderr,
-	    _("ifconfig: `--help' gives usage information.\n")); exit(1);
+	    	fprintf(stderr,_("ifconfig: error resolving '%s' to set address for af=%s\n"), host, ap->name);
+	    fprintf(stderr, _("ifconfig: `--help' gives usage information.\n"));
+	    exit(1);
 	}
 	memcpy(&ifr.ifr_addr, sa, sizeof(struct sockaddr));
 	{
