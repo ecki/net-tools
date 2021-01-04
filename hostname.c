@@ -132,7 +132,7 @@ static void setdname(const char *dname)
 static void showhname(const char *hname, int c)
 {
     struct hostent *hp;
-    register char *p, **alias;
+    char *p, **alias;
 #if HAVE_AFINET6
     char addr[INET6_ADDRSTRLEN + 1];
 #else
@@ -218,8 +218,8 @@ static void showhname(const char *hname, int c)
 
 static void setfilename(const char *name, int what)
 {
-    register FILE *fd;
-    register char *p;
+    FILE *fd;
+    char *p;
     char fline[MAXHOSTNAMELEN];
 
     if ((fd = fopen(name, "r")) != NULL) {

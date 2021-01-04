@@ -457,7 +457,7 @@ static int
 tty_open(char *name, const char *speed)
 {
   char pathbuf[PATH_MAX];
-  register char *path_open, *path_lock;
+  char *path_open, *path_lock;
   int fd;
 
   /* Try opening the TTY device. */
