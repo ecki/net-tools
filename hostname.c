@@ -85,6 +85,7 @@ static void setnname(char *nname)
             fprintf(stderr, _("%s: name too long\n"), program_name);
             break;
         default:
+	    perror(program_name);
 	    break;
         }
 	exit(1);
@@ -105,9 +106,12 @@ static void sethname(char *hname)
 	case EINVAL:
 	    fprintf(stderr, _("%s: name too long\n"), program_name);
 	    break;
+	default:
+	    perror(program_name);
+	    break;
 	}
 	exit(1);
-    };
+    }
 }
 
 static void setdname(char *dname)
@@ -123,9 +127,12 @@ static void setdname(char *dname)
 	case EINVAL:
 	    fprintf(stderr, _("%s: name too long\n"), program_name);
 	    break;
+	default:
+	    perror(program_name);
+	    break;
 	}
 	exit(1);
-    };
+    }
 }
 
 static void showhname(char *hname, int c)
