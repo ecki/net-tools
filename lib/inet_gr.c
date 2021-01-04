@@ -292,7 +292,8 @@ int rprint_cache(int ext, int numeric)
 	printf(_("Source          Destination     Gateway         "
 		 "Flags Metric Ref    Use Iface    "
 		 "MSS   Window irtt  TOS HHRef HHUptod     SpecDst\n"));
-        fmt = proc_gen_fmt(_PATH_PROCNET_RTCACHE, 0, fp,
+
+      fmt = proc_gen_fmt(_PATH_PROCNET_RTCACHE, 0, fp,
 		       "Iface", "%15s",
 		       "Destination", "%127s",
 		       "Gateway", "%127s",
