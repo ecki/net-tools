@@ -28,22 +28,12 @@
 /* Current limitation of Linux network device ioctl(2) interface */
 #define MAC_ADDRESS_MAX_LENGTH (sizeof(((struct ifreq *)0)->ifr_hwaddr.sa_data))
 
-const char default_conf[] = "/etc/mactab";
-const char *fname = default_conf;
-int use_syslog;
-int ctl_sk = -1;
+static const char default_conf[] = "/etc/mactab";
+static const char *fname = default_conf;
+static int use_syslog;
+static int ctl_sk = -1;
 
-void err(char *msg)
-{
-	if (use_syslog) {
-		syslog(LOG_ERR,"%s: %m", msg);
-	} else {
-		perror(msg);
-	}
-	exit(1);
-}
-
-void complain(char *fmt, ...)
+static void complain(const char *fmt, ...)
 {
 	va_list ap;
 	va_start(ap,fmt);
@@ -57,7 +47,7 @@ void complain(char *fmt, ...)
 	exit(1);
 }
 
-void warning(char *fmt, ...)
+static void warning(const char *fmt, ...)
 {
 	va_list ap;
 	va_start(ap,fmt);
@@ -70,7 +60,7 @@ void warning(char *fmt, ...)
 	va_end(ap);
 }
 
-int parsemac(char *str, unsigned int *len, unsigned char *mac, const char *pos)
+static int parsemac(char *str, unsigned int *len, unsigned char *mac, const char *pos)
 {
 	char *s;
 	while ((s = strsep(&str, ":")) != NULL) {
@@ -86,7 +76,7 @@ int parsemac(char *str, unsigned int *len, unsigned char *mac, const char *pos)
 	return 0;
 }
 
-void opensock(void)
+static void opensock(void)
 {
 	if (ctl_sk < 0)
 		ctl_sk = socket(PF_INET,SOCK_DGRAM,0);
@@ -96,7 +86,7 @@ void opensock(void)
 #define ifr_newname ifr_ifru.ifru_slave
 #endif
 
-int  setname(char *oldname, char *newname)
+static int setname(const char *oldname, const char *newname)
 {
 	struct ifreq ifr;
 	opensock();
@@ -106,7 +96,7 @@ int  setname(char *oldname, char *newname)
 	return ioctl(ctl_sk, SIOCSIFNAME, &ifr);
 }
 
-int getmac(char *name, unsigned char *mac)
+static int getmac(const char *name, unsigned char *mac)
 {
 	int r;
 	struct ifreq ifr;
@@ -125,9 +115,9 @@ struct change {
 	unsigned int macaddrlen;
 	unsigned char mac[MAC_ADDRESS_MAX_LENGTH];
 };
-struct change *clist;
+static struct change *clist;
 
-struct change *lookupmac(unsigned char *mac)
+static struct change *lookupmac(unsigned char *mac)
 {
 	struct change *ch;
 	for (ch = clist;ch;ch = ch->next)
@@ -136,7 +126,7 @@ struct change *lookupmac(unsigned char *mac)
 	return NULL;
 }
 
-int addchange(char *p, struct change *ch, const char *pos)
+static int addchange(char *p, struct change *ch, const char *pos)
 {
 	if (strchr(ch->ifname, ':'))
 		warning(_("alias device %s at %s probably has no mac"),
@@ -149,7 +139,7 @@ int addchange(char *p, struct change *ch, const char *pos)
 	return 0;
 }
 
-void readconf(void)
+static void readconf(void)
 {
 	char *line;
 	size_t linel;
@@ -194,7 +184,7 @@ void readconf(void)
 	fclose(ifh);
 }
 
-struct option lopt[] = {
+static const struct option lopt[] = {
 	{"syslog", 0, NULL, 's' },
 	{"config-file", 1, NULL, 'c' },
 	{"help", 0, NULL, 'h' },
@@ -307,4 +297,3 @@ int main(int ac, char **av)
 		closelog();
 	return ret;
 }
-
