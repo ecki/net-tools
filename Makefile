@@ -76,7 +76,7 @@ PKG_CONFIG ?= pkg-config
 # -------- end of user definitions --------
 
 MAINTAINER = net-tools-devel@lists.sourceforge.net
-RELEASE	   = 2.10-alpha
+RELEASE	   = 2.10
 
 .EXPORT_ALL_VARIABLES:
 
