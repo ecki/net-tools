@@ -36,7 +36,7 @@ if you want to contribute:
                           Notes
                           -----
 
-This is net-tools 2.10.
+This is net-tools 3.14.
 
 These have largely been tested against Linux kernels 2.6+.  They might work
 against older ones if anyone actually still cares about those anymore.
