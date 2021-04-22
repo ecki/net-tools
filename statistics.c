@@ -56,8 +56,8 @@ static enum State state;
 static const struct entry Iptab[] =
 {   /* Keep the entries sorted! */
     {"DefaultTTL", N_("Default TTL is %llu"), number | I_STATIC},
-    {"Forwarding", N_("Forwarding is %s"), i_forward | I_STATIC},
     {"ForwDatagrams", N_("%llu forwarded"), number},
+    {"Forwarding", N_("Forwarding is %s"), i_forward | I_STATIC},
     {"FragCreates", N_("%llu fragments created"), opt_number},
     {"FragFails", N_("%llu outgoing packets failed fragmentation"), opt_number},
     {"FragOKs", N_("%llu outgoing packets fragmented ok"), opt_number},
