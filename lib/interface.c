@@ -644,6 +644,33 @@ void ife_print_short(struct interface *ptr)
     printf("\n");
 }
 
+/* Turn numeric value into human readable units. */
+static void ife_unit(unsigned long long value, char **text, unsigned long long *short_val)
+{
+    *text = "B";
+    *short_val = value * 10;
+
+    if (value > 1152921504606846976ull) {
+	*short_val = value / 115292150460684697ull;
+	*text = "EiB";
+    } else if (value > 1125899906842624ull) {
+	*short_val /= 1125899906842624ull;
+	*text = "PiB";
+    } else if (value > 1099511627776ull) {
+	*short_val /= 1099511627776ull;
+	*text = "TiB";
+    } else if (value > 1073741824ull) {
+	*short_val /= 1073741824ull;
+	*text = "GiB";
+    } else if (value > 1048576) {
+	*short_val /= 1048576;
+	*text = "MiB";
+    } else if (value > 1024) {
+	*short_val /= 1024;
+	*text = "KiB";
+    }
+}
+
 void ife_print_long(struct interface *ptr)
 {
     const struct aftype *ap;
@@ -651,8 +678,7 @@ void ife_print_long(struct interface *ptr)
     int hf;
     int can_compress = 0;
     unsigned long long rx, tx, short_rx, short_tx;
-    const char *Rext = "B";
-    const char *Text = "B";
+    char *Rext, *Text;
     static char flags[200];
 
 #if HAVE_AFIPX
@@ -865,47 +891,10 @@ void ife_print_long(struct interface *ptr)
 	 *      by all addresses.
 	 */
 	rx = ptr->stats.rx_bytes;
-	short_rx = rx * 10;
-	if (rx > 1152921504606846976ull) {
-		short_rx = rx / 115292150460684697ull;
-		Rext = "EiB";
-	} else if (rx > 1125899906842624ull) {
-		short_rx /= 1125899906842624ull;
-	    Rext = "PiB";
-	} else if (rx > 1099511627776ull) {
-	    short_rx /= 1099511627776ull;
-	    Rext = "TiB";
-	} else if (rx > 1073741824ull) {
-	    short_rx /= 1073741824ull;
-	    Rext = "GiB";
-	} else if (rx > 1048576) {
-	    short_rx /= 1048576;
-	    Rext = "MiB";
-	} else if (rx > 1024) {
-	    short_rx /= 1024;
-	    Rext = "KiB";
-	}
+	ife_unit(rx, &Rext, &short_rx);
+
 	tx = ptr->stats.tx_bytes;
-	short_tx = tx * 10;
-	if (tx > 1152921504606846976ull) {
-		short_tx = tx / 115292150460684697ull;
-		Text = "EiB";
-	} else if (tx > 1125899906842624ull) {
-		short_tx /= 1125899906842624ull;
-	    Text = "PiB";
-	} else 	if (tx > 1099511627776ull) {
-	    short_tx /= 1099511627776ull;
-	    Text = "TiB";
-	} else if (tx > 1073741824ull) {
-	    short_tx /= 1073741824ull;
-	    Text = "GiB";
-	} else if (tx > 1048576) {
-	    short_tx /= 1048576;
-	    Text = "MiB";
-	} else if (tx > 1024) {
-	    short_tx /= 1024;
-	    Text = "KiB";
-	}
+	ife_unit(tx, &Text, &short_tx);
 
 	printf("        ");
 	printf(_("RX packets %llu  bytes %llu (%lu.%lu %s)\n"),
