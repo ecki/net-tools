@@ -631,7 +631,7 @@ void ife_print_short(struct interface *ptr)
     if (ptr->flags & IFF_NOARP)
 	printf("O");
     if (ptr->flags & IFF_POINTOPOINT)
-	printf("P");
+	printf("p");
     if (ptr->flags & IFF_SLAVE)
 	printf("s");
     if (ptr->flags & IFF_MASTER)
