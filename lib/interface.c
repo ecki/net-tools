@@ -25,7 +25,7 @@
 #include <ctype.h>
 #include <string.h>
 
-#if HAVE_AFIPX
+#if AF_IPX
 #if (__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 1)
 #include <netipx/ipx.h>
 #else
@@ -33,7 +33,7 @@
 #endif
 #endif
 
-#if HAVE_AFECONET
+#if AF_ECONET
 #include <neteconet/ec.h>
 #endif
 
@@ -400,7 +400,7 @@ int if_readlist(void)
 
 /* Support for fetching an IPX address */
 
-#if HAVE_AFIPX
+#if AF_IPX
 static int ipx_getaddr(int sock, int ft, struct ifreq *ifr)
 {
     ((struct sockaddr_ipx *) &ifr->ifr_addr)->sipx_type = ft;
@@ -477,7 +477,7 @@ int if_fetch(struct interface *ife)
     ife->tx_queue_len = -1;	/* unknown value */
 #endif
 
-#if HAVE_AFINET
+#if AF_INET
     /* IPv4 address? */
     fd = get_socket_for_af(AF_INET);
     if (fd >= 0) {
@@ -508,7 +508,7 @@ int if_fetch(struct interface *ife)
     }
 #endif
 
-#if HAVE_AFATALK
+#if AF_APPLETALK
     /* DDP address maybe ? */
     fd = get_socket_for_af(AF_APPLETALK);
     if (fd >= 0) {
@@ -520,7 +520,7 @@ int if_fetch(struct interface *ife)
     }
 #endif
 
-#if HAVE_AFIPX
+#if AF_IPX
     /* Look for IPX addresses with all framing types */
     fd = get_socket_for_af(AF_IPX);
     if (fd >= 0) {
@@ -547,7 +547,7 @@ int if_fetch(struct interface *ife)
     }
 #endif
 
-#if HAVE_AFECONET
+#if AF_ECONET
     /* Econet address maybe? */
     fd = get_socket_for_af(AF_ECONET);
     if (fd >= 0) {
@@ -681,16 +681,16 @@ void ife_print_long(struct interface *ptr)
     char *Rext, *Text;
     static char flags[200];
 
-#if HAVE_AFIPX
+#if AF_IPX
     static const struct aftype *ipxtype = NULL;
 #endif
-#if HAVE_AFECONET
+#if AF_ECONET
     static const struct aftype *ectype = NULL;
 #endif
-#if HAVE_AFATALK
+#if AF_APPLETALK
     static const struct aftype *ddptype = NULL;
 #endif
-#if HAVE_AFINET6
+#if AF_INET6
     FILE *f;
     char addr6[40], devname[21];
     struct sockaddr_storage sas;
@@ -766,7 +766,7 @@ void ife_print_long(struct interface *ptr)
 
 
 
-#if HAVE_AFINET
+#if AF_INET
     if (ptr->has_ip) {
 	printf(_("        %s %s"), ap->name,
 	       ap->sprint(&ptr->addr_sas, 1));
@@ -781,7 +781,7 @@ void ife_print_long(struct interface *ptr)
     }
 #endif
 
-#if HAVE_AFINET6
+#if AF_INET6
     /* FIXME: should be integrated into interface.c.   */
 
     if ((f = fopen(_PATH_PROCNET_IFINET6, "r")) != NULL) {
@@ -824,7 +824,7 @@ void ife_print_long(struct interface *ptr)
     }
 #endif
 
-#if HAVE_AFIPX
+#if AF_IPX
     if (ipxtype == NULL)
 	ipxtype = get_afntype(AF_IPX);
 
@@ -844,7 +844,7 @@ void ife_print_long(struct interface *ptr)
     }
 #endif
 
-#if HAVE_AFATALK
+#if AF_APPLETALK
     if (ddptype == NULL)
 	ddptype = get_afntype(AF_APPLETALK);
     if (ddptype != NULL) {
@@ -853,7 +853,7 @@ void ife_print_long(struct interface *ptr)
     }
 #endif
 
-#if HAVE_AFECONET
+#if AF_ECONET
     if (ectype == NULL)
 	ectype = get_afntype(AF_ECONET);
     if (ectype != NULL) {

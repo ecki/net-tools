@@ -53,7 +53,7 @@
 #include <linux/if_slip.h>
 #endif
 
-#if HAVE_AFINET6
+#if AF_INET6
 
 #ifndef _LINUX_IN6_H
 /*
@@ -68,9 +68,9 @@ struct in6_ifreq {
 
 #endif
 
-#endif				/* HAVE_AFINET6 */
+#endif				/* AF_INET6 */
 
-#if HAVE_AFIPX
+#if AF_IPX
 #if (__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 1)
 #include <netipx/ipx.h>
 #else
@@ -202,7 +202,7 @@ static void usage(int rc)
 {
     FILE *fp = rc ? stderr : stdout;
     fprintf(fp, _("Usage:\n  ifconfig [-a] [-v] [-s] <interface> [[<AF>] <address>]\n"));
-#if HAVE_AFINET
+#if AF_INET
     fprintf(fp, _("  [add <address>[/<prefixlen>]]\n"));
     fprintf(fp, _("  [del <address>[/<prefixlen>]]\n"));
     fprintf(fp, _("  [[-]broadcast [<address>]]  [[-]pointopoint [<address>]]\n"));
@@ -267,14 +267,14 @@ int main(int argc, char **argv)
     int goterr = 0, didnetmask = 0, neednetmask=0;
     char **spp;
     int fd;
-#if HAVE_AFINET6
+#if AF_INET6
     extern struct aftype inet6_aftype;
     struct sockaddr_in6 *sin6 = (struct sockaddr_in6 *)&_sa;
     struct in6_ifreq ifr6;
     unsigned long prefix_len;
     char *cp;
 #endif
-#if HAVE_AFINET
+#if AF_INET
     extern struct aftype inet_aftype;
 #endif
 
@@ -726,11 +726,11 @@ int main(int argc, char **argv)
 	    spp++;
 	    continue;
 	}
-#if HAVE_AFINET || HAVE_AFINET6
+#if AF_INET || AF_INET6
 	if (!strcmp(*spp, "add")) {
 	    if (*++spp == NULL)
 		usage(E_OPTERR);
-#if HAVE_AFINET6
+#if AF_INET6
 	    if (strchr(*spp, ':')) {
 		/* INET6 */
 		if ((cp = strchr(*spp, '/'))) {
@@ -777,7 +777,7 @@ int main(int argc, char **argv)
 		continue;
 	    }
 #endif
-#if HAVE_AFINET
+#if AF_INET
 	    { /* ipv4 address a.b.c.d */
 		in_addr_t ip, nm, bc;
 		safe_strncpy(host, *spp, (sizeof host));
@@ -816,13 +816,13 @@ int main(int argc, char **argv)
 	}
 #endif
 
-#if HAVE_AFINET || HAVE_AFINET6
+#if AF_INET || AF_INET6
 	if (!strcmp(*spp, "del")) {
 	    if (*++spp == NULL)
 		usage(E_OPTERR);
 
 #ifdef SIOCDIFADDR
-#if HAVE_AFINET6
+#if AF_INET6
 	    if (strchr(*spp, ':')) {	/* INET6 */
 		if ((cp = strchr(*spp, '/'))) {
 		    prefix_len = atol(cp + 1);
@@ -869,7 +869,7 @@ int main(int argc, char **argv)
 		continue;
 	    }
 #endif
-#if HAVE_AFINET
+#if AF_INET
 	    {
 		/* ipv4 address a.b.c.d */
 		in_addr_t ip, nm, bc;
@@ -911,7 +911,7 @@ int main(int argc, char **argv)
 #endif
 	}
 #endif
-#if HAVE_AFINET6
+#if AF_INET6
 	if (!strcmp(*spp, "tunnel")) {
 	    if (*++spp == NULL)
 		usage(E_OPTERR);
@@ -993,7 +993,7 @@ int main(int argc, char **argv)
 	{
 	    int r = 0;		/* to shut gcc up */
 	    switch (ap->af) {
-#if HAVE_AFINET
+#if AF_INET
 	    case AF_INET:
 		fd = get_socket_for_af(AF_INET);
 		if (fd < 0) {
@@ -1003,7 +1003,7 @@ int main(int argc, char **argv)
 		r = ioctl(fd, SIOCSIFADDR, &ifr);
 		break;
 #endif
-#if HAVE_AFECONET
+#if AF_ECONET
 	    case AF_ECONET:
 		fd = get_socket_for_af(AF_ECONET);
 		if (fd < 0) {

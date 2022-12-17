@@ -6,7 +6,7 @@
 
 #include "config.h"
 
-#if HAVE_HWASH || HAVE_AFASH
+#if HAVE_HWASH || AF_ASH
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -100,7 +100,7 @@ struct hwtype ash_hwtype =
 
 #endif	/* HAVE_HWASH */
 
-#if HAVE_AFASH
+#if AF_ASH
 
 /* Display an Ash socket address. */
 static const char *
@@ -123,6 +123,6 @@ struct aftype ash_aftype =
     "/proc/sys/net/ash"
 };
 
-#endif	/* HAVE_AFASH */
+#endif	/* AF_ASH */
 
-#endif	/* HAVE_AFASH || HAVE_HWASH */
+#endif	/* AF_ASH || HAVE_HWASH */

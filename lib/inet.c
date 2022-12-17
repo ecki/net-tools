@@ -31,10 +31,10 @@
 /* FIXME.  Split this file into inet4.c for the IPv4 specific parts
    and inet.c for those shared between IPv4 and IPv6.  */
 
-#if HAVE_AFINET || HAVE_AFINET6
+#include <sys/socket.h>
+#if AF_INET || AF_INET6
 #include <netinet/in.h>
 #include <sys/types.h>
-#include <sys/socket.h>
 #include <arpa/inet.h>
 #include <arpa/nameser.h>
 #include <ctype.h>
@@ -69,7 +69,7 @@ struct service {
 
 static struct service *tcp_name = NULL, *udp_name = NULL, *raw_name = NULL;
 
-#if HAVE_AFINET
+#if AF_INET
 
 static struct addr *INET_nn = NULL;	/* addr-to-name cache           */
 
@@ -362,7 +362,7 @@ struct aftype inet_aftype =
     NULL
 };
 
-#endif				/* HAVE_AFINET */
+#endif				/* AF_INET */
 
 static void add2list(struct service **namebase, struct service *item)
 {
@@ -462,4 +462,4 @@ const char *get_sname(int socknumber, const char *proto, int numeric)
     return (buffer);
 }
 
-#endif				/* HAVE_AFINET || HAVE_AFINET6 */
+#endif				/* AF_INET || AF_INET6 */

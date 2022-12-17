@@ -10,10 +10,10 @@
 
 #include "config.h"
 
-#if HAVE_AFIPX
+#include <sys/socket.h>
+#if AF_IPX
 #include <sys/param.h>
 #include <sys/types.h>
-#include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <arpa/nameser.h>
@@ -43,4 +43,4 @@ int IPX_rinput(int action, int ext, char **args)
     fprintf(stderr, _("IPX: this needs to be written\n"));
     return (E_NOSUPP);
 }
-#endif				/* HAVE_AFIPX */
+#endif				/* AF_IPX */

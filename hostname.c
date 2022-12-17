@@ -46,7 +46,7 @@
 #include "net-support.h"
 #include "../intl.h"
 
-#if HAVE_AFINET6
+#if AF_INET6
 #include <sys/socket.h> /* for PF_INET6 */
 #include <sys/types.h>  /* for inet_ntop */
 #endif
@@ -133,7 +133,7 @@ static void showhname(const char *hname, int c)
 {
     struct hostent *hp;
     char *p, **alias;
-#if HAVE_AFINET6
+#if AF_INET6
     char addr[INET6_ADDRSTRLEN + 1];
 #else
     char addr[INET_ADDRSTRLEN + 1];
@@ -149,7 +149,7 @@ static void showhname(const char *hname, int c)
     if (opt_v)
 	fprintf(stderr, _("Resolving `%s' ...\n"), hname);
     if (
-#if HAVE_AFINET6
+#if AF_INET6
         !(hp = gethostbyname2(hname, PF_INET6)) &&
 #endif
         !(hp = gethostbyname(hname))) {

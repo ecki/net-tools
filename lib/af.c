@@ -119,37 +119,37 @@ static short sVafinit = 0;
 
 struct aftype * const aftypes[] =
 {
-#if HAVE_AFUNIX
+#if AF_UNIX
     &unix_aftype,
 #endif
-#if HAVE_AFINET
+#if AF_INET
     &inet_aftype,
 #endif
-#if HAVE_AFINET6
+#if AF_INET6
     &inet6_aftype,
 #endif
-#if HAVE_AFAX25
+#if AF_AX25
     &ax25_aftype,
 #endif
-#if HAVE_AFNETROM
+#if AF_NETROM
     &netrom_aftype,
 #endif
-#if HAVE_AFROSE
+#if AF_ROSE
     &rose_aftype,
 #endif
-#if HAVE_AFIPX
+#if AF_IPX
     &ipx_aftype,
 #endif
-#if HAVE_AFATALK
+#if AF_APPLETALK
     &ddp_aftype,
 #endif
-#if HAVE_AFECONET
+#if AF_ECONET
     &ec_aftype,
 #endif
-#if HAVE_AFASH
+#if AF_ASH
     &ash_aftype,
 #endif
-#if HAVE_AFX25
+#if AF_X25
     &x25_aftype,
 #endif
     &unspec_aftype,
@@ -159,37 +159,37 @@ struct aftype * const aftypes[] =
 static void afinit(void)
 {
     unspec_aftype.title = _("UNSPEC");
-#if HAVE_AFUNIX
+#if AF_UNIX
     unix_aftype.title = _("UNIX Domain");
 #endif
-#if HAVE_AFINET
+#if AF_INET
     inet_aftype.title = _("DARPA Internet");
 #endif
-#if HAVE_AFINET6
+#if AF_INET6
     inet6_aftype.title = _("IPv6");
 #endif
-#if HAVE_AFAX25
+#if AF_AX25
     ax25_aftype.title = _("AMPR AX.25");
 #endif
-#if HAVE_AFNETROM
+#if AF_NETROM
     netrom_aftype.title = _("AMPR NET/ROM");
 #endif
-#if HAVE_AFIPX
+#if AF_IPX
     ipx_aftype.title = _("Novell IPX");
 #endif
-#if HAVE_AFATALK
+#if AF_APPLETALK
     ddp_aftype.title = _("Appletalk DDP");
 #endif
-#if HAVE_AFECONET
+#if AF_ECONET
     ec_aftype.title = _("Econet");
 #endif
-#if HAVE_AFX25
+#if AF_X25
     x25_aftype.title = _("CCITT X.25");
 #endif
-#if HAVE_AFROSE
+#if AF_ROSE
     rose_aftype.title = _("AMPR ROSE");
 #endif
-#if HAVE_AFASH
+#if AF_ASH
     ash_aftype.title = _("Ash");
 #endif
     sVafinit = 1;

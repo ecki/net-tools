@@ -44,26 +44,26 @@ extern struct aftype x25_aftype;
 
 void setroute_init(void)
 {
-#if HAVE_AFINET
+#if AF_INET
     inet_aftype.rinput = INET_rinput;
 #endif
-#if HAVE_AFINET6
+#if AF_INET6
     inet6_aftype.rinput = INET6_rinput;
 #endif
-#if HAVE_AFNETROM
+#if AF_NETROM
     netrom_aftype.rinput = NETROM_rinput;
 #endif
-#if HAVE_AFIPX
+#if AF_IPX
     ipx_aftype.rinput = IPX_rinput;
 #endif
-#if HAVE_AFX25
+#if AF_X25
     x25_aftype.rinput = X25_rinput;
 #endif
 #if 0
-#if HAVE_AFAX25
+#if AF_AX25
     ax25_aftype.rinput = AX25_rinput;
 #endif
-#if HAVE_AFATALK
+#if AF_APPLETALK
     ddp_aftype.rinput = DDP_rinput;
 #endif
 #endif

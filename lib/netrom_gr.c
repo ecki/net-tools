@@ -20,7 +20,8 @@
  */
 #include "config.h"
 
-#if HAVE_AFNETROM
+#include <sys/socket.h>
+#if AF_NETROM
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -76,4 +77,4 @@ int NETROM_rprint(int options)
     return 0;
 }
 
-#endif				/* HAVE_AFNETROM */
+#endif				/* AF_NETROM */
