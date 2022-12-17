@@ -17,7 +17,7 @@
  */
 #include "config.h"
 
-#if HAVE_AFX25 || HAVE_HWX25
+#if AF_X25 || HAVE_HWX25
 #include <sys/types.h>
 #include <sys/ioctl.h>
 #include <sys/socket.h>

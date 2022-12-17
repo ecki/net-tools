@@ -14,10 +14,10 @@
  */
 #include "config.h"
 
-#if HAVE_AFATALK
+#include <sys/socket.h>
+#if AF_APPLETALK
 #include <asm/types.h>
 #include <sys/types.h>
-#include <sys/socket.h>
 #include <linux/atalk.h>
 #include <stdlib.h>
 #include <stdio.h>
