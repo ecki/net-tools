@@ -1763,8 +1763,7 @@ static int ipx_info(void)
 	       sad, dad, &txq, &rxq, &state, &uid);
 	if ((st = rindex(sad, ':'))) {
 	    *st++ = '\0';
-	    sscanf(st, "%X", &sport);	/* net byt order */
-	    sport = ntohs(sport);
+	    sscanf(st, "%X", &sport);
 	} else {
 	    EINTERN("netstat.c", "ipx socket format error in source port");
 	    fclose(f);
@@ -1774,8 +1773,7 @@ static int ipx_info(void)
 	if (strcmp(dad, "Not_Connected") != 0) {
 	    if ((st = rindex(dad, ':'))) {
 		*st++ = '\0';
-		sscanf(st, "%X", &dport);	/* net byt order */
-		dport = ntohs(dport);
+		sscanf(st, "%X", &dport);
 	    } else {
 		EINTERN("netstat.c", "ipx socket format error in destination port");
 		fclose(f);
