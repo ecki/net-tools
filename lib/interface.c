@@ -254,7 +254,7 @@ static int get_dev_fields(const char *bp, struct interface *ife)
     switch (procnetdev_vsn) {
     case 3:
 	sscanf(bp,
-	"%Lu %Lu %lu %lu %lu %lu %lu %lu %Lu %Lu %lu %lu %lu %lu %lu %lu",
+	"%llu %llu %lu %lu %lu %lu %lu %lu %llu %llu %lu %lu %lu %lu %lu %lu",
 	       &ife->stats.rx_bytes,
 	       &ife->stats.rx_packets,
 	       &ife->stats.rx_errors,
@@ -274,7 +274,7 @@ static int get_dev_fields(const char *bp, struct interface *ife)
 	       &ife->stats.tx_compressed);
 	break;
     case 2:
-	sscanf(bp, "%Lu %Lu %lu %lu %lu %lu %Lu %Lu %lu %lu %lu %lu %lu",
+	sscanf(bp, "%llu %llu %lu %lu %lu %lu %llu %llu %lu %lu %lu %lu %lu",
 	       &ife->stats.rx_bytes,
 	       &ife->stats.rx_packets,
 	       &ife->stats.rx_errors,
@@ -292,7 +292,7 @@ static int get_dev_fields(const char *bp, struct interface *ife)
 	ife->stats.rx_multicast = 0;
 	break;
     case 1:
-	sscanf(bp, "%Lu %lu %lu %lu %lu %Lu %lu %lu %lu %lu %lu",
+	sscanf(bp, "%llu %lu %lu %lu %lu %llu %lu %lu %lu %lu %lu",
 	       &ife->stats.rx_packets,
 	       &ife->stats.rx_errors,
 	       &ife->stats.rx_dropped,
