@@ -1,0 +1,3190 @@
+# Georgian translation of net-tools
+# Copyright (C) 2022 Free Software Foundation, Inc.
+# This file is distributed under the same license as the net-tools package.
+# Temuri Doghonadze <temuri.doghonadze@gmail.com>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: net-tools\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-05-16 05:18+0200\n"
+"PO-Revision-Date: 2022-09-12 07:23+0200\n"
+"Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
+"Language-Team: Georgian <(nothing)>\n"
+"Language: ka\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.1.1\n"
+
+#: ../arp.c:111 ../arp.c:276
+#, c-format
+msgid "arp: need host name\n"
+msgstr "arp: საჭიროა ჰოსტის სახელი\n"
+
+#: ../arp.c:213 ../arp.c:228
+#, c-format
+msgid "No ARP entry for %s\n"
+msgstr "%s-სთვის ARP ჩანაწერი არ არსებობს\n"
+
+#: ../arp.c:246
+#, c-format
+msgid "arp: cant get HW-Address for `%s': %s.\n"
+msgstr "arp: `%s'-ის აპარატურული მისამართის მიღების შეცდომა: %s.\n"
+
+#: ../arp.c:250
+#, c-format
+msgid "arp: protocol type mismatch.\n"
+msgstr "arp: პროტოკოლის ტიპი არ ემთხვევა.\n"
+
+#: ../arp.c:259
+#, c-format
+msgid "arp: device `%s' has HW address %s `%s'.\n"
+msgstr "arp: მოწყობილობის `%s' აპარატურული მისამართია %s `%s'.\n"
+
+#: ../arp.c:289
+#, c-format
+msgid "arp: need hardware address\n"
+msgstr "arp: საჭიროა აპარატურული მისამართი\n"
+
+#: ../arp.c:297
+#, c-format
+msgid "arp: invalid hardware address\n"
+msgstr "arp: არასწორი აპარატურული მისამართი\n"
+
+#: ../arp.c:394
+#, c-format
+msgid "arp: cannot open etherfile %s !\n"
+msgstr "arp: etherfile-ის გახსნის შეცდომა: %s !\n"
+
+#: ../arp.c:410
+#, c-format
+msgid "arp: format error on line %u of etherfile %s !\n"
+msgstr "arp: შეცდომა etherfile-ის %u-ე ხაზზე ფაილში %s !\n"
+
+#: ../arp.c:423
+#, c-format
+msgid "arp: cannot set entry on line %u of etherfile %s !\n"
+msgstr "arp: ჩანაწერის დაყენების შეცდომა ხაზზე %u etherfile-ში %s !\n"
+
+#: ../arp.c:444
+#, c-format
+msgid ""
+"Address                  HWtype  HWaddress           Flags Mask            "
+"Iface\n"
+msgstr ""
+"მისამართი                  აპარ.ტიპი  აპარ.მისამ.           ალმების "
+"ნიღაბი            იფეისი\n"
+
+#: ../arp.c:472
+msgid "<from_interface>"
+msgstr "<ინტერფეისიდან>"
+
+#: ../arp.c:474
+msgid "(incomplete)"
+msgstr "(არასრული)"
+
+#: ../arp.c:491
+#, c-format
+msgid "%s (%s) at "
+msgstr "%s (%s) მისამართზე "
+
+#: ../arp.c:497
+#, c-format
+msgid "<incomplete> "
+msgstr "<არასრული> "
+
+#: ../arp.c:503
+#, c-format
+msgid "netmask %s "
+msgstr "ქსელის ნიღაბი %s "
+
+#: ../arp.c:520
+#, c-format
+msgid "on %s\n"
+msgstr "%s-ზე\n"
+
+#: ../arp.c:599
+#, c-format
+msgid "Entries: %d\tSkipped: %d\tFound: %d\n"
+msgstr "ჩანაწერები: %d\tგამოტოვებული: %d\tნაპოვნი: %d\n"
+
+#: ../arp.c:603
+#, c-format
+msgid "%s (%s) -- no entry\n"
+msgstr "%s (%s) -- ჩანაწერის გარეშე\n"
+
+#: ../arp.c:605
+#, c-format
+msgid "arp: in %d entries no match found.\n"
+msgstr "arp: %d ჩანაწერში არც ერთი ემთხვევა.\n"
+
+#: ../arp.c:620
+#, c-format
+msgid ""
+"Usage:\n"
+"  arp [-vn]  [<HW>] [-i <if>] [-a] [<hostname>]             <-Display ARP "
+"cache\n"
+msgstr ""
+"გამოყენება:\n"
+"  arp [-vn]  [<HW>] [-i <if>] [-a] [<hostname>]             <-Display ARP "
+"cache\n"
+
+#: ../arp.c:621
+#, c-format
+msgid ""
+"  arp [-v]          [-i <if>] -d  <hostname> [pub][nopub]    <-Delete ARP "
+"entry\n"
+msgstr ""
+"  arp [-v]          [-i <if>] -d  <hostname> [pub][nopub]    <-ARP ჩანაწერის "
+"წაშლა\n"
+
+#: ../arp.c:622
+#, c-format
+msgid ""
+"  arp [-vnD] [<HW>] [-i <if>] -f  [<filename>]            <-Add entry from "
+"file\n"
+msgstr ""
+"  arp [-vnD] [<HW>] [-i <if>] -f  [<filename>]            <-ჩანაწერის "
+"ფაილიდან დამატება\n"
+
+#: ../arp.c:623
+#, c-format
+msgid ""
+"  arp [-v]   [<HW>] [-i <if>] -s  <hostname> <hwaddr> [temp][nopub] <-Add "
+"entry\n"
+msgstr ""
+"  arp [-v]   [<HW>] [-i <if>] -s  <hostname> <hwaddr> [temp][nopub] <-"
+"ჩანაწერის დამატება\n"
+
+#: ../arp.c:624
+#, c-format
+msgid ""
+"  arp [-v]   [<HW>] [-i <if>] -Ds <hostname> <if> [netmask <nm>] pub      "
+"<-''-\n"
+"\n"
+msgstr ""
+"  arp [-v]   [<HW>] [-i <if>] -Ds <hostname> <if> [netmask <nm>] pub      "
+"<-''-\n"
+"\n"
+
+#: ../arp.c:626
+#, c-format
+msgid ""
+"        -a                       display (all) hosts in alternative (BSD) "
+"style\n"
+msgstr ""
+"        -a                       (ყველა) ჰოსტის სხვანაირ (BSD) სტილში "
+"ჩვენება\n"
+
+#: ../arp.c:627
+#, c-format
+msgid "        -s, --set                set a new ARP entry\n"
+msgstr "        -s, --set                ახალი ARP ჩანაწერის დაყენება\n"
+
+#: ../arp.c:628
+#, c-format
+msgid "        -d, --delete             delete a specified entry\n"
+msgstr "        -d, --delete             მითითებული ჩანაწერის წაშლა\n"
+
+#: ../arp.c:629 ../netstat.c:1503 ../route.c:86
+#, c-format
+msgid "        -v, --verbose            be verbose\n"
+msgstr "        -v, --verbose            დამატებითი ინფორმაცია\n"
+
+#: ../arp.c:630 ../netstat.c:1504 ../route.c:87
+#, c-format
+msgid "        -n, --numeric            don't resolve names\n"
+msgstr "        -n, --numeric            სახელები არ ამოიხსნება\n"
+
+#: ../arp.c:631
+#, c-format
+msgid ""
+"        -i, --device             specify network interface (e.g. eth0)\n"
+msgstr ""
+"        -i, --device             მიუთიეთ ქსელის ინტერფესი (მაგ: eth0)\n"
+
+#: ../arp.c:632
+#, c-format
+msgid "        -D, --use-device         read <hwaddr> from given device\n"
+msgstr ""
+"        -D, --use-device         <hwaddr> -ის წაკითხვა მითითებული "
+"მოწყობილობიდან\n"
+
+#: ../arp.c:633
+#, c-format
+msgid "        -A, -p, --protocol       specify protocol family\n"
+msgstr "        -A, -p, --protocol       პროტოკოლის ოჯახს მითითება\n"
+
+#: ../arp.c:634
+#, c-format
+msgid ""
+"        -f, --file               read new entries from file or from /etc/"
+"ethers\n"
+"\n"
+msgstr ""
+"        -f, --file               ახალი ჩანაწერების ფაილიდან ან /etc/ethers-"
+"დან წაკითხვა\n"
+"\n"
+
+#: ../arp.c:636 ../rarp.c:182
+#, c-format
+msgid "  <HW>=Use '-H <hw>' to specify hardware address type. Default: %s\n"
+msgstr ""
+"  <HW>=აპარატურული მისამართის ტიპის მისათითებლად გამოიყენეთ '-H <hw>'. "
+"ნაგულისხმები: %s\n"
+
+#: ../arp.c:637 ../rarp.c:183
+#, c-format
+msgid "  List of possible hardware types (which support ARP):\n"
+msgstr "  აპარატურის შესაძლო ტიპების სია (ARP-ის მხარდაჭერით):\n"
+
+#: ../arp.c:671 ../arp.c:756
+#, c-format
+msgid "%s: hardware type not supported!\n"
+msgstr "%s: აპარატურის ტიპი მხარდაუჭერელია!\n"
+
+#: ../arp.c:675
+#, c-format
+msgid "%s: address family not supported!\n"
+msgstr "%s: მისამართის ოჯახი მხარდაუჭერელია!\n"
+
+#: ../arp.c:710
+#, c-format
+msgid "arp: -N not yet supported.\n"
+msgstr "arp: -N ჯერ მხარდაჭერილი არაა.\n"
+
+#: ../arp.c:720
+#, c-format
+msgid "arp: %s: unknown address family.\n"
+msgstr "arp: %s: მისამართის უცნობი ოჯახი.\n"
+
+#: ../arp.c:729
+#, c-format
+msgid "arp: %s: unknown hardware type.\n"
+msgstr "arp: %s: აპარატურის უცნობი ტიპი.\n"
+
+#: ../arp.c:748
+#, c-format
+msgid "arp: %s: kernel only supports 'inet'.\n"
+msgstr "arp: %s: ბირთვს მხოლოდ 'inet'-ის მხარდაჭერა გააჩნია.\n"
+
+#: ../arp.c:761
+#, c-format
+msgid "arp: %s: hardware type without ARP support.\n"
+msgstr "arp: %s: აპარატურის ტიპი ARP-ის მხარდაჭერის გარეშე.\n"
+
+#: ../hostname.c:71
+#, c-format
+msgid "Setting nodename to `%s'\n"
+msgstr "კვანძის სახელის `%s'-ზე დაყენება\n"
+
+#: ../hostname.c:76
+#, c-format
+msgid "%s: you must be root to change the node name\n"
+msgstr "%s: კვანძის სახელის შესაცვლელად საჭიროა root-ის პრივილეგიები\n"
+
+#: ../hostname.c:79 ../hostname.c:100 ../hostname.c:118
+#, c-format
+msgid "%s: name too long\n"
+msgstr "%s: სახელი ძალიან გრძელია\n"
+
+#: ../hostname.c:92
+#, c-format
+msgid "Setting hostname to `%s'\n"
+msgstr "სერვერის სახელის დაყენება `%s'-ზე\n"
+
+#: ../hostname.c:97
+#, c-format
+msgid "%s: you must be root to change the host name\n"
+msgstr "%s: ჰოსტის სახელის შესაცვლელად საჭიროა root-ის პრივილეგიები\n"
+
+#: ../hostname.c:110
+#, c-format
+msgid "Setting domainname to `%s'\n"
+msgstr "დომენის სახელის დაყენება `%s'-ზე\n"
+
+#: ../hostname.c:115
+#, c-format
+msgid "%s: you must be root to change the domain name\n"
+msgstr "%s: დომენის სახელის შესაცვლელად საჭიროა root-ის პრივილეგიები\n"
+
+#: ../hostname.c:132
+#, c-format
+msgid "Resolving `%s' ...\n"
+msgstr "`%s'-ის ამოხსნა ...\n"
+
+#: ../hostname.c:138
+#, c-format
+msgid "Result: h_name=`%s'\n"
+msgstr "შედეგი: h_name=`%s'\n"
+
+#: ../hostname.c:143
+#, c-format
+msgid "Result: h_aliases=`%s'\n"
+msgstr "შედეგი: h_aliases=`%s'\n"
+
+#: ../hostname.c:148
+#, c-format
+msgid "Result: h_addr_list=`%s'\n"
+msgstr "შედეგი: h_addr_list=`%s'\n"
+
+#: ../hostname.c:209
+#, c-format
+msgid "%s: can't open `%s'\n"
+msgstr "%s: `%s'-ის გახსნის შეცდომა\n"
+
+#: ../hostname.c:223
+#, c-format
+msgid "Usage: hostname [-v] {hostname|-F file}      set hostname (from file)\n"
+msgstr ""
+"გამოყენება: hostname [-v] {ჰოსტის სახელი|-F ფაილი}      ჰოსტის სახელის "
+"დაყენება (ფაილიდან)\n"
+
+#: ../hostname.c:224
+#, c-format
+msgid ""
+"       domainname [-v] {nisdomain|-F file}   set NIS domainname (from file)\n"
+msgstr ""
+"       domainname [-v] {nis-ისდომენი|-F ფაილი}   NIS -ის დომენის სახელის "
+"დაყენება (ფაილიდან)\n"
+
+#: ../hostname.c:226
+#, c-format
+msgid ""
+"       nodename [-v] {nodename|-F file}      set DECnet node name (from "
+"file)\n"
+msgstr ""
+"       nodename [-v] {nodename|-F ფაილი}      DECnet-ის კვანძის სახელის "
+"დაყენება (ფაილიდან)\n"
+
+#: ../hostname.c:228
+#, c-format
+msgid "       hostname [-v] [-d|-f|-s|-a|-i|-y|-n]  display formatted name\n"
+msgstr ""
+"       hostname [-v] [-d|-f|-s|-a|-i|-y|-n]  დაფორმატებული სახელის ჩვენება\n"
+
+#: ../hostname.c:229
+#, c-format
+msgid ""
+"       hostname [-v]                         display hostname\n"
+"\n"
+msgstr ""
+"       hostname [-v]                         ჰოსტის სახელის ჩვენება\n"
+"\n"
+
+#: ../hostname.c:230
+#, c-format
+msgid ""
+"       hostname -V|--version|-h|--help       print info and exit\n"
+"\n"
+msgstr ""
+"       hostname -V|--version|-h|--help       ინფორმაციის ჩვენება და გასვლა\n"
+"\n"
+
+#: ../hostname.c:231
+#, c-format
+msgid ""
+"    dnsdomainname=hostname -d, {yp,nis,}domainname=hostname -y\n"
+"\n"
+msgstr ""
+"    dnsdomainname=hostname -d, {yp,nis,}domainname=hostname -y\n"
+"\n"
+
+#: ../hostname.c:232
+#, c-format
+msgid "    -s, --short           short host name\n"
+msgstr "    -s, --short           ჰოსტის მოკლე სახელი\n"
+
+#: ../hostname.c:233
+#, c-format
+msgid "    -a, --alias           alias names\n"
+msgstr "    -a, --alias           დამატებითი სახელი\n"
+
+#: ../hostname.c:234
+#, c-format
+msgid "    -i, --ip-address      addresses for the hostname\n"
+msgstr "    -i, --ip-address      მისამართები ჰოსტის სახელისთვის\n"
+
+#: ../hostname.c:235
+#, c-format
+msgid "    -f, --fqdn, --long    long host name (FQDN)\n"
+msgstr "    -f, --fqdn, --long    ჰოსტის გრძელი სახელი (FQDN)\n"
+
+#: ../hostname.c:236
+#, c-format
+msgid "    -d, --domain          DNS domain name\n"
+msgstr "    -d, --domain          DNS დომენის სახელ\n"
+
+#: ../hostname.c:237
+#, c-format
+msgid "    -y, --yp, --nis       NIS/YP domainname\n"
+msgstr "    -y, --yp, --nis       NIS/YP დომენის სახელი\n"
+
+#: ../hostname.c:239
+#, c-format
+msgid "    -n, --node            DECnet node name\n"
+msgstr "    -n, --node            DECnet კვანძის სახელი\n"
+
+#: ../hostname.c:241
+#, c-format
+msgid ""
+"    -F, --file            read hostname or NIS domainname from given file\n"
+"\n"
+msgstr ""
+"    -F, --file            ჰოსტის ან NIS-ის დომენის სახელის მითითებული "
+"ფაილიდან დაყენება\n"
+"\n"
+
+#: ../hostname.c:243
+#, c-format
+msgid ""
+"   This command can read or set the hostname or the NIS domainname. You can\n"
+"   also read the DNS domain or the FQDN (fully qualified domain name).\n"
+"   Unless you are using bind or NIS for host lookups you can change the\n"
+"   FQDN (Fully Qualified Domain Name) and the DNS domain name (which is\n"
+"   part of the FQDN) in the /etc/hosts file.\n"
+msgstr ""
+"  ამ ბრძანებას ჰოსტის სახელი ან NIS დომენის სახელის წაკითხვა ან დაყენება "
+"შეუძლია. \n"
+"  ასევე შეგძლიათ წაიკითხოთ DNS დომენის სახელი, ან FQDN (სრული DNS სახელი "
+"(Fully Qualified Domain Name)). \n"
+"  თუ თქვენ ჰოსტის სახელების ამოხსნისთვის bind-ს ან NIS-ს არ იყენებთ, FQDN-ის "
+"და DNS-ის \n"
+"  დომენის სახელის (რომელიც FQDN-ის ნაწილია) შეცვლა /etc/hosts ფაილში "
+"შეგიძლიათ.\n"
+
+#: ../hostname.c:340
+#, c-format
+msgid "%s: You can't change the DNS domain name with this command\n"
+msgstr "%s: ამ ბრძანებით DNS დომენის სახელს ვერ შეცვლით\n"
+
+#: ../hostname.c:341
+#, c-format
+msgid ""
+"\n"
+"Unless you are using bind or NIS for host lookups you can change the DNS\n"
+msgstr ""
+"\n"
+"თუ ჰოსტების ამოსახსნელად bind-ს ან NIS-ს არ იყენებთ, DNS-ს შეცვლა "
+"შეგიძლიათ.\n"
+
+#: ../hostname.c:342
+#, c-format
+msgid "domain name (which is part of the FQDN) in the /etc/hosts file.\n"
+msgstr "დომენის სახელი (რომელიც FQDN-ის ნაწილია) /etc/hosts ფაილში.\n"
+
+#: ../hostname.c:359
+#, c-format
+msgid "gethostname()=`%s'\n"
+msgstr "gethostname()=`%s'\n"
+
+#: ../hostname.c:376
+#, c-format
+msgid "getdomainname()=`%s'\n"
+msgstr "getdomainname()=`%s'\n"
+
+#: ../hostname.c:391
+#, c-format
+msgid "getnodename()=`%s'\n"
+msgstr "getnodename()=`%s'\n"
+
+#: ../ifconfig.c:107 ../netstat.c:1465
+#, c-format
+msgid ""
+"Iface   MTU Met   RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR "
+"Flg\n"
+msgstr ""
+"იფეისი   MTU მეტ   RX-დიახ RX-შეცდ RX-გადაგდ RX-გადაწ    TX-დიახ TX-შეცდ TX-"
+"გადაგდ TX-გადაწ ალამ\n"
+
+#: ../ifconfig.c:129 ../ifconfig.c:161
+#, c-format
+msgid "%s: ERROR while getting interface flags: %s\n"
+msgstr "%s: შეცდომა ინტერფეისის ალმების მიღებისას: %s\n"
+
+#: ../ifconfig.c:153 ../ifconfig.c:185 ../ifconfig.c:791 ../ifconfig.c:884
+#: ../ifconfig.c:997
+#, c-format
+msgid "No support for INET on this system.\n"
+msgstr "ამ სისტემაზე INET-ი მხარდაუჭერელია.\n"
+
+#: ../ifconfig.c:193
+#, c-format
+msgid "%s: ERROR while testing interface flags: %s\n"
+msgstr "%s: შეცდომა ინტერფეისის ალმების ტესტირებისას: %s\n"
+
+#: ../ifconfig.c:202
+#, c-format
+msgid ""
+"Usage:\n"
+"  ifconfig [-a] [-v] [-s] <interface> [[<AF>] <address>]\n"
+msgstr ""
+"გამოყენება:\n"
+"  ifconfig [-a] [-v] [-s] <interface> [[<AF>] <address>]\n"
+
+#: ../ifconfig.c:204
+#, c-format
+msgid "  [add <address>[/<prefixlen>]]\n"
+msgstr "  [add <მისამართი>[/<პრეფიქსისსიგრძე>]]\n"
+
+#: ../ifconfig.c:205
+#, c-format
+msgid "  [del <address>[/<prefixlen>]]\n"
+msgstr "  [del <მისამართი>[/<პრეფიქსისსიგრძე>]]\n"
+
+#: ../ifconfig.c:206
+#, c-format
+msgid "  [[-]broadcast [<address>]]  [[-]pointopoint [<address>]]\n"
+msgstr "  [[-]broadcast [<მისამართი>]]  [[-]pointopoint [<მისამართი>]]\n"
+
+#: ../ifconfig.c:207
+#, c-format
+msgid "  [netmask <address>]  [dstaddr <address>]  [tunnel <address>]\n"
+msgstr "  [netmask <address>]  [dstaddr <address>]  [tunnel <address>]\n"
+
+#: ../ifconfig.c:210
+#, c-format
+msgid "  [outfill <NN>] [keepalive <NN>]\n"
+msgstr "  [outfill <NN>] [keepalive <NN>]\n"
+
+#: ../ifconfig.c:212
+#, c-format
+msgid "  [hw <HW> <address>]  [metric <NN>]  [mtu <NN>]\n"
+msgstr "  [hw <HW> <address>]  [metric <NN>]  [mtu <NN>]\n"
+
+#: ../ifconfig.c:213
+#, c-format
+msgid "  [[-]trailers]  [[-]arp]  [[-]allmulti]\n"
+msgstr "  [[-]trailers]  [[-]arp]  [[-]allmulti]\n"
+
+#: ../ifconfig.c:214
+#, c-format
+msgid "  [multicast]  [[-]promisc]\n"
+msgstr "  [multicast]  [[-]promisc]\n"
+
+#: ../ifconfig.c:215
+#, c-format
+msgid "  [mem_start <NN>]  [io_addr <NN>]  [irq <NN>]  [media <type>]\n"
+msgstr "  [mem_start <NN>]  [io_addr <NN>]  [irq <NN>]  [media <type>]\n"
+
+#: ../ifconfig.c:217
+#, c-format
+msgid "  [txqueuelen <NN>]\n"
+msgstr "  [txqueuelen <NN>]\n"
+
+#: ../ifconfig.c:220
+#, c-format
+msgid "  [[-]dynamic]\n"
+msgstr "  [[-]dynamic]\n"
+
+#: ../ifconfig.c:222
+#, c-format
+msgid ""
+"  [up|down] ...\n"
+"\n"
+msgstr ""
+"  [up|down] ...\n"
+"\n"
+
+#: ../ifconfig.c:224
+#, c-format
+msgid "  <HW>=Hardware Type.\n"
+msgstr "  <HW>=აპარატურის ტიპი.\n"
+
+#: ../ifconfig.c:225
+#, c-format
+msgid "  List of possible hardware types:\n"
+msgstr "  აპარატურის შესაძლო ტიპების სია:\n"
+
+#. 1 = ARPable
+#: ../ifconfig.c:227
+#, c-format
+msgid "  <AF>=Address family. Default: %s\n"
+msgstr "  <AF>=მისამართის ოჯახი. ნაგულისხმები: %s\n"
+
+#: ../ifconfig.c:228
+#, c-format
+msgid "  List of possible address families:\n"
+msgstr "  მისამართის შესაძლო ოჯახების სია:\n"
+
+#: ../ifconfig.c:304
+#, c-format
+msgid "ifconfig: option `%s' not recognised.\n"
+msgstr "ifconfig: პარამეტრი `%s' უცნობია.\n"
+
+#: ../ifconfig.c:306 ../ifconfig.c:987
+#, c-format
+msgid "ifconfig: `--help' gives usage information.\n"
+msgstr "ifconfig: `--help' გამოყენების შესახებ ინფორმაცია.\n"
+
+#: ../ifconfig.c:381
+#, c-format
+msgid "Unknown media type.\n"
+msgstr "მედიის უცნობი ტიპი.\n"
+
+#: ../ifconfig.c:418
+#, c-format
+msgid ""
+"Warning: Interface %s still in promisc mode... maybe other application is "
+"running?\n"
+msgstr ""
+"გაფრთხილება: ინტერფეისი %s ჯერ კიდევ შერეულ რეჟიმშია... იქნება სხვა "
+"აპლიკაციაა გაშვებული?\n"
+
+#: ../ifconfig.c:430
+#, c-format
+msgid "Warning: Interface %s still in MULTICAST mode.\n"
+msgstr "გაფრთხილება: ინტერფეისი %s ჯერ კიდევ MULTICAST რეჟიმშია.\n"
+
+#: ../ifconfig.c:442
+#, c-format
+msgid "Warning: Interface %s still in ALLMULTI mode.\n"
+msgstr "გაფრთხილება: ინტერფეისი %s ჯერ კიდევ ALLMULTI რეჟიმშია.\n"
+
+#: ../ifconfig.c:466
+#, c-format
+msgid "Warning: Interface %s still in DYNAMIC mode.\n"
+msgstr "გაფრთხილება: ინტერფეისი %s ჯერ კიდევ DYNAMIC რეჟიმშია.\n"
+
+#: ../ifconfig.c:524
+#, c-format
+msgid "Warning: Interface %s still in BROADCAST mode.\n"
+msgstr "გაფრთხილება: ინტერფეისი %s ჯერ კიდევ BROADCAST რეჟიმშია.\n"
+
+#: ../ifconfig.c:535
+#, c-format
+msgid "ifconfig: Error resolving '%s' for broadcast\n"
+msgstr "ifconfig: მაუწყებლობისთვის '%s' -ის ამოხსნა შეუძლებელია\n"
+
+#: ../ifconfig.c:560
+#, c-format
+msgid "ifconfig: Error resolving '%s' for dstaddr\n"
+msgstr "ifconfig: '%s' -ის დანიშნულების მისამართისთვის ამოხსნის შეცდომა\n"
+
+#: ../ifconfig.c:583
+#, c-format
+msgid "ifconfig: Error resolving '%s' for netmask\n"
+msgstr "ifconfig: '%s' -ის ქსელის ნიღბისთვის ამოხსნის შეცდომა\n"
+
+#: ../ifconfig.c:662
+#, c-format
+msgid "Warning: Interface %s still in POINTOPOINT mode.\n"
+msgstr "გაფრთხილება: ინტერფეისი %s ჯერ კიდევ POINTOPOINT რეჟიმშია.\n"
+
+#: ../ifconfig.c:673
+#, c-format
+msgid "ifconfig: Error resolving '%s' for pointopoint\n"
+msgstr "ifconfig: '%s' -ის pointopoint-სთვის ამოხსნის შეცდომა\n"
+
+#: ../ifconfig.c:697
+#, c-format
+msgid "hw address type `%s' has no handler to set address. failed.\n"
+msgstr ""
+"აპარატურული მისამართის ტიპს '%s' მისამართის დასაყენებლად დამმუშავებელი არ "
+"გააჩნია. შეცდომა.\n"
+
+#: ../ifconfig.c:706
+#, c-format
+msgid "%s: invalid %s address.\n"
+msgstr "%s: არასწორი %s მისამართი.\n"
+
+#: ../ifconfig.c:746
+#, c-format
+msgid "ifconfig: Error resolving '%s' for add\n"
+msgstr "ifconfig: '%s' -ის დასაყენებლად ამოხსნის შეცდომა\n"
+
+#: ../ifconfig.c:757 ../ifconfig.c:847 ../ifconfig.c:935
+#, c-format
+msgid "No support for INET6 on this system.\n"
+msgstr "ამ სისტემაზე INET6-ის მხარდაჭერა არ არსებობს.\n"
+
+#: ../ifconfig.c:800 ../ifconfig.c:893
+#, c-format
+msgid "Interface %s not initialized\n"
+msgstr "ინტერფეისი ინიციალიზებული არაა %s\n"
+
+#: ../ifconfig.c:812 ../ifconfig.c:904
+#, c-format
+msgid "Bad address.\n"
+msgstr "ცუდი მისამართი.\n"
+
+#: ../ifconfig.c:907
+#, c-format
+msgid "Address deletion not supported on this system.\n"
+msgstr "ამ სისტემაზე მისამართის წაშლა მხარდაუჭერელია.\n"
+
+#: ../ifconfig.c:979
+#, c-format
+msgid "ifconfig: Cannot set address for this protocol family.\n"
+msgstr "ifconfig: ამ პროტოკოლის ოჯახისთვის მისამართის დაყენების შეცდომა.\n"
+
+#: ../ifconfig.c:986
+#, c-format
+msgid "ifconfig: error resolving '%s' to set address for af=%s\n"
+msgstr ""
+"ifconfig: '%s' -ის ამოხსნის შეცდომა af=%s-სთვის მისამართის დასაყენებლად\n"
+
+#: ../ifconfig.c:1007
+#, c-format
+msgid "No support for ECONET on this system.\n"
+msgstr "ამ სისტემაზე ECONET -ის მხარდაჭერა არ არსებობს.\n"
+
+#: ../ifconfig.c:1015
+#, c-format
+msgid "Don't know how to set addresses for family %d.\n"
+msgstr "არ ვიცი, როგორ დავაყენო მისამართი ოჯახისთვის %d.\n"
+
+#: ../ifconfig.c:1050
+#, c-format
+msgid "WARNING: at least one error occured. (%d)\n"
+msgstr "გაფრთხილება: მოხდა სულ მცირე, ერთი შეცდომა. (%d)\n"
+
+#: ../netstat.c:434
+#, c-format
+msgid ""
+"(No info could be read for \"-p\": geteuid()=%d but you should be root.)\n"
+msgstr ""
+"(ინფორმაციის წაკითხვა შეუძლებელია, როცა\"-p\": geteuid()=%d მაგრამ root უნდა "
+"ბრძანდებოდეთ.)\n"
+
+#: ../netstat.c:438
+#, c-format
+msgid ""
+"(Not all processes could be identified, non-owned process info\n"
+" will not be shown, you would have to be root to see it all.)\n"
+msgstr ""
+"(ყველა პროცესის იდენტიფიკაცია შეუძლებელია. პროცესის ინფორმაცია, რომელიც "
+"თქვენ არ გეკუთვნით,\n"
+"ნაჩვენები არ იქნება. ყველა პროცესის ინფორმაციის საჩვენებლად root-ის "
+"უფლებებია საჭირო.)\n"
+
+#: ../netstat.c:445 ../netstat.c:1189 ../netstat.c:1266
+msgid "LISTENING"
+msgstr "LISTENING"
+
+#: ../netstat.c:446
+msgid "CONN SENT"
+msgstr "CONN SENT"
+
+#: ../netstat.c:447 ../netstat.c:1268
+msgid "DISC SENT"
+msgstr "DISC SENT"
+
+#: ../netstat.c:448 ../netstat.c:515 ../netstat.c:904 ../netstat.c:1269
+msgid "ESTABLISHED"
+msgstr "ESTABLISHED"
+
+#: ../netstat.c:470
+#, c-format
+msgid "Active NET/ROM sockets\n"
+msgstr "აქტიური NET/ROM სოკეტები\n"
+
+#: ../netstat.c:471
+#, c-format
+msgid ""
+"User       Dest       Source     Device  State        Vr/Vs    Send-Q  Recv-"
+"Q\n"
+msgstr ""
+"მომხმ       დანიშნ       წყარო     მოწყობილ  მდგომარ        Vr/Vs    გაგზავნ-"
+"Q  მიღებ-Q\n"
+
+#: ../netstat.c:481 ../netstat.c:1308
+#, c-format
+msgid "Problem reading data from %s\n"
+msgstr "%s-დან მონაცემების კითხვის შეცდომა\n"
+
+#: ../netstat.c:516
+msgid "SYN_SENT"
+msgstr "SYN_SENT"
+
+#: ../netstat.c:517
+msgid "SYN_RECV"
+msgstr "SYN_RECV"
+
+#: ../netstat.c:518
+msgid "FIN_WAIT1"
+msgstr "FIN_WAIT1"
+
+#: ../netstat.c:519
+msgid "FIN_WAIT2"
+msgstr "FIN_WAIT2"
+
+#: ../netstat.c:520
+msgid "TIME_WAIT"
+msgstr "TIME_WAIT"
+
+#: ../netstat.c:521
+msgid "CLOSE"
+msgstr "CLOSE"
+
+#: ../netstat.c:522
+msgid "CLOSE_WAIT"
+msgstr "CLOSE_WAIT"
+
+#: ../netstat.c:523
+msgid "LAST_ACK"
+msgstr "LAST_ACK"
+
+#: ../netstat.c:524
+msgid "LISTEN"
+msgstr "LISTEN"
+
+#: ../netstat.c:525
+msgid "CLOSING"
+msgstr "CLOSING"
+
+#: ../netstat.c:596
+#, c-format
+msgid "warning, got bogus igmp6 line %d.\n"
+msgstr "გაფრთხილება, მივიღე ყალბი igmp6 სახელი %d.\n"
+
+#: ../netstat.c:601 ../netstat.c:639 ../netstat.c:763 ../netstat.c:898
+#: ../netstat.c:1032 ../netstat.c:1037
+#, c-format
+msgid "netstat: unsupported address family %d !\n"
+msgstr "netstat: მისამართის მხარდაუჭერელი ოჯახი: %d !\n"
+
+#: ../netstat.c:614 ../netstat.c:619 ../netstat.c:627 ../netstat.c:634
+#, c-format
+msgid "warning, got bogus igmp line %d.\n"
+msgstr "გაფრთხილება, მივიღე ყალბი igmp ხაზი %d.\n"
+
+#: ../netstat.c:677
+#, c-format
+msgid "Active X.25 sockets\n"
+msgstr "აქტიური X.25 სოკეტები\n"
+
+#. IMHO, Vr/Vs is not very usefull --SF
+#: ../netstat.c:679
+#, c-format
+msgid ""
+"Dest         Source          Device  LCI  State        Vr/Vs  Send-Q  Recv-"
+"Q\n"
+msgstr ""
+"დანიშნ         წყარო          მოწყობილობა  LCI  მდგომარ        Vr/Vs  გაგზ-"
+"Q  მიღ-Q\n"
+
+#: ../netstat.c:759
+#, c-format
+msgid "warning, got bogus tcp line.\n"
+msgstr "გაფრთხილება. მიღებულია ყალბი tcp ხაზი.\n"
+
+#: ../netstat.c:800 ../netstat.c:953 ../netstat.c:1075
+#, c-format
+msgid "off (0.00/%ld/%d)"
+msgstr "გამორთული (0.00/%ld/%d)"
+
+#: ../netstat.c:804
+#, c-format
+msgid "on (%2.2f/%ld/%d)"
+msgstr "ჩართული (%2.2f/%ld/%d)"
+
+#: ../netstat.c:809
+#, c-format
+msgid "keepalive (%2.2f/%ld/%d)"
+msgstr "ცოცხალი დატოვება (%2.2f/%ld/%d)"
+
+#: ../netstat.c:814
+#, c-format
+msgid "timewait (%2.2f/%ld/%d)"
+msgstr "მოლოდინის დრო (%2.2f/%ld/%d)"
+
+#: ../netstat.c:819 ../netstat.c:962 ../netstat.c:1085
+#, c-format
+msgid "unkn-%d (%2.2f/%ld/%d)"
+msgstr "უცნ-%d (%2.2f/%ld/%d)"
+
+#: ../netstat.c:894
+#, c-format
+msgid "warning, got bogus udp line.\n"
+msgstr "გაფრთხილება. მივიღე ყალბი UDP ხაზი.\n"
+
+#: ../netstat.c:912 ../netstat.c:1175 ../netstat.c:1208
+msgid "UNKNOWN"
+msgstr "უცნობი"
+
+#: ../netstat.c:958 ../netstat.c:1080
+#, c-format
+msgid "on%d (%2.2f/%ld/%d)"
+msgstr "%d-ზე (%2.2f/%ld/%d)"
+
+#: ../netstat.c:1046
+#, c-format
+msgid "warning, got bogus raw line.\n"
+msgstr "გაფრთხილება. მივიღე ყალბი დაუმუშავებელი ხაზი.\n"
+
+#: ../netstat.c:1128
+#, c-format
+msgid "warning, got bogus unix line.\n"
+msgstr "გაფრთხილება. მივიღე ყალბი Unix ხაზი\n"
+
+#: ../netstat.c:1155
+msgid "STREAM"
+msgstr "STREAM"
+
+#: ../netstat.c:1159
+msgid "DGRAM"
+msgstr "DGRAM"
+
+#: ../netstat.c:1163
+msgid "RAW"
+msgstr "RAW"
+
+#: ../netstat.c:1167
+msgid "RDM"
+msgstr "RDM"
+
+#: ../netstat.c:1171
+msgid "SEQPACKET"
+msgstr "SEQPACKET"
+
+#: ../netstat.c:1180
+msgid "FREE"
+msgstr "FREE"
+
+#: ../netstat.c:1196
+msgid "CONNECTING"
+msgstr "CONNECTING"
+
+#: ../netstat.c:1200
+msgid "CONNECTED"
+msgstr "CONNECTED"
+
+#: ../netstat.c:1204
+msgid "DISCONNECTING"
+msgstr "DISCONNECTING"
+
+#: ../netstat.c:1235
+#, c-format
+msgid "Active UNIX domain sockets "
+msgstr "Unix-ის დომენის აქტიური სოკეტები "
+
+#: ../netstat.c:1237 ../netstat.c:1756
+#, c-format
+msgid "(servers and established)"
+msgstr "(სერცერები და დამყარებული)"
+
+#: ../netstat.c:1240 ../netstat.c:1759
+#, c-format
+msgid "(only servers)"
+msgstr "(მხოლოდ სერვერები)"
+
+#: ../netstat.c:1242 ../netstat.c:1761
+#, c-format
+msgid "(w/o servers)"
+msgstr "(სერვერების გარეშე)"
+
+#: ../netstat.c:1245
+#, c-format
+msgid ""
+"\n"
+"Proto RefCnt Flags       Type       State         I-Node"
+msgstr ""
+"\n"
+"პროტო ბმისრდნ ალმები       ტიპი       დგომ         I-Node"
+
+#: ../netstat.c:1247
+#, c-format
+msgid " Path\n"
+msgstr " ბილიკი\n"
+
+#: ../netstat.c:1267
+msgid "SABM SENT"
+msgstr "SABM SENT"
+
+#: ../netstat.c:1270
+msgid "RECOVERY"
+msgstr "RECOVERY"
+
+#: ../netstat.c:1284
+#, c-format
+msgid "Active AX.25 sockets\n"
+msgstr "აქტიური AX.25 სოკეტები\n"
+
+#: ../netstat.c:1285
+#, c-format
+msgid "Dest       Source     Device  State        Vr/Vs    Send-Q  Recv-Q\n"
+msgstr ""
+"დანიშნ.       წყარო     მოწყობილობა  მდგომარეობა        Vr/Vs    გაგზ-Q  მიღ-"
+"Q\n"
+
+#: ../netstat.c:1328
+#, c-format
+msgid "problem reading data from %s\n"
+msgstr "%s-დან მონაცემებს წაკითხვის პრობლემა\n"
+
+#: ../netstat.c:1379
+#, c-format
+msgid ""
+"Active IPX sockets\n"
+"Proto Recv-Q Send-Q Local Address              Foreign Address            "
+"State"
+msgstr ""
+"აქტიური IPX სოკეტები\n"
+"პროტო მიღ-Q გაგზ-Q ლოკალური მისამართი              უცხო მისამართი            "
+"მდგომარეობა"
+
+#: ../netstat.c:1381
+#, c-format
+msgid " User"
+msgstr " მომხმარებელი"
+
+#: ../netstat.c:1415
+msgid "ESTAB"
+msgstr "ESTAB"
+
+#: ../netstat.c:1423
+msgid "UNK."
+msgstr "UNK."
+
+#: ../netstat.c:1461
+#, c-format
+msgid "Kernel Interface table\n"
+msgstr "კერნელის ინტერფეისის ცხრილი\n"
+
+#: ../netstat.c:1469
+msgid "missing interface information"
+msgstr "ინტერფეისის ინფორმაციის გარეშე"
+
+#: ../netstat.c:1492
+#, c-format
+msgid ""
+"usage: netstat [-veenNcCF] [<Af>] -r         netstat {-V|--version|-h|--"
+"help}\n"
+msgstr ""
+"გამოყენება: netstat [-veenNcCF] [<Af>] -r         netstat {-V|--version|-h|--"
+"help}\n"
+
+#: ../netstat.c:1493
+#, c-format
+msgid "       netstat [-vnNcaeol] [<Socket> ...]\n"
+msgstr "       netstat [-vnNcaeol] [<Socket> ...]\n"
+
+#: ../netstat.c:1494
+#, c-format
+msgid ""
+"       netstat { [-veenNac] -i | [-cnNe] -M | -s }\n"
+"\n"
+msgstr ""
+"       netstat { [-veenNac] -i | [-cnNe] -M | -s }\n"
+"\n"
+
+#: ../netstat.c:1496
+#, c-format
+msgid "        -r, --route              display routing table\n"
+msgstr "        -r, --route              რაუტინგის ცხრილის ჩვენება\n"
+
+#: ../netstat.c:1497
+#, c-format
+msgid "        -i, --interfaces         display interface table\n"
+msgstr "        -i, --interfaces         ინტერფეისის ცხრილის ჩვენება\n"
+
+#: ../netstat.c:1498
+#, c-format
+msgid "        -g, --groups             display multicast group memberships\n"
+msgstr ""
+"        -g, --groups             მრავალმხრივი ჯგუფის წევრობის ჩვენება\n"
+
+#: ../netstat.c:1499
+#, c-format
+msgid ""
+"        -s, --statistics         display networking statistics (like SNMP)\n"
+msgstr ""
+"        -s, --statistics         ქსელის სტატისტიკის ჩვენება (SNMP-ის "
+"მსგავსად)\n"
+
+#: ../netstat.c:1501
+#, c-format
+msgid ""
+"        -M, --masquerade         display masqueraded connections\n"
+"\n"
+msgstr ""
+"        -M, --masquerade         დამასკარადებული შეერთებების ჩვენება\n"
+"\n"
+
+#: ../netstat.c:1505
+#, c-format
+msgid "        --numeric-hosts          don't resolve host names\n"
+msgstr "        --numeric-hosts          ჰოსტის სახელები არ ამოიხსნება\n"
+
+#: ../netstat.c:1506
+#, c-format
+msgid "        --numeric-ports          don't resolve port names\n"
+msgstr "        --numeric-ports          პორტის სახელები არ ამოიხსნება\n"
+
+#: ../netstat.c:1507
+#, c-format
+msgid "        --numeric-users          don't resolve user names\n"
+msgstr "        --numeric-users          მომხმარებლის სახელები არ ამოიხსნება\n"
+
+#: ../netstat.c:1508
+#, c-format
+msgid "        -N, --symbolic           resolve hardware names\n"
+msgstr "        -N, --symbolic           აპარატურული სახელების ამოხსნა\n"
+
+#: ../netstat.c:1509 ../route.c:88
+#, c-format
+msgid "        -e, --extend             display other/more information\n"
+msgstr "        -e, --extend             მეტი/სხვა ინფორმაციის ჩვენება\n"
+
+#: ../netstat.c:1510
+#, c-format
+msgid "        -p, --programs           display PID/Program name for sockets\n"
+msgstr ""
+"        -p, --programs           სოკეტების პროგრამის სახელის/PID-ის ჩვენება\n"
+
+#: ../netstat.c:1511
+#, c-format
+msgid ""
+"        -c, --continuous         continuous listing\n"
+"\n"
+msgstr ""
+"        -c, --continuous         უწყვეტი გამოტანა\n"
+"\n"
+
+#: ../netstat.c:1512
+#, c-format
+msgid "        -l, --listening          display listening server sockets\n"
+msgstr ""
+"        -l, --listening          სერვერის მოსმენადი სოკეტების ჩვენება\n"
+
+#: ../netstat.c:1513
+#, c-format
+msgid ""
+"        -a, --all, --listening   display all sockets (default: connected)\n"
+msgstr ""
+"        -a, --all, --listening   ყველა სოკეტის ჩვენება (ნაგულისხმები: "
+"მიერთებული)\n"
+
+#: ../netstat.c:1514
+#, c-format
+msgid "        -o, --timers             display timers\n"
+msgstr "        -o, --timers             ტაიმერების ჩვენება\n"
+
+#: ../netstat.c:1515 ../route.c:89
+#, c-format
+msgid ""
+"        -F, --fib                display Forwarding Information Base "
+"(default)\n"
+msgstr ""
+"        -F, --fib                გადაგზავნის ინფორმაციის ბაზის ჩვენება "
+"(ნაგულისხმები)\n"
+
+#: ../netstat.c:1516 ../route.c:90
+#, c-format
+msgid ""
+"        -C, --cache              display routing cache instead of FIB\n"
+"\n"
+msgstr ""
+"        -C, --cache              FIB-ის მაგიერ რაუტინგის ქეშის ჩვენება\n"
+"\n"
+
+#: ../netstat.c:1518
+#, c-format
+msgid ""
+"  <Socket>={-t|--tcp} {-u|--udp} {-w|--raw} {-x|--unix} --ax25 --ipx --"
+"netrom\n"
+msgstr ""
+"  <Socket>={-t|--tcp} {-u|--udp} {-w|--raw} {-x|--unix} --ax25 --ipx --"
+"netrom\n"
+
+#: ../netstat.c:1519
+#, c-format
+msgid "  <AF>=Use '-6|-4' or '-A <af>' or '--<af>'; default: %s\n"
+msgstr "  <AF>=Use '-6|-4' or '-A <af>' or '--<af>'; ნაგულისხმები: %s\n"
+
+#: ../netstat.c:1520 ../route.c:93
+#, c-format
+msgid "  List of possible address families (which support routing):\n"
+msgstr ""
+"  მისამართის შესაძლო ოჯახების ჩვენება (რომლებსაც რაუტინგის მხარდაჭერა "
+"აქვთ):\n"
+
+#: ../netstat.c:1753
+#, c-format
+msgid "Active Internet connections "
+msgstr "ინტერნეტის აქტიური შეერთებები "
+
+#: ../netstat.c:1763
+#, c-format
+msgid ""
+"\n"
+"Proto Recv-Q Send-Q Local Address           Foreign Address         "
+"State      "
+msgstr ""
+"\n"
+"პროტო მიღ-Q გაგზ-Q ლოკალური მისამართი           უცხო მისამართი         "
+"მდგომარეობა      "
+
+#: ../netstat.c:1765
+#, c-format
+msgid " User       Inode     "
+msgstr " მომხმარებელი       Inode     "
+
+#: ../netstat.c:1768
+#, c-format
+msgid " Timer"
+msgstr " ტაიმერი"
+
+#: ../netstat.c:1798
+#, c-format
+msgid "IPv4 Group Memberships\n"
+msgstr "IPv4 ჯგუფის წევრობები\n"
+
+#: ../netstat.c:1799
+#, c-format
+msgid "Interface       RefCnt Group\n"
+msgstr "ინტერფეისი       RefCnt ჯგუფი\n"
+
+#: ../rarp.c:44
+msgid "This kernel does not support RARP.\n"
+msgstr "ამ ბირთვს RARP-ის მხარდაჭერა არ გააჩნია.\n"
+
+#: ../rarp.c:83
+#, c-format
+msgid "no RARP entry for %s.\n"
+msgstr "%s-ისთვის RARP ჩანაწერი არ არსებობს.\n"
+
+#: ../rarp.c:96
+#, c-format
+msgid "%s: bad hardware address\n"
+msgstr "%s: ცუდი აპარატურული მისამართი\n"
+
+#: ../rarp.c:128
+#, c-format
+msgid "rarp: cannot open file %s:%s.\n"
+msgstr "rarp: ფაილის გახსნის შეცდომა %s:%s.\n"
+
+#: ../rarp.c:140
+#, c-format
+msgid "rarp: format error at %s:%u\n"
+msgstr "rarp: ფორმატის შეცდომა მისამართზე %s:%u\n"
+
+#: ../rarp.c:144 ../rarp.c:289
+#, c-format
+msgid "rarp: %s: unknown host\n"
+msgstr "rarp: %s: უცნობი ჰოსტი\n"
+
+#: ../rarp.c:147
+#, c-format
+msgid "rarp: cannot set entry from %s:%u\n"
+msgstr "rarp: ჩანაწერის %s:%u-დან დაყენების შეცდომა\n"
+
+#: ../rarp.c:176
+#, c-format
+msgid "Usage: rarp -a                               list entries in cache.\n"
+msgstr ""
+"გამოყენება: rarp -a                               ჩანაწერების ქეშიდან "
+"ჩვენება.\n"
+
+#: ../rarp.c:177
+#, c-format
+msgid "       rarp -d <hostname>                    delete entry from cache.\n"
+msgstr ""
+"       rarp -d <hostname>                    ქეშიდან ჩანაწერის წაშლა.\n"
+
+#: ../rarp.c:178
+#, c-format
+msgid "       rarp [<HW>] -s <hostname> <hwaddr>    add entry to cache.\n"
+msgstr ""
+"       rarp [<HW>] -s <hostname> <hwaddr>    ქეშში ჩანაწერის ჩამატება.\n"
+
+#: ../rarp.c:179
+#, c-format
+msgid ""
+"       rarp -f                               add entries from /etc/ethers.\n"
+msgstr ""
+"       rarp -f                               ჩანაწერების დამატება /etc/"
+"ethers-დან.\n"
+
+#: ../rarp.c:180
+#, c-format
+msgid ""
+"       rarp -V                               display program version.\n"
+"\n"
+msgstr ""
+"       rarp -V                               პროგრამის ვერსიის გამოტანა.\n"
+"\n"
+
+#: ../rarp.c:238
+#, c-format
+msgid "%s: illegal option mix.\n"
+msgstr "%s: არასწორად შერეული პარამეტრები.\n"
+
+#: ../rarp.c:269
+#, c-format
+msgid "rarp: %s: unknown hardware type.\n"
+msgstr "rarp: %s: აპარატურის უცნობი ტიპი.\n"
+
+#: ../route.c:80
+#, c-format
+msgid ""
+"Usage: route [-nNvee] [-FC] [<AF>]           List kernel routing tables\n"
+msgstr ""
+"გამოყენება: route [-nNvee] [-FC] [<AF>]           ბირთვის რაუტინგის "
+"ცხრილების ჩვენება\n"
+
+#: ../route.c:81
+#, c-format
+msgid ""
+"       route [-v] [-FC] {add|del|flush} ...  Modify routing table for AF.\n"
+"\n"
+msgstr ""
+"       route [-v] [-FC] {add|del|flush} ...  რაუტინგის ცხრილის შეცვლა AF-"
+"სთვის.\n"
+"\n"
+
+#: ../route.c:83
+#, c-format
+msgid ""
+"       route {-h|--help} [<AF>]              Detailed usage syntax for "
+"specified AF.\n"
+msgstr ""
+"       route {-h|--help} [<AF>]              მითითებული AF-სთვის "
+"გამოყენებული სინტაქსის დეტალები.\n"
+
+#: ../route.c:84
+#, c-format
+msgid ""
+"       route {-V|--version}                  Display version/author and "
+"exit.\n"
+"\n"
+msgstr ""
+"       route {-V|--version}                  ვერსიის/ავტორის გამოტანა და "
+"გასვლა.\n"
+"\n"
+
+#: ../route.c:92
+#, c-format
+msgid "  <AF>=Use '-A <af>' or '--<af>'; default: %s\n"
+msgstr "  <AF>=Use '-A <af>' or '--<af>'; ნაგულისხმები: %s\n"
+
+#: ../plipconfig.c:66
+#, c-format
+msgid "Usage: plipconfig [-a] [-i] [-v] interface\n"
+msgstr "გამოყენება: plipconfig [-a] [-i] [-v] ინტერფეისი\n"
+
+#: ../plipconfig.c:67
+#, c-format
+msgid "                  [nibble NN] [trigger NN]\n"
+msgstr "                  [nibble NN] [trigger NN]\n"
+
+#: ../plipconfig.c:68
+#, c-format
+msgid "       plipconfig -V | --version\n"
+msgstr "       plipconfig -V | --version\n"
+
+#: ../plipconfig.c:74
+#, c-format
+msgid "%s\tnibble %lu  trigger %lu\n"
+msgstr "%s\tნიბლი %lu  ტრიგერი %lu\n"
+
+#: ../iptunnel.c:85
+#, c-format
+msgid "Usage: iptunnel { add | change | del | show } [ NAME ]\n"
+msgstr "გამოყენება: iptunnel { add | change | del | show } [ სახელი ]\n"
+
+#: ../iptunnel.c:86
+#, c-format
+msgid ""
+"          [ mode { ipip | gre | sit } ] [ remote ADDR ] [ local ADDR ]\n"
+msgstr ""
+"          [ mode { ipip | gre | sit } ] [ დაშორებული მისამართი ] [ ლოკალური "
+"მისამართი ]\n"
+
+#: ../iptunnel.c:87
+#, c-format
+msgid "          [ [i|o]seq ] [ [i|o]key KEY ] [ [i|o]csum ]\n"
+msgstr "          [ [i|o]seq ] [ [i|o]key KEY ] [ [i|o]csum ]\n"
+
+#: ../iptunnel.c:88
+#, c-format
+msgid "          [ ttl TTL ] [ tos TOS ] [ nopmtudisc ] [ dev PHYS_DEV ]\n"
+msgstr "          [ ttl TTL ] [ tos TOS ] [ nopmtudisc ] [ dev PHYS_DEV ]\n"
+
+#: ../iptunnel.c:89
+#, c-format
+msgid ""
+"       iptunnel -V | --version\n"
+"\n"
+msgstr ""
+"       iptunnel -V | --version\n"
+"\n"
+
+#: ../iptunnel.c:90
+#, c-format
+msgid "Where: NAME := STRING\n"
+msgstr "სადაც: NAME := STRING\n"
+
+#: ../iptunnel.c:91
+#, c-format
+msgid "       ADDR := { IP_ADDRESS | any }\n"
+msgstr "       ADDR := { IP_ADDRESS | any }\n"
+
+#: ../iptunnel.c:92
+#, c-format
+msgid "       TOS  := { NUMBER | inherit }\n"
+msgstr "       TOS  := { რიცხვი | inherit }\n"
+
+#: ../iptunnel.c:93
+#, c-format
+msgid "       TTL  := { 1..255 | inherit }\n"
+msgstr "       TTL  := { 1..255 | inherit }\n"
+
+#: ../iptunnel.c:94
+#, c-format
+msgid "       KEY  := { DOTTED_QUAD | NUMBER }\n"
+msgstr "       KEY  := { DOTTED_QUAD | რიცხვი }\n"
+
+#: ../iptunnel.c:332
+#, c-format
+msgid "Keys are not allowed with ipip and sit.\n"
+msgstr "\"ipip\"-სთან და \"sit\"-თან ერთად გასაღებები დაუშვებელია.\n"
+
+#: ../iptunnel.c:352
+#, c-format
+msgid "Broadcast tunnel requires a source address.\n"
+msgstr "სამაუწყებლო გვირაბი საწყის მისამართს მოითხოვს.\n"
+
+#: ../iptunnel.c:367
+#, c-format
+msgid "ttl != 0 and noptmudisc are incompatible\n"
+msgstr "ttl != 0 და noptmudisc შეუთავსებელია\n"
+
+#: ../iptunnel.c:379
+#, c-format
+msgid "cannot determine tunnel mode (ipip, gre or sit)\n"
+msgstr "გვირაბის ტიპის დადგენის შეცდომა (ipip, gre ან sit)\n"
+
+#: ../iptunnel.c:417
+#, c-format
+msgid "%s: %s/ip  remote %s  local %s "
+msgstr "%s: %s/ip  დაშორებული %s  ლოკალური %s "
+
+#: ../iptunnel.c:421
+msgid "unknown"
+msgstr "უცნობი"
+
+#: ../iptunnel.c:453
+#, c-format
+msgid "  Drop packets out of sequence.\n"
+msgstr "  მიმდევრობიდან პაკეტების გადაყრა.\n"
+
+#: ../iptunnel.c:455
+#, c-format
+msgid "  Checksum in received packet is required.\n"
+msgstr "  საჭიროა, მიღებული პაკეტი საკონტროლო ჯამს შეიცავდეს.\n"
+
+#: ../iptunnel.c:457
+#, c-format
+msgid "  Sequence packets on output.\n"
+msgstr "  გამავალი პაკეტების მიმდევრობით გაგზავნა.\n"
+
+#: ../iptunnel.c:459
+#, c-format
+msgid "  Checksum output packets.\n"
+msgstr "  გამავალი პაკეტების საკონტროლო ჯამი.\n"
+
+#: ../iptunnel.c:487
+#, c-format
+msgid "Wrong format of /proc/net/dev. Sorry.\n"
+msgstr "/proc/net/dev-ის არასწორი ფორმატი. ბოდიში.\n"
+
+#: ../iptunnel.c:500
+#, c-format
+msgid "Failed to get type of [%s]\n"
+msgstr "[%s]-ის ტიპის მიღების შეცდომა\n"
+
+#: ../iptunnel.c:516
+#, c-format
+msgid "RX: Packets    Bytes        Errors CsumErrs OutOfSeq Mcasts\n"
+msgstr "RX: პაკეტი    ბაიტი        შეცდომა საკჯშეცდ მიმდევგარ Mcasts\n"
+
+#: ../iptunnel.c:519
+#, c-format
+msgid "TX: Packets    Bytes        Errors DeadLoop NoRoute  NoBufs\n"
+msgstr "TX: პაკეტი    ბაიტი        შეცდომ მარყუჟ რაუტგარ  ბაფგარეშ\n"
+
+#: ../statistics.c:47
+msgid "ICMP input histogram:"
+msgstr "ICMP შეტანის ჰისტოგრამა:"
+
+#: ../statistics.c:48
+msgid "ICMP output histogram:"
+msgstr "ICMP გამოტანის ჰისტოგრამა:"
+
+#: ../statistics.c:65
+#, c-format
+msgid "Forwarding is %s"
+msgstr "გადაგზავნა %s"
+
+#: ../statistics.c:66
+#, c-format
+msgid "Default TTL is %u"
+msgstr "ნაგულისხმები TTL-ია %u"
+
+#: ../statistics.c:67
+#, c-format
+msgid "%u total packets received"
+msgstr "სულ მიღებულია %u პაკეტი"
+
+#: ../statistics.c:68
+#, c-format
+msgid "%u with invalid headers"
+msgstr "%u არასწორი თავსართებით"
+
+#: ../statistics.c:69
+#, c-format
+msgid "%u with invalid addresses"
+msgstr "%u არასწორი მისამართებით"
+
+#: ../statistics.c:70
+#, c-format
+msgid "%u forwarded"
+msgstr "%u გადაგზავნილია"
+
+#: ../statistics.c:71
+#, c-format
+msgid "%u with unknown protocol"
+msgstr "%u უცნობი პროტოკოლით"
+
+#: ../statistics.c:72
+#, c-format
+msgid "%u incoming packets discarded"
+msgstr "%u შემომავალი პაკეტი მოცილებულია"
+
+#: ../statistics.c:73
+#, c-format
+msgid "%u incoming packets delivered"
+msgstr "%u მიღებული შემომავალი პაკეტი"
+
+#: ../statistics.c:74
+#, c-format
+msgid "%u requests sent out"
+msgstr "%u მოთხოვნა გაგზავნილია"
+
+#. ?
+#: ../statistics.c:75
+#, c-format
+msgid "%u outgoing packets dropped"
+msgstr "%u გაგაზვნილი პაკეტი გადაყრილია"
+
+#: ../statistics.c:76
+#, c-format
+msgid "%u dropped because of missing route"
+msgstr "%u გადაიყარა არარსებული რაუტის გამო"
+
+#: ../statistics.c:77
+#, c-format
+msgid "%u fragments dropped after timeout"
+msgstr "%u ფრაგმენტი გადაყრილია მოლოდინის ვადის გასვლის გამო"
+
+#: ../statistics.c:78
+#, c-format
+msgid "%u reassemblies required"
+msgstr "%u თავიდან აწყობა გახდა საჭირო"
+
+#. ?
+#: ../statistics.c:79
+#, c-format
+msgid "%u packets reassembled ok"
+msgstr "%u პაკეტი თავიდან წარმატებით აეწყო"
+
+#: ../statistics.c:80
+#, c-format
+msgid "%u packet reassemblies failed"
+msgstr "%u პაკეტის აწყობის შეცდომა"
+
+#: ../statistics.c:81
+#, c-format
+msgid "%u fragments received ok"
+msgstr "%u ფრაგმენტი წარმატებითაა მიღებული"
+
+#: ../statistics.c:82
+#, c-format
+msgid "%u fragments failed"
+msgstr "%u შეცდომიანი ფრაგმენტი"
+
+#: ../statistics.c:83
+#, c-format
+msgid "%u fragments created"
+msgstr "%u ფრაგმენტი შეიქმნა"
+
+#: ../statistics.c:88
+#, c-format
+msgid "%u ICMP messages received"
+msgstr "%u ICMP შეტყობინება მიღებულია"
+
+#: ../statistics.c:89
+#, c-format
+msgid "%u input ICMP message failed"
+msgstr "%u შემომავალი ICMP შეტყობინების შეცდომა"
+
+#: ../statistics.c:90 ../statistics.c:103
+#, c-format
+msgid "destination unreachable: %u"
+msgstr "სამიზნე მიუწვდომელია: %u"
+
+#: ../statistics.c:91
+#, c-format
+msgid "timeout in transit: %u"
+msgstr "დრო ტრანზიტში ამოიწურა: %u"
+
+#: ../statistics.c:92 ../statistics.c:105
+#, c-format
+msgid "wrong parameters: %u"
+msgstr "არასწორი პარამეტრები: %u"
+
+#. ?
+#: ../statistics.c:93
+#, c-format
+msgid "source quenches: %u"
+msgstr "წყაროს ჩახშობა: %u"
+
+#: ../statistics.c:94
+#, c-format
+msgid "redirects: %u"
+msgstr "გადამისამართებები: %u"
+
+#: ../statistics.c:95 ../statistics.c:108
+#, c-format
+msgid "echo requests: %u"
+msgstr "ექოს მოთხოვნები: %u"
+
+#: ../statistics.c:96 ../statistics.c:109
+#, c-format
+msgid "echo replies: %u"
+msgstr "ექოს პასუხები: %u"
+
+#: ../statistics.c:97
+#, c-format
+msgid "timestamp request: %u"
+msgstr "დროის შტამპის მოთხოვნა: %u"
+
+#: ../statistics.c:98
+#, c-format
+msgid "timestamp reply: %u"
+msgstr "დროის შტაპის პასუხი: %u"
+
+#: ../statistics.c:99
+#, c-format
+msgid "address mask request: %u"
+msgstr "მისამართის ნიღბის მოთხოვნა: %u"
+
+#. ?
+#: ../statistics.c:100 ../statistics.c:113
+#, c-format
+msgid "address mask replies: %u"
+msgstr "მისამართის ნიღბის პასუხი: %u"
+
+#. ?
+#: ../statistics.c:101
+#, c-format
+msgid "%u ICMP messages sent"
+msgstr "%u ICMP შეტყობინება გაგზავნილია"
+
+#: ../statistics.c:102
+#, c-format
+msgid "%u ICMP messages failed"
+msgstr "%u ICMP შეტყობინების შეცდომა"
+
+#: ../statistics.c:104
+#, c-format
+msgid "time exceeded: %u"
+msgstr "დრო გადაცდა: %u"
+
+#. ?
+#: ../statistics.c:106
+#, c-format
+msgid "source quench: %u"
+msgstr "წყაროს ჩახშობა: %u"
+
+#: ../statistics.c:107
+#, c-format
+msgid "redirect: %u"
+msgstr "გადამისამართება: %u"
+
+#: ../statistics.c:110
+#, c-format
+msgid "timestamp requests: %u"
+msgstr "დროის შტამპის მოთხოვნები: %u"
+
+#: ../statistics.c:111
+#, c-format
+msgid "timestamp replies: %u"
+msgstr "დროის შტამპის პასუხები: %u"
+
+#: ../statistics.c:112
+#, c-format
+msgid "address mask requests: %u"
+msgstr "მისამართის ნიღბის მოთხოვნები: %u"
+
+#: ../statistics.c:118
+#, c-format
+msgid "RTO algorithm is %s"
+msgstr "RTO -ის ალგორითმია %s"
+
+#: ../statistics.c:122
+#, c-format
+msgid "%u active connection openings"
+msgstr "%u აქტიური შეერთების გახსნები"
+
+#: ../statistics.c:123
+#, c-format
+msgid "%u passive connection openings"
+msgstr "%u პასიური შეერთების გახსნები"
+
+#: ../statistics.c:124
+#, c-format
+msgid "%u failed connection attempts"
+msgstr "%u დაკავშირების შეცდომის მქონე ცდები"
+
+#: ../statistics.c:125
+#, c-format
+msgid "%u connection resets received"
+msgstr "%u მიღებული დაკავშირების თავიდან დაწყება"
+
+#: ../statistics.c:126
+#, c-format
+msgid "%u connections established"
+msgstr "%u დამყარებული შეერთება"
+
+#: ../statistics.c:127
+#, c-format
+msgid "%u segments received"
+msgstr "%u სეგმენტი მიღებულია"
+
+#: ../statistics.c:128
+#, c-format
+msgid "%u segments sent out"
+msgstr "%u გაგზავნილი სეგმენტი"
+
+#: ../statistics.c:129
+#, c-format
+msgid "%u segments retransmitted"
+msgstr "%u გადაგზავნილი სეგმენტი"
+
+#: ../statistics.c:130
+#, c-format
+msgid "%u bad segments received"
+msgstr "%u მიღებული ცუდი სეგმენტი"
+
+#: ../statistics.c:131
+#, c-format
+msgid "%u resets sent"
+msgstr "%u ჩამოყრა გაგზავნილია"
+
+#: ../statistics.c:136
+#, c-format
+msgid "%u packets received"
+msgstr "%u მიღებული პაკეტი"
+
+#: ../statistics.c:137
+#, c-format
+msgid "%u packets to unknown port received"
+msgstr "%u უცნობ პორტზე მიღებული პაკეტი"
+
+#: ../statistics.c:138
+#, c-format
+msgid "%u packet receive errors"
+msgstr "%u პაკეტის მიღების შეცდომა"
+
+#: ../statistics.c:139
+#, c-format
+msgid "%u packets sent"
+msgstr "%u პაკეტი გაგზავნილია"
+
+#: ../statistics.c:144
+#, c-format
+msgid "%u SYN cookies sent"
+msgstr "%u SYN ქუქი გაგზავნილია"
+
+#: ../statistics.c:145
+#, c-format
+msgid "%u SYN cookies received"
+msgstr "%u SYN ქუქი მიღებულია"
+
+#: ../statistics.c:146
+#, c-format
+msgid "%u invalid SYN cookies received"
+msgstr "%u არასწორი SYN ქუქი მიღებულია"
+
+#: ../statistics.c:148
+#, c-format
+msgid "%u resets received for embryonic SYN_RECV sockets"
+msgstr "%u ემბრიონული SYN_RECV სოკეტებისთვის მიღებული განულება"
+
+#: ../statistics.c:150
+#, c-format
+msgid "%u packets pruned from receive queue because of socket buffer overrun"
+msgstr "%u სოკეტის ბუფერის გადავსების გამო მიღების რიგიდან მოცილებული პაკეტი"
+
+#. obsolete: 2.2.0 doesn't do that anymore
+#: ../statistics.c:153
+#, c-format
+msgid "%u packets pruned from receive queue"
+msgstr "%u მიღების რიგიდან მოცილებული პაკეტი"
+
+#: ../statistics.c:154
+#, c-format
+msgid ""
+"%u packets dropped from out-of-order queue because of socket buffer overrun"
+msgstr "%u სოკეტის ბაფერის გადავსების გამო დაულაგებელი სიიდან გადაყრილი პაკეტი"
+
+#: ../statistics.c:156
+#, c-format
+msgid "%u ICMP packets dropped because they were out-of-window"
+msgstr "%u ფანჯრის გარეთ მყოფი გადაყრილი ICMP პაკეტი"
+
+#: ../statistics.c:158
+#, c-format
+msgid "%u ICMP packets dropped because socket was locked"
+msgstr "%u სოკეტის დაბლოკვის გამო გადაყრილი ICMP პაკეტი"
+
+#: ../statistics.c:160
+#, c-format
+msgid "%u TCP sockets finished time wait in fast timer"
+msgstr "%u TIME_WAIT-ის სწრაფ ტაიმერში დასრულებული TCP სოკეტი"
+
+#: ../statistics.c:161
+#, c-format
+msgid "%u time wait sockets recycled by time stamp"
+msgstr ""
+"%u -ჯერ TIME_WAIT სოკეტები დროის შტამპის მიერ თავიდან იქნა გამოყენებული"
+
+#: ../statistics.c:162
+#, c-format
+msgid "%u TCP sockets finished time wait in slow timer"
+msgstr "%u TIME_WAIT_ის ნელ ტაიმერში დასრულებული TCP სოკეტი"
+
+#: ../statistics.c:163
+#, c-format
+msgid "%u passive connections rejected because of time stamp"
+msgstr "%u დროის შტამპის გამო უარყოფილი პასიური შეერთება"
+
+#: ../statistics.c:165
+#, c-format
+msgid "%u active connections rejected because of time stamp"
+msgstr "%u დროის შტამპის გამო უარყოფილი აქტიური შეერთება"
+
+#: ../statistics.c:167
+#, c-format
+msgid "%u packets rejected in established connections because of timestamp"
+msgstr "%u დროის შტამპის გამო უარყოფილი პაკეტი დამყარებულ შეერთებებში"
+
+#: ../statistics.c:169
+#, c-format
+msgid "%u delayed acks sent"
+msgstr "%u გაგზავნილი დაყოვნებული ACK"
+
+#: ../statistics.c:170
+#, c-format
+msgid "%u delayed acks further delayed because of locked socket"
+msgstr "%u დაბლოკილი სოკეტის გამო დამატებით გადადებული უკვე გადადებული ACK"
+
+#: ../statistics.c:172
+#, c-format
+msgid "Quick ack mode was activated %u times"
+msgstr "სწრაფი ack-ის რეჟიმი %u-ჯერ ჩაირთო"
+
+#: ../statistics.c:173
+#, c-format
+msgid "%u times the listen queue of a socket overflowed"
+msgstr "სოკეტის მოსმენის რიგი %u-ჯერ გადაივსო"
+
+#: ../statistics.c:175
+#, c-format
+msgid "%u SYNs to LISTEN sockets dropped"
+msgstr "%u SYN-დან LISTEN -მდე გადაგდებული სოკეტი"
+
+#: ../statistics.c:176
+#, c-format
+msgid "%u packets directly queued to recvmsg prequeue"
+msgstr "%u recvmsg წინასწარ რიგში პირდაპირ ჩასმული პაკეტი"
+
+#: ../statistics.c:178
+#, c-format
+msgid "%u bytes directly in process context from backlog"
+msgstr "%u ბაიტი backlog-დან პირდაპირ პროცესის კონტექსტში"
+
+#: ../statistics.c:179
+#, c-format
+msgid "%u bytes directly received in process context from prequeue"
+msgstr "%u პრერიგიდან პროცესის კონტექსტში პირდაპირ მიღებული პაკეტი"
+
+#: ../statistics.c:181
+#, c-format
+msgid "%u packets dropped from prequeue"
+msgstr "%u პრერიგიდან გადაყრილი პაკეტი"
+
+#: ../statistics.c:182
+#, c-format
+msgid "%u packet headers predicted"
+msgstr "%u გამოცნობილი პაკეტის თავსართი"
+
+#: ../statistics.c:183
+#, c-format
+msgid "%u packet headers predicted and directly queued to user"
+msgstr ""
+"%u პაკეტის თავსართი გამოცნობილი და პირდაპირ მომხმარებლის რიგში ჩამატებულია"
+
+#: ../statistics.c:185
+#, c-format
+msgid "Ran %u times out of system memory during packet sending"
+msgstr "%u-ჯერ სისტემას პაკეტების გასაგზავნად მეხსიერება"
+
+#: ../statistics.c:187
+#, c-format
+msgid "%u acknowledgments not containing data payload received"
+msgstr "%u მიღებული მონაცემების არშემცველი დადასტურება"
+
+#: ../statistics.c:188
+#, c-format
+msgid "%u predicted acknowledgments"
+msgstr "%u გამოცნობილი დადასტურება"
+
+#: ../statistics.c:189
+#, c-format
+msgid "%u times recovered from packet loss due to fast retransmit"
+msgstr "%u-ჯერ სწრაფი გადაცემის გამო პაკეტების დაკარგვისგან აღდგენილი"
+
+#: ../statistics.c:190
+#, c-format
+msgid "%u times recovered from packet loss by selective acknowledgements"
+msgstr "%u-ჯერ პაკეტების კარგვისგან არჩევითი დადასტურებით აღდგენა"
+
+#: ../statistics.c:191
+#, c-format
+msgid "%u bad SACK blocks received"
+msgstr "%u მიღებული ცუდი SACK ბლოკი"
+
+#: ../statistics.c:192
+#, c-format
+msgid "Detected reordering %u times using FACK"
+msgstr "გამოვლენილია %u-ჯერ გადალაგება FACK-ის გამოყენებით"
+
+#: ../statistics.c:193
+#, c-format
+msgid "Detected reordering %u times using SACK"
+msgstr "გამოვლენილია %u-ჯერ გადალაგება SACK-ის გამოყენებით"
+
+#: ../statistics.c:194
+#, c-format
+msgid "Detected reordering %u times using time stamp"
+msgstr "გამოვლენილია %u-ჯერ გადალაგება დროის შტამპის გამოყენებით"
+
+#: ../statistics.c:195
+#, c-format
+msgid "Detected reordering %u times using reno fast retransmit"
+msgstr "გამოვლენილია %u-ჯერ გადალაგება reno სწრაფი გადაგზავნის გამოყენებით"
+
+#: ../statistics.c:196
+#, c-format
+msgid "%u congestion windows fully recovered without slow start"
+msgstr "%u ნელი დაწყების გარეშე სრულად აღდგენილი გადატვირთვის ფანჯარა"
+
+#: ../statistics.c:197
+#, c-format
+msgid "%u congestion windows partially recovered using Hoe heuristic"
+msgstr "%u Hoe-ის ევრისტიკით ნაწილობრივ აღდგენილი გადატვირთვის ფანჯარა"
+
+#: ../statistics.c:198
+#, c-format
+msgid "%u congestion window recovered without slow start using DSACK"
+msgstr ""
+"%u DSACK-ის გამოყენებით ნელი დაწყების გარეშე აღდგენილი გადატვირთვის ფანჯარა"
+
+#: ../statistics.c:199
+#, c-format
+msgid "%u congestion windows recovered without slow start after partial ack"
+msgstr ""
+"%u ნაწილობრივი ACK-ის შემდეგ ნელი დაწყების გარეშე აღდგენილი გადატვირთვის "
+"ფანჯარა"
+
+#: ../statistics.c:200
+#, c-format
+msgid "%u retransmits lost"
+msgstr "%u გადაგზავნა დაკარგულია"
+
+#: ../statistics.c:201
+#, c-format
+msgid "%u timeouts after reno fast retransmit"
+msgstr "%u მოლოდინის გასვლა reno სწრაფი გადაგზავნის შემდეგ"
+
+#: ../statistics.c:202
+#, c-format
+msgid "%u timeouts after SACK recovery"
+msgstr "%u მოლოდინის გასვლა SACK აღდგენის შემდეგ"
+
+#: ../statistics.c:203
+#, c-format
+msgid "%u timeouts in loss state"
+msgstr "დროის ამოწურვის რაოდენობა დაკარგვის მდგომარეობაში: %u"
+
+#: ../statistics.c:204
+#, c-format
+msgid "%u fast retransmits"
+msgstr "%u სწრაფი გადაგზავნა"
+
+#: ../statistics.c:205
+#, c-format
+msgid "%u forward retransmits"
+msgstr "%u გადაგზავნილი გადაგზავნა"
+
+#: ../statistics.c:206
+#, c-format
+msgid "%u retransmits in slow start"
+msgstr "%u გადაგზავნები ნელ გაშვებაში"
+
+#: ../statistics.c:207
+#, c-format
+msgid "%u other TCP timeouts"
+msgstr "%u TCP -ის სხვა მოლოდინის ამოწურვა"
+
+#: ../statistics.c:208
+#, c-format
+msgid "%u reno fast retransmits failed"
+msgstr "%u reno სწრაფი გადაგზავნის შეცდომა"
+
+#: ../statistics.c:209
+#, c-format
+msgid "%u SACK retransmits failed"
+msgstr "%u შეცდომის მქონე SACK გადაგზავნა"
+
+#: ../statistics.c:210
+#, c-format
+msgid "%u times receiver scheduled too late for direct processing"
+msgstr ""
+"%u-ჯერ მიმღებმა პირდაპირი დამუშავებისთვის რიგში მეტისმეტად გვიან ჩაამატა"
+
+#: ../statistics.c:211
+#, c-format
+msgid "%u packets collapsed in receive queue due to low socket buffer"
+msgstr "%u სოკეტის არასაკმარისი ბუფერის გამო გაფუჭებული პაკეტი მიღების რიგში"
+
+#: ../statistics.c:212
+#, c-format
+msgid "%u DSACKs sent for old packets"
+msgstr "%u გაგზავნილი DSACK ძველი პაკეტისთვის"
+
+#: ../statistics.c:213
+#, c-format
+msgid "%u DSACKs sent for out of order packets"
+msgstr "%u გაგზავნილი DSACK-ები დაულაგებელი პაკეტებისთვის"
+
+#: ../statistics.c:214
+#, c-format
+msgid "%u DSACKs received"
+msgstr "%u მიღებული DSACK"
+
+#: ../statistics.c:215
+#, c-format
+msgid "%u DSACKs for out of order packets received"
+msgstr "%u DSACK-ი მიღებული დაულაგებელი პაკეტებისთვის"
+
+#: ../statistics.c:216
+#, c-format
+msgid "%u connections reset due to unexpected SYN"
+msgstr "%u შეერთების თავიდან დაწყება მოულოდნელი SYN-ის გამო"
+
+#: ../statistics.c:217
+#, c-format
+msgid "%u connections reset due to unexpected data"
+msgstr "%u შეერთების თავიდან დაწყება მოულოდნელი მონაცემების გამო"
+
+#: ../statistics.c:218
+#, c-format
+msgid "%u connections reset due to early user close"
+msgstr ""
+"%u კავშირი ხელახლა დაიწყო მომხმარებლის მიერ ადრეულ ეტაპზე დახურვის გამო"
+
+#: ../statistics.c:219
+#, c-format
+msgid "%u connections aborted due to memory pressure"
+msgstr "%u კავშირი მეხსიერებაზე დაწოლის გამო შეწყდა"
+
+#: ../statistics.c:220
+#, c-format
+msgid "%u connections aborted due to timeout"
+msgstr "%u შეერთება შეწყდა ვადის ამოწურვის გამო"
+
+#: ../statistics.c:221
+#, c-format
+msgid "%u connections aborted after user close in linger timeout"
+msgstr ""
+"%u გაწყვეტილი შეერთება მომხმარებლის მიერ დაყოვნებული ვადის დახურვის შემდეგ"
+
+#: ../statistics.c:222
+#, c-format
+msgid "%u times unabled to send RST due to no memory"
+msgstr "%u-ჯერ არასაკმარისი მეხსიერების გამო RST-ის გაგზავნის შეუძლებლობა"
+
+#: ../statistics.c:223
+#, c-format
+msgid "TCP ran low on memory %u times"
+msgstr "TCP-ის მეხსიერება არასაკმარისი იყო %u-ჯერ"
+
+#: ../statistics.c:224
+#, c-format
+msgid "%u TCP data loss events"
+msgstr "%u TCP მონაცემების კარგვის მოვლენა"
+
+#: ../statistics.c:225
+#, c-format
+msgid "%u congestion windows recovered without slow start by DSACK"
+msgstr "%u DSACK-ის მიერ ნელი დაწყების გარეშე აღდგენილი გადატვირთვის ფანჯარა"
+
+#: ../statistics.c:227
+#, c-format
+msgid "%u classic Reno fast retransmits failed"
+msgstr "%u კლასიკური Reno სწრაფი გადაგზავნის შეცდომა"
+
+#: ../statistics.c:294
+msgid "enabled"
+msgstr "ჩართულია"
+
+#: ../statistics.c:294
+msgid "disabled"
+msgstr "გამორთულია"
+
+#: ../statistics.c:377
+msgid "error parsing /proc/net/snmp"
+msgstr "/proc/net/snmp-ის დამუშავების შეცდომა"
+
+#: ../statistics.c:390
+msgid "cannot open /proc/net/snmp"
+msgstr "/proc/net/snmp-ის გახსნის შეცდომა"
+
+#: ../lib/activate.c:69
+#, c-format
+msgid "Hardware type `%s' not supported.\n"
+msgstr "აპარატურის ტიპი \"%s\" მხარდაუჭერელია.\n"
+
+#: ../lib/activate.c:73
+#, c-format
+msgid "Cannot change line discipline to `%s'.\n"
+msgstr "ხაზის დისციპლინის \"%s\"-ზე შეცვლა შეუძლებელია.\n"
+
+#: ../lib/af.c:153 ../lib/hw.c:161
+msgid "UNSPEC"
+msgstr "UNSPEC"
+
+#: ../lib/af.c:155
+msgid "UNIX Domain"
+msgstr "UNIX დომენი"
+
+#: ../lib/af.c:158
+msgid "DARPA Internet"
+msgstr "DARPA -ის ინტერნეტი"
+
+#: ../lib/af.c:161
+msgid "IPv6"
+msgstr "IPv6"
+
+#: ../lib/af.c:164 ../lib/hw.c:182
+msgid "AMPR AX.25"
+msgstr "AMPR AX.25"
+
+#: ../lib/af.c:167 ../lib/hw.c:188
+msgid "AMPR NET/ROM"
+msgstr "AMPR NET/ROM"
+
+#: ../lib/af.c:170
+msgid "Novell IPX"
+msgstr "Novell IPX"
+
+#: ../lib/af.c:173
+msgid "Appletalk DDP"
+msgstr "Appletalk DDP"
+
+#: ../lib/af.c:176 ../lib/hw.c:223
+msgid "Econet"
+msgstr "Econet"
+
+#: ../lib/af.c:179
+msgid "CCITT X.25"
+msgstr "CCITT X.25"
+
+#: ../lib/af.c:182 ../lib/hw.c:185
+msgid "AMPR ROSE"
+msgstr "AMPR ROSE"
+
+#: ../lib/af.c:185 ../lib/hw.c:173
+msgid "Ash"
+msgstr "Ash"
+
+#: ../lib/af.c:243
+#, c-format
+msgid "Please don't supply more than one address family.\n"
+msgstr "გთხოვთ, ნუ მიუთითებთ მისამართის ერთზე მეტ ოჯახს\n"
+
+#: ../lib/af.c:304
+#, c-format
+msgid "Too much address family arguments.\n"
+msgstr "მისამართის ოჯახის მეტისმეტად ბევრი არგუმენტი.\n"
+
+#: ../lib/af.c:315
+#, c-format
+msgid "Unknown address family `%s'.\n"
+msgstr "მისამართის უცნობი ოჯახი `%s'.\n"
+
+#: ../lib/arcnet.c:70 ../lib/arcnet.c:85
+#, c-format
+msgid "in_arcnet(%s): invalid arcnet address!\n"
+msgstr "in_arcnet(%s): arcnet -ის მისამართი არასწორია!\n"
+
+#: ../lib/arcnet.c:97
+#, c-format
+msgid "in_arcnet(%s): trailing : ignored!\n"
+msgstr "in_arcnet(%s): მოყოლილი : იგნორირებულია!\n"
+
+#: ../lib/arcnet.c:109
+#, c-format
+msgid "in_arcnet(%s): trailing junk!\n"
+msgstr "in_arcnet(%s): მოყოლილი ნაგავი!\n"
+
+#: ../lib/ash.c:81
+#, c-format
+msgid "Malformed Ash address"
+msgstr "Ash-ის არასწორი მისამართი"
+
+#: ../lib/ax25.c:75 ../lib/ddp.c:50 ../lib/econet.c:52 ../lib/inet.c:244
+#: ../lib/inet.c:259 ../lib/inet6.c:145 ../lib/ipx.c:81 ../lib/netrom.c:78
+#: ../lib/rose.c:71 ../lib/unix.c:56 ../lib/unix.c:76
+msgid "[NONE SET]"
+msgstr "[დაყენებული არაა]"
+
+#: ../lib/ax25.c:97 ../lib/netrom.c:100
+msgid "Invalid callsign"
+msgstr "არასწორი სახმობი სიგნალი"
+
+#: ../lib/ax25.c:110 ../lib/netrom.c:113
+msgid "Callsign too long"
+msgstr "სახმობი სიგნალი ძალიან გრძელია"
+
+#: ../lib/ax25_gr.c:47
+#, c-format
+msgid "AX.25 not configured in this system.\n"
+msgstr "AX.25 ამ სისტემაზე მორგებული არაა.\n"
+
+#: ../lib/ax25_gr.c:50
+#, c-format
+msgid "Kernel AX.25 routing table\n"
+msgstr "ბირთვის AX.25 რაუტინგის ცხრილი\n"
+
+#. xxx
+#: ../lib/ax25_gr.c:51 ../lib/rose_gr.c:55
+#, c-format
+msgid "Destination  Iface    Use\n"
+msgstr "დანიშნულება  ინტერფ    გამოყენ\n"
+
+#: ../lib/ether.c:74 ../lib/ether.c:91
+#, c-format
+msgid "in_ether(%s): invalid ether address!\n"
+msgstr "in_ether(%s): არასწორი ether მისამართი!\n"
+
+#: ../lib/ether.c:105
+#, c-format
+msgid "in_ether(%s): trailing : ignored!\n"
+msgstr "in_ether(%s): მოყოლილი : იგნორირებულია!\n"
+
+#: ../lib/ether.c:117
+#, c-format
+msgid "in_ether(%s): trailing junk!\n"
+msgstr "in_ether(%s): მოყოლილი ნაგავი!\n"
+
+#: ../lib/fddi.c:84 ../lib/fddi.c:99
+#, c-format
+msgid "in_fddi(%s): invalid fddi address!\n"
+msgstr "in_fddi(%s): არასწორი fddi მისამართი!\n"
+
+#: ../lib/fddi.c:111
+#, c-format
+msgid "in_fddi(%s): trailing : ignored!\n"
+msgstr "in_fddi(%s): მოყოლილი : იგნორირებულია!\n"
+
+#: ../lib/fddi.c:123
+#, c-format
+msgid "in_fddi(%s): trailing junk!\n"
+msgstr "in_fddi(%s): მოყოლილი ნაგავი!\n"
+
+#: ../lib/getroute.c:101 ../lib/setroute.c:80
+#, c-format
+msgid "Address family `%s' not supported.\n"
+msgstr "მისამართის ოჯახი `%s' მხარდაჭერილი არაა.\n"
+
+#: ../lib/getroute.c:107 ../lib/setroute.c:84
+#, c-format
+msgid "No routing for address family `%s'.\n"
+msgstr "ამ მისამართის ოჯახს რაუტინგი არ გააჩნია: '%s'.\n"
+
+#: ../lib/hippi.c:84 ../lib/hippi.c:99
+#, c-format
+msgid "in_hippi(%s): invalid hippi address!\n"
+msgstr "in_hippi(%s): არასწორი hippi მისამართი!\n"
+
+#: ../lib/hippi.c:111
+#, c-format
+msgid "in_hippi(%s): trailing : ignored!\n"
+msgstr "in_hippi(%s): მოყოლილი : იგნორირებულია!\n"
+
+#: ../lib/hippi.c:122
+#, c-format
+msgid "in_hippi(%s): trailing junk!\n"
+msgstr "in_hippi(%s): მოყოლილი ნაგავი!\n"
+
+#: ../lib/hw.c:160
+msgid "Local Loopback"
+msgstr "ლოკალური მარყუჟი"
+
+#: ../lib/hw.c:163
+msgid "Serial Line IP"
+msgstr "სერიული ხაზის IP"
+
+#: ../lib/hw.c:164
+msgid "VJ Serial Line IP"
+msgstr "VJ სერიული ხაზის IP"
+
+#: ../lib/hw.c:165
+msgid "6-bit Serial Line IP"
+msgstr "6-ბიტიანი სერიული ხაზი IP"
+
+#: ../lib/hw.c:166
+msgid "VJ 6-bit Serial Line IP"
+msgstr "VJ 6-ბიტიანი სერიული ხაზი IP"
+
+#: ../lib/hw.c:167
+msgid "Adaptive Serial Line IP"
+msgstr "Adaptive Serial Line IP"
+
+#: ../lib/hw.c:170
+msgid "Ethernet"
+msgstr "Ethernet"
+
+#: ../lib/hw.c:176
+msgid "Fiber Distributed Data Interface"
+msgstr "Fiber Distributed Data Interface"
+
+#: ../lib/hw.c:179
+msgid "HIPPI"
+msgstr "HIPPI"
+
+#: ../lib/hw.c:191
+msgid "generic X.25"
+msgstr "ზოგადი X.25"
+
+#: ../lib/hw.c:194
+msgid "IPIP Tunnel"
+msgstr "IPIP გვირაბი"
+
+#: ../lib/hw.c:197
+msgid "Point-to-Point Protocol"
+msgstr "წერტილიდან-წერტილამდე პროტოკოლი"
+
+#: ../lib/hw.c:200
+msgid "(Cisco)-HDLC"
+msgstr "(Cisco)-HDLC"
+
+#: ../lib/hw.c:201
+msgid "LAPB"
+msgstr "LAPB"
+
+#: ../lib/hw.c:204
+msgid "ARCnet"
+msgstr "ARCnet"
+
+#: ../lib/hw.c:207
+msgid "Frame Relay DLCI"
+msgstr "Frame Relay DLCI"
+
+#: ../lib/hw.c:208
+msgid "Frame Relay Access Device"
+msgstr "Frame Relay წვდომის მოწყობილობა"
+
+#: ../lib/hw.c:211
+msgid "IPv6-in-IPv4"
+msgstr "IPv6-ი-IPv4-ში"
+
+#: ../lib/hw.c:214
+msgid "IrLAP"
+msgstr "IrLAP"
+
+#: ../lib/hw.c:217
+msgid "16/4 Mbps Token Ring"
+msgstr "16/4 Mbps Token Ring"
+
+#: ../lib/hw.c:219
+msgid "16/4 Mbps Token Ring (New)"
+msgstr "16/4 Mbps Token Ring (ახალი)"
+
+#: ../lib/hw.c:226
+msgid "Generic EUI-64"
+msgstr "ზოგადი EUI-64"
+
+#: ../lib/inet.c:153 ../lib/inet6.c:94
+#, c-format
+msgid "rresolve: unsupport address family %d !\n"
+msgstr "rresolve: მხარდაუჭერელი მისამართის ოჯახი %d !\n"
+
+#: ../lib/inet6.c:147
+msgid "[UNKNOWN]"
+msgstr "[უცნობი]"
+
+#: ../lib/inet6_gr.c:71
+#, c-format
+msgid "INET6 (IPv6) not configured in this system.\n"
+msgstr "INET6 (IPv6) ამ სისტემაზე მორგებული არაა.\n"
+
+#: ../lib/inet6_gr.c:76
+#, c-format
+msgid "Kernel IPv6 routing cache\n"
+msgstr "ბირთვის IPv6 რაუტინგის ქეში\n"
+
+#: ../lib/inet6_gr.c:78
+#, c-format
+msgid "Kernel IPv6 routing table\n"
+msgstr "ბირთვის IPv6 რაუტინგის ცხრილი\n"
+
+#: ../lib/inet6_gr.c:80
+#, c-format
+msgid ""
+"Destination                    Next Hop                   Flag Met Ref Use "
+"If\n"
+msgstr ""
+"დანიშნულება                    შემდეგი ჰოპი                   ალამი მეტ "
+"მიბმა გამოყ. ინტ\n"
+
+#: ../lib/inet6_gr.c:174
+#, c-format
+msgid "Kernel IPv6 Neighbour Cache\n"
+msgstr "ბირთვის IPv6 მეზობლების ქეში\n"
+
+#: ../lib/inet6_gr.c:177
+#, c-format
+msgid ""
+"Neighbour                                   HW Address        Iface    Flags "
+"Ref State\n"
+msgstr ""
+"მეზობელი                                   აპარ. მისამ.        იფეისი    "
+"ალმები მიბმ. მდგომ.\n"
+
+#: ../lib/inet6_gr.c:181
+#, c-format
+msgid ""
+"Neighbour                                   HW Address        Iface    Flags "
+"Ref State            Stale(sec) Delete(sec)\n"
+msgstr ""
+"მეზობელი                                   აპარ. მისამ.        იფეისი    "
+"ალმები მიბმის მდგომ            გაჭედ(წმ) წაშლა(წმ)\n"
+
+#: ../lib/inet6_sr.c:46
+#, c-format
+msgid "Usage: inet6_route [-vF] del Target\n"
+msgstr "გამოყენება: inet6_route [-vF] del დანიშნულება\n"
+
+#: ../lib/inet6_sr.c:47
+#, c-format
+msgid "       inet6_route [-vF] add Target [gw Gw] [metric M] [[dev] If]\n"
+msgstr ""
+"       inet6_route [-vF] add დანიშნულება [gw ნაგ. რაუტერი] [metric M] [[dev] "
+"ინტერფეისი]\n"
+
+#: ../lib/inet6_sr.c:48
+#, c-format
+msgid "       inet6_route [-FC] flush      NOT supported\n"
+msgstr "       inet6_route [-FC] flush      მხარდაუჭერელაი\n"
+
+#: ../lib/inet6_sr.c:188
+#, c-format
+msgid "Flushing `inet6' routing table not supported\n"
+msgstr "ცხრილის, `inet6', რაუტინგის ცხრილის გაწმენდა მხარდაუჭერელია\n"
+
+#: ../lib/inet_gr.c:50 ../lib/inet_gr.c:220
+#, c-format
+msgid "INET (IPv4) not configured in this system.\n"
+msgstr "INET (IPv4) ამ სისტემაზე მორგებული არაა.\n"
+
+#: ../lib/inet_gr.c:53
+#, c-format
+msgid "Kernel IP routing table\n"
+msgstr "ბირთვის IP რაუტინგის ცხრილი\n"
+
+#: ../lib/inet_gr.c:56
+#, c-format
+msgid ""
+"Destination     Gateway         Genmask         Flags Metric Ref    Use "
+"Iface\n"
+msgstr ""
+"დანიშნ     ნაგ. რაუტერი         ნიღაბი         ალმები მეტრიკა მიბმ    გამოყ "
+"იფეისი\n"
+
+#: ../lib/inet_gr.c:59
+#, c-format
+msgid ""
+"Destination     Gateway         Genmask         Flags   MSS Window  irtt "
+"Iface\n"
+msgstr ""
+"დანიშნ     ნაგ. რაუტერი         ნიღაბი         ალმები   MSS ფანჯარა  irtt "
+"იფეისი\n"
+
+#: ../lib/inet_gr.c:62
+#, c-format
+msgid ""
+"Destination     Gateway         Genmask         Flags Metric Ref    Use "
+"Iface    MSS   Window irtt\n"
+msgstr ""
+"დანიშნ     ნაგ. რაუტერი         ნიღაბი         ალმები მეტრიკა მიბმ    გამოყ. "
+"იფეისი    MSS   ფანჯარა irtt\n"
+
+#: ../lib/inet_gr.c:237
+#, c-format
+msgid "Kernel IP routing cache\n"
+msgstr "ბირთვის IP რაუტინგის ქეში\n"
+
+#: ../lib/inet_gr.c:258
+#, c-format
+msgid ""
+"Source          Destination     Gateway         Flags Metric Ref    Use "
+"Iface\n"
+msgstr ""
+"წყარო          დანიშნ     ნაგ. რაუტერი         ალმები მეტრიკა მიბმ    გამოყ. "
+"იფეისი\n"
+
+#: ../lib/inet_gr.c:261
+#, c-format
+msgid ""
+"Source          Destination     Gateway         Flags   MSS Window  irtt "
+"Iface\n"
+msgstr ""
+"წყარო          დანიშნულება     ნაგ. რაუტერი         ალმები   MSS ფანჯარა  "
+"irtt იფეისი\n"
+
+#: ../lib/inet_gr.c:266
+#, c-format
+msgid ""
+"Source          Destination     Gateway         Flags Metric Ref    Use "
+"Iface    MSS   Window irtt  HH  Arp\n"
+msgstr ""
+"წყარო          დანიშნულება     ნაგ. რაუტერი         ალმები მეტრიკა მიბმა    "
+"გამოყ. იფეისი    MSS   ფანჯარა irtt  HH  Arp\n"
+
+#: ../lib/inet_gr.c:290
+#, c-format
+msgid ""
+"Source          Destination     Gateway         Flags Metric Ref    Use "
+"Iface    MSS   Window irtt  TOS HHRef HHUptod     SpecDst\n"
+msgstr ""
+"წყარო          დანიშნულება     ნაგ. რაუტერი         ალმები მეტრიკა მიბმ    "
+"გამოყ. იფეისი    MSS   ფანჯარა irtt  TOS HHRef HHUptod     SpecDst\n"
+
+#: ../lib/inet_sr.c:51
+#, c-format
+msgid ""
+"Usage: inet_route [-vF] del {-host|-net} Target[/prefix] [gw Gw] [metric M] "
+"[[dev] If]\n"
+msgstr ""
+"გამოყენება: inet_route [-vF] del {-host|-net} სამიზნე[/პრეფიქსი] [gw Gw] "
+"[metric M] [[dev] If]\n"
+
+#: ../lib/inet_sr.c:52
+#, c-format
+msgid ""
+"       inet_route [-vF] add {-host|-net} Target[/prefix] [gw Gw] [metric M]\n"
+msgstr ""
+"       inet_route [-vF] add {-host|-net} სამიზნე[/პრეფიქსი] [gw Gw] [metric "
+"M]\n"
+
+#: ../lib/inet_sr.c:53
+#, c-format
+msgid ""
+"                              [netmask N] [mss Mss] [window W] [irtt I]\n"
+msgstr ""
+"                              [netmask N] [mss Mss] [window W] [irtt I]\n"
+
+#: ../lib/inet_sr.c:54
+#, c-format
+msgid "                              [mod] [dyn] [reinstate] [[dev] If]\n"
+msgstr "                              [mod] [dyn] [reinstate] [[dev] If]\n"
+
+#: ../lib/inet_sr.c:55
+#, c-format
+msgid ""
+"       inet_route [-vF] add {-host|-net} Target[/prefix] [metric M] reject\n"
+msgstr ""
+"       inet_route [-vF] add {-host|-net} სამიზნე/პრეფიქსი] [metric M] "
+"reject\n"
+
+#: ../lib/inet_sr.c:56
+#, c-format
+msgid "       inet_route [-FC] flush      NOT supported\n"
+msgstr "       inet_route [-FC] flush      მხარდაუჭერელია\n"
+
+#: ../lib/inet_sr.c:158
+#, c-format
+msgid "route: %s: cannot use a NETWORK as gateway!\n"
+msgstr "route: %s: ქსელს მისამართს ნაგულისხმებ რაუტერად ვერ გამოვიყენებ!\n"
+
+#: ../lib/inet_sr.c:174
+#, c-format
+msgid "route: Invalid MSS/MTU.\n"
+msgstr "route: არასწორი MSS/MTU.\n"
+
+#: ../lib/inet_sr.c:187
+#, c-format
+msgid "route: Invalid window.\n"
+msgstr "route: არასწორი ფანჯარა.\n"
+
+#: ../lib/inet_sr.c:203
+#, c-format
+msgid "route: Invalid initial rtt.\n"
+msgstr "route: არასწორი საწყისი rtt.\n"
+
+#: ../lib/inet_sr.c:261
+#, c-format
+msgid "route: netmask %.8x doesn't make sense with host route\n"
+msgstr "route: ქსელის ნიღაბს %.8x ჰოსტის რაუტით აზრი არ აქვს.\n"
+
+#: ../lib/inet_sr.c:265
+#, c-format
+msgid "route: bogus netmask %s\n"
+msgstr "route: ყალბი ქსელური ნიღაბი %s\n"
+
+#: ../lib/inet_sr.c:270
+#, c-format
+msgid "route: netmask doesn't match route address\n"
+msgstr "route: ქსელის ნიღაბი რაუტის მისამართს არ ემთხვევა\n"
+
+#: ../lib/inet_sr.c:306
+#, c-format
+msgid "Flushing `inet' routing table not supported\n"
+msgstr "რაუტინგის `inet' ცხრილის გაწმენდა მხარდაუჭერელია\n"
+
+#: ../lib/inet_sr.c:310
+#, c-format
+msgid "Modifying `inet' routing cache not supported\n"
+msgstr "'inet' რაუტინგის ქეშის ჩასწორება მხარდაუჭერელია\n"
+
+#: ../lib/ipx_gr.c:52
+#, c-format
+msgid "IPX not configured in this system.\n"
+msgstr "IPX ამ სისტემაზე მორგებული არაა.\n"
+
+#: ../lib/ipx_gr.c:56
+#, c-format
+msgid "Kernel IPX routing table\n"
+msgstr "ბირთვის IPX რაუტინგის ცხრილი\n"
+
+#. xxx
+#: ../lib/ipx_gr.c:57
+#, c-format
+msgid "Destination               Router Net                Router Node\n"
+msgstr ""
+"დანიშნულება               რაუტერის ქსელი                რაუტერის კვანძი\n"
+
+#: ../lib/ipx_sr.c:33
+#, c-format
+msgid "IPX: this needs to be written\n"
+msgstr "IPX: საჭიროა ამის ჩაწერა\n"
+
+#: ../lib/masq_info.c:198
+#, c-format
+msgid "IP masquerading entries\n"
+msgstr "IP-ის მასკარადირების ჩანაწერები\n"
+
+#: ../lib/masq_info.c:201
+#, c-format
+msgid "prot   expire source               destination          ports\n"
+msgstr "პროტ   ვადა წყარო               დანიშნულება          პორტები\n"
+
+#: ../lib/masq_info.c:204
+#, c-format
+msgid ""
+"prot   expire    initseq delta prevd source               "
+"destination          ports\n"
+msgstr ""
+"პროტ   ვადა    თავდმიმდ დელტა prevd წყარო               დანიშნულება          "
+"პორტები\n"
+
+#: ../lib/netrom_gr.c:48
+#, c-format
+msgid "NET/ROM not configured in this system.\n"
+msgstr "NET/ROM ამ სისტემაზე მორგებული არაა.\n"
+
+#: ../lib/netrom_gr.c:51
+#, c-format
+msgid "Kernel NET/ROM routing table\n"
+msgstr "ბირთვის NET/ROM რაუტინგის ცხრილი\n"
+
+#: ../lib/netrom_gr.c:52
+#, c-format
+msgid "Destination  Mnemonic  Quality  Neighbour  Iface\n"
+msgstr "დანიშნულება  მნემონიკა  ხარისხი  მეზობელი  იფეისი\n"
+
+#: ../lib/netrom_sr.c:34
+#, c-format
+msgid "netrom usage\n"
+msgstr "netrom -ის გამოყენება\n"
+
+#: ../lib/netrom_sr.c:44
+#, c-format
+msgid "NET/ROM: this needs to be written\n"
+msgstr "NET/ROM: საჭიროა ამის ჩაწერა\n"
+
+#: ../lib/ppp.c:44
+#, c-format
+msgid "You cannot start PPP with this program.\n"
+msgstr "ამ პროგრამასთან ერთად PPP-ს ვერ გაუშვებთ.\n"
+
+#: ../lib/ppp_ac.c:38
+#, c-format
+msgid "Sorry, use pppd!\n"
+msgstr "უკაცრავად, გამოიყენეთ pppd!\n"
+
+#: ../lib/rose.c:87
+msgid "Node address must be ten digits"
+msgstr "კვანძის მისამართი ათი ციფრი უნდა იყოს"
+
+#: ../lib/rose_gr.c:51
+#, c-format
+msgid "ROSE not configured in this system.\n"
+msgstr "ამ სისტემაზე ROSE მორგებული არაა.\n"
+
+#: ../lib/rose_gr.c:54
+#, c-format
+msgid "Kernel ROSE routing table\n"
+msgstr "ბირთვის ROSE რაუტინგის ცხრილი\n"
+
+#: ../lib/tr.c:86 ../lib/tr.c:101
+#, c-format
+msgid "in_tr(%s): invalid token ring address!\n"
+msgstr "in_tr(%s): token ring -ის არასწორი მისამართი!\n"
+
+#: ../lib/tr.c:113
+#, c-format
+msgid "in_tr(%s): trailing : ignored!\n"
+msgstr "in_tr(%s): მოყოლილი : იგნორირებულია!\n"
+
+#: ../lib/tr.c:125
+#, c-format
+msgid "in_tr(%s): trailing junk!\n"
+msgstr "in_tr(%s): მოყოლილი ნაგავი!\n"
+
+#: ../lib/interface.c:174
+#, c-format
+msgid "warning: no inet socket available: %s\n"
+msgstr "გაფრთხილება: inet სოკეტი ხელმიუწვდომელია: %s\n"
+
+#: ../lib/interface.c:323
+#, c-format
+msgid "Warning: cannot open %s (%s). Limited output.\n"
+msgstr "გაფრთხილება: %s (%s)-ის გახსნის შეცდოა. გამოტანა შეზღუდულია.\n"
+
+#. Give better error message for this case.
+#: ../lib/interface.c:570
+msgid "Device not found"
+msgstr "მოწყობილობა ნაპოვნი არაა"
+
+#: ../lib/interface.c:574
+#, c-format
+msgid "%s: error fetching interface information: %s\n"
+msgstr "%s: ინტერფეისის ინფორმაციის გამოთხოვის შეცდომა: %s\n"
+
+#: ../lib/interface.c:607
+msgid "     - no statistics available -"
+msgstr "     - სტატისტიკა ხელმიუწვდომელია -"
+
+#: ../lib/interface.c:611
+#, c-format
+msgid "[NO FLAGS]"
+msgstr "[ალმების გარეშე]"
+
+#: ../lib/interface.c:687
+#, c-format
+msgid "%-9.9s Link encap:%s  "
+msgstr "%-9.9s ბმულის ენკაპ:%s  "
+
+#: ../lib/interface.c:692
+#, c-format
+msgid "HWaddr %s  "
+msgstr "აპარ.მისამ.%s  "
+
+#: ../lib/interface.c:695
+#, c-format
+msgid "Media:%s"
+msgstr "მედია:%s"
+
+#: ../lib/interface.c:697
+#, c-format
+msgid "(auto)"
+msgstr "(ავტო)"
+
+#: ../lib/interface.c:704
+#, c-format
+msgid "          %s addr:%s "
+msgstr "          %s მისამ:%s "
+
+#: ../lib/interface.c:707
+#, c-format
+msgid " P-t-P:%s "
+msgstr " წ-წ:%s "
+
+#: ../lib/interface.c:710
+#, c-format
+msgid " Bcast:%s "
+msgstr " Bcast:%s "
+
+#: ../lib/interface.c:712
+#, c-format
+msgid " Mask:%s\n"
+msgstr " ნიღაბი:%s\n"
+
+#: ../lib/interface.c:729
+#, c-format
+msgid "          inet6 addr: %s/%d"
+msgstr "          inet6 მისამართი: %s/%d"
+
+#: ../lib/interface.c:731
+#, c-format
+msgid " Scope:"
+msgstr " ფარგლები:"
+
+#: ../lib/interface.c:734
+#, c-format
+msgid "Global"
+msgstr "გლობალური"
+
+#: ../lib/interface.c:737
+#, c-format
+msgid "Link"
+msgstr "ბმული"
+
+#: ../lib/interface.c:740
+#, c-format
+msgid "Site"
+msgstr "საიტი"
+
+#: ../lib/interface.c:743
+#, c-format
+msgid "Compat"
+msgstr "თავსებად"
+
+#: ../lib/interface.c:746
+#, c-format
+msgid "Host"
+msgstr "ჰოსტი"
+
+#: ../lib/interface.c:749
+#, c-format
+msgid "Unknown"
+msgstr "უცნობი"
+
+#: ../lib/interface.c:764
+#, c-format
+msgid "          IPX/Ethernet II addr:%s\n"
+msgstr "          IPX/Ethernet II მისამ:%s\n"
+
+#: ../lib/interface.c:767
+#, c-format
+msgid "          IPX/Ethernet SNAP addr:%s\n"
+msgstr "          IPX/Ethernet SNAP მისამ:%s\n"
+
+#: ../lib/interface.c:770
+#, c-format
+msgid "          IPX/Ethernet 802.2 addr:%s\n"
+msgstr "          IPX/Ethernet 802.2 მისამ:%s\n"
+
+#: ../lib/interface.c:773
+#, c-format
+msgid "          IPX/Ethernet 802.3 addr:%s\n"
+msgstr "          IPX/Ethernet 802.3 მისამ:%s\n"
+
+#: ../lib/interface.c:783
+#, c-format
+msgid "          EtherTalk Phase 2 addr:%s\n"
+msgstr "          EtherTalk მეორე ფაზის მისამ:%s\n"
+
+#: ../lib/interface.c:792
+#, c-format
+msgid "          econet addr:%s\n"
+msgstr "          econet -ის მისამ:%s\n"
+
+#: ../lib/interface.c:799
+#, c-format
+msgid "[NO FLAGS] "
+msgstr "[ალმების გარეშე] "
+
+#: ../lib/interface.c:801
+#, c-format
+msgid "UP "
+msgstr "UP "
+
+#: ../lib/interface.c:803
+#, c-format
+msgid "BROADCAST "
+msgstr "BROADCAST "
+
+#: ../lib/interface.c:805
+#, c-format
+msgid "DEBUG "
+msgstr "DEBUG "
+
+#: ../lib/interface.c:807
+#, c-format
+msgid "LOOPBACK "
+msgstr "LOOPBACK "
+
+#: ../lib/interface.c:809
+#, c-format
+msgid "POINTOPOINT "
+msgstr "POINTOPOINT "
+
+#: ../lib/interface.c:811
+#, c-format
+msgid "NOTRAILERS "
+msgstr "NOTRAILERS "
+
+#: ../lib/interface.c:813
+#, c-format
+msgid "RUNNING "
+msgstr "RUNNING "
+
+#: ../lib/interface.c:815
+#, c-format
+msgid "NOARP "
+msgstr "NOARP "
+
+#: ../lib/interface.c:817
+#, c-format
+msgid "PROMISC "
+msgstr "PROMISC "
+
+#: ../lib/interface.c:819
+#, c-format
+msgid "ALLMULTI "
+msgstr "ALLMULTI "
+
+#: ../lib/interface.c:821
+#, c-format
+msgid "SLAVE "
+msgstr "SLAVE "
+
+#: ../lib/interface.c:823
+#, c-format
+msgid "MASTER "
+msgstr "MASTER "
+
+#: ../lib/interface.c:825
+#, c-format
+msgid "MULTICAST "
+msgstr "MULTICAST "
+
+#: ../lib/interface.c:828
+#, c-format
+msgid "DYNAMIC "
+msgstr "DYNAMIC "
+
+#. DONT FORGET TO ADD THE FLAGS IN ife_print_short
+#: ../lib/interface.c:831
+#, c-format
+msgid " MTU:%d  Metric:%d"
+msgstr " MTU:%d  მეტრიკა:%d"
+
+#: ../lib/interface.c:835
+#, c-format
+msgid "  Outfill:%d  Keepalive:%d"
+msgstr "  Outfill:%d  Keepalive:%d"
+
+#: ../lib/interface.c:849
+#, c-format
+msgid "RX packets:%llu errors:%lu dropped:%lu overruns:%lu frame:%lu\n"
+msgstr ""
+"RX პაკეტები:%llu შეცდომები:%lu გადაყრილები:%lu გადავსებები:%lu კადრი:%lu\n"
+
+#: ../lib/interface.c:854
+#, c-format
+msgid "             compressed:%lu\n"
+msgstr "             შეკუმშული:%lu\n"
+
+#: ../lib/interface.c:894
+#, c-format
+msgid "TX packets:%llu errors:%lu dropped:%lu overruns:%lu carrier:%lu\n"
+msgstr ""
+"TX პაკეტები:%llu შეცდომები:%lu გადაყრილი:%lu გადავსებები:%lu მატარებელი:%lu\n"
+
+#: ../lib/interface.c:898
+#, c-format
+msgid "          collisions:%lu "
+msgstr "          კოლიზიები:%lu "
+
+#: ../lib/interface.c:900
+#, c-format
+msgid "compressed:%lu "
+msgstr "შეკუმშული:%lu "
+
+#: ../lib/interface.c:902
+#, c-format
+msgid "txqueuelen:%d "
+msgstr "გადაც.რიგ. სიგრძე:%d "
+
+#: ../lib/interface.c:904
+#, c-format
+msgid "RX bytes:%llu (%lu.%lu %s)  TX bytes:%llu (%lu.%lu %s)\n"
+msgstr "RX ბაიტი:%llu (%lu.%lu %s)  TX ბაიტი:%llu (%lu.%lu %s)\n"
+
+#: ../lib/interface.c:915
+#, c-format
+msgid "Interrupt:%d "
+msgstr "წყვეტა:%d "
+
+#. Only print devices using it for
+#. I/O maps
+#: ../lib/interface.c:918
+#, c-format
+msgid "Base address:0x%x "
+msgstr "საბაზისო მისამართი:0x%x "
+
+#: ../lib/interface.c:920
+#, c-format
+msgid "Memory:%lx-%lx "
+msgstr "მეხსიერება:%lx-%lx "
+
+#: ../lib/interface.c:923
+#, c-format
+msgid "DMA chan:%x "
+msgstr "DMA არხი:%x "
+
+#: ../lib/sockets.c:63
+#, c-format
+msgid "No usable address families found.\n"
+msgstr "გამოყენებადი მისამართის ოჯახების გარეშე.\n"
+
+#: ../lib/util-ank.c:229
+#, c-format
+msgid "ip: %s is invalid inet address\n"
+msgstr "ip: %s არასწორი inet მისამართია\n"
+
+#: ../lib/util-ank.c:238
+#, c-format
+msgid "ip: %s is invalid inet prefix\n"
+msgstr "ip: %s არასწორი inet პრეფქსია\n"
+
+#: ../lib/util-ank.c:248
+#, c-format
+msgid "ip: %s is invalid IPv4 address\n"
+msgstr "ip: %s არასწორი IPv4 პრეფიქსია\n"
+
+#: ../lib/util-ank.c:256
+#, c-format
+msgid "ip: argument is wrong: %s\n"
+msgstr "ip: არასწორი არგუმენტი: %s\n"
+
+#: ../ipmaddr.c:61
+#, c-format
+msgid "Usage: ipmaddr [ add | del ] MULTIADDR dev STRING\n"
+msgstr "გამოყენება: ipmaddr [ add | del ] MULTIADDR dev სტრიქონი\n"
+
+#: ../ipmaddr.c:62
+#, c-format
+msgid "       ipmaddr show [ dev STRING ] [ ipv4 | ipv6 | link | all ]\n"
+msgstr "       ipmaddr show [ dev სტრიქონი ] [ ipv4 | ipv6 | link | all ]\n"
+
+#: ../ipmaddr.c:63
+#, c-format
+msgid "       ipmaddr -V | -version\n"
+msgstr "       ipmaddr -V | -version\n"
+
+#: ../ipmaddr.c:263
+#, c-format
+msgid "family %d "
+msgstr "ოჯახი %d "
+
+#: ../ipmaddr.c:272
+#, c-format
+msgid " users %d"
+msgstr " მომხმარებლები %d"
+
+#: ../ipmaddr.c:358
+msgid "Cannot create socket"
+msgstr "სოკეტის შექმნის შეცდომა"
+
+#: ../slattach.c:180
+#, c-format
+msgid "slattach: /dev/%s already locked!\n"
+msgstr "slattach: /dev/%s მოწყობილობა უკვე დაბლოკილია!\n"
+
+#: ../slattach.c:186
+#, c-format
+msgid "slattach: tty_lock: (%s): %s\n"
+msgstr "slattach: tty_lock: (%s): %s\n"
+
+#: ../slattach.c:192
+#, c-format
+msgid "slattach: cannot write PID file\n"
+msgstr "slattach: PID ფაილის ჩაწერის შეცდომა\n"
+
+#: ../slattach.c:202
+#, c-format
+msgid "slattach: tty_lock: UUCP user %s unknown!\n"
+msgstr "slattach: tty_lock: UUCP მომხმარებელი %s უცნობია!\n"
+
+#: ../slattach.c:430
+#, c-format
+msgid "slattach: tty_hangup(DROP): %s\n"
+msgstr "slattach: tty_hangup(DROP): %s\n"
+
+#: ../slattach.c:437
+#, c-format
+msgid "slattach: tty_hangup(RAISE): %s\n"
+msgstr "slattach: tty_hangup(RAISE): %s\n"
+
+#: ../slattach.c:468
+#, c-format
+msgid "slattach: tty name too long\n"
+msgstr "slattach: tty -ის სახელი ძალიან გრძელია\n"
+
+#: ../slattach.c:498
+#, c-format
+msgid "slattach: tty_open: cannot get current state!\n"
+msgstr "slattach: tty_open: მიმდინარე მდგომარეობის მიღების შეცდომა!\n"
+
+#: ../slattach.c:505
+#, c-format
+msgid "slattach: tty_open: cannot get current line disc!\n"
+msgstr "slattach: tty_open: მიმდინარე ხაზის დისკის მიღების შეცდომა!\n"
+
+#: ../slattach.c:513
+#, c-format
+msgid "slattach: tty_open: cannot set RAW mode!\n"
+msgstr "slattach: tty_open: RAW მოდელის დაყენების შეცდომა!\n"
+
+#: ../slattach.c:520
+#, c-format
+msgid "slattach: tty_open: cannot set %s bps!\n"
+msgstr "slattach: tty_open: %s ბ/წმ-ის დაყენება შეუძლებელია!\n"
+
+#: ../slattach.c:530
+#, c-format
+msgid "slattach: tty_open: cannot set 8N1 mode!\n"
+msgstr "slattach: tty_open: 8N1 მოდელის დაყენების შეცდომა!\n"
+
+#: ../slattach.c:672
+#, c-format
+msgid "slattach: setvbuf(stdout,0,_IOLBF,0) : %s\n"
+msgstr "slattach: setvbuf(stdout,0,_IOLBF,0) : %s\n"
+
+#: ../slattach.c:704
+#, c-format
+msgid "%s started"
+msgstr "%s გაეშვა"
+
+#: ../slattach.c:705
+#, c-format
+msgid " on %s"
+msgstr " %s-ზე"
+
+#: ../slattach.c:706
+#, c-format
+msgid " interface %s\n"
+msgstr " ინტერფეისი %s\n"
