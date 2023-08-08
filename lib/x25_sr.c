@@ -13,11 +13,11 @@
  */
 #include "config.h"
 
-#if HAVE_AFX25
+#include <sys/socket.h>
+#if AF_X25
 #include <asm/types.h>
 #include <sys/param.h>
 #include <sys/types.h>
-#include <sys/socket.h>
 #include <sys/ioctl.h>
 #include <linux/x25.h>
 #include <ctype.h>
@@ -148,4 +148,4 @@ int X25_rinput(int action, int options, char **args)
 
   return(X25_setroute(action, options, args));
 }
-#endif	/* HAVE_AFX25 */
+#endif	/* AF_X25 */

@@ -191,7 +191,7 @@ FILE *procinfo;
     fclose(procinfo);					\
   }
 
-#if HAVE_AFINET6
+#if AF_INET6
 #define INFO_GUTS2(file,proc,prot)			\
   lnr = 0;						\
   procinfo = proc_fopen((file));		       	\
@@ -501,7 +501,7 @@ static void prg_cache_load(void)
 			 " will not be shown, you would have to be root to see it all.)\n"));
 }
 
-#if HAVE_AFNETROM
+#if AF_NETROM
 static const char *netrom_state[] =
 {
     N_("LISTENING"),
@@ -555,7 +555,7 @@ static int netrom_info(void)
 }
 #endif
 
-#if HAVE_AFROSE
+#if AF_ROSE
 static const char * const rose_state[] =
 {
     N_("LISTENING"),
@@ -619,7 +619,7 @@ enum {
     TCP_CLOSING			/* now a valid state */
 };
 
-#if HAVE_AFINET || HAVE_AFINET6
+#if AF_INET || AF_INET6
 
 static const char *tcp_state[] =
 {
@@ -663,7 +663,7 @@ static void igmp_do_one(int lnr, const char *line,const char *prot)
     char mcast_addr[128];
     struct sockaddr_storage sas;
     struct sockaddr_in *sin = (struct sockaddr_in *)&sas;
-#if HAVE_AFINET6
+#if AF_INET6
     char addr6[INET6_ADDRSTRLEN];
     struct in6_addr in6;
     extern struct aftype inet6_aftype;
@@ -693,7 +693,7 @@ static void igmp_do_one(int lnr, const char *line,const char *prot)
     }
 
     if (igmp6_flag) {    /* IPV6 */
-#if HAVE_AFINET6
+#if AF_INET6
 	num = sscanf( line, "%d %15s %64[0-9A-Fa-f] %d", &idx, device, mcast_addr, &refcnt );
 	if (num == 4) {
 	    /* Demangle what the kernel gives us */
@@ -722,7 +722,7 @@ static void igmp_do_one(int lnr, const char *line,const char *prot)
 	printf("%-15s %-6d %s\n", device, refcnt, mcast_addr);
 #endif
     } else {    /* IPV4 */
-#if HAVE_AFINET
+#if AF_INET
 	if (line[0] != '\t') {
 	    if (idx_flag) {
 		if ((num = sscanf(line, "%d\t%15c", &idx, device)) < 2) {
@@ -765,7 +765,7 @@ static void igmp_do_one(int lnr, const char *line,const char *prot)
     }    /* IPV4 */
 }
 
-#if HAVE_AFX25
+#if AF_X25
 static int x25_info(void)
 {
        FILE *f=proc_fopen(_PATH_PROCNET_X25);
@@ -837,7 +837,7 @@ static const char *sctp_socket_state_str(int state)
 static const struct aftype *process_sctp_addr_str(const char *addr_str, struct sockaddr_storage *sas)
 {
     if (strchr(addr_str,':')) {
-#if HAVE_AFINET6
+#if AF_INET6
 	extern struct aftype inet6_aftype;
 	/* Demangle what the kernel gives us */
 	struct in6_addr in6;
@@ -1122,7 +1122,7 @@ static void tcp_do_one(int lnr, const char *line, const char *prot)
     struct sockaddr_storage localsas, remsas;
     struct sockaddr_in *localaddr = (struct sockaddr_in *)&localsas;
     struct sockaddr_in *remaddr = (struct sockaddr_in *)&remsas;
-#if HAVE_AFINET6
+#if AF_INET6
     char addr6[INET6_ADDRSTRLEN];
     struct in6_addr in6;
     extern struct aftype inet6_aftype;
@@ -1146,7 +1146,7 @@ static void tcp_do_one(int lnr, const char *line, const char *prot)
       return;
 
     if (strlen(local_addr) > 8) {
-#if HAVE_AFINET6
+#if AF_INET6
 	/* Demangle what the kernel gives us */
 	sscanf(local_addr, "%08X%08X%08X%08X",
 	       &in6.s6_addr32[0], &in6.s6_addr32[1],
@@ -1226,7 +1226,7 @@ static int notnull(const struct sockaddr_storage *sas)
 {
     const struct sockaddr_in *sin = (const struct sockaddr_in *)sas;
 
-#if HAVE_AFINET6
+#if AF_INET6
     const struct sockaddr_in6 *sin6 = (const struct sockaddr_in6 *)sas;
 
     if (sin6->sin6_family == AF_INET6) {
@@ -1248,7 +1248,7 @@ static void udp_do_one(int lnr, const char *line,const char *prot)
     struct sockaddr_storage localsas, remsas;
     struct sockaddr_in *localaddr = (struct sockaddr_in *)&localsas;
     struct sockaddr_in *remaddr = (struct sockaddr_in *)&remsas;
-#if HAVE_AFINET6
+#if AF_INET6
     char addr6[INET6_ADDRSTRLEN];
     struct in6_addr in6;
     extern struct aftype inet6_aftype;
@@ -1271,7 +1271,7 @@ static void udp_do_one(int lnr, const char *line,const char *prot)
     }
 
     if (strlen(local_addr) > 8) {
-#if HAVE_AFINET6
+#if AF_INET6
 	sscanf(local_addr, "%08X%08X%08X%08X",
 	       &in6.s6_addr32[0], &in6.s6_addr32[1],
 	       &in6.s6_addr32[2], &in6.s6_addr32[3]);
@@ -1362,7 +1362,7 @@ static void raw_do_one(int lnr, const char *line,const char *prot)
     struct sockaddr_storage localsas, remsas;
     struct sockaddr_in *localaddr = (struct sockaddr_in *)&localsas;
     struct sockaddr_in *remaddr = (struct sockaddr_in *)&remsas;
-#if HAVE_AFINET6
+#if AF_INET6
     char addr6[INET6_ADDRSTRLEN];
     struct in6_addr in6;
     extern struct aftype inet6_aftype;
@@ -1384,7 +1384,7 @@ static void raw_do_one(int lnr, const char *line,const char *prot)
     }
 
     if (strlen(local_addr) > 8) {
-#if HAVE_AFINET6
+#if AF_INET6
 	sscanf(local_addr, "%08X%08X%08X%08X",
 	       &in6.s6_addr32[0], &in6.s6_addr32[1],
            &in6.s6_addr32[2], &in6.s6_addr32[3]);
@@ -1450,7 +1450,7 @@ static int raw_info(void)
 #endif
 
 
-#if HAVE_AFUNIX
+#if AF_UNIX
 
 #define HAS_INODE 1
 
@@ -1604,7 +1604,7 @@ static int unix_info(void)
 #endif
 
 
-#if HAVE_AFAX25
+#if AF_AX25
 static int ax25_info(void)
 {
     FILE *f;
@@ -1699,7 +1699,7 @@ static int ax25_info(void)
 #endif
 
 
-#if HAVE_AFIPX
+#if AF_IPX
 static int ipx_info(void)
 {
     FILE *f;
@@ -2225,7 +2225,7 @@ int main
 	+ flag_l2cap + flag_rfcomm;
 
     if (flag_mas) {
-#if HAVE_FW_MASQUERADE && HAVE_AFINET
+#if HAVE_FW_MASQUERADE && AF_INET
 #if MORE_THAN_ONE_MASQ_AF
 	if (!afname[0])
         safe_strncpy(afname, DFLT_AF, sizeof(afname));
@@ -2249,14 +2249,14 @@ int main
             safe_strncpy(afname, DFLT_AF, sizeof(afname));
 
         if (!strcmp(afname, "inet")) {
-#if HAVE_AFINET
+#if AF_INET
             parsesnmp(flag_raw, flag_tcp, flag_udp, flag_sctp);
 #else
             ENOSUPP("netstat", "AF INET");
             exit(1);
 #endif
         } else if(!strcmp(afname, "inet6")) {
-#if HAVE_AFINET6
+#if AF_INET6
             parsesnmp6(flag_raw, flag_tcp, flag_udp);
 #else
             ENOSUPP("netstat", "AF INET6");
@@ -2303,7 +2303,7 @@ int main
     }
     for (;;) {
 	if (!flag_arg || flag_tcp || flag_sctp || flag_udp || flag_udplite || flag_raw) {
-#if HAVE_AFINET
+#if AF_INET
 	    prg_cache_load();
 	    printf(_("Active Internet connections "));	/* xxx */
 
@@ -2330,7 +2330,7 @@ int main
 	    }
 #endif
 	}
-#if HAVE_AFINET
+#if AF_INET
 	if (!flag_arg || flag_tcp) {
 	    i = tcp_info();
 	    if (i)
@@ -2362,7 +2362,7 @@ int main
 	}
 
 	if (flag_igmp) {
-#if HAVE_AFINET6
+#if AF_INET6
 	    printf( "IPv6/");
 #endif
 	    printf( _("IPv4 Group Memberships\n") );
@@ -2375,7 +2375,7 @@ int main
 #endif
 
 	if (!flag_arg || flag_unx) {
-#if HAVE_AFUNIX
+#if AF_UNIX
 	    prg_cache_load();
 	    i = unix_info();
 	    if (i)
@@ -2388,7 +2388,7 @@ int main
 #endif
 	}
 	if (!flag_arg || flag_ipx) {
-#if HAVE_AFIPX
+#if AF_IPX
 	    i = ipx_info();
 	    if (i)
 		return (i);
@@ -2400,7 +2400,7 @@ int main
 #endif
 	}
 	if (!flag_arg || flag_ax25) {
-#if HAVE_AFAX25
+#if AF_AX25
 	    i = ax25_info();
 	    if (i)
 		return (i);
@@ -2412,7 +2412,7 @@ int main
 #endif
 	}
 	if(!flag_arg || flag_x25) {
-#if HAVE_AFX25
+#if AF_X25
 	    /* FIXME */
 	    i = x25_info();
 	    if (i)
@@ -2425,7 +2425,7 @@ int main
 #endif
 	}
 	if (!flag_arg || flag_netrom) {
-#if HAVE_AFNETROM
+#if AF_NETROM
 	    i = netrom_info();
 	    if (i)
 		return (i);
@@ -2437,7 +2437,7 @@ int main
 #endif
 	}
 	if (!flag_arg || flag_rose) {
-#if HAVE_AFROSE
+#if AF_ROSE
           i = rose_info();
           if (i)
             return (i);

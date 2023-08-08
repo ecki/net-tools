@@ -22,12 +22,12 @@
  */
 #include "config.h"
 
-#if HAVE_AFROSE
+#include <sys/socket.h>
+#if AF_ROSE
 #if 0
 #include <sys/types.h>
 #include <sys/ioctl.h>
 #include <linux/rose.h>
-#include <sys/socket.h>
 #include <net/if_arp.h>		/* ARPHRD_ROSE */
 #include <ctype.h>
 #include <errno.h>
@@ -89,4 +89,4 @@ int ROSE_rprint(int options)
     return 0;
 }
 
-#endif				/* HAVE_AFROSE */
+#endif				/* AF_ROSE */
