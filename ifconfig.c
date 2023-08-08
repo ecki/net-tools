@@ -330,7 +330,13 @@ int main(int argc, char **argv)
     }
     /* No. Fetch the interface name. */
     spp = argv;
-    safe_strncpy(ifr.ifr_name, *spp++, IFNAMSIZ);
+    size_t len = strlen(*spp);
+    if (len >= IFNAMSIZ)
+    {
+	fprintf(stderr, "%s(%lu): interface name length must be < %i\n", *spp, len, IFNAMSIZ);
+	return EXIT_FAILURE;
+    }
+    memcpy(ifr.ifr_name, *spp++, len+1);
     if (*spp == (char *) NULL) {
 	int err = if_print(ifr.ifr_name);
 	(void) close(skfd);
