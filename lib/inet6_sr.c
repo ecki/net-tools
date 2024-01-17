@@ -93,8 +93,6 @@ static int INET6_setroute(int action, int options, char **args)
 
     /* Fill in the other fields. */
     rt.rtmsg_flags = RTF_UP;
-    if (prefix_len == 128)
-	rt.rtmsg_flags |= RTF_HOST;
     rt.rtmsg_metric = 1;
     rt.rtmsg_dst_len = prefix_len;
 
