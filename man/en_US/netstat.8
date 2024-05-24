@@ -9,7 +9,7 @@
 .\" Modified: Brian Micek bmicek@gmail.com
 .\"
 .\"
-.TH NETSTAT 8 "2014\-10\-07" "net\-tools" "Linux System Administrator's Manual"
+.TH NETSTAT 8 "2024\-05\-24" "net\-tools" "Linux System Administrator's Manual"
 
 .SH NAME
 netstat \- Print network connections, routing tables, interface statistics, masquerade connections, and multicast memberships
@@ -36,16 +36,21 @@ netstat \- Print network connections, routing tables, interface statistics, masq
 .RB [ \-\-verbose | \-v ]
 .RB [ \-\-continuous | \-c]
 .RB [ \-\-wide | \-W ]
-.P
+
+.PP
+
 .B netstat 
 .RB { \-\-route | \-r }
 .RI [ address_family_options ]
 .RB [ \-\-extend | \-e  [ \-\-extend | \-e] ]
 .RB [ \-\-verbose | \-v ]
 .RB [ \-\-numeric | \-n ]
+.RB [ \-\-symbolic | \-N ]
 .RB [ \-\-numeric\-hosts "] [" \-\-numeric\-ports "] [" \-\-numeric\-users ]
 .RB [ \-\-continuous | \-c ]
-.P
+
+.PP
+
 .B netstat
 .RB { \-\-interfaces | \-i }
 .RB [ \-\-all | \-a ]
@@ -55,20 +60,26 @@ netstat \- Print network connections, routing tables, interface statistics, masq
 .RB [ \-\-numeric | \-n ]
 .RB [ \-\-numeric-hosts "] [" \-\-numeric-ports "] [" \-\-numeric-users ]
 .RB [ \-\-continuous | \-c ]
-.P
+
+.PP
+
 .B netstat
 .RB { \-\-groups | \-g }
-.RB [ \-\-numeric | \-n ]
-.RB [ \-\-numeric\-hosts "] [" \-\-numeric\-ports "] [" \-\-numeric\-users ]
+.RB [ \-\-inet6 | \-6 "] [" \-\-inet | -4 ]
+.RB [ \-\-numeric | \-n | \-\-numeric\-hosts ]
 .RB [ \-\-continuous | \-c ]
-.P
+
+.PP
+
 .B netstat
 .RB { \-\-masquerade | \-M }
 .RB [ \-\-extend | \-e ]
 .RB [ \-\-numeric | \-n ]
 .RB [ \-\-numeric\-hosts "] [" \-\-numeric\-ports "] [" \-\-numeric\-users ]
 .RB [ \-\-continuous | \-c ]
-.P
+
+.PP
+
 .B netstat
 .RB { \-\-statistics | -s }
 .RB [ \-\-tcp | \-t ]

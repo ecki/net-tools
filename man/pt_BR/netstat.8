@@ -8,7 +8,7 @@
 .\" Traduzido para português por Arnaldo Carvalho de Melo <acme@conectiva.com.br>
 .\" Revisado por Jorge Luiz Godoy Filho <jorge@bestway.com.br>
 .\"
-.TH NETSTAT 8 "2007-12-02" "net-tools" "Manual do Programador Linux"
+.TH NETSTAT 8 "2024-05-24" "net-tools" "Manual do Programador Linux"
 
 .SH NOME
 netstat \- Mostra conexões de rede, tabelas de roteamento, estatísticas de interface e conexões
@@ -49,13 +49,21 @@ mascaradas.
 .PP
 
 .B netstat
+.RB { \-\-groups | \-g }
+.RB [ \-\-inet6 | \-6 "] [" \-\-inet | -4 ]
+.RB [ \-\-numeric | \-n | \-\-numeric\-hosts ]
+.RB [ \-\-continuous | \-c ]
+
+.PP
+
+.B netstat
 .RB [ \-enc ]
 .RB { \-\-masquerade | \-M }
 
 .PP
 
 .B netstat 
-.\".RB [ \-cn ]
+.RB [ \-cn ]
 .RB { \-\-statistics | \-s }
 
 .PP

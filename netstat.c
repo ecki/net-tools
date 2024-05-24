@@ -145,6 +145,7 @@ int flag_int = 0;
 int flag_rou = 0;
 int flag_mas = 0;
 int flag_sta = 0;
+int flag_igmp= 0;
 
 int flag_all = 0;
 int flag_lst = 0;
@@ -158,7 +159,6 @@ int flag_tcp = 0;
 int flag_sctp= 0;
 int flag_udp = 0;
 int flag_udplite = 0;
-int flag_igmp= 0;
 int flag_rom = 0;
 int flag_exp = 1;
 int flag_wide= 0;
@@ -1981,7 +1981,7 @@ static void usage(int rc)
     FILE *fp = rc ? stderr : stdout;
     fprintf(fp, _("usage: netstat [-vWeenNcCF] [<Af>] -r         netstat {-V|--version|-h|--help}\n"));
     fprintf(fp, _("       netstat [-vWnNcaeol] [<Socket> ...]\n"));
-    fprintf(fp, _("       netstat { [-vWeenNac] -i | [-cnNe] -M | -s [-6tuw] }\n\n"));
+    fprintf(fp, _("       netstat { [-vWeenNac] -i | [-cnNe] -M | [-6tuw] -s | [-cn46] -g }\n\n"));
 
     fprintf(fp, _("        -r, --route              display routing table\n"));
     fprintf(fp, _("        -i, --interfaces         display interface table\n"));
@@ -2206,7 +2206,7 @@ int main
 	    flag_sta++;
 	}
 
-    if (flag_int + flag_rou + flag_mas + flag_sta > 1)
+    if (flag_int + flag_rou + flag_mas + flag_sta + flag_igmp > 1)
 	usage(E_OPTERR);
 
     if ((flag_inet || flag_inet6 || flag_sta) &&
@@ -2221,7 +2221,7 @@ int main
 	   flag_l2cap = flag_rfcomm = 1;
 
     flag_arg = flag_tcp + flag_sctp + flag_udplite + flag_udp + flag_raw + flag_unx
-        + flag_ipx + flag_ax25 + flag_netrom + flag_igmp + flag_x25 + flag_rose
+        + flag_ipx + flag_ax25 + flag_netrom + flag_x25 + flag_rose
 	+ flag_l2cap + flag_rfcomm;
 
     if (flag_mas) {
@@ -2301,6 +2301,36 @@ int main
 	}
 	return (i);
     }
+    if (flag_igmp) {
+        for (;;) {
+            if ( flag_inet ) {
+#if HAVE_AFINET
+                printf( _("IPv4") );
+#else
+                ENOSUPP("netstat", "AF INET");
+#endif
+            }
+
+            if ( flag_inet && flag_inet6 ) printf("/");
+
+            if ( flag_inet6 ) {
+#if HAVE_AFINET6
+               printf( _("IPv6") );
+#else
+               ENOSUPP("netstat", "AF INET6");
+#endif
+            }
+            printf( _(" Group Memberships\n") );
+            printf( _("Interface       RefCnt Group\n") );
+            printf(   "--------------- ------ ---------------------\n" );
+            i = igmp_info();
+            if (!flag_cnt || i)
+                break;
+            wait_continous();
+        }
+        return (i);
+    }
+
     for (;;) {
 	if (!flag_arg || flag_tcp || flag_sctp || flag_udp || flag_udplite || flag_raw) {
 #if HAVE_AFINET
@@ -2359,18 +2389,6 @@ int main
 	    i = raw_info();
 	    if (i)
 		return (i);
-	}
-
-	if (flag_igmp) {
-#if HAVE_AFINET6
-	    printf( "IPv6/");
-#endif
-	    printf( _("IPv4 Group Memberships\n") );
-	    printf( _("Interface       RefCnt Group\n") );
-	    printf( "--------------- ------ ---------------------\n" );
-	    i = igmp_info();
-	    if (i)
-	        return (i);
 	}
 #endif
 

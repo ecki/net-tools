@@ -8,12 +8,11 @@
 .\" Modified: Tuan Hoang tuan@optimus.mitre.org 
 .\"
 .\"
-.TH NETSTAT 8 "2007-12-02" "net-tools" "Linux Administrator's Manual"
+.TH NETSTAT 8 "2024-05-24" "net-tools" "Linux Administrator's Manual"
 
 .SH NAME
 netstat \- Affiche les connexions réseau, les tables de routage, les
-statistiques des interfaces, les connexions masquées, les messages netlink,
-et les membres multicast.
+statistiques des interfaces, les connexions masquées, et les membres multicast.
 
 .SH SYNOPSIS
 
@@ -24,7 +23,6 @@ et les membres multicast.
 .RB [ \-\-udplite | \-U ]
 .RB [ \-\-sctp | \-S ]
 .RB [ \-\-raw | \-w ]
-.RB [ \-\-groups | \-g ]
 .RB [ \-\-unix | \-x ] 
 .RB [ \-\-inet | \-\-ip ]
 .RB [ \-\-ax25 ]
@@ -52,16 +50,16 @@ et les membres multicast.
 .PP
 
 .B netstat
+.RB { \-\-groups | \-g }
+.RB [ \-\-inet6 | \-6 "] [" \-\-inet | -4 ]
+.RB [ \-\-numeric | \-n | \-\-numeric\-hosts ]
+.RB [ \-\-continuous | \-c ]
+
+.PP
+
+.B netstat
 .RB [ \-enc ]
 .RB { \-\-masquerade | \-M }
-
-.PP
-
-.B netstat 
-.RB [ \-cn ]
-.RB { \-\-netlink | \-N }
-
-.PP
 
 .B netstat 
 .RB { \-V | \-\-version }
@@ -138,14 +136,6 @@ sessions FTP (commande PORT). Le support de l'IP-Masquerade est utilisé
 pour cacher au monde extérieur des hôtes appartenant à un réseau (et ayant
 des adresses) non officiel, tel que décrit dans
 .BR iptables (8).
-
-.SS "\-N, \-\-netlink"
-
-Les noyaux récents supportent une communication avec l'utilisateur appelée
-netlink. Vous pouvez obtenir des messages relatifs à la création, la
-suppression d'interfaces ou de routes à partir de 
-.I /dev/route
-(36,0).
 
 .PP
 .SH OPTIONS
