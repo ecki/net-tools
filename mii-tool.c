@@ -1,5 +1,4 @@
 /*
-
     mii-tool: monitor and control the MII for a network interface
 
     Usage:
@@ -22,11 +21,6 @@
     Donald Becker may be reached as becker@scyld.com, or C/O
     Scyld Computing Corporation, 410 Severn Av., Suite 210,
     Annapolis, MD 21403
-
-    References
-	http://www.scyld.com/diag/mii-status.html
-	http://www.scyld.com/expert/NWay.html
-	http://www.national.com/pf/DP/DP83840.html
 */
 
 
