@@ -344,7 +344,7 @@ int show_basic_mii(int sock, int phy_id)
 	if (i < NMII)
 	    printf("%s rev %d\n", mii_id[i].name, mii_val[3]&0x0f);
 	else {
-	    /* Each OUI consists of 24 bits a-z of which a and b are
+	    /* Each OUI consists of 24 bits a-x of which a and b are
 	     * always assigned as zero.  The bit assignments in these
 	     * registers are specified as:
 	     *     2.15-0   c-r
@@ -353,7 +353,7 @@ int show_basic_mii(int sock, int phy_id)
 	     * for the written representation specified in section
 	     * 9.5.2 of IEEE 802-2001.  However, some vendors mirror
 	     * the written representation, using the bit assignments:
-	     *     2.15-10  f-a (?)
+	     *     2.15-10  f-a (gh=00)
 	     *     2.9-2    p-i
 	     *     2.1-0    x-w
 	     *     3.15-10  v-q
