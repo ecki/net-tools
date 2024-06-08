@@ -232,6 +232,14 @@ static const char *media_list(unsigned mask, unsigned mask2, int best)
     return buf;
 }
 
+static unsigned char bitreverse_byte(unsigned char byte)
+{
+    byte = (byte << 4) | (byte >> 4);
+    byte = (byte & 0x33) << 2 | (byte & 0xcc) >> 2;
+    byte = (byte & 0x55) << 1 | (byte & 0xaa) >> 1;
+    return byte;
+}
+
 int show_basic_mii(int sock, int phy_id)
 {
     char buf[200];
@@ -335,11 +343,31 @@ int show_basic_mii(int sock, int phy_id)
 		break;
 	if (i < NMII)
 	    printf("%s rev %d\n", mii_id[i].name, mii_val[3]&0x0f);
-	else
-	    printf("vendor %02x:%02x:%02x, model %d rev %d\n",
+	else {
+	    /* Each OUI consists of 24 bits a-z of which a and b are
+	     * always assigned as zero.  The bit assignments in these
+	     * registers are specified as:
+	     *     2.15-0   c-r
+	     *     3.15-10  s-x
+	     * This is the opposite of the bit order within each byte
+	     * for the written representation specified in section
+	     * 9.5.2 of IEEE 802-2001.  However, some vendors mirror
+	     * the written representation, using the bit assignments:
+	     *     2.15-10  f-a (?)
+	     *     2.9-2    p-i
+	     *     2.1-0    x-w
+	     *     3.15-10  v-q
+	     * Therefore we decode the registers under both
+	     * interpretations.
+	     */
+	    printf("vendor %02x:%02x:%02x or %02x:%02x:%02x, model %d rev %d\n",
+		   bitreverse_byte(mii_val[2]>>10),
+		   bitreverse_byte(mii_val[2]>>2),
+		   bitreverse_byte((mii_val[2]<<6)|(mii_val[3]>>10)),
 		   mii_val[2]>>10, (mii_val[2]>>2)&0xff,
 		   ((mii_val[2]<<6)|(mii_val[3]>>10))&0xff,
 		   (mii_val[3]>>4)&0x3f, mii_val[3]&0x0f);
+	}
 	printf("  basic mode:   ");
 	if (bmcr & BMCR_RESET)
 	    printf("software reset, ");
