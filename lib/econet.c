@@ -18,10 +18,11 @@
 
 #include "config.h"
 
-#if HAVE_AFECONET
+#include <sys/socket.h>
+
+#if AF_ECONET
 
 #include <sys/types.h>
-#include <sys/socket.h>
 #include <stdio.h>
 #include <neteconet/ec.h>
 
@@ -83,4 +84,4 @@ struct aftype ec_aftype =
     "/proc/sys/net/econet"
 };
 
-#endif				/* HAVE_AFECONET */
+#endif				/* AF_ECONET */

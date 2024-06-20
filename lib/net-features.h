@@ -126,61 +126,61 @@ static char *Features =
 "(" DFLT_AF ")"
 #endif
 
-#if HAVE_AFUNIX
+#if AF_UNIX
 " +"
 #else
 " -"
 #endif
 "UNIX "
-#if HAVE_AFINET
+#if AF_INET
 "+"
 #else
 "-"
 #endif
 "INET "
-#if HAVE_AFINET6
+#if AF_INET6
 "+"
 #else
 "-"
 #endif
 "INET6 "
-#if HAVE_AFIPX
+#if AF_IPX
 "+"
 #else
 "-"
 #endif
 "IPX "
-#if HAVE_AFAX25
+#if AF_AX25
 "+"
 #else
 "-"
 #endif
 "AX25 "
-#if HAVE_AFNETROM
+#if AF_NETROM
 "+"
 #else
 "-"
 #endif
 "NETROM "
-#if HAVE_AFX25
+#if AF_X25
 "+"
 #else
 "-"
 #endif
 "X25 "
-#if HAVE_AFATALK
+#if AF_APPLETALK
 "+"
 #else
 "-"
 #endif
 "ATALK "
-#if HAVE_AFECONET
+#if AF_ECONET
 "+"
 #else
 "-"
 #endif
 "ECONET "
-#if HAVE_AFROSE
+#if AF_ROSE
 "+"
 #else
 "-"

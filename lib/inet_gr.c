@@ -10,9 +10,9 @@
 
 #include "config.h"
 
-#if HAVE_AFINET
-#include <sys/types.h>
 #include <sys/socket.h>
+#if AF_INET
+#include <sys/types.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <arpa/nameser.h>
@@ -455,4 +455,4 @@ int INET_rprint(int options)
     return (rc);
 }
 
-#endif				/* HAVE_AFINET */
+#endif				/* AF_INET */
