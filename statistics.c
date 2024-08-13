@@ -187,6 +187,7 @@ static const struct entry Tcptab[] =
 
 static const struct entry Udptab[] =
 {   /* Keep the entries sorted! */
+    {"InCsumErrors", N_("%llu packets with invalid checksum"), number},
     {"InDatagrams", N_("%llu packets received"), number},
     {"InErrors", N_("%llu packet receive errors"), number},
     {"NoPorts", N_("%llu packets to unknown port received"), number},
@@ -197,6 +198,7 @@ static const struct entry Udptab[] =
 
 static const struct entry Udp6tab[] =
 {   /* Keep the entries sorted! */
+    {"Udp6InCsumErrors", N_("%llu packets with invalid checksum"), number},
     {"Udp6InDatagrams", N_("%llu packets received"), number},
     {"Udp6InErrors", N_("%llu packet receive errors"), number},
     {"Udp6NoPorts", N_("%llu packets to unknown port received"), number},
