@@ -203,6 +203,8 @@ static const struct entry Udp6tab[] =
     {"Udp6InErrors", N_("%llu packet receive errors"), number},
     {"Udp6NoPorts", N_("%llu packets to unknown port received"), number},
     {"Udp6OutDatagrams", N_("%llu packets sent"), number},
+    {"Udp6RcvbufErrors", N_("%llu receive buffer errors"), number},
+    {"Udp6SndbufErrors", N_("%llu send buffer errors"), number},
 };
 
 static const struct entry Tcpexttab[] =
