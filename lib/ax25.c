@@ -20,7 +20,7 @@
  */
 #include "config.h"
 
-#if HAVE_AFAX25 || HAVE_HWAX25
+#if AF_AX25 || HAVE_HWAX25
 #include <sys/types.h>
 #include <sys/ioctl.h>
 #include <sys/socket.h>

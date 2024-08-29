@@ -47,11 +47,11 @@ int sockets_open(int family)
 	    if (access(af->flag_file, R_OK))
 		continue;
 	}
-#if HAVE_AFNETROM
+#if AF_NETROM
 	if (af->af == AF_NETROM)
 	    type = SOCK_SEQPACKET;
 #endif
-#if HAVE_AFX25
+#if AF_X25
        if (af->af == AF_X25)
            type = SOCK_SEQPACKET;
 #endif
