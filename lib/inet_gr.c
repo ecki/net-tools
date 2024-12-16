@@ -42,7 +42,8 @@ int rprint_fib(int ext, int numeric)
     char buff[1024], iface[17], flags[64];
     char gate_addr[128], net_addr[128];
     char mask_addr[128];
-    int num, iflags, metric, refcnt, use, mss, window, irtt;
+    int num, iflags, refcnt, use, mss, window, irtt;
+    uint32_t metric;
     FILE *fp = fopen(_PATH_PROCNET_ROUTE, "r");
     char *fmt;
 
@@ -75,7 +76,7 @@ int rprint_fib(int ext, int numeric)
 		       "Flags", "%X",
 		       "RefCnt", "%d",
 		       "Use", "%d",
-		       "Metric", "%d",
+		       "Metric", "%u",
 		       "Mask", "%127s",
 		       "MTU", "%d",
 		       "Window", "%d",
@@ -168,11 +169,11 @@ int rprint_fib(int ext, int numeric)
 	if (ext == 1) {
 #if HAVE_RTF_REJECT
 	    if (iflags & RTF_REJECT)
-		printf("%-15s -               %-15s %-5s %-6d -  %7d -\n",
+		printf("%-15s -               %-15s %-5s %-6u -  %7d -\n",
 		       net_addr, mask_addr, flags, metric, use);
 	    else
 #endif
-		printf("%-15s %-15s %-15s %-5s %-6d %-2d %7d %s\n",
+		printf("%-15s %-15s %-15s %-5s %-6u %-2d %7d %s\n",
 		       net_addr, gate_addr, mask_addr, flags,
 		       metric, refcnt, use, iface);
 	}
@@ -190,11 +191,11 @@ int rprint_fib(int ext, int numeric)
 	if (ext >= 3) {
 #if HAVE_RTF_REJECT
 	    if (iflags & RTF_REJECT)
-		printf("%-15s -               %-15s %-5s %-6d -  %7d -        -     -      -\n",
+		printf("%-15s -               %-15s %-5s %-6u -  %7d -        -     -      -\n",
 		       net_addr, mask_addr, flags, metric, use);
 	    else
 #endif
-		printf("%-15s %-15s %-15s %-5s %-6d %-3d %6d %-6.6s   %-5d %-6d %d\n",
+		printf("%-15s %-15s %-15s %-5s %-6u %-3d %6d %-6.6s   %-5d %-6d %d\n",
 		       net_addr, gate_addr, mask_addr, flags,
 		       metric, refcnt, use, iface, mss, window, irtt);
 	}
