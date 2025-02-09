@@ -25,7 +25,7 @@
  */
 #include "config.h"
 
-#if HAVE_AFNETROM || HAVE_HWNETROM
+#if AF_NETROM || HAVE_HWNETROM
 #include <sys/types.h>
 #include <sys/ioctl.h>
 #include <sys/socket.h>
@@ -206,4 +206,4 @@ struct aftype netrom_aftype =
     "/proc/net/nr"
 };
 
-#endif				/* HAVE_AFNETROM */
+#endif				/* AF_NETROM */

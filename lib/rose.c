@@ -17,7 +17,7 @@
  */
 #include "config.h"
 
-#if HAVE_AFROSE || HAVE_HWROSE
+#if AF_ROSE || HAVE_HWROSE
 #include <features.h>
 #include <sys/types.h>
 #include <sys/ioctl.h>
