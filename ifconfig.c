@@ -340,16 +340,17 @@ int main(int argc, char **argv)
     /* The next argument is either an address family name, or an option. */
     if ((ap = get_aftype(*spp)) != NULL)
 	spp++; /* it was a AF name */
-    else
+    else {
 	ap = get_aftype(DFLT_AF);
-
-    if (ap) {
-	addr_family = ap->af;
-	skfd = ap->fd;
-    } else {
-	fprintf(stderr, _("ifconfig: Unknown address family.\n"));
-	exit(1);
+	if (ap == NULL) {
+            fprintf(stderr, _("ifconfig: Default address family %s is unknown. How can that be?\n"), DFLT_AF);
+            exit(1);
+	}
     }
+
+    addr_family = ap->af;
+    skfd = ap->fd;
+    assert(ap->af != NULL && ap->fd != NULL);
 
     /* Process the remaining arguments. */
     while (*spp != (char *) NULL) {
