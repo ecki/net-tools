@@ -35,7 +35,7 @@ char *proc_gen_fmt(const char *name, int more, FILE * fh,...)
 	if (!strcmp(title, head)) {
 	    strcat(format, va_arg(ap, char *));
 	    title = va_arg(ap, char *);
-	    if (!title || !head)
+	    if (!title)
 		break;
 	} else {
 	    strcat(format, "%*s");	/* XXX */
