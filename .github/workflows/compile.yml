@@ -13,9 +13,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    
+    - name: Compile
+      run: make all
 
-    - name: configure
-      run: ./configure
-
-    - name: Install dependencies
-      run: make
+    - name: distcheck
+      run: make distcheck
