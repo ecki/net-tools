@@ -350,7 +350,6 @@ int main(int argc, char **argv)
 
     addr_family = ap->af;
     skfd = ap->fd;
-    assert(ap->af != NULL && ap->fd != NULL);
 
     /* Process the remaining arguments. */
     while (*spp != (char *) NULL) {
