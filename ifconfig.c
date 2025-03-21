@@ -346,6 +346,9 @@ int main(int argc, char **argv)
     if (ap) {
 	addr_family = ap->af;
 	skfd = ap->fd;
+    } else {
+	fprintf(stderr, _("ifconfig: Unknown address family.\n"));
+	exit(1);
     }
 
     /* Process the remaining arguments. */
