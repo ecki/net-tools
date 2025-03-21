@@ -1,0 +1,24 @@
+name: Compile net-tools
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: configure
+      run: yes "" | make config 
+      
+    - name: compile
+      run: make all
+
+    - name: distcheck
+      run: make distcheck
