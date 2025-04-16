@@ -10,10 +10,10 @@
 
 #include "config.h"
 
-#if HAVE_AFNETROM
+#include <sys/socket.h>
+#if AF_NETROM
 #include <sys/param.h>
 #include <sys/types.h>
-#include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <arpa/nameser.h>
@@ -53,4 +53,4 @@ int NETROM_rinput(int action, int ext, char **args)
     fprintf(stderr, _("NET/ROM: this needs to be written\n"));
     return (E_NOSUPP);
 }
-#endif				/* HAVE_AFNETROM */
+#endif				/* AF_NETROM */

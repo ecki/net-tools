@@ -16,11 +16,11 @@
  */
 #include "config.h"
 
-#if HAVE_AFAX25
+#include <sys/socket.h>
+#if AF_AX25
 #if 0
 #include <sys/types.h>
 #include <sys/ioctl.h>
-#include <sys/socket.h>
 #include <linux/ax25.h>
 #include <linux/if_arp.h>	/* ARPHRD_AX25 */
 #include <ctype.h>
@@ -62,4 +62,4 @@ int AX25_rprint(int options)
     return 0;
 }
 
-#endif				/* HAVE_AFAX25 */
+#endif				/* AF_AX25 */

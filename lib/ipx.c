@@ -15,10 +15,10 @@
  */
 #include "config.h"
 
-#if HAVE_AFIPX
+#include <sys/socket.h>
+#if AF_IPX
 #include <asm/types.h>
 #include <sys/types.h>
-#include <sys/socket.h>
 #if (__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 1)
 #include <netipx/ipx.h>
 #else

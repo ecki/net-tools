@@ -10,11 +10,11 @@
 
 #include "config.h"
 
-#if HAVE_AFINET6
+#include <sys/socket.h>
+#if AF_INET6
 #include <asm/types.h>
 #include <sys/param.h>
 #include <sys/types.h>
-#include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <arpa/nameser.h>
@@ -195,4 +195,4 @@ int INET6_rinput(int action, int options, char **args)
 
     return (INET6_setroute(action, options, args));
 }
-#endif				/* HAVE_AFINET6 */
+#endif				/* AF_INET6 */
