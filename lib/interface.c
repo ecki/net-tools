@@ -211,32 +211,47 @@ out:
 }
 
 static const char *get_name(char *name, const char *p)
+/* Safe version — guarantees at most IFNAMSIZ‑1 bytes are copied
+   and the destination buffer is always NUL‑terminated.             */
 {
-    while (isspace(*p))
-	p++;
-    while (*p) {
-	if (isspace(*p))
-	    break;
-	if (*p == ':') {	/* could be an alias */
-		const char *dot = p++;
- 		while (*p && isdigit(*p)) p++;
-		if (*p == ':') {
-			/* Yes it is, backup and copy it. */
-			p = dot;
-			*name++ = *p++;
-			while (*p && isdigit(*p)) {
-				*name++ = *p++;
-			}
-		} else {
-			/* No, it isn't */
-			p = dot;
-	    }
-	    p++;
-	    break;
-	}
-	*name++ = *p++;
+    char       *dst = name;                 /* current write ptr          */
+    const char *end = name + IFNAMSIZ - 1;  /* last byte we may write     */
+
+    /* Skip leading white‑space. */
+    while (isspace((unsigned char)*p))
+        ++p;
+
+    /* Copy until white‑space, end of string, or buffer full. */
+    while (*p && !isspace((unsigned char)*p) && dst < end) {
+        if (*p == ':') {                    /* possible alias veth0:123:  */
+            const char *dot = p;            /* remember the colon         */
+            ++p;
+            while (*p && isdigit((unsigned char)*p))
+                ++p;
+
+            if (*p == ':') {                /* confirmed alias            */
+                p = dot;                    /* rewind and copy it all     */
+
+                /* copy the colon */
+                if (dst < end)
+                    *dst++ = *p++;
+
+                /* copy the digits */
+                while (*p && isdigit((unsigned char)*p) && dst < end)
+                    *dst++ = *p++;
+
+                if (*p == ':')              /* consume trailing colon     */
+                    ++p;
+            } else {              /* if so treat as normal */
+                p = dot;
+            }
+            break;                          /* interface name ends here   */
+        }
+
+        *dst++ = *p++;                      /* ordinary character copy    */
     }
-    *name++ = '\0';
+
+    *dst = '\0';                            /* always NUL‑terminate       */
     return p;
 }
 
