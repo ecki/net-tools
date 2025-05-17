@@ -239,12 +239,11 @@ static const char *get_name(char *name, const char *p)
                 /* copy the digits */
                 while (*p && isdigit((unsigned char)*p) && dst < end)
                     *dst++ = *p++;
-
-                if (*p == ':')              /* consume trailing colon     */
-                    ++p;
             } else {              /* if so treat as normal */
                 p = dot;
             }
+            if (*p == ':')                  /* consume trailing colon */
+                ++p;
             break;                          /* interface name ends here   */
         }
 
