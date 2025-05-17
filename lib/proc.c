@@ -17,6 +17,8 @@ char *proc_gen_fmt(const char *name, int more, FILE * fh,...)
     char buf[512], format[512] = "";
     char *title, *head, *hdr;
     va_list ap;
+    size_t format_len = 0;
+    size_t format_size = sizeof(format);
 
     if (!fgets(buf, (sizeof buf) - 1, fh))
 	return NULL;
@@ -33,14 +35,43 @@ char *proc_gen_fmt(const char *name, int more, FILE * fh,...)
 	    *hdr++ = 0;
 
 	if (!strcmp(title, head)) {
-	    strcat(format, va_arg(ap, char *));
+	    const char *arg = va_arg(ap, char *);
+	    size_t arg_len = strlen(arg);
+
+	    /* Check if we have enough space for format specifier + space */
+	    if (format_len + arg_len + 1 >= format_size) {
+		fprintf(stderr, "warning: format buffer overflow in %s\n", name);
+		va_end(ap);
+		return NULL;
+	    }
+
+	    strcpy(format + format_len, arg);
+	    format_len += arg_len;
+
 	    title = va_arg(ap, char *);
 	    if (!title)
 		break;
 	} else {
-	    strcat(format, "%*s");	/* XXX */
+	    /* Check if we have enough space for "%*s" */
+	    if (format_len + 3 >= format_size) {
+		fprintf(stderr, "warning: format buffer overflow in %s\n", name);
+		va_end(ap);
+		return NULL;
+	    }
+
+	    strcpy(format + format_len, "%*s");
+	    format_len += 3;
 	}
-	strcat(format, " ");
+
+	/* Check if we have space for the trailing space */
+	if (format_len + 1 >= format_size) {
+	    fprintf(stderr, "warning: format buffer overflow in %s\n", name);
+	    va_end(ap);
+	    return NULL;
+	}
+
+	format[format_len++] = ' ';
+	format[format_len] = '\0';
     }
     va_end(ap);
 
