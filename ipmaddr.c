@@ -91,17 +91,17 @@ static int parse_lla(char *str, char *addr)
 	return len;
 }
 
-static int parse_hex(char *str, unsigned char *addr)
+static int parse_hex(char *str, unsigned char *dst, size_t dstlen)
 {
 	int len=0;
 
-	while (*str) {
+	while (len < dstlen && *str) {
 		int tmp;
 		if (str[1] == 0)
 			return -1;
 		if (sscanf(str, "%02x", &tmp) != 1)
 			return -1;
-		addr[len] = tmp;
+		dst[len] = tmp;
 		len++;
 		str += 2;
 	}
@@ -152,7 +152,7 @@ void read_dev_mcast(struct ma_info **result_p)
 
 		m.addr.family = AF_PACKET;
 
-		len = parse_hex(hexa, (unsigned char*)&m.addr.data);
+		len = parse_hex(hexa, (unsigned char*)&m.addr.data, sizeof(m.addr.data));
 		if (len >= 0) {
 			struct ma_info *ma = xmalloc(sizeof(m));
 			memcpy(ma, &m, sizeof(m));
@@ -222,7 +222,7 @@ void read_igmp6(struct ma_info **result_p)
 
 		m.addr.family = AF_INET6;
 
-		len = parse_hex(hexa, (unsigned char*)&m.addr.data);
+		len = parse_hex(hexa, (unsigned char*)&m.addr.data, sizeof(m.addr.data));
 		if (len >= 0) {
 			struct ma_info *ma = xmalloc(sizeof(m));
 			memcpy(ma, &m, sizeof(m));
