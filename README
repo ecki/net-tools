@@ -32,11 +32,15 @@ if you want to contribute:
 
            https://sourceforge.net/projects/net-tools/
 
+There is a GitHub mirror available, if you prefer this for pull requests:
+
+           https://github.com/ecki/net-tools/
+
 
                           Notes
                           -----
 
-This is net-tools 3.14.
+This is net-tools HEAD.
 
 These have largely been tested against Linux kernels 2.6+.  They might work
 against older ones if anyone actually still cares about those anymore.
@@ -49,8 +53,15 @@ The NLS support by Arnaldo Carvalho de Melo <acme@conectiva.com.br> uses GNU
 gettext.  Translations to Brazilian Portuguese (pt_BR), German (de), Estonian
 (ee), Czech (cz), and French (fr) are available.  Others are welcome!
 
+The translated man pages are planned to be moved to the manpages-i10n
+project in the next release. Thanks to Helge Kreutzmann.
+
+net-tools is generally considered deprecated, in most cases use
+the iproute2 package instead.
+
 route/netstat -r do not yet support different address families cleanly.
 IPX/DDP/AX25 people, please feel free to add the code.
+
 
 Mike Frysinger
 vapier@gentoo.org
