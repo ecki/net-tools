@@ -47,9 +47,10 @@ static char AX25_errmsg[128];
 
 extern struct aftype ax25_aftype;
 
+// align with NETROM_orint
 static const char *AX25_print(const char *ptr)
 {
-    static char buff[8];
+    static char buff[10]; // N0CALL-15
     int i;
 
     for (i = 0; i < 6; i++) {
@@ -58,9 +59,14 @@ static const char *AX25_print(const char *ptr)
 	    buff[i] = '\0';
     }
     buff[6] = '\0';
+
+    // add SSID
     i = ((ptr[6] & 0x1E) >> 1);
-    if (i != 0)
-	sprintf(&buff[strlen(buff)], "-%d", i);
+    if (i != 0) {
+        int l = strlen(buff);
+        sprintf(&buff[l], sizeof(buff)-l, "-%d", i);
+    }
+
     return (buff);
 }
 
