@@ -64,7 +64,7 @@ static const char *AX25_print(const char *ptr)
     i = ((ptr[6] & 0x1E) >> 1);
     if (i != 0) {
         int l = strlen(buff);
-        sprintf(&buff[l], sizeof(buff)-l, "-%d", i);
+        snprintf(&buff[l], sizeof(buff)-l, "-%d", i);
     }
 
     return (buff);
