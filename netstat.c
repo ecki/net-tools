@@ -1101,16 +1101,11 @@ static void addr_do_one(char *buf, size_t buf_len, size_t short_len, const struc
     sport = get_sname(htons(port), proto, flag_not & FLAG_NUM_PORT);
     addr_len = strlen(saddr);
     port_len = strlen(sport);
-    if (!flag_wide && (addr_len + port_len > short_len)) {
-	/* Assume port name is short */
-	port_len = netmin(port_len, short_len - 4);
-	addr_len = short_len - port_len;
-	strncpy(buf, saddr, addr_len);
-	buf[addr_len] = '\0';
-	strcat(buf, ":");
-	strncat(buf, sport, port_len);
-    } else
-	snprintf(buf, buf_len, "%s:%s", saddr, sport);
+    if (!flag_wide && (addr_len + port_len + 1 > short_len)) {
+	port_len = netmin(port_len, 7);
+	addr_len = short_len - port_len - 1;
+    }
+    snprintf(buf, buf_len, "%.*s:%.*s", (int)addr_len, saddr, (int)port_len, sport);
 }
 
 static void tcp_do_one(int lnr, const char *line, const char *prot)
@@ -1174,8 +1169,8 @@ static void tcp_do_one(int lnr, const char *line, const char *prot)
 	return;
     }
 
-	addr_do_one(local_addr, sizeof(local_addr), 22, ap, &localsas, local_port, "tcp");
-	addr_do_one(rem_addr, sizeof(rem_addr), 22, ap, &remsas, rem_port, "tcp");
+	addr_do_one(local_addr, sizeof(local_addr), 23, ap, &localsas, local_port, "tcp");
+	addr_do_one(rem_addr, sizeof(rem_addr), 23, ap, &remsas, rem_port, "tcp");
 
 	timers[0] = '\0';
 	if (flag_opt)
@@ -1210,8 +1205,8 @@ static void tcp_do_one(int lnr, const char *line, const char *prot)
 		break;
 	    }
 
-	printf("%-4s  %6ld %6ld %-*s %-*s %-11s",
-	       prot, rxq, txq, (int)netmax(23,strlen(local_addr)), local_addr, (int)netmax(23,strlen(rem_addr)), rem_addr, _(tcp_state[state]));
+	printf("%-4s  %6ld %6ld %-23s %-23s %-11s",
+	       prot, rxq, txq, local_addr, rem_addr, _(tcp_state[state]));
 
 	finish_this_one(uid,inode,timers);
 }
@@ -1315,8 +1310,8 @@ static void udp_do_one(int lnr, const char *line,const char *prot)
 
     if (flag_all || (notnull(&remsas) && !flag_lst) || (!notnull(&remsas) && flag_lst))
     {
-	addr_do_one(local_addr, sizeof(local_addr), 22, ap, &localsas, local_port, "udp");
-	addr_do_one(rem_addr, sizeof(rem_addr), 22, ap, &remsas, rem_port, "udp");
+	addr_do_one(local_addr, sizeof(local_addr), 23, ap, &localsas, local_port, "udp");
+	addr_do_one(rem_addr, sizeof(rem_addr), 23, ap, &remsas, rem_port, "udp");
 
 	timers[0] = '\0';
 	if (flag_opt)
@@ -1412,8 +1407,8 @@ static void raw_do_one(int lnr, const char *line,const char *prot)
 
     if (flag_all || (notnull(&remsas) && !flag_lst) || (!notnull(&remsas) && flag_lst))
     {
-	addr_do_one(local_addr, sizeof(local_addr), 22, ap, &localsas, local_port, "raw");
-	addr_do_one(rem_addr, sizeof(rem_addr), 22, ap, &remsas, rem_port, "raw");
+	addr_do_one(local_addr, sizeof(local_addr), 23, ap, &localsas, local_port, "raw");
+	addr_do_one(rem_addr, sizeof(rem_addr), 23, ap, &remsas, rem_port, "raw");
 
 	timers[0] = '\0';
 	if (flag_opt)
