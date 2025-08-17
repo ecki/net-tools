@@ -1,8 +1,6 @@
 /*
- * lib/ib.c        This file contains an implementation of the "Infiniband"
+ * lib/ib.c     This file contains an implementation of the "Infiniband"
  *              support functions.
- *
- * Version:     $Id: ib.c,v 1.1 2008/10/03 01:52:03 ecki Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
@@ -56,18 +54,13 @@ static const char *pr_ib(const char *ptr)
     return (buff);
 }
 
-#ifdef DEBUG
-#define _DEBUG 1
-#else
-#define _DEBUG 0
-#endif
 
 /* Input an Infiniband address and convert to binary. */
 static int in_ib(char *bufp, struct sockaddr_storage *sasp)
 {
     struct sockaddr *sap = (struct sockaddr *)sasp;
     char *ptr;
-    char c, *orig;
+    char c;
     int i;
     unsigned val;
 
@@ -75,7 +68,9 @@ static int in_ib(char *bufp, struct sockaddr_storage *sasp)
     ptr = sap->sa_data;
 
     i = 0;
-    orig = bufp;
+#ifdef DEBUG
+    char *orig = bufp;
+#endif
     while ((*bufp != '\0') && (i < INFINIBAND_ALEN)) {
 	val = 0;
 	c = *bufp++;
@@ -86,8 +81,9 @@ static int in_ib(char *bufp, struct sockaddr_storage *sasp)
 	else if (c >= 'A' && c <= 'F')
 	    val = c - 'A' + 10;
 	else {
-	    if (_DEBUG)
+#ifdef DEBUG
 		fprintf(stderr, _("in_ib(%s): invalid infiniband address!\n"), orig);
+#endif
 	    errno = EINVAL;
 	    return (-1);
 	}
@@ -115,13 +111,11 @@ static int in_ib(char *bufp, struct sockaddr_storage *sasp)
 
 	/* We might get a semicolon here - not required. */
 	if (*bufp == ':') {
-	    if (i == INFINIBAND_ALEN) {
 #ifdef DEBUG
-		fprintf(stderr, _("in_ib(%s): trailing : ignored!\n"),
-			orig)
+            if (i == INFINIBAND_ALEN) {
+                fprintf(stderr, _("in_ib(%s): trailing : ignored!\n"), orig);
+            }
 #endif
-		    ;		/* nothing */
-	    }
 	    bufp++;
 	}
     }
