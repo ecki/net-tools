@@ -9,14 +9,14 @@
 .\" Modified: Brian Micek bmicek@gmail.com
 .\"
 .\"
-.TH NETSTAT 8 "2014\-10\-07" "net\-tools" "Linux System Administrator's Manual"
+.TH NETSTAT 8 "2025\-08\-26" "net\-tools" "Linux System Administrator's Manual"
 
 .SH NAME
 netstat \- Print network connections, routing tables, interface statistics, masquerade connections, and multicast memberships
 
 .SH SYNOPSIS
 
-.B netstat 
+.B netstat
 .RI [ address_family_options ]
 .RB [ \-\-tcp | \-t ]
 .RB [ \-\-udp | \-u ]
@@ -37,7 +37,7 @@ netstat \- Print network connections, routing tables, interface statistics, masq
 .RB [ \-\-continuous | \-c]
 .RB [ \-\-wide | \-W ]
 .P
-.B netstat 
+.B netstat
 .RB { \-\-route | \-r }
 .RI [ address_family_options ]
 .RB [ \-\-extend | \-e  [ \-\-extend | \-e] ]
@@ -77,10 +77,10 @@ netstat \- Print network connections, routing tables, interface statistics, masq
 .RB [ \-\-sctp | \-S ]
 .RB [ \-\-raw | \-w ]
 .P
-.B netstat 
+.B netstat
 .RB { \-\-version | \-V }
 .P
-.B netstat 
+.B netstat
 .RB { \-\-help | \-h }
 .P
 .IR address_family_options :
@@ -88,14 +88,14 @@ netstat \- Print network connections, routing tables, interface statistics, masq
 .RB [ -4 | \-\-inet ]
 .RB [ -6 | \-\-inet6 ]
 .RB [ \-\-protocol= { inet , inet6 , unix , ipx , ax25 , netrom , ddp , bluetooth ", ... } ]"
-.RB [ \-\-unix | \-x ] 
+.RB [ \-\-unix | \-x ]
 .RB [ \-\-inet | \-\-ip | \-\-tcpip ]
 .RB [ \-\-ax25 ]
 .RB [ \-\-x25 ]
 .RB [ \-\-rose ]
 .RB [ \-\-ash ]
 .RB [ \-\-bluetooth ]
-.RB [ \-\-ipx ] 
+.RB [ \-\-ipx ]
 .RB [ \-\-netrom ]
 .RB [ \-\-ddp | \-\-appletalk ]
 .RB [ \-\-econet | \-\-ec ]
@@ -114,17 +114,17 @@ information printed is controlled by the first argument, as follows:
 .SS (none)
 By default,
 .B
-netstat 
+netstat
 displays a list of open sockets.  If you don't specify any
 address families, then the active sockets of all configured address
 families will be printed.
 .SS "\-\-route, \-r"
 Display the kernel routing tables. See the description in 
-.BR route (8) 
-for details. 
-.B netstat -r 
+.BR route (8)
+for details.
+.B netstat -r
 and 
-.B route -e 
+.B route -e
 produce the same output.
 .SS "\-\-groups, \-g"
 Display multicast group membership information for IPv4 and IPv6.
@@ -158,19 +158,19 @@ port names.
 .SS "\-\-protocol=\fIfamily\fR, \fB\-A"
 Specifies the address families (perhaps better described as low level
 protocols) for which connections are to be shown.
-.I family 
+.I family
 is a comma (',') separated list of address family keywords like
-.BR inet , 
+.BR inet ,
 .BR inet6 ,
-.BR unix , 
-.BR ipx , 
-.BR ax25 , 
+.BR unix ,
+.BR ipx ,
+.BR ax25 ,
 .BR netrom ,
 .BR econet ,
 .BR ddp ,
 and
 .BR bluetooth .
-This has the same effect as using the 
+This has the same effect as using the
 .BR \-\-inet | -4 ,
 .BR \-\-inet6 | -6 ,
 .BR \-\-unix | -x ,
@@ -215,15 +215,15 @@ Print routing information from the route cache.
 .SH OUTPUT
 .P
 .SS Active Internet connections \fR(TCP, UDP, UDPLite, raw)\fR
-.SS "Proto" 
-The protocol (tcp, udp, udpl, raw) used by the socket. 
+.SS "Proto"
+The protocol (tcp, udp, udpl, raw) used by the socket.
 .SS "Recv\-Q"
 Established: The count of bytes not copied by the user program connected to this socket.
-Listening: Since Kernel 2.6.18 this column contains the current syn backlog.
+Listening: Since Kernel 2.6.18 this column contains the current accept queue.
 .SS "Send\-Q"
 Established: The count of bytes not acknowledged by the remote host.
 Listening: Since Kernel 2.6.18 this column contains the maximum size of the syn backlog.
-.SS "Local Address" 
+.SS "Local Address"
 Address and port number of the local end of the socket.  Unless the
 .BR \-\-numeric " (" \-n )
 option is specified, the socket address is resolved to its canonical
@@ -280,7 +280,7 @@ LISTEN
 The socket is listening for incoming connections.  Such sockets are 
 not included in the output unless you specify the 
 .BR \-\-listening " (" \-l )
-or 
+or
 .BR \-\-all " (" \-a )
 option.
 .TP
@@ -342,13 +342,13 @@ The protocol (usually unix) used by the socket.
 .SS "RefCnt"
 The reference count (i.e. attached processes via this socket).
 .SS "Flags"
-The flags displayed is SO_ACCEPTON (displayed as 
+The flags displayed is SO_ACCEPTON (displayed as
 .BR ACC ),
-SO_WAITDATA 
+SO_WAITDATA
 .RB ( W )
-or SO_NOSPACE 
-.RB ( N ). 
-SO_ACCECPTON 
+or SO_NOSPACE
+.RB ( N ).
+SO_ACCECPTON
 is used on unconnected sockets if their corresponding
 processes are waiting for a connect request. The other flags are not
 of normal interest.
@@ -518,6 +518,6 @@ The netstat user interface was written by Fred Baumgarten
 by Matt Welsh <mdw@tc.cornell.edu>. It was updated by
 Alan Cox <Alan.Cox@linux.org>, updated again by Tuan Hoang
 <tqhoang@bigfoot.com>. The man page and the command included 
-in the net\-tools package is totally rewritten by Bernd Eckenfels 
+in the net\-tools package is rewritten by Bernd Eckenfels 
 <ecki@linux.de>.  UDPLite options were added by Brian Micek
 <bmicek@gmail.com>
