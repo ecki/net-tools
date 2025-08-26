@@ -1,6 +1,6 @@
 .\" Copyright (C) 2000 David A. Hinds -- dhinds@pcmcia.sourceforge.org
 .\"
-.TH MII\-TOOL 8 "2013\-02\-15" "net\-tools" "Linux System Administrator's Manual"
+.TH MII\-TOOL 8 "2025\-08\-26" "net\-tools" "Linux System Administrator's Manual"
 
 .SH NAME
 mii\-tool \- view, manipulate media-independent interface status
@@ -22,6 +22,10 @@ mii\-tool \- view, manipulate media-independent interface status
 This utility checks or sets the status of a network interface's Media
 Independent Interface (MII) unit.  Most fast ethernet adapters use an
 MII to autonegotiate link speed and duplex setting.
+.PP
+This is a legacy tool, you might have better success with
+.BR ethtool (8)
+instead.
 .PP
 Most intelligent network devices use an autonegotiation protocol to
 communicate what media technologies they support, and then select the
@@ -90,7 +94,8 @@ SIOCGMIIPHY on 'eth?' failed: No such device
 This error is shown, if the kernel does not know about the named device.
 .TP
 SIOCGMIIPHY on 'eth?' failed: Operation not supported 
-The interface in question does not support MII queries. Most likely, it does not have 
+The interface in question does not support MII control.
+Possibly it only supports ethtool style control, or does not have 
 MII transceivers, at all.
 
 .SH AUTHORS
@@ -101,4 +106,6 @@ Donald Becker \- becker@scyld.com
 Bernd Eckenfels \- net-tools@lina.inka.de
 
 .SH SEE ALSO
+.BR ethtool (8)
+.br
 http://net-tools.sourceforge.net \- Homepage of the net-tools project
