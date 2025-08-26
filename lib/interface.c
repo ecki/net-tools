@@ -173,8 +173,6 @@ static int if_readconf(void)
        (as of 2.1.128) */
     skfd = get_socket_for_af(AF_INET);
     if (skfd < 0) {
-	fprintf(stderr, _("warning: no inet socket available: %s\n"),
-		strerror(errno));
 	/* Try to soldier on with whatever socket we can get hold of.  */
 	skfd = sockets_open(0);
 	if (skfd < 0)
