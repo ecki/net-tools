@@ -2048,6 +2048,7 @@ int main
 	{"programs", 0, 0, 'p'},
 	{"verbose", 0, 0, 'v'},
 	{"statistics", 0, 0, 's'},
+	{"notrim", 0, 0, 'T'}, // alias for W
 	{"wide", 0, 0, 'W'},
 	{"numeric", 0, 0, 'n'},
 	{"numeric-hosts", 0, 0, '!'},
@@ -2114,6 +2115,7 @@ int main
 	    flag_int++;
 	    break;
 	case 'W':
+	case 'T':
 	    flag_wide++;
 	    break;
 	case 'n':
