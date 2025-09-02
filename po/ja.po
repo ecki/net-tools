@@ -1,71 +1,68 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Net-tool Japanese locale data
+# Kenshi Muto <kmuto@debian.org>, 2007.
+# Yasuyuki Furukawa <yasu@on.cs.keio.ac.jp>, 1999.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-02 22:28+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2007-07-04 20:47+0900\n"
+"Last-Translator: Kenshi Muto <kmuto@debian.org>\n"
+"Language-Team: Japanese\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8-bit\n"
 
 #: ../arp.c:112 ../arp.c:278
 #, c-format
 msgid "arp: need host name\n"
-msgstr ""
+msgstr "arp: ホスト名が必要です\n"
 
 #: ../arp.c:214 ../arp.c:229
 #, c-format
 msgid "No ARP entry for %s\n"
-msgstr ""
+msgstr "%sのARPエントリがありません\n"
 
 #: ../arp.c:247
 #, c-format
 msgid "arp: cant get HW-Address for `%s': %s.\n"
-msgstr ""
+msgstr "arp: '%s'のハードウェアアドレスを取得できません: %s.\n"
 
 #: ../arp.c:251
 #, c-format
 msgid "arp: protocol type mismatch.\n"
-msgstr ""
+msgstr "arp: プロトコルタイプが適合しません.\n"
 
 #: ../arp.c:260
 #, c-format
 msgid "arp: device `%s' has HW address %s `%s'.\n"
-msgstr ""
+msgstr "arp: デバイス`%s'はハードウェアアドレス%s `%s'です.\n"
 
 #: ../arp.c:291
 #, c-format
 msgid "arp: need hardware address\n"
-msgstr ""
+msgstr "arp: ハードウェアアドレスが必要です\n"
 
 #: ../arp.c:299
 #, c-format
 msgid "arp: invalid hardware address\n"
-msgstr ""
+msgstr "arp: ハードウェアアドレスが不適当です\n"
 
 #: ../arp.c:397
 #, c-format
 msgid "arp: cannot open etherfile %s !\n"
-msgstr ""
+msgstr "arp: etherファイル%sが開けません!\n"
 
 #: ../arp.c:413
 #, c-format
 msgid "arp: format error on line %u of etherfile %s !\n"
-msgstr ""
+msgstr "arp: %u行(ファイル%s)にフォーマットエラーがあります!\n"
 
 #: ../arp.c:426
 #, c-format
 msgid "arp: cannot set entry on line %u of etherfile %s !\n"
-msgstr ""
+msgstr "arp: etherファイル%u行(%s)のエントリを設定できません!\n"
 
 #: ../arp.c:447
 #, c-format
@@ -73,49 +70,53 @@ msgid ""
 "Address                  HWtype  HWaddress           Flags Mask            "
 "Iface\n"
 msgstr ""
+"アドレス               HWタイプ  HWアドレス         フラグ マスク インタ"
+"フェース\n"
 
 #: ../arp.c:475
 msgid "<from_interface>"
-msgstr ""
+msgstr "<起点インタフェース>"
 
 #: ../arp.c:477
 msgid "(incomplete)"
-msgstr ""
+msgstr "(不完全)"
 
+# translatable?
 #: ../arp.c:494
 #, c-format
 msgid "%s (%s) at "
-msgstr ""
+msgstr "%s (%s) at "
 
 #: ../arp.c:500
 #, c-format
 msgid "<incomplete> "
-msgstr ""
+msgstr "<不完全> "
 
 #: ../arp.c:506
 #, c-format
 msgid "netmask %s "
-msgstr ""
+msgstr "ネットマスク %s "
 
+# translatable?
 #: ../arp.c:523
 #, c-format
 msgid "on %s\n"
-msgstr ""
+msgstr "on %s\n"
 
 #: ../arp.c:611
 #, c-format
 msgid "Entries: %d\tSkipped: %d\tFound: %d\n"
-msgstr ""
+msgstr "エントリ: %d\tスキップ: %d\t発見: %d\n"
 
 #: ../arp.c:615
 #, c-format
 msgid "%s (%s) -- no entry\n"
-msgstr ""
+msgstr "%s (%s) -- エントリなし\n"
 
 #: ../arp.c:617
 #, c-format
 msgid "arp: in %d entries no match found.\n"
-msgstr ""
+msgstr "arp: %dのエントリ中, 一致するものが見つかりません.\n"
 
 #: ../arp.c:633
 #, c-format
@@ -124,6 +125,9 @@ msgid ""
 "  arp [-vn]  [<HW>] [-i <if>] [-a] [<hostname>]             <-Display ARP "
 "cache\n"
 msgstr ""
+"使用法:\n"
+"  arp [-vn]  [<HW>] [-i <インタフェース>]\n"
+"                                [-a] [<ホスト名>]   ‥‥ ARPキャッシュの表示\n"
 
 #: ../arp.c:634
 #, c-format
@@ -131,6 +135,8 @@ msgid ""
 "  arp [-v]          [-i <if>] -d  <host> [pub]               <-Delete ARP "
 "entry\n"
 msgstr ""
+"  arp [-v]    [-i <インタフェース>]  -d  <ホスト名> [pub] ‥‥ARPエントリを削"
+"除\n"
 
 #: ../arp.c:635
 #, c-format
@@ -138,6 +144,9 @@ msgid ""
 "  arp [-vnD] [<HW>] [-i <if>] -f  [<filename>]            <-Add entry from "
 "file\n"
 msgstr ""
+"  arp [-vnD] [<HW>] [-i <インタフェース>] \n"
+"                              -f  <ファイル名>  ‥‥ファイルからエントリを追"
+"加\n"
 
 #: ../arp.c:636
 #, c-format
@@ -145,7 +154,10 @@ msgid ""
 "  arp [-v]   [<HW>] [-i <if>] -s  <host> <hwaddr> [temp]            <-Add "
 "entry\n"
 msgstr ""
+"  arp [-v]   [<HW>] [-i <インタフェース>]\n"
+"             -s <ホスト名> <ハードウェアアドレス> [temp] ‥‥エントリを追加\n"
 
+# FIXME:What does '' mean?
 #: ../arp.c:637
 #, c-format
 msgid ""
@@ -153,6 +165,8 @@ msgid ""
 "<-''-\n"
 "\n"
 msgstr ""
+"  arp [-v]   [<HW>] [-i <インタフェース>] -Ds <ホスト名>\n"
+"              <インタフェース> [netmask <ネットマスク>] pub     ‥‥     〃\n"
 
 #: ../arp.c:639
 #, c-format
@@ -160,49 +174,55 @@ msgid ""
 "        -a                       display (all) hosts in alternative (BSD) "
 "style\n"
 msgstr ""
+"        -a                 新しい(BSD)スタイルでエントリされた全ホストを表示"
+"する\n"
 
 #: ../arp.c:640
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "        -e                       display (all) hosts in default (Linux) "
 "style\n"
 msgstr ""
+"        -a                 新しい(BSD)スタイルでエントリされた全ホストを表示"
+"する\n"
 
 #: ../arp.c:641
 #, c-format
 msgid "        -s, --set                set a new ARP entry\n"
-msgstr ""
+msgstr "        -s, --set          新規ARPエントリを設定する\n"
 
 #: ../arp.c:642
 #, c-format
 msgid "        -d, --delete             delete a specified entry\n"
-msgstr ""
+msgstr "        -d, --delete       指定エントリを削除する\n"
 
 #: ../arp.c:643 ../netstat.c:1992 ../route.c:88
 #, c-format
 msgid "        -v, --verbose            be verbose\n"
-msgstr ""
+msgstr "        -v, --verbose            詳細表示を行なう\n"
 
 #: ../arp.c:644 ../netstat.c:1994 ../route.c:89
 #, c-format
 msgid "        -n, --numeric            don't resolve names\n"
-msgstr ""
+msgstr "        -n, --numeric            名前のレゾルブをしない\n"
 
 #: ../arp.c:645
 #, c-format
 msgid ""
 "        -i, --device             specify network interface (e.g. eth0)\n"
-msgstr ""
+msgstr "        -i, --device       ネットワークインタフェースの指定(例 eth0)\n"
 
 #: ../arp.c:646
 #, c-format
 msgid "        -D, --use-device         read <hwaddr> from given device\n"
 msgstr ""
+"        -D, --use-device   与えられたデバイスから\n"
+"                                    <HWアドレス>を読み込む\n"
 
 #: ../arp.c:647
 #, c-format
 msgid "        -A, -p, --protocol       specify protocol family\n"
-msgstr ""
+msgstr "        -A, -p, --protocol       プロトコルファミリを指定する\n"
 
 #: ../arp.c:648
 #, c-format
@@ -211,128 +231,136 @@ msgid ""
 "ethers\n"
 "\n"
 msgstr ""
+"        -f, --file         /etc/ethersファイルから新規エントリを読み込む\n"
+"\n"
 
 #: ../arp.c:650 ../rarp.c:185
 #, c-format
 msgid "  <HW>=Use '-H <hw>' to specify hardware address type. Default: %s\n"
 msgstr ""
+"  <HW>=ハードウェアアドレスタイプを指定するには'-H <hw>'を使って下さい。標"
+"準: %s\n"
 
 #: ../arp.c:651 ../rarp.c:186
 #, c-format
 msgid "  List of possible hardware types (which support ARP):\n"
-msgstr ""
+msgstr "  (ARPをサポートした)指定可能なハードウェアタイプのリスト:\n"
 
 #: ../arp.c:685 ../arp.c:771
 #, c-format
 msgid "%s: hardware type not supported!\n"
-msgstr ""
+msgstr "%s: ハードウェアタイプがサポートされていません!\n"
 
 #: ../arp.c:689
 #, c-format
 msgid "%s: address family not supported!\n"
-msgstr ""
+msgstr "%s: アドレスファミリがサポートされていません!\n"
 
 #: ../arp.c:724
 #, c-format
 msgid "arp: -N not yet supported.\n"
-msgstr ""
+msgstr "arp: -Nはまだサポートしていません.\n"
 
 #: ../arp.c:734
 #, c-format
 msgid "arp: %s: unknown address family.\n"
-msgstr ""
+msgstr "arp: %s: 不明なアドレスファミリです.\n"
 
 #: ../arp.c:743
 #, c-format
 msgid "arp: %s: unknown hardware type.\n"
-msgstr ""
+msgstr "arp: %s: 不明なハードウェアタイプです.\n"
 
 #: ../arp.c:763
 #, c-format
 msgid "arp: %s: kernel only supports 'inet'.\n"
-msgstr ""
+msgstr "arp: %s: カーネルは'inet'以外はサポートしていません.\n"
 
 #: ../arp.c:776
 #, c-format
 msgid "arp: %s: hardware type without ARP support.\n"
-msgstr ""
+msgstr "arp: %s: ARPサポートのないハードウェアタイプです.\n"
 
 #: ../hostname.c:71
 #, c-format
 msgid "Setting nodename to `%s'\n"
-msgstr ""
+msgstr "ノード名を`%s'へ設定しました\n"
 
 #: ../hostname.c:76
-#, c-format
+#, fuzzy, c-format
 msgid "%s: you don't have permission to set the node name\n"
-msgstr ""
+msgstr "%s: ノード名の変更はルートでなければなりません\n"
 
 #: ../hostname.c:79 ../hostname.c:101 ../hostname.c:122 ../hostname.c:176
 #: ../hostname.c:206
 #, c-format
 msgid "%s: name too long\n"
-msgstr ""
+msgstr "%s: 名前が長すぎます\n"
 
 #: ../hostname.c:93
 #, c-format
 msgid "Setting hostname to `%s'\n"
-msgstr ""
+msgstr "ホスト名を`%s'へ設定しました\n"
 
 #: ../hostname.c:98
-#, c-format
+#, fuzzy, c-format
 msgid "%s: you don't have permission to set the host name\n"
-msgstr ""
+msgstr "%s: ホスト名の変更はルートでなければなりません\n"
 
 #: ../hostname.c:114
 #, c-format
 msgid "Setting domainname to `%s'\n"
-msgstr ""
+msgstr "ドメインを`%s'へ設定しました\n"
 
 #: ../hostname.c:119
-#, c-format
+#, fuzzy, c-format
 msgid "%s: you don't have permission to set the domain name\n"
-msgstr ""
+msgstr "%s: ドメイン名の変更はルートでなければなりません\n"
 
 #: ../hostname.c:150
 #, c-format
 msgid "Resolving `%s' ...\n"
-msgstr ""
+msgstr "`%s'をレゾルブ中 ...\n"
 
 #: ../hostname.c:161
 #, c-format
 msgid "Result: h_name=`%s'\n"
-msgstr ""
+msgstr "結果: h_name=`%s'\n"
 
 #: ../hostname.c:166
 #, c-format
 msgid "Result: h_aliases=`%s'\n"
-msgstr ""
+msgstr "結果: h_aliases=`%s'\n"
 
 #: ../hostname.c:171
 #, c-format
 msgid "Result: h_addr_list=`%s'\n"
-msgstr ""
+msgstr "結果: h_addr_list=`%s'\n"
 
 #: ../hostname.c:173 ../hostname.c:203
-#, c-format
+#, fuzzy, c-format
 msgid "%s: protocol family not supported\n"
-msgstr ""
+msgstr "%s: アドレスファミリがサポートされていません!\n"
 
 #: ../hostname.c:249
 #, c-format
 msgid "%s: can't open `%s'\n"
-msgstr ""
+msgstr "%s: `%s'を開けません\n"
 
 #: ../hostname.c:264
 #, c-format
 msgid "Usage: hostname [-v] {hostname|-F file}      set hostname (from file)\n"
 msgstr ""
+"使用法: hostname   [-v] {ホスト名|-F ファイル}    (ファイルによる)ホスト名の"
+"設定\n"
 
 #: ../hostname.c:265
 #, c-format
 msgid ""
 "       domainname [-v] {nisdomain|-F file}   set NIS domainname (from file)\n"
 msgstr ""
+"        domainname [-v] {NISドメイン|-F ファイル} (ファイルによる)NISドメイン"
+"名の設定\n"
 
 #: ../hostname.c:267
 #, c-format
@@ -340,11 +368,12 @@ msgid ""
 "       nodename [-v] {nodename|-F file}      set DECnet node name (from "
 "file)\n"
 msgstr ""
+"nodename [-v] {ノード名|-F ファイル}  (ファイルによる)DECnetノード名の設定\n"
 
 #: ../hostname.c:269
 #, c-format
 msgid "       hostname [-v] [-d|-f|-s|-a|-i|-y|-n]  display formatted name\n"
-msgstr ""
+msgstr "        hostname [-v] [-d|-f|-s|-a|-i|-y]     形式を指定して表示\n"
 
 #: ../hostname.c:270
 #, c-format
@@ -352,6 +381,8 @@ msgid ""
 "       hostname [-v]                         display hostname\n"
 "\n"
 msgstr ""
+"        hostname [-v]                         ホスト名の出力\n"
+"\n"
 
 #: ../hostname.c:271
 #, c-format
@@ -359,6 +390,9 @@ msgid ""
 "       hostname -V|--version|-h|--help       print info and exit\n"
 "\n"
 msgstr ""
+"        hostname -V|--version|-h|--help       諸情報を出力して終了\n"
+"\n"
+"\n"
 
 #: ../hostname.c:272
 #, c-format
@@ -366,41 +400,43 @@ msgid ""
 "    dnsdomainname=hostname -d, {yp,nis,}domainname=hostname -y\n"
 "\n"
 msgstr ""
+"    dnsdomainname=ホスト名 -d, {yp,nis,}domainname=ホスト名 -y\n"
+"\n"
 
 #: ../hostname.c:273
 #, c-format
 msgid "    -s, --short           short host name\n"
-msgstr ""
+msgstr "    -s, --short           短縮ホスト名\n"
 
 #: ../hostname.c:274
 #, c-format
 msgid "    -a, --alias           alias names\n"
-msgstr ""
+msgstr "    -a, --alias           エイリアス名\n"
 
 #: ../hostname.c:275
 #, c-format
 msgid "    -i, --ip-address      addresses for the hostname\n"
-msgstr ""
+msgstr "    -i, --ip-address      ホスト名に対するアドレス\n"
 
 #: ../hostname.c:276
 #, c-format
 msgid "    -f, --fqdn, --long    long host name (FQDN)\n"
-msgstr ""
+msgstr "    -f, --fqdn, --long    ロングホスト名(FQDN)\n"
 
 #: ../hostname.c:277
 #, c-format
 msgid "    -d, --domain          DNS domain name\n"
-msgstr ""
+msgstr "    -d, --domain          DNSドメイン名\n"
 
 #: ../hostname.c:278
 #, c-format
 msgid "    -y, --yp, --nis       NIS/YP domainname\n"
-msgstr ""
+msgstr "    -y, --yp, --nis       NIS/YPドメイン名\n"
 
 #: ../hostname.c:280
 #, c-format
 msgid "    -n, --node            DECnet node name\n"
-msgstr ""
+msgstr "    -n, --node            DECnetノード名\n"
 
 #: ../hostname.c:282
 #, c-format
@@ -408,6 +444,9 @@ msgid ""
 "    -F, --file            read hostname or NIS domainname from given file\n"
 "\n"
 msgstr ""
+"    -F, --file            指定のファイルからホスト名かNISドメイン名を読み込"
+"む\n"
+"\n"
 
 #: ../hostname.c:284
 #, c-format
@@ -418,11 +457,16 @@ msgid ""
 "   FQDN (Fully Qualified Domain Name) and the DNS domain name (which is\n"
 "   part of the FQDN) in the /etc/hosts file.\n"
 msgstr ""
+"   このコマンドでは、ホスト名またはNISドメイン名を読み込みまたは設定できま"
+"す。\n"
+"   DNSドメインまたはFDN(完全修飾ドメイン名)を読み込むこともできます。\n"
+"   ホスト名の参照にBindおよび, NISも使わない場合, /etc/hostsファイルにある\n"
+"   FQDNや, (FQDNの一部分の)ドメイン名を変更できます.\n"
 
 #: ../hostname.c:383
 #, c-format
 msgid "%s: You can't change the DNS domain name with this command\n"
-msgstr ""
+msgstr "%s: このコマンドではDNSドメイン名は変更できません.\n"
 
 #: ../hostname.c:384
 #, c-format
@@ -430,49 +474,53 @@ msgid ""
 "\n"
 "Unless you are using bind or NIS for host lookups you can change the DNS\n"
 msgstr ""
+"\n"
+"ホスト名の参照にBindおよび, NISも使わない場合、/etc/hostsファイル\n"
 
 #: ../hostname.c:385
 #, c-format
 msgid "domain name (which is part of the FQDN) in the /etc/hosts file.\n"
-msgstr ""
+msgstr "にあるFQDNや, (FQDNの一部分の)ドメイン名を変更できます.\n"
 
 #: ../hostname.c:402
 #, c-format
 msgid "gethostname()=`%s'\n"
-msgstr ""
+msgstr "gethostname()=`%s'\n"
 
 #: ../hostname.c:427
 #, c-format
 msgid "getdomainname()=`%s'\n"
-msgstr ""
+msgstr "getdomainname()=`%s'\n"
 
 #: ../hostname.c:442
 #, c-format
 msgid "getnodename()=`%s'\n"
-msgstr ""
+msgstr "getnodename()=`%s'\n"
 
 #: ../ifconfig.c:105
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Iface      MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR "
 "Flg\n"
 msgstr ""
+"Iface   MTU Met   RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR フ"
+"ラグ\n"
 
 #: ../ifconfig.c:130 ../ifconfig.c:162
 #, c-format
 msgid "%s: ERROR while getting interface flags: %s\n"
-msgstr ""
+msgstr "%s: インタフェースフラグの取得中にエラーが発生しました:%s\n"
 
 #: ../ifconfig.c:154 ../ifconfig.c:186 ../ifconfig.c:799 ../ifconfig.c:891
 #: ../ifconfig.c:1006
 #, c-format
 msgid "No support for INET on this system.\n"
-msgstr ""
+msgstr "INETはこのシステムではサポートされていません.\n"
 
 #: ../ifconfig.c:194
 #, c-format
 msgid "%s: ERROR while testing interface flags: %s\n"
-msgstr ""
+msgstr "%s: インタフェースフラグのテスト中にエラーが発生しました: %s\n"
 
 #: ../ifconfig.c:204
 #, c-format
@@ -480,56 +528,60 @@ msgid ""
 "Usage:\n"
 "  ifconfig [-a] [-v] [-s] <interface> [[<AF>] <address>]\n"
 msgstr ""
+"使用法:\n"
+"  ifconfig [-a] [-v] [-s] <インタフェース> [[<AF>] <アドレス>]\n"
 
 #: ../ifconfig.c:206
 #, c-format
 msgid "  [add <address>[/<prefixlen>]]\n"
-msgstr ""
+msgstr "  [add <アドレス>[/<プレフィックス長>]]\n"
 
 #: ../ifconfig.c:207
 #, c-format
 msgid "  [del <address>[/<prefixlen>]]\n"
-msgstr ""
+msgstr "   [del <アドレス>[/<プレフィックス長>]]\n"
 
 #: ../ifconfig.c:208
 #, c-format
 msgid "  [[-]broadcast [<address>]]  [[-]pointopoint [<address>]]\n"
-msgstr ""
+msgstr "  [[-]broadcast [<アドレス>]]  [[-]pointopoint [<アドレス>]]\n"
 
 #: ../ifconfig.c:209
 #, c-format
 msgid "  [netmask <address>]  [dstaddr <address>]  [tunnel <address>]\n"
-msgstr ""
+msgstr "  [netmask <アドレス>]  [dstaddr <アドレス>]  [tunnel <アドレス>]\n"
 
 #: ../ifconfig.c:212
 #, c-format
 msgid "  [outfill <NN>] [keepalive <NN>]\n"
-msgstr ""
+msgstr "  [outfill <数値>] [keepalive <数値>]\n"
 
 #: ../ifconfig.c:214
-#, c-format
+#, fuzzy, c-format
 msgid "  [hw <HW> <address>]  [mtu <NN>]\n"
-msgstr ""
+msgstr "  [hw <HW> <アドレス>]  [metric <数値>]  [mtu <数値>]\n"
 
 #: ../ifconfig.c:215
 #, c-format
 msgid "  [[-]trailers]  [[-]arp]  [[-]allmulti]\n"
-msgstr ""
+msgstr "  [[-]trailers]  [[-]arp]  [[-]allmulti]\n"
 
 #: ../ifconfig.c:216
 #, c-format
 msgid "  [multicast]  [[-]promisc]\n"
-msgstr ""
+msgstr "  [multicast]  [[-]promisc]\n"
 
 #: ../ifconfig.c:217
 #, c-format
 msgid "  [mem_start <NN>]  [io_addr <NN>]  [irq <NN>]  [media <type>]\n"
 msgstr ""
+"  [mem_start <開始アドレス>] [io_addr <IOアドレス>] [irq <番号>] [media <タイ"
+"プ>]\n"
 
 #: ../ifconfig.c:219
 #, c-format
 msgid "  [txqueuelen <NN>]\n"
-msgstr ""
+msgstr "   [txqueuelen <TXキュー長>]\n"
 
 #: ../ifconfig.c:222
 #, c-format
@@ -539,7 +591,7 @@ msgstr ""
 #: ../ifconfig.c:225
 #, c-format
 msgid "  [[-]dynamic]\n"
-msgstr ""
+msgstr "  [[-]dynamic]\n"
 
 #: ../ifconfig.c:227
 #, c-format
@@ -547,37 +599,39 @@ msgid ""
 "  [up|down] ...\n"
 "\n"
 msgstr ""
+"  [up|down] ...\n"
+"\n"
 
 #: ../ifconfig.c:229
 #, c-format
 msgid "  <HW>=Hardware Type.\n"
-msgstr ""
+msgstr "  <HW>=ハードウェアタイプ.\n"
 
 #: ../ifconfig.c:230
 #, c-format
 msgid "  List of possible hardware types:\n"
-msgstr ""
+msgstr "  利用可能なハードウェアタイプのリスト:\n"
 
 #. 1 = ARPable
 #: ../ifconfig.c:232
 #, c-format
 msgid "  <AF>=Address family. Default: %s\n"
-msgstr ""
+msgstr "  <AF>=アドレスファミリ. 標準: %s\n"
 
 #: ../ifconfig.c:233
 #, c-format
 msgid "  List of possible address families:\n"
-msgstr ""
+msgstr "  利用可能なアドレスファミリのリスト:\n"
 
 #: ../ifconfig.c:309
 #, c-format
 msgid "ifconfig: option `%s' not recognised.\n"
-msgstr ""
+msgstr "ifconfig: オプション`%s'を解釈できません.\n"
 
 #: ../ifconfig.c:311 ../ifconfig.c:995
 #, c-format
 msgid "ifconfig: `--help' gives usage information.\n"
-msgstr ""
+msgstr "ifconfig: `--help'で使用法を見られます.\n"
 
 #: ../ifconfig.c:335
 #, c-format
@@ -592,7 +646,7 @@ msgstr ""
 #: ../ifconfig.c:392
 #, c-format
 msgid "Unknown media type.\n"
-msgstr ""
+msgstr "不明なメディアタイプです.\n"
 
 #: ../ifconfig.c:429
 #, c-format
@@ -600,26 +654,28 @@ msgid ""
 "Warning: Interface %s still in promisc mode... maybe other application is "
 "running?\n"
 msgstr ""
+"警告: インタフェース%sはまだpromiscモードです...恐らく他のアプリケーションが"
+"実行中ではありませんか?\n"
 
 #: ../ifconfig.c:441
 #, c-format
 msgid "Warning: Interface %s still in MULTICAST mode.\n"
-msgstr ""
+msgstr "警告: インタフェース%sはまだMULTICASTモードです.\n"
 
 #: ../ifconfig.c:453
 #, c-format
 msgid "Warning: Interface %s still in ALLMULTI mode.\n"
-msgstr ""
+msgstr "警告: インタフェース%sはまだALLMULTIモードです.\n"
 
 #: ../ifconfig.c:477
 #, c-format
 msgid "Warning: Interface %s still in DYNAMIC mode.\n"
-msgstr ""
+msgstr "警告: インタフェース%sはまだDYNAMICモードです.\n"
 
 #: ../ifconfig.c:524
 #, c-format
 msgid "Warning: Interface %s still in BROADCAST mode.\n"
-msgstr ""
+msgstr "警告: インタフェース%sはまだBROADCASTモードです.\n"
 
 #: ../ifconfig.c:535
 #, c-format
@@ -639,7 +695,7 @@ msgstr ""
 #: ../ifconfig.c:674
 #, c-format
 msgid "Warning: Interface %s still in POINTOPOINT mode.\n"
-msgstr ""
+msgstr "警告: インタフェース%sはまだPOINTOPOINTモードです.\n"
 
 #: ../ifconfig.c:685
 #, c-format
@@ -650,11 +706,13 @@ msgstr ""
 #, c-format
 msgid "hw address type `%s' has no handler to set address. failed.\n"
 msgstr ""
+"ハードウェアアドレスタイプ`%s'はアドレスを設定するハンドラを持っていません. "
+"失敗しました.\n"
 
 #: ../ifconfig.c:717
 #, c-format
 msgid "%s: invalid %s address.\n"
-msgstr ""
+msgstr "%s: 不適切なアドレスです(%s).\n"
 
 #: ../ifconfig.c:755
 #, c-format
@@ -664,27 +722,27 @@ msgstr ""
 #: ../ifconfig.c:765 ../ifconfig.c:854 ../ifconfig.c:943
 #, c-format
 msgid "No support for INET6 on this system.\n"
-msgstr ""
+msgstr "INET6はこのシステムではサポートされていません.\n"
 
 #: ../ifconfig.c:808 ../ifconfig.c:902
 #, c-format
 msgid "Interface %s not initialized\n"
-msgstr ""
+msgstr "インタフェース%sは初期化されていません.\n"
 
 #: ../ifconfig.c:820 ../ifconfig.c:913
 #, c-format
 msgid "Bad address.\n"
-msgstr ""
+msgstr "不適切なアドレスです.\n"
 
 #: ../ifconfig.c:916
 #, c-format
 msgid "Address deletion not supported on this system.\n"
-msgstr ""
+msgstr "アドレス削除はこのシステムではサポートされていません.\n"
 
 #: ../ifconfig.c:987
 #, c-format
 msgid "ifconfig: Cannot set address for this protocol family.\n"
-msgstr ""
+msgstr "ifconfig:このプロトコルファミリにアドレスを設定できません.\n"
 
 #: ../ifconfig.c:994
 #, c-format
@@ -694,23 +752,25 @@ msgstr ""
 #: ../ifconfig.c:1016
 #, c-format
 msgid "No support for ECONET on this system.\n"
-msgstr ""
+msgstr "ECONETはこのシステムではサポートされていません.\n"
 
 #: ../ifconfig.c:1024
 #, c-format
 msgid "Don't know how to set addresses for family %d.\n"
-msgstr ""
+msgstr "ファミリ%dのアドレスの設定方法が不明です.\n"
 
 #: ../ifconfig.c:1069
 #, c-format
 msgid "WARNING: at least one error occured. (%d)\n"
-msgstr ""
+msgstr "警告: 少なくとも1つのエラーが発生しました. (%d)\n"
 
 #: ../netstat.c:496
 #, c-format
 msgid ""
 "(No info could be read for \"-p\": geteuid()=%d but you should be root.)\n"
 msgstr ""
+"(\"-p\"の情報を読み込めませんでした: geteuid()=%d しかしルートであるべきで"
+"す.)\n"
 
 #: ../netstat.c:500
 #, c-format
@@ -718,28 +778,34 @@ msgid ""
 "(Not all processes could be identified, non-owned process info\n"
 " will not be shown, you would have to be root to see it all.)\n"
 msgstr ""
+"(一部のプロセスが識別されますが, 所有していないプロセスの情報は\n"
+"表示されません。それら全てを見るにはルートになる必要があります.)\n"
 
+# translatable?
 #: ../netstat.c:507 ../netstat.c:561 ../netstat.c:1536 ../netstat.c:1617
 msgid "LISTENING"
-msgstr ""
+msgstr "LISTENING"
 
+# translatable?
 #: ../netstat.c:508 ../netstat.c:562
 msgid "CONN SENT"
-msgstr ""
+msgstr "CONN SENT"
 
+# translatable?
 #: ../netstat.c:509 ../netstat.c:563 ../netstat.c:1619
 msgid "DISC SENT"
-msgstr ""
+msgstr "DISC SENT"
 
+# translatable?
 #: ../netstat.c:510 ../netstat.c:564 ../netstat.c:627 ../netstat.c:1304
 #: ../netstat.c:1620
 msgid "ESTABLISHED"
-msgstr ""
+msgstr "ESTABLISHED"
 
 #: ../netstat.c:532
 #, c-format
 msgid "Active NET/ROM sockets\n"
-msgstr ""
+msgstr "稼働中のNET/ROMソケット\n"
 
 #: ../netstat.c:533
 #, c-format
@@ -747,82 +813,95 @@ msgid ""
 "User       Dest       Source     Device  State        Vr/Vs    Send-Q  Recv-"
 "Q\n"
 msgstr ""
+"ユーザ     受信先     発信元    デバイス  状態        Vr/Vs    送信-Q  受信-"
+"Q\n"
 
 #: ../netstat.c:544 ../netstat.c:596 ../netstat.c:1659
 #, c-format
 msgid "Problem reading data from %s\n"
-msgstr ""
+msgstr "%sからのデータの読み込みに問題\n"
 
 #: ../netstat.c:587
-#, c-format
+#, fuzzy, c-format
 msgid "Active ROSE sockets\n"
-msgstr ""
+msgstr "稼働中のNET/ROMソケット\n"
 
 #: ../netstat.c:588
 #, c-format
 msgid "dest_addr   dest_call  src_addr    src_call  dev   lci neigh   state\n"
 msgstr ""
 
+# translatable?
 #: ../netstat.c:628
 msgid "SYN_SENT"
-msgstr ""
+msgstr "SYN_SENT"
 
+# translatable?
 #: ../netstat.c:629
 msgid "SYN_RECV"
-msgstr ""
+msgstr "SYN_RECV"
 
+# translatable?
 #: ../netstat.c:630
 msgid "FIN_WAIT1"
-msgstr ""
+msgstr "FIN_WAIT1"
 
+# translatable?
 #: ../netstat.c:631
 msgid "FIN_WAIT2"
-msgstr ""
+msgstr "FIN_WAIT2"
 
+# translatable?
 #: ../netstat.c:632
 msgid "TIME_WAIT"
-msgstr ""
+msgstr "TIME_WAIT"
 
+# translatable?
 #: ../netstat.c:633
 msgid "CLOSE"
-msgstr ""
+msgstr "CLOSE"
 
+# translatable?
 #: ../netstat.c:634
 msgid "CLOSE_WAIT"
-msgstr ""
+msgstr "CLOSE_WAIT"
 
+# translatable?
 #: ../netstat.c:635
 msgid "LAST_ACK"
-msgstr ""
+msgstr "LAST_ACK"
 
+# translatable?
 #: ../netstat.c:636 ../netstat.c:1837
 msgid "LISTEN"
-msgstr ""
+msgstr "LISTEN"
 
+# translatable?
 #: ../netstat.c:637
 msgid "CLOSING"
-msgstr ""
+msgstr "CLOSING"
 
 #: ../netstat.c:711
 #, c-format
 msgid "warning, got bogus igmp6 line %d.\n"
-msgstr ""
+msgstr "警告, 偽のigmp6ライン%dを得ました.\n"
 
 #: ../netstat.c:716 ../netstat.c:757 ../netstat.c:1172 ../netstat.c:1298
 #: ../netstat.c:1409
 #, c-format
 msgid "netstat: unsupported address family %d !\n"
-msgstr ""
+msgstr "netstat: サポートしてないアドレスファミリ%dです!\n"
 
+# c-format
 #: ../netstat.c:729 ../netstat.c:734 ../netstat.c:746 ../netstat.c:752
 #, c-format
 msgid "warning, got bogus igmp line %d.\n"
-msgstr ""
+msgstr "警告, 偽のigmpライン%dを得ました.\n"
 
 #: ../netstat.c:795
 #, c-format
 msgid "Active X.25 sockets\n"
-msgstr ""
+msgstr "稼働中のX.25ソケット\n"
 
 #. IMHO, Vr/Vs is not very usefull --SF
 #: ../netstat.c:797
@@ -831,172 +910,187 @@ msgid ""
 "Dest         Source          Device  LCI  State        Vr/Vs  Send-Q  Recv-"
 "Q\n"
 msgstr ""
+"受信先       発信元        デバイス  LCI  状態         Vr/Vs  送信-Q  受信-"
+"Q\n"
 
 #: ../netstat.c:898
-#, c-format
+#, fuzzy, c-format
 msgid "warning, got bogus sctp eps line.\n"
-msgstr ""
+msgstr "警告, 偽のTCPラインを得ました.\n"
 
 #: ../netstat.c:919 ../netstat.c:1017 ../netstat.c:1029
-#, c-format
+#, fuzzy, c-format
 msgid "unsupported address family %d"
-msgstr ""
+msgstr "netstat: サポートしてないアドレスファミリ%dです!\n"
 
 #: ../netstat.c:975
-#, c-format
+#, fuzzy, c-format
 msgid "warning, got bogus sctp assoc line.\n"
-msgstr ""
+msgstr "警告, 偽のTCPラインを得ました.\n"
 
 #: ../netstat.c:1141
 #, c-format
 msgid "warning, got bogus tcp line.\n"
-msgstr ""
+msgstr "警告, 偽のTCPラインを得ました.\n"
 
 #: ../netstat.c:1184 ../netstat.c:1325 ../netstat.c:1422
 #, c-format
 msgid "off (0.00/%ld/%d)"
-msgstr ""
+msgstr "オフ (0.00/%ld/%d)"
 
 #: ../netstat.c:1188
 #, c-format
 msgid "on (%2.2f/%ld/%d)"
-msgstr ""
+msgstr "オン (%2.2f/%ld/%d)"
 
 #: ../netstat.c:1193
 #, c-format
 msgid "keepalive (%2.2f/%ld/%d)"
-msgstr ""
+msgstr "キープアライブ (%2.2f/%ld/%d)"
 
 #: ../netstat.c:1198
 #, c-format
 msgid "timewait (%2.2f/%ld/%d)"
-msgstr ""
+msgstr "時間待ち (%2.2f/%ld/%d)"
 
 #: ../netstat.c:1203
-#, c-format
+#, fuzzy, c-format
 msgid "probe (%2.2f/%ld/%d)"
-msgstr ""
+msgstr "オン (%2.2f/%ld/%d)"
 
 #: ../netstat.c:1208 ../netstat.c:1334 ../netstat.c:1432
 #, c-format
 msgid "unkn-%d (%2.2f/%ld/%d)"
-msgstr ""
+msgstr "不明-%d (%2.2f/%ld/%d)"
 
 #: ../netstat.c:1269
 #, c-format
 msgid "warning, got bogus udp line.\n"
-msgstr ""
+msgstr "警告, 偽のUDPラインを得ました.\n"
 
 #: ../netstat.c:1312 ../netstat.c:1522 ../netstat.c:1555 ../netstat.c:1849
 #: ../netstat.c:1893
 msgid "UNKNOWN"
-msgstr ""
+msgstr "不明"
 
 #: ../netstat.c:1330 ../netstat.c:1427
 #, c-format
 msgid "on%d (%2.2f/%ld/%d)"
-msgstr ""
+msgstr "オン%d (%2.2f/%ld/%d)"
 
 #: ../netstat.c:1382
 #, c-format
 msgid "warning, got bogus raw line.\n"
-msgstr ""
+msgstr "警告, 偽のRawラインを得ました.\n"
 
 #: ../netstat.c:1475
 #, c-format
 msgid "warning, got bogus unix line.\n"
-msgstr ""
+msgstr "警告, 偽のunixラインを得ました.\n"
 
+# translatable?
 #: ../netstat.c:1502
 msgid "STREAM"
-msgstr ""
+msgstr "STREAM"
 
+# translatable?
 #: ../netstat.c:1506
 msgid "DGRAM"
-msgstr ""
+msgstr "DGRAM"
 
+# translatable?
 #: ../netstat.c:1510
 msgid "RAW"
-msgstr ""
+msgstr "RAW"
 
+# translatable?
 #: ../netstat.c:1514
 msgid "RDM"
-msgstr ""
+msgstr "RDM"
 
+# translatable?
 #: ../netstat.c:1518
 msgid "SEQPACKET"
-msgstr ""
+msgstr "SEQPACKET"
 
+# translatable?
 #: ../netstat.c:1527
 msgid "FREE"
-msgstr ""
+msgstr "FREE"
 
+# translatable?
 #: ../netstat.c:1543
 msgid "CONNECTING"
-msgstr ""
+msgstr "CONNECTING"
 
+# translatable?
 #: ../netstat.c:1547 ../netstat.c:1831
 msgid "CONNECTED"
-msgstr ""
+msgstr "CONNECTED"
 
+# translatable?
 #: ../netstat.c:1551
 msgid "DISCONNECTING"
-msgstr ""
+msgstr "DISCONNECTING"
 
 #: ../netstat.c:1585
 #, c-format
 msgid "Active UNIX domain sockets "
-msgstr ""
+msgstr "稼働中のUNIXドメインソケット "
 
 #: ../netstat.c:1587 ../netstat.c:2311 ../netstat.c:2457
 #, c-format
 msgid "(servers and established)"
-msgstr ""
+msgstr "(サーバと確立)"
 
 #: ../netstat.c:1590 ../netstat.c:2314 ../netstat.c:2460
 #, c-format
 msgid "(only servers)"
-msgstr ""
+msgstr "(サーバのみ)"
 
 #: ../netstat.c:1592 ../netstat.c:2316 ../netstat.c:2462
 #, c-format
 msgid "(w/o servers)"
-msgstr ""
+msgstr "(w/oサーバ)"
 
 #: ../netstat.c:1595
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "\n"
 "Proto RefCnt Flags       Type       State         I-Node  "
 msgstr ""
+"\n"
+"Proto RefCnt フラグ      タイプ     状態         Iノード"
 
 #: ../netstat.c:1598
 #, c-format
 msgid " Path\n"
-msgstr ""
+msgstr " パス\n"
 
+# translatable?
 #: ../netstat.c:1618
 msgid "SABM SENT"
-msgstr ""
+msgstr "SABM SENT"
 
+# translatable?
 #: ../netstat.c:1621
 msgid "RECOVERY"
-msgstr ""
+msgstr "RECOVERY"
 
 #: ../netstat.c:1635
 #, c-format
 msgid "Active AX.25 sockets\n"
-msgstr ""
+msgstr "稼働中のAX.25ソケット\n"
 
 #: ../netstat.c:1636
 #, c-format
 msgid "Dest       Source     Device  State        Vr/Vs    Send-Q  Recv-Q\n"
-msgstr ""
+msgstr "受信先     発信元     デバイス 状態        Vr/Vs    送信-Q  受信-Q\n"
 
 #: ../netstat.c:1679
 #, c-format
 msgid "problem reading data from %s\n"
-msgstr ""
+msgstr "%sからのデータ読み込み中に問題\n"
 
 #: ../netstat.c:1749
 #, c-format
@@ -1005,19 +1099,24 @@ msgid ""
 "Proto Recv-Q Send-Q Local Address              Foreign Address            "
 "State"
 msgstr ""
+"稼働中のIPXソケット\n"
+"Proto 受信-Q 送信-Q 内部アドレス               外部アドレス               状"
+"態"
 
 #: ../netstat.c:1751
 #, c-format
 msgid " User"
-msgstr ""
+msgstr " ユーザ"
 
+# translatable?
 #: ../netstat.c:1787
 msgid "ESTAB"
-msgstr ""
+msgstr "ESTAB"
 
+# translatable?
 #: ../netstat.c:1795
 msgid "UNK."
-msgstr ""
+msgstr "UNK."
 
 #: ../netstat.c:1833
 msgid "OPEN"
@@ -1027,30 +1126,38 @@ msgstr ""
 msgid "BOUND"
 msgstr ""
 
+# translatable?
 #: ../netstat.c:1839
+#, fuzzy
 msgid "CONNECT"
-msgstr ""
+msgstr "CONNECTED"
 
+# translatable?
 #: ../netstat.c:1841
+#, fuzzy
 msgid "CONNECT2"
-msgstr ""
+msgstr "CONNECTED"
 
 #: ../netstat.c:1843
 msgid "CONFIG"
 msgstr ""
 
+# translatable?
 #: ../netstat.c:1845
+#, fuzzy
 msgid "DISCONN"
-msgstr ""
+msgstr "DISCONNECTING"
 
+# translatable?
 #: ../netstat.c:1847
+#, fuzzy
 msgid "CLOSED"
-msgstr ""
+msgstr "CLOSE"
 
 #: ../netstat.c:1868
-#, c-format
+#, fuzzy, c-format
 msgid "warning, got bogus l2cap line.\n"
-msgstr ""
+msgstr "警告, 偽のTCPラインを得ました.\n"
 
 #: ../netstat.c:1881
 msgid "SDP"
@@ -1069,65 +1176,73 @@ msgid "HIGH"
 msgstr ""
 
 #: ../netstat.c:1918
-#, c-format
+#, fuzzy, c-format
 msgid "warning, got bogus rfcomm line.\n"
-msgstr ""
+msgstr "警告, 偽のRawラインを得ました.\n"
 
 #: ../netstat.c:1948
 #, c-format
 msgid "Kernel Interface table\n"
-msgstr ""
+msgstr "カーネルインタフェーステーブル\n"
 
 #: ../netstat.c:1952
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Iface             MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP "
 "TX-OVR Flg\n"
 msgstr ""
+"Iface   MTU Met   RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR フ"
+"ラグ\n"
 
 #: ../netstat.c:1956
 msgid "missing interface information"
-msgstr ""
+msgstr "インタフェース情報が足りません"
 
 #: ../netstat.c:1980
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "usage: netstat [-vWeenNcCF] [<Af>] -r         netstat {-V|--version|-h|--"
 "help}\n"
 msgstr ""
+"使用法: netstat [-veenNcCF] [<アドレスファミリ>] -r\n"
+"        netstat {-V|--version|-h|--help}\n"
 
 #: ../netstat.c:1981
-#, c-format
+#, fuzzy, c-format
 msgid "       netstat [-vWnNcaeol] [<Socket> ...]\n"
-msgstr ""
+msgstr "        netstat [-vnNcaeol] [<ソケット> ...]\n"
 
 #: ../netstat.c:1982
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "       netstat { [-vWeenNac] -i | [-cnNe] -M | -s [-6tuw] }\n"
 "\n"
 msgstr ""
+"        netstat { [-veenNac] -i | [-cnNe] -M | -s }\n"
+"\n"
 
 #: ../netstat.c:1984
 #, c-format
 msgid "        -r, --route              display routing table\n"
-msgstr ""
+msgstr "        -r, --routing            経路テーブルの表示\n"
 
 #: ../netstat.c:1985
 #, c-format
 msgid "        -i, --interfaces         display interface table\n"
-msgstr ""
+msgstr "        -i, --interfaces         インタフェーステーブルの表示\n"
 
 #: ../netstat.c:1986
 #, c-format
 msgid "        -g, --groups             display multicast group memberships\n"
 msgstr ""
+"        -g, --groups             マルチキャスト・グループメンバシップの表示\n"
 
 #: ../netstat.c:1987
 #, c-format
 msgid ""
 "        -s, --statistics         display networking statistics (like SNMP)\n"
 msgstr ""
+"        -s, --statistics         (SNMPのように)ネットワーク統計を表示\n"
 
 #: ../netstat.c:1989
 #, c-format
@@ -1135,46 +1250,49 @@ msgid ""
 "        -M, --masquerade         display masqueraded connections\n"
 "\n"
 msgstr ""
+"        -M, --masquerade         マスカレード接続の表示\n"
+"\n"
 
 #: ../netstat.c:1993
-#, c-format
+#, fuzzy, c-format
 msgid "        -W, --wide               don't truncate IP addresses\n"
-msgstr ""
+msgstr "        -n, --numeric            名前のレゾルブをしない\n"
 
 #: ../netstat.c:1995
 #, c-format
 msgid "        --numeric-hosts          don't resolve host names\n"
-msgstr ""
+msgstr "        --numeric-hosts          ホスト名をレゾルブしない\n"
 
 #: ../netstat.c:1996
 #, c-format
 msgid "        --numeric-ports          don't resolve port names\n"
-msgstr ""
+msgstr "        --numeric-ports          ポート名をレゾルブしない\n"
 
 #: ../netstat.c:1997
 #, c-format
 msgid "        --numeric-users          don't resolve user names\n"
-msgstr ""
+msgstr "        --numeric-users          ユーザ名をレゾルブしない\n"
 
 #: ../netstat.c:1998
 #, c-format
 msgid "        -N, --symbolic           resolve hardware names\n"
-msgstr ""
+msgstr "        -N, --symbolic           ハードウェア名をレゾルブする\n"
 
 #: ../netstat.c:1999 ../route.c:90
 #, c-format
 msgid "        -e, --extend             display other/more information\n"
-msgstr ""
+msgstr "        -e, --extend             他の情報や多くの情報を表示する\n"
 
 #: ../netstat.c:2000
 #, c-format
 msgid "        -p, --programs           display PID/Program name for sockets\n"
 msgstr ""
+"        -p, --programs           ソケットのPID/プログラム名を表示する\n"
 
 #: ../netstat.c:2001
 #, c-format
 msgid "        -o, --timers             display timers\n"
-msgstr ""
+msgstr "        -o, --timers             タイマの表示\n"
 
 #: ../netstat.c:2002
 #, c-format
@@ -1182,17 +1300,19 @@ msgid ""
 "        -c, --continuous         continuous listing\n"
 "\n"
 msgstr ""
+"        -c, --continous          継続的な表示\n"
+"\n"
 
 #: ../netstat.c:2003
 #, c-format
 msgid "        -l, --listening          display listening server sockets\n"
-msgstr ""
+msgstr "        -l, --listening          サーバのlistenソケットの表示\n"
 
 #: ../netstat.c:2004
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "        -a, --all                display all sockets (default: connected)\n"
-msgstr ""
+msgstr "        -a, --all, --listening   全ての情報を表示 (標準: connected)\n"
 
 #: ../netstat.c:2005 ../route.c:91
 #, c-format
@@ -1200,40 +1320,47 @@ msgid ""
 "        -F, --fib                display Forwarding Information Base "
 "(default)\n"
 msgstr ""
+"        -F, --fib                フォワード情報ベースを表示する(標準)\n"
 
 #: ../netstat.c:2006
-#, c-format
+#, fuzzy, c-format
 msgid "        -C, --cache              display routing cache instead of FIB\n"
 msgstr ""
+"        -C, --cache              FIBのかわりに経路キャッシュを表示する\n"
+"\n"
 
 #: ../netstat.c:2008
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "        -Z, --context            display SELinux security context for "
 "sockets\n"
-msgstr ""
+msgstr "        -l, --listening          サーバのlistenソケットの表示\n"
 
 #: ../netstat.c:2011
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "\n"
 "  <Socket>={-t|--tcp} {-u|--udp} {-U|--udplite} {-S|--sctp} {-w|--raw}\n"
 msgstr ""
+"  <ソケット>={-t|--tcp} {-u|--udp} {-w|--raw} {-x|--unix} --ax25 --ipx --"
+"netrom\n"
 
 #: ../netstat.c:2012
-#, c-format
+#, fuzzy, c-format
 msgid "           {-x|--unix} --ax25 --ipx --netrom\n"
 msgstr ""
+"  <ソケット>={-t|--tcp} {-u|--udp} {-w|--raw} {-x|--unix} --ax25 --ipx --"
+"netrom\n"
 
 #: ../netstat.c:2013
 #, c-format
 msgid "  <AF>=Use '-6|-4' or '-A <af>' or '--<af>'; default: %s\n"
-msgstr ""
+msgstr "  <AF>='-6|-4'または'-A <af>'または'--<af>'を利用; 標準: %s\n"
 
 #: ../netstat.c:2014 ../route.c:95
 #, c-format
 msgid "  List of possible address families (which support routing):\n"
-msgstr ""
+msgstr "  (ルーティングをサポートした)利用可能なアドレスファミリのリスト:\n"
 
 #: ../netstat.c:2190
 #, c-format
@@ -1246,14 +1373,14 @@ msgid "SELinux is not enabled for this application.\n"
 msgstr ""
 
 #: ../netstat.c:2266
-#, c-format
+#, fuzzy, c-format
 msgid "netstat: No statistics support for specified address family: %s\n"
-msgstr ""
+msgstr "netstat: サポートしてないアドレスファミリ%dです!\n"
 
 #: ../netstat.c:2308
 #, c-format
 msgid "Active Internet connections "
-msgstr ""
+msgstr "稼働中のインターネット接続 "
 
 #: ../netstat.c:2318
 #, c-format
@@ -1262,109 +1389,119 @@ msgid ""
 "Proto Recv-Q Send-Q Local Address           Foreign Address         "
 "State      "
 msgstr ""
+"\n"
+"Proto 受信-Q 送信-Q 内部アドレス            外部アドレス            状"
+"態       "
 
 #: ../netstat.c:2320
 #, c-format
 msgid " User       Inode     "
-msgstr ""
+msgstr " ユーザ    Iノード    "
 
 #: ../netstat.c:2324
 #, c-format
 msgid " Timer"
-msgstr ""
+msgstr "タイマ"
 
 #: ../netstat.c:2368
 #, c-format
 msgid "IPv4 Group Memberships\n"
-msgstr ""
+msgstr "IPv4グループメンバシップ\n"
 
 #: ../netstat.c:2369
 #, c-format
 msgid "Interface       RefCnt Group\n"
-msgstr ""
+msgstr "インタフェース 参照Cnt グループ\n"
 
 #: ../netstat.c:2454
-#, c-format
+#, fuzzy, c-format
 msgid "Active Bluetooth connections "
-msgstr ""
+msgstr "稼働中のインターネット接続 "
 
 #: ../rarp.c:45
 msgid "This kernel does not support RARP.\n"
-msgstr ""
+msgstr "このカーネルはRARPをサポートしていません.\n"
 
 #: ../rarp.c:84
 #, c-format
 msgid "no RARP entry for %s.\n"
-msgstr ""
+msgstr "%sのRARPエントリがありません.\n"
 
 #: ../rarp.c:98
 #, c-format
 msgid "%s: bad hardware address\n"
-msgstr ""
+msgstr "%s: 不正なハードウェアアドレスです\n"
 
 #: ../rarp.c:130
 #, c-format
 msgid "rarp: cannot open file %s:%s.\n"
-msgstr ""
+msgstr "rarp: ファイル%sを開けません:%s.\n"
 
 #: ../rarp.c:142
 #, c-format
 msgid "rarp: format error at %s:%u\n"
-msgstr ""
+msgstr "rarp: %s:%u行にフォーマットエラーがあります\n"
 
 #: ../rarp.c:146 ../rarp.c:292
 #, c-format
 msgid "rarp: %s: unknown host\n"
-msgstr ""
+msgstr "rarp: %s: 不明なホストです\n"
 
 #: ../rarp.c:149
 #, c-format
 msgid "rarp: cannot set entry from %s:%u\n"
-msgstr ""
+msgstr "rarp: %s:%u行からエントリを設定できません\n"
 
 #: ../rarp.c:179
 #, c-format
 msgid "Usage: rarp -a                               list entries in cache.\n"
 msgstr ""
+"使用法: rarp -a                              キャッシュエントリの表示.\n"
 
 #: ../rarp.c:180
 #, c-format
 msgid "       rarp -d <hostname>                    delete entry from cache.\n"
 msgstr ""
+"       rarp -d <ホスト名>                    キャッシュからエントリを削除す"
+"る.\n"
 
 #: ../rarp.c:181
 #, c-format
 msgid "       rarp [<HW>] -s <hostname> <hwaddr>    add entry to cache.\n"
 msgstr ""
+"       rarp [<HW>] -s <ホスト名> <ハードウェアアドレス>\n"
+"                                             キャッシュへエントリを追加.\n"
 
 #: ../rarp.c:182
 #, c-format
 msgid ""
 "       rarp -f                               add entries from /etc/ethers.\n"
 msgstr ""
+"       rarp -f                               /etc/ethersからエントリ追加.\n"
 
 #: ../rarp.c:183
 #, c-format
 msgid ""
 "       rarp -V                               display program version.\n"
 "\n"
-msgstr ""
+msgstr "       rarp -V                               バージョン情報の出力.\n"
 
 #: ../rarp.c:241
 #, c-format
 msgid "%s: illegal option mix.\n"
-msgstr ""
+msgstr "%s: オプションの組合せが間違っています.\n"
 
 #: ../rarp.c:272
 #, c-format
 msgid "rarp: %s: unknown hardware type.\n"
-msgstr ""
+msgstr "rarp: %s: ハードウェアタイプが不明です.\n"
 
 #: ../route.c:82
 #, c-format
 msgid ""
 "Usage: route [-nNvee] [-FC] [<AF>]           List kernel routing tables\n"
 msgstr ""
+"使用法:route [-nNvee] [-FC] [アドレスファミリ]  カーネル経路テーブルの表示.\n"
 
 #: ../route.c:83
 #, c-format
@@ -1372,6 +1509,9 @@ msgid ""
 "       route [-v] [-FC] {add|del|flush} ...  Modify routing table for AF.\n"
 "\n"
 msgstr ""
+"       route [-v] [-FC] {add|del|flush}‥‥\n"
+"\t\t\t\t   アドレスファミリの経路テーブルの設定.\n"
+"\n"
 
 #: ../route.c:85
 #, c-format
@@ -1379,6 +1519,8 @@ msgid ""
 "       route {-h|--help} [<AF>]              Detailed usage syntax for "
 "specified AF.\n"
 msgstr ""
+"       route {-h|--help} [アドレスファミリ]\n"
+"                                     アドレスファミリ特定の文法の説明.\n"
 
 #: ../route.c:86
 #, c-format
@@ -1387,6 +1529,8 @@ msgid ""
 "exit.\n"
 "\n"
 msgstr ""
+"       route {-V|--version}          バージョン/作者情報の出力と終了.\n"
+"\n"
 
 #: ../route.c:92
 #, c-format
@@ -1394,52 +1538,56 @@ msgid ""
 "        -C, --cache              display routing cache instead of FIB\n"
 "\n"
 msgstr ""
+"        -C, --cache              FIBのかわりに経路キャッシュを表示する\n"
+"\n"
 
 #: ../route.c:94
-#, c-format
+#, fuzzy, c-format
 msgid "  <AF>=Use -4, -6, '-A <af>' or '--<af>'; default: %s\n"
-msgstr ""
+msgstr "  <AF>='-A <af>'または'--<af>'を利用; 標準: %s\n"
 
 #: ../plipconfig.c:63
-#, c-format
+#, fuzzy, c-format
 msgid "Usage: plipconfig interface [nibble NN] [trigger NN]\n"
-msgstr ""
+msgstr "使用法: plipconfig [-a] [-i] [-v] インタフェース\n"
 
 #: ../plipconfig.c:64
 #, c-format
 msgid "       plipconfig -V | --version\n"
-msgstr ""
+msgstr "       plipconfig -V | --version\n"
 
 #: ../plipconfig.c:65
-#, c-format
+#, fuzzy, c-format
 msgid "       plipconfig -h | --help\n"
-msgstr ""
+msgstr "       plipconfig -V | --version\n"
 
+# translatable?
 #: ../plipconfig.c:71
 #, c-format
 msgid "%s\tnibble %lu  trigger %lu\n"
-msgstr ""
+msgstr "%s\tnibble %lu  trigger %lu\n"
 
 #: ../iptunnel.c:82
 #, c-format
 msgid "Usage: iptunnel { add | change | del | show } [ NAME ]\n"
-msgstr ""
+msgstr "Usage: iptunnel { add | change | del | show } [ NAME ]\n"
 
 #: ../iptunnel.c:83
 #, c-format
 msgid ""
 "          [ mode { ipip | gre | sit } ] [ remote ADDR ] [ local ADDR ]\n"
 msgstr ""
+"          [ mode { ipip | gre | sit } ] [ remote ADDR ] [ local ADDR ]\n"
 
 #: ../iptunnel.c:84
 #, c-format
 msgid "          [ [i|o]seq ] [ [i|o]key KEY ] [ [i|o]csum ]\n"
-msgstr ""
+msgstr "          [ [i|o]seq ] [ [i|o]key KEY ] [ [i|o]csum ]\n"
 
 #: ../iptunnel.c:85
 #, c-format
 msgid "          [ ttl TTL ] [ tos TOS ] [ nopmtudisc ] [ dev PHYS_DEV ]\n"
-msgstr ""
+msgstr "          [ ttl TTL ] [ tos TOS ] [ nopmtudisc ] [ dev PHYS_DEV ]\n"
 
 #: ../iptunnel.c:86
 #, c-format
@@ -1447,346 +1595,351 @@ msgid ""
 "       iptunnel -V | --version\n"
 "\n"
 msgstr ""
+"       iptunnel -V | --version\n"
+"\n"
 
 #: ../iptunnel.c:87
 #, c-format
 msgid "Where: NAME := STRING\n"
-msgstr ""
+msgstr "意味: NAME := STRING\n"
 
 #: ../iptunnel.c:88
 #, c-format
 msgid "       ADDR := { IP_ADDRESS | any }\n"
-msgstr ""
+msgstr "       ADDR := { IP_ADDRESS | any }\n"
 
 #: ../iptunnel.c:89
 #, c-format
 msgid "       TOS  := { NUMBER | inherit }\n"
-msgstr ""
+msgstr "       TOS  := { NUMBER | inherit }\n"
 
 #: ../iptunnel.c:90
 #, c-format
 msgid "       TTL  := { 1..255 | inherit }\n"
-msgstr ""
+msgstr "       TTL  := { 1..255 | inherit }\n"
 
 #: ../iptunnel.c:91
 #, c-format
 msgid "       KEY  := { DOTTED_QUAD | NUMBER }\n"
-msgstr ""
+msgstr "       KEY  := { DOTTED_QUAD | NUMBER }\n"
 
 #: ../iptunnel.c:332
 #, c-format
 msgid "Keys are not allowed with ipip and sit.\n"
-msgstr ""
+msgstr "キーはipipおよびsitでは許可されません.\n"
 
 #: ../iptunnel.c:352
 #, c-format
 msgid "Broadcast tunnel requires a source address.\n"
-msgstr ""
+msgstr "ブロードキャストトンネルは発信元アドレスが必要です.\n"
 
 #: ../iptunnel.c:367
 #, c-format
 msgid "ttl != 0 and noptmudisc are incompatible\n"
-msgstr ""
+msgstr "ttl != 0およびnoptmudiscは矛盾します\n"
 
 #: ../iptunnel.c:379
 #, c-format
 msgid "cannot determine tunnel mode (ipip, gre or sit)\n"
-msgstr ""
+msgstr "トンネルモードを決定できません(ipip, greまたはsit)\n"
 
 #: ../iptunnel.c:417
 #, c-format
 msgid "%s: %s/ip  remote %s  local %s "
-msgstr ""
+msgstr "%s: %s/ip  リモート%s  ローカル%s "
 
 #: ../iptunnel.c:421
 msgid "unknown"
-msgstr ""
+msgstr "不明"
 
+# FIXME: what does it mean?
 #: ../iptunnel.c:453
 #, c-format
 msgid "  Drop packets out of sequence.\n"
-msgstr ""
+msgstr "  シーケンスから外れたパケットをドロップ.\n"
 
 #: ../iptunnel.c:455
 #, c-format
 msgid "  Checksum in received packet is required.\n"
-msgstr ""
+msgstr "  受信パケットのチェックサムは必須です.\n"
 
+# FIXME: what does it mean?
 #: ../iptunnel.c:457
 #, c-format
 msgid "  Sequence packets on output.\n"
-msgstr ""
+msgstr "  送信のシーケンスパケット.\n"
 
+# FIXME: what does it mean?
 #: ../iptunnel.c:459
 #, c-format
 msgid "  Checksum output packets.\n"
-msgstr ""
+msgstr "  送信パケットのチェックサム.\n"
 
 #: ../iptunnel.c:489
 #, c-format
 msgid "Wrong format of /proc/net/dev. Sorry.\n"
-msgstr ""
+msgstr "/proc/net/devが不正なフォーマットです. すみません.\n"
 
 #: ../iptunnel.c:503
 #, c-format
 msgid "Failed to get type of [%s]\n"
-msgstr ""
+msgstr "[%s]のタイプの取得に失敗\n"
 
 #: ../iptunnel.c:519
 #, c-format
 msgid "RX: Packets    Bytes        Errors CsumErrs OutOfSeq Mcasts\n"
-msgstr ""
+msgstr "RX: パケット   バイト      エラー  CsumErrs outOfSeq マルチキャスト\n"
 
 #: ../iptunnel.c:522
 #, c-format
 msgid "TX: Packets    Bytes        Errors DeadLoop NoRoute  NoBufs\n"
-msgstr ""
+msgstr "TX: パケット   バイト       エラー DeadLoop NoRoute  バッファなし\n"
 
 #: ../statistics.c:40
 msgid "ICMP input histogram:"
-msgstr ""
+msgstr "ICMP入力ヒストグラム:"
 
 #: ../statistics.c:41
 msgid "ICMP output histogram:"
-msgstr ""
+msgstr "ICMP出力ヒストグラム:"
 
 #. Keep the entries sorted!
 #: ../statistics.c:58
-#, c-format
+#, fuzzy, c-format
 msgid "Default TTL is %llu"
-msgstr ""
+msgstr "標準TTLは%uです"
 
 #: ../statistics.c:59 ../statistics.c:95
-#, c-format
+#, fuzzy, c-format
 msgid "%llu forwarded"
-msgstr ""
+msgstr "%uの転送"
 
 #: ../statistics.c:60
 #, c-format
 msgid "Forwarding is %s"
-msgstr ""
+msgstr "フォワードは%sです"
 
 #. Keep the entries sorted!
 #: ../statistics.c:61 ../statistics.c:81
-#, c-format
+#, fuzzy, c-format
 msgid "%llu fragments created"
-msgstr ""
+msgstr "%uフラグメントを生成"
 
 #: ../statistics.c:62 ../statistics.c:82
-#, c-format
+#, fuzzy, c-format
 msgid "%llu outgoing packets failed fragmentation"
-msgstr ""
+msgstr "%uの送信パケットをドロップ"
 
 #: ../statistics.c:63 ../statistics.c:83
-#, c-format
+#, fuzzy, c-format
 msgid "%llu outgoing packets fragmented ok"
-msgstr ""
+msgstr "%uの送信パケットをドロップ"
 
 #: ../statistics.c:64 ../statistics.c:84
-#, c-format
+#, fuzzy, c-format
 msgid "%llu with invalid addresses"
-msgstr ""
+msgstr "不適当なアドレスが%u"
 
 #: ../statistics.c:65 ../statistics.c:85
-#, c-format
+#, fuzzy, c-format
 msgid "%llu incoming packets delivered"
-msgstr ""
+msgstr "%uの受信パケットを配送"
 
 #: ../statistics.c:66 ../statistics.c:86
-#, c-format
+#, fuzzy, c-format
 msgid "%llu incoming packets discarded"
-msgstr ""
+msgstr "%uの受信パケットを破棄"
 
 #: ../statistics.c:67 ../statistics.c:87
-#, c-format
+#, fuzzy, c-format
 msgid "%llu with invalid headers"
-msgstr ""
+msgstr "不適当なヘッダが%u"
 
 #: ../statistics.c:68 ../statistics.c:90
-#, c-format
+#, fuzzy, c-format
 msgid "%llu total packets received"
-msgstr ""
+msgstr "合計%uパケットを受信"
 
 #: ../statistics.c:69 ../statistics.c:93
-#, c-format
+#, fuzzy, c-format
 msgid "%llu with unknown protocol"
-msgstr ""
+msgstr "%uの不明なプロトコル"
 
 #: ../statistics.c:70 ../statistics.c:94
-#, c-format
+#, fuzzy, c-format
 msgid "%llu outgoing packets dropped"
-msgstr ""
+msgstr "%uの送信パケットをドロップ"
 
 #: ../statistics.c:71 ../statistics.c:97
-#, c-format
+#, fuzzy, c-format
 msgid "%llu dropped because of missing route"
-msgstr ""
+msgstr "不明な経路で%uをドロップ"
 
 #: ../statistics.c:72 ../statistics.c:98
-#, c-format
+#, fuzzy, c-format
 msgid "%llu requests sent out"
-msgstr ""
+msgstr "%uの要求を送信"
 
 #. ?
 #: ../statistics.c:73 ../statistics.c:99
-#, c-format
+#, fuzzy, c-format
 msgid "%llu packet reassemblies failed"
-msgstr ""
+msgstr "%uパケットの再構築に失敗"
 
 #: ../statistics.c:74 ../statistics.c:100
-#, c-format
+#, fuzzy, c-format
 msgid "%llu packets reassembled ok"
-msgstr ""
+msgstr "%uパケットの再構築に成功"
 
 #: ../statistics.c:75 ../statistics.c:101
-#, c-format
+#, fuzzy, c-format
 msgid "%llu reassemblies required"
-msgstr ""
+msgstr "%uの再構築が必要"
 
 #. ?
 #: ../statistics.c:76 ../statistics.c:102
-#, c-format
+#, fuzzy, c-format
 msgid "%llu fragments dropped after timeout"
-msgstr ""
+msgstr "タイムアウト後に%uのフラグメントをドロップ"
 
 #: ../statistics.c:88
-#, c-format
+#, fuzzy, c-format
 msgid "%llu incoming multicast packets"
-msgstr ""
+msgstr "%uの受信パケットを破棄"
 
 #: ../statistics.c:89
-#, c-format
+#, fuzzy, c-format
 msgid "%llu incoming packets with no route"
-msgstr ""
+msgstr "%uの受信パケットを破棄"
 
 #: ../statistics.c:91
-#, c-format
+#, fuzzy, c-format
 msgid "%llu with packets too big"
-msgstr ""
+msgstr "%uのパケットを送信"
 
 #: ../statistics.c:92
-#, c-format
+#, fuzzy, c-format
 msgid "%llu with truncated packets"
-msgstr ""
+msgstr "不適当なヘッダが%u"
 
 #: ../statistics.c:96
-#, c-format
+#, fuzzy, c-format
 msgid "%llu outgoing multicast packets"
-msgstr ""
+msgstr "%uの送信パケットをドロップ"
 
 #. Keep the entries sorted!
 #: ../statistics.c:107 ../statistics.c:120
-#, c-format
+#, fuzzy, c-format
 msgid "address mask replies: %llu"
-msgstr ""
+msgstr "アドレスマスク応答: %u"
 
 #. ?
 #: ../statistics.c:108
-#, c-format
+#, fuzzy, c-format
 msgid "address mask request: %llu"
-msgstr ""
+msgstr "アドレスマスク要求: %u"
 
 #. ?
 #. Keep the entries sorted!
 #: ../statistics.c:109 ../statistics.c:122 ../statistics.c:137
 #: ../statistics.c:153
-#, c-format
+#, fuzzy, c-format
 msgid "destination unreachable: %llu"
-msgstr ""
+msgstr "送信先到達不可: %u"
 
 #: ../statistics.c:110 ../statistics.c:123 ../statistics.c:138
 #: ../statistics.c:154
-#, c-format
+#, fuzzy, c-format
 msgid "echo replies: %llu"
-msgstr ""
+msgstr "エコー応答: %u"
 
 #: ../statistics.c:111 ../statistics.c:124 ../statistics.c:139
 #: ../statistics.c:155
-#, c-format
+#, fuzzy, c-format
 msgid "echo requests: %llu"
-msgstr ""
+msgstr "エコー要求: %u"
 
 #: ../statistics.c:112 ../statistics.c:140
-#, c-format
+#, fuzzy, c-format
 msgid "%llu input ICMP message failed"
-msgstr ""
+msgstr "%uのICMPメッセージ入力失敗."
 
 #: ../statistics.c:113 ../statistics.c:144
-#, c-format
+#, fuzzy, c-format
 msgid "%llu ICMP messages received"
-msgstr ""
+msgstr "%uのICMPメッセージ受信"
 
 #: ../statistics.c:114 ../statistics.c:127
-#, c-format
+#, fuzzy, c-format
 msgid "wrong parameters: %llu"
-msgstr ""
+msgstr "誤ったパラメータ: %u"
 
 #. ?
 #: ../statistics.c:115 ../statistics.c:149 ../statistics.c:164
-#, c-format
+#, fuzzy, c-format
 msgid "redirects: %llu"
-msgstr ""
+msgstr "リダイレクト: %u"
 
 #: ../statistics.c:116
-#, c-format
+#, fuzzy, c-format
 msgid "source quenches: %llu"
-msgstr ""
+msgstr "発信元消滅: %u"
 
 #: ../statistics.c:117
-#, c-format
+#, fuzzy, c-format
 msgid "timeout in transit: %llu"
-msgstr ""
+msgstr "送信時間オーバ: %u"
 
 #: ../statistics.c:118
-#, c-format
+#, fuzzy, c-format
 msgid "timestamp reply: %llu"
-msgstr ""
+msgstr "タイムスタンプ応答: %u"
 
 #: ../statistics.c:119
-#, c-format
+#, fuzzy, c-format
 msgid "timestamp request: %llu"
-msgstr ""
+msgstr "タイムスタンプ要求: %u"
 
 #: ../statistics.c:121
-#, c-format
+#, fuzzy, c-format
 msgid "address mask requests: %llu"
-msgstr ""
+msgstr "アドレスマスク要求: %u"
 
 #: ../statistics.c:125
-#, c-format
+#, fuzzy, c-format
 msgid "%llu ICMP messages failed"
-msgstr ""
+msgstr "%uのICMPメッセージ失敗"
 
 #: ../statistics.c:126 ../statistics.c:159
-#, c-format
+#, fuzzy, c-format
 msgid "%llu ICMP messages sent"
-msgstr ""
+msgstr "%uのICMPメッセージ送信"
 
 #. ?
 #: ../statistics.c:128
-#, c-format
+#, fuzzy, c-format
 msgid "redirect: %llu"
-msgstr ""
+msgstr "リダイレクト: %u"
 
 #: ../statistics.c:129
-#, c-format
+#, fuzzy, c-format
 msgid "source quench: %llu"
-msgstr ""
+msgstr "発信元消滅: %u"
 
 #: ../statistics.c:130
-#, c-format
+#, fuzzy, c-format
 msgid "time exceeded: %llu"
-msgstr ""
+msgstr "時間切れ: %u"
 
 #: ../statistics.c:131
-#, c-format
+#, fuzzy, c-format
 msgid "timestamp replies: %llu"
-msgstr ""
+msgstr "タイムスタンプ応答: %u"
 
 #: ../statistics.c:132
-#, c-format
+#, fuzzy, c-format
 msgid "timestamp requests: %llu"
-msgstr ""
+msgstr "タイムスタンプ要求: %u"
 
 #: ../statistics.c:141 ../statistics.c:156
 #, c-format
@@ -1814,9 +1967,9 @@ msgid "neighbour solicits: %llu"
 msgstr ""
 
 #: ../statistics.c:147 ../statistics.c:162
-#, c-format
+#, fuzzy, c-format
 msgid "parameter problem: %llu"
-msgstr ""
+msgstr "誤ったパラメータ: %u"
 
 #: ../statistics.c:148 ../statistics.c:163
 #, c-format
@@ -1834,9 +1987,9 @@ msgid "router solicits: %llu"
 msgstr ""
 
 #: ../statistics.c:152
-#, c-format
+#, fuzzy, c-format
 msgid "received ICMPv6 time exceeded: %llu"
-msgstr ""
+msgstr "時間切れ: %u"
 
 #: ../statistics.c:160
 #, c-format
@@ -1849,438 +2002,454 @@ msgid "neighbor solicits: %llu"
 msgstr ""
 
 #: ../statistics.c:167
-#, c-format
+#, fuzzy, c-format
 msgid "sent ICMPv6 time exceeded: %llu"
-msgstr ""
+msgstr "時間切れ: %u"
 
 #. Keep the entries sorted!
 #: ../statistics.c:172
-#, c-format
+#, fuzzy, c-format
 msgid "%llu active connection openings"
-msgstr ""
+msgstr "%uの能動接続開始"
 
 #: ../statistics.c:173
-#, c-format
+#, fuzzy, c-format
 msgid "%llu failed connection attempts"
-msgstr ""
+msgstr "%uの接続試行失敗"
 
 #: ../statistics.c:174
-#, c-format
+#, fuzzy, c-format
 msgid "%llu connections established"
-msgstr ""
+msgstr "%uの接続確立"
 
 #: ../statistics.c:175
-#, c-format
+#, fuzzy, c-format
 msgid "%llu connection resets received"
-msgstr ""
+msgstr "%uの接続リセット受信"
 
 #: ../statistics.c:176
-#, c-format
+#, fuzzy, c-format
 msgid "%llu bad segments received"
-msgstr ""
+msgstr "%uの不正セグメント受信."
 
 #: ../statistics.c:177
-#, c-format
+#, fuzzy, c-format
 msgid "%llu segments received"
-msgstr ""
+msgstr "%uセグメントの受信"
 
 #: ../statistics.c:179
-#, c-format
+#, fuzzy, c-format
 msgid "%llu resets sent"
-msgstr ""
+msgstr "%uのリセット送信"
 
 #: ../statistics.c:180
-#, c-format
+#, fuzzy, c-format
 msgid "%llu segments sent out"
-msgstr ""
+msgstr "%uセグメントの送信"
 
 #: ../statistics.c:181
-#, c-format
+#, fuzzy, c-format
 msgid "%llu passive connection openings"
-msgstr ""
+msgstr "%uの受動接続開始"
 
 #: ../statistics.c:182
-#, c-format
+#, fuzzy, c-format
 msgid "%llu segments retransmitted"
-msgstr ""
+msgstr "%uセグメントの再転送"
 
 #: ../statistics.c:183
 #, c-format
 msgid "RTO algorithm is %s"
-msgstr ""
+msgstr "RTOアルゴリズムは%sです"
 
 #. Keep the entries sorted!
 #: ../statistics.c:190 ../statistics.c:201
-#, c-format
+#, fuzzy, c-format
 msgid "%llu packets with invalid checksum"
-msgstr ""
+msgstr "不適当なヘッダが%u"
 
 #: ../statistics.c:191 ../statistics.c:202
-#, c-format
+#, fuzzy, c-format
 msgid "%llu packets received"
-msgstr ""
+msgstr "%uパケット受信"
 
 #: ../statistics.c:192 ../statistics.c:203
-#, c-format
+#, fuzzy, c-format
 msgid "%llu packet receive errors"
-msgstr ""
+msgstr "%uのパケット受信エラー"
 
 #: ../statistics.c:193 ../statistics.c:204
-#, c-format
+#, fuzzy, c-format
 msgid "%llu packets to unknown port received"
-msgstr ""
+msgstr "不明なポートからの%uパケットの受信."
 
 #: ../statistics.c:194 ../statistics.c:205
-#, c-format
+#, fuzzy, c-format
 msgid "%llu packets sent"
-msgstr ""
+msgstr "%uのパケットを送信"
 
 #: ../statistics.c:195 ../statistics.c:206
-#, c-format
+#, fuzzy, c-format
 msgid "%llu receive buffer errors"
-msgstr ""
+msgstr "%uのパケット受信エラー"
 
 #: ../statistics.c:196 ../statistics.c:207
 #, c-format
 msgid "%llu send buffer errors"
 msgstr ""
 
+# FIXME
 #. Keep the entries sorted!
 #: ../statistics.c:212
-#, c-format
+#, fuzzy, c-format
 msgid "%llu delayed acks further delayed because of locked socket"
-msgstr ""
+msgstr "%uの遅延ackがロックされたソケットのためにさらに遅延"
 
 #: ../statistics.c:213
-#, c-format
+#, fuzzy, c-format
 msgid "Quick ack mode was activated %llu times"
-msgstr ""
+msgstr "クイックackモードが%u回稼働"
 
 #: ../statistics.c:214
-#, c-format
+#, fuzzy, c-format
 msgid "%llu delayed acks sent"
-msgstr ""
+msgstr "%uの遅延ackを送信"
 
 #: ../statistics.c:215
-#, c-format
+#, fuzzy, c-format
 msgid "%llu resets received for embryonic SYN_RECV sockets"
-msgstr ""
+msgstr "%uの未完成のSYN_RECVソケットに対するリセットを受信"
 
+# FIXME
 #: ../statistics.c:216
-#, c-format
+#, fuzzy, c-format
 msgid "%llu SYNs to LISTEN sockets dropped"
-msgstr ""
+msgstr "%uのソケットリスンSYNが無視"
 
+# FIXME
 #: ../statistics.c:217
-#, c-format
+#, fuzzy, c-format
 msgid "%llu times the listen queue of a socket overflowed"
-msgstr ""
+msgstr "ソケットのリスンキューが%u回オーバフロー"
 
 #: ../statistics.c:218
-#, c-format
+#, fuzzy, c-format
 msgid "%llu ICMP packets dropped because socket was locked"
-msgstr ""
+msgstr "%uのICMPパケットをソケットのロックによってドロップ"
 
 #: ../statistics.c:219
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "%llu packets dropped from out-of-order queue because of socket buffer overrun"
 msgstr ""
+"%uのパケットがソケットバッファオーバーランのためout-of-orderキューからドロッ"
+"プ"
 
 #: ../statistics.c:220
-#, c-format
+#, fuzzy, c-format
 msgid "%llu ICMP packets dropped because they were out-of-window"
-msgstr ""
+msgstr "%uのICMPパケットがout-of-windowのためドロップ"
 
 #: ../statistics.c:221
-#, c-format
+#, fuzzy, c-format
 msgid "%llu active connections rejected because of time stamp"
-msgstr ""
+msgstr "%uの能動的接続がタイムスタンプのために拒否"
 
 #: ../statistics.c:222
-#, c-format
+#, fuzzy, c-format
 msgid "%llu packets rejected in established connections because of timestamp"
-msgstr ""
+msgstr "%uのパケットがタイムスタンプのために接続確立を拒否"
 
 #: ../statistics.c:223
-#, c-format
+#, fuzzy, c-format
 msgid "%llu passive connections rejected because of time stamp"
-msgstr ""
+msgstr "%uの受動的接続がタイムスタンプのために拒否"
 
 #: ../statistics.c:224
-#, c-format
+#, fuzzy, c-format
 msgid "%llu packets pruned from receive queue because of socket buffer overrun"
-msgstr ""
+msgstr "%uのパケットをソケットバッファオーバランのため受信キューから除外"
 
 #: ../statistics.c:225
-#, c-format
+#, fuzzy, c-format
 msgid "%llu packets pruned from receive queue"
-msgstr ""
+msgstr "%uのパケットを受信キューから除外"
 
 #: ../statistics.c:226
-#, c-format
+#, fuzzy, c-format
 msgid "Ran %llu times out of system memory during packet sending"
-msgstr ""
+msgstr "%u回のパケット送信中のシステムメモリあふれ"
 
 #: ../statistics.c:227
-#, c-format
+#, fuzzy, c-format
 msgid "%llu invalid SYN cookies received"
-msgstr ""
+msgstr "%uの不適当なSYNクッキーを受信"
 
 #: ../statistics.c:228
-#, c-format
+#, fuzzy, c-format
 msgid "%llu SYN cookies received"
-msgstr ""
+msgstr "%uのSYNクッキーを受信"
 
 #: ../statistics.c:229
-#, c-format
+#, fuzzy, c-format
 msgid "%llu SYN cookies sent"
-msgstr ""
+msgstr "%uのSYNクッキーを送信"
 
 #: ../statistics.c:230
-#, c-format
+#, fuzzy, c-format
 msgid "%llu times unable to send RST due to no memory"
-msgstr ""
+msgstr "メモリ不足のためにRSTの送信が%u回不能"
 
 #: ../statistics.c:231
-#, c-format
+#, fuzzy, c-format
 msgid "%llu connections reset due to early user close"
-msgstr ""
+msgstr "早期のユーザのクローズのために%uの接続をリセット"
 
 #: ../statistics.c:232
-#, c-format
+#, fuzzy, c-format
 msgid "%llu connections reset due to unexpected data"
-msgstr ""
+msgstr "予期せぬデータのために%uの接続をリセット"
 
+# FIXME
 #: ../statistics.c:233
-#, c-format
+#, fuzzy, c-format
 msgid "%llu connections aborted after user close in linger timeout"
-msgstr ""
+msgstr "ユーザの長期タイムアウトでのクローズ後に%uの接続が中止"
 
 #: ../statistics.c:234
-#, c-format
+#, fuzzy, c-format
 msgid "%llu connections aborted due to memory pressure"
-msgstr ""
+msgstr "メモリの制約のために%uの接続を中止"
 
 #: ../statistics.c:235
-#, c-format
+#, fuzzy, c-format
 msgid "%llu connections reset due to unexpected SYN"
-msgstr ""
+msgstr "予期せぬSYNのために%uの接続をリセット"
 
 #: ../statistics.c:236
-#, c-format
+#, fuzzy, c-format
 msgid "%llu connections aborted due to timeout"
-msgstr ""
+msgstr "タイムアウトのために%uの接続を中止"
 
 #: ../statistics.c:237
-#, c-format
+#, fuzzy, c-format
 msgid "%llu bytes directly in process context from backlog"
-msgstr ""
+msgstr "%uバイトをバックログから直接受信"
 
 #: ../statistics.c:238
-#, c-format
+#, fuzzy, c-format
 msgid "%llu bytes directly received in process context from prequeue"
-msgstr ""
+msgstr "%uバイトをプレキューから直接受信"
 
 #: ../statistics.c:239
-#, c-format
+#, fuzzy, c-format
 msgid "%llu DSACKs for out of order packets received"
-msgstr ""
+msgstr "%uのDSACKを順序外パケットとして受信"
 
 #: ../statistics.c:240
-#, c-format
+#, fuzzy, c-format
 msgid "%llu DSACKs sent for out of order packets"
-msgstr ""
+msgstr "%uのDSACKを順序外パケットとして送信"
 
 #: ../statistics.c:241
-#, c-format
+#, fuzzy, c-format
 msgid "%llu DSACKs sent for old packets"
-msgstr ""
+msgstr "%uのDSACKを古いパケットとして送信"
 
 #: ../statistics.c:242
-#, c-format
+#, fuzzy, c-format
 msgid "%llu DSACKs received"
-msgstr ""
+msgstr "%uのDSACKを受信"
 
 #: ../statistics.c:243
-#, c-format
+#, fuzzy, c-format
 msgid "%llu congestion window recovered without slow start using DSACK"
-msgstr ""
+msgstr "DSACKを使って%uの輻輳ウィンドウを回復"
 
 #: ../statistics.c:244
-#, c-format
+#, fuzzy, c-format
 msgid "%llu congestion windows recovered without slow start by DSACK"
-msgstr ""
+msgstr "DSACKを使って%uの輻輳ウィンドウを回復"
 
 #: ../statistics.c:245
-#, c-format
+#, fuzzy, c-format
 msgid "Detected reordering %llu times using FACK"
-msgstr ""
+msgstr "FACKを使った%u回の検出された並べ替え"
 
 #: ../statistics.c:246
-#, c-format
+#, fuzzy, c-format
 msgid "%llu fast retransmits"
-msgstr ""
+msgstr "%uの高速再送"
 
 #: ../statistics.c:247
-#, c-format
+#, fuzzy, c-format
 msgid "%llu forward retransmits"
-msgstr ""
+msgstr "%uの転送再送"
 
 #: ../statistics.c:248
-#, c-format
+#, fuzzy, c-format
 msgid "%llu congestion windows fully recovered without slow start"
-msgstr ""
+msgstr "%uの輻輳ウィンドウを完全に回復"
 
 #: ../statistics.c:249
-#, c-format
+#, fuzzy, c-format
 msgid "%llu predicted acknowledgments"
-msgstr ""
+msgstr "%uの予測承認"
 
 #: ../statistics.c:250
-#, c-format
+#, fuzzy, c-format
 msgid "%llu packet headers predicted"
-msgstr ""
+msgstr "%uのパケットヘッダを予測"
 
 #: ../statistics.c:251
-#, c-format
+#, fuzzy, c-format
 msgid "%llu packet headers predicted and directly queued to user"
-msgstr ""
+msgstr "%uのパケットヘッダを予測してユーザに直接キュー"
 
 #: ../statistics.c:252
-#, c-format
+#, fuzzy, c-format
 msgid "%llu timeouts in loss state"
-msgstr ""
+msgstr "状態ロスでの%uのタイムアウト"
 
 #: ../statistics.c:253
-#, c-format
+#, fuzzy, c-format
 msgid "%llu TCP data loss events"
-msgstr ""
+msgstr "%uのTCPデータがイベントをロス"
 
 #: ../statistics.c:254
-#, c-format
+#, fuzzy, c-format
 msgid "%llu congestion windows recovered without slow start after partial ack"
-msgstr ""
+msgstr "部分ack後に%uの輻輳ウィンドウを回復"
 
 #: ../statistics.c:255
-#, c-format
+#, fuzzy, c-format
 msgid "%llu retransmits lost"
-msgstr ""
+msgstr "%uの再送ロスト"
 
+# FIXME
 #: ../statistics.c:256
-#, c-format
+#, fuzzy, c-format
 msgid "TCP ran low on memory %llu times"
-msgstr ""
+msgstr "TCPが少ないメモリで%u回実行"
 
 #: ../statistics.c:257
-#, c-format
+#, fuzzy, c-format
 msgid "%llu congestion windows partially recovered using Hoe heuristic"
-msgstr ""
+msgstr "Hoeヒューリスティックを使って%uの輻輳ウィンドウを部分的に回復"
 
 #: ../statistics.c:258
-#, c-format
+#, fuzzy, c-format
 msgid "%llu packets directly queued to recvmsg prequeue"
-msgstr ""
+msgstr "%uパケットをrecvmsgプレキューに直接キュー."
 
 #: ../statistics.c:259
-#, c-format
+#, fuzzy, c-format
 msgid "%llu packets dropped from prequeue"
-msgstr ""
+msgstr "%uのパケットをプレキューからドロップ"
 
 #: ../statistics.c:260
-#, c-format
+#, fuzzy, c-format
 msgid "%llu acknowledgments not containing data payload received"
-msgstr ""
+msgstr "データを含まない%uの承認の受信"
 
+# FIXME
 #: ../statistics.c:261
-#, c-format
+#, fuzzy, c-format
 msgid "%llu packets collapsed in receive queue due to low socket buffer"
-msgstr ""
+msgstr "%uのパケットを低ソケットバッファのために受信キューから除外"
 
+# FIXME
 #: ../statistics.c:262
-#, c-format
+#, fuzzy, c-format
 msgid "%llu timeouts after reno fast retransmit"
-msgstr ""
+msgstr "高速再送後の%uのタイムアウト"
 
+# FIXME
 #: ../statistics.c:263
-#, c-format
+#, fuzzy, c-format
 msgid "%llu reno fast retransmits failed"
-msgstr ""
+msgstr "%dの高速再送失敗"
 
+# FIXME
 #: ../statistics.c:264
-#, c-format
+#, fuzzy, c-format
 msgid "%llu classic Reno fast retransmits failed"
-msgstr ""
+msgstr "%dの高速再送失敗"
 
 #: ../statistics.c:265
-#, c-format
+#, fuzzy, c-format
 msgid "%llu times recovered from packet loss due to fast retransmit"
-msgstr ""
+msgstr "高速な再送によるパケットロスの%u回の回復"
 
+# FIXME:what does it mean?
 #: ../statistics.c:266
-#, c-format
+#, fuzzy, c-format
 msgid "Detected reordering %llu times using reno fast retransmit"
-msgstr ""
+msgstr "高速再送を使った%u回の検出された並べ替え"
 
 #: ../statistics.c:267
-#, c-format
+#, fuzzy, c-format
 msgid "%llu timeouts after SACK recovery"
-msgstr ""
+msgstr "SACK復元後の%uのタイムアウト"
 
 #: ../statistics.c:268
-#, c-format
+#, fuzzy, c-format
 msgid "%llu SACK retransmits failed"
-msgstr ""
+msgstr "%uのsack再送失敗"
 
 #: ../statistics.c:269
-#, c-format
+#, fuzzy, c-format
 msgid "%llu times recovered from packet loss by selective acknowledgements"
-msgstr ""
+msgstr "高速な再送によるパケットロスの%u回の回復"
 
 #: ../statistics.c:270
-#, c-format
+#, fuzzy, c-format
 msgid "%llu bad SACK blocks received"
-msgstr ""
+msgstr "%uの不正なSACKを受信"
 
 #: ../statistics.c:271
-#, c-format
+#, fuzzy, c-format
 msgid "Detected reordering %llu times using SACK"
-msgstr ""
+msgstr "SACKを使った%u回の検出された並べ替え"
 
+# FIXME
 #: ../statistics.c:272
-#, c-format
+#, fuzzy, c-format
 msgid "%llu times receiver scheduled too late for direct processing"
-msgstr ""
+msgstr "直接処理には遅すぎるとスケジュールされた%u回のレシーバ"
 
 #: ../statistics.c:273
-#, c-format
+#, fuzzy, c-format
 msgid "%llu retransmits in slow start"
-msgstr ""
+msgstr "スロースタートでの%uの再送"
 
 #: ../statistics.c:274
-#, c-format
+#, fuzzy, c-format
 msgid "%llu other TCP timeouts"
-msgstr ""
+msgstr "%uのその他のTCPタイムアウト"
 
 #: ../statistics.c:275
-#, c-format
+#, fuzzy, c-format
 msgid "Detected reordering %llu times using time stamp"
-msgstr ""
+msgstr "タイムスタンプを使った%u回の検出された並べ替え"
 
+# FIXME
 #: ../statistics.c:276
-#, c-format
+#, fuzzy, c-format
 msgid "%llu TCP sockets finished time wait in slow timer"
-msgstr ""
+msgstr "%uのTCPソケットがスロータイマでの時間待ちを完了"
 
+# FIXME: what does it mean?
 #: ../statistics.c:277
-#, c-format
+#, fuzzy, c-format
 msgid "%llu TCP sockets finished time wait in fast timer"
-msgstr ""
+msgstr "%uのTCPソケットがファーストタイマでの時間待ちを完了"
 
+# FIXME
 #: ../statistics.c:278
-#, c-format
+#, fuzzy, c-format
 msgid "%llu time wait sockets recycled by time stamp"
-msgstr ""
+msgstr "%uの時間待ちソケットがタイムスタンプで再利用"
 
 #. Keep the entries sorted!
 #: ../statistics.c:283
@@ -2309,24 +2478,24 @@ msgid "%llu Number of messages fragmented"
 msgstr ""
 
 #: ../statistics.c:288
-#, c-format
+#, fuzzy, c-format
 msgid "%llu Number of control chunks received"
-msgstr ""
+msgstr "%uのSYNクッキーを受信"
 
 #: ../statistics.c:289
-#, c-format
+#, fuzzy, c-format
 msgid "%llu Number of ordered chunks received"
-msgstr ""
+msgstr "%uのDSACKを順序外パケットとして受信"
 
 #: ../statistics.c:290
-#, c-format
+#, fuzzy, c-format
 msgid "%llu Number of SCTP packets received"
-msgstr ""
+msgstr "%uパケット受信"
 
 #: ../statistics.c:291
-#, c-format
+#, fuzzy, c-format
 msgid "%llu Number of Unordered chunks received"
-msgstr ""
+msgstr "%uのDSACKを順序外パケットとして受信"
 
 #: ../statistics.c:292
 #, c-format
@@ -2334,9 +2503,9 @@ msgid "%llu Number of control chunks sent"
 msgstr ""
 
 #: ../statistics.c:293
-#, c-format
+#, fuzzy, c-format
 msgid "%llu Number of Out of Blue packets"
-msgstr ""
+msgstr "%uのDSACKを順序外パケットとして送信"
 
 #: ../statistics.c:294
 #, c-format
@@ -2344,9 +2513,9 @@ msgid "%llu Number of ordered chunks sent"
 msgstr ""
 
 #: ../statistics.c:295
-#, c-format
+#, fuzzy, c-format
 msgid "%llu Number of SCTP packets sent"
-msgstr ""
+msgstr "%uのパケットを送信"
 
 #: ../statistics.c:296
 #, c-format
@@ -2354,14 +2523,14 @@ msgid "%llu Number of Unordered chunks sent"
 msgstr ""
 
 #: ../statistics.c:297
-#, c-format
+#, fuzzy, c-format
 msgid "%llu Passive Associations"
-msgstr ""
+msgstr "%uの受動接続開始"
 
 #: ../statistics.c:298
-#, c-format
+#, fuzzy, c-format
 msgid "%llu Number of messages reassembled "
-msgstr ""
+msgstr "%uパケットの再構築に成功"
 
 #: ../statistics.c:299
 #, c-format
@@ -2370,296 +2539,302 @@ msgstr ""
 
 #: ../statistics.c:376
 msgid "enabled"
-msgstr ""
+msgstr "有効"
 
 #: ../statistics.c:376
 msgid "disabled"
-msgstr ""
+msgstr "無効"
 
 #: ../statistics.c:521
-#, c-format
+#, fuzzy, c-format
 msgid "error parsing %s\n"
-msgstr ""
+msgstr "/proc/net/snmpの処理中にエラーが発生しました"
 
 #: ../statistics.c:542 ../statistics.c:594
 msgid "cannot open /proc/net/snmp"
-msgstr ""
+msgstr "/proc/net/snmpを開けません"
 
 #: ../statistics.c:547
-#, c-format
+#, fuzzy, c-format
 msgid "Problem while parsing /proc/net/snmp\n"
-msgstr ""
+msgstr "/proc/net/snmpの処理中にエラーが発生しました"
 
 #: ../statistics.c:558
-#, c-format
+#, fuzzy, c-format
 msgid "Problem while parsing /proc/net/netstat\n"
-msgstr ""
+msgstr "/proc/net/snmpの処理中にエラーが発生しました"
 
 #: ../statistics.c:584
+#, fuzzy
 msgid "cannot open /proc/net/snmp6"
-msgstr ""
+msgstr "/proc/net/snmpを開けません"
 
 #: ../lib/activate.c:69
 #, c-format
 msgid "Hardware type `%s' not supported.\n"
-msgstr ""
+msgstr "ハードウェアタイプ`%s'はサポートされていません.\n"
 
 #: ../lib/activate.c:73
 #, c-format
 msgid "Cannot change line discipline to `%s'.\n"
-msgstr ""
+msgstr "`%s'のline disciplineを変更できません.\n"
 
 #: ../lib/af.c:161 ../lib/hw.c:166
 msgid "UNSPEC"
-msgstr ""
+msgstr "不明なネット"
 
 #: ../lib/af.c:163
 msgid "UNIX Domain"
-msgstr ""
+msgstr "UNIXドメイン"
 
 #: ../lib/af.c:166
 msgid "DARPA Internet"
-msgstr ""
+msgstr "DARPAインターネット"
 
 #: ../lib/af.c:169
 msgid "IPv6"
-msgstr ""
+msgstr "IPv6"
 
 #: ../lib/af.c:172 ../lib/hw.c:187
 msgid "AMPR AX.25"
-msgstr ""
+msgstr "AMPR AX.25"
 
 #: ../lib/af.c:175 ../lib/hw.c:193
 msgid "AMPR NET/ROM"
-msgstr ""
+msgstr "AMPR NET/ROM"
 
 #: ../lib/af.c:178
 msgid "Novell IPX"
-msgstr ""
+msgstr "Novell IPX"
 
 #: ../lib/af.c:181
 msgid "Appletalk DDP"
-msgstr ""
+msgstr "アップルトークDDP"
 
 #: ../lib/af.c:184 ../lib/hw.c:228
 msgid "Econet"
-msgstr ""
+msgstr "エコネット"
 
 #: ../lib/af.c:187
 msgid "CCITT X.25"
-msgstr ""
+msgstr "CCITT X.25"
 
 #: ../lib/af.c:190 ../lib/hw.c:190
 msgid "AMPR ROSE"
-msgstr ""
+msgstr "AMPR ROSE"
 
 #: ../lib/af.c:193 ../lib/hw.c:178
 msgid "Ash"
-msgstr ""
+msgstr "Ash"
 
 #: ../lib/af.c:250
 #, c-format
 msgid "Please don't supply more than one address family.\n"
-msgstr ""
+msgstr "複数のアドレスファミリをしないで下さい.\n"
 
 #: ../lib/af.c:300
 #, c-format
 msgid "Too much address family arguments.\n"
-msgstr ""
+msgstr "アドレスファミリの引数が多すぎます.\n"
 
 #: ../lib/af.c:311
 #, c-format
 msgid "Unknown address family `%s'.\n"
-msgstr ""
+msgstr "不明なアドレスファミリです `%s'.\n"
 
 #: ../lib/arcnet.c:76 ../lib/arcnet.c:90
 #, c-format
 msgid "in_arcnet(%s): invalid arcnet address!\n"
-msgstr ""
+msgstr "in_arcnet(%s): 不適当なARCNETアドレスです!\n"
 
 #: ../lib/arcnet.c:100
 #, c-format
 msgid "in_arcnet(%s): trailing : ignored!\n"
-msgstr ""
+msgstr "in_arcnet(%s): trailing : 無効!\n"
 
+# translatable?
 #: ../lib/arcnet.c:108
 #, c-format
 msgid "in_arcnet(%s): trailing junk!\n"
-msgstr ""
+msgstr "in_arcnet(%s): trailing junk!\n"
 
 #: ../lib/ash.c:82
 #, c-format
 msgid "Malformed Ash address"
-msgstr ""
+msgstr "異常なAshアドレスです"
 
 #: ../lib/ax25.c:82 ../lib/ddp.c:51 ../lib/econet.c:52 ../lib/inet.c:259
 #: ../lib/inet.c:273 ../lib/inet6.c:145 ../lib/ipx.c:82 ../lib/netrom.c:86
 #: ../lib/rose.c:75 ../lib/unix.c:57 ../lib/unix.c:78
 msgid "[NONE SET]"
-msgstr ""
+msgstr "[設定なし]"
 
 #: ../lib/ax25.c:110 ../lib/netrom.c:115
 msgid "Invalid callsign"
-msgstr ""
+msgstr "不適当なコールサインです"
 
 #: ../lib/ax25.c:122 ../lib/netrom.c:127
 msgid "Callsign too long"
-msgstr ""
+msgstr "コールサインが長すぎます"
 
 #: ../lib/ax25_gr.c:47
 #, c-format
 msgid "AX.25 not configured in this system.\n"
-msgstr ""
+msgstr "AX.25はこのシステムでは設定されていません.\n"
 
 #: ../lib/ax25_gr.c:50
 #, c-format
 msgid "Kernel AX.25 routing table\n"
-msgstr ""
+msgstr "カーネル AX.25経路テーブル\n"
 
 #. xxx
 #: ../lib/ax25_gr.c:51
 #, c-format
 msgid "Destination  Iface    Use\n"
-msgstr ""
+msgstr "送信先サイト Iface    使用数\n"
 
 #: ../lib/ether.c:80 ../lib/ether.c:96
 #, c-format
 msgid "in_ether(%s): invalid ether address!\n"
-msgstr ""
+msgstr "in_ether(%s): 不適当なイーサアドレス!\n"
 
 #: ../lib/ether.c:108
 #, c-format
 msgid "in_ether(%s): trailing : ignored!\n"
-msgstr ""
+msgstr "in_ether(%s): trailing : 無効!\n"
 
+# translatable?
 #: ../lib/ether.c:116
 #, c-format
 msgid "in_ether(%s): trailing junk!\n"
-msgstr ""
+msgstr "in_ether(%s): trailing junk!\n"
 
 #: ../lib/fddi.c:90 ../lib/fddi.c:104
 #, c-format
 msgid "in_fddi(%s): invalid fddi address!\n"
-msgstr ""
+msgstr "in_fddi(%s): 不適当なfddiアドレス!\n"
 
 #: ../lib/fddi.c:114
 #, c-format
 msgid "in_fddi(%s): trailing : ignored!\n"
-msgstr ""
+msgstr "in_fddi(%s): trailing : 無効!\n"
 
+# translatable?
 #: ../lib/fddi.c:122
 #, c-format
 msgid "in_fddi(%s): trailing junk!\n"
-msgstr ""
+msgstr "in_fddi(%s): trailing junk!\n"
 
 #: ../lib/getroute.c:105 ../lib/setroute.c:80
 #, c-format
 msgid "Address family `%s' not supported.\n"
-msgstr ""
+msgstr "アドレスファミリ`%s'はサポートされていません.\n"
 
 #: ../lib/getroute.c:111 ../lib/setroute.c:84
 #, c-format
 msgid "No routing for address family `%s'.\n"
-msgstr ""
+msgstr "アドレスファミリ`%s'への経路が見つかりません.\n"
 
 #: ../lib/hippi.c:90 ../lib/hippi.c:104
 #, c-format
 msgid "in_hippi(%s): invalid hippi address!\n"
-msgstr ""
+msgstr "in_hippi(%s): 不適当なhippiアドレスです!\n"
 
 #: ../lib/hippi.c:114
 #, c-format
 msgid "in_hippi(%s): trailing : ignored!\n"
-msgstr ""
+msgstr "in_hippi(%s): trailing : 無効!\n"
 
+# translatable?
 #: ../lib/hippi.c:121
 #, c-format
 msgid "in_hippi(%s): trailing junk!\n"
-msgstr ""
+msgstr "in_hippi(%s): trailing junk!\n"
 
 #: ../lib/hw.c:165
 msgid "Local Loopback"
-msgstr ""
+msgstr "ローカルループバック"
 
 #: ../lib/hw.c:168
 msgid "Serial Line IP"
-msgstr ""
+msgstr "シリアルラインIP"
 
 #: ../lib/hw.c:169
 msgid "VJ Serial Line IP"
-msgstr ""
+msgstr "VJシリアルラインIP"
 
 #: ../lib/hw.c:170
 msgid "6-bit Serial Line IP"
-msgstr ""
+msgstr "6ビットシリアルラインIP"
 
 #: ../lib/hw.c:171
 msgid "VJ 6-bit Serial Line IP"
-msgstr ""
+msgstr "VJ 6ビットシリアルラインIP"
 
 #: ../lib/hw.c:172
 msgid "Adaptive Serial Line IP"
-msgstr ""
+msgstr "AdaptiveシリアルラインIP"
 
 #: ../lib/hw.c:175
 msgid "Ethernet"
-msgstr ""
+msgstr "イーサネット"
 
+# translatable?
 #: ../lib/hw.c:181
 msgid "Fiber Distributed Data Interface"
-msgstr ""
+msgstr "Fiber Distributed Data Interface"
 
 #: ../lib/hw.c:184
 msgid "HIPPI"
-msgstr ""
+msgstr "HIPPI"
 
 #: ../lib/hw.c:196
 msgid "generic X.25"
-msgstr ""
+msgstr "ジェネリックX.25"
 
 #: ../lib/hw.c:199
 msgid "IPIP Tunnel"
-msgstr ""
+msgstr "IPIPトンネル"
 
 #: ../lib/hw.c:202
 msgid "Point-to-Point Protocol"
-msgstr ""
+msgstr "Point-to-Pointプロトコル"
 
 #: ../lib/hw.c:205
 msgid "(Cisco)-HDLC"
-msgstr ""
+msgstr "(Cisco)-HDLC"
 
 #: ../lib/hw.c:206
 msgid "LAPB"
-msgstr ""
+msgstr "LAPB"
 
 #: ../lib/hw.c:209
 msgid "ARCnet"
-msgstr ""
+msgstr "ARCネット"
 
 #: ../lib/hw.c:212
 msgid "Frame Relay DLCI"
-msgstr ""
+msgstr "フレームリレーDLCI"
 
 #: ../lib/hw.c:213
 msgid "Frame Relay Access Device"
-msgstr ""
+msgstr "フレームリレーアクセスデバイス"
 
 #: ../lib/hw.c:216
 msgid "IPv6-in-IPv4"
-msgstr ""
+msgstr "IPv6-in-IPv4"
 
 #: ../lib/hw.c:219
 msgid "IrLAP"
-msgstr ""
+msgstr "IrLAP"
 
 #: ../lib/hw.c:222
 msgid "16/4 Mbps Token Ring"
-msgstr ""
+msgstr "16/4 Mbpsトークンリング"
 
 #: ../lib/hw.c:224
 msgid "16/4 Mbps Token Ring (New)"
-msgstr ""
+msgstr "16/4 Mbpsトークンリング(新)"
 
 #: ../lib/hw.c:231
 msgid "InfiniBand"
@@ -2667,43 +2842,45 @@ msgstr ""
 
 #: ../lib/hw.c:234
 msgid "Generic EUI-64"
-msgstr ""
+msgstr "ジェネリックEUI-64"
 
 #: ../lib/inet.c:155 ../lib/inet6.c:94
 #, c-format
 msgid "rresolve: unsupport address family %d !\n"
-msgstr ""
+msgstr "rresolve: アドレスファミリ%dをサポートしていません!\n"
 
 #: ../lib/inet6.c:147
 msgid "[UNKNOWN]"
-msgstr ""
+msgstr "[不明]"
 
 #: ../lib/inet6_gr.c:69
 #, c-format
 msgid "INET6 (IPv6) not configured in this system.\n"
-msgstr ""
+msgstr "INET6(IPv6)はこのシステムでは利用できるよう設定されていません.\n"
 
 #: ../lib/inet6_gr.c:74
-#, c-format
+#, fuzzy, c-format
 msgid "Kernel IPv6 routing cache\n"
-msgstr ""
+msgstr "カーネルIP経路キャッシュ\n"
 
 #: ../lib/inet6_gr.c:76
 #, c-format
 msgid "Kernel IPv6 routing table\n"
-msgstr ""
+msgstr "カーネルIPv6 経路テーブル\n"
 
 #: ../lib/inet6_gr.c:78
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Destination                    Next Hop                   Flag Met Ref  Use "
 "If\n"
 msgstr ""
+"送信先サイト                                次回ホッ"
+"プ                             フラグ Metric Ref 使用数 インタフェース\n"
 
 #: ../lib/inet6_gr.c:171
 #, c-format
 msgid "Kernel IPv6 Neighbour Cache\n"
-msgstr ""
+msgstr "カーネルIPv6 近隣ネットワークのキャッシュ\n"
 
 #: ../lib/inet6_gr.c:174
 #, c-format
@@ -2711,6 +2888,8 @@ msgid ""
 "Neighbour                                   HW Address        Iface    Flags "
 "Ref State\n"
 msgstr ""
+"近隣サイト                               ハードウェアアドレス Iface   フラグ "
+"Ref 状態\n"
 
 #: ../lib/inet6_gr.c:178
 #, c-format
@@ -2718,36 +2897,41 @@ msgid ""
 "Neighbour                                   HW Address        Iface    Flags "
 "Ref State            Stale(sec) Delete(sec)\n"
 msgstr ""
+"近隣サイト                               ハードウェアアドレス Iface   フラグ "
+"Ref 状態             Stale[秒]  Delete[秒]\n"
 
 #: ../lib/inet6_sr.c:48
 #, c-format
 msgid "Usage: inet6_route [-vF] del Target\n"
-msgstr ""
+msgstr "使用法: inet6_route [-vF] del ターゲット\n"
 
 #: ../lib/inet6_sr.c:49
 #, c-format
 msgid "       inet6_route [-vF] add Target [gw Gw] [metric M] [[dev] If]\n"
 msgstr ""
+"        inet6_route [-vF] add ターゲット \n"
+"                    [gw ゲートウェイ] [metric メトリック]\n"
+"                    [[dev] インタフェース]\n"
 
 #: ../lib/inet6_sr.c:50
 #, c-format
 msgid "       inet6_route [-FC] flush      NOT supported\n"
-msgstr ""
+msgstr "        inet6_route [-FC] flush      サポートしていません\n"
 
 #: ../lib/inet6_sr.c:190
 #, c-format
 msgid "Flushing `inet6' routing table not supported\n"
-msgstr ""
+msgstr "`inet6'経路テーブルのフラッシュはサポートしていません\n"
 
 #: ../lib/inet_gr.c:52 ../lib/inet_gr.c:223
 #, c-format
 msgid "INET (IPv4) not configured in this system.\n"
-msgstr ""
+msgstr "INET(IPv4)はこのシステムでは利用できるように設定されていません.\n"
 
 #: ../lib/inet_gr.c:55
 #, c-format
 msgid "Kernel IP routing table\n"
-msgstr ""
+msgstr "カーネルIP経路テーブル\n"
 
 #: ../lib/inet_gr.c:58
 #, c-format
@@ -2755,6 +2939,8 @@ msgid ""
 "Destination     Gateway         Genmask         Flags Metric Ref    Use "
 "Iface\n"
 msgstr ""
+"受信先サイト    ゲートウェイ    ネットマスク   フラグ Metric Ref 使用数 イン"
+"タフェース\n"
 
 #: ../lib/inet_gr.c:61
 #, c-format
@@ -2762,6 +2948,8 @@ msgid ""
 "Destination     Gateway         Genmask         Flags   MSS Window  irtt "
 "Iface\n"
 msgstr ""
+"受信先サイト    ゲートウェイ    ネットマスク   フラグ   MSS Window  irtt イン"
+"タフェース\n"
 
 #: ../lib/inet_gr.c:64
 #, c-format
@@ -2769,11 +2957,13 @@ msgid ""
 "Destination     Gateway         Genmask         Flags Metric Ref    Use "
 "Iface    MSS   Window irtt\n"
 msgstr ""
+"受信先サイト   ゲートウェイ    ネットマスク    フラグ Metric Ref 使用数 "
+"Iface    MSS   Window irtt\n"
 
 #: ../lib/inet_gr.c:240
 #, c-format
 msgid "Kernel IP routing cache\n"
-msgstr ""
+msgstr "カーネルIP経路キャッシュ\n"
 
 #: ../lib/inet_gr.c:261
 #, c-format
@@ -2781,6 +2971,8 @@ msgid ""
 "Source          Destination     Gateway         Flags Metric Ref    Use "
 "Iface\n"
 msgstr ""
+"発信元サイト   受信先サイト    ゲートウェイ    フラグ Metric Ref 使用数 イン"
+"タフェース\n"
 
 #: ../lib/inet_gr.c:264
 #, c-format
@@ -2788,6 +2980,8 @@ msgid ""
 "Source          Destination     Gateway         Flags   MSS Window  irtt "
 "Iface\n"
 msgstr ""
+"発信元サイト    受信先サイト    ゲートウェイ   フラグ   MSS Window  irtt イン"
+"タフェース\n"
 
 #: ../lib/inet_gr.c:269
 #, c-format
@@ -2795,6 +2989,8 @@ msgid ""
 "Source          Destination     Gateway         Flags Metric Ref    Use "
 "Iface    MSS   Window irtt  HH  Arp\n"
 msgstr ""
+"発信元サイト    受信先サイト    ゲートウェイ   フラグ Metric Ref 使用数 "
+"Iface    MSS   Window irtt   HH  Arp\n"
 
 #: ../lib/inet_gr.c:293
 #, c-format
@@ -2802,6 +2998,8 @@ msgid ""
 "Source          Destination     Gateway         Flags Metric Ref    Use "
 "Iface    MSS   Window irtt  TOS HHRef HHUptod     SpecDst\n"
 msgstr ""
+"発信元サイト   受信先サイト     ゲートウェイ   フラグ Metric Ref 使用数 "
+"Iface    MSS   Window irtt  TOS HHRef HHUptod     SpecDst\n"
 
 #: ../lib/inet_sr.c:54
 #, c-format
@@ -2809,79 +3007,86 @@ msgid ""
 "Usage: inet_route [-vF] del {-host|-net} Target[/prefix] [gw Gw] [metric M] "
 "[[dev] If]\n"
 msgstr ""
+"使用法:inet_route [-vF] del {-host|-net} 受信先[/プレフィックス]\n"
+"                   [gw ゲートウェイ] [metric メトリック]\n"
+"                   [[dev] インタフェース]\n"
 
 #: ../lib/inet_sr.c:55
 #, c-format
 msgid ""
 "       inet_route [-vF] add {-host|-net} Target[/prefix] [gw Gw] [metric M]\n"
 msgstr ""
+"       inet_route [-vF] add {-host|-net} 受信先[/プレフィックス]\n"
+"                   [gw ゲートウェイ] [metric メトリック]\n"
 
 #: ../lib/inet_sr.c:56
 #, c-format
 msgid ""
 "                              [netmask N] [mss Mss] [window W] [irtt I]\n"
-msgstr ""
+msgstr "            [netmask ネットマスク] [mss Mss] [window W] [irtt I]\n"
 
 #: ../lib/inet_sr.c:57
 #, c-format
 msgid "                              [mod] [dyn] [reinstate] [[dev] If]\n"
-msgstr ""
+msgstr "            [mod] [dyn] [reinstate] [[dev] インタフェース]\n"
 
 #: ../lib/inet_sr.c:58
 #, c-format
 msgid ""
 "       inet_route [-vF] add {-host|-net} Target[/prefix] [metric M] reject\n"
 msgstr ""
+"       inet_route [-vF] add {-host|-net} 受信先[/プレフィックス]\n"
+"                   [metric メトリック] reject\n"
 
 #: ../lib/inet_sr.c:59
 #, c-format
 msgid "       inet_route [-FC] flush      NOT supported\n"
-msgstr ""
+msgstr "        inet_route [-FC] flush      サポートしていません\n"
 
 #: ../lib/inet_sr.c:168
 #, c-format
 msgid "route: %s: cannot use a NETWORK as gateway!\n"
-msgstr ""
+msgstr "route: %s: NETWORKをゲートウェイとして使えません!\n"
 
 #: ../lib/inet_sr.c:184
 #, c-format
 msgid "route: Invalid MSS/MTU.\n"
-msgstr ""
+msgstr "route: MSS/MTUが不適当です.\n"
 
 #: ../lib/inet_sr.c:197
 #, c-format
 msgid "route: Invalid window.\n"
-msgstr ""
+msgstr "route: windowが不適当です.\n"
 
 #: ../lib/inet_sr.c:213
 #, c-format
 msgid "route: Invalid initial rtt.\n"
-msgstr ""
+msgstr "route: 初期rttが不適当です.\n"
 
 #: ../lib/inet_sr.c:271
 #, c-format
 msgid "route: netmask %.8x doesn't make sense with host route\n"
-msgstr ""
+msgstr "route: ネットマスク%.8xがホスト経路を検出しません\n"
 
 #: ../lib/inet_sr.c:275
 #, c-format
 msgid "route: bogus netmask %s\n"
-msgstr ""
+msgstr "route: 偽のネットマスク`%s'です\n"
 
 #: ../lib/inet_sr.c:280
 #, c-format
 msgid "route: netmask doesn't match route address\n"
-msgstr ""
+msgstr "route: ネットマスクが経路アドレスと一致しません\n"
 
 #: ../lib/inet_sr.c:316
 #, c-format
 msgid "Flushing `inet' routing table not supported\n"
-msgstr ""
+msgstr "`inet'経路テーブルのフラッシュはサポートしていません\n"
 
 #: ../lib/inet_sr.c:320
 #, c-format
 msgid "Modifying `inet' routing cache not supported\n"
-msgstr ""
+msgstr "`inet'経路テーブルの変更はサポートしていません\n"
 
 #: ../lib/ipx_gr.c:54
 #, c-format
@@ -2891,28 +3096,28 @@ msgstr ""
 #: ../lib/ipx_gr.c:63
 #, c-format
 msgid "Kernel IPX routing table\n"
-msgstr ""
+msgstr "カーネルIPX経路テーブル\n"
 
 #. xxx
 #: ../lib/ipx_gr.c:64
 #, c-format
 msgid "Destination               Router Net                Router Node\n"
-msgstr ""
+msgstr "送信先サイト              ルータ ネット             ルータノード\n"
 
 #: ../lib/ipx_sr.c:43
 #, c-format
 msgid "IPX: this needs to be written\n"
-msgstr ""
+msgstr "IPX: これは書き込みが必要です\n"
 
 #: ../lib/masq_info.c:217
 #, c-format
 msgid "IP masquerading entries\n"
-msgstr ""
+msgstr "IPマスカレード エントリ\n"
 
 #: ../lib/masq_info.c:220
 #, c-format
 msgid "prot   expire source               destination          ports\n"
-msgstr ""
+msgstr "プロト expire 発信元サイト         送信先サイト         ポート\n"
 
 #: ../lib/masq_info.c:223
 #, c-format
@@ -2920,55 +3125,57 @@ msgid ""
 "prot   expire    initseq delta prevd source               "
 "destination          ports\n"
 msgstr ""
+"プロト expire    初期seq delta prevd 発信元サイト         受信先サイ"
+"ト         ポート\n"
 
 #: ../lib/netrom_gr.c:46
 #, c-format
 msgid "NET/ROM not configured in this system.\n"
-msgstr ""
+msgstr "NET/ROMはこのシステムでは利用可能なように設定されていません.\n"
 
 #: ../lib/netrom_gr.c:49
 #, c-format
 msgid "Kernel NET/ROM routing table\n"
-msgstr ""
+msgstr "カーネルNET/ROM経路テーブル\n"
 
 #: ../lib/netrom_gr.c:50
 #, c-format
 msgid "Destination  Mnemonic  Quality  Neighbour  Iface\n"
-msgstr ""
+msgstr "受信先サイト ニーモニック 品質  近隣サイト インタフェース\n"
 
 #: ../lib/netrom_sr.c:43
 #, c-format
 msgid "netrom usage\n"
-msgstr ""
+msgstr "netrom使用法\n"
 
 #: ../lib/netrom_sr.c:53
 #, c-format
 msgid "NET/ROM: this needs to be written\n"
-msgstr ""
+msgstr "NET/ROM: これは書き込みが必要です\n"
 
 #: ../lib/ppp.c:44
 #, c-format
 msgid "You cannot start PPP with this program.\n"
-msgstr ""
+msgstr "このプログラムではPPPを開始できません. \n"
 
 #: ../lib/ppp_ac.c:38
 #, c-format
 msgid "Sorry, use pppd!\n"
-msgstr ""
+msgstr "申し訳ありませんが, pppdを使って下さい!\n"
 
 #: ../lib/rose.c:91
 msgid "Node address must be ten digits"
-msgstr ""
+msgstr "ノードアドレスは10進数でなければなりません"
 
 #: ../lib/rose_gr.c:55
 #, c-format
 msgid "ROSE not configured in this system.\n"
-msgstr ""
+msgstr "ROSEはこのシステムでは利用可能なように設定されていません\n"
 
 #: ../lib/rose_gr.c:58
 #, c-format
 msgid "Kernel ROSE routing table\n"
-msgstr ""
+msgstr "カーネルROSE経路テーブル\n"
 
 #: ../lib/rose_gr.c:59
 #, c-format
@@ -2980,117 +3187,147 @@ msgstr ""
 #: ../lib/tr.c:92 ../lib/tr.c:106
 #, c-format
 msgid "in_tr(%s): invalid token ring address!\n"
-msgstr ""
+msgstr "in_tr(%s): 不適当なトークンリングアドレスです!\n"
 
 #: ../lib/tr.c:116
 #, c-format
 msgid "in_tr(%s): trailing : ignored!\n"
-msgstr ""
+msgstr "in_tr(%s): trailing : 無効!\n"
 
+# translatable?
 #: ../lib/tr.c:124
 #, c-format
 msgid "in_tr(%s): trailing junk!\n"
-msgstr ""
+msgstr "in_tr(%s): trailing junk!\n"
 
 #: ../lib/interface.c:337
 #, c-format
 msgid "Warning: cannot open %s (%s). Limited output.\n"
-msgstr ""
+msgstr "警告: %sを開けません(%s). 限定された出力です.\n"
 
 #. Give better error message for this case.
 #: ../lib/interface.c:583
 msgid "Device not found"
-msgstr ""
+msgstr "デバイスが見つかりません"
 
 #: ../lib/interface.c:587
 #, c-format
 msgid "%s: error fetching interface information: %s\n"
-msgstr ""
+msgstr "%s: インタフェース情報を取得中にエラーが発生しました: %s\n"
 
 #: ../lib/interface.c:620
 msgid "     - no statistics available -"
-msgstr ""
+msgstr "     - 統計情報を利用できません -"
 
 #: ../lib/interface.c:624
 #, c-format
 msgid "[NO FLAGS]"
-msgstr ""
+msgstr "[フラグなし]"
 
+# translatable?
 #: ../lib/interface.c:734
+#, fuzzy
 msgid "UP,"
-msgstr ""
+msgstr "UP "
 
+# translatable?
 #: ../lib/interface.c:736
+#, fuzzy
 msgid "BROADCAST,"
-msgstr ""
+msgstr "BROADCAST "
 
+# translatable?
 #: ../lib/interface.c:738
+#, fuzzy
 msgid "DEBUG,"
-msgstr ""
+msgstr "DEBUG "
 
+# translatable?
 #: ../lib/interface.c:740
+#, fuzzy
 msgid "LOOPBACK,"
-msgstr ""
+msgstr "LOOPBACK "
 
+# translatable?
 #: ../lib/interface.c:742
+#, fuzzy
 msgid "POINTOPOINT,"
-msgstr ""
+msgstr "POINTOPOINT "
 
+# translatable?
 #: ../lib/interface.c:744
+#, fuzzy
 msgid "NOTRAILERS,"
-msgstr ""
+msgstr "NOTRAILERS "
 
+# translatable?
 #: ../lib/interface.c:746
+#, fuzzy
 msgid "RUNNING,"
-msgstr ""
+msgstr "RUNNING "
 
+# translatable?
 #: ../lib/interface.c:748
+#, fuzzy
 msgid "NOARP,"
-msgstr ""
+msgstr "NOARP "
 
+# translatable?
 #: ../lib/interface.c:750
+#, fuzzy
 msgid "PROMISC,"
-msgstr ""
+msgstr "PROMISC "
 
+# translatable?
 #: ../lib/interface.c:752
+#, fuzzy
 msgid "ALLMULTI,"
-msgstr ""
+msgstr "ALLMULTI "
 
+# translatable?
 #: ../lib/interface.c:754
+#, fuzzy
 msgid "SLAVE,"
-msgstr ""
+msgstr "SLAVE "
 
+# translatable?
 #: ../lib/interface.c:756
+#, fuzzy
 msgid "MASTER,"
-msgstr ""
+msgstr "MASTER "
 
+# translatable?
 #: ../lib/interface.c:758
+#, fuzzy
 msgid "MULTICAST,"
-msgstr ""
+msgstr "MULTICAST "
 
+# translatable?
 #: ../lib/interface.c:761
+#, fuzzy
 msgid "DYNAMIC,"
-msgstr ""
+msgstr "DYNAMIC "
 
 #: ../lib/interface.c:770
 #, c-format
 msgid "%s: %s  mtu %d"
 msgstr ""
 
+# translatable?
 #: ../lib/interface.c:774
-#, c-format
+#, fuzzy, c-format
 msgid "  outfill %d  keepalive %d"
-msgstr ""
+msgstr "  Outfill:%d  キープアライブ:%d"
 
 #: ../lib/interface.c:783 ../lib/interface.c:881
-#, c-format
+#, fuzzy, c-format
 msgid "        %s %s"
-msgstr ""
+msgstr "          %sアドレス:%s"
 
 #: ../lib/interface.c:785
-#, c-format
+#, fuzzy, c-format
 msgid "  netmask %s"
-msgstr ""
+msgstr "ネットマスク %s "
 
 #: ../lib/interface.c:787
 #, c-format
@@ -3098,9 +3335,9 @@ msgid "  broadcast %s"
 msgstr ""
 
 #: ../lib/interface.c:790
-#, c-format
+#, fuzzy, c-format
 msgid "  destination %s"
-msgstr ""
+msgstr "送信先到達不可: %u"
 
 #: ../lib/interface.c:809
 #, c-format
@@ -3112,13 +3349,16 @@ msgstr ""
 msgid "  scopeid 0x%x"
 msgstr ""
 
+# translatable?
 #: ../lib/interface.c:817
+#, fuzzy
 msgid "compat,"
-msgstr ""
+msgstr "Compat"
 
 #: ../lib/interface.c:821
+#, fuzzy
 msgid "global,"
-msgstr ""
+msgstr "グローバル"
 
 #: ../lib/interface.c:823
 msgid "link,"
@@ -3133,44 +3373,44 @@ msgid "host,"
 msgstr ""
 
 #: ../lib/interface.c:845
-#, c-format
+#, fuzzy, c-format
 msgid "        %s Ethernet-II   %s\n"
-msgstr ""
+msgstr "          IPX/イーサネットIIアドレス:%s\n"
 
 #: ../lib/interface.c:848
-#, c-format
+#, fuzzy, c-format
 msgid "        %s Ethernet-SNAP %s\n"
-msgstr ""
+msgstr "          IPX/イーサネットSNAPアドレス:%s\n"
 
 #: ../lib/interface.c:851
-#, c-format
+#, fuzzy, c-format
 msgid "        %s Ethernet802.2 %s\n"
-msgstr ""
+msgstr "          IPX/イーサネット802.2アドレス:%s\n"
 
 #: ../lib/interface.c:854
-#, c-format
+#, fuzzy, c-format
 msgid "        %s Ethernet802.3 %s\n"
-msgstr ""
+msgstr "          IPX/イーサネット802.3アドレス:%s\n"
 
 #: ../lib/interface.c:864 ../lib/interface.c:873
-#, c-format
+#, fuzzy, c-format
 msgid "        %s %s\n"
-msgstr ""
+msgstr "          %sアドレス:%s"
 
 #: ../lib/interface.c:883
-#, c-format
+#, fuzzy, c-format
 msgid "        %s"
-msgstr ""
+msgstr "          %sアドレス:%s"
 
 #: ../lib/interface.c:885
-#, c-format
+#, fuzzy, c-format
 msgid "  txqueuelen %d"
-msgstr ""
+msgstr "TXキュー長:%d "
 
 #: ../lib/interface.c:890
-#, c-format
+#, fuzzy, c-format
 msgid "        media %s"
-msgstr ""
+msgstr "          inet6アドレス: %s/%d"
 
 #: ../lib/interface.c:892
 #, c-format
@@ -3178,51 +3418,51 @@ msgid "autoselect"
 msgstr ""
 
 #: ../lib/interface.c:912
-#, c-format
+#, fuzzy, c-format
 msgid "RX packets %llu  bytes %llu (%lu.%lu %s)\n"
-msgstr ""
+msgstr "RXバイト:%llu (%lu.%lu %s)  TXバイト:%llu (%lu.%lu %s)\n"
 
 #: ../lib/interface.c:918
-#, c-format
+#, fuzzy, c-format
 msgid "RX compressed:%lu\n"
-msgstr ""
+msgstr "圧縮:%lu "
 
 #: ../lib/interface.c:921
-#, c-format
+#, fuzzy, c-format
 msgid "RX errors %lu  dropped %lu  overruns %lu  frame %lu\n"
-msgstr ""
+msgstr "RXパケット:%llu エラー:%lu 損失:%lu オーバラン:%lu フレーム:%lu\n"
 
 #: ../lib/interface.c:927
-#, c-format
+#, fuzzy, c-format
 msgid "TX packets %llu  bytes %llu (%lu.%lu %s)\n"
-msgstr ""
+msgstr "RXバイト:%llu (%lu.%lu %s)  TXバイト:%llu (%lu.%lu %s)\n"
 
 #: ../lib/interface.c:933
-#, c-format
+#, fuzzy, c-format
 msgid "TX compressed %lu\n"
-msgstr ""
+msgstr "圧縮:%lu "
 
 #: ../lib/interface.c:936
-#, c-format
+#, fuzzy, c-format
 msgid "TX errors %lu  dropped %lu overruns %lu  carrier %lu  collisions %lu\n"
-msgstr ""
+msgstr "TXパケット:%llu エラー:%lu 損失:%lu オーバラン:%lu キャリア:%lu\n"
 
 #: ../lib/interface.c:946
-#, c-format
+#, fuzzy, c-format
 msgid "interrupt %d  "
-msgstr ""
+msgstr "割り込み:%d "
 
 #. Only print devices using it for
 #. I/O maps
 #: ../lib/interface.c:949
-#, c-format
+#, fuzzy, c-format
 msgid "base 0x%x  "
-msgstr ""
+msgstr "ベースアドレス:0x%x "
 
 #: ../lib/interface.c:951
-#, c-format
+#, fuzzy, c-format
 msgid "memory 0x%lx-%lx  "
-msgstr ""
+msgstr "メモリ:%lx-%lx "
 
 #: ../lib/interface.c:954
 #, c-format
@@ -3232,131 +3472,131 @@ msgstr ""
 #: ../lib/sockets.c:63
 #, c-format
 msgid "No usable address families found.\n"
-msgstr ""
+msgstr "利用可能なアドレスファミリが見つかりません.\n"
 
 #: ../lib/util-ank.c:230
 #, c-format
 msgid "ip: %s is invalid inet address\n"
-msgstr ""
+msgstr "ip: %sは不適切なInetアドレスです.\n"
 
 #: ../lib/util-ank.c:239
 #, c-format
 msgid "ip: %s is invalid inet prefix\n"
-msgstr ""
+msgstr "ip: %sは不適切なInetプレフィックスです\n"
 
 #: ../lib/util-ank.c:249
 #, c-format
 msgid "ip: %s is invalid IPv4 address\n"
-msgstr ""
+msgstr "ip: %sは不適切なIPv4アドレスです.\n"
 
 #: ../lib/util-ank.c:257
 #, c-format
 msgid "ip: argument is wrong: %s\n"
-msgstr ""
+msgstr "ip: 引数が間違っています: %s\n"
 
 #: ../ipmaddr.c:56
 #, c-format
 msgid "Usage: ipmaddr [ add | del ] MULTIADDR dev STRING\n"
-msgstr ""
+msgstr "使用法: ipmaddr [ add | del ] マルチキャストアドレス dev 文字列\n"
 
 #: ../ipmaddr.c:57
 #, c-format
 msgid "       ipmaddr show [ dev STRING ] [ ipv4 | ipv6 | link | all ]\n"
-msgstr ""
+msgstr "        ipmaddr show [ dev 文字列 ] [ ipv4 | ipv6 | link | all ]\n"
 
 #: ../ipmaddr.c:58
 #, c-format
 msgid "       ipmaddr -V | -version\n"
-msgstr ""
+msgstr "       ipmaddr -V | -version\n"
 
 #: ../ipmaddr.c:255
 #, c-format
 msgid "family %d "
-msgstr ""
+msgstr "ファミリ %d "
 
 #: ../ipmaddr.c:264
 #, c-format
 msgid " users %d"
-msgstr ""
+msgstr " ユーザ %d"
 
 #: ../ipmaddr.c:353
 msgid "Cannot create socket"
-msgstr ""
+msgstr "ソケットを作成できません"
 
 #: ../slattach.c:214
 #, c-format
 msgid "slattach: /dev/%s already locked!\n"
-msgstr ""
+msgstr "slattach: /dev/%s はすでにロックされています!\n"
 
 #: ../slattach.c:220
 #, c-format
 msgid "slattach: tty_lock: (%s): %s\n"
-msgstr ""
+msgstr "slattach: tty_lock: (%s): %s\n"
 
 #: ../slattach.c:226
 #, c-format
 msgid "slattach: cannot write PID file\n"
-msgstr ""
+msgstr "slattach: PIDファイルを書き込めません\n"
 
 #: ../slattach.c:234
 #, c-format
 msgid "slattach: tty_lock: UUCP user %s unknown!\n"
-msgstr ""
+msgstr "slattach: tty_lock: UUCPユーザ%sは不明です!\n"
 
 #: ../slattach.c:469
 #, c-format
 msgid "slattach: tty_hangup(DROP): %s\n"
-msgstr ""
+msgstr "slattach: tty_hangup(DROP): %s\n"
 
 #: ../slattach.c:476
 #, c-format
 msgid "slattach: tty_hangup(RAISE): %s\n"
-msgstr ""
+msgstr "slattach: tty_hangup(RAISE): %s\n"
 
 #: ../slattach.c:507
 #, c-format
 msgid "slattach: tty name too long\n"
-msgstr ""
+msgstr "slattach: tty名が長すぎます\n"
 
 #: ../slattach.c:558
 #, c-format
 msgid "slattach: tty_open: cannot get current state!\n"
-msgstr ""
+msgstr "slattach: tty_open: 現在の状態を得られません!\n"
 
 #: ../slattach.c:565
 #, c-format
 msgid "slattach: tty_open: cannot get current line disc!\n"
-msgstr ""
+msgstr "slattach: tty_open: 現在のライン・ディスクを得られません!\n"
 
 #: ../slattach.c:573
 #, c-format
 msgid "slattach: tty_open: cannot set RAW mode!\n"
-msgstr ""
+msgstr "slattach: tty_open: RAWモードを設定できません!\n"
 
 #: ../slattach.c:580
 #, c-format
 msgid "slattach: tty_open: cannot set %s bps!\n"
-msgstr ""
+msgstr "slattach: tty_open: %s bpsを設定できません!\n"
 
 #: ../slattach.c:590
 #, c-format
 msgid "slattach: tty_open: cannot set 8N1 mode!\n"
-msgstr ""
+msgstr "slattach: tty_open: 8N1モードへ設定できません!\n"
 
 #: ../slattach.c:732
 #, c-format
 msgid "slattach: setvbuf(stdout,0,_IOLBF,0) : %s\n"
-msgstr ""
+msgstr "slattach: setvbuf(stdout,0,_IOLBF,0) : %s\n"
 
 #: ../slattach.c:764
 #, c-format
 msgid "%s started"
-msgstr ""
+msgstr "%sを開始しました"
 
 #: ../slattach.c:765
 #, c-format
 msgid " on %s"
-msgstr ""
+msgstr "(%s上)"
 
 #: ../slattach.c:766
 #, c-format
@@ -3366,4 +3606,116 @@ msgstr ""
 #: ../slattach.c:767
 #, c-format
 msgid " interface %s\n"
-msgstr ""
+msgstr " インタフェース %s\n"
+
+#, c-format
+#~ msgid ""
+#~ "Iface   MTU Met   RX-OK RX-ERR RX-DRP RX-OVR   TX-OK TX-ERR TX-DRP TX-OVR "
+#~ "Flg\n"
+#~ msgstr ""
+#~ "Iface   MTU Met   RX-OK RX-ERR RX-DRP RX-OVR   TX-OK TX-ERR TX-DRP TX-OVR "
+#~ "フラグ\n"
+
+#, c-format
+#~ msgid "                  [nibble NN] [trigger NN]\n"
+#~ msgstr "                  [nibble 数値] [trigger 数値]\n"
+
+#, c-format
+#~ msgid "%u fragments received ok"
+#~ msgstr "%uフラグメントの受信に成功"
+
+#, c-format
+#~ msgid "%u fragments failed"
+#~ msgstr "%uフラグメントで失敗"
+
+#, c-format
+#~ msgid "echo request: %u"
+#~ msgstr "エコー要求: %u"
+
+#, c-format
+#~ msgid "%u times recovered from packet loss due to SACK data"
+#~ msgstr "SACKデータによるパケットロスの%u回の回復"
+
+#, c-format
+#~ msgid "IPX not configured in this system.\n"
+#~ msgstr "IPXはこのシステムでは設定されていません.\n"
+
+#, c-format
+#~ msgid "warning: no inet socket available: %s\n"
+#~ msgstr "警告: Inetソケットは利用できません: %s\n"
+
+#, c-format
+#~ msgid "%-9.9s Link encap:%s  "
+#~ msgstr "%-9.9s リンク方法:%s  "
+
+#, c-format
+#~ msgid "HWaddr %s  "
+#~ msgstr "ハードウェアアドレス %s "
+
+#, c-format
+#~ msgid "Media:%s"
+#~ msgstr "メディア:%s"
+
+#, c-format
+#~ msgid "(auto)"
+#~ msgstr "(自動)"
+
+#, c-format
+#~ msgid " P-t-P:%s "
+#~ msgstr " P-t-P:%s "
+
+#, c-format
+#~ msgid " Bcast:%s "
+#~ msgstr " ブロードキャスト:%s "
+
+#, c-format
+#~ msgid " Mask:%s\n"
+#~ msgstr " マスク:%s\n"
+
+#, c-format
+#~ msgid " Scope:"
+#~ msgstr " 範囲:"
+
+#, c-format
+#~ msgid "Link"
+#~ msgstr "リンク"
+
+#, c-format
+#~ msgid "Site"
+#~ msgstr "サイト"
+
+#, c-format
+#~ msgid "Host"
+#~ msgstr "ホスト"
+
+#, c-format
+#~ msgid "Unknown"
+#~ msgstr "不明"
+
+#, c-format
+#~ msgid "          EtherTalk Phase 2 addr:%s\n"
+#~ msgstr "          イーサトーク フェーズ2アドレス:%s\n"
+
+#, c-format
+#~ msgid "          econet addr:%s\n"
+#~ msgstr "          エコネットアドレス:%s\n"
+
+#, c-format
+#~ msgid "[NO FLAGS] "
+#~ msgstr "[フラグなし]"
+
+#, c-format
+#~ msgid " MTU:%d  Metric:%d"
+#~ msgstr " MTU:%d  メトリック:%d"
+
+#, c-format
+#~ msgid "             compressed:%lu\n"
+#~ msgstr "             圧縮:%lu\n"
+
+#, c-format
+#~ msgid "          collisions:%lu "
+#~ msgstr "          衝突:%lu "
+
+#, c-format
+#~ msgid "DMA chan:%x "
+#~ msgstr "DMAチェイン:%x "

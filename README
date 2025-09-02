@@ -52,7 +52,8 @@ flie a bug for us (or even send a patch!).
 
 The NLS support by Arnaldo Carvalho de Melo <acme@conectiva.com.br> uses GNU
 gettext.  Translations to Brazilian Portuguese (pt_BR), German (de), Estonian
-(ee), Czech (cz), and French (fr) are available.  Others are welcome!
+(ee), Czech (cz), French (fr) and Japanese (ja) are available.  Others are
+welcome!
 
 The translated man pages are planned to be moved to the manpages-i10n
 project in the next release. Thanks to Helge Kreutzmann.
