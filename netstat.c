@@ -470,7 +470,8 @@ static void prg_cache_load(void)
 		else
 		    cmdlp = cmdlbuf;
 	    }
-
+	    // pid can be up to 10, use rest from commandline start.
+	    // #pragma GCC diagnostic ignored "-Wformat-truncation"?
 	    snprintf(finbuf, sizeof(finbuf), "%s/%s", direproc->d_name, cmdlp);
 #if HAVE_SELINUX
 	    if (getpidcon(atoi(direproc->d_name), &scon) == -1) {
@@ -1799,13 +1800,13 @@ static int ipx_info(void)
 	/* Fetch and resolve the Source */
 	(void) ap->input(0, sad, &sa);
 	safe_strncpy(buf, ap->sprint(&sa, flag_not & FLAG_NUM_HOST), sizeof(buf));
-	snprintf(sad, sizeof(sad), "%s:%04X", buf, sport);
+	snprintf(sad, sizeof(sad), "%.40s:%04X", buf, sport);
 
 	if (!nc) {
 	    /* Fetch and resolve the Destination */
 	    (void) ap->input(0, dad, &sa);
 	    safe_strncpy(buf, ap->sprint(&sa, flag_not & FLAG_NUM_HOST), sizeof(buf));
-	    snprintf(dad, sizeof(dad), "%s:%04X", buf, dport);
+	    snprintf(dad, sizeof(dad), "%.40s:%04X", buf, dport);
 	} else
         safe_strncpy(dad, "-", sizeof(dad));
 
