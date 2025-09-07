@@ -1,8 +1,6 @@
 /*
  * lib/unix.c This file contains the general hardware types.
  *
- * Version:     $Id: unix.c,v 1.6 1998/11/19 13:02:04 philip Exp $
- *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
  *
@@ -82,7 +80,7 @@ static const char *UNIX_sprint(const struct sockaddr_storage *sasp, int numeric)
 
 struct aftype unix_aftype =
 {
-    "unix", NULL, /*"UNIX Domain", */ AF_UNIX, 0,
+    "unix", NULL/*"UNIX Domain"*/, AF_UNIX, 0,
     UNIX_print, UNIX_sprint, NULL, NULL,
     NULL, NULL, NULL,
     -1,
@@ -93,7 +91,7 @@ struct aftype unix_aftype =
 
 struct aftype unspec_aftype =
 {
-    "unspec", NULL, /*"UNSPEC", */ AF_UNSPEC, 0,
+    "unspec", NULL/*"UNSPEC"*/, AF_UNSPEC, 0,
     UNSPEC_print, UNSPEC_sprint, NULL, NULL,
     NULL,
 };
