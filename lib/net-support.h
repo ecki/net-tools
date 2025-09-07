@@ -246,5 +246,8 @@ extern char afname[256];
 #endif
 #endif
 
+/* Current limitation of Linux network device ioctl(2) interface */
+#define MAC_ADDRESS_MAX_LENGTH (sizeof(((struct ifreq *)0)->ifr_hwaddr.sa_data))
+
 /* End of lib/support.h */
 

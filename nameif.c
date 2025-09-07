@@ -2,8 +2,6 @@
  * Name Interfaces based on MAC address.
  * Writen 2000 by Andi Kleen.
  * Subject to the Gnu Public License, version 2.
- * TODO: make it support token ring etc.
- * $Id: nameif.c,v 1.4 2003/09/11 03:46:49 ak Exp $
  */
 #ifndef _GNU_SOURCE
 #define _GNU_SOURCE
@@ -24,9 +22,6 @@
 #include "intl.h"
 #include "net-support.h"
 #include "util.h"
-
-/* Current limitation of Linux network device ioctl(2) interface */
-#define MAC_ADDRESS_MAX_LENGTH (sizeof(((struct ifreq *)0)->ifr_hwaddr.sa_data))
 
 static const char default_conf[] = "/etc/mactab";
 static const char *fname = default_conf;

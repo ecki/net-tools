@@ -433,12 +433,13 @@ int if_fetch(struct interface *ife)
     ife->flags = ifr.ifr_flags;
 
     safe_strncpy(ifr.ifr_name, ifname, sizeof(ifr.ifr_name));
+    memset(ife->hwaddr, 0, sizeof(ife->hwaddr));  // clean out trailing
     if (ioctl(skfd, SIOCGIFHWADDR, &ifr) < 0)
-	memset(ife->hwaddr, 0, 32);
-    else
-	memcpy(ife->hwaddr, ifr.ifr_hwaddr.sa_data, 8);
-
-    ife->type = ifr.ifr_hwaddr.sa_family;
+        ife->type = -1; // 0 is ARPHRD_NETROM, maybe ARPHRD_VOID?
+    else {
+        memcpy(ife->hwaddr, ifr.ifr_hwaddr.sa_data, MAC_ADDRESS_MAX_LENGTH);
+        ife->type = ifr.ifr_hwaddr.sa_family;
+    }
 
     safe_strncpy(ifr.ifr_name, ifname, sizeof(ifr.ifr_name));
     if (ioctl(skfd, SIOCGIFMTU, &ifr) < 0)
@@ -466,12 +467,6 @@ int if_fetch(struct interface *ife)
 #endif
     }
 #endif
-
-    safe_strncpy(ifr.ifr_name, ifname, sizeof(ifr.ifr_name));
-    if (ioctl(skfd, SIOCGIFMAP, &ifr) < 0)
-	memset(&ife->map, 0, sizeof(struct ifmap));
-    else
-	memcpy(&ife->map, &ifr.ifr_map, sizeof(struct ifmap));
 
     safe_strncpy(ifr.ifr_name, ifname, sizeof(ifr.ifr_name));
     if (ioctl(skfd, SIOCGIFMAP, &ifr) < 0)
