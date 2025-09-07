@@ -1,6 +1,8 @@
-# $Id: de.po,v 1.11 2003/10/25 21:15:09 ecki Exp $
 # German translation for net-tools 1.51
 # Copyright (C) 1999 Ralf Bächle <ralf@linux-mips.org>
+# This file is distributed under the same license as the PACKAGE package.
+#
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: net-tools 1.51\n"
@@ -483,12 +485,12 @@ msgid "getnodename()=`%s'\n"
 msgstr "getnodename()=»%s«\n"
 
 #: ../ifconfig.c:105
-#, fuzzy, c-format
+#, c-format
 msgid ""
-"Iface      MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR "
+"Iface             MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR "
 "Flg\n"
 msgstr ""
-"SStelle MTU Met    RX-OK RX-Feh RX-DRP RX-Ülf    TX-OK TX-Feh TX-DRP TX-Üb "
+"SStelle           MTU    RX-OK RX-Feh RX-DRP RX-Ülf    TX-OK TX-Feh TX-DRP TX-Üb "
 "Flg\n"
 
 #: ../ifconfig.c:130 ../ifconfig.c:162

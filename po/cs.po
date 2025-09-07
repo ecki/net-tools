@@ -1,8 +1,10 @@
 # Czech translation of net-tools
 # Copyright (C) 1999 Free Software Foundation, Inc.
+# This file is distributed under the same license as the PACKAGE package.
 # Jiří Pavlovský <pavlovsk@ffcuni.cz>, 1999.
 # Petr Pisar <petr.pisar@atlas.cz>, 2009.
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: net-tools cvs-20090825\n"
@@ -502,10 +504,10 @@ msgstr "getnodename()=`%s'\n"
 #: ../ifconfig.c:105
 #, fuzzy, c-format
 msgid ""
-"Iface      MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR "
+"Iface             MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR "
 "Flg\n"
 msgstr ""
-"Rozhr   MTU Met  PŘ-OK PŘ-CHYB PŘ-ZAH PŘ-PŘT   OD-OK OD-CHYB OD-ZAH OD-PŘT "
+"Rozhr             MTU    PŘ-OK PŘ-CHYB PŘ-ZAH PŘ-PŘT   OD-OK OD-CHYB OD-ZAH OD-PŘT "
 "Přízn\n"
 
 #: ../ifconfig.c:130 ../ifconfig.c:162

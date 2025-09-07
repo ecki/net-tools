@@ -1,5 +1,6 @@
 # Estonian translations for net-tools
 # Copyright (C) 1999 Free Software Foundation, Inc.
+# This file is distributed under the same license as the PACKAGE package.
 # Meelis Roos <Meelis.Roos@mail.ee>, 1999.
 #
 #, fuzzy
@@ -497,12 +498,12 @@ msgid "getnodename()=`%s'\n"
 msgstr "getnodename()=`%s'\n"
 
 #: ../ifconfig.c:105
-#, fuzzy, c-format
+#, c-format
 msgid ""
-"Iface      MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR "
+"Iface             MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR "
 "Flg\n"
 msgstr ""
-"Liides  MTU Meetr. RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR "
+"Liides            MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR "
 "Lip\n"
 
 #: ../ifconfig.c:130 ../ifconfig.c:162

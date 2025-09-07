@@ -1,6 +1,8 @@
-# $Id: fr.po,v 1.2 2000/02/13 22:28:08 ralf Exp $
-# French translation for net-tools 1.51
+# French translation for net-tools
 # Copyright (C) 1999 J.M.Vansteene <vanstee@worldnet.fr>
+# This file is distributed under the same license as the PACKAGE package.
+#
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: net-tools 1.51\n"
@@ -491,12 +493,12 @@ msgid "getnodename()=`%s'\n"
 msgstr "getnodename()=`%s'\n"
 
 #: ../ifconfig.c:105
-#, fuzzy, c-format
+#, c-format
 msgid ""
-"Iface      MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR "
+"Iface             MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR "
 "Flg\n"
 msgstr ""
-"Iface   MTU Met    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR "
+"Iface             MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR "
 "Indic\n"
 
 #: ../ifconfig.c:130 ../ifconfig.c:162

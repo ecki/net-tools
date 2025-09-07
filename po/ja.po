@@ -1,7 +1,9 @@
 # Net-tool Japanese locale data
+# This file is distributed under the same license as the PACKAGE package.
 # Kenshi Muto <kmuto@debian.org>, 2007.
 # Yasuyuki Furukawa <yasu@on.cs.keio.ac.jp>, 1999.
 #
+#, fuzzy
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
@@ -498,12 +500,12 @@ msgid "getnodename()=`%s'\n"
 msgstr "getnodename()=`%s'\n"
 
 #: ../ifconfig.c:105
-#, fuzzy, c-format
+#, c-format
 msgid ""
-"Iface      MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR "
+"Iface             MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR "
 "Flg\n"
 msgstr ""
-"Iface   MTU Met   RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR フ"
+"Iface             MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR フ"
 "ラグ\n"
 
 #: ../ifconfig.c:130 ../ifconfig.c:162

@@ -102,7 +102,7 @@ static int if_print(char *ifname)
     int res;
 
     if (ife_short)
-	printf(_("Iface      MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR Flg\n"));
+	printf(_("Iface             MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR Flg\n"));
 
     if (!ifname) {
 	res = for_all_interfaces(do_if_print, &opt_a);

@@ -1,12 +1,11 @@
-# Brazilian Portuguese translation for net-tools 1.54
+# Brazilian Portuguese translation for net-tools
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Arnaldo Carvalho de Melo <acme@conectiva.com.br>, 2000.
-#
-# $Id: pt_BR.po,v 1.8 2006/12/14 23:36:24 ecki Exp $
-# Brazilian portuguese translation for net-tools 1.54
 # Copyright (C) 1998, 1999 Free Software Foundation, Inc.
 # Arnaldo Carvalho de Melo <acme@conectiva.com.br>, 1998-2000
 # Ralf Baechle <ralf@linux-mips.org>, 1999
+#
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: net-tools 1.54\n"
@@ -498,12 +497,12 @@ msgid "getnodename()=`%s'\n"
 msgstr "getnodename()=`%s'\n"
 
 #: ../ifconfig.c:105
-#, fuzzy, c-format
+#, c-format
 msgid ""
-"Iface      MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR "
+"Iface             MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR "
 "Flg\n"
 msgstr ""
-"Iface     MTU Met  RX-OK RX-ERR RX-DRP RX-OVR  TX-OK TX-ERR TX-DRP TX-OV "
+"Iface             MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR "
 "Opções\n"
 
 #: ../ifconfig.c:130 ../ifconfig.c:162
