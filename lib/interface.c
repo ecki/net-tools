@@ -913,9 +913,9 @@ void ife_print_long(struct interface *ptr)
 		ptr->stats.rx_packets,
 	       rx, (unsigned long)(short_rx / 10),
 	       (unsigned long)(short_rx % 10), Rext);
-	if (can_compress) {
+	if (can_compress || ptr->stats.rx_compressed > 0) {
   	    printf("        ");
-	    printf(_("RX compressed:%lu\n"), ptr->stats.rx_compressed);
+	    printf(_("RX compressed %lu\n"), ptr->stats.rx_compressed);
 	}
 	printf("        ");
 	printf(_("RX errors %lu  dropped %lu  overruns %lu  frame %lu\n"),
@@ -928,12 +928,12 @@ void ife_print_long(struct interface *ptr)
 		ptr->stats.tx_packets,
 	        tx, (unsigned long)(short_tx / 10),
 	        (unsigned long)(short_tx % 10), Text);
-	if (can_compress) {
+	if (can_compress || ptr->stats.tx_compressed > 0) {
   	    printf("        ");
 	    printf(_("TX compressed %lu\n"), ptr->stats.tx_compressed);
 	}
 	printf("        ");
-	printf(_("TX errors %lu  dropped %lu overruns %lu  carrier %lu  collisions %lu\n"),
+	printf(_("TX errors %lu  dropped %lu  overruns %lu  carrier %lu  collisions %lu\n"),
 	       ptr->stats.tx_errors,
 	       ptr->stats.tx_dropped, ptr->stats.tx_fifo_errors,
 	       ptr->stats.tx_carrier_errors, ptr->stats.collisions);
