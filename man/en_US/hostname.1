@@ -1,4 +1,4 @@
-.TH HOSTNAME 1 "2013\-08\-29" "net\-tools" "Linux System Administrator's Manual"
+.TH HOSTNAME 1 "2025-09-10" "net\-tools" "Linux System Administrator's Manual"
 
 .SH NAME
 hostname \- show or set the system's host name
@@ -14,64 +14,63 @@ nodename \- show or set the system's DECnet node name
 ypdomainname \- show or set the system's NIS/YP domain name
 
 .SH SYNOPSIS
-.B hostname
-.RB [ \-v ]
-.RB [ \-s | \-\-short ]
-
-.PP
-.B hostname
+.SY hostname
 .RB [ \-v ]
 .RB [ \-a | \-\-alias ]
 .RB [ \-d | \-\-domain ]
 .RB [ \-f | \-\-fqdn | \-\-long ]
 .RB [ \-i | \-\-ip\-address ]
+.RB [ \-s | \-\-short ]
 
-.PP
-.B hostname
+.P
+.SY hostname
 .RB [ \-v ]
 .RB [ \-y | \-\-yp | \-\-nis ]
 .RB [ \-n | \-\-node ]
 
-.PP
-.B hostname 
+.P
+.SY hostname
 .RB [ \-v ]
-.RB [ \-F\ filename | \-\-file\ filename ]
-.RI [ newname ]
-
-.PP
-.B domainname
+.RB [ \-F
+.I filename
+.RB | \-\-file
+.IR filename | newname ]
+.br
+.SY domainname
 .RB [ \-v ]
-.RB [ \-F\ filename | \-\-file\ filename ]
-.RI [ newname ]
-
-.PP 
-.B nodename
+.RB [ \-F
+.I filename
+.RB | \-\-file
+.IR filename | newname ]
+.br
+.SY nodename
 .RB [ \-v ]
-.RB [ \-F\ filename | \-\-file\ filename ]
-.RI [ newname ]
+.RB [ \-F
+.I filename
+.RB | \-\-file
+.IR filename | newname ]
 
-.PP
-.B hostname
-.RB [ \-v | \-\-verbose ]
+.P
+.SY dnsdomainname
+.RB [ \-v ]
+.br
+.SY nisdomainname
+.RB [ \-v ]
+.br
+.SY ypdomainname
+.RB [ \-v ]
+
+.P
+.SY hostname
 .RB [ \-h | \-\-help ]
 .RB [ \-V | \-\-version ]
-
-.PP
-.B dnsdomainname
-.RB [ \-v ]
-.br
-.B nisdomainname
-.RB [ \-v ]
-.br
-.B ypdomainname
-.RB [ \-v ]
 
 .SH DESCRIPTION
 .B Hostname
 is the program that is used to either set or display
-the current host, domain or node name of the system.  These names are used
-by many of the networking programs to identify the machine. The domain 
-name is also used by NIS/YP.
+the current host, domain or node name of the system.
+These names are used by many of the networking programs to identify
+the machine.  The domain name is also used by NIS/YP.
 
 .SS "GET NAME"
 When called without any arguments, the program displays the current
@@ -102,101 +101,113 @@ complete FQDN of the system is returned with
 .BR "hostname \-\-fqdn" .
 
 .SS "SET NAME"
-When called with one argument or with the 
+When called with one argument or with the
 .B \-\-file
 option, the commands set the host name, the NIS/YP domain name or
-the node name. 
+the node name.
 
-.LP
-Note, that only the super-user can change the names. 
+.P
+Note, that only the super-user can change the names.
 
-.LP
-It is not possible to set the FQDN or the DNS domain name with the 
-.B dnsdomainname 
-command (see 
+.P
+It is not possible to set the FQDN or the DNS domain name with the
+.B dnsdomainname
+command (see
 .B "THE FQDN"
 below).
 
-.LP
-The host name is usually set once at system startup by reading the 
-contents of a file which contains the host name, e.g. 
+.P
+The host name is usually set once at system startup by reading the
+contents of a file which contains the host name, e.g.
 .IR /etc/hostname ).
 
 .SS THE FQDN
-You can't change the FQDN (as returned by 
-.BR "hostname \-\-fqdn" ) 
+You can't change the FQDN (as returned by
+.BR "hostname \-\-fqdn" )
 or the DNS domain name (as returned by
-.BR "dnsdomainname" ) 
+.BR "dnsdomainname" )
 with this command. The FQDN of the system is the name that the
 .BR resolver (3)
-returns for the host name. 
+returns for the host name.
 
-.LP
+.P
 Technically: The FQDN is the canonical name returned by
 .BR gethostbyname2 (2)
-when resolving the result of the 
+when resolving the result of the
 .BR gethostname (2)
-name. The DNS domain name is the part after the first dot.
-.LP
-Therefore it depends on the configuration (usually in 
+name. The DNS domain name is the part after the first dot..LP
+Therefore it depends on the configuration (usually in
 .IR /etc/host.conf )
 how you can change it. If
-.B hosts 
-is the first lookup method, you can change the FQDN in 
+.B hosts
+is the first lookup method, you can change the FQDN in
 .IR /etc/hosts .
-
 
 .SH OPTIONS
 .TP
-.I "\-a, \-\-alias"
+.B "\-a, \-\-alias"
 Display the alias name of the host (if used).
 .TP
-.I "\-d, \-\-domain"
+.B "\-d, \-\-domain"
 Display the name of the DNS domain (this is the FQDN without the segment up
-to the first dot). This is equivalent to using the 
-.B dnsdomainname 
+to the first dot). This is equivalent to using the
+.B dnsdomainname
 command.
 .TP
-.I "\-F, \-\-file filename"
+.BI "\-F, \-\-file" " filename"
 Read the new host name from the specified file. Comments (lines starting with
-a `#') are ignored.
+a `\fB#\fP') are ignored.
 .TP
-.I "\-f, \-\-fqdn, \-\-long"
+.B "\-f, \-\-fqdn, \-\-long"
 Display the FQDN (Fully Qualified Domain Name). A FQDN consists of name
 including the DNS domain.
 .TP
-.I "\-h, \-\-help"
+.B "\-h, \-\-help"
 Print a usage message and exit.
 .TP
-.I "\-i, \-\-ip\-address"
+.B "\-i, \-\-ip\-address"
 Display the IP address(es) of the host.
 .TP
-.I "\-n, \-\-node"
+.B "\-n, \-\-node"
 Display the DECnet node name. If a parameter is given (or
-.B \-\-file name
+.BI \-\-file " name"
 ) the root can also set a new node name.
 .TP
-.I "\-s, \-\-short"
+.B "\-s, \-\-short"
 Display the short host name. This is the host name cut at the first dot.
 .TP
-.I "\-V, \-\-version"
+.B "\-V, \-\-version"
 Print version information on standard output and exit successfully.
 .TP
-.I "\-v, \-\-verbose"
+.B "\-v, \-\-verbose"
 Be verbose and tell what's going on.
 .TP
-.I "\-y, \-\-yp, \-\-nis"
-Display the NIS domain name. If a parameter is given (or 
-.B \-\-file name
+.B "\-y, \-\-yp, \-\-nis"
+Display the NIS domain name. If a parameter is given (or
+.BI \-\-file " name"
 ) then root can also set a new NIS domain.
+
 .SH FILES
-.B /etc/hostname
-.B /etc/hosts
-.B /etc/host.conf
+.I /etc/hostname
+.I /etc/hosts
+.I /etc/host.conf
+
+.SH SEE ALSO
+Homepage of the \fInet\-tools\fP project:
+.UR https://net-tools.sourceforge.io
+.UE
+
+.P
+.BR hostname (5),
+.BR hostname (7),
+.BR hosts (5)
+.br
+.BR hostnamectl (8)
+if \fIsystemd\fP is used.
 
 .SH AUTHOR
-Peter Tobias, <tobias@et\-inf.fho\-emden.de>
+Peter Tobias <tobias@et\-inf.fho\-emden.de>,
 .br
-Bernd Eckenfels, <net\-tools@lina.inka.de> (NIS and manpage).
+Bernd Eckenfels <net\-tools@lina.inka.de> (NIS support),
 .br
-Steve Whitehouse, <SteveW@ACM.org> (DECnet support and manpage).
+Steve Whitehouse <SteveW@ACM.org> (DECnet support).

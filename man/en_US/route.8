@@ -1,67 +1,73 @@
-.TH ROUTE 8 "2014\-02\-17" "net\-tools" "Linux System Administrator's Manual"
+.TH ROUTE 8 "2025-09-10" "net\-tools" "Linux System Administrator's Manual"
+
 .SH NAME
-route \- show / manipulate the IP routing table
+route \- show / manipulate the routing table
+
 .SH SYNOPSIS
-.B route
+.SY route
 .RB [ \-CFvnNee ]
 .RB [ \-A
-family
-.RB | \-4 | \-6 ] 
-.TP
-.B route 
+.I Family
+.RB | \-4 | \-6 ]
+
+.P
+.SY route
 .RB [ \-v ]
 .RB [ \-A
-family 
-.RB | \-4 | \-6 ] 
-.B add 
-.RB [ \-net | \-host ] 
-.I target 
-.RB [ netmask 
-.IR Nm ] 
-.RB [ gw 
-.IR Gw ] 
-.RB [ metric 
-.IR N ] 
-.RB [ mss 
-.IR M ] 
-.RB [ window 
-.IR W ] 
-.RB [ irtt 
+.I Family
+.RB | \-4 | \-6 ]
+.B add
+.RB [ \-net | \-host ]
+.I Target
+.RB [ netmask
+.IR Nm ]
+.RB [ gw
+.IR Gw ]
+.RB [ metric
+.IR N ]
+.RB [ mss
+.IR M ]
+.RB [ window
+.IR W ]
+.RB [ irtt
 .IR I ]
 .RB [ reject ]
 .RB [ mod ]
-.RB [ dyn ] 
-.RB [ reinstate ] 
-.RB [[ dev ] 
-.IR If ]
-.TP
-.B route 
-.RB [ \-v ] 
-.RB [ \-A
-.I family
-.RB | \-4 | \-6 ]
-.B del 
-.RB [ \-net | \-host ] 
-.I target 
-.RB [ gw 
-.IR Gw ] 
-.RB [ netmask 
-.IR Nm ] 
-.RB [ metric 
-.IR M ] 
+.RB [ dyn ]
+.RB [ reinstate ]
 .RB [[ dev ]
 .IR If ]
-.TP
-.B route 
-.RB [ \-V ] 
+
+.P
+.SY route
+.RB [ \-v ]
+.RB [ \-A
+.I Family
+.RB | \-4 | \-6 ]
+.B del
+.RB [ \-net | \-host ]
+.I Target
+.RB [ gw
+.IR Gw ]
+.RB [ netmask
+.IR Nm ]
+.RB [ metric
+.IR M ]
+.RB [[ dev ]
+.IR If ]
+
+.P
+.SY route
+.RB [ \-V ]
 .RB [ \-\-version ]
 .RB [ \-h ]
 .RB [ \-\-help ]
+
 .SH DESCRIPTION
 .B Route
-manipulates the kernel's IP routing tables.  Its primary use is to set
-up static routes to specific hosts or networks via an interface after
-it has been configured with the
+manipulates the kernel's routing tables.
+Its primary use is to set up static routes to specific hosts or
+networks via an interface after it has been configured with the
 .BR ifconfig (8)
 program.
 
@@ -77,27 +83,27 @@ displays the current contents of the routing tables.
 
 .SH OPTIONS
 .TP
-\fB\-A \fIfamily\fR
-use the specified address family (eg `inet'). Use 
+\fB\-A\fP \fIFamily\fP
+use the specified address family (eg `inet'). Use
 .B route \-\-help
-for a full list. You can use 
-.B \-6 
-as an alias for 
-.B \-\-inet6 
-and 
-.B \-4 
-as an alias for 
-.B \-A inet
-.
+for a full list.
+.br
+You can use
+.B \-6
+as an alias for
+.B \-\-inet6
+and
+.B \-4
+as an alias for
+.BR "\-A inet" .
 
-.TP 
+.TP
 .B \-F
-operate on the kernel's FIB (Forwarding Information Base) routing
-table. 
+operate on the kernel's FIB (Forwarding Information Base) routing table.
 This is the default.
-.TP 
+.TP
 .B \-C
-operate on the kernel's routing cache.
+operate on the kernel's routing cache. (This is no longer available.)
 .TP
 .B \-v
 select verbose operation.
@@ -111,36 +117,39 @@ nameserver has vanished.
 use
 .BR netstat (8)\-format
 for displaying the routing table.
-.B \-ee 
+.B \-ee
 will generate a very long line with all parameters from the routing table.
 .TP
 .B del
 delete a route.
-.TP 
-.B add 
+.TP
+.B add
 add a new route.
 .TP
-.I target
-the destination network or host. You can provide an addresses or symbolic 
+.I Target
+the destination network or host. You can provide an addresses or symbolic
 network or host name. Optionally you can use \fB/\fIprefixlen\fR notation
 instead of using the \fBnetmask\fR option.
 .TP
 .B \-net
 the
-.I target
+.I Target
 is a network.
 .TP
 .B \-host
 the
-.I target 
+.I Target
 is a host.
 .TP
-\fBnetmask \fINM\fR
-when adding a network route, the netmask to be used.
+\fBnetmask\fP \fINm\fP
+when adding a network route, the netmask
+.I Nm
+to be used.
 .TP
-\fBgw \fIGW\fR
-route packets via a gateway.
-.br
+\fBgw\fP \fIGW\fP
+route packets via a gateway
+.IR Gw .
+
 .B NOTE:
 The specified gateway must be reachable first. This usually means that
 you have to set up a static route to the gateway beforehand. If you specify
@@ -148,20 +157,25 @@ the address of one of your local interfaces, it will be used to decide about
 the interface to which the packets should be routed to. This is a BSDism
 compatibility hack.
 .TP
-\fBmetric \fIM\fR
-set the metric field in the routing table (used by routing daemons) to \fIM\fR. If this option is not specified the metric for inet6 (IPv6) address family defaults to '1', for inet (IPv4) it defaults to '0'. You should always specify an explicit metric value to not rely on those defaults - they also differ from iproute2.
-.TP 
-\fBmss \fIM\fR
+\fBmetric\fP \fIN\fP
+set the metric field in the routing table (used by routing daemons)
+to \fIN\fR.
+If this option is not specified the metric for inet6 (IPv6) address family
+defaults to '1', for inet (IPv4) it defaults to '0'.
+You should always specify an explicit metric value to not rely on those defaults
+- they also differ from iproute2.
+.TP
+\fBmss\fP \fIM\fP
 sets MTU (Maximum Transmission Unit) of the route to \fIM\fR bytes.
 Note that the current implementation of the route command does not allow
 the option to set the Maximum Segment Size (MSS).
-.TP 
-\fBwindow \fIW\fR
+.TP
+\fBwindow\fP \fIW\fP
 set the TCP window size for connections over this route to \fIW\fR
 bytes. This is typically only used on AX.25 networks and with drivers
 unable to handle back to back frames.
 .TP
-\fBirtt \fII\fR
+\fBirtt\fP \fII\fP
 set the initial round trip time (irtt) for TCP connections over this
 route to \fII\fR milliseconds (1-12000). This is typically only used on
 AX.25 networks. If omitted the RFC 1122 default of 300ms is used.
@@ -171,33 +185,33 @@ install a blocking route, which will force a route lookup to fail.
 This is for example used to mask out networks before using the default
 route. This is NOT for firewalling.
 .TP
-.B mod, dyn, reinstate
+.BR mod ", " dyn ", " reinstate
 install a dynamic or modified route. These flags are for diagnostic
 purposes, and are generally only set by routing daemons.
 .TP
-\fBdev \fIIf\fR
+\fBdev\fP \fIIf\fP
 force the route to be associated with the specified device, as the
 kernel will otherwise try to determine the device on its own (by
 checking already existing routes and device specifications, and where
 the route is added to). In most normal networks you won't need this.
 
-If \fBdev \fIIf\fR
-is the last option on the command line, the word 
+If \fIIf\fP is the last option on the command line, the word
 .B dev
-may be omitted, as it's the default. Otherwise the order of the route
-modifiers (\fBmetric netmask gw dev\fR) doesn't matter.
+may be omitted, as it's the default.
+Otherwise the order of the route modifiers
+(\fBmetric netmask gw dev\fR) doesn't matter.
 
 .SH EXAMPLES
 .TP
 .B route add \-net 127.0.0.0 netmask 255.0.0.0 metric 1024 dev lo
-adds the normal loopback entry, using netmask 255.0.0.0 and associated with the 
+adds the normal loopback entry, using netmask 255.0.0.0 and associated with the
 "lo" device (assuming this device was previously set up correctly with
-.BR ifconfig (8)). 
+.BR ifconfig (8)).
 
-.TP 
+.TP
 .B route add \-net 192.56.76.0 netmask 255.255.255.0 metric 1024 dev eth0
-adds a route to the local network 192.56.76.x via 
-"eth0".  The word "dev" can be omitted here. 
+adds a route to the local network 192.56.76.x via
+"eth0".  The word "dev" can be omitted here.
 
 .TP
 .B route del default
@@ -211,7 +225,7 @@ addressing, you pretty much always have to specify the netmask that is
 same as as seen in 'route -n' listing.
 
 .TP
-.B route add default gw mango 
+.B route add default gw mango
 adds a default route (which will be used if no other route matches).
 All packets using this route will be gatewayed through the address of a node
 named "mango". The
@@ -232,33 +246,33 @@ route to the SLIP interface.
 .B route add \-net 224.0.0.0 netmask 240.0.0.0 dev eth0
 This is an obscure one documented so people know how to do it. This sets
 all of the class D (multicast) IP routes to go via "eth0". This is the
-correct normal configuration line with a multicasting kernel. 
+correct normal configuration line with a multicasting kernel.
 
 .TP
 .B route add \-net 10.0.0.0 netmask 255.0.0.0 metric 1024 reject
 This installs a rejecting route for the private network "10.x.x.x."
 
 .TP
-.B route -6 add 2001:0002::/48 metric 1 dev eth0  
-This adds a IPv6 route with the specified metric to be directly reachable via eth0.
+.B route -6 add 2001:0002::/48 metric 1 dev eth0
+This adds a IPv6 route with the specified metric to be directly reachable via
+eth0.
 
-.LP
 .SH OUTPUT
 The output of the kernel routing table is organized in the following columns
 .TP
-.B Destination     
+.B Destination
 The destination network or destination host.
 .TP
 .B Gateway
 The gateway address or '*' if none set.
 .TP
-.B Genmask         
+.B Genmask
 The netmask for the destination net; '255.255.255.255' for a host destination
-and '0.0.0.0' for the 
+and '0.0.0.0' for the
 .B default
 route.
 .TP
-.B Flags 
+.B Flags
 Possible flags include
 .br
 .B U
@@ -296,11 +310,12 @@ entry)
 .B !
 .RB ( reject
 route)
+.br
 .TP
-.B Metric 
+.B Metric
 The 'distance' to the target (usually counted in hops).
 .TP
-.B Ref    
+.B Ref
 Number of references to this route. (Not used in the Linux kernel.)
 .TP
 .B Use
@@ -310,44 +325,59 @@ be either route cache misses (\-F) or hits (\-C).
 .B Iface
 Interface to which packets for this route will be sent.
 .TP
-.B MSS 
+.B MSS
 Default maximum segment size for TCP connections over this route.
 .TP
-.B Window  
+.B Window
 Default window size for TCP connections over this route.
 .TP
 .B irtt
 Initial RTT (Round Trip Time). The kernel uses this to guess about the best
 TCP protocol parameters without waiting on (possibly slow) answers.
 .TP
-.B HH (cached only)
+.BR HH " (cached only)"
 The number of ARP entries and cached routes that refer to the hardware
 header cache for the cached route. This will be \-1 if a hardware
 address is not needed for the interface of the cached route (e.g. lo).
 .TP
-.B Arp (cached only)
+.BR Arp " (cached only)"
 Whether or not the hardware address for the cached route is up to date.
-.LP
+
 .SH FILES
 .I /proc/net/ipv6_route
 .br
 .I /proc/net/route
 .br
 .I /proc/net/rt_cache
-.LP
-.SH "SEE ALSO"
-.BR ethers (5),
-.BR arp (8),
-.BR rarp (8),
-.BR route (8),
-.BR ifconfig (8),
-.BR netstat (8)
-.LP
+
 .SH HISTORY
 .B Route
 for Linux was originally written by Fred N.  van Kempen,
 <waltje@uwalt.nl.mugnet.org> and then modified by Johannes Stille and
 Linus Torvalds for pl15. Alan Cox added the mss and window options for
 Linux 1.1.22. irtt support and merged with netstat from Bernd Eckenfels.
+
+With the introduction of the netlink kernel interface this
+tool is mostly superseded by the \fBip route\fP command.
+
+.SH "SEE ALSO"
+Homepage of the \fInet\-tools\fP project:
+.UR https://net-tools.sourceforge.io
+.UE
+
+.P
+.BR arp (8),
+.BR ifconfig (8),
+.BR netstat (8),
+.BR ip-route (8)
+.br
+.BR ethers (5),
+.BR rtnetlink (7),
+.BR netplan (5)
+
 .SH AUTHOR
-Currently maintained by Phil Blundell <Philip.Blundell@pobox.com> and Bernd Eckenfels <net-tools@lina.inka.de>.
+Currently maintained by
+.br
+Phil Blundell <Philip.Blundell@pobox.com>,
+.br
+Bernd Eckenfels <net\-tools@lina.inka.de>.

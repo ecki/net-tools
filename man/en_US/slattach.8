@@ -1,104 +1,123 @@
-.TH SLATTACH 8 "2011\-12\-31" "net\-tools" "Linux System Administrator's Manual"
+.TH SLATTACH 8 "2025-09-10" "net\-tools" "Linux System Administrator's Manual"
+
 .SH NAME
 slattach \- attach a network interface to a serial line
+
 .SH SYNOPSIS
-.B "slattach [\-dehlLmnqv] [\-c command] [\-p proto] [\-s speed] [tty]"
-.br
+.SY slattach
+.RB [ \-dehlLmnqv "] [" \-c
+.I command
+.RB "] [" \-p
+.I proto
+.RB "] [" \-s
+.IR speed "] [" tty ]
+
 .SH DESCRIPTION
 .B Slattach
-is a tiny little program that can be used to put a normal terminal
+is a tiny program that can be used to put a normal terminal
 ("serial") line into one of several "network" modes, thus allowing
 you to use it for point-to-point links to other computers.
+
 .SH OPTIONS
 .TP
-.B tty
+.I tty
 Path to a serial device like
 .IR /dev/ttyS* ", " /dev/cua* " or " /dev/ptmx
 to spawn a new pseudo tty.
 .TP
-.B "[\-c command]"
+\fB\-c\fP \fIcommand\fP
 Execute
-.B command
+.I command
 when the line is hung up. This can be used to run scripts or re-establish
 connections when a link goes down.
 .TP
-.B "[\-d]"
+.B \-d
 Enable debugging output.  Useful when determining why a given
 setup doesn't work.
 .TP
-.B "[\-h]"
+.B \-h
 Exit when the carrier is lost. This works on both /dev/tty and /dev/cua
 devices by directly monitoring the carrier status every 15 seconds.
 .TP
-.B "[\-v]"
+.B \-v
 Enable verbose output.  Useful in shell scripts.
 .TP
-.B "[\-q]"
+.B \-q
 Operate in quiet mode - no messages at all.
 .TP
-.B "[\-l]"
-Create an UUCP-style lockfile for the device in /var/lock.
+.B \-l
+Create an UUCP-style lockfile for the device in
+.IR /var/lock .
 .TP
-.B "[\-n]"
-Equivalent to the "mesg n" command.
+.B \-n
+Equivalent to the "\fBmesg n\fP" command.
 .TP
-.B "[\-m]"
-Do \fBnot\fP initialize the line into 8 bits raw mode.
+.B \-m
+Do \fBnot\fP initialize the line into 8-bit raw mode.
 .TP
-.B "[\-e]"
+.B \-e
 Exit right after initializing device, instead of waiting for the
 line to hang up.
 .TP
-.B "[\-L]"
-Enable 3 wire operation. The terminal is moved into CLOCAL mode, 
+.B \-L
+Enable 3 wire operation. The terminal is moved into CLOCAL mode,
 carrier watching is disabled.
 .TP
-.B "[\-p proto]"
-Set a specific kind of protocol to use on the line.  The default
-is set to
+\fB\-p\fP \fIproto\fP
+Set a specific kind of protocol to use on the line.
+The default is set to
 .BR "cslip" ,
 i.e. compressed SLIP.  Other possible values are
 .B "slip"
-(normal SLIP), 
+(normal SLIP),
 .B "adaptive"
 (adaptive CSLIP/SLIP),
 .B "ppp"
 (Point-to-Point Protocol)
 and
 .B "kiss"
-(a protocol used for communicating with AX.25 packet radio terminal node controllers).
+(a protocol used for communicating with AX.25 packet radio
+terminal node controllers).
 The special argument
 .B "tty"
 can be used to put the device back into normal serial operation.
-Using 'ppp' mode is not normally useful as ppp requires an additional ppp daemon
+Using 'ppp' mode normally requires an additional ppp daemon
 .B pppd
-to be active on the line. For kiss connections the 
+to be active on the line. For kiss connections the
 .B kissattach
 program should be used.
 .TP
-.B "[\-s speed]"
+\fB\-s\fP \fIspeed\fP
 Set a specific line speed, other than the default.
-.PP
+
+.P
 If no arguments are given, the current terminal line (usually: the
 login device) is used.  Otherwise, an attempt is made to claim the
 indicated terminal port, lock it, and open it.
+
 .SH FILES
 .I /dev/cua* /var/lock/LCK.* /dev/ttyS* /dev/ptmx
-.SH BUGS
-None known.
+
 .SH SEE ALSO
+Homepage of the \fInet\-tools\fP project:
+.UR https://net-tools.sourceforge.io
+.UE
+
+.P
 .BR kissattach (8),
 .BR dip (8),
 .BR pppd (8),
 .BR sliplogin (8)
+
 .SH AUTHORS
-Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
+Fred N. van Kempen <waltje@uwalt.nl.mugnet.org>,
 .br
-Alan Cox, <Alan.Cox@linux.org>
+Alan Cox <Alan.Cox@linux.org>,
 .br
-Miquel van Smoorenburg, <miquels@drinkel.ow.org>
+Miquel van Smoorenburg <miquels@drinkel.ow.org>,
 .br
-George Shearer, <gshearer@one.net>
+George Shearer <gshearer@one.net>,
 .br
-Yossi Gottlieb, <yogo@math.tau.ac.il>
+Yossi Gottlieb <yogo@math.tau.ac.il>,
 .br
+Bernd Eckenfels <net\-tools@lina.inka.de>.

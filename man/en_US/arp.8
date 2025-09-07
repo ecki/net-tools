@@ -1,65 +1,72 @@
-.TH ARP 8 "2008\-10\-03" "net\-tools" "Linux System Administrator's Manual"
+.TH ARP 8 "2025-09-10" "net\-tools" "Linux System Administrator's Manual"
+
 .SH NAME
 arp \- manipulate the system ARP cache
+
 .SH SYNOPSIS
-.B arp
+.SY arp
 .RB [ \-vn ]
 .RB [ \-H
 .IR type ]
 .RB [ \-i
-.IR if ]
+.IR If ]
 .RB [ \-ae ]
 .RI [ hostname ]
-.PP
-.B arp
+
+.P
+.SY arp
 .RB [ \-v ]
 .RB [ \-i
-.IR if ]
+.IR If ]
 .B \-d
 .I hostname
 .RB [ pub ]
-.PP
-.B arp
+
+.P
+.SY arp
 .RB [ \-v ]
 .RB [ \-H
 .IR type ]
 .RB [ \-i
-.IR if ]
+.IR If ]
 .B \-s
 .I hostname hw_addr
 .RB [ temp ]
-.PP
-.B arp
+
+.P
+.SY arp
 .RB [ \-v ]
 .RB [ \-H
 .IR type ]
 .RB [ \-i
-.IR if ]
+.IR If ]
 .B \-s
 .I hostname hw_addr
 .RB [ netmask
-.IR nm ]
+.IR Nm ]
 .B pub
-.PP
-.B arp
+
+.P
+.SY arp
 .RB [ \-v ]
 .RB [ \-H
 .IR type ]
 .RB [ \-i
-.IR if ]
+.IR If ]
 .B \-Ds
 .I hostname
-.I ifname
+.I Ifname
 .RB [ netmask
-.IR nm ]
+.IR Nm ]
 .B pub
-.PP
-.B arp
+
+.P
+.SY arp
 .RB [ \-vnD ]
 .RB [ \-H
 .IR type ]
 .RB [ \-i
-.IR if ]
+.IR If ]
 .B \-f
 .RI [ filename ]
 
@@ -68,22 +75,22 @@ arp \- manipulate the system ARP cache
 manipulates or displays the kernel's IPv4 network neighbour cache. It can add
 entries to the table, delete one or display the current content.
 
-.B ARP
-stands for Address Resolution Protocol, which is used to find the media
+ARP stands for Address Resolution Protocol, which is used to find the media
 access control address of a network neighbour for a given IPv4 Address.
-.SH MODES
+
+.SS MODES
 .B arp
 with no mode specifier will print the current content of the table. It is
 possible to limit the number of entries printed, by specifying an hardware
 address type, interface name or host address.
 
-.B arp -d
+.B arp \-d
 .I address
 will delete a ARP table entry. Root or netadmin privilege is required to do
 this. The entry is found by IP address. If a hostname is given, it will be
 resolved before looking up the entry in the ARP table.
 
-.B arp -s
+.B arp \-s
 .I address hw_addr
 is used to set up a new table entry. The format of the
 .I hw_addr
@@ -98,28 +105,27 @@ may be specified to proxy arp for entire subnets. This is not good
 practice, but is supported by older kernels because it can be
 useful. If the
 .B temp
-flag is not supplied entries will be permanent stored into the ARP
-cache. To simplify setting up entries for one of your own network interfaces, you can use the
+flag is not supplied entries will be permanent stored into the ARP cache.
+To simplify setting up entries for own network interface, you can use the
 .B "arp \-Ds"
-.I address ifname
+.I address Ifname
 form. In that case the hardware address is taken from the interface with the
 specified name.
 
-.br
 .SH OPTIONS
 .TP
-.B "\-v, \-\-verbose"
+.BR \-v ", " \-\-verbose
 Tell the user what is going on by being verbose.
 .TP
-.B "\-n, \-\-numeric"
+.BR \-n ", " \-\-numeric
 shows numerical addresses instead of trying to determine symbolic host, port
 or user names.
 .TP
 \fB\-H\fI type\fR, \fB\-\-hw\-type\fI type\fR, \fB\-t\fI type\fR
 When setting or reading the ARP cache, this optional parameter tells
 .B arp
-which class of entries it should check for.  The default value of
-this parameter is
+which class of entries it should check for.
+The default value of this parameter is
 .B ether
 (i.e. hardware code 0x01 for IEEE 802.3 10Mbps Ethernet).
 Other values might include network technologies such as
@@ -137,10 +143,12 @@ Use alternate BSD style output format (with no fixed columns).
 .B \-e
 Use default Linux style output format (with fixed columns).
 .TP
-.B "\-D, \-\-use-device"
-Instead of a hw_addr, the given argument is the name of an interface.
+.BR \-D ", " \-\-use-device
+Instead of a hw_addr, the given argument \fIIfname\fP is the name
+of an interface.
 .B arp
-will use the MAC address of that interface for the table entry. This is usually the best option to set up a proxy ARP entry to yourself.
+will use the MAC address of that interface for the table entry.
+This is usually the best option to set up a proxy ARP entry to yourself.
 .TP
 \fB\-i\fI If\fR, \fB\-\-device\fI If\fR
 Select an interface. When dumping the ARP cache only entries matching
@@ -152,10 +160,11 @@ table. For
 .B pub
 entries the specified interface is the interface on which ARP requests will
 be answered.
-.br
+
 .B NOTE:
 This has to be different from the interface to which the IP
 datagrams will be routed.
+
 .B NOTE:
 As of kernel 2.2.0 it is no longer possible to set an ARP entry for an
 entire subnet. Linux instead does automagic proxy arp when a route
@@ -177,13 +186,14 @@ set up.  The name of the data file is very often
 but this is not official. If no filename is specified
 .I /etc/ethers
 is used as default.
-.sp 1
+
 The format of the file is simple; it
 only contains ASCII text lines with a hostname, and a hardware
 address separated by whitespace. Additionally the
-.BR "pub" , " temp" " and" " netmask"
+.BR "pub" ", " temp " and " netmask
 flags can be used.
-.LP
+
+.P
 In all places where a
 .B hostname
 is expected, one can also enter an
@@ -192,7 +202,7 @@ in dotted-decimal notation.
 .P
 As a special case for compatibility the order of the hostname and
 the hardware address can be exchanged.
-.LP
+.P
 Each complete entry in the ARP cache will be marked with the
 .B C
 flag. Permanent entries are marked with
@@ -200,16 +210,18 @@ flag. Permanent entries are marked with
 and published entries have the
 .B P
 flag.
+
 .SH EXAMPLES
-.B /usr/sbin/arp -i eth0 -Ds 10.0.0.2 eth1 pub
+.B /usr/sbin/arp \-i eth0 \-Ds 10.0.0.2 eth1 pub
 
 This will answer ARP requests for 10.0.0.2 on eth0 with the MAC address for
 eth1.
 
-.B /usr/sbin/arp -i eth1 -d 10.0.0.1
+.B /usr/sbin/arp \-i eth1 \-d 10.0.0.1
 
 Delete the ARP table entry for 10.0.0.1 on interface eth1. This will match
 published proxy ARP entries and permanent entries.
+
 .SH FILES
 .I /proc/net/arp
 .br
@@ -218,11 +230,21 @@ published proxy ARP entries and permanent entries.
 .I /etc/hosts
 .br
 .I /etc/ethers
+
 .SH SEE ALSO
-.BR ethers (5),
-.BR rarp (8),
+Homepage of the \fInet\-tools\fP project:
+.UR https://net-tools.sourceforge.io
+.UE
+
+.P
 .BR route (8),
 .BR ifconfig (8),
+.BR ip (8),
 .BR netstat (8)
+.br
+.BR ethers (5)
+
 .SH AUTHORS
-Fred N. van Kempen <waltje@uwalt.nl.mugnet.org>, Bernd Eckenfels <net\-tools@lina.inka.de>.
+Fred N. van Kempen <waltje@uwalt.nl.mugnet.org>,
+.br
+Bernd Eckenfels <net\-tools@lina.inka.de>.

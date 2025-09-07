@@ -1,8 +1,10 @@
-.TH ETHERS 5 "2008\-10\-03" "net\-tools" "Linux System Administrator's Manual"
+.TH ETHERS 5 "2025-09-10" "net\-tools" "Linux System Administrator's Manual"
+
 .SH NAME
 ethers \- Ethernet address to IP number database
+
 .SH DESCRIPTION
-\fB/etc/ethers\fP contains 48 bit Ethernet addresses and their corresponding
+\fI/etc/ethers\fP contains 48 bit Ethernet addresses and their corresponding
 IP numbers, one line for each IP number:
 .sp
 .RS
@@ -18,10 +20,23 @@ where \fIx\fP is a hexadecimal number between \fB0\fP and \fBff\fP
 which represents one byte of the address, which is in network byte
 order (big-endian).  The \fIIP\-number\fP may be a hostname which
 can be resolved by DNS or a dot separated number.
+
 .SH EXAMPLES
+.EX
 08:00:20:00:61:CA  pal
+.EE
+
 .SH FILES
-/etc/ethers
+.I /etc/ethers
+
 .SH "SEE ALSO"
+Homepage of the \fInet\-tools\fP project:
+.UR https://net-tools.sourceforge.io
+.UE
+
+.P
 .BR arp (8),
-.BR rarp (8)
+.BR ip-link (8),
+.BR rarp (8),
+.BR rarpd (8),
+.BR dnsmasq (8)

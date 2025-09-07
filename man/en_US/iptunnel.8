@@ -1,17 +1,17 @@
-.TH IPTUNNEL 8 "SEPTEMBER 2009" "" ""
+.TH IPTUNNEL 8 "2025-09-10" "net\-tools" "Linux System Administrator's Manual"
+
 .SH NAME
-.B iptunnel
-\- creates, changes, deletes, and displays configured tunnels
+iptunnel \- creates, changes, deletes, and displays configured tunnels
 
 .SH SYNOPSIS
 .B iptunnel
-.RB [< operation >]
-.RB [< args >]
+.RI [< operation >]
+.RI [< args >]
 
 .SH NOTE
-.P
 This program is obsolete. Please use \fBip tunnel\fR instead, and see
-\fBip-tunnel\fR(8) for more information.
+.BR ip-tunnel (8)
+for more information.
 
 .SH DESCRIPTION
 The \fBiptunnel\fR command creates configured tunnels for sending and receiving
@@ -34,5 +34,10 @@ command can perform one of the following operations:
 \- show the tunnel attributes (name, tunnel end points, next hop for tunneled packets).
 
 .SH SEE ALSO
+Homepage of the \fInet\-tools\fP project:
+.UR https://net-tools.sourceforge.io
+.UE
+
+.P
 .BR ip-tunnel (8),
 .BR ip (8)

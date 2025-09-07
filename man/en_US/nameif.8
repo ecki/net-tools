@@ -1,35 +1,67 @@
-.TH NAMEIF 8 "2008\-10\-03" "net\-tools" "Linux System Administrator's Manual"
+.TH NAMEIF 8 "2025-09-10" "net\-tools" "Linux System Administrator's Manual"
+
 .SH NAME
 nameif \- name network interfaces based on MAC addresses
-.SH SYNOPSIS
-.B "nameif [\-c configfile] [\-s]"
-.br
-.B "nameif [\-c configfile] [\-s] {interface macaddress}"
-.SH DESCRIPTION
-.B nameif 
-renames network interfaces based on mac addresses. When no arguments are
-given 
-.I /etc/mactab
-is read. Each line  of it contains an interface name and a Ethernet MAC 
-address. Comments are allowed starting with #. 
-Otherwise the interfaces specified on the command line are processed.
-.I nameif
-looks for the interface with the given MAC address and renames it to the
-name given.
 
-When the 
-.I \-s
+.SH SYNOPSIS
+.B nameif
+.RB [ \-c
+.IR configfile ]
+.RB [ \-s ]
+.br
+.B nameif
+.RB [ \-c
+.IR configfile ]
+.RB [ \-s ]
+.I "interface macaddress"
+
+.SH DESCRIPTION
+.B nameif
+renames network interfaces based on mac addresses.
+When no arguments are given
+.I /etc/mactab
+is read.
+Each line  of it contains an interface name and a Ethernet MAC address.
+Comments are allowed starting with \fB#\fR.
+Otherwise the interfaces specified on the command line are processed.
+.B nameif
+looks for the interface with the given MAC address and renames it
+to the name given.
+
+When the
+.B \-s
 argument is given all error messages go to the syslog.
 
-When the 
-.I \-c 
-argument is given with a file name that file is read instead of /etc/mactab.
+When the
+.B \-c
+argument is given with a file name that file is read instead of
+.IR /etc/mactab .
 
 .SH NOTES
-.I nameif
+.B nameif
 should be run before the interface is up, otherwise it'll fail.
 
 .SH FILES
-/etc/mactab
+.I /etc/mactab
+
 .SH BUGS
-Only works for Ethernet currently.
+Only works for Ethernet hardware address types.
+
+More modern alias name functions are available with the
+.BR ip (8)
+command or management frameworks like
+.BR udev (5)
+or
+.BR netplan (5).
+
+.SH SEE AlSO
+Homepage of the \fInet\-tools\fP project:
+.UR https://net-tools.sourceforge.io
+.UE
+
+.P
+.BR ifconfig (8),
+.BR ip (8)
+.br
+.BR netplan (5),
+.BR udev (5)

@@ -1,34 +1,44 @@
-.TH IFCONFIG 8 "2008\-10\-03" "net\-tools" "Linux System Administrator's Manual"
+.TH IFCONFIG 8 "2025-09-10" "net\-tools" "Linux System Administrator's Manual"
+
 .SH NAME
 ifconfig \- configure a network interface
+
 .SH SYNOPSIS
-.B "ifconfig [-v] [-a] [-s] [interface]"
-.br
-.B "ifconfig [-v] interface [aftype] options | address ..."
+.SY ifconfig
+.RB [ \-v "] [" \-a "] [" \-s ]
+.RI [ interface ]
+.P
+.SY ifconfig
+.BR [ \-v ]
+.IR interface " [" aftype "] " options " | " address " ..."
+
 .SH DESCRIPTION
 .B Ifconfig
 is used to configure the kernel-resident network interfaces.  It is
 used at boot time to set up interfaces as necessary.  After that, it
 is usually only needed when debugging or when system tuning is needed.
-.LP
+
+.P
 If no arguments are given,
 .B ifconfig
 displays the status of the currently active interfaces.  If
 a single
-.B interface
+.I interface
 argument is given, it displays the status of the given interface
 only; if a single
 .B \-a
 argument is given, it displays the status of all interfaces, even
 those that are down.  Otherwise, it configures an interface.
 
-.SH Address Families
-If the first argument after the interface name is recognized as
-the name of a supported address family, that address family is
-used for decoding and displaying all protocol addresses.  Currently
-supported address families include
+.SS Address Families
+If the first argument \fIaftype\fP after the \fIinterface\fP name
+is recognized as the name of a supported address family,
+that address family is used for decoding and displaying all protocol
+addresses.
+.br
+Currently supported address families include
 .B inet
-(TCP/IP, default), 
+(TCP/IP, default),
 .B inet6
 (IPv6),
 .B ax25
@@ -39,23 +49,27 @@ supported address families include
 (Novell IPX) and
 .B netrom
 (AMPR Packet radio).
+
 All numbers supplied as parts in IPv4 dotted decimal notation may be decimal,
-octal, or hexadecimal, as specified in the ISO C standard (that is, a leading 0x
-or 0X implies hexadecimal; otherwise, a leading '0' implies octal; otherwise,
-the number is interpreted as decimal). Use of hexadecimal and octal numbers
-is not RFC-compliant and therefore its use is discouraged.
+octal, or hexadecimal, as specified in the ISO C standard
+(that is, a leading '\fB0x\fR' or '\fB0X\fR' implies hexadecimal;
+otherwise, a leading '\fB0\fR' implies octal;
+otherwise, the number is interpreted as decimal).
+Use of hexadecimal and octal numbers is not RFC-compliant and
+therefore its use is discouraged.
+
 .SH OPTIONS
 .TP
-.B -a
+.B \-a
 display all interfaces which are currently available, even if down
 .TP
-.B -s
-display a short list (like netstat -i)
+.B \-s
+display a short list (like \fBnetstat \-i\fR)
 .TP
-.B -v
+.B \-v
 be more verbose for some error conditions
 .TP
-.B interface
+.I interface
 The name of the interface.  This is usually a driver name followed by
 a unit number, for example
 .B eth0
@@ -72,7 +86,7 @@ aliases are deleted, if you delete the first (primary).
 This flag causes the interface to be activated.  It is implicitly
 specified if an address is assigned to the interface; you can suppress this
 behavior when using an alias interface by appending an
-.BR "-"
+.B "-"
 to the alias (e.g.
 .BR "eth0:0-" ).
 It is also suppressed when using the IPv4 0.0.0.0 address as the kernel will
@@ -91,68 +105,70 @@ mode of the interface.  If selected, all packets on the network will
 be received by the interface.
 .TP
 .B "[\-]allmulti"
-Enable or disable 
+Enable or disable
 .B all-multicast
 mode.  If selected, all multicast packets on the network will be
 received by the interface.
 .TP
-.B "mtu N"
-This parameter sets the Maximum Transfer Unit (MTU) of an interface.
+\fBmtu\fP \fIM\fP
+This parameter sets the Maximum Transfer Unit (MTU) of an interface
+to \fIM\fP bytes.
 .TP
-.B "dstaddr addr"
+\fBdstaddr\fP \fIaddr\fP
 Set the remote IP address for a point-to-point link (such as
 PPP).  This keyword is now obsolete; use the
 .B pointopoint
 keyword instead.
 .TP
-.B "netmask addr"
+\fBnetmask\fP \fIaddr\fP
 Set the IP network mask for this interface.  This value defaults to the
 usual class A, B or C network mask (as derived from the interface IP
 address), but it can be set to any value.
 .TP
-.B "add addr/prefixlen"
-Add an IPv6 address to an interface. 
+\fBadd\fP \fIaddr\fB/\fIprefixlen\fR
+Add an address to an interface.
 .TP
-.B "del addr/prefixlen"
-Remove an IPv6 address from an interface.
+\fBdel\fP \fIaddr\fB/\fIprefixlen\fR
+Remove an address from an interface.
 .TP
-.B "tunnel ::aa.bb.cc.dd"
+\fBtunnel\fP \fI::aa.bb.cc.dd\fP
 Create a new SIT (IPv6-in-IPv4) device, tunnelling to the given destination.
 .TP
-.B "irq addr"
-Set the interrupt line used by this device.  Not all devices can
-dynamically change their IRQ setting.
+\fBirq\fP \fII\fP
+Set the interrupt line used by this device.
+Not all devices can dynamically change their IRQ setting.
 .TP
-.B "io_addr addr"
-Set the start address in I/O space for this device. 
+\fBio_addr\fP \fIMem\fP
+Set the start address in I/O space for this device.
+Only a few old devices need this.
 .TP
-.B "mem_start addr"
-Set the start address for shared memory used by this device.  Only a
-few devices need this.
+\fBmem_start\fP \fIMem\fP
+Set the start address for shared memory used by this device.
+Only a few old devices need this.
 .TP
-.B "media type"
+\fBmedia\fP \fItype\fP
 Set the physical port or medium type to be used by the device.  Not
 all devices can change this setting, and those that can vary in what
 values they support.  Typical values for
-.B type
-are 
+.I type
+are
 .B 10base2
 (thin Ethernet),
 .B 10baseT
 (twisted-pair 10Mbps Ethernet),
-.B AUI 
+.B AUI
 (external transceiver) and so on.  The special medium type of
 .B auto
 can be used to tell the driver to auto-sense the media.  Again, not
 all drivers can do this.
 .TP
-.B "[\-]broadcast [addr]"
+\fB[\-]broadcast\fP [\fIaddr\fP]
 If the address argument is given, set the protocol broadcast
 address for this interface.  Otherwise, set (or clear) the
 .B IFF_BROADCAST
 flag for the interface.
 .TP
-.B "[\-]pointopoint [addr]"
+\fB[\-]pointopoint\fP [\fIaddr\fP]
 This keyword enables the
 .B point-to-point
 mode of an interface, meaning that it is a direct link between two
@@ -163,13 +179,15 @@ the other side of the link, just like the obsolete
 .B dstaddr
 keyword does.  Otherwise, set or clear the
 .B IFF_POINTOPOINT
-flag for the interface. 
+flag for the interface.
 .TP
-.B hw class address
+\fBhw\fP \fIhwclass\fP \fIhwaddr\fP
 Set the hardware address of this interface, if the device driver
 supports this operation.  The keyword must be followed by the
-name of the hardware class and the printable ASCII equivalent of
-the hardware address.  Hardware classes currently supported include
+name of the hardware class \fIhwclass\fP  and the printable ASCII
+equivalent of the hardware address.
+.br
+Hardware classes currently supported include
 .B ether
 (Ethernet),
 .B ax25
@@ -183,41 +201,230 @@ and
 Set the multicast flag on the interface. This should not normally be needed
 as the drivers set the flag correctly themselves.
 .TP
-.B address
-The IP address to be assigned to this interface.
-.TP
-.B txqueuelen length
+\fBtxqueuelen\fP \fIlength\fP
 Set the length of the transmit queue of the device. It is useful to set this
 to small values for slower devices with a high latency (modem links, ISDN)
 to prevent fast bulk transfers from disturbing interactive traffic like
-telnet too much. 
+telnet too much.
 .TP
-.B name \fInewname\fR
-Change the name of this interface to \fInewname\fR. The interface must be shut
-down first.
+\fBname\fP \fInewname\fP
+Change the name of this interface to \fInewname\fR.
+The interface must be shut down first.
+.TP
+.I address
+The IP address to be assigned to this interface.
+
+.SH OUTPUT
+
+.SS Interface Statistics Table (-s)
+The table lists active (default) or all known (\fB\-a\fP) kernel interfaces.
+With the \fB-s\fP option it is the same output as \fBnetstat \-i\fP.
+.P
+.EX
+> ifconfig -s enp2s0f0
+Iface     MTU    RX-OK RX-ERR RX-DRP RX-OVR  TX-OK TX-ERR TX-DRP TX-OVR Flg
+enp2s0f0 1500 18668761      0   1318 0    26038367      0      0      0 BMRU
+.EE
+
+.P
+The result table shows the following columns:
+.TP
+.B Iface
+Name and alias prefix of the network interface.
+.TP
+.B MTU
+The maximum transfer unit in bytes of this interface.
+.TP
+.B RX-OK
+Number of successfully received packets since interface statistic was reset.
+.TP
+.B RX-ERR
+Total count of receive errors since statistic reset.
+This includes:
+\fIrx_errors\fP (general receive errors),
+\fIrx_crc_errors\fP (packets received with a CRC checksum failure),
+\fIrx_frame_errors\fP (frame alignment errors, corrupted).
+.TP
+.B RX-DRP
+Number of incoming packets that were dropped before reaching the
+protocol stack.
+Common causes: no buffer space in the driver,
+congestion, or resource limitations.
+.TP
+.B RX-OVR
+Number of packets dropped due to FIFO buffer overflows in the NIC or driver.
+Common causes: the hardware could not push frames fast enough to the system.
+
+.TP
+.B TX-OK
+Number of packets  successfully transmitted since interface statistic was reset.
+.TP
+.B TX-ERR
+Number of transmit errors.
+Includes collisions, carrier loss, and other transmission failures.
+.TP
+.B TX-DRP
+Number of packets dropped by the driver before being sent
+(e.g., due to congestion or lack of buffer space).
+.TP
+.B TX-OVR
+Number of packets lost due to transmit FIFO overflows in the hardware.
+.TP
+.B Flg
+The flags for this interface, as listed below.
+
+.SS Interface Flags
+The list of interface flags used in the short and detailed interface output.
+The names of the bit flag constants of the \fBSIOCGIFFLAGS\fP control
+are listed in
+.BR netdevice (7).
+
+.TP
+.BR A ", " ALLMULTI
+Accepts all multicast packets (\fIIFF_ALLMULTI\fP).
+.TP
+.BR B ", " BROADCAST
+Interface supports broadcast communication (\fIIFF_BROADCAST\fP).
+.TP
+.BR D ", " DEBUG
+Internal debugging for the interface enabled (\fIIFF_DEBUG\fP).
+.TP
+.BR L ", " LOOPBACK
+Interface is a loopback device (\fIIFF_LOOPBACK\fP).
+.TP
+.BR M ", " MULTICAST
+Interface supports multicast communication (\fIIFF_MULTICAST\fP).
+.TP
+.BR d ", " DYNAMIC
+Address is dynamically set (e.g. by DHCP) (\fIIFF_DYNAMIC\fP).
+.TP
+.BR P ", " PROMISC
+Interface is in promiscuous mode (captures all packets) (\fIIFF_PROMISC\fP).
+This flag might not reliably show promisc mode.
+.TP
+.BR N ", " NOTRAILERS
+Avoid use of trailers in packets (\fIIFF_NOTRAILERS\fP).
+.TP
+.BR O ", " NOARP
+Interface does not use ARP (\fIIFF_NOARP\fP).
+.TP
+.BR p ", " POINTOPOINT
+Interface is point-to-point
+(has a peer instead of broadcast) (\fIIFF_POINTOPOINT\fP).
+.TP
+.BR s ", " SLAVE
+Interface is part of a bonded device (\fIIFF_SLAVE\fP).
+.TP
+.BR m ", " MASTER
+Interface controls a bonded device (\fIIFF_MASTER\fP).
+.TP
+.BR R ", " RUNNING
+Interface is operational and resources are allocated (\fIIFF_RUNNING\fP).
+.TP
+.BR U ", " UP
+Interface is administratively up (\fIIFF_UP\fP).
+.TP
+.BR "[NO FLAGS]" ", " <>
+If the bitmask for the interface status is 0.
+
+.SS Interface Details
+Sample output for the details of a single interface:
+.P
+.EX
+> ifconfig enp2s0f0
+enp2s0f0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 203.0.113.9  netmask 255.255.255.0  broadcast 203.0.113.255
+        inet6 fe80::a8bb:ccff:fedd:eeff  prefixlen 64  scopeid 0x20<link>
+        inet6 2001:db8::a8bb:ccff:fedd:eeff  prefixlen 64  scopeid 0x0<global>
+        ether aa:bb:cc:dd:ee:ff  txqueuelen 1000  (Ethernet)
+        RX packets 18668507  bytes 9459465501 (8.8 GiB)
+        RX compressed 0
+        RX errors 0  dropped 1318  overruns 0  frame 0
+        TX packets 26038199  bytes 16983080620 (15.8 GiB)
+        TX compressed 0
+        TX errors 0  dropped 0  overruns 0  carrier 0  collisions 0
+        device interrupt 30
+.EE
+.P
+The output of the interface list is the same as \fBnetstat \-i \-e\fP.
+.P
+For each interface there is a block starting with the interface name
+the \fBflags\fP and the \fBmtu\fP, optional \fBoutfil\fP and \fBkeepalive\fP.
+
+Then one line for each address, prefixed with
+the address type and its type specifc details.
+
+.RS
+In the example is one IPv4 (\fBinet\fP) address.
+it specifies \fBnetmask\fP, optional \fBbroadcast\fP.
+If the point-to-point flag is set if will show \fBdestination\fP address.
+
+The example follows with two IPv6 (\fBinet6\fP) addresses.
+Such a line specifies addresss, \fBprefixlen\fP, and \fBscopeid\fP:
+.TP
+.B compat
+IPv4 compatibility address.
+.TP
+.B global
+A Global Unicast Address (UGA).
+.TP
+.B site
+A site-unique address.
+.TP
+.B link
+A link-local address.
+.TP
+.B host
+A loopback address.
+.RE
+
+.P
+This is followed with a line for the hardware address family
+(\fBether\fP in this case).
+This line contains \fBtxqueuelen\fP if available.
+
+.P
+If the device is configured for port selection, it has a \fBmedia\fP line.
+
+.P
+After that the \fBpackets\fP statistics for transmit (\fBTX\fP)
+and receive (\fBRX\fP) are shown
+(same as in the short format above, but the different
+error counters are shown seperate).
+Additionally the total number of \fBbytes\fP (frame sizes total)
+are shown (with a human friendly formatting as comment).
+The \fBcompressed\fP packet counter lines are optional.
+.P
+The final \fBdevice\fP line lists optional driver details,
+with some of the following keywords:
+.BR interrupt ", " base ", " memory ", and " dma .
+
 .SH NOTES
 Since kernel release 2.2 there are no explicit interface statistics for
 alias interfaces anymore. The statistics printed for the original address
 are shared with all alias addresses on the same device. If you want per-address
 statistics you should add explicit accounting
-rules for the address using the 
+rules for the address using the
 .BR iptables (8)
 command.
-.LP
+
+.P
 Since net\-tools 1.60\-4 ifconfig is printing byte counters and human readable
-counters with IEC 60027-2 units. So 1 KiB are 2^10 byte. Note, the numbers 
-are truncated to one decimal (which can by quite a large error if you 
+counters with IEC 60027-2 units. So 1 KiB are 2^10 byte. Note, the numbers
+are truncated to one decimal (which can by quite a large error if you
 consider 0.1 PiB is 112.589.990.684.262 bytes :)
-.LP
+
+.P
 Interrupt problems with Ethernet device drivers fail with EAGAIN
 .I (SIOCSIIFLAGS: Resource temporarily unavailable)
 it is most likely a interrupt conflict. See
 .I http://www.scyld.com/expert/irq\-conflict.html
 for more information.
+
 .SH FILES
 .I /proc/net/dev
-.br
 .I /proc/net/if_inet6
+
 .SH BUGS
 Ifconfig uses the ioctl access method to get the full address information,
 which limits hardware addresses to 8 bytes.
@@ -228,26 +435,37 @@ Please use
 command from
 .B iproute2
 package to display link layer informations including the hardware address.
-.LP
+
+.P
 While appletalk DDP and IPX addresses will be displayed they cannot be
 altered by this command.
+
 .SH SEE ALSO
+.na
+Homepage of the \fInet\-tools\fP project:
+.UR https://net-tools.sourceforge.io
+.UE
+
+Prefixes for binary multiples (NIST):
+.UR https://physics.nist.gov/cuu/Units/binary.html
+.UE
+
+.P
 .BR route (8),
 .BR netstat (8),
 .BR arp (8),
-.BR rarp (8),
-.BR iptables (8),
-.BR ifup (8),
-.BR interfaces (5)
+.BR ip-link (8),
+.BR iptables (8)
 .br
-http://physics.nist.gov/cuu/Units/binary.html - Prefixes for binary multiples
+.BR interfaces (5),
+.BR ip (7),
+.BR netdevice (7)
+
 .SH AUTHORS
-Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
+Fred N. van Kempen <waltje@uwalt.nl.mugnet.org>,
 .br
-Alan Cox, <Alan.Cox@linux.org>
+Alan Cox <Alan.Cox@linux.org>, Andi Kleen,
 .br
-Phil Blundell, <Philip.Blundell@pobox.com>
+Phil Blundell <Philip.Blundell@pobox.com>,
 .br
-Andi Kleen
-.br
-Bernd Eckenfels, <net\-tools@lina.inka.de>
+Bernd Eckenfels <net\-tools@lina.inka.de>.

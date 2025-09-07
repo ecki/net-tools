@@ -1,46 +1,49 @@
 .\" Copyright (C) 2000 David A. Hinds -- dhinds@pcmcia.sourceforge.org
-.\"
-.TH MII\-TOOL 8 "2025\-08\-26" "net\-tools" "Linux System Administrator's Manual"
+.TH MII\-TOOL 8 "2025-09-10" "net\-tools" "Linux System Administrator's Manual"
 
 .SH NAME
 mii\-tool \- view, manipulate media-independent interface status
 
 .SH SYNOPSIS
-.B mii\-tool
-[\fB\-v\fR, \fB\-\-verbose\fR]
-[\fB\-V\fR, \fB\-\-version\fR]
-[\fB\-R\fR, \fB\-\-reset\fR]
-[\fB\-r\fR, \fB\-\-restart\fR]
-[\fB\-w\fR, \fB\-\-watch\fR]
-[\fB\-l\fR, \fB\-\-log\fR]
-[\fB\-A\fR, \fB\-\-advertise=\fImedia,...\fR]
-[\fB\-F\fR, \fB\-\-force=\fImedia\fR]
-[\fB\-p\fR, \fB\-\-phy=\fIaddr\fR]
-.RI "interface\ ..."
+.SY mii\-tool
+.RB [ \-v | \-\-verbose ]
+.RB [ \-V | \-\-version ]
+.RB [ \-R | \-\-reset ]
+.RB [ \-r | \-\-restart ]
+.RB [ \-w | \-\-watch ]
+.RB [ \-l | \-\-log ]
+.RB [ \-A | \-\-advertise=\fImedia,...\fP ]
+.RB [ \-F | \-\-force=\fImedia\fP ]
+.RB [ \-p | \-\-phy=\fIaddr\fP ]
+.IR interface ...
 
 .SH DESCRIPTION
 This utility checks or sets the status of a network interface's Media
 Independent Interface (MII) unit.  Most fast ethernet adapters use an
 MII to autonegotiate link speed and duplex setting.
-.PP
+
+.P
 This is a legacy tool, you might have better success with
 .BR ethtool (8)
 instead.
-.PP
+
+.P
 Most intelligent network devices use an autonegotiation protocol to
 communicate what media technologies they support, and then select the
-fastest mutually supported media technology.  The \fB\-A\fR or
-\fB\-\-advertise\fR options can be used to tell the MII to only
+fastest mutually supported media technology.  The \fB\-A\fP or
+\fB\-\-advertise\fP options can be used to tell the MII to only
 advertise a subset of its capabilities.  Some passive devices, such as
 single-speed hubs, are unable to autonegotiate.  To handle such
 devices, the MII protocol also allows for establishing a link by
-simply detecting either a 10baseT or 100baseT link beat.  The \fB\-F\fR
-or \fB\-\-force\fR options can be used to force the MII to operate in
-one mode, instead of autonegotiating.  The \fB\-A\fR and \fB\-F\fR
+simply detecting either a 10baseT or 100baseT link beat.  The \fB\-F\fP
+or \fB\-\-force\fP options can be used to force the MII to operate in
+one mode, instead of autonegotiating.  The \fB\-A\fP and \fB\-F\fP
 options are mutually exclusive.
-.PP
+
+.P
 The default short output reports the negotiated link speed and link
 status for each interface.
+
 .SH OPTIONS
 .TP
 \fB\-v\fR, \fB\-\-verbose\fR
@@ -85,27 +88,32 @@ Override the MII address provided by kernel with value \fBaddr\fR.
 .SH DIAGNOSTICS
 .TP
 SIOCGMIIPHY on 'eth?' failed: Invalid argument
-If the interface is not running (up), kernel will refuse to report its link state.
+If the interface is not running (up),
+kernel will refuse to report its link state.
 .TP
 SIOCGMIIPHY on 'eth?' failed: Operation not permitted
 Most kernels restrict access to root.
 .TP
 SIOCGMIIPHY on 'eth?' failed: No such device
-This error is shown, if the kernel does not know about the named device.
+This error is shown,
+if the kernel does not know about the named device.
 .TP
-SIOCGMIIPHY on 'eth?' failed: Operation not supported 
+SIOCGMIIPHY on 'eth?' failed: Operation not supported
 The interface in question does not support MII control.
-Possibly it only supports ethtool style control, or does not have 
-MII transceivers, at all.
-
-.SH AUTHORS
-David Hinds \- dhinds@pcmcia.sourceforge.org
-.br
-Donald Becker \- becker@scyld.com
-.br
-Bernd Eckenfels \- net-tools@lina.inka.de
+Possibly it only supports ethtool style control,
+or does not have MII transceivers.
 
 .SH SEE ALSO
+Homepage of the \fInet\-tools\fP project:
+.UR https://net-tools.sourceforge.io
+.UE
+
+.P
 .BR ethtool (8)
+
+.SH AUTHORS
+David Hinds <dhinds@pcmcia.sourceforge.org>,
 .br
-http://net-tools.sourceforge.net \- Homepage of the net-tools project
+Donald Becker <becker@scyld.com>,
+.br
+Bernd Eckenfels <net\-tools@lina.inka.de>.
