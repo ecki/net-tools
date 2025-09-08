@@ -1,5 +1,5 @@
 .\"
-.\" netstat.8 
+.\" netstat.8
 .\"
 .\" Original: (mdw@tc.cornell.edu & dc6iq@insu1.etec.uni-karlsruhe.de)
 .\"
@@ -15,26 +15,26 @@ netstat \- Mostra conexões de rede, tabelas de roteamento, estatísticas de int
 mascaradas.
 .SH SINOPSE
 
-.B netstat 
+.B netstat
 .RB [ \-venaoc ]
 .RB [ \-\-tcp | \-t ]
 .RB [ \-\-udp | \-u ]
 .RB [ \-\-udplite | \-U ]
 .RB [ \-\-sctp | \-S ]
 .RB [ \-\-raw | \-w ]
-.RB [ \-\-unix | \-x ] 
+.RB [ \-\-unix | \-x ]
 .RB [ \-\-inet | \-\-ip ]
 .RB [ \-\-ax25 ]
-.RB [ \-\-ipx ] 
+.RB [ \-\-ipx ]
 .RB [ \-\-netrom ]
 
 .PP
 
-.B netstat 
+.B netstat
 .RB [ \-veenc ]
-.RB [ \-\-inet ] 
+.RB [ \-\-inet ]
 .RB [ \-\-ipx ]
-.RB [ \-\-netrom ] 
+.RB [ \-\-netrom ]
 .RB [ \-\-ddp ]
 .RB [ \-\-ax25 ]
 .RB { \-\-route | \-r }
@@ -54,13 +54,13 @@ mascaradas.
 
 .PP
 
-.B netstat 
+.B netstat
 .\".RB [ \-cn ]
 .RB { \-\-statistics | \-s }
 
 .PP
 
-.B netstat 
+.B netstat
 .RB { \-V | \-\-version }
 .RB { \-h | \-\-help }
 
@@ -92,7 +92,7 @@ Com a opção
 .BR \-r ", " \-\-route
 você obterá as tabelas de roteamento do kernel no mesmo formato usado por
 .BR "route -e" .
-.B "netstat -er" 
+.B "netstat -er"
 usará o formato de apresentação do comando
 .BR route .
 Por favor veja
@@ -109,20 +109,20 @@ de recepção e transmissão. A saída usa o formato
 .B "ifconfig -e"
 , e é descrita em
 .BR ifconfig (8).
-.B "netstat -ei" 
+.B "netstat -ei"
 mostrará uma tabela ou uma entrada de interface como
 .B ifconfig
 mostra. Com a chave
 .B -a
 , você pode incluir interfaces que não estejam configuradas (i.e. não tem
-a flag 
+a flag
 .BR U = UP
 configurada).
 
 .SS "\-M, \-\-masquerade"
 
 Uma lista de todas as sessões mascaradas também pode ser vista. Com a chave
-.B -e 
+.B -e
 você pode incluir mais algumas informações sobre numeração sequencial e deltas
 , causados por reescritas de dados em sessões FTP (comando PORT).
 O suporte a mascaramento é usado para esconder máquinas em endereços de
@@ -131,15 +131,15 @@ rede não oficiais do resto do mundo, como descrito em
 
 .SS "\-s, \-\-statistics"
 
-Mostra estatísticas sobre o subsistema de rede do kernel do Linux, que 
+Mostra estatísticas sobre o subsistema de rede do kernel do Linux, que
 são lidas a partir de
 .IR /proc/net/snmp .
 
 .PP
 .SH OPÇÕES
 .SS "\-v, \-\-verbose"
-Informa ao usuário o que está ocorrendo, sendo detalhado. Especialmente 
-mostra algumas informações úteis sobre famílias de endereços não 
+Informa ao usuário o que está ocorrendo, sendo detalhado. Especialmente
+mostra algumas informações úteis sobre famílias de endereços não
 configuradas.
 
 .SS "\-n, \-\-numeric"
@@ -148,14 +148,14 @@ usuário.
 
 .SS "\-A, \-\-af \fIfamília\fI"
 Usa um método diferente para configurar as famílias de endereços.
-.I família 
+.I família
 é uma lista de palavras-chave de famílias de endereços separadas por vírgulas
 (',') como
-.BR inet , 
-.BR unix , 
-.BR ipx , 
-.BR ax25 , 
-.B netrom 
+.BR inet ,
+.BR unix ,
+.BR ipx ,
+.BR ax25 ,
+.B netrom
 e
 .BR ddp .
 Tem o mesmo efeito de usar as opções longas
@@ -168,7 +168,7 @@ e
 .BR \-\-ddp.
 
 .SS "\-c, \-\-continuous"
-Isto fará com que 
+Isto fará com que
 .B netstat
 mostre a tabela selecionada a cada segundo, continuamente na tela até que
 você o interrompa.
@@ -179,7 +179,7 @@ você o interrompa.
 .PP
 .SS Conexões Internet Ativas \fR(TCP, UDP, RAW)\fR
 
-.SS "Proto" 
+.SS "Proto"
 O protocolo (tcp, udp, raw) usado pelo socket.
 
 .SS "Recv-Q"
@@ -188,7 +188,7 @@ O contador de bytes não copiados pelo programa conectado a este socket.
 .SS "Send-Q"
 O contador de bytes não confirmados pela máquina remota.
 
-.SS "Endereço Local" 
+.SS "Endereço Local"
 O endereço local (nome da máquina local) e o numero da porta do socket. A menos
 que a chave
 .B -n
@@ -271,20 +271,20 @@ O nome ou UID do dono do socket.
 .SS UNIX domain sockets Ativos
 
 
-.SS "Proto" 
+.SS "Proto"
 O protocolo (normalmente unix) usado pelo socket.
 
 .SS "CntRef"
 O contador de referências (i.e. processos conectados via este socket).
 
 .SS "Flags"
-As flags mostradas são SO_ACCEPTON (mostrada como 
+As flags mostradas são SO_ACCEPTON (mostrada como
 .BR ACC ),
-SO_WAITDATA 
+SO_WAITDATA
 .RB ( W )
-ou SO_NOSPACE 
-.RB ( N ). 
-SO_ACCECPTON 
+ou SO_NOSPACE
+.RB ( N ).
+SO_ACCECPTON
 é usada para sockets não-conectados se seus processos correspondentes
 estiverem esperando por uma solicitação de conexão. As demais flags não
 são de interesse comum.

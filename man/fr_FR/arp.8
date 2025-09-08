@@ -2,45 +2,45 @@
 .SH NOM
 arp \- manipule la table ARP du système
 .SH SYNOPSIS
-.B arp 
-.RB [ \-vn ] 
-.RB [ "\-H type" ] 
-.RB [ "-i if" ] 
-.B -a 
+.B arp
+.RB [ \-vn ]
+.RB [ "\-H type" ]
+.RB [ "-i if" ]
+.B -a
 .RB [ nom_hôte ]
 .PP
-.B arp 
+.B arp
 .RB [ \-v ]
-.RB [ "\-i if" ] 
+.RB [ "\-i if" ]
 .B "\-d nom_hôte"
 .RB [ pub ]
 .PP
-.B arp 
-.RB [ \-v ] 
-.RB [ "\-H type" ] 
-.RB [ "\-i if" ] 
+.B arp
+.RB [ \-v ]
+.RB [ "\-H type" ]
+.RB [ "\-i if" ]
 .B -s nom_hôte hw_addr
-.RB [ temp ] 
+.RB [ temp ]
 .PP
-.B arp 
-.RB [ \-v ] 
-.RB [ "\-H type" ] 
-.RB [ "\-i if" ] 
+.B arp
+.RB [ \-v ]
+.RB [ "\-H type" ]
+.RB [ "\-i if" ]
 .B -s nom_hôte hw_addr
-.RB [ "netmask nm" ] 
+.RB [ "netmask nm" ]
 .B pub
 .PP
-.B arp 
-.RB [ \-v ] 
-.RB [ "\-H type" ] 
-.RB [ "\-i if" ] 
+.B arp
+.RB [ \-v ]
+.RB [ "\-H type" ]
+.RB [ "\-i if" ]
 .B -Ds nom_hôte ifa
-.RB [ "netmask nm" ] 
+.RB [ "netmask nm" ]
 .B pub
 .PP
-.B arp 
+.B arp
 .RB [ \-vnD ]
-.RB [ "\-H type" ] 
+.RB [ "\-H type" ]
 .RB [ "-i if" ]
 .B -f nom_fichier
 
@@ -63,7 +63,7 @@ d'hôtes symboliques.
 .TP
 .B "\-H type, \-\-hw-type type"
 En positionnant ou lisant les entrées ARP, ce paramètre optionnel indique
-à 
+à
 .B arp
 les classes d'entrées qu'il doit contrôler.  La valeur par défaut de
 ce paramètre est
@@ -104,10 +104,10 @@ une entrée permanente ou une entrée
 .B temp
 , cette interface lui sera associée; si cette option n'est pas utilisée,
 le noyau fera des tentatives de résolution selon la table de routage. Pour
-les entrées 
+les entrées
 .B pub
 l'interface spécifiée est celle pour laquelle les requêtes ARP auront trouvé
-une réponse. 
+une réponse.
 .br
 .B NOTE:
 Ceci est différent de l'interface vers laquelle les datagrammes IP seront routés.
@@ -122,10 +122,10 @@ mais pour la plupart on peut considérer que la présentation classique
 peut être utilisée.  Pour la classe Ethernet, c'est 6 octets en hexadécimal,
 séparés par des double-points. Pour ajouter des entrées proxy-arp
 (Ce sont celles avec l'indicateur
-.BR pub lish 
+.BR pub lish
 positionné)
 un masque réseau (
-.B netmask 
+.B netmask
 ) peut être spécifié au proxy-arp pour le
 sous-réseau entier. Ceci n'est pas très recommandé, mais est supporté par
 les anciens noyaux, car c'est utile dans certains cas. Si l'indicateur
@@ -137,7 +137,7 @@ A partir du noyau 2.2.0 il n'est plus possible de définir des entrées ARP
 pour un sous réseau entier.
 .TP
 .B "\-f nom_de_fichier, \-\-file nom_de_fichier"
-Similaire à l'option 
+Similaire à l'option
 .B \-s
 , mais cette fois les informations d'adresses sont prises dans le fichier
 .BR nom_de_fichier .

@@ -5,50 +5,50 @@ route \- affiche / manipule la table de routage IP
 .B route
 .RB [ \-CFvnee ]
 .TP
-.B route 
+.B route
 .RB [ \-v ]
 .RB [ \-A
-famille] 
-.B add 
-.RB [ \-net | \-host ] 
-cible 
-.RB [ netmask 
-Nm] 
-.RB [ gw 
-Gw] 
-.RB [ metric 
-N] 
-.RB [ mss 
-M] 
-.RB [ window 
-W] 
-.RB [ irtt 
+famille]
+.B add
+.RB [ \-net | \-host ]
+cible
+.RB [ netmask
+Nm]
+.RB [ gw
+Gw]
+.RB [ metric
+N]
+.RB [ mss
+M]
+.RB [ window
+W]
+.RB [ irtt
 I]
 .RB [ reject ]
 .RB [ mod ]
-.RB [ dyn ] 
-.RB [ reinstate ] 
-.RB [[ dev ] 
-If]
-.TP
-.B route 
-.RB [ \-v ] 
-.RB [ \-A
-famille]
-.B del 
-.RB [ \-net | \-host ] 
-cible 
-.RB [ gw 
-Gw] 
-.RB [ netmask 
-Nm] 
-.RB [ metric 
-N] 
+.RB [ dyn ]
+.RB [ reinstate ]
 .RB [[ dev ]
 If]
 .TP
-.B route 
-.RB [ \-V ] 
+.B route
+.RB [ \-v ]
+.RB [ \-A
+famille]
+.B del
+.RB [ \-net | \-host ]
+cible
+.RB [ gw
+Gw]
+.RB [ netmask
+Nm]
+.RB [ metric
+N]
+.RB [[ dev ]
+If]
+.TP
+.B route
+.RB [ \-V ]
 .RB [ \-\-version ]
 .RB [ \-h ]
 .RB [ \--help ]
@@ -79,7 +79,7 @@ savoir pourquoi la route vers votre serveur de nom a disparu.
 utilise
 .BR netstat (8)-format
 pour l'affichage de la table de routage.
-.B \-ee 
+.B \-ee
 Génère une très longue ligne avec tous les paramètres à partir de la table
 de routage.
 
@@ -92,10 +92,10 @@ est un réseau.
 .TP
 .B -host
 la
-.B cible 
+.B cible
 est un hôte.
 
-.TP 
+.TP
 .B -F
 affiche la table de routage FIB du noyau. L'organisation peut être changée avec
 .B \-e
@@ -103,16 +103,16 @@ et
 .B \-ee
 .
 
-.TP 
+.TP
 .B -C
-affiche le cache de routage du noyau. 
+affiche le cache de routage du noyau.
 
 .TP
 .B del
 supprime une route.
 
-.TP 
-.B add 
+.TP
+.B add
 ajoute une route.
 
 .TP
@@ -140,16 +140,16 @@ envoyés. Ceci est une bidouille permettant d'être compatible BSD.
 Affecte la valeur M au champ métrique de la table de routage (utilisé par
 les démons de routage).
 
-.TP 
+.TP
 .B mss M
 Spécifie le MSS (Maximum Segment Size, Taille maximum de segment) de TCP,
 pour les connexions empruntant cette route. Ce n'est normalement utilisé
-que pour des optimisations fines des configurations de routage. 
+que pour des optimisations fines des configurations de routage.
 
 
-.TP 
-.B window W 
-Définit la taille de fenêtre TCP à W octets pour les connexions relatives 
+.TP
+.B window W
+Définit la taille de fenêtre TCP à W octets pour les connexions relatives
 à cette route. C'est en général uniquement utilisé sur les réseaux AX.25 et
 avec les pilotes incapables de manipuler les trames dos à dos.
 
@@ -190,15 +190,15 @@ modificateurs de route (metric - netmask - gw - dev) n'a pas d'importance.
 .TP
 .B route add -net 127.0.0.0
 ajoute l'entrée loopback normale, en utilisant le masque 255.0.0.0 (réseau
-de classe A, selon l'adresse de destination) et associée avec l'interface 
+de classe A, selon l'adresse de destination) et associée avec l'interface
 "lo" (en supposant que ce périphérique a été correctement configuré avec
-.BR ifconfig (8)). 
+.BR ifconfig (8)).
 
-.TP 
+.TP
 .B route add -net 192.56.76.0 netmask 255.255.255.0 dev eth0
-ajoute une route vers le réseau 192.56.76.x via 
+ajoute une route vers le réseau 192.56.76.x via
 "eth0". Le masque de classe C n'est pas vraiment nécessaire ici car
-192.* est une adresse IP de classe C. Le mot "dev" peut être omis. 
+192.* est une adresse IP de classe C. Le mot "dev" peut être omis.
 
 .TP
 .B route add default gw mango-gw
@@ -206,7 +206,7 @@ ajoute une route par défaut (qui sera utilisée si aucune autre route ne
 convient). Tous les paquets empreintant cette route passeront par
 "mango-gw". Le périphérique qui sera effectivement utilisé pour cette route
 dépend de la façon dont on atteint "mango-gw" - la route statique vers
-"mango-gw" devra être préalablement configurée. 
+"mango-gw" devra être préalablement configurée.
 
 .TP
 .B route add ipx4 sl0
@@ -233,27 +233,27 @@ Installe une route 'rejetée' pour le réseau privé "10.x.x.x."
 Le contenu des tables de routage du noyaus est affiché en colonnes comme
 suit
 .TP
-.B Destination     
+.B Destination
 Le réseau ou hôte destination.
 .TP
 .B Gateway
 L'adresse de la passerelle ou '*' si indéfini.
 .TP
-.B Genmask         
+.B Genmask
 Le masque de réseau pour le réseau destinataire; '255.255.255.255' pour un hôte
 et '0.0.0.0' pour la route par défaut (
 .B default
 ).
 .TP
-.B Indicateurs 
+.B Indicateurs
 Les indicateurs possibles sont
 .br
 .B U
-(la route est active = 
+(la route est active =
 .BR up )
 .br
 .B H
-(la cible est un 
+(la cible est un
 .BR hôte )
 .br
 .B G
@@ -261,7 +261,7 @@ Les indicateurs possibles sont
 .BR passerelle )
 .br
 .B R
-.RB ( rétablit 
+.RB ( rétablit
 la route pour le routage dynamique)
 .br
 .B D
@@ -276,12 +276,12 @@ par le démon de routage ou par redirect)
 .RB ( rejète
 la route)
 .TP
-.B Metric 
+.B Metric
 La 'distance' à la cible (habituellement comptée en hops). Ce n'est pas
 utilisé par les noyaux récents, mais peut-être requis par certains démons
 de routage.
 .TP
-.B Ref    
+.B Ref
 Nombre de références à cette route. (Pas utilisé dans le noyau Linux.)
 .TP
 .B Use
@@ -291,11 +291,11 @@ be either route cache misses (-F) or hits (-C).
 .B Iface
 Interface vers laquelle les paquets empruntant cette route seront envoyés.
 .TP
-.B MSS 
+.B MSS
 Taille de segment maximum par défaut pour les connexions TCP sur cette
 route.
 .TP
-.B Window  
+.B Window
 Taille de fenêtre par défaut pour les connexions TCP sur cette route.
 .TP
 .B irtt
@@ -328,11 +328,11 @@ Indique si oui ou non l'adresse matérielle pour la route en cache est encore
 .BR netstat (8)
 .LP
 .SH HISTORIQUE
-.B Route 
+.B Route
 pour Linux a été originellement écrit par Fred N. van Kempen,
 <waltje@uwalt.nl.mugnet.org> puis modifié par Johannes Stille et
-Linus Torvalds pour pl15. Alan Cox a ajouté les options concernant 
-la gestion des fenêtres et MSS pour Linux 1.1.22. Le support de irtt 
+Linus Torvalds pour pl15. Alan Cox a ajouté les options concernant
+la gestion des fenêtres et MSS pour Linux 1.1.22. Le support de irtt
 et la fusion avec netstat ont été réalisés par Bernd Eckenfels.
 .SH AUTEUR
 Maintenu par Phil Blundell <Philip.Blundell@pobox.com>.

@@ -16,9 +16,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    
+
     - name: configure
-      run: yes "" | make config 
-      
+      run: yes "" | make config
+
     - name: compile
       run: make all

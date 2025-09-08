@@ -5,46 +5,46 @@ route \- mostra / manipula a tabela de roteamento IP
 .B route
 .RB [ \-vnee ]
 .TP
-.B route 
-.RB [ \-v ] 
-.B add 
-.RB [ \-net | \-host ] 
-Alvo 
-.RB [ netmask 
-Nm] 
-.RB [ gw 
-Gw] 
-.RB [ metric 
-N] 
-.RB [ mss 
-M] 
-.RB [ window 
-W] 
-.RB [ irtt 
+.B route
+.RB [ \-v ]
+.B add
+.RB [ \-net | \-host ]
+Alvo
+.RB [ netmask
+Nm]
+.RB [ gw
+Gw]
+.RB [ metric
+N]
+.RB [ mss
+M]
+.RB [ window
+W]
+.RB [ irtt
 I]
 .RB [ reject ]
 .RB [ mod ]
-.RB [ dyn ] 
-.RB [ reinstate ] 
-.RB [[ dev ] 
-If]
-.TP
-.B route 
-.RB [ \-v ] 
-.B del 
-.RB [ \-net | \-host ] 
-Alvo 
-.RB [ gw 
-Gw] 
-.RB [ netmask 
-Nm] 
-.RB [ metric 
-N] 
+.RB [ dyn ]
+.RB [ reinstate ]
 .RB [[ dev ]
 If]
 .TP
-.B route 
-.RB [ \-V ] 
+.B route
+.RB [ \-v ]
+.B del
+.RB [ \-net | \-host ]
+Alvo
+.RB [ gw
+Gw]
+.RB [ netmask
+Nm]
+.RB [ metric
+N]
+.RB [[ dev ]
+If]
+.TP
+.B route
+.RB [ \-V ]
 .RB [ \-\-version ]
 .RB [ \-h ]
 .RB [ \--help ]
@@ -52,7 +52,7 @@ If]
 .B Route
 manipula a tabela de roteamento IP do kernel. Seu principal uso é
 configurar rotas estáticas para hosts ou redes especificadas através de
-uma interface, após a mesma ter sido configurada com o programa 
+uma interface, após a mesma ter sido configurada com o programa
 .BR ifconfig (8)
 .
 
@@ -69,10 +69,10 @@ servidor de nomes sumiu.
 
 .TP
 .B \-e
-use o formato 
+use o formato
 .BR netstat (8)
 na apresentação da tabela de roteamento.
-.B \-ee 
+.B \-ee
 produzira uma linha bem grande com todos os parâmetros da tabela de roteamento.
 
 .TP
@@ -81,18 +81,18 @@ o
 .B Alvo
 é o endereço de uma rede (encontrado no arquivo
 .I /etc/networks
-pela função 
-.BR getnetbyname (2) 
+pela função
+.BR getnetbyname (2)
 ).
 
 .TP
 .B -host
-é o endereço de uma máquina (descoberto com a função 
+é o endereço de uma máquina (descoberto com a função
 .BR gethostbyname (2)
 ).
 
-.TP 
-.B (nenhum) 
+.TP
+.B (nenhum)
 displays the kernel routing table. The layout can be changed with
 mostra a tabela de roteamento do kernel. O layout pode ser alterado com
 .B \-e
@@ -104,8 +104,8 @@ e
 .B del
 remove uma rota.
 
-.TP 
-.B add 
+.TP
+.B add
 adiciona uma rota.
 
 .TP
@@ -141,14 +141,14 @@ para manter compatibilidade com os sistemas baseados em BSD.
 Configura o campo de métrica na tabela de roteamento, usado em daemons
 para roteamento dinâmico.
 
-.TP 
+.TP
 .B mss M
 Especifica o Tamanho Máximo do Segmento TCP em Bytes (MSS) para conexões
 TCP através desta rota. Isto é normalmente usado somente para otimização
-fina de configurações de roteamento. 
+fina de configurações de roteamento.
 
-.TP 
-.B window W 
+.TP
+.B window W
 Especifica o tamanho da janela TCP para conexões TCP através desta rota.
 Tipicamente somente usado para redes AX.25 e em drivers incapazes de
 de tratar frames back to back.
@@ -177,7 +177,7 @@ de outra forma tentara determinar o dispositivo por conta própria
 (através da checagem de rotas e especificações de dispositivos já existentes
 e onde a rota esta adicionada).
 
-If 
+If
 .B dev If
 é a última opção na linha de comando, a palavra
 .B dev
@@ -191,11 +191,11 @@ Adiciona a entrada para a interface loopback normal, usando mascara igual
 a 255.0.0.0 (rede classe A, determinada a partir do endereço de destino),
 associada ao dispositivo "lo" (assumindo que este dispositivo tenha sido
 previamente configurado com o
-.BR ifconfig (8)). 
+.BR ifconfig (8)).
 
-.TP 
+.TP
 .B route add -net 192.56.76.0 netmask 255.255.255.0 dev eth0
-Adiciona uma rota para a rede 192.56.76.x através da interface "eth0". O 
+Adiciona uma rota para a rede 192.56.76.x através da interface "eth0". O
 modificador de mascara classe C não é realmente necessário aqui por que
 192.* é um endereço IP de classe C. A palavra "dev" pode ser omitida aqui.
 
@@ -219,7 +219,7 @@ rota anterior através da interface SLIP.
 
 .TP
 .B route add -net 224.0.0.0 netmask 240.0.0.0 dev eth0
-Isto é bem obscura, documentada para que as pessoas saibam como usá-la. 
+Isto é bem obscura, documentada para que as pessoas saibam como usá-la.
 Configura para que todas as rotas IP classe D (multicast) vão através da
 interface "eth0". Esta é a linha de configuração normal a ser usada com
 um kernel multicast.
@@ -232,7 +232,7 @@ Esta instala uma rota de rejeição para a rede privada "10.x.x.x"
 .SH SAÍDA
 A saída da tabela de roteamento do kernel é organizada nas seguintes colunas
 .TP
-.B Destino     
+.B Destino
 A rede ou máquina de destino.
 .TP
 .B Roteador
@@ -244,7 +244,7 @@ destino, '0.0.0.0' para a rota
 .B default
 .
 .TP
-.B Flags 
+.B Flags
 Os flags possíveis são
 .br
 .B U
@@ -277,11 +277,11 @@ Rota
 .RB ( rejeitada
 )
 .TP
-.B Metric 
+.B Metric
 A 'distância' até o alvo (geralmente contada em hops). Não é utilizada pelos
 kernels recentes, somente daemons de roteamento podem usa-la.
 .TP
-.B Ref    
+.B Ref
 Numero de referências a esta rota. Não usado no kernel do Linux, sempre 0.
 .TP
 .B Uso
@@ -292,10 +292,10 @@ por rotas.
 .B Iface
 Interface através da qual os pacotes IP serão enviados.
 .TP
-.B MSS 
+.B MSS
 Tamanho máximo de segmento default para conexões TCP através desta rota.
 .TP
-.B Window  
+.B Window
 Tamanho de janela default para conexões TCP através desta rota.
 .TP
 .B irtt

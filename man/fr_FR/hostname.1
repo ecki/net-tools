@@ -33,7 +33,7 @@ nodename \- affiche ou définit le nom de domaine DECnet du système
 .RB [ \-\-node ]
 
 .PP
-.B hostname 
+.B hostname
 .RB [ \-v ]
 .RB [ \-F\ nom_fichier ]
 .RB [ \-\-file\ nom_fichier ]
@@ -46,7 +46,7 @@ nodename \- affiche ou définit le nom de domaine DECnet du système
 .RB [ \-\-file\ nom_fichier ]
 .RB [ name ]
 
-.PP 
+.PP
 .B nodename
 .RB [ \-v ]
 .RB [ \-F\ nom_fichier ]
@@ -105,16 +105,16 @@ Qualified Domain Name). Le nom FQDN du système est retourné par la commande
 Appelé avec un argument ou avec l'option
 .B \-\-file
 , la commande définit le nom d'hôte, le nom de domaine NIS/YP ou
-le nom de noeud. 
+le nom de noeud.
 
 .LP
 Notez que seul le super-utilisateur peut changer les noms.
 
 .LP
 Il n'est pas possible de définir le nom FQDN ou le nom de domaine DNS avec
-la commande 
-.B dnsdomainname 
- (voir 
+la commande
+.B dnsdomainname
+ (voir
 .B "LE FQDN"
 ci-dessous).
 
@@ -124,17 +124,17 @@ démarrage du système, par le script de configuration
 .I /etc/rc.d/rc.inet1.
 ou
 .I /etc/init.d/boot
-(normallement en lisant un fichier contenant ce nom, p.ex. 
+(normallement en lisant un fichier contenant ce nom, p.ex.
 .IR /etc/hostname ).
 
 .SS LE FQDN
-Vous pouvez modifier le FQDN (tel que fourni par la commande 
-.BR "hostname \-\-fqdn" ) 
+Vous pouvez modifier le FQDN (tel que fourni par la commande
+.BR "hostname \-\-fqdn" )
 ou le nom de domaine DNS (tel que fourni par la commande
-.BR "dnsdomainname" ) 
+.BR "dnsdomainname" )
 avec cette commande. Le FQDN du système est le nom que le resolveur (
 .BR resolver (3)
- ) retourne comme nom d'hôte. 
+ ) retourne comme nom d'hôte.
 
 .LP
 Techniquement: Le FQDN est le nom fourni par
@@ -144,10 +144,10 @@ Techniquement: Le FQDN est le nom fourni par
 Le nom de domaine DNS est la partie suivant le premier point.
 .LP
 La façon dont vous pouvez le changer dépend de la configuration
-(habituellement dans 
+(habituellement dans
 .IR /etc/host.conf ).
-Si le fichier 'hosts' est analysé avant d'interroger le DNS ou 
-NIS) vous pouvez le changer dans le fichier 
+Si le fichier 'hosts' est analysé avant d'interroger le DNS ou
+NIS) vous pouvez le changer dans le fichier
 .IR /etc/hosts .
 
 .SH OPTIONS
@@ -160,7 +160,7 @@ Affiche le nom du domaine DNS. Ne pas utiliser la commande
 .B domainname
 pour obtenir le nom de domaine DNS car vous obtiendrez en réalité le
 nom de domaine NIS. Utilisez plutôt la commande
-.B dnsdomainname 
+.B dnsdomainname
 .
 .TP
 .I "\-F, \-\-file nom_fichier"

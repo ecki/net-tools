@@ -27,7 +27,7 @@ de endereçamento é usada na decodificação e apresentação de todos
 os endereços de protocolos. Atualmente as famílias de endereçamento
 suportadas incluem
 .B inet
-(TCP/IP, default) 
+(TCP/IP, default)
 .B ax25
 (AMPR Packet Radio),
 .B ddp
@@ -46,20 +46,20 @@ O nome da interface de rede. Usualmente é um nome como
 ou algo parecido: um nome de driver de dispositivo seguido por um
 número.
 .TP
-.B up 
+.B up
 Esta flag causa a ativação da interface. É especificada
 implicitamente se a interface receber um novo endereço (veja
 abaixo).
 .TP
-.B down 
+.B down
 Esta flag desativa o driver desta interface, é útil quando alguma
 coisa começar a ter problemas.
 .TP
-.B "[\-]arp" 
+.B "[\-]arp"
 Habilita ou desabilita o uso do protocolo ARP para esta interface. Se
 o sinal de menos (\-) estiver presente a opção é desligada.
 .TP
-.B "[\-]trailers" 
+.B "[\-]trailers"
 Habilita ou desabilita o uso de trailer em frames Ethernet. Não é
 utilizada na implementação atual do pacote net-tools.
 .TP
@@ -69,7 +69,7 @@ Habilita ou desabilita o modo
 da interface. Isto significa que todos os frames passarão pela camada
 de rede do kernel, permitindo monitoração da rede.
 .TP
-.B "mtu N" 
+.B "mtu N"
 Este parâmetro configura a Unidade Máxima de Transferência (MTU) de uma
 interface. Para Ethernet é um número entre 1000-2000 (o padrão é
 1500). Para SLIP, use algo entre 200 e 4096. Note que a implementação
@@ -78,7 +78,7 @@ a MTU com um tamanho adequado!
 .TP
 .B "dstaddr addr"
 Configura o endereço IP do "outro lado" no caso de um link Ponto-A-Ponto,
-como PPP. Esta palavra-chave tornou-se obsoleta e deve ser usada a nova 
+como PPP. Esta palavra-chave tornou-se obsoleta e deve ser usada a nova
 palavra-chave
 .BR pointopoint .
 .TP

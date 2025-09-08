@@ -5,50 +5,50 @@ route \- Anzeigen der IP-Routen-Tabelle
 .B route
 .RB [ \-CFvnee ]
 .TP
-.B route 
+.B route
 .RB [ \-v ]
 .RB [ \-A
-Addressfamilie] 
-.B add 
-.RB [ \-net | \-host ] 
+Addressfamilie]
+.B add
+.RB [ \-net | \-host ]
 Ziel
-.RB [ netmask 
-Nm] 
-.RB [ gw 
-Gw] 
-.RB [ metric 
-N] 
-.RB [ mss 
-M] 
-.RB [ window 
-W] 
-.RB [ irtt 
+.RB [ netmask
+Nm]
+.RB [ gw
+Gw]
+.RB [ metric
+N]
+.RB [ mss
+M]
+.RB [ window
+W]
+.RB [ irtt
 I]
 .RB [ reject ]
 .RB [ mod ]
-.RB [ dyn ] 
-.RB [ reinstate ] 
-.RB [[ dev ] 
-Schnittstelle]
-.TP
-.B route 
-.RB [ \-v ] 
-.RB [ \-A
-Adressfamilie]
-.B del 
-.RB [ \-net | \-host ] 
-Ziel
-.RB [ gw 
-Router] 
-.RB [ netmask 
-Nm] 
-.RB [ metric 
-N] 
+.RB [ dyn ]
+.RB [ reinstate ]
 .RB [[ dev ]
 Schnittstelle]
 .TP
-.B route 
-.RB [ \-V ] 
+.B route
+.RB [ \-v ]
+.RB [ \-A
+Adressfamilie]
+.B del
+.RB [ \-net | \-host ]
+Ziel
+.RB [ gw
+Router]
+.RB [ netmask
+Nm]
+.RB [ metric
+N]
+.RB [[ dev ]
+Schnittstelle]
+.TP
+.B route
+.RB [ \-V ]
 .RB [ \-\-version ]
 .RB [ \-h ]
 .RB [ \--help ]
@@ -81,7 +81,7 @@ der Nameserver nicht mehr erreichbar ist, z.B. weil keine Route existiert.
 Schaltet das Ausgabeformat von
 .BR netstat (8)
 f\(:ur die Anzeige der Routentabelle an.
-.B \-ee 
+.B \-ee
 gibt eine sehr lange Zeile mit allen Routenparametern aus der Routentabelle
 aus.
 
@@ -97,7 +97,7 @@ daS
 .B Ziel
 ist ein Rechner
 
-.TP 
+.TP
 .B -F
 Zeit die FIB Routentabelle des Kerns an.  Das Ausgabeformat kann mit den
 Optionen
@@ -106,7 +106,7 @@ and
 .B \-ee
 ge\(:andert werden.
 
-.TP 
+.TP
 .B -C
 zeigt den Routencache des Kernels an.
 
@@ -114,8 +114,8 @@ zeigt den Routencache des Kernels an.
 .B del
 L\(:oescht eine Route.
 
-.TP 
-.B add 
+.TP
+.B add
 f\(:ugt eine Route zu.
 
 .TP
@@ -145,20 +145,20 @@ Dieses Merkmal dient der Kompatibilit\(:at mit BSD.
 Setzt das Metric-Feld der Routentabelle, das von Routend\(:amonen verwendet
 wird, auf M.
 
-.TP 
+.TP
 .B mss M
 Setzt den MSS-Wert (Maximum Segment Size) f\(:ur TCP-Verbindungen \(:uber
 diese Route auf M bytes.  Diese Einstellung kann verwendet werden um eine
 kleinere MTU zu erzwingen, wenn
 Path MTU Discovery nicht funktioniert (normalerweise weil ein Firewall
 dazwischen ist der ICMP Fragmentation Needed blockt). Die Standardeinstellung
-ist die MTU des Netzwerkinterfaces minus Headers oder eine kleinere falls 
+ist die MTU des Netzwerkinterfaces minus Headers oder eine kleinere falls
 bekannt.
 
 
 
-.TP 
-.B window W 
+.TP
+.B window W
 Setzt das TCP-Fenster f\(:ur Verbindungen \(:uber diese Route auf W bytes.
 Dies wird \(:ublicherweise nur auf AX.25-Netzwerken und mit Treibern, die
 Probleme mit aufeinanderfolgenden Paketen haben, benutzt.
@@ -207,9 +207,9 @@ erzeugt die normale Loopbackroute mit der Netzmaske 255.0.0.0 (Netzwerk Klasse
 A, ermittelt aus der Zieladresse) und assoziert sie mit der Schnittstelle lo
 unter der Annahme, da\(ss dieses Ger\(:at vorher mit
 .BR ifconfig (8)
-konfiguriert wurde. 
+konfiguriert wurde.
 
-.TP 
+.TP
 .B route add -net 192.56.76.0 netmask 255.255.255.0 dev eth0
 Legt eine Route zum Netzwerk 192.56.76.x \(:uber eth0 an.  Die Angabe der
 Klasse C Netzmaske ist in diesem Fall nicht n\(:otig, 192.* Klasse C
@@ -255,7 +255,7 @@ Das Zielnetzwerk oder -System.
 .B Router
 Die Adresse des weiterleitenden Routers oder "*", wenn keine gesetzt ist.
 .TP
-.B Genmask         
+.B Genmask
 Die Netzmaske f\(:ur das Zielnetz; '255.255.255.255' f\(:ur eine einzeles
 Zielsystem und '0.0.0.0' f\(:ur die Standardroute (.
 .BR default ).
@@ -287,12 +287,12 @@ modified von einem Routend\(:amon oder redirekt-Paket.
 .B !
 .RB ( zur\(:uckweisende Route)
 .TP
-.B Metric 
+.B Metric
 Der Abstand zum Ziel, d.h. \(:ublicherweise die Anzahl der Zwischenrouter.
 Dieser Wert wird von aktuellen Kernen nicht verwendet, kann aber u.U.
 von Routend\(:amonen ben\(:otigt werden.
 .TP
-.B Ref    
+.B Ref
 Anzahl der Referenzen auf diese Route.  Wird vom Linux Kern nicht benutzt.
 .TP
 .B Benutzer
@@ -304,7 +304,7 @@ be either route cache misses (-F) or hits (-C).
 .B Schnittstelle
 Schnittstelle auf die Pakete f\(:ur diese Route geleitet werden.
 .TP
-.B MSS 
+.B MSS
 Maximale Segmentgr\(:o\(sse f\(:ur TCP-Verbindungen \(:uber diese Route.
 .TP
 .B Fenster

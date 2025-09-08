@@ -48,16 +48,16 @@ Termine correctement après l'initialisation du périphérique,
 au lieu d'attendre que la ligne soit suspendue.
 .TP
 .B "[-L]"
-Valide les opérations 3 lignes. Le terminal est mis en mode CLOCAL, 
+Valide les opérations 3 lignes. Le terminal est mis en mode CLOCAL,
 la surveillance de porteuse est invalidée.
 .TP
 .B "[-p proto]"
 Définit le protocole spécifique à utiliser sur la ligne.
-La valeur par défaut est 
+La valeur par défaut est
 .B "cslip"
 , c'est-à-dire SLIP compressé.  Les autres valeurs possibles sont :
 .B "slip"
-(SLIP normal), 
+(SLIP normal),
 .B "adaptive"
 (CSLIP/SLIP adaptatifs),
 .B "ppp"
@@ -71,7 +71,7 @@ peut être utilisé pour refaire passer le périphérique en
 fonctionnement série normal. L'utilisation du mode 'ppp' n'est en
 principe pas utile puisque ppp nécessite le démon additionnel
 .B pppd
-pour être actif sur la ligne. Pour les connexions `kiss', le programme 
+pour être actif sur la ligne. Pour les connexions `kiss', le programme
 .B kissattach
 doit être utilisé.
 .TP

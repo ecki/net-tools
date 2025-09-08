@@ -1,12 +1,12 @@
 .\"
-.\" netstat.8 
+.\" netstat.8
 .\"
 .\" Original: (mdw@tc.cornell.edu & dc6iq@insu1.etec.uni-karlsruhe.de)
 .\" German translation: Ralf Baechle (ralf@linux-mips.org)
 .\"
 .\" Modified: Bernd.Eckenfels@inka.de
-.\" Modified: Andi Kleen ak@muc.de 
-.\" Modified: Tuan Hoang tuan@optimus.mitre.org 
+.\" Modified: Andi Kleen ak@muc.de
+.\" Modified: Tuan Hoang tuan@optimus.mitre.org
 .\"
 .\"
 .TH NETSTAT 8 "2007-12-02" "net-tools" "Handbuch f\(:ur Linuxprogrammierer"
@@ -16,7 +16,7 @@ netstat \- Anzeige von Netzwerksverbindungen, Routentabellen, Schnittstellenstat
 
 .SH SYNOPSIS
 
-.B netstat 
+.B netstat
 .RB [ \-venaoc ]
 .RB [ \-\-tcp | \-t ]
 .RB [ \-\-udp | \-u ]
@@ -24,19 +24,19 @@ netstat \- Anzeige von Netzwerksverbindungen, Routentabellen, Schnittstellenstat
 .RB [ \-\-sctp | \-S ]
 .RB [ \-\-raw | \-w ]
 .RB [ \-\-groups | \-g ]
-.RB [ \-\-unix | \-x ] 
+.RB [ \-\-unix | \-x ]
 .RB [ \-\-inet | \-\-ip ]
 .RB [ \-\-ax25 ]
-.RB [ \-\-ipx ] 
+.RB [ \-\-ipx ]
 .RB [ \-\-netrom ]
 
 .PP
 
-.B netstat 
+.B netstat
 .RB [ \-veenc ]
-.RB [ \-\-inet ] 
+.RB [ \-\-inet ]
 .RB [ \-\-ipx ]
-.RB [ \-\-netrom ] 
+.RB [ \-\-netrom ]
 .RB [ \-\-ddp ]
 .RB [ \-\-ax25 ]
 .RB { \-\-route | \-r }
@@ -55,13 +55,13 @@ netstat \- Anzeige von Netzwerksverbindungen, Routentabellen, Schnittstellenstat
 
 .PP
 
-.B netstat 
+.B netstat
 .RB [ \-cn ]
 .RB { \-\-netlink | \-N }
 
 .PP
 
-.B netstat 
+.B netstat
 .RB { \-V | \-\-version }
 .RB { \-h | \-\-help }
 
@@ -98,9 +98,9 @@ beinhaltet RAW, UDP und TCP Sockets.
 Die
 .BR \-r ", " \-\-route
 Option gibt die Routentabellen des Kernels im gleichen Format wie
-.B "route -e" 
+.B "route -e"
 aus.
-.B "netstat -er" 
+.B "netstat -er"
 benutzt das Ausgabeformat von
 .BR route .
 F\(:ur Details siehe
@@ -116,7 +116,7 @@ Die Ausgabe ist im Format von
 und wird in
 .BR ifconfig (8)
 beschrieben.
-.B "netstat -ei" 
+.B "netstat -ei"
 erzeugt eine Tabelle f\(:ur Interfaces wie
 .BR ifconfig .
 Die
@@ -129,7 +129,7 @@ Flag nicht gesetzt haben).
 .SS "\-M, \-\-masquerade"
 
 Hiermit wird eine Liste aller maskierten Sitzungen erstellt. Der
-.B -e 
+.B -e
 Schalter schlie\(sst zus\(:atzlich Informationen \(:uber Sequenznummern und
 Deltas, die durch das Umschreiben von FTP-Sitzungen (PORT Kommando) verursacht
 werden, ein.  Maskieren wird verwendet, um Maschinen mit inoffiziellen
@@ -152,7 +152,7 @@ macht detailiertere Ausgaben.  Insbesondere wird ausgegeben, welche
 Adressfamilien nicht im Kernel konfiguriert sind.
 
 .SS "\-n, \-\-numeric"
-gibt numerische Adressen anstelle von 
+gibt numerische Adressen anstelle von
 Rechner-, Port- oder Benutzernamen aus.
 
 .SS "\-p, \-\-programs"
@@ -164,14 +164,14 @@ haben alle dazu n\(:otigen Privilegien.
 
 .SS "\-A, \-\-af \fIFamilie\fI"
 benutzt einen alternativen Weg, um Adressfamilien zu setzen.
-.I Familie 
+.I Familie
 ist eine durch Kommas getrennte Auflistung von Schl\(:usselworten f\(:ur
 Adressfamilien wie
-.BR inet , 
-.BR unix , 
-.BR ipx , 
-.BR ax25 , 
-.B netrom 
+.BR inet ,
+.BR unix ,
+.BR ipx ,
+.BR ax25 ,
+.B netrom
 und
 .BR ddp .
 Dies hat den gleichen Effekt wie die Optionen
@@ -194,7 +194,7 @@ im Sekundenabstand die Ausgabe, bis es abgebrochen wird.
 .PP
 .SS Aktive Internet-Verbindungen \fR(TCP, UDP, RAW)\fR
 
-.SS "Proto" 
+.SS "Proto"
 Das vom Socket verwendete Protokoll (TCP, UDP, RAW).
 
 .SS "Recv-Q"
@@ -204,7 +204,7 @@ wurden.
 .SS "Send-Q"
 Die Anzahl von Bytes, die von der Gegenseite noch nicht best\(:atigt wurde.
 
-.SS "Lokale Adresse" 
+.SS "Lokale Adresse"
 Die lokale Adresse (lokaler Rechnername) und Portnummer des Sockets.  Au\(sser
 bei Verwendung der
 .B -n
@@ -296,7 +296,7 @@ Sockets sind diese Daten nicht verf\(:ugbar.
 .PP
 .SS aktive Sockets in der UNIX Dom\(:ane
 
-.SS "Proto" 
+.SS "Proto"
 das Protokoll (in der Regel unix), welches vom Socket verwendet wird
 
 .SS "RefZ\(:ah"
@@ -305,11 +305,11 @@ der Referenzz\(:ahler, d.h. die Zahl der Prozesse, die diesen Socket benutzen
 .SS "Flaggen"
 die Flags, die angezeigt werden sind SO_ACCEPTON (angezeigt als
 .BR ACC ),
-SO_WAITDATA 
+SO_WAITDATA
 .RB ( W )
-oder SO_NOSPACE 
-.RB ( N ). 
-SO_ACCECPTON 
+oder SO_NOSPACE
+.RB ( N ).
+SO_ACCECPTON
 wird auf unverbundenen Sockets verwendet, wenn die zugeh\(:origen Sockets
 auf Verbindungsanfragen warten.  Die anderen Flags sind normalerweise nicht
 von Interesse.

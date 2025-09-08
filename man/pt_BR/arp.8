@@ -2,47 +2,47 @@
 .SH NOME
 arp \- manipula o cache ARP do sistema
 .SH SINOPSE
-.B arp 
-.RB [ \-vn ] 
-.RB [ "\-H tipo" ] 
-.RB [ "-i if" ] 
-.B -a 
+.B arp
+.RB [ \-vn ]
+.RB [ "\-H tipo" ]
+.RB [ "-i if" ]
+.B -a
 .RB [ máquina ]
 .PP
-.B arp 
+.B arp
 .RB [ \-v ]
-.RB [ "\-i if" ] 
+.RB [ "\-i if" ]
 .B "\-d máquina"
 .RB [ pub ]
 .RB [ nopub ]
 .PP
-.B arp 
-.RB [ \-v ] 
-.RB [ "\-H tipo" ] 
-.RB [ "\-i if" ] 
+.B arp
+.RB [ \-v ]
+.RB [ "\-H tipo" ]
+.RB [ "\-i if" ]
 .B -s máquina endereço_hardware
-.RB [ temp ] 
+.RB [ temp ]
 .RB [ nopub ]
 .PP
-.B arp 
-.RB [ \-v ] 
-.RB [ "\-H tipo" ] 
-.RB [ "\-i if" ] 
+.B arp
+.RB [ \-v ]
+.RB [ "\-H tipo" ]
+.RB [ "\-i if" ]
 .B -s máquina endereço_hardware
-.RB [ "netmask nm" ] 
+.RB [ "netmask nm" ]
 .B pub
 .PP
-.B arp 
-.RB [ \-v ] 
-.RB [ "\-H tipo" ] 
-.RB [ "\-i if" ] 
+.B arp
+.RB [ \-v ]
+.RB [ "\-H tipo" ]
+.RB [ "\-i if" ]
 .B -Ds máquina ifa
-.RB [ "netmask nm" ] 
+.RB [ "netmask nm" ]
 .B pub
 .PP
-.B arp 
+.B arp
 .RB [ \-vnD ]
-.RB [ "\-H tipo" ] 
+.RB [ "\-H tipo" ]
 .RB [ "-i if" ]
 .B -f arquivo
 
@@ -90,24 +90,24 @@ usado se a máquina indicada for desligada, por exemplo. Nos kernels
 mais recentes o
 .BR arp (1)
 suporta a especificação de
-.B pub 
+.B pub
 ou
-.B nopub 
+.B nopub
 para decidir se uma entrada pública ou privada deve ser removida. Se você
 não informar uma destas flags as duas entradas serão removidas.
 .TP
 .B "\-D, \-\-use-device"
-Usa o endereço de hardware da interface 
+Usa o endereço de hardware da interface
 .BR ifa
 .TP
 .B "\-i If, \-\-device If"
 Seleciona uma interface. Quando mostrando o cache ARP somente entradas iguais
 à interface serão mostradas. Configura uma entrada ARP permanente ou
-temporária que será usada no dispositivo especificado. Se nenhum dispositivo for 
-informado, o kernel descobre o dispositivo a partir da tabela de roteamento. 
+temporária que será usada no dispositivo especificado. Se nenhum dispositivo for
+informado, o kernel descobre o dispositivo a partir da tabela de roteamento.
 Para entradas
 .B pub
-a interface especificada é a interface na qual as requisições ARP serão 
+a interface especificada é a interface na qual as requisições ARP serão
 respondidas.
 .br
 .B NOTA:
@@ -116,8 +116,8 @@ Deve ser diferente da interface para a qual os pacotes IP serão roteados.
 .B "\-s máquina endereço_hardware, \-\-set máquina"
 Cria manualmente uma entrada de mapeamento de endereço ARP para a máquina
 .B máquina
-com endereço de hardware configurado para 
-.B endereço_hardware.  
+com endereço de hardware configurado para
+.B endereço_hardware.
 O formato do endereço de hardware depende da classe de hardware, mas
 para a maioria das classes pode-se assumir que a apresentação usual pode
 ser usada. Para a classe Ethernet, são 6 bytes em hexadecimal, separados
@@ -126,7 +126,7 @@ com a flag
 .BR púb lico
 setadas) uma
 .B netmask
-pode ser especificada para o proxy arp de uma subrede inteira. 
+pode ser especificada para o proxy arp de uma subrede inteira.
 Proxy arp para rotear redes inteiras não é um bom protocolo, mas algumas
 vezes é útil, então é suportado. Se a flag
 .B temp
@@ -136,15 +136,15 @@ não for fornecida, as entradas serão permanentemente armazenadas no cache ARP.
 Similar à opção
 .B \-s
 só que desta vez as informações de endereços são obtidas a partir do arquivo
-.B arquivo.  
+.B arquivo.
 Isto pode ser usado se entradas ARP para muitas máquinas tiverem que ser
 configuradas. O nome do arquivo de dados é freqüentemente
-.IR /etc/ethers , 
+.IR /etc/ethers ,
 mas isto não é oficial.
 .sp 1
 O formato deste arquivo é simples; ele somente contém linhas de texto ASCII com
 um nome de máquina e um endereço de hardware separados por um espaço em branco.
-Adicionalmente as flags 
+Adicionalmente as flags
 .BR "pub" , " nopub" , " temp" " and" " netmask"
 podem ser usadas.
 .LP
@@ -153,12 +153,12 @@ Em todos os lugares onde uma
 é esperada, você também pode informar um
 .B "endereço IP"
 em notação decimal separada por pontos.
-.LP 
+.LP
 Cada entrada completa no cache ARP será marcada com uma flag
-.BR C . 
+.BR C .
 Entradas permanentes são marcadas com um
 .B M
-e entradas publicadas tem uma flag 
+e entradas publicadas tem uma flag
 .BR P .
 .SH ARQUIVOS
 .I /proc/net/arp,
@@ -179,5 +179,5 @@ Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org> com muitas melhorias
 feitas pelo mantenedor do net-tools, Bernd Eckenfels <net-tools@lina.inka.de>.
 Tradução para a língua portuguesa feita por
 Arnaldo Carvalho de Melo <acme@conectiva.com.br> em 11/abril/1998.
-Revisado por 
+Revisado por
 Jorge Luiz Godoy Filho <jorge@bestway.com.br> em 15/abril/1998.

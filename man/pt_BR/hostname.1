@@ -1,7 +1,7 @@
 .TH HOSTNAME 1 "28 de janeiro de 1996" "net-tools" "Manual do Programador Linux"
 
 .SH NOME
-hostname \- mostra ou configura o nome da máquina 
+hostname \- mostra ou configura o nome da máquina
 .BR
 domainname \- mostra ou configura o nome do domínio NIS/YP
 .BR
@@ -30,7 +30,7 @@ ypdomainname \- mostra ou configura o nome do domínio NIS/YP
 .RB [ \-\-nis ]
 
 .PP
-.B hostname 
+.B hostname
 .RB [ \-v ]
 .RB [ \-F\ arquivo ]
 .RB [ \-\-file\ arquivo ]
@@ -99,8 +99,8 @@ Note que somente o super usuário pode mudar os nomes.
 
 .LP
 Nao é possível configurar o FQDN ou o nome do domínio DNS com o comando
-.B dnsdomainname 
-(veja 
+.B dnsdomainname
+(veja
 .B "O FQDN"
 abaixo).
 
@@ -115,9 +115,9 @@ ou
 
 .SS O FQDN
 Você não pode mudar o FQDN (conforme retornado por
-.BR "hostname \-\-fqdn" ) 
+.BR "hostname \-\-fqdn" )
 ou o nome do domínio DNS (conforme retornado por
-.BR "dnsdomainname" ) 
+.BR "dnsdomainname" )
 com este comando. O FQDN do sistema é o nome que o
 .BR resolver (3)
 retorna para o nome da máquina.
@@ -131,7 +131,7 @@ O nome do domínio DNS é a parte após o primeiro ponto.
 .LP
 Portanto isto depende da configuração (normalmente em
 .IR /etc/host.conf )
-para que você possa mudá-lo. Normalmente (se o arquivo hosts for lido antes 
+para que você possa mudá-lo. Normalmente (se o arquivo hosts for lido antes
 do DNS ou NIS) você pode mudá-lo em
 .IR /etc/hosts .
 
@@ -145,7 +145,7 @@ Mostra o alias da máquina (se usado).
 Mostra o nome do domínio DNS. Não use o comando
 .B domainname
 para obter o nome do domínio DNS porque ele mostrará o nome do domínio NIS e
-não o nome do domínio DNS. Use 
+não o nome do domínio DNS. Use
 .BR dnsdomainname .
 .TP
 .I "\-F, \-\-file arquivo"
