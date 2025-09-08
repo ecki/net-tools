@@ -15,7 +15,7 @@
  * Patched to support 'add' and 'del' keywords for INET(4) addresses
  * by Mrs. Brisby <mrs.brisby@nimh.org>
  *
- * {1.34} - 19980630 - Arnaldo Carvalho de Melo <acme@conectiva.com.br>
+ *        - 19980630 - Arnaldo Carvalho de Melo <acme@conectiva.com.br>
  *                     - gettext instead of catgets for i18n
  *          10/1998  - Andi Kleen. Use interface list primitives.
  *	    20001008 - Bernd Eckenfels, Patch from RH for setting mtu

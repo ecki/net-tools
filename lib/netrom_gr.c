@@ -7,7 +7,7 @@
  *              base on Code from Jonathan Naylor <jsn@Cs.Nott.AC.UK>
  *
  * Changes:
- * 980701 {0.02} Arnaldo Carvalho de Melo   GNU gettext instead of catgets
+ * 980701        Arnaldo Carvalho de Melo   GNU gettext instead of catgets
  *
  *
  *              This program is free software; you can redistribute it

@@ -13,25 +13,25 @@
  *              Linus Torvalds:         Misc Changes
  *              Alan Cox:               add the new mtu/window stuff
  *              Miquel van Smoorenburg: rt_add and rt_del
- *       {1.79} Bernd Eckenfels:        route_info
- *       {1.80} Bernd Eckenfels:        reject, metric, irtt, 1.2.x support.
- *       {1.81} Bernd Eckenfels:        reject routes need a dummy device
- *960127 {1.82} Bernd Eckenfels:        'mod' and 'dyn' 'reinstate' added
- *960129 {1.83} Bernd Eckenfels:        resolve and getsock now in lib/,
+ *              Bernd Eckenfels:        route_info
+ *              Bernd Eckenfels:        reject, metric, irtt, 1.2.x support.
+ *              Bernd Eckenfels:        reject routes need a dummy device
+ *960127        Bernd Eckenfels:        'mod' and 'dyn' 'reinstate' added
+ *960129        Bernd Eckenfels:        resolve and getsock now in lib/,
  *                                      REJECT displays '-' as gatway.
- *960202 {1.84} Bernd Eckenfels:        net-features support added
- *960203 {1.85} Bernd Eckenfels:        "#ifdef' in '#if' for net-features
+ *960202        Bernd Eckenfels:        net-features support added
+ *960203        Bernd Eckenfels:        "#ifdef' in '#if' for net-features
  *                                      -A  (aftrans) support, get_longopts
- *960206 {1.86} Bernd Eckenfels:        route_init();
- *960218 {1.87} Bernd Eckenfels:        netinet/in.h added
- *960221 {1.88} Bernd Eckenfels:        aftrans_dfl support
- *960222 {1.90} Bernd Eckenfels:        moved all AF specific code to lib/.
- *960413 {1.91} Bernd Eckenfels:        new RTACTION support+FLAG_CACHE/FIB
- *960426 {1.92} Bernd Eckenfels:        FLAG_SYM/-N support
- *960823 {x.xx} Frank Strauss:          INET6 stuff
- *980629 {1.95} Arnaldo Carvalho de Melo: gettext instead of catgets
- *990101 {1.96} Bernd Eckenfels:	fixed usage and FLAG_CACHE Output
- *20010404 {1.97} Arnaldo Carvalho de Melo: use setlocale
+ *960206        Bernd Eckenfels:        route_init();
+ *960218        Bernd Eckenfels:        netinet/in.h added
+ *960221        Bernd Eckenfels:        aftrans_dfl support
+ *960222        Bernd Eckenfels:        moved all AF specific code to lib/.
+ *960413        Bernd Eckenfels:        new RTACTION support+FLAG_CACHE/FIB
+ *960426        Bernd Eckenfels:        FLAG_SYM/-N support
+ *960823        Frank Strauss:          INET6 stuff
+ *980629        Arnaldo Carvalho de Melo: gettext instead of catgets
+ *990101        Bernd Eckenfels:	fixed usage and FLAG_CACHE Output
+ *20010404        Arnaldo Carvalho de Melo: use setlocale
  *
  */
 #include <sys/types.h>

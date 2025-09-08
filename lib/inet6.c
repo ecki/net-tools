@@ -7,8 +7,8 @@
  *              Copyright 1993 MicroWalt Corporation
  *
  * Modified:
- *960808 {0.01} Frank Strauss :         adapted for IPv6 support
- *980701 {0.02} Arnaldo C. Melo:        GNU gettext instead of catgets
+ *960808        Frank Strauss :         adapted for IPv6 support
+ *980701        Arnaldo C. Melo:        GNU gettext instead of catgets
  *990824        Bernd Eckenfels:	clear members for selecting v6 address
  *
  *              This program is free software; you can redistribute it

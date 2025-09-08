@@ -16,13 +16,13 @@
  *              Copyright 1993 MicroWalt Corporation
  *
  * Modifications:
- *960125 {1.20} Bernd Eckenfels:        reformated, layout
- *960202 {1.30} Bernd Eckenfels:        rprint in aftype
- *960206 {1.31} Bernd Eckenfels:        route_init
- *960219 {1.32} Bernd Eckenfels:        type for ap->input()
- *960322 {1.33} Bernd Eckenfels:        activate_ld and const in get_hwtype
- *960413 {1.34} Bernd Eckenfels:        new RTACTION suport
- *990101 {1.35} Bernd Eckenfels:	print_(hw|af)list support, added kerneldefines
+ *960125        Bernd Eckenfels:        reformated, layout
+ *960202        Bernd Eckenfels:        rprint in aftype
+ *960206        Bernd Eckenfels:        route_init
+ *960219        Bernd Eckenfels:        type for ap->input()
+ *960322        Bernd Eckenfels:        activate_ld and const in get_hwtype
+ *960413        Bernd Eckenfels:        new RTACTION suport
+ *990101        Bernd Eckenfels:	print_(hw|af)list support, added kerneldefines
  *
  *              This program is free software; you can redistribute it
  *              and/or  modify it under  the terms of  the GNU General

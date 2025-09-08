@@ -7,14 +7,14 @@
  *              Copyright 1993 MicroWalt Corporation
  *
  * Modified:
- *960113 {1.21} Bernd Eckenfels :       rresolve cache bug.
- *960128 {1.22} Bernd Eckenfels :       endian bug in print
- *960203 {1.23} Bernd Eckenfels :       net-features support
- *960217 {1.24} Bernd Eckenfels :       get_sname
- *960219 {1.25} Bernd Eckenfels :       extern int h_errno
- *960329 {1.26} Bernd Eckenfels :       resolve 255.255.255.255
- *980101 {1.27} Bernd Eckenfels :	resolve raw sockets in /etc/protocols
- *990302 {1.28} Phil Blundell   :       add netmask to INET_rresolve
+ *960113        Bernd Eckenfels :       rresolve cache bug.
+ *960128        Bernd Eckenfels :       endian bug in print
+ *960203        Bernd Eckenfels :       net-features support
+ *960217        Bernd Eckenfels :       get_sname
+ *960219        Bernd Eckenfels :       extern int h_errno
+ *960329        Bernd Eckenfels :       resolve 255.255.255.255
+ *980101        Bernd Eckenfels :	resolve raw sockets in /etc/protocols
+ *990302        Phil Blundell   :       add netmask to INET_rresolve
  *991007        Kurt Garloff	:	rresolve, resolve: may be hosts
  *		<garloff@suse.de>	store type (host?) in cache
  *

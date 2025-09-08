@@ -15,7 +15,7 @@
 #		Copyright 1988-1993 MicroWalt Corporation
 #
 # Modified:
-#        {1.65} Bernd eckes Eckenfels <net-tools@lina.inka.de>
+#               Bernd eckes Eckenfels <net-tools@lina.inka.de>
 #		some layout cleanups, slattach/plipconfig removed.
 #		--test for testinstallations added.
 #

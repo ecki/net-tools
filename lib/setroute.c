@@ -12,8 +12,8 @@
  *
  * Modifications:
  *
- *960221 {0.01} Bernd Eckenfels:        generated from getroute.c
- *960413 {0.02} Bernd Eckenfels:        new RTACTION support
+ *960221        Bernd Eckenfels:        generated from getroute.c
+ *960413        Bernd Eckenfels:        new RTACTION support
  *960809        Frank Strauss:          INET6
  *
  *              This program is free software; you can redistribute it

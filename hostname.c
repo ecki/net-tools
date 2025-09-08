@@ -14,14 +14,14 @@
  * Author:      Peter Tobias <tobias@et-inf.fho-emden.de>
  *
  * Changes:
- *         {1.90}  Peter Tobias : Added -a and -i options.
- *         {1.91}  Bernd Eckenfels : -v,-V rewritten, long_opts (major rewrite), usage.
- *19960120 {1.95}  Bernd Eckenfels : -y/nisdomainname - support for get/setdomainname added
- *19960218 {1.96}  Bernd Eckenfels : netinet/in.h added
- *19980629 {1.97}  Arnaldo Carvalho de Melo : gettext instead of catgets for i18n
- *20000213 {1.99}  Arnaldo Carvalho de Melo : fixed some i18n strings
- *20010404 {1.100} Arnaldo Carvalho de Melo: use setlocale
- *20031011 {1.101} Maik Broemme: gcc 3.x fixes (default: break)
+ *                 Peter Tobias : Added -a and -i options.
+ *                 Bernd Eckenfels : -v,-V rewritten, long_opts (major rewrite), usage.
+ *19960120         Bernd Eckenfels : -y/nisdomainname - support for get/setdomainname added
+ *19960218         Bernd Eckenfels : netinet/in.h added
+ *19980629         Arnaldo Carvalho de Melo : gettext instead of catgets for i18n
+ *20000213         Arnaldo Carvalho de Melo : fixed some i18n strings
+ *20010404         Arnaldo Carvalho de Melo: use setlocale
+ *20031011         Maik Broemme: gcc 3.x fixes (default: break)
  *
  *              This program is free software; you can redistribute it
  *              and/or  modify it under  the terms of  the GNU General

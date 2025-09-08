@@ -7,11 +7,11 @@
  *
  * Modifications:
  *
- *960217 {0.01} Bernd Eckenfels:        creatin from the code of
+ *960217        Bernd Eckenfels:        creatin from the code of
  *                                      Jos Vos' ipfwadm 2.0beta1
- *950218 {0.02} Bernd Eckenfels:        <linux/if.h> added
+ *950218        Bernd Eckenfels:        <linux/if.h> added
  *
- *980405 {0.03} Arnaldo Carvalho:       i18n CATGETS -> gettext
+ *980405        Arnaldo Carvalho:       i18n CATGETS -> gettext
  *
  *              This program is free software; you can redistribute it
  *              and/or  modify it under  the terms of  the GNU General

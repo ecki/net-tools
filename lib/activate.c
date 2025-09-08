@@ -12,8 +12,8 @@
  *
  * Modifications:
  *
- *960322 {0.01} Bernd Eckenfels:        creation
- *980411 {0.01i} Arnaldo Carvalho:      i18n: now uses gettext
+ *960322        Bernd Eckenfels:        creation
+ *980411         Arnaldo Carvalho:      i18n: now uses gettext
  *
  *              This program is free software; you can redistribute it
  *              and/or  modify it under  the terms of  the GNU General
