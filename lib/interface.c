@@ -211,17 +211,17 @@ out:
 }
 
 static const char *get_name(char *name, const char *p)
-/* Safe version — guarantees at most IFNAMSIZ‑1 bytes are copied
-   and the destination buffer is always NUL‑terminated.             */
+/* Safe version - guarantees at most IFNAMSIZ-1 bytes are copied
+   and the destination buffer is always NUL-terminated. */
 {
     char       *dst = name;                 /* current write ptr          */
     const char *end = name + IFNAMSIZ - 1;  /* last byte we may write     */
 
-    /* Skip leading white‑space. */
+    /* Skip leading white-space. */
     while (isspace((unsigned char)*p))
         ++p;
 
-    /* Copy until white‑space, end of string, or buffer full. */
+    /* Copy until white-space, end of string, or buffer full. */
     while (*p && !isspace((unsigned char)*p) && dst < end) {
         if (*p == ':') {                    /* possible alias veth0:123:  */
             const char *dot = p;            /* remember the colon         */
@@ -244,13 +244,13 @@ static const char *get_name(char *name, const char *p)
             }
             if (*p == ':')                  /* consume trailing colon */
                 ++p;
-            break;                          /* interface name ends here   */
+            break;                          /* interface name ends here */
         }
 
-        *dst++ = *p++;                      /* ordinary character copy    */
+        *dst++ = *p++;                      /* ordinary character copy */
     }
 
-    *dst = '\0';                            /* always NUL‑terminate       */
+    *dst = '\0';                            /* always NUL-terminate */
     return p;
 }
 
