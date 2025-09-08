@@ -1,8 +1,6 @@
 /*
- * lib/hippi.c        This file contains an implementation of the "HIPPI"
+ * lib/hippi.c  This file contains an implementation of the "HIPPI"
  *              support functions for the NET-2 base distribution.
- *
- * Version:     $Id$
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation

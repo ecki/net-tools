@@ -2,8 +2,6 @@
  * lib/fddi.c This file contains an implementation of the "FDDI"
  *              support functions.
  *
- * Version:     $Id: fddi.c,v 1.7 2000/03/05 11:26:02 philip Exp $
- *
  * Author:      Lawrence V. Stefani, <stefani@lkg.dec.com>
  *
  * 1998-07-01 - Arnaldo Carvalho de Melo <acme@conectiva.com.br> GNU gettext

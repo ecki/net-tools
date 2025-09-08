@@ -1,8 +1,6 @@
 /*
  * lib/getargs.c      General argument parser.
  *
- * Version:     $Id: getargs.c,v 1.3 1998/11/15 20:09:43 freitag Exp $
- *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993,1994 MicroWalt Corporation
  *

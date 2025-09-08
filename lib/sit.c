@@ -1,8 +1,6 @@
 /*
  * lib/sit.c  This file contains the SIT HW-type support.
  *
- * Version:    $Id: sit.c,v 1.5 2000/03/05 16:14:08 ecki Exp $
- *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
  *

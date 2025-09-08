@@ -1,9 +1,7 @@
 /*
- * lib/inet.c This file contains an implementation of the "INET"
+ * lib/inet.c   This file contains an implementation of the "INET"
  *              support functions for the net-tools.
  *              (NET-3 base distribution).
- *
- * Version:    $Id: inet.c,v 1.14 2003/10/19 11:57:37 pb Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation

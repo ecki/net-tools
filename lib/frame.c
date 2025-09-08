@@ -1,8 +1,6 @@
 /*
  * lib/frame.c        This file contains the Frame Relay support.
  *
- * Version:     $Id: frame.c,v 1.4 2000/03/05 11:26:02 philip Exp $
- *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
  * Author:      Mike McLagan <mike.mclagan@linux.org>

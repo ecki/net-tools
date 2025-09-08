@@ -1,13 +1,6 @@
 /*
- * lib/ax25.c This file contains an implementation of the "AX.25"
+ * lib/ax25.c   This file contains an implementation of the "AX.25"
  *              support functions.
- *
- * Version:     $Id: ax25.c,v 1.9 1999/09/27 11:00:45 philip Exp $
- *
- * NOTE:        I will redo this module as soon as I got the libax25.a
- *              library sorted out.  This library contains some useful
- *              and often used address conversion functions, database
- *              lookup stuff, and more of the like.
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation

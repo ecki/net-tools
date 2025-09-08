@@ -1,6 +1,8 @@
-/* Tolerant /proc file parser. Copyright 1998 Andi Kleen */
-/* $Id: proc.c,v 1.5 2007/12/01 18:44:57 ecki Exp $ */
-/* Fixme: cannot currently cope with removed fields */
+/*
+ * proc.c - Tolerant /proc file parser.
+ * Copyright 1998 Andi Kleen
+ * Fixme: cannot currently cope with removed fields
+ */
 
 #include <string.h>
 #include <stdarg.h>

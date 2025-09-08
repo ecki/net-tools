@@ -1,5 +1,7 @@
-/* Copyright 1998 by Andi Kleen. Subject to the GPL. */
-/* $Id: util.c,v 1.4 1998/11/17 15:17:02 freitag Exp $ */
+/*
+ * lib/util.c net-tools utilities
+ * Copyright 1998 by Andi Kleen. Subject to the GPL.
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

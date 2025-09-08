@@ -2,8 +2,6 @@
  * lib/slip_ac.c      This file contains the activation for the
  *                      SLIP line disciplines, called from activate_ld().
  *
- * Version:     $Id: slip_ac.c,v 1.3 1998/11/15 20:12:20 freitag Exp $
- *
  * Author:      Bernd 'eckes' Eckenfels
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation

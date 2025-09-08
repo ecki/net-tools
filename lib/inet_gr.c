@@ -1,13 +1,11 @@
 /*
-   $Id: inet_gr.c,v 1.14 2009/07/08 00:24:03 ecki Exp $
-
-   Modifications:
-   1998-07-01 - Arnaldo Carvalho de Melo - GNU gettext instead of catgets
-   1999-01-01 - Bernd Eckenfels          - fixed the routing cache printouts
-   1999-10-07 - Kurt Garloff <garloff@suse.de> - do host (instead of network) name
-						lookup for gws and hosts
+ * inet_gr.c  utility methods to parse inet routes
+ *
+ * Modifications:
+ * 1998-07-01 - Arnaldo Carvalho de Melo - GNU gettext instead of catgets
+ * 1999-01-01 - Bernd Eckenfels          - fixed the routing cache printouts
+ *  1999-10-07 - Kurt Garloff <garloff@suse.de> - do host (instead of network) name
  */
-
 #include "config.h"
 
 #if HAVE_AFINET

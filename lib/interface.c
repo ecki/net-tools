@@ -1,15 +1,13 @@
-/* Code to manipulate interface information, shared between ifconfig and
-   netstat.
-
-   10/1998 partly rewriten by Andi Kleen to support an interface list.
-   I don't claim that the list operations are efficient @).
-
-   8/2000  Andi Kleen make the list operations a bit more efficient.
-   People are crazy enough to use thousands of aliases now.
-
-   $Id: interface.c,v 1.35 2011-01-01 03:22:31 ecki Exp $
+/*
+ * lib/interface.c  Code to manipulate interface information,
+ *                  shared between ifconfig and netstat.
+ *
+ * 10/1998 partly rewriten by Andi Kleen to support an interface list.
+ * I don't claim that the list operations are efficient @).
+ *
+ * 8/2000  Andi Kleen make the list operations a bit more efficient.
+ * People are crazy enough to use thousands of aliases now.
  */
-
 #include "config.h"
 
 #include <sys/types.h>

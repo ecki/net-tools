@@ -2,8 +2,6 @@
  * lib/ppp.c  This file contains the SLIP support for the NET-2 base
  *              distribution.
  *
- * Version:     $Id: ppp.c,v 1.4 2000/03/05 11:26:03 philip Exp $
- *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
  *

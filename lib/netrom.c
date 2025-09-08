@@ -2,8 +2,6 @@
  * lib/netrom.c       This file contains an implementation of the "NET/ROM"
  *              support functions for the NET-2 base distribution.
  *
- * Version:     $Id: netrom.c,v 1.8 2000/03/05 11:26:03 philip Exp $
- *
  * NOTE:        I will redo this module as soon as I got the libax25.a
  *              library sorted out.  This library contains some useful
  *              and often used address conversion functions, database

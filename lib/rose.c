@@ -1,8 +1,6 @@
 /*
- * lib/rose.c This file contains an implementation of the "ROSE"
+ * lib/rose.c   This file contains an implementation of the "ROSE"
  *              support functions for the NET-2 base distribution.
- *
- * Version:     $Id: rose.c,v 1.7 2000/03/05 11:26:03 philip Exp $
  *
  * Author:      Terry Dawson, VK2KTJ, <terry@perf.no.itg.telstra.com.au>
  *              based on ax25.c by:

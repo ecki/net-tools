@@ -2,8 +2,6 @@
  * route        This file contains an implementation of the command
  *              that manages the IP routing table in the kernel.
  *
- * Version:     $Id: route.c,v 1.10 2002/07/30 05:24:20 ecki Exp $
- *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>

@@ -1,8 +1,6 @@
 /*
- * lib/hw.c   This file contains the top-level part of the hardware
+ * lib/hw.c     This file contains the top-level part of the hardware
  *              support functions module.
- *
- * Version:     $Id: hw.c,v 1.19 2008/10/03 01:52:04 ecki Exp $
  *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *

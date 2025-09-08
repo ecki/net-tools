@@ -1,8 +1,6 @@
 /*
  * lib/slip.c This file contains the SLIP HW-type support.
  *
- * Version:     $Id: slip.c,v 1.4 1999/09/27 11:00:49 philip Exp $
- *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation
  *

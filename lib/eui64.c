@@ -1,8 +1,6 @@
 /*
  * lib/eui64.c  This file contains support for generic EUI-64 hw addressing
  *
- * Version:     $Id: eui64.c,v 1.1 2001/11/12 02:12:05 ecki Exp $
- *
  * Author:      Daniel Stodden <stodden@in.tum.de>
  *              Copyright 2001 Daniel Stodden
  *

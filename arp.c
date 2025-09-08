@@ -8,8 +8,6 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: arp.c,v 1.27 2009/09/06 22:50:11 vapier Exp $
- *
  * Maintainer:  Bernd 'eckes' Eckenfels, <net-tools@lina.inka.de>
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>

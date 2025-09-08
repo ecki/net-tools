@@ -6,8 +6,6 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system.
  *
- * Version:     $Id: netstat.c,v 1.73 2011-04-20 01:35:22 ecki Exp $
- *
  * Authors:     Fred Baumgarten, <dc6iq@insu1.etec.uni-karlsruhe.de>
  *              Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Phil Packer, <pep@wicked.demon.co.uk>

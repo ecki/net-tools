@@ -1,7 +1,6 @@
 /*
  * lib/ash.c  This file contains an implementation of the Ash
- *              support functions for the NET-2 base distribution.
- * $Id: ash.c,v 1.11 1999/09/27 11:00:45 philip Exp $
+ *            support functions for the NET-2 base distribution.
  */
 
 #include "config.h"

@@ -1,8 +1,6 @@
 /*
- * lib/arcnet.c       This file contains an implementation of the "ARCnet"
+ * lib/arcnet.c This file contains an implementation of the "ARCnet"
  *              support functions for the NET-2 base distribution.
- *
- * Version:     $Id: arcnet.c,v 1.6 2000/03/05 11:26:02 philip Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation

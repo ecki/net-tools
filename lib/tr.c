@@ -1,8 +1,6 @@
 /*
- * lib/tr.c   This file contains an implementation of the "Tokenring"
+ * lib/tr.c     This file contains an implementation of the "Tokenring"
  *              support functions.
- *
- * Version:     $Id: tr.c,v 1.9 2005/05/16 03:15:12 ecki Exp $
  *
  * Author:      Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
  *              Copyright 1993 MicroWalt Corporation

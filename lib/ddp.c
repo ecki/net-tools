@@ -1,10 +1,7 @@
 /*
  *              DDP protocol output functions.
- *              [Not yet input]
  *
  *                      Alan Cox  <Alan.Cox@linux.org>
- *
- *		$Id: ddp.c,v 1.6 1998/11/19 13:01:55 philip Exp $
  *
  *              This program is free software; you can redistribute it
  *              and/or  modify it under  the terms of  the GNU General

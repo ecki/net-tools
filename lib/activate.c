@@ -7,8 +7,6 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system. (net-tools, net-drivers)
  *
- * Version:     $Id: activate.c,v 1.3 1998/11/15 20:08:55 freitag Exp $
- *
  * Author:      Bernd 'eckes' Eckenfels <net-tools@lina.inka.de>
  *              Copyright 1996 Bernd Eckenfels, Germany
  *

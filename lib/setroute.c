@@ -7,8 +7,6 @@
  *              NET-3 Networking Distribution for the LINUX operating
  *              system. (net-tools, net-drivers)
  *
- * Version:     $Id: setroute.c,v 1.4 2000/05/20 13:38:10 pb Exp $
- *
  * Author:      Bernd 'eckes' Eckenfels <net-tools@lina.inka.de>
  *              Copyright 1999 Bernd Eckenfels, Germany
  *
