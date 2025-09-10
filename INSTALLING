@@ -25,6 +25,11 @@ Makefile. There are some configuration options with explanations.
 To configure the compilation use "make config".  The default answers should
 be safe for most configurations (bluetooth and selinux required).
 
+To accept all default answers, use
+
+  yes "" | make config
+
+
 
 COMPILE
 -------
@@ -36,7 +41,7 @@ There should be no warnings or errors.
 
 INSTALLATION
 ------------
-If you want to install the binaries use "make install".
+If you want to install the binaries use "make install" as root.
 
 To change the default permissions and ownerships of the installed binaries and
 manpages edit the Makefile. You can test the installation with "make -n install".

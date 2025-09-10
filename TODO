@@ -8,3 +8,4 @@ TODOs for net-tools
 [ ] fix netstat.c warning: ‘security_context_t’ is deprecated
 [ ] fix netstat.c snprintf warning (harmless/expected)
     output between 2 and 768 bytes into a destination of size 20
+[ ] configure.sh implement ${rest:+" $rest"} to avoid benerating trailing ws
