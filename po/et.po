@@ -497,7 +497,7 @@ msgstr "getdomainname()=`%s'\n"
 msgid "getnodename()=`%s'\n"
 msgstr "getnodename()=`%s'\n"
 
-#: ../ifconfig.c:105
+#: ../ifconfig.c:105 ../netstat.c:1952
 #, c-format
 msgid ""
 "Iface             MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR "
@@ -1145,15 +1145,6 @@ msgstr "Hoiatus - sain imeliku raw rea\n"
 #, c-format
 msgid "Kernel Interface table\n"
 msgstr "Tuuma liideste tabel\n"
-
-#: ../netstat.c:1952
-#, fuzzy, c-format
-msgid ""
-"Iface             MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP "
-"TX-OVR Flg\n"
-msgstr ""
-"Liides  MTU Meetr. RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR "
-"Lip\n"
 
 #: ../netstat.c:1956
 msgid "missing interface information"

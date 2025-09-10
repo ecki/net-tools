@@ -484,7 +484,7 @@ msgstr "getdomainname()=»%s«\n"
 msgid "getnodename()=`%s'\n"
 msgstr "getnodename()=»%s«\n"
 
-#: ../ifconfig.c:105
+#: ../ifconfig.c:105 ../netstat.c:1952
 #, c-format
 msgid ""
 "Iface             MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR "
@@ -1131,15 +1131,6 @@ msgstr "Warnung, fehlerhafte raw-Zeile.\n"
 #, c-format
 msgid "Kernel Interface table\n"
 msgstr "Kernel-Schnittstellentabelle\n"
-
-#: ../netstat.c:1952
-#, fuzzy, c-format
-msgid ""
-"Iface             MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP "
-"TX-OVR Flg\n"
-msgstr ""
-"SStelle MTU Met    RX-OK RX-Feh RX-DRP RX-Ülf    TX-OK TX-Feh TX-DRP TX-Üb "
-"Flg\n"
 
 #: ../netstat.c:1956
 msgid "missing interface information"

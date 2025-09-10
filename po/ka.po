@@ -505,7 +505,7 @@ msgstr "getdomainname()=`%s'\n"
 msgid "getnodename()=`%s'\n"
 msgstr "getnodename()=`%s'\n"
 
-#: ../ifconfig.c:105
+#: ../ifconfig.c:105 ../netstat.c:1952
 #, c-format
 msgid ""
 "Iface             MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR "
@@ -1163,15 +1163,6 @@ msgstr "გაფრთხილება. მივიღე ყალბი �
 #, c-format
 msgid "Kernel Interface table\n"
 msgstr "კერნელის ინტერფეისის ცხრილი\n"
-
-#: ../netstat.c:1952
-#, fuzzy, c-format
-msgid ""
-"Iface             MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP "
-"TX-OVR Flg\n"
-msgstr ""
-"იფეისი   MTU მეტ   RX-დიახ RX-შეცდ RX-გადაგდ RX-გადაწ    TX-დიახ TX-შეცდ TX-"
-"გადაგდ TX-გადაწ ალამ\n"
 
 #: ../netstat.c:1956
 msgid "missing interface information"

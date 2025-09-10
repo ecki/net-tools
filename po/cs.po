@@ -501,7 +501,7 @@ msgstr "getdomainname()=`%s'\n"
 msgid "getnodename()=`%s'\n"
 msgstr "getnodename()=`%s'\n"
 
-#: ../ifconfig.c:105
+#: ../ifconfig.c:105 ../netstat.c:1952
 #, fuzzy, c-format
 msgid ""
 "Iface             MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR "
@@ -1155,15 +1155,6 @@ msgstr "varování, nesmyslný 'raw' řádek.\n"
 #, c-format
 msgid "Kernel Interface table\n"
 msgstr "Tabulka rozhraní v jádru\n"
-
-#: ../netstat.c:1952
-#, fuzzy, c-format
-msgid ""
-"Iface             MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP "
-"TX-OVR Flg\n"
-msgstr ""
-"Rozhr   MTU Met  PŘ-OK PŘ-CHYB PŘ-ZAH PŘ-PŘT   OD-OK OD-CHYB OD-ZAH OD-PŘT "
-"Přízn\n"
 
 #: ../netstat.c:1956
 msgid "missing interface information"
