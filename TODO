@@ -1,9 +1,10 @@
 TODOs for net-tools
 
-[ ] update all translations! see the contents of the po directory and ABOUT-NLS
+[ ] update all translations! see the contents of po directory and ABOUT-NLS
 [ ] lib/netrom_rt.c rprint should not rewind _PATH_PROCNET_NR_NEIGH
 [ ] netstat -i: XOVR!=compressed
 [ ] Config file only works with bash not ash.
-[ ] Token ring is almost totally untested.
-[ ] review memory safety
-
+[ ] review memory safety (untrusted /proc files)
+[ ] fix netstat.c warning: ‘security_context_t’ is deprecated
+[ ] fix netstat.c snprintf warning (harmless/expected)
+    output between 2 and 768 bytes into a destination of size 20
