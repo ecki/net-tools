@@ -87,6 +87,7 @@ jobs:
     - if: matrix.build-mode == 'manual'
       shell: bash
       run: |
+        apt-get install -y libselinux1-dev libbluetooth-dev
         yes "" | make config || true
         make all
 
