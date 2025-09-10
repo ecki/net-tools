@@ -17,8 +17,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: install-dev
+      run: sudo apt-get install libbluetooth-dev libselinux1-dev gettext
+
     - name: configure
       run: yes "" | make config
 
     - name: compile
-      run: make all
+      run: make distcheck
