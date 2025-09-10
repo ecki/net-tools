@@ -8,7 +8,7 @@
 #		NET-3 Networking Distribution for the LINUX operating
 #		system.
 #
-# Version:	config.in 1.22	(99-04-19)
+# Version:	config.in 2025-09-10
 #
 # Author:	Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
 #		Copyright 1988-1993 MicroWalt Corporation
@@ -30,10 +30,10 @@
 =  *		NET-3 Networking Distribution for the LINUX operating
 =  *		system.
 =  *
-=  *		DO  NOT  EDIT  DIRECTLY
+=  * Based on:  config.in 2025-09-10
 =  *
+=  *		DO  NOT  EDIT  DIRECTLY
 =  */
-*
 *
 *              Internationalization
 *
@@ -70,7 +70,7 @@ bool 'SLIP (serial line) support' HAVE_HWSLIP y
 bool 'PPP (serial line) support' HAVE_HWPPP y
 bool 'IPIP Tunnel support' HAVE_HWTUNNEL y
 bool 'STRIP (Metricom radio) support' HAVE_HWSTRIP n
-bool 'Token ring (generic) support' HAVE_HWTR n
+bool 'Token ring (generic) support' HAVE_HWTR y
 bool 'AX25 (packet radio) support' HAVE_HWAX25 y
 bool 'Rose (packet radio) support' HAVE_HWROSE y
 bool 'NET/ROM (packet radio) support' HAVE_HWNETROM y
@@ -97,4 +97,4 @@ bool 'Build iptunnel and ipmaddr' HAVE_IP_TOOLS y
 bool 'Build mii-tool' HAVE_MII y
 bool 'Build plipconfig' HAVE_PLIP_TOOLS y
 bool 'Build slattach' HAVE_SERIAL_TOOLS y
-bool 'SELinux support' HAVE_SELINUX n
+bool 'SELinux support' HAVE_SELINUX y

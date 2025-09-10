@@ -18,7 +18,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <net/if_arp.h>
-#include <linux/if_tr.h>
+#include <netinet/if_tr.h> /* in linux/ 2.6 */
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
