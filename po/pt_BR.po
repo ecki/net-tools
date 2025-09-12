@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: net-tools 1.54\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-02 22:28+0200\n"
+"POT-Creation-Date: 2025-09-08 18:30+0200\n"
 "PO-Revision-Date: 1999-03-01 02:38+0100\n"
 "Last-Translator: Arnaldo Carvalho de Melo <acme@conectiva.com.br>\n"
 "MIME-Version: 1.0\n"
@@ -196,12 +196,12 @@ msgstr "        -s, --set                define uma nova entrada ARP\n"
 msgid "        -d, --delete             delete a specified entry\n"
 msgstr "        -d, --delete             remove a entrada especificada\n"
 
-#: ../arp.c:643 ../netstat.c:1992 ../route.c:88
+#: ../arp.c:643 ../netstat.c:1993 ../route.c:88
 #, c-format
 msgid "        -v, --verbose            be verbose\n"
 msgstr "        -v, --verbose           listagem detalhada\n"
 
-#: ../arp.c:644 ../netstat.c:1994 ../route.c:89
+#: ../arp.c:644 ../netstat.c:1995 ../route.c:89
 #, fuzzy, c-format
 msgid "        -n, --numeric            don't resolve names\n"
 msgstr "        -n, --numeric           não resolve nomes\n"
@@ -496,14 +496,14 @@ msgstr "getdomainname()=`%s'\n"
 msgid "getnodename()=`%s'\n"
 msgstr "getnodename()=`%s'\n"
 
-#: ../ifconfig.c:105 ../netstat.c:1952
+#: ../ifconfig.c:105 ../netstat.c:1953
 #, c-format
 msgid ""
-"Iface             MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR "
-"Flg\n"
+"Iface             MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP "
+"TX-OVR Flg\n"
 msgstr ""
-"Iface             MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR "
-"Opções\n"
+"Iface             MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP "
+"TX-OVR Opções\n"
 
 #: ../ifconfig.c:130 ../ifconfig.c:162
 #, fuzzy, c-format
@@ -757,7 +757,7 @@ msgstr "Não sei como configurar endereços para a família %d.\n"
 msgid "WARNING: at least one error occured. (%d)\n"
 msgstr ""
 
-#: ../netstat.c:496
+#: ../netstat.c:497
 #, c-format
 msgid ""
 "(No info could be read for \"-p\": geteuid()=%d but you should be root.)\n"
@@ -765,7 +765,7 @@ msgstr ""
 "(Não foi possível ler informações para \"-p\": geteuid()=%d mas você deve "
 "ser root.)\n"
 
-#: ../netstat.c:500
+#: ../netstat.c:501
 #, c-format
 msgid ""
 "(Not all processes could be identified, non-owned process info\n"
@@ -775,29 +775,29 @@ msgstr ""
 "processos\n"
 " de outrem não serão mostrados, você deve ser root para vê-los todos.)\n"
 
-#: ../netstat.c:507 ../netstat.c:561 ../netstat.c:1536 ../netstat.c:1617
+#: ../netstat.c:508 ../netstat.c:562 ../netstat.c:1537 ../netstat.c:1618
 msgid "LISTENING"
 msgstr "OUVINDO"
 
-#: ../netstat.c:508 ../netstat.c:562
+#: ../netstat.c:509 ../netstat.c:563
 msgid "CONN SENT"
 msgstr "CONN ENVIADO"
 
-#: ../netstat.c:509 ../netstat.c:563 ../netstat.c:1619
+#: ../netstat.c:510 ../netstat.c:564 ../netstat.c:1620
 msgid "DISC SENT"
 msgstr "DISC ENVIADO"
 
-#: ../netstat.c:510 ../netstat.c:564 ../netstat.c:627 ../netstat.c:1304
-#: ../netstat.c:1620
+#: ../netstat.c:511 ../netstat.c:565 ../netstat.c:628 ../netstat.c:1305
+#: ../netstat.c:1621
 msgid "ESTABLISHED"
 msgstr "ESTABELECIDA"
 
-#: ../netstat.c:532
+#: ../netstat.c:533
 #, c-format
 msgid "Active NET/ROM sockets\n"
 msgstr "Ative sockets NET/ROM\n"
 
-#: ../netstat.c:533
+#: ../netstat.c:534
 #, c-format
 msgid ""
 "User       Dest       Source     Device  State        Vr/Vs    Send-Q  Recv-"
@@ -805,222 +805,222 @@ msgid ""
 msgstr ""
 "Usuário    Destino    Origem  Dispositivo Estado      Vr/Vs  Send-Q  Recv-Q\n"
 
-#: ../netstat.c:544 ../netstat.c:596 ../netstat.c:1659
+#: ../netstat.c:545 ../netstat.c:597 ../netstat.c:1660
 #, c-format
 msgid "Problem reading data from %s\n"
 msgstr "Problemas lendo dados de %s\n"
 
-#: ../netstat.c:587
+#: ../netstat.c:588
 #, fuzzy, c-format
 msgid "Active ROSE sockets\n"
 msgstr "Ative sockets NET/ROM\n"
 
-#: ../netstat.c:588
+#: ../netstat.c:589
 #, c-format
 msgid "dest_addr   dest_call  src_addr    src_call  dev   lci neigh   state\n"
 msgstr ""
 
-#: ../netstat.c:628
+#: ../netstat.c:629
 msgid "SYN_SENT"
 msgstr "SYN_ENVIADO"
 
-#: ../netstat.c:629
+#: ../netstat.c:630
 msgid "SYN_RECV"
 msgstr "SYN_RECEBIDO"
 
-#: ../netstat.c:630
+#: ../netstat.c:631
 msgid "FIN_WAIT1"
 msgstr "ESPERA_FIN1"
 
-#: ../netstat.c:631
+#: ../netstat.c:632
 msgid "FIN_WAIT2"
 msgstr "ESPERA_FIN2"
 
-#: ../netstat.c:632
+#: ../netstat.c:633
 msgid "TIME_WAIT"
 msgstr "TIME_WAIT"
 
-#: ../netstat.c:633
+#: ../netstat.c:634
 msgid "CLOSE"
 msgstr "FECHAR"
 
-#: ../netstat.c:634
+#: ../netstat.c:635
 msgid "CLOSE_WAIT"
 msgstr "ESPERANDO_FECHAR"
 
-#: ../netstat.c:635
+#: ../netstat.c:636
 msgid "LAST_ACK"
 msgstr "ÚLTIMO_ACK"
 
-#: ../netstat.c:636 ../netstat.c:1837
+#: ../netstat.c:637 ../netstat.c:1838
 msgid "LISTEN"
 msgstr "OUÇA"
 
-#: ../netstat.c:637
+#: ../netstat.c:638
 msgid "CLOSING"
 msgstr "FECHANDO"
 
-#: ../netstat.c:711
+#: ../netstat.c:712
 #, c-format
 msgid "warning, got bogus igmp6 line %d.\n"
 msgstr "atenção, recebi linha igmp6 inválida %d.\n"
 
-#: ../netstat.c:716 ../netstat.c:757 ../netstat.c:1172 ../netstat.c:1298
-#: ../netstat.c:1409
+#: ../netstat.c:717 ../netstat.c:758 ../netstat.c:1173 ../netstat.c:1299
+#: ../netstat.c:1410
 #, c-format
 msgid "netstat: unsupported address family %d !\n"
 msgstr "netstat: família de protocolos %d não suportada!\n"
 
-#: ../netstat.c:729 ../netstat.c:734 ../netstat.c:746 ../netstat.c:752
+#: ../netstat.c:730 ../netstat.c:735 ../netstat.c:747 ../netstat.c:753
 #, c-format
 msgid "warning, got bogus igmp line %d.\n"
 msgstr "atenção, recebi linha igmp inválida %d.\n"
 
-#: ../netstat.c:795
+#: ../netstat.c:796
 #, fuzzy, c-format
 msgid "Active X.25 sockets\n"
 msgstr "Ativar sockets AX.25\n"
 
 #. IMHO, Vr/Vs is not very usefull --SF
-#: ../netstat.c:797
+#: ../netstat.c:798
 #, fuzzy, c-format
 msgid ""
 "Dest         Source          Device  LCI  State        Vr/Vs  Send-Q  Recv-"
 "Q\n"
 msgstr "Destino    Origem Dispositivo Estado       Vr/Vs  Send-Q  Recv-Q\n"
 
-#: ../netstat.c:898
+#: ../netstat.c:899
 #, fuzzy, c-format
 msgid "warning, got bogus sctp eps line.\n"
 msgstr "atenção, recebi linha tcp inválida.\n"
 
-#: ../netstat.c:919 ../netstat.c:1017 ../netstat.c:1029
+#: ../netstat.c:920 ../netstat.c:1018 ../netstat.c:1030
 #, fuzzy, c-format
 msgid "unsupported address family %d"
 msgstr "netstat: família de protocolos %d não suportada!\n"
 
-#: ../netstat.c:975
+#: ../netstat.c:976
 #, fuzzy, c-format
 msgid "warning, got bogus sctp assoc line.\n"
 msgstr "atenção, recebi linha tcp inválida.\n"
 
-#: ../netstat.c:1141
+#: ../netstat.c:1142
 #, c-format
 msgid "warning, got bogus tcp line.\n"
 msgstr "atenção, recebi linha tcp inválida.\n"
 
-#: ../netstat.c:1184 ../netstat.c:1325 ../netstat.c:1422
+#: ../netstat.c:1185 ../netstat.c:1326 ../netstat.c:1423
 #, c-format
 msgid "off (0.00/%ld/%d)"
 msgstr "desligado (0.00/%ld/%ld)"
 
-#: ../netstat.c:1188
+#: ../netstat.c:1189
 #, c-format
 msgid "on (%2.2f/%ld/%d)"
 msgstr "em (%2.2f/%ld/%d)"
 
-#: ../netstat.c:1193
+#: ../netstat.c:1194
 #, c-format
 msgid "keepalive (%2.2f/%ld/%d)"
 msgstr "keepalive (%2.2f/%ld/%d)"
 
-#: ../netstat.c:1198
+#: ../netstat.c:1199
 #, c-format
 msgid "timewait (%2.2f/%ld/%d)"
 msgstr "timewait (%2.2f/%ld/%d)"
 
-#: ../netstat.c:1203
+#: ../netstat.c:1204
 #, fuzzy, c-format
 msgid "probe (%2.2f/%ld/%d)"
 msgstr "em (%2.2f/%ld/%d)"
 
-#: ../netstat.c:1208 ../netstat.c:1334 ../netstat.c:1432
+#: ../netstat.c:1209 ../netstat.c:1335 ../netstat.c:1433
 #, c-format
 msgid "unkn-%d (%2.2f/%ld/%d)"
 msgstr "desconh.-%d (%2.2f/%ld)"
 
-#: ../netstat.c:1269
+#: ../netstat.c:1270
 #, c-format
 msgid "warning, got bogus udp line.\n"
 msgstr "atenção, recebi linha udp inválida.\n"
 
-#: ../netstat.c:1312 ../netstat.c:1522 ../netstat.c:1555 ../netstat.c:1849
-#: ../netstat.c:1893
+#: ../netstat.c:1313 ../netstat.c:1523 ../netstat.c:1556 ../netstat.c:1850
+#: ../netstat.c:1894
 msgid "UNKNOWN"
 msgstr "DESCONHECIDA"
 
-#: ../netstat.c:1330 ../netstat.c:1427
+#: ../netstat.c:1331 ../netstat.c:1428
 #, c-format
 msgid "on%d (%2.2f/%ld/%d)"
 msgstr "ligado %d (%2.2f/%ld)"
 
-#: ../netstat.c:1382
+#: ../netstat.c:1383
 #, c-format
 msgid "warning, got bogus raw line.\n"
 msgstr "atenção, recebi linha raw inválida.\n"
 
-#: ../netstat.c:1475
+#: ../netstat.c:1476
 #, c-format
 msgid "warning, got bogus unix line.\n"
 msgstr "atenção, recebi linha unix inválida.\n"
 
-#: ../netstat.c:1502
+#: ../netstat.c:1503
 msgid "STREAM"
 msgstr "STREAM"
 
-#: ../netstat.c:1506
+#: ../netstat.c:1507
 msgid "DGRAM"
 msgstr "DGRAM"
 
-#: ../netstat.c:1510
+#: ../netstat.c:1511
 msgid "RAW"
 msgstr "RAW"
 
-#: ../netstat.c:1514
+#: ../netstat.c:1515
 msgid "RDM"
 msgstr "RDM"
 
-#: ../netstat.c:1518
+#: ../netstat.c:1519
 msgid "SEQPACKET"
 msgstr "SEQPACKET"
 
-#: ../netstat.c:1527
+#: ../netstat.c:1528
 msgid "FREE"
 msgstr "LIVRE"
 
-#: ../netstat.c:1543
+#: ../netstat.c:1544
 msgid "CONNECTING"
 msgstr "CONECTANDO"
 
-#: ../netstat.c:1547 ../netstat.c:1831
+#: ../netstat.c:1548 ../netstat.c:1832
 msgid "CONNECTED"
 msgstr "CONECTADO"
 
-#: ../netstat.c:1551
+#: ../netstat.c:1552
 msgid "DISCONNECTING"
 msgstr "DESCONECTANDO"
 
-#: ../netstat.c:1585
+#: ../netstat.c:1586
 #, c-format
 msgid "Active UNIX domain sockets "
 msgstr "Domain sockets UNIX ativos "
 
-#: ../netstat.c:1587 ../netstat.c:2311 ../netstat.c:2457
+#: ../netstat.c:1588 ../netstat.c:2312 ../netstat.c:2458
 #, c-format
 msgid "(servers and established)"
 msgstr "(servidores e estabelecidas)"
 
-#: ../netstat.c:1590 ../netstat.c:2314 ../netstat.c:2460
+#: ../netstat.c:1591 ../netstat.c:2315 ../netstat.c:2461
 #, c-format
 msgid "(only servers)"
 msgstr "(sem os servidores)"
 
-#: ../netstat.c:1592 ../netstat.c:2316 ../netstat.c:2462
+#: ../netstat.c:1593 ../netstat.c:2317 ../netstat.c:2463
 #, c-format
 msgid "(w/o servers)"
 msgstr "(sem os servidores)"
 
-#: ../netstat.c:1595
+#: ../netstat.c:1596
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -1029,35 +1029,35 @@ msgstr ""
 "\n"
 "Proto CntRef Flags       Tipo       Estado        I-Node Rota"
 
-#: ../netstat.c:1598
+#: ../netstat.c:1599
 #, c-format
 msgid " Path\n"
 msgstr " Caminho\n"
 
-#: ../netstat.c:1618
+#: ../netstat.c:1619
 msgid "SABM SENT"
 msgstr "SABM ENVIADO"
 
-#: ../netstat.c:1621
+#: ../netstat.c:1622
 msgid "RECOVERY"
 msgstr "RECUPERAÇÃO"
 
-#: ../netstat.c:1635
+#: ../netstat.c:1636
 #, c-format
 msgid "Active AX.25 sockets\n"
 msgstr "Ativar sockets AX.25\n"
 
-#: ../netstat.c:1636
+#: ../netstat.c:1637
 #, c-format
 msgid "Dest       Source     Device  State        Vr/Vs    Send-Q  Recv-Q\n"
 msgstr "Destino    Origem Dispositivo Estado       Vr/Vs  Send-Q  Recv-Q\n"
 
-#: ../netstat.c:1679
+#: ../netstat.c:1680
 #, c-format
 msgid "problem reading data from %s\n"
 msgstr "problemas lendo dados de %s\n"
 
-#: ../netstat.c:1749
+#: ../netstat.c:1750
 #, c-format
 msgid ""
 "Active IPX sockets\n"
@@ -1068,87 +1068,87 @@ msgstr ""
 "Proto Recv-Q Send-Q Endereço Local             Endereço Remoto           "
 "Estado"
 
-#: ../netstat.c:1751
+#: ../netstat.c:1752
 #, c-format
 msgid " User"
 msgstr " Usuário"
 
-#: ../netstat.c:1787
+#: ../netstat.c:1788
 msgid "ESTAB"
 msgstr "ESTAB"
 
-#: ../netstat.c:1795
+#: ../netstat.c:1796
 msgid "UNK."
 msgstr "DESC."
 
-#: ../netstat.c:1833
+#: ../netstat.c:1834
 msgid "OPEN"
 msgstr ""
 
-#: ../netstat.c:1835
+#: ../netstat.c:1836
 msgid "BOUND"
 msgstr ""
 
-#: ../netstat.c:1839
+#: ../netstat.c:1840
 #, fuzzy
 msgid "CONNECT"
 msgstr "CONECTADO"
 
-#: ../netstat.c:1841
+#: ../netstat.c:1842
 #, fuzzy
 msgid "CONNECT2"
 msgstr "CONECTADO"
 
-#: ../netstat.c:1843
+#: ../netstat.c:1844
 msgid "CONFIG"
 msgstr ""
 
-#: ../netstat.c:1845
+#: ../netstat.c:1846
 #, fuzzy
 msgid "DISCONN"
 msgstr "DESCONECTANDO"
 
-#: ../netstat.c:1847
+#: ../netstat.c:1848
 #, fuzzy
 msgid "CLOSED"
 msgstr "FECHAR"
 
-#: ../netstat.c:1868
+#: ../netstat.c:1869
 #, fuzzy, c-format
 msgid "warning, got bogus l2cap line.\n"
 msgstr "atenção, recebi linha tcp inválida.\n"
 
-#: ../netstat.c:1881
+#: ../netstat.c:1882
 msgid "SDP"
 msgstr ""
 
-#: ../netstat.c:1884
+#: ../netstat.c:1885
 msgid "LOW"
 msgstr ""
 
-#: ../netstat.c:1887
+#: ../netstat.c:1888
 msgid "MEDIUM"
 msgstr ""
 
-#: ../netstat.c:1890
+#: ../netstat.c:1891
 msgid "HIGH"
 msgstr ""
 
-#: ../netstat.c:1918
+#: ../netstat.c:1919
 #, fuzzy, c-format
 msgid "warning, got bogus rfcomm line.\n"
 msgstr "atenção, recebi linha raw inválida.\n"
 
-#: ../netstat.c:1948
+#: ../netstat.c:1949
 #, c-format
 msgid "Kernel Interface table\n"
 msgstr "Tabela de Interfaces do Kernel\n"
 
-#: ../netstat.c:1956
+#: ../netstat.c:1957
 msgid "missing interface information"
 msgstr "falta informação da interface"
 
-#: ../netstat.c:1980
+#: ../netstat.c:1981
 #, fuzzy, c-format
 msgid ""
 "usage: netstat [-vWeenNcCF] [<Af>] -r         netstat {-V|--version|-h|--"
@@ -1156,42 +1156,42 @@ msgid ""
 msgstr ""
 "uso: netstat [-veenNcCF] [<Af>] -r         netstat {-V|--version|-h|--help}\n"
 
-#: ../netstat.c:1981
+#: ../netstat.c:1982
 #, fuzzy, c-format
 msgid "       netstat [-vWnNcaeol] [<Socket> ...]\n"
 msgstr "     netstat [-vnNcaeo] [<Socket>]\n"
 
-#: ../netstat.c:1982
+#: ../netstat.c:1983
 #, fuzzy, c-format
 msgid ""
 "       netstat { [-vWeenNac] -i | [-cnNe] -M | -s [-6tuw] }\n"
 "\n"
 msgstr "     netstat [-vnNcaeo] [<Socket>]\n"
 
-#: ../netstat.c:1984
+#: ../netstat.c:1985
 #, c-format
 msgid "        -r, --route              display routing table\n"
 msgstr "        -r, --route             mostra tabela de roteamento\n"
 
-#: ../netstat.c:1985
+#: ../netstat.c:1986
 #, c-format
 msgid "        -i, --interfaces         display interface table\n"
 msgstr "        -i, --interfaces        mostra tabela de interfaces\n"
 
-#: ../netstat.c:1986
+#: ../netstat.c:1987
 #, c-format
 msgid "        -g, --groups             display multicast group memberships\n"
 msgstr ""
 "        -o, --timers            mostra temporizadores\n"
 "\n"
 
-#: ../netstat.c:1987
+#: ../netstat.c:1988
 #, c-format
 msgid ""
 "        -s, --statistics         display networking statistics (like SNMP)\n"
 msgstr "        -i, --interfaces        mostra tabela de interfaces\n"
 
-#: ../netstat.c:1989
+#: ../netstat.c:1990
 #, c-format
 msgid ""
 "        -M, --masquerade         display masqueraded connections\n"
@@ -1200,49 +1200,49 @@ msgstr ""
 "        -M, --masquerade        mostra conexões mascaradas\n"
 "\n"
 
-#: ../netstat.c:1993
+#: ../netstat.c:1994
 #, fuzzy, c-format
 msgid "        -W, --wide               don't truncate IP addresses\n"
 msgstr "        -n, --numeric           não resolve nomes\n"
 
-#: ../netstat.c:1995
+#: ../netstat.c:1996
 #, fuzzy, c-format
 msgid "        --numeric-hosts          don't resolve host names\n"
 msgstr "        -n, --numeric           não resolve nomes\n"
 
-#: ../netstat.c:1996
+#: ../netstat.c:1997
 #, fuzzy, c-format
 msgid "        --numeric-ports          don't resolve port names\n"
 msgstr "        -n, --numeric           não resolve nomes\n"
 
-#: ../netstat.c:1997
+#: ../netstat.c:1998
 #, fuzzy, c-format
 msgid "        --numeric-users          don't resolve user names\n"
 msgstr "        -n, --numeric           não resolve nomes\n"
 
-#: ../netstat.c:1998
+#: ../netstat.c:1999
 #, c-format
 msgid "        -N, --symbolic           resolve hardware names\n"
 msgstr "        -n, --numeric           não resolve nomes\n"
 
-#: ../netstat.c:1999 ../route.c:90
+#: ../netstat.c:2000 ../route.c:90
 #, c-format
 msgid "        -e, --extend             display other/more information\n"
 msgstr "        -e, --extend             mostra outras/mais informações\n"
 
-#: ../netstat.c:2000
+#: ../netstat.c:2001
 #, c-format
 msgid "        -p, --programs           display PID/Program name for sockets\n"
 msgstr "        -r, --route             mostra tabela de roteamento\n"
 
-#: ../netstat.c:2001
+#: ../netstat.c:2002
 #, c-format
 msgid "        -o, --timers             display timers\n"
 msgstr ""
 "        -o, --timers            mostra temporizadores\n"
 "\n"
 
-#: ../netstat.c:2002
+#: ../netstat.c:2003
 #, c-format
 msgid ""
 "        -c, --continuous         continuous listing\n"
@@ -1251,18 +1251,18 @@ msgstr ""
 "        -c, --continuous        listagem contínua\n"
 "\n"
 
-#: ../netstat.c:2003
+#: ../netstat.c:2004
 #, c-format
 msgid "        -l, --listening          display listening server sockets\n"
 msgstr "        -L, --netlink           mostra mensagens netlink do kernel\n"
 
-#: ../netstat.c:2004
+#: ../netstat.c:2005
 #, fuzzy, c-format
 msgid ""
 "        -a, --all                display all sockets (default: connected)\n"
 msgstr "        -a, --all, --listening  mostra tudo\n"
 
-#: ../netstat.c:2005 ../route.c:91
+#: ../netstat.c:2006 ../route.c:91
 #, c-format
 msgid ""
 "        -F, --fib                display Forwarding Information Base "
@@ -1271,21 +1271,21 @@ msgstr ""
 "        -F, --fib             mostra a Base de Informações de Repasse "
 "(default)\n"
 
-#: ../netstat.c:2006
+#: ../netstat.c:2007
 #, fuzzy, c-format
 msgid "        -C, --cache              display routing cache instead of FIB\n"
 msgstr ""
 "        -C, --cache              mostra cache de roteamento no lugar da FIB\n"
 "\n"
 
-#: ../netstat.c:2008
+#: ../netstat.c:2009
 #, fuzzy, c-format
 msgid ""
 "        -Z, --context            display SELinux security context for "
 "sockets\n"
 msgstr "        -L, --netlink           mostra mensagens netlink do kernel\n"
 
-#: ../netstat.c:2011
+#: ../netstat.c:2012
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -1294,45 +1294,45 @@ msgstr ""
 "  <Socket>={-t|--tcp} {-u|--udp} {-w|--raw} {-x|--unix} --ax25 --ipx --"
 "netrom\n"
 
-#: ../netstat.c:2012
+#: ../netstat.c:2013
 #, fuzzy, c-format
 msgid "           {-x|--unix} --ax25 --ipx --netrom\n"
 msgstr ""
 "  <Socket>={-t|--tcp} {-u|--udp} {-w|--raw} {-x|--unix} --ax25 --ipx --"
 "netrom\n"
 
-#: ../netstat.c:2013
+#: ../netstat.c:2014
 #, fuzzy, c-format
 msgid "  <AF>=Use '-6|-4' or '-A <af>' or '--<af>'; default: %s\n"
 msgstr "  <AF>=Use '-A <af>' ou [--<af>' Default: %s\n"
 
-#: ../netstat.c:2014 ../route.c:95
+#: ../netstat.c:2015 ../route.c:95
 #, c-format
 msgid "  List of possible address families (which support routing):\n"
 msgstr ""
 "  Lista das famílias de endereços possíveis (que suportam roteamento):\n"
 
-#: ../netstat.c:2190
+#: ../netstat.c:2191
 #, c-format
 msgid "SELinux is not enabled on this machine.\n"
 msgstr ""
 
-#: ../netstat.c:2196
+#: ../netstat.c:2197
 #, c-format
 msgid "SELinux is not enabled for this application.\n"
 msgstr ""
 
-#: ../netstat.c:2266
+#: ../netstat.c:2267
 #, fuzzy, c-format
 msgid "netstat: No statistics support for specified address family: %s\n"
 msgstr "netstat: família de protocolos %d não suportada!\n"
 
-#: ../netstat.c:2308
+#: ../netstat.c:2309
 #, c-format
 msgid "Active Internet connections "
 msgstr "Conexões Internet Ativas "
 
-#: ../netstat.c:2318
+#: ../netstat.c:2319
 #, c-format
 msgid ""
 "\n"
@@ -1343,27 +1343,27 @@ msgstr ""
 "Proto Recv-Q Send-Q Endereço Local          Endereço Remoto         "
 "Estado     "
 
-#: ../netstat.c:2320
+#: ../netstat.c:2321
 #, c-format
 msgid " User       Inode     "
 msgstr " Usuário   "
 
-#: ../netstat.c:2324
+#: ../netstat.c:2325
 #, c-format
 msgid " Timer"
 msgstr " Temporizador"
 
-#: ../netstat.c:2368
+#: ../netstat.c:2369
 #, c-format
 msgid "IPv4 Group Memberships\n"
 msgstr "IPv4 Group Memberships\n"
 
-#: ../netstat.c:2369
+#: ../netstat.c:2370
 #, c-format
 msgid "Interface       RefCnt Group\n"
 msgstr "Interface       CntRef Grupo\n"
 
-#: ../netstat.c:2454
+#: ../netstat.c:2455
 #, fuzzy, c-format
 msgid "Active Bluetooth connections "
 msgstr "Conexões Internet Ativas "
@@ -2510,302 +2510,306 @@ msgstr "erro lendo /proc/net/snmp"
 msgid "cannot open /proc/net/snmp6"
 msgstr "não foi possível abrir /proc/net/snmp"
 
-#: ../lib/activate.c:69
+#: ../lib/activate.c:63
 #, c-format
 msgid "Hardware type `%s' not supported.\n"
 msgstr "O tipo de hardware `%s' não é suportado.\n"
 
-#: ../lib/activate.c:73
+#: ../lib/activate.c:67
 #, c-format
 msgid "Cannot change line discipline to `%s'.\n"
 msgstr "Não foi possível mudar a disciplina da linha para `%s'.\n"
 
-#: ../lib/af.c:161 ../lib/hw.c:166
+#: ../lib/af.c:159 ../lib/hw.c:164
 msgid "UNSPEC"
 msgstr "Não Especificado"
 
-#: ../lib/af.c:163
+#: ../lib/af.c:161
 msgid "UNIX Domain"
 msgstr "UNIX Domain"
 
-#: ../lib/af.c:166
+#: ../lib/af.c:164
 msgid "DARPA Internet"
 msgstr "DARPA Internet"
 
-#: ../lib/af.c:169
+#: ../lib/af.c:167
 msgid "IPv6"
 msgstr "IPv6"
 
-#: ../lib/af.c:172 ../lib/hw.c:187
+#: ../lib/af.c:170 ../lib/hw.c:188
 msgid "AMPR AX.25"
 msgstr "AX.25 AMPR"
 
-#: ../lib/af.c:175 ../lib/hw.c:193
+#: ../lib/af.c:173 ../lib/hw.c:194
 msgid "AMPR NET/ROM"
 msgstr "NET/ROM AMPR"
 
-#: ../lib/af.c:178
+#: ../lib/af.c:176
 msgid "Novell IPX"
 msgstr "Novell IPX"
 
-#: ../lib/af.c:181
+#: ../lib/af.c:179
 msgid "Appletalk DDP"
 msgstr "Appletalk DDP"
 
-#: ../lib/af.c:184 ../lib/hw.c:228
+#: ../lib/af.c:182 ../lib/hw.c:229
 msgid "Econet"
 msgstr "Econet"
 
-#: ../lib/af.c:187
+#: ../lib/af.c:185
 msgid "CCITT X.25"
 msgstr ""
 
-#: ../lib/af.c:190 ../lib/hw.c:190
+#: ../lib/af.c:188 ../lib/hw.c:191
 msgid "AMPR ROSE"
 msgstr "AMPR ROSE"
 
-#: ../lib/af.c:193 ../lib/hw.c:178
+#: ../lib/af.c:191 ../lib/hw.c:179
 msgid "Ash"
 msgstr "Ash"
 
-#: ../lib/af.c:250
+#: ../lib/af.c:248
 #, c-format
 msgid "Please don't supply more than one address family.\n"
 msgstr "Por favor não especifique mais que uma família de endereços.\n"
 
-#: ../lib/af.c:300
+#: ../lib/af.c:298
 #, c-format
 msgid "Too much address family arguments.\n"
 msgstr "Excesso no número de famílias de endereços.\n"
 
-#: ../lib/af.c:311
+#: ../lib/af.c:309
 #, c-format
 msgid "Unknown address family `%s'.\n"
 msgstr "Família de endereços `%s' desconhecida.\n"
 
-#: ../lib/arcnet.c:76 ../lib/arcnet.c:90
+#: ../lib/arcnet.c:74 ../lib/arcnet.c:88
 #, c-format
 msgid "in_arcnet(%s): invalid arcnet address!\n"
 msgstr "in_arcnet(%s): endereço arcnet inválido!\n"
 
-#: ../lib/arcnet.c:100
+#: ../lib/arcnet.c:98
 #, c-format
 msgid "in_arcnet(%s): trailing : ignored!\n"
 msgstr "in_arcnet(%s): trailing : ignorado!\n"
 
-#: ../lib/arcnet.c:108
+#: ../lib/arcnet.c:106
 #, c-format
 msgid "in_arcnet(%s): trailing junk!\n"
 msgstr "in_arcnet(%s): lixo no trailing!\n"
 
-#: ../lib/ash.c:82
+#: ../lib/ash.c:86
 #, c-format
 msgid "Malformed Ash address"
 msgstr "Endereço Ash mal formado"
 
-#: ../lib/ax25.c:82 ../lib/ddp.c:51 ../lib/econet.c:52 ../lib/inet.c:259
-#: ../lib/inet.c:273 ../lib/inet6.c:145 ../lib/ipx.c:82 ../lib/netrom.c:86
-#: ../lib/rose.c:75 ../lib/unix.c:57 ../lib/unix.c:78
+#: ../lib/ax25.c:75 ../lib/ddp.c:49 ../lib/econet.c:47 ../lib/inet.c:256
+#: ../lib/inet.c:270 ../lib/inet6.c:142 ../lib/ipx.c:83 ../lib/netrom.c:79
+#: ../lib/rose.c:73 ../lib/unix.c:55 ../lib/unix.c:76
 msgid "[NONE SET]"
 msgstr "[Nenhum configurado]"
 
-#: ../lib/ax25.c:110 ../lib/netrom.c:115
+#: ../lib/ax25.c:103 ../lib/netrom.c:108
 msgid "Invalid callsign"
 msgstr "Callsign inválido"
 
-#: ../lib/ax25.c:122 ../lib/netrom.c:127
+#: ../lib/ax25.c:115 ../lib/netrom.c:120
 msgid "Callsign too long"
 msgstr "Callsign muito longo"
 
-#: ../lib/ax25_gr.c:47
+#: ../lib/ax25_gr.c:45
 #, c-format
 msgid "AX.25 not configured in this system.\n"
 msgstr "O AX.25 não foi configurado neste sistema.\n"
 
-#: ../lib/ax25_gr.c:50
+#: ../lib/ax25_gr.c:48
 #, c-format
 msgid "Kernel AX.25 routing table\n"
 msgstr "Tabela de roteamento AX.25 do kernel\n"
 
 #. xxx
-#: ../lib/ax25_gr.c:51
+#: ../lib/ax25_gr.c:49
 #, c-format
 msgid "Destination  Iface    Use\n"
 msgstr "Destino      Iface    Uso\n"
 
-#: ../lib/ether.c:80 ../lib/ether.c:96
+#: ../lib/ether.c:78 ../lib/ether.c:94
 #, c-format
 msgid "in_ether(%s): invalid ether address!\n"
 msgstr "in_ether(%s): endereco ether inválido!\n"
 
-#: ../lib/ether.c:108
+#: ../lib/ether.c:106
 #, c-format
 msgid "in_ether(%s): trailing : ignored!\n"
 msgstr "in_ether(%s): trailing : ignorado!\n"
 
-#: ../lib/ether.c:116
+#: ../lib/ether.c:114
 #, c-format
 msgid "in_ether(%s): trailing junk!\n"
 msgstr "in_ether(%s): lixo no trailing!\n"
 
-#: ../lib/fddi.c:90 ../lib/fddi.c:104
+#: ../lib/fddi.c:88 ../lib/fddi.c:102
 #, c-format
 msgid "in_fddi(%s): invalid fddi address!\n"
 msgstr "in_fddi(%S): endereço fddi inválido!\n"
 
-#: ../lib/fddi.c:114
+#: ../lib/fddi.c:112
 #, c-format
 msgid "in_fddi(%s): trailing : ignored!\n"
 msgstr "in_fddi(%s): trailing : ignorado!\n"
 
-#: ../lib/fddi.c:122
+#: ../lib/fddi.c:120
 #, c-format
 msgid "in_fddi(%s): trailing junk!\n"
 msgstr "in_fddi(%s): lixo no trailing!\n"
 
-#: ../lib/getroute.c:105 ../lib/setroute.c:80
+#: ../lib/getroute.c:98 ../lib/setroute.c:73
 #, c-format
 msgid "Address family `%s' not supported.\n"
 msgstr "Família de endereços `%s' não suportada.\n"
 
-#: ../lib/getroute.c:111 ../lib/setroute.c:84
+#: ../lib/getroute.c:104 ../lib/setroute.c:77
 #, c-format
 msgid "No routing for address family `%s'.\n"
 msgstr "Nenhum roteamento para a família `%s'\n"
 
-#: ../lib/hippi.c:90 ../lib/hippi.c:104
+#: ../lib/hippi.c:88 ../lib/hippi.c:102
 #, c-format
 msgid "in_hippi(%s): invalid hippi address!\n"
 msgstr "in_fddi(%S): endereço fddi inválido!\n"
 
-#: ../lib/hippi.c:114
+#: ../lib/hippi.c:112
 #, c-format
 msgid "in_hippi(%s): trailing : ignored!\n"
 msgstr "in_fddi(%s): trailing : ignorado!\n"
 
-#: ../lib/hippi.c:121
+#: ../lib/hippi.c:119
 #, c-format
 msgid "in_hippi(%s): trailing junk!\n"
 msgstr "in_fddi(%s): lixo no trailing!\n"
 
-#: ../lib/hw.c:165
+#: ../lib/hw.c:163
 msgid "Local Loopback"
 msgstr "Loopback Local"
 
-#: ../lib/hw.c:168
+#: ../lib/hw.c:166
 msgid "Serial Line IP"
 msgstr "SLIP"
 
-#: ../lib/hw.c:169
+#: ../lib/hw.c:167
 msgid "VJ Serial Line IP"
 msgstr "SLIP VJ"
 
-#: ../lib/hw.c:170
+#: ../lib/hw.c:168
 msgid "6-bit Serial Line IP"
 msgstr "SLIP 6 bits"
 
-#: ../lib/hw.c:171
+#: ../lib/hw.c:169
 msgid "VJ 6-bit Serial Line IP"
 msgstr "SLIP VJ 6 bits"
 
-#: ../lib/hw.c:172
+#: ../lib/hw.c:170
 msgid "Adaptive Serial Line IP"
 msgstr "SLIP Adaptativo"
 
-#: ../lib/hw.c:175
+#: ../lib/hw.c:173
+msgid "Metricom Starmode IP"
+msgstr ""
+
+#: ../lib/hw.c:176
 msgid "Ethernet"
 msgstr "Ethernet"
 
-#: ../lib/hw.c:181
+#: ../lib/hw.c:182
 msgid "Fiber Distributed Data Interface"
 msgstr "FDDI - Fibra Ótica"
 
-#: ../lib/hw.c:184
+#: ../lib/hw.c:185
 msgid "HIPPI"
 msgstr "HIPPI"
 
-#: ../lib/hw.c:196
+#: ../lib/hw.c:197
 msgid "generic X.25"
 msgstr ""
 
-#: ../lib/hw.c:199
+#: ../lib/hw.c:200
 msgid "IPIP Tunnel"
 msgstr "Túnel IPIP"
 
-#: ../lib/hw.c:202
+#: ../lib/hw.c:203
 msgid "Point-to-Point Protocol"
 msgstr "Protocolo Ponto-a-Ponto"
 
-#: ../lib/hw.c:205
+#: ../lib/hw.c:206
 msgid "(Cisco)-HDLC"
 msgstr "(Cisco)-HDLC"
 
-#: ../lib/hw.c:206
+#: ../lib/hw.c:207
 msgid "LAPB"
 msgstr "LAPB"
 
-#: ../lib/hw.c:209
+#: ../lib/hw.c:210
 msgid "ARCnet"
 msgstr "ARCnet"
 
-#: ../lib/hw.c:212
+#: ../lib/hw.c:213
 msgid "Frame Relay DLCI"
 msgstr "Frame Relay DLCI"
 
-#: ../lib/hw.c:213
+#: ../lib/hw.c:214
 msgid "Frame Relay Access Device"
 msgstr "FRAD - Dispositivo de Acesso a Frame Relay"
 
-#: ../lib/hw.c:216
+#: ../lib/hw.c:217
 msgid "IPv6-in-IPv4"
 msgstr "IPv6 sobre IPv4"
 
-#: ../lib/hw.c:219
+#: ../lib/hw.c:220
 msgid "IrLAP"
 msgstr "IrLAP"
 
-#: ../lib/hw.c:222
+#: ../lib/hw.c:223
 msgid "16/4 Mbps Token Ring"
 msgstr "16/4 Mbps Token Ring"
 
-#: ../lib/hw.c:224
+#: ../lib/hw.c:225
 msgid "16/4 Mbps Token Ring (New)"
 msgstr "16/4 Mbps Token Ring (Novo)"
 
-#: ../lib/hw.c:231
+#: ../lib/hw.c:232
 msgid "InfiniBand"
 msgstr ""
 
-#: ../lib/hw.c:234
+#: ../lib/hw.c:235
 msgid "Generic EUI-64"
 msgstr ""
 
-#: ../lib/inet.c:155 ../lib/inet6.c:94
+#: ../lib/inet.c:152 ../lib/inet6.c:91
 #, c-format
 msgid "rresolve: unsupport address family %d !\n"
 msgstr "rresolve: família de endereços %d não suportada!\n"
 
-#: ../lib/inet6.c:147
+#: ../lib/inet6.c:144
 #, fuzzy
 msgid "[UNKNOWN]"
 msgstr "DESCONHECIDA"
 
-#: ../lib/inet6_gr.c:69
+#: ../lib/inet6_gr.c:75
 #, c-format
 msgid "INET6 (IPv6) not configured in this system.\n"
 msgstr "NET/ROM não configurado neste sistema.\n"
 
-#: ../lib/inet6_gr.c:74
+#: ../lib/inet6_gr.c:80
 #, fuzzy, c-format
 msgid "Kernel IPv6 routing cache\n"
 msgstr "Tabela de Roteamento IP do Kernel\n"
 
-#: ../lib/inet6_gr.c:76
+#: ../lib/inet6_gr.c:82
 #, c-format
 msgid "Kernel IPv6 routing table\n"
 msgstr "Tabela de Roteamento IPv6 do Kernel\n"
 
-#: ../lib/inet6_gr.c:78
+#: ../lib/inet6_gr.c:84
 #, fuzzy, c-format
 msgid ""
 "Destination                    Next Hop                   Flag Met Ref  Use "
@@ -2814,12 +2818,12 @@ msgstr ""
 "Destino                                     Próximo "
 "\"Hop\"                          Opções Métrica Ref   Uso Iface\n"
 
-#: ../lib/inet6_gr.c:171
+#: ../lib/inet6_gr.c:177
 #, c-format
 msgid "Kernel IPv6 Neighbour Cache\n"
 msgstr "Cache de Vizinhos IPv6 do Kernel\n"
 
-#: ../lib/inet6_gr.c:174
+#: ../lib/inet6_gr.c:180
 #, c-format
 msgid ""
 "Neighbour                                   HW Address        Iface    Flags "
@@ -2828,7 +2832,7 @@ msgstr ""
 "Vizinho                                     Endereço HW       Iface   Opções "
 "Estado Ref\n"
 
-#: ../lib/inet6_gr.c:178
+#: ../lib/inet6_gr.c:184
 #, c-format
 msgid ""
 "Neighbour                                   HW Address        Iface    Flags "
@@ -2838,37 +2842,37 @@ msgstr ""
 "Estado Ref\n"
 "       Parado(seg) Remover(seg)\n"
 
-#: ../lib/inet6_sr.c:48
+#: ../lib/inet6_sr.c:50
 #, c-format
 msgid "Usage: inet6_route [-vF] del Target\n"
 msgstr "Uso: inet6_route [-vF] del Destino\n"
 
-#: ../lib/inet6_sr.c:49
+#: ../lib/inet6_sr.c:51
 #, c-format
 msgid "       inet6_route [-vF] add Target [gw Gw] [metric M] [[dev] If]\n"
 msgstr "       inet6_route [-vF] add Destino [gw Gw] [metric M] [[dev] If]\n"
 
-#: ../lib/inet6_sr.c:50
+#: ../lib/inet6_sr.c:52
 #, c-format
 msgid "       inet6_route [-FC] flush      NOT supported\n"
 msgstr "       inet6_route [-FC] flush      NÃO suportado\n"
 
-#: ../lib/inet6_sr.c:190
+#: ../lib/inet6_sr.c:192
 #, c-format
 msgid "Flushing `inet6' routing table not supported\n"
 msgstr "Limpeza da tabela de roteamento `inet6' não é suportada\n"
 
-#: ../lib/inet_gr.c:52 ../lib/inet_gr.c:223
+#: ../lib/inet_gr.c:58 ../lib/inet_gr.c:229
 #, c-format
 msgid "INET (IPv4) not configured in this system.\n"
 msgstr "NET/ROM não configurado neste sistema.\n"
 
-#: ../lib/inet_gr.c:55
+#: ../lib/inet_gr.c:61
 #, c-format
 msgid "Kernel IP routing table\n"
 msgstr "Tabela de Roteamento IP do Kernel\n"
 
-#: ../lib/inet_gr.c:58
+#: ../lib/inet_gr.c:64
 #, c-format
 msgid ""
 "Destination     Gateway         Genmask         Flags Metric Ref    Use "
@@ -2877,7 +2881,7 @@ msgstr ""
 "Destino         Roteador        MáscaraGen.    Opções Métrica Ref   Uso "
 "Iface\n"
 
-#: ../lib/inet_gr.c:61
+#: ../lib/inet_gr.c:67
 #, c-format
 msgid ""
 "Destination     Gateway         Genmask         Flags   MSS Window  irtt "
@@ -2886,7 +2890,7 @@ msgstr ""
 "Destino         Roteador        MáscaraGen.    Opções   MSS Janela  irtt "
 "Iface\n"
 
-#: ../lib/inet_gr.c:64
+#: ../lib/inet_gr.c:70
 #, c-format
 msgid ""
 "Destination     Gateway         Genmask         Flags Metric Ref    Use "
@@ -2895,12 +2899,12 @@ msgstr ""
 "Destino         Roteador        MáscaraGen     Opções Métrica Ref   Uso "
 "Iface    MSS   Janela irtt\n"
 
-#: ../lib/inet_gr.c:240
+#: ../lib/inet_gr.c:246
 #, c-format
 msgid "Kernel IP routing cache\n"
 msgstr "Tabela de Roteamento IP do Kernel\n"
 
-#: ../lib/inet_gr.c:261
+#: ../lib/inet_gr.c:267
 #, c-format
 msgid ""
 "Source          Destination     Gateway         Flags Metric Ref    Use "
@@ -2909,7 +2913,7 @@ msgstr ""
 "Destino         Roteador        MáscaraGen.    Opções Métrica Ref   Uso "
 "Iface\n"
 
-#: ../lib/inet_gr.c:264
+#: ../lib/inet_gr.c:270
 #, c-format
 msgid ""
 "Source          Destination     Gateway         Flags   MSS Window  irtt "
@@ -2918,7 +2922,7 @@ msgstr ""
 "Destino         Roteador        MáscaraGen.    Opções   MSS Janela  irtt "
 "Iface\n"
 
-#: ../lib/inet_gr.c:269
+#: ../lib/inet_gr.c:275
 #, c-format
 msgid ""
 "Source          Destination     Gateway         Flags Metric Ref    Use "
@@ -2927,7 +2931,7 @@ msgstr ""
 "Destino         Roteador        Origem         Opções Métrica Ref   Uso "
 "Iface    MSS   Janela irtt   HH  Arp\n"
 
-#: ../lib/inet_gr.c:293
+#: ../lib/inet_gr.c:299
 #, c-format
 msgid ""
 "Source          Destination     Gateway         Flags Metric Ref    Use "
@@ -2936,7 +2940,7 @@ msgstr ""
 "Destino         Roteador        Origem         Opções Métrica Ref   Uso "
 "Iface    MSS   Janela irtt   HH  Arp\n"
 
-#: ../lib/inet_sr.c:54
+#: ../lib/inet_sr.c:55
 #, c-format
 msgid ""
 "Usage: inet_route [-vF] del {-host|-net} Target[/prefix] [gw Gw] [metric M] "
@@ -2945,7 +2949,7 @@ msgstr ""
 "Uso: inet_route [-vF] del {-host|-net} Destino[/prefixo] [gw Gw] [metric M] "
 "[[dev] If]\n"
 
-#: ../lib/inet_sr.c:55
+#: ../lib/inet_sr.c:56
 #, c-format
 msgid ""
 "       inet_route [-vF] add {-host|-net} Target[/prefix] [gw Gw] [metric M]\n"
@@ -2953,19 +2957,19 @@ msgstr ""
 "       inet_route [-vF] add {-host|-net} Destino[/prefixo] [gw Gw] [metric "
 "M]\n"
 
-#: ../lib/inet_sr.c:56
+#: ../lib/inet_sr.c:57
 #, c-format
 msgid ""
 "                              [netmask N] [mss Mss] [window W] [irtt I]\n"
 msgstr ""
 "                              [netmask N] [mss Mss] [window W] [irtt I]\n"
 
-#: ../lib/inet_sr.c:57
+#: ../lib/inet_sr.c:58
 #, c-format
 msgid "                              [mod] [dyn] [reinstate] [[dev] If]\n"
 msgstr "                              [mod] [dyn] [reinstate] [[dev] If]\n"
 
-#: ../lib/inet_sr.c:58
+#: ../lib/inet_sr.c:59
 #, c-format
 msgid ""
 "       inet_route [-vF] add {-host|-net} Target[/prefix] [metric M] reject\n"
@@ -2973,88 +2977,88 @@ msgstr ""
 "       inet_route [-vF] add {-host|-net} Destino[/prefixo] [metric M] "
 "reject\n"
 
-#: ../lib/inet_sr.c:59
+#: ../lib/inet_sr.c:60
 #, c-format
 msgid "       inet_route [-FC] flush      NOT supported\n"
 msgstr "       inet_route [-FC] flush      NÃO suportado\n"
 
-#: ../lib/inet_sr.c:168
+#: ../lib/inet_sr.c:169
 #, c-format
 msgid "route: %s: cannot use a NETWORK as gateway!\n"
 msgstr "route: %s: não é possível usar uma REDE como roteador!\n"
 
-#: ../lib/inet_sr.c:184
+#: ../lib/inet_sr.c:185
 #, c-format
 msgid "route: Invalid MSS/MTU.\n"
 msgstr "route: MSS inválido.\n"
 
-#: ../lib/inet_sr.c:197
+#: ../lib/inet_sr.c:198
 #, c-format
 msgid "route: Invalid window.\n"
 msgstr "route: janela inválida.\n"
 
-#: ../lib/inet_sr.c:213
+#: ../lib/inet_sr.c:214
 #, c-format
 msgid "route: Invalid initial rtt.\n"
 msgstr "route: rtt inicial inválido.\n"
 
-#: ../lib/inet_sr.c:271
+#: ../lib/inet_sr.c:272
 #, c-format
 msgid "route: netmask %.8x doesn't make sense with host route\n"
 msgstr "route: a máscara %.8x não faz sentido em rotas para máquinas\n"
 
-#: ../lib/inet_sr.c:275
+#: ../lib/inet_sr.c:276
 #, c-format
 msgid "route: bogus netmask %s\n"
 msgstr "route: netmask %s inválida\n"
 
-#: ../lib/inet_sr.c:280
+#: ../lib/inet_sr.c:281
 #, c-format
 msgid "route: netmask doesn't match route address\n"
 msgstr "route: a netmask não casa com o endereço de rede\n"
 
-#: ../lib/inet_sr.c:316
+#: ../lib/inet_sr.c:317
 #, c-format
 msgid "Flushing `inet' routing table not supported\n"
 msgstr "Não é suportado limpar a tabela de roteamento `inet'\n"
 
-#: ../lib/inet_sr.c:320
+#: ../lib/inet_sr.c:321
 #, c-format
 msgid "Modifying `inet' routing cache not supported\n"
 msgstr "Não é suportado modificar o cache de roteamento `inet'\n"
 
-#: ../lib/ipx_gr.c:54
+#: ../lib/ipx_gr.c:60
 #, c-format
 msgid "IPX routing not in file %s or %s found.\n"
 msgstr ""
 
-#: ../lib/ipx_gr.c:63
+#: ../lib/ipx_gr.c:69
 #, c-format
 msgid "Kernel IPX routing table\n"
 msgstr "Tabela de roteamento IPX do kernel\n"
 
 #. xxx
-#: ../lib/ipx_gr.c:64
+#: ../lib/ipx_gr.c:70
 #, c-format
 msgid "Destination               Router Net                Router Node\n"
 msgstr "Destino                   Rede Roteadora            Nó Roteador\n"
 
-#: ../lib/ipx_sr.c:43
+#: ../lib/ipx_sr.c:45
 #, c-format
 msgid "IPX: this needs to be written\n"
 msgstr "NET/ROM: isto precisa ser escrito\n"
 
-#: ../lib/masq_info.c:217
+#: ../lib/masq_info.c:211
 #, c-format
 msgid "IP masquerading entries\n"
 msgstr "Entradas de IP mascarado\n"
 
-#: ../lib/masq_info.c:220
+#: ../lib/masq_info.c:214
 #, c-format
 msgid "prot   expire source               destination          ports\n"
 msgstr "prot   expira origem               destino             portas\n"
 
-#: ../lib/masq_info.c:223
+#: ../lib/masq_info.c:217
 #, c-format
 msgid ""
 "prot   expire    initseq delta prevd source               "
@@ -3063,352 +3067,352 @@ msgstr ""
 "prot   expira    initseq delta prevd origem               "
 "destino             portas\n"
 
-#: ../lib/netrom_gr.c:46
+#: ../lib/netrom_gr.c:43
 #, c-format
 msgid "NET/ROM not configured in this system.\n"
 msgstr "NET/ROM não configurado neste sistema.\n"
 
-#: ../lib/netrom_gr.c:49
+#: ../lib/netrom_gr.c:46
 #, c-format
 msgid "Kernel NET/ROM routing table\n"
 msgstr "Tabela de roteamento NET/ROM do kernel\n"
 
-#: ../lib/netrom_gr.c:50
+#: ../lib/netrom_gr.c:47
 #, c-format
 msgid "Destination  Mnemonic  Quality  Neighbour  Iface\n"
 msgstr "Destino      Mnemônico Qualidade Vizinho   Iface\n"
 
-#: ../lib/netrom_sr.c:43
+#: ../lib/netrom_sr.c:44
 #, c-format
 msgid "netrom usage\n"
 msgstr "uso de netrom\n"
 
-#: ../lib/netrom_sr.c:53
+#: ../lib/netrom_sr.c:54
 #, c-format
 msgid "NET/ROM: this needs to be written\n"
 msgstr "NET/ROM: isto precisa ser escrito\n"
 
-#: ../lib/ppp.c:44
+#: ../lib/ppp.c:42
 #, c-format
 msgid "You cannot start PPP with this program.\n"
 msgstr "Você não pode iniciar o PPP com este programa.\n"
 
-#: ../lib/ppp_ac.c:38
+#: ../lib/ppp_ac.c:35
 #, c-format
 msgid "Sorry, use pppd!\n"
 msgstr "Desculpe, use o pppd!\n"
 
-#: ../lib/rose.c:91
+#: ../lib/rose.c:89
 msgid "Node address must be ten digits"
 msgstr "Endereço do nó deve ter dez dígitos"
 
-#: ../lib/rose_gr.c:55
+#: ../lib/rose_gr.c:52
 #, c-format
 msgid "ROSE not configured in this system.\n"
 msgstr "ROSE não configurada neste sistema.\n"
 
-#: ../lib/rose_gr.c:58
+#: ../lib/rose_gr.c:55
 #, c-format
 msgid "Kernel ROSE routing table\n"
 msgstr "Tabela de roteamento ROSE do kernel\n"
 
-#: ../lib/rose_gr.c:59
+#: ../lib/rose_gr.c:56
 #, c-format
 msgid ""
 "Destination  neigh1 callsign  device  neigh2 callsign  device  neigh3 "
 "callsign  device\n"
 msgstr ""
 
-#: ../lib/tr.c:92 ../lib/tr.c:106
+#: ../lib/tr.c:88 ../lib/tr.c:102
 #, c-format
 msgid "in_tr(%s): invalid token ring address!\n"
 msgstr "in_tr(%s): endereço token ring inválido!\n"
 
-#: ../lib/tr.c:116
+#: ../lib/tr.c:112
 #, c-format
 msgid "in_tr(%s): trailing : ignored!\n"
 msgstr "in_tr(%s): trailing : ignorado!\n"
 
-#: ../lib/tr.c:124
+#: ../lib/tr.c:120
 #, c-format
 msgid "in_tr(%s): trailing junk!\n"
 msgstr "in_tr(%s): lixo no trailing!\n"
 
-#: ../lib/interface.c:337
+#: ../lib/interface.c:341
 #, c-format
 msgid "Warning: cannot open %s (%s). Limited output.\n"
 msgstr "Atenção: não foi possível abrir %s (%s). Saída limitada.\n"
 
 #. Give better error message for this case.
-#: ../lib/interface.c:583
+#: ../lib/interface.c:582
 msgid "Device not found"
 msgstr "dispositivo não encontrado"
 
-#: ../lib/interface.c:587
+#: ../lib/interface.c:586
 #, c-format
 msgid "%s: error fetching interface information: %s\n"
 msgstr "%s: erro obtendo informações da interface: %s\n"
 
-#: ../lib/interface.c:620
+#: ../lib/interface.c:619
 msgid "     - no statistics available -"
 msgstr "     - estatísticas não disponíveis -"
 
-#: ../lib/interface.c:624
+#: ../lib/interface.c:623
 #, c-format
 msgid "[NO FLAGS]"
 msgstr "[SEM FLAGS]"
 
-#: ../lib/interface.c:734
+#: ../lib/interface.c:733
 #, fuzzy
 msgid "UP,"
 msgstr "UP "
 
-#: ../lib/interface.c:736
+#: ../lib/interface.c:735
 #, fuzzy
 msgid "BROADCAST,"
 msgstr "BROADCAST"
 
-#: ../lib/interface.c:738
+#: ../lib/interface.c:737
 #, fuzzy
 msgid "DEBUG,"
 msgstr "DEBUG "
 
-#: ../lib/interface.c:740
+#: ../lib/interface.c:739
 #, fuzzy
 msgid "LOOPBACK,"
 msgstr "LOOPBACK"
 
-#: ../lib/interface.c:742
+#: ../lib/interface.c:741
 #, fuzzy
 msgid "POINTOPOINT,"
 msgstr "POINTOPOINT "
 
-#: ../lib/interface.c:744
+#: ../lib/interface.c:743
 #, fuzzy
 msgid "NOTRAILERS,"
 msgstr "NOTRAILERS "
 
-#: ../lib/interface.c:746
+#: ../lib/interface.c:745
 #, fuzzy
 msgid "RUNNING,"
 msgstr "RUNNING "
 
-#: ../lib/interface.c:748
+#: ../lib/interface.c:747
 #, fuzzy
 msgid "NOARP,"
 msgstr "NOARP "
 
-#: ../lib/interface.c:750
+#: ../lib/interface.c:749
 #, fuzzy
 msgid "PROMISC,"
 msgstr "PROMISC "
 
-#: ../lib/interface.c:752
+#: ../lib/interface.c:751
 #, fuzzy
 msgid "ALLMULTI,"
 msgstr "ALLMULTI "
 
-#: ../lib/interface.c:754
+#: ../lib/interface.c:753
 #, fuzzy
 msgid "SLAVE,"
 msgstr "SLAVE "
 
-#: ../lib/interface.c:756
+#: ../lib/interface.c:755
 #, fuzzy
 msgid "MASTER,"
 msgstr "MASTER "
 
-#: ../lib/interface.c:758
+#: ../lib/interface.c:757
 #, fuzzy
 msgid "MULTICAST,"
 msgstr "MULTICAST "
 
-#: ../lib/interface.c:761
+#: ../lib/interface.c:760
 #, fuzzy
 msgid "DYNAMIC,"
 msgstr "DYNAMIC "
 
-#: ../lib/interface.c:770
+#: ../lib/interface.c:769
 #, c-format
 msgid "%s: %s  mtu %d"
 msgstr ""
 
-#: ../lib/interface.c:774
+#: ../lib/interface.c:773
 #, fuzzy, c-format
 msgid "  outfill %d  keepalive %d"
 msgstr "  Outfill:%d  Keepalive:%d"
 
-#: ../lib/interface.c:783 ../lib/interface.c:881
+#: ../lib/interface.c:782 ../lib/interface.c:880
 #, fuzzy, c-format
 msgid "        %s %s"
 msgstr "          %s end.: %s "
 
-#: ../lib/interface.c:785
+#: ../lib/interface.c:784
 #, fuzzy, c-format
 msgid "  netmask %s"
 msgstr "mascara %s "
 
-#: ../lib/interface.c:787
+#: ../lib/interface.c:786
 #, c-format
 msgid "  broadcast %s"
 msgstr ""
 
-#: ../lib/interface.c:790
+#: ../lib/interface.c:789
 #, fuzzy, c-format
 msgid "  destination %s"
 msgstr "destino não alcançável: %d"
 
-#: ../lib/interface.c:809
+#: ../lib/interface.c:808
 #, c-format
 msgid "        %s %s  prefixlen %d"
 msgstr ""
 
-#: ../lib/interface.c:813
+#: ../lib/interface.c:812
 #, c-format
 msgid "  scopeid 0x%x"
 msgstr ""
 
-#: ../lib/interface.c:817
+#: ../lib/interface.c:816
 #, fuzzy
 msgid "compat,"
 msgstr "Compat"
 
-#: ../lib/interface.c:821
+#: ../lib/interface.c:820
 #, fuzzy
 msgid "global,"
 msgstr "Global"
 
-#: ../lib/interface.c:823
+#: ../lib/interface.c:822
 msgid "link,"
 msgstr ""
 
-#: ../lib/interface.c:825
+#: ../lib/interface.c:824
 msgid "site,"
 msgstr ""
 
-#: ../lib/interface.c:827
+#: ../lib/interface.c:826
 msgid "host,"
 msgstr ""
 
-#: ../lib/interface.c:845
+#: ../lib/interface.c:844
 #, fuzzy, c-format
 msgid "        %s Ethernet-II   %s\n"
 msgstr "      Endereço IPX/Ethernet II:%s\n"
 
-#: ../lib/interface.c:848
+#: ../lib/interface.c:847
 #, fuzzy, c-format
 msgid "        %s Ethernet-SNAP %s\n"
 msgstr "      Endereço IPX/Ethernet SNAP:%s\n"
 
-#: ../lib/interface.c:851
+#: ../lib/interface.c:850
 #, fuzzy, c-format
 msgid "        %s Ethernet802.2 %s\n"
 msgstr "      Endereço IPX/Ethernet 802.2:%s\n"
 
-#: ../lib/interface.c:854
+#: ../lib/interface.c:853
 #, fuzzy, c-format
 msgid "        %s Ethernet802.3 %s\n"
 msgstr "      Endereço IPX/Ethernet 802.3:%s\n"
 
-#: ../lib/interface.c:864 ../lib/interface.c:873
+#: ../lib/interface.c:863 ../lib/interface.c:872
 #, fuzzy, c-format
 msgid "        %s %s\n"
 msgstr "          %s end.: %s "
 
-#: ../lib/interface.c:883
+#: ../lib/interface.c:882
 #, fuzzy, c-format
 msgid "        %s"
 msgstr "          %s end.: %s "
 
-#: ../lib/interface.c:885
+#: ../lib/interface.c:884
 #, fuzzy, c-format
 msgid "  txqueuelen %d"
 msgstr "txqueuelen:%d "
 
-#: ../lib/interface.c:890
+#: ../lib/interface.c:889
 #, fuzzy, c-format
 msgid "        media %s"
 msgstr "          endereço inet6: %s/%d"
 
-#: ../lib/interface.c:892
+#: ../lib/interface.c:891
 #, c-format
 msgid "autoselect"
 msgstr ""
 
-#: ../lib/interface.c:912
+#: ../lib/interface.c:911
 #, c-format
 msgid "RX packets %llu  bytes %llu (%lu.%lu %s)\n"
 msgstr ""
 
-#: ../lib/interface.c:918
+#: ../lib/interface.c:917
 #, fuzzy, c-format
-msgid "RX compressed:%lu\n"
+msgid "RX compressed %lu\n"
 msgstr "compactados:%lu "
 
-#: ../lib/interface.c:921
+#: ../lib/interface.c:920
 #, fuzzy, c-format
 msgid "RX errors %lu  dropped %lu  overruns %lu  frame %lu\n"
 msgstr "Pacotes RX:%lu erros:%lu descartados:%lu sobreposições:%lu frame:%lu\n"
 
-#: ../lib/interface.c:927
+#: ../lib/interface.c:926
 #, c-format
 msgid "TX packets %llu  bytes %llu (%lu.%lu %s)\n"
 msgstr ""
 
-#: ../lib/interface.c:933
+#: ../lib/interface.c:932
 #, fuzzy, c-format
 msgid "TX compressed %lu\n"
 msgstr "compactados:%lu "
 
-#: ../lib/interface.c:936
+#: ../lib/interface.c:935
 #, fuzzy, c-format
-msgid "TX errors %lu  dropped %lu overruns %lu  carrier %lu  collisions %lu\n"
+msgid "TX errors %lu  dropped %lu  overruns %lu  carrier %lu  collisions %lu\n"
 msgstr ""
 "Pacotes TX:%lu erros:%lu descartados:%lu sobreposições:%lu portadora:%lu\n"
 
-#: ../lib/interface.c:946
+#: ../lib/interface.c:945
 #, fuzzy, c-format
 msgid "interrupt %d  "
 msgstr "IRQ:%d "
 
 #. Only print devices using it for
 #. I/O maps
-#: ../lib/interface.c:949
+#: ../lib/interface.c:948
 #, fuzzy, c-format
 msgid "base 0x%x  "
 msgstr "Endereço de E/S:0x%x "
 
-#: ../lib/interface.c:951
+#: ../lib/interface.c:950
 #, fuzzy, c-format
 msgid "memory 0x%lx-%lx  "
 msgstr "Memória:%lx-%lx "
 
-#: ../lib/interface.c:954
+#: ../lib/interface.c:953
 #, c-format
 msgid "  dma 0x%x"
 msgstr ""
 
-#: ../lib/sockets.c:63
+#: ../lib/sockets.c:69
 #, c-format
 msgid "No usable address families found.\n"
 msgstr "Nenhuma família de endereços que possa ser usada foi encontrada.\n"
 
-#: ../lib/util-ank.c:230
+#: ../lib/util-ank.c:227
 #, c-format
 msgid "ip: %s is invalid inet address\n"
 msgstr "%s: endereço %s inválido.\n"
 
-#: ../lib/util-ank.c:239
+#: ../lib/util-ank.c:236
 #, c-format
 msgid "ip: %s is invalid inet prefix\n"
 msgstr "ip: %s é um prefixo inválido inet\n"
 
-#: ../lib/util-ank.c:249
+#: ../lib/util-ank.c:246
 #, c-format
 msgid "ip: %s is invalid IPv4 address\n"
 msgstr "%s: endereço %s inválido.\n"
 
-#: ../lib/util-ank.c:257
+#: ../lib/util-ank.c:254
 #, c-format
 msgid "ip: argument is wrong: %s\n"
 msgstr "ip: argumento errado: %s\n"
@@ -3527,6 +3531,10 @@ msgstr ""
 #, c-format
 msgid " interface %s\n"
 msgstr "%s: interface desconhecida.\n"
+
+#, fuzzy, c-format
+#~ msgid "RX compressed:%lu\n"
+#~ msgstr "compactados:%lu "
 
 #~ msgid ""
 #~ "  arp [-v]   [<HW>] [-i <if>] -s  <hostname> <hwaddr> [netmask <nm>] pub  "
