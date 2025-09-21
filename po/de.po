@@ -2,19 +2,21 @@
 # Copyright (C) 1999 Ralf Bächle <ralf@linux-mips.org>
 # This file is distributed under the same license as the PACKAGE package.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: net-tools 1.51\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-08 18:30+0200\n"
-"PO-Revision-Date: 2005-06-13 00:02+0100\n"
-"Last-Translator: Ralf Bächle <ralf@linux-mips.org>\n"
-"Language-Team:\n"
-"Language: \n"
+"PO-Revision-Date: 2025-09-22 08:59+0000\n"
+"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
+"Language-Team: German <https://l10n.opensuse.org/projects/net-tools/master/"
+"de/>\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.13.3\n"
 
 #: ../arp.c:112 ../arp.c:278
 #, c-format
@@ -76,9 +78,8 @@ msgstr ""
 "Iface\n"
 
 #: ../arp.c:475
-#, fuzzy
 msgid "<from_interface>"
-msgstr " Schnittstelle: %s\n"
+msgstr "<von_Schnittstelle>"
 
 #: ../arp.c:477
 msgid "(incomplete)"
@@ -2769,7 +2770,7 @@ msgstr ""
 
 #: ../lib/hw.c:232
 msgid "InfiniBand"
-msgstr ""
+msgstr "InfiniBand"
 
 #: ../lib/hw.c:235
 msgid "Generic EUI-64"
@@ -2781,9 +2782,8 @@ msgid "rresolve: unsupport address family %d !\n"
 msgstr "rresolve: nicht unterstützte Adressfamilie %d !\n"
 
 #: ../lib/inet6.c:144
-#, fuzzy
 msgid "[UNKNOWN]"
-msgstr "UNBEKANNT"
+msgstr "[UNBEKANNT]"
 
 #: ../lib/inet6_gr.c:75
 #, c-format
