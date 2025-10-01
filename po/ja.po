@@ -3,18 +3,20 @@
 # Kenshi Muto <kmuto@debian.org>, 2007.
 # Yasuyuki Furukawa <yasu@on.cs.keio.ac.jp>, 1999.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-08 18:30+0200\n"
-"PO-Revision-Date: 2007-07-04 20:47+0900\n"
-"Last-Translator: Kenshi Muto <kmuto@debian.org>\n"
-"Language-Team: Japanese\n"
-"Language: \n"
+"PO-Revision-Date: 2025-10-02 06:59+0000\n"
+"Last-Translator: Yasuhiko Kamata <belphegor@belbel.or.jp>\n"
+"Language-Team: Japanese <https://l10n.opensuse.org/projects/net-tools/master/"
+"ja/>\n"
+"Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.13.3\n"
 
 #: ../arp.c:112 ../arp.c:278
 #, c-format
@@ -180,13 +182,12 @@ msgstr ""
 "する\n"
 
 #: ../arp.c:640
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "        -e                       display (all) hosts in default (Linux) "
 "style\n"
-msgstr ""
-"        -a                 新しい(BSD)スタイルでエントリされた全ホストを表示"
-"する\n"
+msgstr "        -e                       標準の (Linux) スタイルで (すべての) "
+"ホストを表示する\n"
 
 #: ../arp.c:641
 #, c-format
@@ -289,9 +290,9 @@ msgid "Setting nodename to `%s'\n"
 msgstr "ノード名を`%s'へ設定しました\n"
 
 #: ../hostname.c:76
-#, fuzzy, c-format
+#, c-format
 msgid "%s: you don't have permission to set the node name\n"
-msgstr "%s: ノード名の変更はルートでなければなりません\n"
+msgstr "%s: ノード名を設定する権限がありません\n"
 
 #: ../hostname.c:79 ../hostname.c:101 ../hostname.c:122 ../hostname.c:176
 #: ../hostname.c:206
@@ -305,9 +306,9 @@ msgid "Setting hostname to `%s'\n"
 msgstr "ホスト名を`%s'へ設定しました\n"
 
 #: ../hostname.c:98
-#, fuzzy, c-format
+#, c-format
 msgid "%s: you don't have permission to set the host name\n"
-msgstr "%s: ホスト名の変更はルートでなければなりません\n"
+msgstr "%s: ホスト名を設定する権限がありません\n"
 
 #: ../hostname.c:114
 #, c-format
@@ -315,9 +316,9 @@ msgid "Setting domainname to `%s'\n"
 msgstr "ドメインを`%s'へ設定しました\n"
 
 #: ../hostname.c:119
-#, fuzzy, c-format
+#, c-format
 msgid "%s: you don't have permission to set the domain name\n"
-msgstr "%s: ドメイン名の変更はルートでなければなりません\n"
+msgstr "%s: ドメイン名を変更する権限がありません\n"
 
 #: ../hostname.c:150
 #, c-format
@@ -340,9 +341,9 @@ msgid "Result: h_addr_list=`%s'\n"
 msgstr "結果: h_addr_list=`%s'\n"
 
 #: ../hostname.c:173 ../hostname.c:203
-#, fuzzy, c-format
+#, c-format
 msgid "%s: protocol family not supported\n"
-msgstr "%s: アドレスファミリがサポートされていません!\n"
+msgstr "%s: プロトコルファミリがサポートされていません\n"
 
 #: ../hostname.c:249
 #, c-format
@@ -559,9 +560,9 @@ msgid "  [outfill <NN>] [keepalive <NN>]\n"
 msgstr "  [outfill <数値>] [keepalive <数値>]\n"
 
 #: ../ifconfig.c:214
-#, fuzzy, c-format
+#, c-format
 msgid "  [hw <HW> <address>]  [mtu <NN>]\n"
-msgstr "  [hw <HW> <アドレス>]  [metric <数値>]  [mtu <数値>]\n"
+msgstr "  [hw <HW> <アドレス>]  [mtu <数値>]\n"
 
 #: ../ifconfig.c:215
 #, c-format
@@ -588,7 +589,7 @@ msgstr "   [txqueuelen <TXキュー長>]\n"
 #: ../ifconfig.c:222
 #, c-format
 msgid "  [name <newname>]\n"
-msgstr ""
+msgstr "  [name <新しい名前>]\n"
 
 #: ../ifconfig.c:225
 #, c-format
@@ -638,12 +639,13 @@ msgstr "ifconfig: `--help'で使用法を見られます.\n"
 #: ../ifconfig.c:335
 #, c-format
 msgid "Warning: truncating interface name %s length %lu to %u\n"
-msgstr ""
+msgstr "警告: インターフェイス名 %s の長さを %lu 文字から %u 文字に切り詰めました\n"
 
 #: ../ifconfig.c:349
 #, c-format
 msgid "ifconfig: Default address family %s is unknown. How can that be?\n"
-msgstr ""
+msgstr "ifconfig: 標準のアドレスファミリ %s "
+"が不明です。どうしてそうなるのでしょうか？\n"
 
 #: ../ifconfig.c:392
 #, c-format
@@ -682,17 +684,17 @@ msgstr "警告: インタフェース%sはまだBROADCASTモードです.\n"
 #: ../ifconfig.c:535
 #, c-format
 msgid "ifconfig: Error resolving '%s' for broadcast\n"
-msgstr ""
+msgstr "ifconfig: broadcast 用の '%s' の解決時にエラーが発生しました\n"
 
 #: ../ifconfig.c:559
 #, c-format
 msgid "ifconfig: Error resolving '%s' for dstaddr\n"
-msgstr ""
+msgstr "ifconfig: dstaddr 用の '%s' の解決時にエラーが発生しました\n"
 
 #: ../ifconfig.c:581
 #, c-format
 msgid "ifconfig: Error resolving '%s' for netmask\n"
-msgstr ""
+msgstr "ifconfig: netmask 用の '%s' の解決時にエラーが発生しました\n"
 
 #: ../ifconfig.c:674
 #, c-format
@@ -702,7 +704,7 @@ msgstr "警告: インタフェース%sはまだPOINTOPOINTモードです.\n"
 #: ../ifconfig.c:685
 #, c-format
 msgid "ifconfig: Error resolving '%s' for pointopoint\n"
-msgstr ""
+msgstr "ifconfig: pointopoint 用の '%s' の解決時にエラーが発生しました\n"
 
 #: ../ifconfig.c:708
 #, c-format
@@ -719,7 +721,7 @@ msgstr "%s: 不適切なアドレスです(%s).\n"
 #: ../ifconfig.c:755
 #, c-format
 msgid "ifconfig: Error resolving '%s' for add\n"
-msgstr ""
+msgstr "ifconfig: add 用の '%s' の解決時にエラーが発生しました\n"
 
 #: ../ifconfig.c:765 ../ifconfig.c:854 ../ifconfig.c:943
 #, c-format
@@ -749,7 +751,7 @@ msgstr "ifconfig:このプロトコルファミリにアドレスを設定でき
 #: ../ifconfig.c:994
 #, c-format
 msgid "ifconfig: error resolving '%s' to set address for af=%s\n"
-msgstr ""
+msgstr "ifconfig: af=%s に対するアドレス設定 '%s' の解決時にエラーが発生しました\n"
 
 #: ../ifconfig.c:1016
 #, c-format
@@ -824,14 +826,14 @@ msgid "Problem reading data from %s\n"
 msgstr "%sからのデータの読み込みに問題\n"
 
 #: ../netstat.c:588
-#, fuzzy, c-format
+#, c-format
 msgid "Active ROSE sockets\n"
-msgstr "稼働中のNET/ROMソケット\n"
+msgstr "稼働中のROSEソケット\n"
 
 #: ../netstat.c:589
 #, c-format
 msgid "dest_addr   dest_call  src_addr    src_call  dev   lci neigh   state\n"
-msgstr ""
+msgstr "dest_addr   dest_call  src_addr    src_call  dev   lci neigh   state\n"
 
 # translatable?
 #: ../netstat.c:629
@@ -916,19 +918,19 @@ msgstr ""
 "Q\n"
 
 #: ../netstat.c:899
-#, fuzzy, c-format
+#, c-format
 msgid "warning, got bogus sctp eps line.\n"
-msgstr "警告, 偽のTCPラインを得ました.\n"
+msgstr "警告, 偽のsctp epsラインを得ました.\n"
 
 #: ../netstat.c:920 ../netstat.c:1018 ../netstat.c:1030
-#, fuzzy, c-format
+#, c-format
 msgid "unsupported address family %d"
-msgstr "netstat: サポートしてないアドレスファミリ%dです!\n"
+msgstr "サポートしてないアドレスファミリ%dです"
 
 #: ../netstat.c:976
-#, fuzzy, c-format
+#, c-format
 msgid "warning, got bogus sctp assoc line.\n"
-msgstr "警告, 偽のTCPラインを得ました.\n"
+msgstr "警告, 偽のsctp assocラインを得ました.\n"
 
 #: ../netstat.c:1142
 #, c-format
@@ -956,9 +958,9 @@ msgid "timewait (%2.2f/%ld/%d)"
 msgstr "時間待ち (%2.2f/%ld/%d)"
 
 #: ../netstat.c:1204
-#, fuzzy, c-format
+#, c-format
 msgid "probe (%2.2f/%ld/%d)"
-msgstr "オン (%2.2f/%ld/%d)"
+msgstr "プローブ (%2.2f/%ld/%d)"
 
 #: ../netstat.c:1209 ../netstat.c:1335 ../netstat.c:1433
 #, c-format
@@ -1056,13 +1058,13 @@ msgid "(w/o servers)"
 msgstr "(w/oサーバ)"
 
 #: ../netstat.c:1596
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "Proto RefCnt Flags       Type       State         I-Node  "
 msgstr ""
 "\n"
-"Proto RefCnt フラグ      タイプ     状態         Iノード"
+"Proto RefCnt フラグ      タイプ     状態         Iノード  "
 
 #: ../netstat.c:1599
 #, c-format
@@ -1122,65 +1124,61 @@ msgstr "UNK."
 
 #: ../netstat.c:1834
 msgid "OPEN"
-msgstr ""
+msgstr "OPEN"
 
 #: ../netstat.c:1836
 msgid "BOUND"
-msgstr ""
+msgstr "BOUND"
 
 # translatable?
 #: ../netstat.c:1840
-#, fuzzy
 msgid "CONNECT"
-msgstr "CONNECTED"
+msgstr "CONNECT"
 
 # translatable?
 #: ../netstat.c:1842
-#, fuzzy
 msgid "CONNECT2"
-msgstr "CONNECTED"
+msgstr "CONNECT2"
 
 #: ../netstat.c:1844
 msgid "CONFIG"
-msgstr ""
+msgstr "CONFIG"
 
 # translatable?
 #: ../netstat.c:1846
-#, fuzzy
 msgid "DISCONN"
-msgstr "DISCONNECTING"
+msgstr "DISCONN"
 
 # translatable?
 #: ../netstat.c:1848
-#, fuzzy
 msgid "CLOSED"
-msgstr "CLOSE"
+msgstr "CLOSED"
 
 #: ../netstat.c:1869
-#, fuzzy, c-format
+#, c-format
 msgid "warning, got bogus l2cap line.\n"
-msgstr "警告, 偽のTCPラインを得ました.\n"
+msgstr "警告, 偽のl2capラインを得ました.\n"
 
 #: ../netstat.c:1882
 msgid "SDP"
-msgstr ""
+msgstr "SDP"
 
 #: ../netstat.c:1885
 msgid "LOW"
-msgstr ""
+msgstr "LOW"
 
 #: ../netstat.c:1888
 msgid "MEDIUM"
-msgstr ""
+msgstr "MEDIUM"
 
 #: ../netstat.c:1891
 msgid "HIGH"
-msgstr ""
+msgstr "HIGH"
 
 #: ../netstat.c:1919
-#, fuzzy, c-format
+#, c-format
 msgid "warning, got bogus rfcomm line.\n"
-msgstr "警告, 偽のRawラインを得ました.\n"
+msgstr "警告, 偽のrfcommラインを得ました.\n"
 
 #: ../netstat.c:1949
 #, c-format
@@ -1192,26 +1190,26 @@ msgid "missing interface information"
 msgstr "インタフェース情報が足りません"
 
 #: ../netstat.c:1981
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "usage: netstat [-vWeenNcCF] [<Af>] -r         netstat {-V|--version|-h|--"
 "help}\n"
 msgstr ""
-"使用法: netstat [-veenNcCF] [<アドレスファミリ>] -r\n"
-"        netstat {-V|--version|-h|--help}\n"
+"使用法: netstat [-vWeenNcCF] [<アドレスファミリ>] -r         netstat "
+"{-V|--version|-h|--help}\n"
 
 #: ../netstat.c:1982
-#, fuzzy, c-format
+#, c-format
 msgid "       netstat [-vWnNcaeol] [<Socket> ...]\n"
-msgstr "        netstat [-vnNcaeol] [<ソケット> ...]\n"
+msgstr "       netstat [-vWnNcaeol] [<ソケット> ...]\n"
 
 #: ../netstat.c:1983
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "       netstat { [-vWeenNac] -i | [-cnNe] -M | -s [-6tuw] }\n"
 "\n"
 msgstr ""
-"        netstat { [-veenNac] -i | [-cnNe] -M | -s }\n"
+"       netstat { [-vWeenNac] -i | [-cnNe] -M | -s [-6tuw] }\n"
 "\n"
 
 #: ../netstat.c:1985
@@ -1247,9 +1245,9 @@ msgstr ""
 "\n"
 
 #: ../netstat.c:1994
-#, fuzzy, c-format
+#, c-format
 msgid "        -W, --wide               don't truncate IP addresses\n"
-msgstr "        -n, --numeric            名前のレゾルブをしない\n"
+msgstr "        -W, --wide               IPアドレスの切り詰めを行わない\n"
 
 #: ../netstat.c:1996
 #, c-format
@@ -1302,10 +1300,11 @@ msgid "        -l, --listening          display listening server sockets\n"
 msgstr "        -l, --listening          サーバのlistenソケットの表示\n"
 
 #: ../netstat.c:2005
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "        -a, --all                display all sockets (default: connected)\n"
-msgstr "        -a, --all, --listening   全ての情報を表示 (標準: connected)\n"
+msgstr "        -a, --all                全てのソケットを表示 (標準: "
+"接続済みのもののみ)\n"
 
 #: ../netstat.c:2006 ../route.c:91
 #, c-format
@@ -1316,34 +1315,31 @@ msgstr ""
 "        -F, --fib                フォワード情報ベースを表示する(標準)\n"
 
 #: ../netstat.c:2007
-#, fuzzy, c-format
+#, c-format
 msgid "        -C, --cache              display routing cache instead of FIB\n"
-msgstr ""
-"        -C, --cache              FIBのかわりに経路キャッシュを表示する\n"
-"\n"
+msgstr "        -C, --cache              FIBのかわりに経路キャッシュを表示する\n"
 
 #: ../netstat.c:2009
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "        -Z, --context            display SELinux security context for "
 "sockets\n"
-msgstr "        -l, --listening          サーバのlistenソケットの表示\n"
+msgstr "        -Z, --context            "
+"ソケットに対するSELinuxセキュリティコンテキストを表示する\n"
 
 #: ../netstat.c:2012
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "  <Socket>={-t|--tcp} {-u|--udp} {-U|--udplite} {-S|--sctp} {-w|--raw}\n"
 msgstr ""
-"  <ソケット>={-t|--tcp} {-u|--udp} {-w|--raw} {-x|--unix} --ax25 --ipx --"
-"netrom\n"
+"\n"
+"  <ソケット>={-t|--tcp} {-u|--udp} {-U|--udplite} {-S|--sctp} {-w|--raw}\n"
 
 #: ../netstat.c:2013
-#, fuzzy, c-format
+#, c-format
 msgid "           {-x|--unix} --ax25 --ipx --netrom\n"
-msgstr ""
-"  <ソケット>={-t|--tcp} {-u|--udp} {-w|--raw} {-x|--unix} --ax25 --ipx --"
-"netrom\n"
+msgstr "           {-x|--unix} --ax25 --ipx --netrom\n"
 
 #: ../netstat.c:2014
 #, c-format
@@ -1358,17 +1354,18 @@ msgstr "  (ルーティングをサポートした)利用可能なアドレス�
 #: ../netstat.c:2191
 #, c-format
 msgid "SELinux is not enabled on this machine.\n"
-msgstr ""
+msgstr "このマシンではSELinuxが有効化されていません。\n"
 
 #: ../netstat.c:2197
 #, c-format
 msgid "SELinux is not enabled for this application.\n"
-msgstr ""
+msgstr "このアプリケーションではSELinuxが有効化されていません。\n"
 
 #: ../netstat.c:2267
-#, fuzzy, c-format
+#, c-format
 msgid "netstat: No statistics support for specified address family: %s\n"
-msgstr "netstat: サポートしてないアドレスファミリ%dです!\n"
+msgstr "netstat: このアドレスファミリに対しては統計情報のサポートがされていません: %"
+"s\n"
 
 #: ../netstat.c:2309
 #, c-format
@@ -1407,9 +1404,9 @@ msgid "Interface       RefCnt Group\n"
 msgstr "インタフェース 参照Cnt グループ\n"
 
 #: ../netstat.c:2455
-#, fuzzy, c-format
+#, c-format
 msgid "Active Bluetooth connections "
-msgstr "稼働中のインターネット接続 "
+msgstr "稼働中のBluetooth接続 "
 
 #: ../rarp.c:45
 msgid "This kernel does not support RARP.\n"
@@ -1535,14 +1532,15 @@ msgstr ""
 "\n"
 
 #: ../route.c:94
-#, fuzzy, c-format
+#, c-format
 msgid "  <AF>=Use -4, -6, '-A <af>' or '--<af>'; default: %s\n"
-msgstr "  <AF>='-A <af>'または'--<af>'を利用; 標準: %s\n"
+msgstr "  <AF>=-4, -6のいずれか,もしくは '-A <af>', '--<af>' のいずれかを指定; 標準: "
+"%s\n"
 
 #: ../plipconfig.c:63
-#, fuzzy, c-format
+#, c-format
 msgid "Usage: plipconfig interface [nibble NN] [trigger NN]\n"
-msgstr "使用法: plipconfig [-a] [-i] [-v] インタフェース\n"
+msgstr "使用法: plipconfig インタフェース [nibble NN] [trigger NN]\n"
 
 #: ../plipconfig.c:64
 #, c-format
@@ -1550,9 +1548,9 @@ msgid "       plipconfig -V | --version\n"
 msgstr "       plipconfig -V | --version\n"
 
 #: ../plipconfig.c:65
-#, fuzzy, c-format
+#, c-format
 msgid "       plipconfig -h | --help\n"
-msgstr "       plipconfig -V | --version\n"
+msgstr "       plipconfig -h | --help\n"
 
 # translatable?
 #: ../plipconfig.c:71
@@ -1698,14 +1696,14 @@ msgstr "ICMP出力ヒストグラム:"
 
 #. Keep the entries sorted!
 #: ../statistics.c:58
-#, fuzzy, c-format
+#, c-format
 msgid "Default TTL is %llu"
-msgstr "標準TTLは%uです"
+msgstr "標準TTLは%lluです"
 
 #: ../statistics.c:59 ../statistics.c:95
-#, fuzzy, c-format
+#, c-format
 msgid "%llu forwarded"
-msgstr "%uの転送"
+msgstr "%lluの転送"
 
 #: ../statistics.c:60
 #, c-format
@@ -1714,9 +1712,9 @@ msgstr "フォワードは%sです"
 
 #. Keep the entries sorted!
 #: ../statistics.c:61 ../statistics.c:81
-#, fuzzy, c-format
+#, c-format
 msgid "%llu fragments created"
-msgstr "%uフラグメントを生成"
+msgstr "%lluフラグメントを生成"
 
 #: ../statistics.c:62 ../statistics.c:82
 #, fuzzy, c-format
