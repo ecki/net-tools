@@ -8,114 +8,116 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-08 18:30+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-10-08 07:59+0000\n"
+"Last-Translator: David Medina <medipas@gmail.com>\n"
+"Language-Team: Catalan <https://l10n.opensuse.org/projects/net-tools/master/"
+"ca/>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.13.3\n"
 
 #: ../arp.c:112 ../arp.c:278
 #, c-format
 msgid "arp: need host name\n"
-msgstr ""
+msgstr "arp: cal el nom de l'amfitrió\n"
 
 #: ../arp.c:214 ../arp.c:229
 #, c-format
 msgid "No ARP entry for %s\n"
-msgstr ""
+msgstr "No hi ha cap entrada ARP per a %s\n"
 
 #: ../arp.c:247
 #, c-format
 msgid "arp: cant get HW-Address for `%s': %s.\n"
-msgstr ""
+msgstr "arp: no es pot obtenir l'adreça HW per a «%s»: %s.\n"
 
 #: ../arp.c:251
 #, c-format
 msgid "arp: protocol type mismatch.\n"
-msgstr ""
+msgstr "arp: el tipus de protocol no coincideix.\n"
 
 #: ../arp.c:260
 #, c-format
 msgid "arp: device `%s' has HW address %s `%s'.\n"
-msgstr ""
+msgstr "arp: el dispositiu «%s» té l'adreça HW %s «%s».\n"
 
 #: ../arp.c:291
 #, c-format
 msgid "arp: need hardware address\n"
-msgstr ""
+msgstr "arp: cal una adreça de maquinari\n"
 
 #: ../arp.c:299
 #, c-format
 msgid "arp: invalid hardware address\n"
-msgstr ""
+msgstr "arp: l'adreça del maquinari no és vàlida\n"
 
 #: ../arp.c:397
 #, c-format
 msgid "arp: cannot open etherfile %s !\n"
-msgstr ""
+msgstr "arp: no es pot obrir etherfile %s !\n"
 
 #: ../arp.c:413
 #, c-format
 msgid "arp: format error on line %u of etherfile %s !\n"
-msgstr ""
+msgstr "arp: error de format a la línia %u de etherfile %s !\n"
 
 #: ../arp.c:426
 #, c-format
 msgid "arp: cannot set entry on line %u of etherfile %s !\n"
-msgstr ""
+msgstr "arp: no es pot establir l'entrada a la línia %u del fitxer ether %s !\n"
 
 #: ../arp.c:447
 #, c-format
 msgid ""
 "Address                  HWtype  HWaddress           Flags Mask            "
 "Iface\n"
-msgstr ""
+msgstr "Adreça HWtype HWaddress Iface de la màscara\n"
 
 #: ../arp.c:475
 msgid "<from_interface>"
-msgstr ""
+msgstr "<frominterface>"
 
 #: ../arp.c:477
 msgid "(incomplete)"
-msgstr ""
+msgstr "(incomplet)"
 
 #: ../arp.c:494
 #, c-format
 msgid "%s (%s) at "
-msgstr ""
+msgstr "%s (%s) a "
 
 #: ../arp.c:500
 #, c-format
 msgid "<incomplete> "
-msgstr ""
+msgstr "<incomplete> "
 
 #: ../arp.c:506
 #, c-format
 msgid "netmask %s "
-msgstr ""
+msgstr "màscara de xarxa %s "
 
 #: ../arp.c:523
 #, c-format
 msgid "on %s\n"
-msgstr ""
+msgstr "a %s\n"
 
 #: ../arp.c:611
 #, c-format
 msgid "Entries: %d\tSkipped: %d\tFound: %d\n"
-msgstr ""
+msgstr "Entrades: %d S'ha omès: %d S'ha trobat: %d\n"
 
 #: ../arp.c:615
 #, c-format
 msgid "%s (%s) -- no entry\n"
-msgstr ""
+msgstr "%s (%s) -- sense entrada\n"
 
 #: ../arp.c:617
 #, c-format
 msgid "arp: in %d entries no match found.\n"
-msgstr ""
+msgstr "arp: a %d entrades no s'ha trobat cap coincidència.\n"
 
 #: ../arp.c:633
 #, c-format
@@ -124,13 +126,15 @@ msgid ""
 "  arp [-vn]  [<HW>] [-i <if>] [-a] [<hostname>]             <-Display ARP "
 "cache\n"
 msgstr ""
+"Ús:\n"
+"  arp [-vn] [<HW>] [-i <if>] [-a] [<hostname>]  -Display ARP cache\n"
 
 #: ../arp.c:634
 #, c-format
 msgid ""
 "  arp [-v]          [-i <if>] -d  <host> [pub]               <-Delete ARP "
 "entry\n"
-msgstr ""
+msgstr "  arp [-v] [-i <if>] -d <host> [pub]  -Suprimeix l'entrada ARP\n"
 
 #: ../arp.c:635
 #, c-format
@@ -138,6 +142,8 @@ msgid ""
 "  arp [-vnD] [<HW>] [-i <if>] -f  [<filename>]            <-Add entry from "
 "file\n"
 msgstr ""
+"  arp [-vnD] [<HW>] [-i <if>] -f [<filename>]  -Afegeix una entrada des del "
+"fitxer\n"
 
 #: ../arp.c:636
 #, c-format
@@ -145,6 +151,7 @@ msgid ""
 "  arp [-v]   [<HW>] [-i <if>] -s  <host> <hwaddr> [temp]            <-Add "
 "entry\n"
 msgstr ""
+"  arp [-v] [<HW>] [-i <if>] -s <host> <hwaddr> [temp]  -Afegeix una entrada\n"
 
 #: ../arp.c:637
 #, c-format
@@ -153,13 +160,16 @@ msgid ""
 "<-''-\n"
 "\n"
 msgstr ""
+"  arp [-v] [<HW>] [-i <if>] -Ds <host> <if>[màscara de xarxa <nm>] pub ]-''-"
+"\n"
+"\n"
 
 #: ../arp.c:639
 #, c-format
 msgid ""
 "        -a                       display (all) hosts in alternative (BSD) "
 "style\n"
-msgstr ""
+msgstr "        -un display (tots) amfitrions en estil alternatiu (BSD)\n"
 
 #: ../arp.c:640
 #, c-format
@@ -167,42 +177,43 @@ msgid ""
 "        -e                       display (all) hosts in default (Linux) "
 "style\n"
 msgstr ""
+"        -e mostra (tots) els amfitrions en l'estil predeterminat (Linux)\n"
 
 #: ../arp.c:641
 #, c-format
 msgid "        -s, --set                set a new ARP entry\n"
-msgstr ""
+msgstr "        -s, --set estableix una entrada ARP nova\n"
 
 #: ../arp.c:642
 #, c-format
 msgid "        -d, --delete             delete a specified entry\n"
-msgstr ""
+msgstr "        -d, --delete suprimeix una entrada especificada\n"
 
 #: ../arp.c:643 ../netstat.c:1993 ../route.c:88
 #, c-format
 msgid "        -v, --verbose            be verbose\n"
-msgstr ""
+msgstr "        -v, --verbose be verbose\n"
 
 #: ../arp.c:644 ../netstat.c:1995 ../route.c:89
 #, c-format
 msgid "        -n, --numeric            don't resolve names\n"
-msgstr ""
+msgstr "        -n, --numeric no resol els noms\n"
 
 #: ../arp.c:645
 #, c-format
 msgid ""
 "        -i, --device             specify network interface (e.g. eth0)\n"
-msgstr ""
+msgstr "        -i, --device especifica la interfície de xarxa (p. ex. eth0)\n"
 
 #: ../arp.c:646
 #, c-format
 msgid "        -D, --use-device         read <hwaddr> from given device\n"
-msgstr ""
+msgstr "        -D, --use-device ha llegit <hwaddr> des del dispositiu donat\n"
 
 #: ../arp.c:647
 #, c-format
 msgid "        -A, -p, --protocol       specify protocol family\n"
-msgstr ""
+msgstr "        -A, -p, --protocol especifica la família del protocol\n"
 
 #: ../arp.c:648
 #, c-format
@@ -211,128 +222,137 @@ msgid ""
 "ethers\n"
 "\n"
 msgstr ""
+"        -f, --file llegeix entrades noves des d'un fitxer o des de /etc/"
+"ethers\n"
+"\n"
 
 #: ../arp.c:650 ../rarp.c:185
 #, c-format
 msgid "  <HW>=Use '-H <hw>' to specify hardware address type. Default: %s\n"
 msgstr ""
+"  <HW>.Utilitza '-H <hw>' per especificar el tipus d'adreça del maquinari. "
+"Per defecte: %s\n"
 
 #: ../arp.c:651 ../rarp.c:186
 #, c-format
 msgid "  List of possible hardware types (which support ARP):\n"
-msgstr ""
+msgstr "  Llista de possibles tipus de maquinari (que suporten ARP):\n"
 
 #: ../arp.c:685 ../arp.c:771
 #, c-format
 msgid "%s: hardware type not supported!\n"
-msgstr ""
+msgstr "%s: el tipus de maquinari no és compatible!\n"
 
 #: ../arp.c:689
 #, c-format
 msgid "%s: address family not supported!\n"
-msgstr ""
+msgstr "%s: la família d'adreces no és compatible!\n"
 
 #: ../arp.c:724
 #, c-format
 msgid "arp: -N not yet supported.\n"
-msgstr ""
+msgstr "arp: -N encara no està suportat.\n"
 
 #: ../arp.c:734
 #, c-format
 msgid "arp: %s: unknown address family.\n"
-msgstr ""
+msgstr "arp: %s: família d'adreces desconeguda.\n"
 
 #: ../arp.c:743
 #, c-format
 msgid "arp: %s: unknown hardware type.\n"
-msgstr ""
+msgstr "arp: %s: tipus de maquinari desconegut.\n"
 
 #: ../arp.c:763
 #, c-format
 msgid "arp: %s: kernel only supports 'inet'.\n"
-msgstr ""
+msgstr "arp: %s: el nucli només admet «inet».\n"
 
 #: ../arp.c:776
 #, c-format
 msgid "arp: %s: hardware type without ARP support.\n"
-msgstr ""
+msgstr "arp: %s: tipus de maquinari sense suport ARP.\n"
 
 #: ../hostname.c:71
 #, c-format
 msgid "Setting nodename to `%s'\n"
-msgstr ""
+msgstr "S'està establint el nom del node a «%s»\n"
 
 #: ../hostname.c:76
 #, c-format
 msgid "%s: you don't have permission to set the node name\n"
-msgstr ""
+msgstr "%s: no teniu permís per establir el nom del node\n"
 
 #: ../hostname.c:79 ../hostname.c:101 ../hostname.c:122 ../hostname.c:176
 #: ../hostname.c:206
 #, c-format
 msgid "%s: name too long\n"
-msgstr ""
+msgstr "%s: nom massa llarg\n"
 
 #: ../hostname.c:93
 #, c-format
 msgid "Setting hostname to `%s'\n"
-msgstr ""
+msgstr "S'està establint el nom de l'amfitrió a «%s»\n"
 
 #: ../hostname.c:98
 #, c-format
 msgid "%s: you don't have permission to set the host name\n"
-msgstr ""
+msgstr "%s: no teniu permís per establir el nom de l'amfitrió\n"
 
 #: ../hostname.c:114
 #, c-format
 msgid "Setting domainname to `%s'\n"
-msgstr ""
+msgstr "S'està establint el nom de domini a «%s»\n"
 
 #: ../hostname.c:119
 #, c-format
 msgid "%s: you don't have permission to set the domain name\n"
-msgstr ""
+msgstr "%s: no teniu permís per establir el nom del domini\n"
 
 #: ../hostname.c:150
 #, c-format
 msgid "Resolving `%s' ...\n"
-msgstr ""
+msgstr "S'està resolent «%s»...\n"
 
 #: ../hostname.c:161
 #, c-format
 msgid "Result: h_name=`%s'\n"
-msgstr ""
+msgstr "Resultat: h_name=`%s'\n"
 
 #: ../hostname.c:166
 #, c-format
 msgid "Result: h_aliases=`%s'\n"
-msgstr ""
+msgstr "Resultat: h_aliases=`%s'\n"
 
 #: ../hostname.c:171
 #, c-format
 msgid "Result: h_addr_list=`%s'\n"
-msgstr ""
+msgstr "Resultat: h_addr_list=`%s'\n"
 
 #: ../hostname.c:173 ../hostname.c:203
 #, c-format
 msgid "%s: protocol family not supported\n"
-msgstr ""
+msgstr "%s: la família del protocol no és compatible\n"
 
 #: ../hostname.c:249
 #, c-format
 msgid "%s: can't open `%s'\n"
-msgstr ""
+msgstr "%s: no es pot obrir «%s»\n"
 
 #: ../hostname.c:264
 #, c-format
 msgid "Usage: hostname [-v] {hostname|-F file}      set hostname (from file)\n"
 msgstr ""
+"Ús: hostname [-v] {hostname)-F file} estableix el nom de l'amfitrió (des del "
+"fitxer)\n"
 
 #: ../hostname.c:265
 #, c-format
 msgid ""
 "       domainname [-v] {nisdomain|-F file}   set NIS domainname (from file)\n"
 msgstr ""
+"       domininame [-v] {nisdomain)-F file} estableix el domini NIS (des del "
+"fitxer)\n"
 
 #: ../hostname.c:267
 #, c-format
@@ -340,11 +360,15 @@ msgid ""
 "       nodename [-v] {nodename|-F file}      set DECnet node name (from "
 "file)\n"
 msgstr ""
+"       nodename [-v] {nodename)-F fitxer} estableix el nom del node DECnet ("
+"des del fitxer)\n"
 
 #: ../hostname.c:269
 #, c-format
 msgid "       hostname [-v] [-d|-f|-s|-a|-i|-y|-n]  display formatted name\n"
 msgstr ""
+"       nom de l'amfitrió [-v] [-dted-fted-s]-a]-i--y]-n] mostra el nom "
+"formatat\n"
 
 #: ../hostname.c:270
 #, c-format
@@ -352,6 +376,8 @@ msgid ""
 "       hostname [-v]                         display hostname\n"
 "\n"
 msgstr ""
+"       hostname [-v] mostra el nom de l'amfitrió\n"
+"\n"
 
 #: ../hostname.c:271
 #, c-format
@@ -359,6 +385,8 @@ msgid ""
 "       hostname -V|--version|-h|--help       print info and exit\n"
 "\n"
 msgstr ""
+"       hostname -V and--version and-h and--help imprimeix informació i surt\n"
+"\n"
 
 #: ../hostname.c:272
 #, c-format
@@ -366,41 +394,43 @@ msgid ""
 "    dnsdomainname=hostname -d, {yp,nis,}domainname=hostname -y\n"
 "\n"
 msgstr ""
+"    dnsdomainname,nomamfitrió -d, {yp,nis,}nomdomini,nomamfitrió -y\n"
+"\n"
 
 #: ../hostname.c:273
 #, c-format
 msgid "    -s, --short           short host name\n"
-msgstr ""
+msgstr "    -s, --short nom curt d'amfitrió\n"
 
 #: ../hostname.c:274
 #, c-format
 msgid "    -a, --alias           alias names\n"
-msgstr ""
+msgstr "    -a, --alias àlies noms\n"
 
 #: ../hostname.c:275
 #, c-format
 msgid "    -i, --ip-address      addresses for the hostname\n"
-msgstr ""
+msgstr "    -i, --ip-adreces d'adreça per al nom d'amfitrió\n"
 
 #: ../hostname.c:276
 #, c-format
 msgid "    -f, --fqdn, --long    long host name (FQDN)\n"
-msgstr ""
+msgstr "    -f, --fqdn, --long long host name (FQDN)\n"
 
 #: ../hostname.c:277
 #, c-format
 msgid "    -d, --domain          DNS domain name\n"
-msgstr ""
+msgstr "    -d, --domain nom de domini DNS\n"
 
 #: ../hostname.c:278
 #, c-format
 msgid "    -y, --yp, --nis       NIS/YP domainname\n"
-msgstr ""
+msgstr "    -y, --yp, --nis NIS/YP domini\n"
 
 #: ../hostname.c:280
 #, c-format
 msgid "    -n, --node            DECnet node name\n"
-msgstr ""
+msgstr "    -n, --node nom del node DECnet\n"
 
 #: ../hostname.c:282
 #, c-format
@@ -408,6 +438,9 @@ msgid ""
 "    -F, --file            read hostname or NIS domainname from given file\n"
 "\n"
 msgstr ""
+"    -F, --file llegeix el nom de l'ordinador o el nom de domini NIS des d'un "
+"fitxer donat\n"
+"\n"
 
 #: ../hostname.c:284
 #, c-format
@@ -418,11 +451,19 @@ msgid ""
 "   FQDN (Fully Qualified Domain Name) and the DNS domain name (which is\n"
 "   part of the FQDN) in the /etc/hosts file.\n"
 msgstr ""
+"   Aquesta ordre pot llegir o establir el nom del servidor o el nom del "
+"domini NIS. Pots\n"
+"   També llegeix el domini DNS o el FQDN (nom de domini totalment "
+"qualificat).\n"
+"   Llevat que estiguis utilitzant el BIND o el NIS per a les cerques de "
+"l'amfitrió, pots canviar el\n"
+"   FQDN (Fully Qualified Domain Name) i el nom de domini DNS (que és\n"
+"   part del FQDN) al fitxer /etc/hosts.\n"
 
 #: ../hostname.c:383
 #, c-format
 msgid "%s: You can't change the DNS domain name with this command\n"
-msgstr ""
+msgstr "%s: No podeu canviar el nom del domini DNS amb aquesta ordre\n"
 
 #: ../hostname.c:384
 #, c-format
@@ -430,49 +471,54 @@ msgid ""
 "\n"
 "Unless you are using bind or NIS for host lookups you can change the DNS\n"
 msgstr ""
+"\n"
+"Tret que estiguis utilitzant el BIND o el NIS per a les cerques de "
+"l'amfitrió, pots canviar el DNS\n"
 
 #: ../hostname.c:385
 #, c-format
 msgid "domain name (which is part of the FQDN) in the /etc/hosts file.\n"
-msgstr ""
+msgstr "nom de domini (que forma part del FQDN) al fitxer /etc/hosts.\n"
 
 #: ../hostname.c:402
 #, c-format
 msgid "gethostname()=`%s'\n"
-msgstr ""
+msgstr "gethostname()=`%s'\n"
 
 #: ../hostname.c:427
 #, c-format
 msgid "getdomainname()=`%s'\n"
-msgstr ""
+msgstr "getdomainname()=`%s'\n"
 
 #: ../hostname.c:442
 #, c-format
 msgid "getnodename()=`%s'\n"
-msgstr ""
+msgstr "getnodename()=`%s'\n"
 
 #: ../ifconfig.c:105 ../netstat.c:1953
 #, c-format
 msgid ""
 "Iface             MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP "
 "TX-OVR Flg\n"
-msgstr ""
+msgstr "Iface MTU RX-OK RX-ERR RX-DRP RX-OVR TX-OK TX-ERR TX-DRP TX-OVR Flg\n"
 
 #: ../ifconfig.c:130 ../ifconfig.c:162
 #, c-format
 msgid "%s: ERROR while getting interface flags: %s\n"
 msgstr ""
+"%s: S'ha produït un error en obtenir els indicadors de la interfície: %s\n"
 
 #: ../ifconfig.c:154 ../ifconfig.c:186 ../ifconfig.c:799 ../ifconfig.c:891
 #: ../ifconfig.c:1006
 #, c-format
 msgid "No support for INET on this system.\n"
-msgstr ""
+msgstr "No hi ha suport per a l'INET en aquest sistema.\n"
 
 #: ../ifconfig.c:194
 #, c-format
 msgid "%s: ERROR while testing interface flags: %s\n"
 msgstr ""
+"%s: S'ha produït un error en provar els indicadors de la interfície: %s\n"
 
 #: ../ifconfig.c:204
 #, c-format
@@ -480,66 +526,68 @@ msgid ""
 "Usage:\n"
 "  ifconfig [-a] [-v] [-s] <interface> [[<AF>] <address>]\n"
 msgstr ""
+"Ús:\n"
+"  ifconfig [-a] [-v] [-s] <interface> [[<AF>] <address>]\n"
 
 #: ../ifconfig.c:206
 #, c-format
 msgid "  [add <address>[/<prefixlen>]]\n"
-msgstr ""
+msgstr "  [add <address>[/<prefixlen>]]\n"
 
 #: ../ifconfig.c:207
 #, c-format
 msgid "  [del <address>[/<prefixlen>]]\n"
-msgstr ""
+msgstr "  [del <address>[/<prefixlen>]]\n"
 
 #: ../ifconfig.c:208
 #, c-format
 msgid "  [[-]broadcast [<address>]]  [[-]pointopoint [<address>]]\n"
-msgstr ""
+msgstr "  [[-]broadcast [<address>]] [[-]pointopoint [<address>]]\n"
 
 #: ../ifconfig.c:209
 #, c-format
 msgid "  [netmask <address>]  [dstaddr <address>]  [tunnel <address>]\n"
-msgstr ""
+msgstr "  [màscara de xarxa <address>] [dstaddr <address>] [túnel <address>]\n"
 
 #: ../ifconfig.c:212
 #, c-format
 msgid "  [outfill <NN>] [keepalive <NN>]\n"
-msgstr ""
+msgstr "  [outfill <NN>] [keepalive <NN>]\n"
 
 #: ../ifconfig.c:214
 #, c-format
 msgid "  [hw <HW> <address>]  [mtu <NN>]\n"
-msgstr ""
+msgstr "  [hw <HW> <address>] [mtu <NN>]\n"
 
 #: ../ifconfig.c:215
 #, c-format
 msgid "  [[-]trailers]  [[-]arp]  [[-]allmulti]\n"
-msgstr ""
+msgstr "  [[-]trailers] [[-]arp] [[-]allmulti]\n"
 
 #: ../ifconfig.c:216
 #, c-format
 msgid "  [multicast]  [[-]promisc]\n"
-msgstr ""
+msgstr "  [multicast] [[-]promisc]\n"
 
 #: ../ifconfig.c:217
 #, c-format
 msgid "  [mem_start <NN>]  [io_addr <NN>]  [irq <NN>]  [media <type>]\n"
-msgstr ""
+msgstr "  [memstart <NN>] [ioaddr <NN>] [irq <NN>] [media <type>]\n"
 
 #: ../ifconfig.c:219
 #, c-format
 msgid "  [txqueuelen <NN>]\n"
-msgstr ""
+msgstr "  [txqueuelen <NN>]\n"
 
 #: ../ifconfig.c:222
 #, c-format
 msgid "  [name <newname>]\n"
-msgstr ""
+msgstr "  [nom <newname>]\n"
 
 #: ../ifconfig.c:225
 #, c-format
 msgid "  [[-]dynamic]\n"
-msgstr ""
+msgstr "  [[-]dinàmic]\n"
 
 #: ../ifconfig.c:227
 #, c-format
@@ -547,52 +595,55 @@ msgid ""
 "  [up|down] ...\n"
 "\n"
 msgstr ""
+"  [up]down] ...\n"
+"\n"
 
 #: ../ifconfig.c:229
 #, c-format
 msgid "  <HW>=Hardware Type.\n"
-msgstr ""
+msgstr "  <HW>.Tipus de maquinari.\n"
 
 #: ../ifconfig.c:230
 #, c-format
 msgid "  List of possible hardware types:\n"
-msgstr ""
+msgstr "  Llista de possibles tipus de maquinari:\n"
 
 #. 1 = ARPable
 #: ../ifconfig.c:232
 #, c-format
 msgid "  <AF>=Address family. Default: %s\n"
-msgstr ""
+msgstr "  <AF>. Família d'adreces. Per defecte: %s\n"
 
 #: ../ifconfig.c:233
 #, c-format
 msgid "  List of possible address families:\n"
-msgstr ""
+msgstr "  Llista de famílies d'adreces possibles:\n"
 
 #: ../ifconfig.c:309
 #, c-format
 msgid "ifconfig: option `%s' not recognised.\n"
-msgstr ""
+msgstr "ifconfig: l'opció «%s» no està reconeguda.\n"
 
 #: ../ifconfig.c:311 ../ifconfig.c:995
 #, c-format
 msgid "ifconfig: `--help' gives usage information.\n"
-msgstr ""
+msgstr "ifconfig: .--help' proporciona informació d'ús.\n"
 
 #: ../ifconfig.c:335
 #, c-format
 msgid "Warning: truncating interface name %s length %lu to %u\n"
-msgstr ""
+msgstr "Avís: truncant el nom de la interfície %s longitud %lu a %u\n"
 
 #: ../ifconfig.c:349
 #, c-format
 msgid "ifconfig: Default address family %s is unknown. How can that be?\n"
 msgstr ""
+"ifconfig: la família d'adreces per defecte %s és desconeguda. Com pot ser?\n"
 
 #: ../ifconfig.c:392
 #, c-format
 msgid "Unknown media type.\n"
-msgstr ""
+msgstr "Tipus de suport desconegut.\n"
 
 #: ../ifconfig.c:429
 #, c-format
@@ -600,117 +651,126 @@ msgid ""
 "Warning: Interface %s still in promisc mode... maybe other application is "
 "running?\n"
 msgstr ""
+"Avís: la interfície %s encara està en mode promisc... potser s'està "
+"executant una altra aplicació?\n"
 
 #: ../ifconfig.c:441
 #, c-format
 msgid "Warning: Interface %s still in MULTICAST mode.\n"
-msgstr ""
+msgstr "Avís: la interfície %s encara està en mode MULTICAST.\n"
 
 #: ../ifconfig.c:453
 #, c-format
 msgid "Warning: Interface %s still in ALLMULTI mode.\n"
-msgstr ""
+msgstr "Avís: la interfície %s encara està en mode ALLMULTI.\n"
 
 #: ../ifconfig.c:477
 #, c-format
 msgid "Warning: Interface %s still in DYNAMIC mode.\n"
-msgstr ""
+msgstr "Avís: la interfície %s encara està en mode DINÀMIC.\n"
 
 #: ../ifconfig.c:524
 #, c-format
 msgid "Warning: Interface %s still in BROADCAST mode.\n"
-msgstr ""
+msgstr "Avís: la interfície %s encara està en mode d'emissió.\n"
 
 #: ../ifconfig.c:535
 #, c-format
 msgid "ifconfig: Error resolving '%s' for broadcast\n"
-msgstr ""
+msgstr "ifconfig: s'ha produït un error en resoldre «%s» per a la difusió\n"
 
 #: ../ifconfig.c:559
 #, c-format
 msgid "ifconfig: Error resolving '%s' for dstaddr\n"
-msgstr ""
+msgstr "ifconfig: s'ha produït un error en resoldre «%s» per a «dstaddr»\n"
 
 #: ../ifconfig.c:581
 #, c-format
 msgid "ifconfig: Error resolving '%s' for netmask\n"
-msgstr ""
+msgstr "ifconfig: Error en resoldre «%s» per a la màscara de xarxa\n"
 
 #: ../ifconfig.c:674
 #, c-format
 msgid "Warning: Interface %s still in POINTOPOINT mode.\n"
-msgstr ""
+msgstr "Avís: la interfície %s encara està en mode POINTOPOINT.\n"
 
 #: ../ifconfig.c:685
 #, c-format
 msgid "ifconfig: Error resolving '%s' for pointopoint\n"
-msgstr ""
+msgstr "ifconfig: s'ha produït un error en resoldre «%s» pel punt\n"
 
 #: ../ifconfig.c:708
 #, c-format
 msgid "hw address type `%s' has no handler to set address. failed.\n"
 msgstr ""
+"el tipus d'adreça hw .%s' no té cap gestor per establir l'adreça. ha fallat."
+"\n"
 
 #: ../ifconfig.c:717
 #, c-format
 msgid "%s: invalid %s address.\n"
-msgstr ""
+msgstr "%s: l'adreça %s no és vàlida.\n"
 
 #: ../ifconfig.c:755
 #, c-format
 msgid "ifconfig: Error resolving '%s' for add\n"
-msgstr ""
+msgstr "ifconfig: s'ha produït un error en resoldre «%s» per afegir\n"
 
 #: ../ifconfig.c:765 ../ifconfig.c:854 ../ifconfig.c:943
 #, c-format
 msgid "No support for INET6 on this system.\n"
-msgstr ""
+msgstr "No hi ha suport per a l'INET6 en aquest sistema.\n"
 
 #: ../ifconfig.c:808 ../ifconfig.c:902
 #, c-format
 msgid "Interface %s not initialized\n"
-msgstr ""
+msgstr "Interfície %s no inicialitzada\n"
 
 #: ../ifconfig.c:820 ../ifconfig.c:913
 #, c-format
 msgid "Bad address.\n"
-msgstr ""
+msgstr "Adreça dolenta.\n"
 
 #: ../ifconfig.c:916
 #, c-format
 msgid "Address deletion not supported on this system.\n"
-msgstr ""
+msgstr "L'eliminació de l'adreça no està suportada en aquest sistema.\n"
 
 #: ../ifconfig.c:987
 #, c-format
 msgid "ifconfig: Cannot set address for this protocol family.\n"
 msgstr ""
+"ifconfig: No es pot establir l'adreça per a aquesta família de protocols.\n"
 
 #: ../ifconfig.c:994
 #, c-format
 msgid "ifconfig: error resolving '%s' to set address for af=%s\n"
 msgstr ""
+"ifconfig: s'ha produït un error en resoldre «%s» per establir l'adreça per a "
+"af=%s\n"
 
 #: ../ifconfig.c:1016
 #, c-format
 msgid "No support for ECONET on this system.\n"
-msgstr ""
+msgstr "No hi ha suport per a ECONET en aquest sistema.\n"
 
 #: ../ifconfig.c:1024
 #, c-format
 msgid "Don't know how to set addresses for family %d.\n"
-msgstr ""
+msgstr "No sé com establir adreces per a la família %d.\n"
 
 #: ../ifconfig.c:1069
 #, c-format
 msgid "WARNING: at least one error occured. (%d)\n"
-msgstr ""
+msgstr "AVÍS: s'ha produït almenys un error. (%d)\n"
 
 #: ../netstat.c:497
 #, c-format
 msgid ""
 "(No info could be read for \"-p\": geteuid()=%d but you should be root.)\n"
 msgstr ""
+"(No es pot llegir cap informació per a «-p»: geteuid().%d, però hauríeu de "
+"ser root.)\n"
 
 #: ../netstat.c:501
 #, c-format
@@ -718,111 +778,114 @@ msgid ""
 "(Not all processes could be identified, non-owned process info\n"
 " will not be shown, you would have to be root to see it all.)\n"
 msgstr ""
+"(No es poden identificar tots els processos, informació del procés no "
+"propietat\n"
+" no es mostrarà, hauríeu de ser arrel per veure-ho tot.)\n"
 
 #: ../netstat.c:508 ../netstat.c:562 ../netstat.c:1537 ../netstat.c:1618
 msgid "LISTENING"
-msgstr ""
+msgstr "ESCOLTANT"
 
 #: ../netstat.c:509 ../netstat.c:563
 msgid "CONN SENT"
-msgstr ""
+msgstr "CONN ENVIAT"
 
 #: ../netstat.c:510 ../netstat.c:564 ../netstat.c:1620
 msgid "DISC SENT"
-msgstr ""
+msgstr "S'HA ENVIAT EL DISC"
 
 #: ../netstat.c:511 ../netstat.c:565 ../netstat.c:628 ../netstat.c:1305
 #: ../netstat.c:1621
 msgid "ESTABLISHED"
-msgstr ""
+msgstr "ESTABLERT"
 
 #: ../netstat.c:533
 #, c-format
 msgid "Active NET/ROM sockets\n"
-msgstr ""
+msgstr "Sòcols NET/ROM actius\n"
 
 #: ../netstat.c:534
 #, c-format
 msgid ""
 "User       Dest       Source     Device  State        Vr/Vs    Send-Q  Recv-"
 "Q\n"
-msgstr ""
+msgstr "Estat del dispositiu origen de prova d'usuari Vr/Vs Send-Q Recv-Q\n"
 
 #: ../netstat.c:545 ../netstat.c:597 ../netstat.c:1660
 #, c-format
 msgid "Problem reading data from %s\n"
-msgstr ""
+msgstr "Hi ha hagut un problema en llegir les dades de %s\n"
 
 #: ../netstat.c:588
 #, c-format
 msgid "Active ROSE sockets\n"
-msgstr ""
+msgstr "Sòcols ROSE actius\n"
 
 #: ../netstat.c:589
 #, c-format
 msgid "dest_addr   dest_call  src_addr    src_call  dev   lci neigh   state\n"
-msgstr ""
+msgstr "destaddr destcall srcaddr srccall dev lci neigh\n"
 
 #: ../netstat.c:629
 msgid "SYN_SENT"
-msgstr ""
+msgstr "SYNSENT"
 
 #: ../netstat.c:630
 msgid "SYN_RECV"
-msgstr ""
+msgstr "SYNRECV"
 
 #: ../netstat.c:631
 msgid "FIN_WAIT1"
-msgstr ""
+msgstr "FINWAIT1"
 
 #: ../netstat.c:632
 msgid "FIN_WAIT2"
-msgstr ""
+msgstr "FINWAIT2"
 
 #: ../netstat.c:633
 msgid "TIME_WAIT"
-msgstr ""
+msgstr "TEMPS"
 
 #: ../netstat.c:634
 msgid "CLOSE"
-msgstr ""
+msgstr "TANCA"
 
 #: ../netstat.c:635
 msgid "CLOSE_WAIT"
-msgstr ""
+msgstr "CLOSEWAIT"
 
 #: ../netstat.c:636
 msgid "LAST_ACK"
-msgstr ""
+msgstr "LASTACK"
 
 #: ../netstat.c:637 ../netstat.c:1838
 msgid "LISTEN"
-msgstr ""
+msgstr "ESCOLTA"
 
 #: ../netstat.c:638
 msgid "CLOSING"
-msgstr ""
+msgstr "TANCAMENT"
 
 #: ../netstat.c:712
 #, c-format
 msgid "warning, got bogus igmp6 line %d.\n"
-msgstr ""
+msgstr "avís, s'ha produït un error en la línia igmp6 %d.\n"
 
 #: ../netstat.c:717 ../netstat.c:758 ../netstat.c:1173 ../netstat.c:1299
 #: ../netstat.c:1410
 #, c-format
 msgid "netstat: unsupported address family %d !\n"
-msgstr ""
+msgstr "netstat: família d'adreces %d no admesa!\n"
 
 #: ../netstat.c:730 ../netstat.c:735 ../netstat.c:747 ../netstat.c:753
 #, c-format
 msgid "warning, got bogus igmp line %d.\n"
-msgstr ""
+msgstr "avís, s'ha produït un error en la línia igmp %d.\n"
 
 #: ../netstat.c:796
 #, c-format
 msgid "Active X.25 sockets\n"
-msgstr ""
+msgstr "Sòcols X.25 actius\n"
 
 #. IMHO, Vr/Vs is not very usefull --SF
 #: ../netstat.c:798
@@ -830,138 +893,138 @@ msgstr ""
 msgid ""
 "Dest         Source          Device  LCI  State        Vr/Vs  Send-Q  Recv-"
 "Q\n"
-msgstr ""
+msgstr "Dest Source Device LCI State Vr/Vs Send-Q Recv-Q\n"
 
 #: ../netstat.c:899
 #, c-format
 msgid "warning, got bogus sctp eps line.\n"
-msgstr ""
+msgstr "avís, hi ha una línia errònia de sctp eps.\n"
 
 #: ../netstat.c:920 ../netstat.c:1018 ../netstat.c:1030
 #, c-format
 msgid "unsupported address family %d"
-msgstr ""
+msgstr "família d'adreces %d no suportada"
 
 #: ../netstat.c:976
 #, c-format
 msgid "warning, got bogus sctp assoc line.\n"
-msgstr ""
+msgstr "avís, hi ha una línia falsa d'assoc sctp.\n"
 
 #: ../netstat.c:1142
 #, c-format
 msgid "warning, got bogus tcp line.\n"
-msgstr ""
+msgstr "avís, hi ha una línia tcp falsa.\n"
 
 #: ../netstat.c:1185 ../netstat.c:1326 ../netstat.c:1423
 #, c-format
 msgid "off (0.00/%ld/%d)"
-msgstr ""
+msgstr "aturada (0.00/%ld/%d)"
 
 #: ../netstat.c:1189
 #, c-format
 msgid "on (%2.2f/%ld/%d)"
-msgstr ""
+msgstr "el (%2.2f/%ld/%d)"
 
 #: ../netstat.c:1194
 #, c-format
 msgid "keepalive (%2.2f/%ld/%d)"
-msgstr ""
+msgstr "manténiu (%2.2f/%ld/%d)"
 
 #: ../netstat.c:1199
 #, c-format
 msgid "timewait (%2.2f/%ld/%d)"
-msgstr ""
+msgstr "temps d'espera (%2.2f/%ld/%d)"
 
 #: ../netstat.c:1204
 #, c-format
 msgid "probe (%2.2f/%ld/%d)"
-msgstr ""
+msgstr "sonda (%2.2f/%ld/%d)"
 
 #: ../netstat.c:1209 ../netstat.c:1335 ../netstat.c:1433
 #, c-format
 msgid "unkn-%d (%2.2f/%ld/%d)"
-msgstr ""
+msgstr "unkn-%d (%2.2f/%ld/%d)"
 
 #: ../netstat.c:1270
 #, c-format
 msgid "warning, got bogus udp line.\n"
-msgstr ""
+msgstr "avís, hi ha una línia udp falsa.\n"
 
 #: ../netstat.c:1313 ../netstat.c:1523 ../netstat.c:1556 ../netstat.c:1850
 #: ../netstat.c:1894
 msgid "UNKNOWN"
-msgstr ""
+msgstr "DESCONEGUT"
 
 #: ../netstat.c:1331 ../netstat.c:1428
 #, c-format
 msgid "on%d (%2.2f/%ld/%d)"
-msgstr ""
+msgstr "on%d (%2.2f/%ld/%d)"
 
 #: ../netstat.c:1383
 #, c-format
 msgid "warning, got bogus raw line.\n"
-msgstr ""
+msgstr "avís, s'ha fet una falsa línia crua.\n"
 
 #: ../netstat.c:1476
 #, c-format
 msgid "warning, got bogus unix line.\n"
-msgstr ""
+msgstr "avís, hi ha una línia errònia d'unix.\n"
 
 #: ../netstat.c:1503
 msgid "STREAM"
-msgstr ""
+msgstr "FLUX"
 
 #: ../netstat.c:1507
 msgid "DGRAM"
-msgstr ""
+msgstr "DGRAM"
 
 #: ../netstat.c:1511
 msgid "RAW"
-msgstr ""
+msgstr "RAW"
 
 #: ../netstat.c:1515
 msgid "RDM"
-msgstr ""
+msgstr "RDM"
 
 #: ../netstat.c:1519
 msgid "SEQPACKET"
-msgstr ""
+msgstr "PAQUETSEQ"
 
 #: ../netstat.c:1528
 msgid "FREE"
-msgstr ""
+msgstr "LLIURE"
 
 #: ../netstat.c:1544
 msgid "CONNECTING"
-msgstr ""
+msgstr "CONNECTANT"
 
 #: ../netstat.c:1548 ../netstat.c:1832
 msgid "CONNECTED"
-msgstr ""
+msgstr "CONNECTAT"
 
 #: ../netstat.c:1552
 msgid "DISCONNECTING"
-msgstr ""
+msgstr "DESCONNECTANT"
 
 #: ../netstat.c:1586
 #, c-format
 msgid "Active UNIX domain sockets "
-msgstr ""
+msgstr "Sòcols de domini UNIX actius "
 
 #: ../netstat.c:1588 ../netstat.c:2312 ../netstat.c:2458
 #, c-format
 msgid "(servers and established)"
-msgstr ""
+msgstr "(servidors i establerts)"
 
 #: ../netstat.c:1591 ../netstat.c:2315 ../netstat.c:2461
 #, c-format
 msgid "(only servers)"
-msgstr ""
+msgstr "(només servidors)"
 
 #: ../netstat.c:1593 ../netstat.c:2317 ../netstat.c:2463
 #, c-format
 msgid "(w/o servers)"
-msgstr ""
+msgstr "(servidors w/o)"
 
 #: ../netstat.c:1596
 #, c-format
@@ -969,34 +1032,36 @@ msgid ""
 "\n"
 "Proto RefCnt Flags       Type       State         I-Node  "
 msgstr ""
+"\n"
+"Node-I del tipus d'estat del Proto RefCnt  "
 
 #: ../netstat.c:1599
 #, c-format
 msgid " Path\n"
-msgstr ""
+msgstr " Camí\n"
 
 #: ../netstat.c:1619
 msgid "SABM SENT"
-msgstr ""
+msgstr "ENVIAT PEL SABM"
 
 #: ../netstat.c:1622
 msgid "RECOVERY"
-msgstr ""
+msgstr "RECUPERACIÓ"
 
 #: ../netstat.c:1636
 #, c-format
 msgid "Active AX.25 sockets\n"
-msgstr ""
+msgstr "Sòcols AX.25 actius\n"
 
 #: ../netstat.c:1637
 #, c-format
 msgid "Dest       Source     Device  State        Vr/Vs    Send-Q  Recv-Q\n"
-msgstr ""
+msgstr "Prova l'estat del dispositiu d'origen Vr/Vs Send-Q Recv-Q\n"
 
 #: ../netstat.c:1680
 #, c-format
 msgid "problem reading data from %s\n"
-msgstr ""
+msgstr "problema en llegir les dades de %s\n"
 
 #: ../netstat.c:1750
 #, c-format
@@ -1005,94 +1070,96 @@ msgid ""
 "Proto Recv-Q Send-Q Local Address              Foreign Address            "
 "State"
 msgstr ""
+"Sòcols IPX actius\n"
+"Proto Recv-Q Send-Q Adreça local Adreça exterior Estat"
 
 #: ../netstat.c:1752
 #, c-format
 msgid " User"
-msgstr ""
+msgstr " Usuari"
 
 #: ../netstat.c:1788
 msgid "ESTAB"
-msgstr ""
+msgstr "ESTAB"
 
 #: ../netstat.c:1796
 msgid "UNK."
-msgstr ""
+msgstr "UNK."
 
 #: ../netstat.c:1834
 msgid "OPEN"
-msgstr ""
+msgstr "OBRE"
 
 #: ../netstat.c:1836
 msgid "BOUND"
-msgstr ""
+msgstr "LLIGAT"
 
 #: ../netstat.c:1840
 msgid "CONNECT"
-msgstr ""
+msgstr "CONNECTA"
 
 #: ../netstat.c:1842
 msgid "CONNECT2"
-msgstr ""
+msgstr "CONNECTA2"
 
 #: ../netstat.c:1844
 msgid "CONFIG"
-msgstr ""
+msgstr "CONFIG"
 
 #: ../netstat.c:1846
 msgid "DISCONN"
-msgstr ""
+msgstr "DISCONN"
 
 #: ../netstat.c:1848
 msgid "CLOSED"
-msgstr ""
+msgstr "TANCAT"
 
 #: ../netstat.c:1869
 #, c-format
 msgid "warning, got bogus l2cap line.\n"
-msgstr ""
+msgstr "avís, hi ha una línia l2cap falsa.\n"
 
 #: ../netstat.c:1882
 msgid "SDP"
-msgstr ""
+msgstr "SDP"
 
 #: ../netstat.c:1885
 msgid "LOW"
-msgstr ""
+msgstr "BAIXA"
 
 #: ../netstat.c:1888
 msgid "MEDIUM"
-msgstr ""
+msgstr "MITJÀ"
 
 #: ../netstat.c:1891
 msgid "HIGH"
-msgstr ""
+msgstr "ALTA"
 
 #: ../netstat.c:1919
 #, c-format
 msgid "warning, got bogus rfcomm line.\n"
-msgstr ""
+msgstr "avís, s'ha falsificat la línia rfcomm.\n"
 
 #: ../netstat.c:1949
 #, c-format
 msgid "Kernel Interface table\n"
-msgstr ""
+msgstr "Taula d'interfície del nucli\n"
 
 #: ../netstat.c:1957
 msgid "missing interface information"
-msgstr ""
+msgstr "falta la informació de la interfície"
 
 #: ../netstat.c:1981
 #, c-format
 msgid ""
 "usage: netstat [-vWeenNcCF] [<Af>] -r         netstat {-V|--version|-h|--"
 "help}\n"
-msgstr ""
+msgstr "ús: netstat [-vWeenNcCF] [<Af>] -r netstat {-V:--version:-h:--help}\n"
 
 #: ../netstat.c:1982
 #, c-format
 msgid "       netstat [-vWnNcaeol] [<Socket> ...]\n"
-msgstr ""
+msgstr "       netstat [-vWnNcaeol] [<Socket> ...]\n"
 
 #: ../netstat.c:1983
 #, c-format
@@ -1100,27 +1167,29 @@ msgid ""
 "       netstat { [-vWeenNac] -i | [-cnNe] -M | -s [-6tuw] }\n"
 "\n"
 msgstr ""
+"       netstat { [-vWeenNac] -i   [-cnNe] -M   -s [-6tuw] }\n"
+"\n"
 
 #: ../netstat.c:1985
 #, c-format
 msgid "        -r, --route              display routing table\n"
-msgstr ""
+msgstr "        -r, --route mostra la taula d'itinerari\n"
 
 #: ../netstat.c:1986
 #, c-format
 msgid "        -i, --interfaces         display interface table\n"
-msgstr ""
+msgstr "        -i, --interfaces mostra la taula d'interfícies\n"
 
 #: ../netstat.c:1987
 #, c-format
 msgid "        -g, --groups             display multicast group memberships\n"
-msgstr ""
+msgstr "        -g, --groups mostra les pertinences de grup multicast\n"
 
 #: ../netstat.c:1988
 #, c-format
 msgid ""
 "        -s, --statistics         display networking statistics (like SNMP)\n"
-msgstr ""
+msgstr "        -s, --statistics mostra estadístiques de xarxes (com SNMP)\n"
 
 #: ../netstat.c:1990
 #, c-format
@@ -1128,46 +1197,48 @@ msgid ""
 "        -M, --masquerade         display masqueraded connections\n"
 "\n"
 msgstr ""
+"        -M, --masquerade mostra connexions emmascarades\n"
+"\n"
 
 #: ../netstat.c:1994
 #, c-format
 msgid "        -W, --wide               don't truncate IP addresses\n"
-msgstr ""
+msgstr "        -W, --wide no trunca les adreces IP\n"
 
 #: ../netstat.c:1996
 #, c-format
 msgid "        --numeric-hosts          don't resolve host names\n"
-msgstr ""
+msgstr "        --numeric-hosts no resol els noms dels amfitrions\n"
 
 #: ../netstat.c:1997
 #, c-format
 msgid "        --numeric-ports          don't resolve port names\n"
-msgstr ""
+msgstr "        --numeric-ports no resol els noms dels ports\n"
 
 #: ../netstat.c:1998
 #, c-format
 msgid "        --numeric-users          don't resolve user names\n"
-msgstr ""
+msgstr "        --numeric-users no resol els noms d'usuari\n"
 
 #: ../netstat.c:1999
 #, c-format
 msgid "        -N, --symbolic           resolve hardware names\n"
-msgstr ""
+msgstr "        -N, --symbolic resol els noms del maquinari\n"
 
 #: ../netstat.c:2000 ../route.c:90
 #, c-format
 msgid "        -e, --extend             display other/more information\n"
-msgstr ""
+msgstr "        -e, --extend mostra una altra/més informació\n"
 
 #: ../netstat.c:2001
 #, c-format
 msgid "        -p, --programs           display PID/Program name for sockets\n"
-msgstr ""
+msgstr "        -p, --programs mostra el nom del PID/Programa per als sòcols\n"
 
 #: ../netstat.c:2002
 #, c-format
 msgid "        -o, --timers             display timers\n"
-msgstr ""
+msgstr "        -o, --timers mostra els temporitzadors\n"
 
 #: ../netstat.c:2003
 #, c-format
@@ -1175,29 +1246,32 @@ msgid ""
 "        -c, --continuous         continuous listing\n"
 "\n"
 msgstr ""
+"        -c, --continuous llista contínua\n"
+"\n"
 
 #: ../netstat.c:2004
 #, c-format
 msgid "        -l, --listening          display listening server sockets\n"
-msgstr ""
+msgstr "        -l, --listening display listening server sockets\n"
 
 #: ../netstat.c:2005
 #, c-format
 msgid ""
 "        -a, --all                display all sockets (default: connected)\n"
-msgstr ""
+msgstr "        -a, --all mostra tots els sòcols (predeterminat: connectat)\n"
 
 #: ../netstat.c:2006 ../route.c:91
 #, c-format
 msgid ""
 "        -F, --fib                display Forwarding Information Base "
 "(default)\n"
-msgstr ""
+msgstr "        -F, --fib display Forwarding Information Base (predeterminat)\n"
 
 #: ../netstat.c:2007
 #, c-format
 msgid "        -C, --cache              display routing cache instead of FIB\n"
 msgstr ""
+"        -C, --cache mostra la memòria cau d'encaminament en lloc de FIB\n"
 
 #: ../netstat.c:2009
 #, c-format
@@ -1205,6 +1279,7 @@ msgid ""
 "        -Z, --context            display SELinux security context for "
 "sockets\n"
 msgstr ""
+"        -Z, --context mostra el context de seguretat SELinux per als sòcols\n"
 
 #: ../netstat.c:2012
 #, c-format
@@ -1212,41 +1287,46 @@ msgid ""
 "\n"
 "  <Socket>={-t|--tcp} {-u|--udp} {-U|--udplite} {-S|--sctp} {-w|--raw}\n"
 msgstr ""
+"\n"
+"  <Socket> {-t --tcp} {-u}--udp} {-U}--udplite} {-S}--sctp} {-w}--raw}\n"
 
 #: ../netstat.c:2013
 #, c-format
 msgid "           {-x|--unix} --ax25 --ipx --netrom\n"
-msgstr ""
+msgstr "           {-x}--unix} --ax25 --ipx --netrom\n"
 
 #: ../netstat.c:2014
 #, c-format
 msgid "  <AF>=Use '-6|-4' or '-A <af>' or '--<af>'; default: %s\n"
-msgstr ""
+msgstr "  <AF>:Utilitza '-6:-4' o '-A <af>' o '--<af>'; per defecte: %s\n"
 
 #: ../netstat.c:2015 ../route.c:95
 #, c-format
 msgid "  List of possible address families (which support routing):\n"
 msgstr ""
+"  Llista de possibles famílies d'adreces (que suporten l'encaminament):\n"
 
 #: ../netstat.c:2191
 #, c-format
 msgid "SELinux is not enabled on this machine.\n"
-msgstr ""
+msgstr "SELinux no està habilitat en aquesta màquina.\n"
 
 #: ../netstat.c:2197
 #, c-format
 msgid "SELinux is not enabled for this application.\n"
-msgstr ""
+msgstr "SELinux no està habilitat per a aquesta aplicació.\n"
 
 #: ../netstat.c:2267
 #, c-format
 msgid "netstat: No statistics support for specified address family: %s\n"
 msgstr ""
+"netstat: No s'admeten estadístiques per a la família d'adreces especificada: "
+"%s\n"
 
 #: ../netstat.c:2309
 #, c-format
 msgid "Active Internet connections "
-msgstr ""
+msgstr "Connexions actives d'Internet "
 
 #: ../netstat.c:2319
 #, c-format
@@ -1255,86 +1335,90 @@ msgid ""
 "Proto Recv-Q Send-Q Local Address           Foreign Address         "
 "State      "
 msgstr ""
+"\n"
+"Proto Recv-Q Send-Q Adreça local Adreça exterior Estat      "
 
 #: ../netstat.c:2321
 #, c-format
 msgid " User       Inode     "
-msgstr ""
+msgstr " Node d'usuari     "
 
 #: ../netstat.c:2325
 #, c-format
 msgid " Timer"
-msgstr ""
+msgstr " Temporitzador"
 
 #: ../netstat.c:2369
 #, c-format
 msgid "IPv4 Group Memberships\n"
-msgstr ""
+msgstr "Membres del grup IPv4\n"
 
 #: ../netstat.c:2370
 #, c-format
 msgid "Interface       RefCnt Group\n"
-msgstr ""
+msgstr "Grup RefCnt de la interfície\n"
 
 #: ../netstat.c:2455
 #, c-format
 msgid "Active Bluetooth connections "
-msgstr ""
+msgstr "Connexions Bluetooth actives "
 
 #: ../rarp.c:45
 msgid "This kernel does not support RARP.\n"
-msgstr ""
+msgstr "Aquest nucli no és compatible amb RARP.\n"
 
 #: ../rarp.c:84
 #, c-format
 msgid "no RARP entry for %s.\n"
-msgstr ""
+msgstr "no hi ha cap entrada RARP per a %s.\n"
 
 #: ../rarp.c:98
 #, c-format
 msgid "%s: bad hardware address\n"
-msgstr ""
+msgstr "%s: adreça de maquinari incorrecta\n"
 
 #: ../rarp.c:130
 #, c-format
 msgid "rarp: cannot open file %s:%s.\n"
-msgstr ""
+msgstr "rarp: no es pot obrir el fitxer %s:%s.\n"
 
 #: ../rarp.c:142
 #, c-format
 msgid "rarp: format error at %s:%u\n"
-msgstr ""
+msgstr "rarp: error de format a %s:%u\n"
 
 #: ../rarp.c:146 ../rarp.c:292
 #, c-format
 msgid "rarp: %s: unknown host\n"
-msgstr ""
+msgstr "rarp: %s: amfitrió desconegut\n"
 
 #: ../rarp.c:149
 #, c-format
 msgid "rarp: cannot set entry from %s:%u\n"
-msgstr ""
+msgstr "rarp: no es pot establir l'entrada des de %s:%u\n"
 
 #: ../rarp.c:179
 #, c-format
 msgid "Usage: rarp -a                               list entries in cache.\n"
-msgstr ""
+msgstr "Ús: entrades de llista rarp -a a la memòria cau.\n"
 
 #: ../rarp.c:180
 #, c-format
 msgid "       rarp -d <hostname>                    delete entry from cache.\n"
-msgstr ""
+msgstr "       rarp -d <hostname> suprimeix l'entrada de la memòria cau.\n"
 
 #: ../rarp.c:181
 #, c-format
 msgid "       rarp [<HW>] -s <hostname> <hwaddr>    add entry to cache.\n"
 msgstr ""
+"       rarp [<HW>] -s <hostname> <hwaddr> afegeix una entrada a la memòria "
+"cau.\n"
 
 #: ../rarp.c:182
 #, c-format
 msgid ""
 "       rarp -f                               add entries from /etc/ethers.\n"
-msgstr ""
+msgstr "       rarp -f afegeix entrades des de /etc/ethers.\n"
 
 #: ../rarp.c:183
 #, c-format
@@ -1342,22 +1426,25 @@ msgid ""
 "       rarp -V                               display program version.\n"
 "\n"
 msgstr ""
+"       rarp -V mostra la versió del programa.\n"
+"\n"
 
 #: ../rarp.c:241
 #, c-format
 msgid "%s: illegal option mix.\n"
-msgstr ""
+msgstr "%s: mescla d'opcions il·legal.\n"
 
 #: ../rarp.c:272
 #, c-format
 msgid "rarp: %s: unknown hardware type.\n"
-msgstr ""
+msgstr "rarp: %s: tipus de maquinari desconegut.\n"
 
 #: ../route.c:82
 #, c-format
 msgid ""
 "Usage: route [-nNvee] [-FC] [<AF>]           List kernel routing tables\n"
 msgstr ""
+"Ús: route [-nNvee] [-FC] [<AF>] Llista de taules d'encaminament del nucli\n"
 
 #: ../route.c:83
 #, c-format
@@ -1365,6 +1452,9 @@ msgid ""
 "       route [-v] [-FC] {add|del|flush} ...  Modify routing table for AF.\n"
 "\n"
 msgstr ""
+"       route [-v] [-FC] {add.del.flush} ... Modifica la taula d'encaminament "
+"per AF.\n"
+"\n"
 
 #: ../route.c:85
 #, c-format
@@ -1372,6 +1462,8 @@ msgid ""
 "       route {-h|--help} [<AF>]              Detailed usage syntax for "
 "specified AF.\n"
 msgstr ""
+"       route {-h.--help} [<AF>] Sintaxi d'ús detallada per a l'AF "
+"especificada.\n"
 
 #: ../route.c:86
 #, c-format
@@ -1380,6 +1472,8 @@ msgid ""
 "exit.\n"
 "\n"
 msgstr ""
+"       ruta {-V.--version} Mostra la versió/autor i surt.\n"
+"\n"
 
 #: ../route.c:92
 #, c-format
@@ -1387,52 +1481,54 @@ msgid ""
 "        -C, --cache              display routing cache instead of FIB\n"
 "\n"
 msgstr ""
+"        -C, --cache mostra la memòria cau d'encaminament en lloc de FIB\n"
+"\n"
 
 #: ../route.c:94
 #, c-format
 msgid "  <AF>=Use -4, -6, '-A <af>' or '--<af>'; default: %s\n"
-msgstr ""
+msgstr "  <AF>:Utilitza -4, -6, '-A <af>' o '--<af>'; per defecte: %s\n"
 
 #: ../plipconfig.c:63
 #, c-format
 msgid "Usage: plipconfig interface [nibble NN] [trigger NN]\n"
-msgstr ""
+msgstr "Ús: interfície plipconfig [nibble NN] [trigger NN]\n"
 
 #: ../plipconfig.c:64
 #, c-format
 msgid "       plipconfig -V | --version\n"
-msgstr ""
+msgstr "       plipconfig -V   --version\n"
 
 #: ../plipconfig.c:65
 #, c-format
 msgid "       plipconfig -h | --help\n"
-msgstr ""
+msgstr "       plipconfig -h   --help\n"
 
 #: ../plipconfig.c:71
 #, c-format
 msgid "%s\tnibble %lu  trigger %lu\n"
-msgstr ""
+msgstr "%s nibble %lu activador %lu\n"
 
 #: ../iptunnel.c:82
 #, c-format
 msgid "Usage: iptunnel { add | change | del | show } [ NAME ]\n"
-msgstr ""
+msgstr "Ús: iptunnel { add | change | del | show } [ NOM ]\n"
 
 #: ../iptunnel.c:83
 #, c-format
 msgid ""
 "          [ mode { ipip | gre | sit } ] [ remote ADDR ] [ local ADDR ]\n"
-msgstr ""
+msgstr "          [ mode { ipip   gre   sit } ] [ ADDR remot ] [ ADDR local ]\n"
 
 #: ../iptunnel.c:84
 #, c-format
 msgid "          [ [i|o]seq ] [ [i|o]key KEY ] [ [i|o]csum ]\n"
-msgstr ""
+msgstr "          [ [i]o]seq ] [ [i]o]key KEY ] [ [i o]csum ]\n"
 
 #: ../iptunnel.c:85
 #, c-format
 msgid "          [ ttl TTL ] [ tos TOS ] [ nopmtudisc ] [ dev PHYS_DEV ]\n"
-msgstr ""
+msgstr "          [ ttl TTL ] [ tos TOS ] [ nopmtudisc ] [ dev PHYSDEV ]\n"
 
 #: ../iptunnel.c:86
 #, c-format
@@ -1440,244 +1536,246 @@ msgid ""
 "       iptunnel -V | --version\n"
 "\n"
 msgstr ""
+"       iptunnel -V   --version\n"
+"\n"
 
 #: ../iptunnel.c:87
 #, c-format
 msgid "Where: NAME := STRING\n"
-msgstr ""
+msgstr "WHERE: NOM : STRING CADENA\n"
 
 #: ../iptunnel.c:88
 #, c-format
 msgid "       ADDR := { IP_ADDRESS | any }\n"
-msgstr ""
+msgstr "       ADDR :  { IPADDRESS   any }\n"
 
 #: ../iptunnel.c:89
 #, c-format
 msgid "       TOS  := { NUMBER | inherit }\n"
-msgstr ""
+msgstr "       TOS :  { NUMBER   INHERIT }\n"
 
 #: ../iptunnel.c:90
 #, c-format
 msgid "       TTL  := { 1..255 | inherit }\n"
-msgstr ""
+msgstr "       TTL :  { 1..255   inherit }\n"
 
 #: ../iptunnel.c:91
 #, c-format
 msgid "       KEY  := { DOTTED_QUAD | NUMBER }\n"
-msgstr ""
+msgstr "       CLAU :  { DOTTEDQUAD   NÚMERO }\n"
 
 #: ../iptunnel.c:332
 #, c-format
 msgid "Keys are not allowed with ipip and sit.\n"
-msgstr ""
+msgstr "Les claus no estan permeses amb ipip i sit.\n"
 
 #: ../iptunnel.c:352
 #, c-format
 msgid "Broadcast tunnel requires a source address.\n"
-msgstr ""
+msgstr "El túnel de difusió requereix una adreça d'origen.\n"
 
 #: ../iptunnel.c:367
 #, c-format
 msgid "ttl != 0 and noptmudisc are incompatible\n"
-msgstr ""
+msgstr "ttl ! and 0 i noptmudisc són incompatibles\n"
 
 #: ../iptunnel.c:379
 #, c-format
 msgid "cannot determine tunnel mode (ipip, gre or sit)\n"
-msgstr ""
+msgstr "no es pot determinar el mode túnel (ipip, gre o sit)\n"
 
 #: ../iptunnel.c:417
 #, c-format
 msgid "%s: %s/ip  remote %s  local %s "
-msgstr ""
+msgstr "%s: %s/ip remot %s local %s "
 
 #: ../iptunnel.c:421
 msgid "unknown"
-msgstr ""
+msgstr "desconegut"
 
 #: ../iptunnel.c:453
 #, c-format
 msgid "  Drop packets out of sequence.\n"
-msgstr ""
+msgstr "  Deixa anar els paquets fora de seqüència.\n"
 
 #: ../iptunnel.c:455
 #, c-format
 msgid "  Checksum in received packet is required.\n"
-msgstr ""
+msgstr "  Es requereix la suma de verificació al paquet rebut.\n"
 
 #: ../iptunnel.c:457
 #, c-format
 msgid "  Sequence packets on output.\n"
-msgstr ""
+msgstr "  Paquets de seqüència a la sortida.\n"
 
 #: ../iptunnel.c:459
 #, c-format
 msgid "  Checksum output packets.\n"
-msgstr ""
+msgstr "  Paquets de sortida de suma de verificació.\n"
 
 #: ../iptunnel.c:489
 #, c-format
 msgid "Wrong format of /proc/net/dev. Sorry.\n"
-msgstr ""
+msgstr "Format incorrecte de /proc/net/dev. Ho sento.\n"
 
 #: ../iptunnel.c:503
 #, c-format
 msgid "Failed to get type of [%s]\n"
-msgstr ""
+msgstr "No s'ha pogut obtenir el tipus de [%s]\n"
 
 #: ../iptunnel.c:519
 #, c-format
 msgid "RX: Packets    Bytes        Errors CsumErrs OutOfSeq Mcasts\n"
-msgstr ""
+msgstr "RX: errors de bytes de paquets CsumErrs OutOfSeq Mcasts\n"
 
 #: ../iptunnel.c:522
 #, c-format
 msgid "TX: Packets    Bytes        Errors DeadLoop NoRoute  NoBufs\n"
-msgstr ""
+msgstr "TX: Paquets Errors de bytes DeadLoop NoRoute NoBufs\n"
 
 #: ../statistics.c:40
 msgid "ICMP input histogram:"
-msgstr ""
+msgstr "Histograma d'entrada ICMP:"
 
 #: ../statistics.c:41
 msgid "ICMP output histogram:"
-msgstr ""
+msgstr "Histograma de sortida ICMP:"
 
 #. Keep the entries sorted!
 #: ../statistics.c:58
 #, c-format
 msgid "Default TTL is %llu"
-msgstr ""
+msgstr "El TTL per defecte és %llu"
 
 #: ../statistics.c:59 ../statistics.c:95
 #, c-format
 msgid "%llu forwarded"
-msgstr ""
+msgstr "%llu reenviat"
 
 #: ../statistics.c:60
 #, c-format
 msgid "Forwarding is %s"
-msgstr ""
+msgstr "La reenviament és %s"
 
 #. Keep the entries sorted!
 #: ../statistics.c:61 ../statistics.c:81
 #, c-format
 msgid "%llu fragments created"
-msgstr ""
+msgstr "%llu fragments creats"
 
 #: ../statistics.c:62 ../statistics.c:82
 #, c-format
 msgid "%llu outgoing packets failed fragmentation"
-msgstr ""
+msgstr "%llu paquets sortints han fallat la fragmentació"
 
 #: ../statistics.c:63 ../statistics.c:83
 #, c-format
 msgid "%llu outgoing packets fragmented ok"
-msgstr ""
+msgstr "%llu paquets sortints fragmentats"
 
 #: ../statistics.c:64 ../statistics.c:84
 #, c-format
 msgid "%llu with invalid addresses"
-msgstr ""
+msgstr "%llu amb adreces no vàlides"
 
 #: ../statistics.c:65 ../statistics.c:85
 #, c-format
 msgid "%llu incoming packets delivered"
-msgstr ""
+msgstr "S'han lliurat %llu paquets entrants"
 
 #: ../statistics.c:66 ../statistics.c:86
 #, c-format
 msgid "%llu incoming packets discarded"
-msgstr ""
+msgstr "%llu paquets entrants descartats"
 
 #: ../statistics.c:67 ../statistics.c:87
 #, c-format
 msgid "%llu with invalid headers"
-msgstr ""
+msgstr "%llu amb capçaleres no vàlides"
 
 #: ../statistics.c:68 ../statistics.c:90
 #, c-format
 msgid "%llu total packets received"
-msgstr ""
+msgstr "%llu total de paquets rebuts"
 
 #: ../statistics.c:69 ../statistics.c:93
 #, c-format
 msgid "%llu with unknown protocol"
-msgstr ""
+msgstr "%llu amb un protocol desconegut"
 
 #: ../statistics.c:70 ../statistics.c:94
 #, c-format
 msgid "%llu outgoing packets dropped"
-msgstr ""
+msgstr "%llu paquets sortints deixats"
 
 #: ../statistics.c:71 ../statistics.c:97
 #, c-format
 msgid "%llu dropped because of missing route"
-msgstr ""
+msgstr "%llu ha caigut a causa de la ruta que falta"
 
 #: ../statistics.c:72 ../statistics.c:98
 #, c-format
 msgid "%llu requests sent out"
-msgstr ""
+msgstr "%llu sol·licituds enviades"
 
 #. ?
 #: ../statistics.c:73 ../statistics.c:99
 #, c-format
 msgid "%llu packet reassemblies failed"
-msgstr ""
+msgstr "Ha fallat el reassemblatge de paquets %llu"
 
 #: ../statistics.c:74 ../statistics.c:100
 #, c-format
 msgid "%llu packets reassembled ok"
-msgstr ""
+msgstr "%llu paquets reassemblats bé"
 
 #: ../statistics.c:75 ../statistics.c:101
 #, c-format
 msgid "%llu reassemblies required"
-msgstr ""
+msgstr "Calen %llu reassemblies"
 
 #. ?
 #: ../statistics.c:76 ../statistics.c:102
 #, c-format
 msgid "%llu fragments dropped after timeout"
-msgstr ""
+msgstr "%llu fragments abandonats després de temps d'espera"
 
 #: ../statistics.c:88
 #, c-format
 msgid "%llu incoming multicast packets"
-msgstr ""
+msgstr "%llu entrant paquets multicast"
 
 #: ../statistics.c:89
 #, c-format
 msgid "%llu incoming packets with no route"
-msgstr ""
+msgstr "%llu entrant paquets sense ruta"
 
 #: ../statistics.c:91
 #, c-format
 msgid "%llu with packets too big"
-msgstr ""
+msgstr "%llu amb paquets massa grans"
 
 #: ../statistics.c:92
 #, c-format
 msgid "%llu with truncated packets"
-msgstr ""
+msgstr "%llu amb paquets truncats"
 
 #: ../statistics.c:96
 #, c-format
 msgid "%llu outgoing multicast packets"
-msgstr ""
+msgstr "%llu paquets multicast sortints"
 
 #. Keep the entries sorted!
 #: ../statistics.c:107 ../statistics.c:120
 #, c-format
 msgid "address mask replies: %llu"
-msgstr ""
+msgstr "respostes de la màscara d'adreça: %llu"
 
 #. ?
 #: ../statistics.c:108
 #, c-format
 msgid "address mask request: %llu"
-msgstr ""
+msgstr "sol·licitud de màscara d'adreça: %llu"
 
 #. ?
 #. Keep the entries sorted!
@@ -1685,1092 +1783,1119 @@ msgstr ""
 #: ../statistics.c:153
 #, c-format
 msgid "destination unreachable: %llu"
-msgstr ""
+msgstr "destinació no accessible: %llu"
 
 #: ../statistics.c:110 ../statistics.c:123 ../statistics.c:138
 #: ../statistics.c:154
 #, c-format
 msgid "echo replies: %llu"
-msgstr ""
+msgstr "respostes d'eco: %llu"
 
 #: ../statistics.c:111 ../statistics.c:124 ../statistics.c:139
 #: ../statistics.c:155
 #, c-format
 msgid "echo requests: %llu"
-msgstr ""
+msgstr "peticions d'eco: %llu"
 
 #: ../statistics.c:112 ../statistics.c:140
 #, c-format
 msgid "%llu input ICMP message failed"
-msgstr ""
+msgstr "%llu entrada missatge ICMP ha fallat"
 
 #: ../statistics.c:113 ../statistics.c:144
 #, c-format
 msgid "%llu ICMP messages received"
-msgstr ""
+msgstr "S'han rebut %llu missatges ICMP"
 
 #: ../statistics.c:114 ../statistics.c:127
 #, c-format
 msgid "wrong parameters: %llu"
-msgstr ""
+msgstr "paràmetres incorrectes: %llu"
 
 #. ?
 #: ../statistics.c:115 ../statistics.c:149 ../statistics.c:164
 #, c-format
 msgid "redirects: %llu"
-msgstr ""
+msgstr "redireccionaments: %llu"
 
 #: ../statistics.c:116
 #, c-format
 msgid "source quenches: %llu"
-msgstr ""
+msgstr "especificació de l'origen: %llu"
 
 #: ../statistics.c:117
 #, c-format
 msgid "timeout in transit: %llu"
-msgstr ""
+msgstr "temps d'espera en el trànsit: %llu"
 
 #: ../statistics.c:118
 #, c-format
 msgid "timestamp reply: %llu"
-msgstr ""
+msgstr "resposta de la marca horària: %llu"
 
 #: ../statistics.c:119
 #, c-format
 msgid "timestamp request: %llu"
-msgstr ""
+msgstr "sol·licitud de marca horària: %llu"
 
 #: ../statistics.c:121
 #, c-format
 msgid "address mask requests: %llu"
-msgstr ""
+msgstr "sol·licituds de màscara d'adreça: %llu"
 
 #: ../statistics.c:125
 #, c-format
 msgid "%llu ICMP messages failed"
-msgstr ""
+msgstr "%llu missatges ICMP han fallat"
 
 #: ../statistics.c:126 ../statistics.c:159
 #, c-format
 msgid "%llu ICMP messages sent"
-msgstr ""
+msgstr "S'han enviat %llu missatges ICMP"
 
 #. ?
 #: ../statistics.c:128
 #, c-format
 msgid "redirect: %llu"
-msgstr ""
+msgstr "redirigeix: %llu"
 
 #: ../statistics.c:129
 #, c-format
 msgid "source quench: %llu"
-msgstr ""
+msgstr "especificació d'origen: %llu"
 
 #: ../statistics.c:130
 #, c-format
 msgid "time exceeded: %llu"
-msgstr ""
+msgstr "s'ha excedit el temps: %llu"
 
 #: ../statistics.c:131
 #, c-format
 msgid "timestamp replies: %llu"
-msgstr ""
+msgstr "respostes de la marca horària: %llu"
 
 #: ../statistics.c:132
 #, c-format
 msgid "timestamp requests: %llu"
-msgstr ""
+msgstr "sol·licituds de marca horària: %llu"
 
 #: ../statistics.c:141 ../statistics.c:156
 #, c-format
 msgid "group member queries: %llu"
-msgstr ""
+msgstr "consultes de membres del grup: %llu"
 
 #: ../statistics.c:142 ../statistics.c:157
 #, c-format
 msgid "group member reductions: %llu"
-msgstr ""
+msgstr "reduccions de membres del grup: %llu"
 
 #: ../statistics.c:143 ../statistics.c:158
 #, c-format
 msgid "group member responses: %llu"
-msgstr ""
+msgstr "respostes del membre del grup: %llu"
 
 #: ../statistics.c:145
 #, c-format
 msgid "neighbour advertisement: %llu"
-msgstr ""
+msgstr "anunci veí: %llu"
 
 #: ../statistics.c:146
 #, c-format
 msgid "neighbour solicits: %llu"
-msgstr ""
+msgstr "sol·licituds veïnes: %llu"
 
 #: ../statistics.c:147 ../statistics.c:162
 #, c-format
 msgid "parameter problem: %llu"
-msgstr ""
+msgstr "problema del paràmetre: %llu"
 
 #: ../statistics.c:148 ../statistics.c:163
 #, c-format
 msgid "packets too big: %llu"
-msgstr ""
+msgstr "paquets massa grans: %llu"
 
 #: ../statistics.c:150 ../statistics.c:165
 #, c-format
 msgid "router advertisement: %llu"
-msgstr ""
+msgstr "anunci d'encaminador: %llu"
 
 #: ../statistics.c:151 ../statistics.c:166
 #, c-format
 msgid "router solicits: %llu"
-msgstr ""
+msgstr "sol·licituds d'encaminador: %llu"
 
 #: ../statistics.c:152
 #, c-format
 msgid "received ICMPv6 time exceeded: %llu"
-msgstr ""
+msgstr "s'ha excedit el temps d'ICMPv6: %llu"
 
 #: ../statistics.c:160
 #, c-format
 msgid "neighbor advertisements: %llu"
-msgstr ""
+msgstr "anuncis veïns: %llu"
 
 #: ../statistics.c:161
 #, c-format
 msgid "neighbor solicits: %llu"
-msgstr ""
+msgstr "sol·licituds de veïns: %llu"
 
 #: ../statistics.c:167
 #, c-format
 msgid "sent ICMPv6 time exceeded: %llu"
-msgstr ""
+msgstr "s'ha excedit el temps d'ICMPv6 enviat: %llu"
 
 #. Keep the entries sorted!
 #: ../statistics.c:172
 #, c-format
 msgid "%llu active connection openings"
-msgstr ""
+msgstr "%llu obertures actives de connexió"
 
 #: ../statistics.c:173
 #, c-format
 msgid "%llu failed connection attempts"
-msgstr ""
+msgstr "%llu ha fallat en els intents de connexió"
 
 #: ../statistics.c:174
 #, c-format
 msgid "%llu connections established"
-msgstr ""
+msgstr "%llu connexions establertes"
 
 #: ../statistics.c:175
 #, c-format
 msgid "%llu connection resets received"
-msgstr ""
+msgstr "S'han rebut %llu de restabliments de connexió"
 
 #: ../statistics.c:176
 #, c-format
 msgid "%llu bad segments received"
-msgstr ""
+msgstr "S'han rebut %llu segments dolents"
 
 #: ../statistics.c:177
 #, c-format
 msgid "%llu segments received"
-msgstr ""
+msgstr "%llu segments rebuts"
 
 #: ../statistics.c:179
 #, c-format
 msgid "%llu resets sent"
-msgstr ""
+msgstr "S'han enviat %llu"
 
 #: ../statistics.c:180
 #, c-format
 msgid "%llu segments sent out"
-msgstr ""
+msgstr "%llu segments enviats"
 
 #: ../statistics.c:181
 #, c-format
 msgid "%llu passive connection openings"
-msgstr ""
+msgstr "%llu obertures de connexió passiva"
 
 #: ../statistics.c:182
 #, c-format
 msgid "%llu segments retransmitted"
-msgstr ""
+msgstr "%llu segments retransmesos"
 
 #: ../statistics.c:183
 #, c-format
 msgid "RTO algorithm is %s"
-msgstr ""
+msgstr "L'algorisme RTO és %s"
 
 #. Keep the entries sorted!
 #: ../statistics.c:190 ../statistics.c:201
 #, c-format
 msgid "%llu packets with invalid checksum"
-msgstr ""
+msgstr "%llu paquets amb suma de verificació no vàlida"
 
 #: ../statistics.c:191 ../statistics.c:202
 #, c-format
 msgid "%llu packets received"
-msgstr ""
+msgstr "S'han rebut %llu paquets"
 
 #: ../statistics.c:192 ../statistics.c:203
 #, c-format
 msgid "%llu packet receive errors"
-msgstr ""
+msgstr "%llu paquet rep errors"
 
 #: ../statistics.c:193 ../statistics.c:204
 #, c-format
 msgid "%llu packets to unknown port received"
-msgstr ""
+msgstr "S'han rebut %llu paquets a un port desconegut"
 
 #: ../statistics.c:194 ../statistics.c:205
 #, c-format
 msgid "%llu packets sent"
-msgstr ""
+msgstr "S'han enviat %llu paquets"
 
 #: ../statistics.c:195 ../statistics.c:206
 #, c-format
 msgid "%llu receive buffer errors"
-msgstr ""
+msgstr "%llu rep errors de memòria intermèdia"
 
 #: ../statistics.c:196 ../statistics.c:207
 #, c-format
 msgid "%llu send buffer errors"
-msgstr ""
+msgstr "%llu envia errors de memòria intermèdia"
 
 #. Keep the entries sorted!
 #: ../statistics.c:212
 #, c-format
 msgid "%llu delayed acks further delayed because of locked socket"
-msgstr ""
+msgstr "%llu ha retardat els problemes més a causa del sòcol bloquejat"
 
 #: ../statistics.c:213
 #, c-format
 msgid "Quick ack mode was activated %llu times"
-msgstr ""
+msgstr "El mode d'ack ràpid s'ha activat %llu vegades"
 
 #: ../statistics.c:214
 #, c-format
 msgid "%llu delayed acks sent"
-msgstr ""
+msgstr "S'han enviat %llu de mals retardats"
 
 #: ../statistics.c:215
 #, c-format
 msgid "%llu resets received for embryonic SYN_RECV sockets"
-msgstr ""
+msgstr "S'han rebut %llu per als sòcols SYNRECV embrionaris"
 
 #: ../statistics.c:216
 #, c-format
 msgid "%llu SYNs to LISTEN sockets dropped"
-msgstr ""
+msgstr "%llu SYNs per escoltar els sòcols deixats"
 
 #: ../statistics.c:217
 #, c-format
 msgid "%llu times the listen queue of a socket overflowed"
-msgstr ""
+msgstr "%llu vegades s'ha desbordat la cua d'escolta d'un sòcol"
 
 #: ../statistics.c:218
 #, c-format
 msgid "%llu ICMP packets dropped because socket was locked"
-msgstr ""
+msgstr "S'han descartat %llu paquets ICMP perquè el sòcol estava bloquejat"
 
 #: ../statistics.c:219
 #, c-format
 msgid ""
 "%llu packets dropped from out-of-order queue because of socket buffer overrun"
 msgstr ""
+"%llu paquets abandonats de la cua fora d'ordre a causa de l'envasament de la "
+"memòria intermèdia del sòcol"
 
 #: ../statistics.c:220
 #, c-format
 msgid "%llu ICMP packets dropped because they were out-of-window"
-msgstr ""
+msgstr "%llu paquets ICMP caiguts perquè estaven fora de finestra"
 
 #: ../statistics.c:221
 #, c-format
 msgid "%llu active connections rejected because of time stamp"
-msgstr ""
+msgstr "%llu connexions actives rebutjades a causa del segell de temps"
 
 #: ../statistics.c:222
 #, c-format
 msgid "%llu packets rejected in established connections because of timestamp"
 msgstr ""
+"%llu paquets rebutjats a les connexions establertes a causa de la marca "
+"horària"
 
 #: ../statistics.c:223
 #, c-format
 msgid "%llu passive connections rejected because of time stamp"
-msgstr ""
+msgstr "%llu connexions passives rebutjades a causa del segell de temps"
 
 #: ../statistics.c:224
 #, c-format
 msgid "%llu packets pruned from receive queue because of socket buffer overrun"
 msgstr ""
+"%llu paquets esborrats de la cua de recepció perquè s'ha envaït la memòria "
+"intermèdia del sòcol"
 
 #: ../statistics.c:225
 #, c-format
 msgid "%llu packets pruned from receive queue"
-msgstr ""
+msgstr "%llu paquets esborrats de la cua de recepció"
 
 #: ../statistics.c:226
 #, c-format
 msgid "Ran %llu times out of system memory during packet sending"
 msgstr ""
+"Ranura %llu vegades fora de la memòria del sistema durant l'enviament de "
+"paquets"
 
 #: ../statistics.c:227
 #, c-format
 msgid "%llu invalid SYN cookies received"
-msgstr ""
+msgstr "%llu no s'han rebut les galetes SYN"
 
 #: ../statistics.c:228
 #, c-format
 msgid "%llu SYN cookies received"
-msgstr ""
+msgstr "S'han rebut %llu SYN"
 
 #: ../statistics.c:229
 #, c-format
 msgid "%llu SYN cookies sent"
-msgstr ""
+msgstr "S'han enviat %llu SYN"
 
 #: ../statistics.c:230
 #, c-format
 msgid "%llu times unable to send RST due to no memory"
-msgstr ""
+msgstr "%llu vegades no s'ha pogut enviar el RST perquè no hi ha memòria"
 
 #: ../statistics.c:231
 #, c-format
 msgid "%llu connections reset due to early user close"
 msgstr ""
+"S'han restablert %llu connexions a causa del tancament primerenc de l'usuari"
 
 #: ../statistics.c:232
 #, c-format
 msgid "%llu connections reset due to unexpected data"
-msgstr ""
+msgstr "S'han restablert %llu connexions a causa de dades inesperades"
 
 #: ../statistics.c:233
 #, c-format
 msgid "%llu connections aborted after user close in linger timeout"
 msgstr ""
+"%llu connexions avortades després de tancar l'usuari en temps d'espera "
+"persistent"
 
 #: ../statistics.c:234
 #, c-format
 msgid "%llu connections aborted due to memory pressure"
-msgstr ""
+msgstr "%llu connexions avortades a causa de la pressió de memòria"
 
 #: ../statistics.c:235
 #, c-format
 msgid "%llu connections reset due to unexpected SYN"
-msgstr ""
+msgstr "S'han restablert %llu connexions a causa d'un SYN inesperat"
 
 #: ../statistics.c:236
 #, c-format
 msgid "%llu connections aborted due to timeout"
-msgstr ""
+msgstr "%llu connexions avortades a causa del temps d'espera"
 
 #: ../statistics.c:237
 #, c-format
 msgid "%llu bytes directly in process context from backlog"
-msgstr ""
+msgstr "%llu bytes directament en el context del procés des del registre enrere"
 
 #: ../statistics.c:238
 #, c-format
 msgid "%llu bytes directly received in process context from prequeue"
 msgstr ""
+"%llu bytes rebuts directament en el context del procés des de la cua prèvia"
 
 #: ../statistics.c:239
 #, c-format
 msgid "%llu DSACKs for out of order packets received"
-msgstr ""
+msgstr "%llu DSACKs per als paquets fora de comanda rebuts"
 
 #: ../statistics.c:240
 #, c-format
 msgid "%llu DSACKs sent for out of order packets"
-msgstr ""
+msgstr "%llu DSACKs enviats per a paquets fora de comanda"
 
 #: ../statistics.c:241
 #, c-format
 msgid "%llu DSACKs sent for old packets"
-msgstr ""
+msgstr "%llu DSACKs enviats per paquets antics"
 
 #: ../statistics.c:242
 #, c-format
 msgid "%llu DSACKs received"
-msgstr ""
+msgstr "%llu DSACKs rebuts"
 
 #: ../statistics.c:243
 #, c-format
 msgid "%llu congestion window recovered without slow start using DSACK"
 msgstr ""
+"S'ha recuperat la finestra de congestió de %llu sense iniciar lentament amb "
+"DSACK"
 
 #: ../statistics.c:244
 #, c-format
 msgid "%llu congestion windows recovered without slow start by DSACK"
-msgstr ""
+msgstr "%llu finestres de congestió recuperades sense inici lent per DSACK"
 
 #: ../statistics.c:245
 #, c-format
 msgid "Detected reordering %llu times using FACK"
-msgstr ""
+msgstr "S'ha detectat una reordenació de %llu vegades usant FACK"
 
 #: ../statistics.c:246
 #, c-format
 msgid "%llu fast retransmits"
-msgstr ""
+msgstr "%llu retransmet ràpidament"
 
 #: ../statistics.c:247
 #, c-format
 msgid "%llu forward retransmits"
-msgstr ""
+msgstr "%llu retransmet"
 
 #: ../statistics.c:248
 #, c-format
 msgid "%llu congestion windows fully recovered without slow start"
-msgstr ""
+msgstr "%llu finestres de congestió totalment recuperades sense inici lent"
 
 #: ../statistics.c:249
 #, c-format
 msgid "%llu predicted acknowledgments"
-msgstr ""
+msgstr "%llu predit reconeixements"
 
 #: ../statistics.c:250
 #, c-format
 msgid "%llu packet headers predicted"
-msgstr ""
+msgstr "%llu de capçaleres de paquets predites"
 
 #: ../statistics.c:251
 #, c-format
 msgid "%llu packet headers predicted and directly queued to user"
-msgstr ""
+msgstr "%llu de capçaleres de paquets predit i en cua directa a l'usuari"
 
 #: ../statistics.c:252
 #, c-format
 msgid "%llu timeouts in loss state"
-msgstr ""
+msgstr "%llu temps d'espera en estat de pèrdua"
 
 #: ../statistics.c:253
 #, c-format
 msgid "%llu TCP data loss events"
-msgstr ""
+msgstr "%llu TCP pèrdua de dades"
 
 #: ../statistics.c:254
 #, c-format
 msgid "%llu congestion windows recovered without slow start after partial ack"
 msgstr ""
+"%llu congestion finestres recuperades sense inici lent després d'una baralla "
+"parcial"
 
 #: ../statistics.c:255
 #, c-format
 msgid "%llu retransmits lost"
-msgstr ""
+msgstr "%llu retransmet perdut"
 
 #: ../statistics.c:256
 #, c-format
 msgid "TCP ran low on memory %llu times"
-msgstr ""
+msgstr "TCP va córrer baix en la memòria %llu vegades"
 
 #: ../statistics.c:257
 #, c-format
 msgid "%llu congestion windows partially recovered using Hoe heuristic"
 msgstr ""
+"%llu finestres de congestió parcialment recuperades usant l'heurística Hoe"
 
 #: ../statistics.c:258
 #, c-format
 msgid "%llu packets directly queued to recvmsg prequeue"
-msgstr ""
+msgstr "%llu paquets a la cua directament a la cua anterior al recvmsg"
 
 #: ../statistics.c:259
 #, c-format
 msgid "%llu packets dropped from prequeue"
-msgstr ""
+msgstr "%llu paquets deixats de la cua prèvia"
 
 #: ../statistics.c:260
 #, c-format
 msgid "%llu acknowledgments not containing data payload received"
-msgstr ""
+msgstr "%llu reconeix que no conté la càrrega útil de dades rebuda"
 
 #: ../statistics.c:261
 #, c-format
 msgid "%llu packets collapsed in receive queue due to low socket buffer"
 msgstr ""
+"%llu paquets col·lapsats a la cua de recepció a causa d'una memòria "
+"intermèdia de sòcol baixa"
 
 #: ../statistics.c:262
 #, c-format
 msgid "%llu timeouts after reno fast retransmit"
-msgstr ""
+msgstr "%llu temps d'espera després de reno retransmetre ràpidament"
 
 #: ../statistics.c:263
 #, c-format
 msgid "%llu reno fast retransmits failed"
-msgstr ""
+msgstr "Ha fallat %llu reno retransmissions ràpides"
 
 #: ../statistics.c:264
 #, c-format
 msgid "%llu classic Reno fast retransmits failed"
-msgstr ""
+msgstr "%llu clàssic Reno retransmissió ràpida ha fallat"
 
 #: ../statistics.c:265
 #, c-format
 msgid "%llu times recovered from packet loss due to fast retransmit"
 msgstr ""
+"%llu vegades recuperades de la pèrdua de paquets a causa d'una retransmissió "
+"ràpida"
 
 #: ../statistics.c:266
 #, c-format
 msgid "Detected reordering %llu times using reno fast retransmit"
 msgstr ""
+"S'ha detectat una reordenació de %llu vegades usant una retransmissió ràpida"
 
 #: ../statistics.c:267
 #, c-format
 msgid "%llu timeouts after SACK recovery"
-msgstr ""
+msgstr "%llu temps d'espera després de la recuperació del SAC"
 
 #: ../statistics.c:268
 #, c-format
 msgid "%llu SACK retransmits failed"
-msgstr ""
+msgstr "%llu SACK retransmet ha fallat"
 
 #: ../statistics.c:269
 #, c-format
 msgid "%llu times recovered from packet loss by selective acknowledgements"
 msgstr ""
+"%llu vegades recuperat de la pèrdua de paquets per reconeixements selectius"
 
 #: ../statistics.c:270
 #, c-format
 msgid "%llu bad SACK blocks received"
-msgstr ""
+msgstr "S'han rebut %llu blocs de SAC dolents"
 
 #: ../statistics.c:271
 #, c-format
 msgid "Detected reordering %llu times using SACK"
-msgstr ""
+msgstr "S'ha detectat una reordenació de %llu vegades usant SAC"
 
 #: ../statistics.c:272
 #, c-format
 msgid "%llu times receiver scheduled too late for direct processing"
 msgstr ""
+"%llu vegades el receptor programat és massa tard per al processament directe"
 
 #: ../statistics.c:273
 #, c-format
 msgid "%llu retransmits in slow start"
-msgstr ""
+msgstr "%llu retransmet a l'inici lent"
 
 #: ../statistics.c:274
 #, c-format
 msgid "%llu other TCP timeouts"
-msgstr ""
+msgstr "%llu altres temps d'espera TCP"
 
 #: ../statistics.c:275
 #, c-format
 msgid "Detected reordering %llu times using time stamp"
 msgstr ""
+"S'ha detectat una reordenació de %llu vegades utilitzant el segell de temps"
 
 #: ../statistics.c:276
 #, c-format
 msgid "%llu TCP sockets finished time wait in slow timer"
-msgstr ""
+msgstr "%llu sòcols TCP han acabat el temps d'espera en un temporitzador lent"
 
 #: ../statistics.c:277
 #, c-format
 msgid "%llu TCP sockets finished time wait in fast timer"
-msgstr ""
+msgstr "%llu TCP sòcols han acabat el temps d'espera en el temporitzador ràpid"
 
 #: ../statistics.c:278
 #, c-format
 msgid "%llu time wait sockets recycled by time stamp"
-msgstr ""
+msgstr "%llu sòcols d'espera reciclats per segell de temps"
 
 #. Keep the entries sorted!
 #: ../statistics.c:283
 #, c-format
 msgid "%llu Number of Aborteds "
-msgstr ""
+msgstr "%llu Nombre d'avortaments "
 
 #: ../statistics.c:284
 #, c-format
 msgid "%llu Active Associations"
-msgstr ""
+msgstr "%llu Associacions actives"
 
 #: ../statistics.c:285
 #, c-format
 msgid "%llu Number of Packets with invalid Checksum"
-msgstr ""
+msgstr "%llu Nombre de paquets amb suma de verificació no vàlida"
 
 #: ../statistics.c:286
 #, c-format
 msgid "%llu Current Associations"
-msgstr ""
+msgstr "%llu Associacions actuals"
 
 #: ../statistics.c:287
 #, c-format
 msgid "%llu Number of messages fragmented"
-msgstr ""
+msgstr "%llu Nombre de missatges fragmentats"
 
 #: ../statistics.c:288
 #, c-format
 msgid "%llu Number of control chunks received"
-msgstr ""
+msgstr "%llu Nombre de trossos de control rebuts"
 
 #: ../statistics.c:289
 #, c-format
 msgid "%llu Number of ordered chunks received"
-msgstr ""
+msgstr "%llu Nombre de trossos ordenats rebuts"
 
 #: ../statistics.c:290
 #, c-format
 msgid "%llu Number of SCTP packets received"
-msgstr ""
+msgstr "%llu Nombre de paquets SCTP rebuts"
 
 #: ../statistics.c:291
 #, c-format
 msgid "%llu Number of Unordered chunks received"
-msgstr ""
+msgstr "%llu Nombre de trossos no ordenats rebuts"
 
 #: ../statistics.c:292
 #, c-format
 msgid "%llu Number of control chunks sent"
-msgstr ""
+msgstr "%llu Nombre de trossos de control enviats"
 
 #: ../statistics.c:293
 #, c-format
 msgid "%llu Number of Out of Blue packets"
-msgstr ""
+msgstr "%llu Nombre de paquets fora del blau"
 
 #: ../statistics.c:294
 #, c-format
 msgid "%llu Number of ordered chunks sent"
-msgstr ""
+msgstr "%llu Nombre de trossos ordenats enviats"
 
 #: ../statistics.c:295
 #, c-format
 msgid "%llu Number of SCTP packets sent"
-msgstr ""
+msgstr "%llu Nombre de paquets SCTP enviats"
 
 #: ../statistics.c:296
 #, c-format
 msgid "%llu Number of Unordered chunks sent"
-msgstr ""
+msgstr "%llu Nombre de trossos no ordenats enviats"
 
 #: ../statistics.c:297
 #, c-format
 msgid "%llu Passive Associations"
-msgstr ""
+msgstr "%llu Associacions Passives"
 
 #: ../statistics.c:298
 #, c-format
 msgid "%llu Number of messages reassembled "
-msgstr ""
+msgstr "%llu Nombre de missatges reassemblats "
 
 #: ../statistics.c:299
 #, c-format
 msgid "%llu Number of Graceful Terminations"
-msgstr ""
+msgstr "%llu Nombre de terminacions de gràcia"
 
 #: ../statistics.c:376
 msgid "enabled"
-msgstr ""
+msgstr "habilitat"
 
 #: ../statistics.c:376
 msgid "disabled"
-msgstr ""
+msgstr "inhabilitada"
 
 #: ../statistics.c:521
 #, c-format
 msgid "error parsing %s\n"
-msgstr ""
+msgstr "s'ha produït un error en analitzar %s\n"
 
 #: ../statistics.c:542 ../statistics.c:594
 msgid "cannot open /proc/net/snmp"
-msgstr ""
+msgstr "no es pot obrir /proc/net/snmp"
 
 #: ../statistics.c:547
 #, c-format
 msgid "Problem while parsing /proc/net/snmp\n"
-msgstr ""
+msgstr "Hi ha hagut un problema en analitzar /proc/net/snmp\n"
 
 #: ../statistics.c:558
 #, c-format
 msgid "Problem while parsing /proc/net/netstat\n"
-msgstr ""
+msgstr "Hi ha hagut un problema en analitzar /proc/net/netstat\n"
 
 #: ../statistics.c:584
 msgid "cannot open /proc/net/snmp6"
-msgstr ""
+msgstr "no es pot obrir /proc/net/snmp6"
 
 #: ../lib/activate.c:63
 #, c-format
 msgid "Hardware type `%s' not supported.\n"
-msgstr ""
+msgstr "El tipus de maquinari «%s» no és compatible.\n"
 
 #: ../lib/activate.c:67
 #, c-format
 msgid "Cannot change line discipline to `%s'.\n"
-msgstr ""
+msgstr "No es pot canviar la disciplina de línia a .%s'.\n"
 
 #: ../lib/af.c:159 ../lib/hw.c:164
 msgid "UNSPEC"
-msgstr ""
+msgstr "UNSPEC"
 
 #: ../lib/af.c:161
 msgid "UNIX Domain"
-msgstr ""
+msgstr "Domini UNIX"
 
 #: ../lib/af.c:164
 msgid "DARPA Internet"
-msgstr ""
+msgstr "Internet DARPA"
 
 #: ../lib/af.c:167
 msgid "IPv6"
-msgstr ""
+msgstr "IPv6"
 
 #: ../lib/af.c:170 ../lib/hw.c:188
 msgid "AMPR AX.25"
-msgstr ""
+msgstr "AMPR AX.25"
 
 #: ../lib/af.c:173 ../lib/hw.c:194
 msgid "AMPR NET/ROM"
-msgstr ""
+msgstr "AMPR NET/ROM"
 
 #: ../lib/af.c:176
 msgid "Novell IPX"
-msgstr ""
+msgstr "Novell IPX"
 
 #: ../lib/af.c:179
 msgid "Appletalk DDP"
-msgstr ""
+msgstr "Appletalk DDP"
 
 #: ../lib/af.c:182 ../lib/hw.c:229
 msgid "Econet"
-msgstr ""
+msgstr "Econet"
 
 #: ../lib/af.c:185
 msgid "CCITT X.25"
-msgstr ""
+msgstr "CCITT X.25"
 
 #: ../lib/af.c:188 ../lib/hw.c:191
 msgid "AMPR ROSE"
-msgstr ""
+msgstr "ROSA AMPR"
 
 #: ../lib/af.c:191 ../lib/hw.c:179
 msgid "Ash"
-msgstr ""
+msgstr "Ash"
 
 #: ../lib/af.c:248
 #, c-format
 msgid "Please don't supply more than one address family.\n"
-msgstr ""
+msgstr "Si us plau, no subministris més d'una família d'adreces.\n"
 
 #: ../lib/af.c:298
 #, c-format
 msgid "Too much address family arguments.\n"
-msgstr ""
+msgstr "Hi ha massa arguments de la família d'adreces.\n"
 
 #: ../lib/af.c:309
 #, c-format
 msgid "Unknown address family `%s'.\n"
-msgstr ""
+msgstr "Família d'adreces .%s' desconeguda.\n"
 
 #: ../lib/arcnet.c:74 ../lib/arcnet.c:88
 #, c-format
 msgid "in_arcnet(%s): invalid arcnet address!\n"
-msgstr ""
+msgstr "inarcnet(%s): l'adreça arcnet no és vàlida!\n"
 
 #: ../lib/arcnet.c:98
 #, c-format
 msgid "in_arcnet(%s): trailing : ignored!\n"
-msgstr ""
+msgstr "inarcnet(%s): final : ignorat!\n"
 
 #: ../lib/arcnet.c:106
 #, c-format
 msgid "in_arcnet(%s): trailing junk!\n"
-msgstr ""
+msgstr "inarcnet(%s): brossa final!\n"
 
 #: ../lib/ash.c:86
 #, c-format
 msgid "Malformed Ash address"
-msgstr ""
+msgstr "Adreça Ash mal formada"
 
 #: ../lib/ax25.c:75 ../lib/ddp.c:49 ../lib/econet.c:47 ../lib/inet.c:256
 #: ../lib/inet.c:270 ../lib/inet6.c:142 ../lib/ipx.c:83 ../lib/netrom.c:79
 #: ../lib/rose.c:73 ../lib/unix.c:55 ../lib/unix.c:76
 msgid "[NONE SET]"
-msgstr ""
+msgstr "[CAP CONJUNT]"
 
 #: ../lib/ax25.c:103 ../lib/netrom.c:108
 msgid "Invalid callsign"
-msgstr ""
+msgstr "Callsign invàlid"
 
 #: ../lib/ax25.c:115 ../lib/netrom.c:120
 msgid "Callsign too long"
-msgstr ""
+msgstr "Callsign massa llarg"
 
 #: ../lib/ax25_gr.c:45
 #, c-format
 msgid "AX.25 not configured in this system.\n"
-msgstr ""
+msgstr "AX.25 no està configurat en aquest sistema.\n"
 
 #: ../lib/ax25_gr.c:48
 #, c-format
 msgid "Kernel AX.25 routing table\n"
-msgstr ""
+msgstr "Taula d'encaminament AX.25 del nucli\n"
 
 #. xxx
 #: ../lib/ax25_gr.c:49
 #, c-format
 msgid "Destination  Iface    Use\n"
-msgstr ""
+msgstr "Ús de la interfície de destinació\n"
 
 #: ../lib/ether.c:78 ../lib/ether.c:94
 #, c-format
 msgid "in_ether(%s): invalid ether address!\n"
-msgstr ""
+msgstr "inether(%s): l'adreça ether no és vàlida!\n"
 
 #: ../lib/ether.c:106
 #, c-format
 msgid "in_ether(%s): trailing : ignored!\n"
-msgstr ""
+msgstr "inether(%s): final : ignorat!\n"
 
 #: ../lib/ether.c:114
 #, c-format
 msgid "in_ether(%s): trailing junk!\n"
-msgstr ""
+msgstr "inether(%s): brossa final!\n"
 
 #: ../lib/fddi.c:88 ../lib/fddi.c:102
 #, c-format
 msgid "in_fddi(%s): invalid fddi address!\n"
-msgstr ""
+msgstr "infddi(%s): l'adreça fddi no és vàlida!\n"
 
 #: ../lib/fddi.c:112
 #, c-format
 msgid "in_fddi(%s): trailing : ignored!\n"
-msgstr ""
+msgstr "infddi(%s): final : ignorat!\n"
 
 #: ../lib/fddi.c:120
 #, c-format
 msgid "in_fddi(%s): trailing junk!\n"
-msgstr ""
+msgstr "infddi(%s): brossa final!\n"
 
 #: ../lib/getroute.c:98 ../lib/setroute.c:73
 #, c-format
 msgid "Address family `%s' not supported.\n"
-msgstr ""
+msgstr "La família d'adreces «%s» no és compatible.\n"
 
 #: ../lib/getroute.c:104 ../lib/setroute.c:77
 #, c-format
 msgid "No routing for address family `%s'.\n"
-msgstr ""
+msgstr "No hi ha itinerari per a la família d'adreces «%s».\n"
 
 #: ../lib/hippi.c:88 ../lib/hippi.c:102
 #, c-format
 msgid "in_hippi(%s): invalid hippi address!\n"
-msgstr ""
+msgstr "inhippi(%s): l'adreça hippi no és vàlida!\n"
 
 #: ../lib/hippi.c:112
 #, c-format
 msgid "in_hippi(%s): trailing : ignored!\n"
-msgstr ""
+msgstr "inhippi(%s): final : ignorat!\n"
 
 #: ../lib/hippi.c:119
 #, c-format
 msgid "in_hippi(%s): trailing junk!\n"
-msgstr ""
+msgstr "inhippi(%s): brossa final!\n"
 
 #: ../lib/hw.c:163
 msgid "Local Loopback"
-msgstr ""
+msgstr "Loopback local"
 
 #: ../lib/hw.c:166
 msgid "Serial Line IP"
-msgstr ""
+msgstr "IP de la línia sèrie"
 
 #: ../lib/hw.c:167
 msgid "VJ Serial Line IP"
-msgstr ""
+msgstr "IP de la línia sèrie VJ"
 
 #: ../lib/hw.c:168
 msgid "6-bit Serial Line IP"
-msgstr ""
+msgstr "IP de línia sèrie de 6 bits"
 
 #: ../lib/hw.c:169
 msgid "VJ 6-bit Serial Line IP"
-msgstr ""
+msgstr "IP de la línia sèrie VJ de 6 bits"
 
 #: ../lib/hw.c:170
 msgid "Adaptive Serial Line IP"
-msgstr ""
+msgstr "IP de la línia de sèrie adaptativa"
 
 #: ../lib/hw.c:173
 msgid "Metricom Starmode IP"
-msgstr ""
+msgstr "IP de l'Starmode de Metricom"
 
 #: ../lib/hw.c:176
 msgid "Ethernet"
-msgstr ""
+msgstr "Ethernet"
 
 #: ../lib/hw.c:182
 msgid "Fiber Distributed Data Interface"
-msgstr ""
+msgstr "Interfície de dades distribuïdes en fibra"
 
 #: ../lib/hw.c:185
 msgid "HIPPI"
-msgstr ""
+msgstr "HIPPI"
 
 #: ../lib/hw.c:197
 msgid "generic X.25"
-msgstr ""
+msgstr "genèric X.25"
 
 #: ../lib/hw.c:200
 msgid "IPIP Tunnel"
-msgstr ""
+msgstr "Túnel IPIP"
 
 #: ../lib/hw.c:203
 msgid "Point-to-Point Protocol"
-msgstr ""
+msgstr "Protocol punt a punt"
 
 #: ../lib/hw.c:206
 msgid "(Cisco)-HDLC"
-msgstr ""
+msgstr "(Cisco)-HDLC"
 
 #: ../lib/hw.c:207
 msgid "LAPB"
-msgstr ""
+msgstr "LAPB"
 
 #: ../lib/hw.c:210
 msgid "ARCnet"
-msgstr ""
+msgstr "ARCnet"
 
 #: ../lib/hw.c:213
 msgid "Frame Relay DLCI"
-msgstr ""
+msgstr "Retransmissió de fotogrames DLCI"
 
 #: ../lib/hw.c:214
 msgid "Frame Relay Access Device"
-msgstr ""
+msgstr "Dispositiu d'accés a repeticions de fotogrames"
 
 #: ../lib/hw.c:217
 msgid "IPv6-in-IPv4"
-msgstr ""
+msgstr "IPv6-in-IPv4"
 
 #: ../lib/hw.c:220
 msgid "IrLAP"
-msgstr ""
+msgstr "IrLAP"
 
 #: ../lib/hw.c:223
 msgid "16/4 Mbps Token Ring"
-msgstr ""
+msgstr "Anell de testimoni de 16/4 Mbps"
 
 #: ../lib/hw.c:225
 msgid "16/4 Mbps Token Ring (New)"
-msgstr ""
+msgstr "Anell de testimoni de 16/4 Mbps (Nou)"
 
 #: ../lib/hw.c:232
 msgid "InfiniBand"
-msgstr ""
+msgstr "InfiniBand"
 
 #: ../lib/hw.c:235
 msgid "Generic EUI-64"
-msgstr ""
+msgstr "EUI-64 genèric"
 
 #: ../lib/inet.c:152 ../lib/inet6.c:91
 #, c-format
 msgid "rresolve: unsupport address family %d !\n"
-msgstr ""
+msgstr "rresolve: la família d'adreces %d no és compatible!\n"
 
 #: ../lib/inet6.c:144
 msgid "[UNKNOWN]"
-msgstr ""
+msgstr "[DESCONEGUT]"
 
 #: ../lib/inet6_gr.c:75
 #, c-format
 msgid "INET6 (IPv6) not configured in this system.\n"
-msgstr ""
+msgstr "INET6 (IPv6) no està configurat en aquest sistema.\n"
 
 #: ../lib/inet6_gr.c:80
 #, c-format
 msgid "Kernel IPv6 routing cache\n"
-msgstr ""
+msgstr "Memòria cau d'encaminament IPv6 del nucli\n"
 
 #: ../lib/inet6_gr.c:82
 #, c-format
 msgid "Kernel IPv6 routing table\n"
-msgstr ""
+msgstr "Taula d'encaminament IPv6 del nucli\n"
 
 #: ../lib/inet6_gr.c:84
 #, c-format
 msgid ""
 "Destination                    Next Hop                   Flag Met Ref  Use "
 "If\n"
-msgstr ""
+msgstr "Destinació següent Bandera de pujada Refusa l'ús\n"
 
 #: ../lib/inet6_gr.c:177
 #, c-format
 msgid "Kernel IPv6 Neighbour Cache\n"
-msgstr ""
+msgstr "Memòria cau del veí IPv6\n"
 
 #: ../lib/inet6_gr.c:180
 #, c-format
 msgid ""
 "Neighbour                                   HW Address        Iface    Flags "
 "Ref State\n"
-msgstr ""
+msgstr "Barri HW Adreça Iface Banderes Ref Estat\n"
 
 #: ../lib/inet6_gr.c:184
 #, c-format
 msgid ""
 "Neighbour                                   HW Address        Iface    Flags "
 "Ref State            Stale(sec) Delete(sec)\n"
-msgstr ""
+msgstr "Veïna HW Adreça Iface Banderes Ref Estat Stale(sec) Elimina(sec)\n"
 
 #: ../lib/inet6_sr.c:50
 #, c-format
 msgid "Usage: inet6_route [-vF] del Target\n"
-msgstr ""
+msgstr "Ús: inet6route [-vF] del Target\n"
 
 #: ../lib/inet6_sr.c:51
 #, c-format
 msgid "       inet6_route [-vF] add Target [gw Gw] [metric M] [[dev] If]\n"
 msgstr ""
+"       inet6route [-vF] afegeix la destinació [gw Gw] [mètrica M] [[dev] Si]"
+"\n"
 
 #: ../lib/inet6_sr.c:52
 #, c-format
 msgid "       inet6_route [-FC] flush      NOT supported\n"
-msgstr ""
+msgstr "       inet6route [-FC] flush NO suportat\n"
 
 #: ../lib/inet6_sr.c:192
 #, c-format
 msgid "Flushing `inet6' routing table not supported\n"
-msgstr ""
+msgstr "No s'admet la neteja de la taula d'encaminament «inet6»\n"
 
 #: ../lib/inet_gr.c:58 ../lib/inet_gr.c:229
 #, c-format
 msgid "INET (IPv4) not configured in this system.\n"
-msgstr ""
+msgstr "INET (IPv4) no està configurat en aquest sistema.\n"
 
 #: ../lib/inet_gr.c:61
 #, c-format
 msgid "Kernel IP routing table\n"
-msgstr ""
+msgstr "Taula d'encaminament IP del nucli\n"
 
 #: ../lib/inet_gr.c:64
 #, c-format
 msgid ""
 "Destination     Gateway         Genmask         Flags Metric Ref    Use "
 "Iface\n"
-msgstr ""
+msgstr "Destinació Passarel·la Genmask Banderes Mètriques Ref Utilitza Iface\n"
 
 #: ../lib/inet_gr.c:67
 #, c-format
 msgid ""
 "Destination     Gateway         Genmask         Flags   MSS Window  irtt "
 "Iface\n"
-msgstr ""
+msgstr "Destinació Passarel·la Genmask Banderes MSS Window irtt Iface\n"
 
 #: ../lib/inet_gr.c:70
 #, c-format
 msgid ""
 "Destination     Gateway         Genmask         Flags Metric Ref    Use "
 "Iface    MSS   Window irtt\n"
-msgstr ""
+msgstr "Destinació Gateway Genmask Flags Metric Ref Usa Iface MSS Window irtt\n"
 
 #: ../lib/inet_gr.c:246
 #, c-format
 msgid "Kernel IP routing cache\n"
-msgstr ""
+msgstr "Memòria cau d'encaminament IP del nucli\n"
 
 #: ../lib/inet_gr.c:267
 #, c-format
@@ -2778,13 +2903,15 @@ msgid ""
 "Source          Destination     Gateway         Flags Metric Ref    Use "
 "Iface\n"
 msgstr ""
+"Indicadors de la passarel·la de destinació d'origen Ref. Mètrica Usa la "
+"interfície\n"
 
 #: ../lib/inet_gr.c:270
 #, c-format
 msgid ""
 "Source          Destination     Gateway         Flags   MSS Window  irtt "
 "Iface\n"
-msgstr ""
+msgstr "Irtt Iface de la finestra MSS Window\n"
 
 #: ../lib/inet_gr.c:275
 #, c-format
@@ -2792,6 +2919,7 @@ msgid ""
 "Source          Destination     Gateway         Flags Metric Ref    Use "
 "Iface    MSS   Window irtt  HH  Arp\n"
 msgstr ""
+"Font Destination Gateway Flags Metric Ref Usa Iface MSS Window irtt HH Arp\n"
 
 #: ../lib/inet_gr.c:299
 #, c-format
@@ -2799,6 +2927,8 @@ msgid ""
 "Source          Destination     Gateway         Flags Metric Ref    Use "
 "Iface    MSS   Window irtt  TOS HHRef HHUptod     SpecDst\n"
 msgstr ""
+"Font Destination Gateway Flags Metric Ref Usa Iface MSS Window irtt TOS "
+"HHRef HHUptod SpecDst\n"
 
 #: ../lib/inet_sr.c:55
 #, c-format
@@ -2806,166 +2936,172 @@ msgid ""
 "Usage: inet_route [-vF] del {-host|-net} Target[/prefix] [gw Gw] [metric M] "
 "[[dev] If]\n"
 msgstr ""
+"Ús: inetroute [-vF] del {-host:-net} Target[/prefix] [gw Gw] [metric M] "
+"[[dev] If]\n"
 
 #: ../lib/inet_sr.c:56
 #, c-format
 msgid ""
 "       inet_route [-vF] add {-host|-net} Target[/prefix] [gw Gw] [metric M]\n"
 msgstr ""
+"       inetroute [-vF] add {-host]-net} Target[/prefix] [gw Gw] [metric M]\n"
 
 #: ../lib/inet_sr.c:57
 #, c-format
 msgid ""
 "                              [netmask N] [mss Mss] [window W] [irtt I]\n"
 msgstr ""
+"                              [màscara de xarxa N] [mss Mss] [finestra W] "
+"[irtt I]\n"
 
 #: ../lib/inet_sr.c:58
 #, c-format
 msgid "                              [mod] [dyn] [reinstate] [[dev] If]\n"
-msgstr ""
+msgstr "                              [mod] [dyn] [reinstate] [[dev] If]\n"
 
 #: ../lib/inet_sr.c:59
 #, c-format
 msgid ""
 "       inet_route [-vF] add {-host|-net} Target[/prefix] [metric M] reject\n"
 msgstr ""
+"       inetroute [-vF] add {-host|-net} Target[/prefix] [metric M] rebutja\n"
 
 #: ../lib/inet_sr.c:60
 #, c-format
 msgid "       inet_route [-FC] flush      NOT supported\n"
-msgstr ""
+msgstr "       inetroute [-FC] flush NO suportat\n"
 
 #: ../lib/inet_sr.c:169
 #, c-format
 msgid "route: %s: cannot use a NETWORK as gateway!\n"
-msgstr ""
+msgstr "ruta: %s: no es pot utilitzar una XARXA com a porta d'entrada!\n"
 
 #: ../lib/inet_sr.c:185
 #, c-format
 msgid "route: Invalid MSS/MTU.\n"
-msgstr ""
+msgstr "ruta: MSS/MTU no vàlid.\n"
 
 #: ../lib/inet_sr.c:198
 #, c-format
 msgid "route: Invalid window.\n"
-msgstr ""
+msgstr "ruta: finestra no vàlida.\n"
 
 #: ../lib/inet_sr.c:214
 #, c-format
 msgid "route: Invalid initial rtt.\n"
-msgstr ""
+msgstr "route: rtt inicial no vàlid.\n"
 
 #: ../lib/inet_sr.c:272
 #, c-format
 msgid "route: netmask %.8x doesn't make sense with host route\n"
-msgstr ""
+msgstr "ruta: la màscara de xarxa %.8x no té sentit amb la ruta de l'amfitrió\n"
 
 #: ../lib/inet_sr.c:276
 #, c-format
 msgid "route: bogus netmask %s\n"
-msgstr ""
+msgstr "ruta: màscara de xarxa incorrecta %s\n"
 
 #: ../lib/inet_sr.c:281
 #, c-format
 msgid "route: netmask doesn't match route address\n"
-msgstr ""
+msgstr "ruta: la màscara de xarxa no coincideix amb l'adreça de la ruta\n"
 
 #: ../lib/inet_sr.c:317
 #, c-format
 msgid "Flushing `inet' routing table not supported\n"
-msgstr ""
+msgstr "No s'admet el rentat de la taula d'encaminament «inet»\n"
 
 #: ../lib/inet_sr.c:321
 #, c-format
 msgid "Modifying `inet' routing cache not supported\n"
-msgstr ""
+msgstr "No s'admet la modificació de la memòria cau d'encaminament «inet»\n"
 
 #: ../lib/ipx_gr.c:60
 #, c-format
 msgid "IPX routing not in file %s or %s found.\n"
-msgstr ""
+msgstr "No s'ha trobat l'encaminament IPX al fitxer %s o %s.\n"
 
 #: ../lib/ipx_gr.c:69
 #, c-format
 msgid "Kernel IPX routing table\n"
-msgstr ""
+msgstr "Taula d'encaminament IPX del nucli\n"
 
 #. xxx
 #: ../lib/ipx_gr.c:70
 #, c-format
 msgid "Destination               Router Net                Router Node\n"
-msgstr ""
+msgstr "Encaminador de destinació Node d'encaminador net\n"
 
 #: ../lib/ipx_sr.c:45
 #, c-format
 msgid "IPX: this needs to be written\n"
-msgstr ""
+msgstr "IPX: cal escriure-ho\n"
 
 #: ../lib/masq_info.c:211
 #, c-format
 msgid "IP masquerading entries\n"
-msgstr ""
+msgstr "Entrades de màscara IP\n"
 
 #: ../lib/masq_info.c:214
 #, c-format
 msgid "prot   expire source               destination          ports\n"
-msgstr ""
+msgstr "prot expira els ports de destinació d'origen\n"
 
 #: ../lib/masq_info.c:217
 #, c-format
 msgid ""
 "prot   expire    initseq delta prevd source               "
 "destination          ports\n"
-msgstr ""
+msgstr "prot expire initseq delta prevd ports de destinació origen\n"
 
 #: ../lib/netrom_gr.c:43
 #, c-format
 msgid "NET/ROM not configured in this system.\n"
-msgstr ""
+msgstr "NET/ROM no està configurat en aquest sistema.\n"
 
 #: ../lib/netrom_gr.c:46
 #, c-format
 msgid "Kernel NET/ROM routing table\n"
-msgstr ""
+msgstr "Taula d'encaminament de xarxa/ROM del nucli\n"
 
 #: ../lib/netrom_gr.c:47
 #, c-format
 msgid "Destination  Mnemonic  Quality  Neighbour  Iface\n"
-msgstr ""
+msgstr "Destinació Mnemonic Quality Neighbour\n"
 
 #: ../lib/netrom_sr.c:44
 #, c-format
 msgid "netrom usage\n"
-msgstr ""
+msgstr "ús de netrom\n"
 
 #: ../lib/netrom_sr.c:54
 #, c-format
 msgid "NET/ROM: this needs to be written\n"
-msgstr ""
+msgstr "NET/ROM: cal escriure-ho\n"
 
 #: ../lib/ppp.c:42
 #, c-format
 msgid "You cannot start PPP with this program.\n"
-msgstr ""
+msgstr "No podeu iniciar PPP amb aquest programa.\n"
 
 #: ../lib/ppp_ac.c:35
 #, c-format
 msgid "Sorry, use pppd!\n"
-msgstr ""
+msgstr "Em sap greu, utilitzeu pppd!\n"
 
 #: ../lib/rose.c:89
 msgid "Node address must be ten digits"
-msgstr ""
+msgstr "L'adreça del node ha de tenir deu dígits"
 
 #: ../lib/rose_gr.c:52
 #, c-format
 msgid "ROSE not configured in this system.\n"
-msgstr ""
+msgstr "ROSE no està configurat en aquest sistema.\n"
 
 #: ../lib/rose_gr.c:55
 #, c-format
 msgid "Kernel ROSE routing table\n"
-msgstr ""
+msgstr "Taula d'encaminament de la rosa del nucli\n"
 
 #: ../lib/rose_gr.c:56
 #, c-format
@@ -2973,394 +3109,398 @@ msgid ""
 "Destination  neigh1 callsign  device  neigh2 callsign  device  neigh3 "
 "callsign  device\n"
 msgstr ""
+"Destinació pes1 callsign dispositiu pes2 callsign dispositiu pes pes3 "
+"callsign\n"
 
 #: ../lib/tr.c:88 ../lib/tr.c:102
 #, c-format
 msgid "in_tr(%s): invalid token ring address!\n"
-msgstr ""
+msgstr "intr(%s): l'adreça de l'anell de testimonis no és vàlida!\n"
 
 #: ../lib/tr.c:112
 #, c-format
 msgid "in_tr(%s): trailing : ignored!\n"
-msgstr ""
+msgstr "intr(%s): final : ignorat!\n"
 
 #: ../lib/tr.c:120
 #, c-format
 msgid "in_tr(%s): trailing junk!\n"
-msgstr ""
+msgstr "intr(%s): brossa final!\n"
 
 #: ../lib/interface.c:341
 #, c-format
 msgid "Warning: cannot open %s (%s). Limited output.\n"
-msgstr ""
+msgstr "Avís: no es pot obrir %s (%s). Sortida limitada.\n"
 
 #. Give better error message for this case.
 #: ../lib/interface.c:582
 msgid "Device not found"
-msgstr ""
+msgstr "No s'ha trobat el dispositiu"
 
 #: ../lib/interface.c:586
 #, c-format
 msgid "%s: error fetching interface information: %s\n"
 msgstr ""
+"%s: s'ha produït un error en recuperar la informació de la interfície: %s\n"
 
 #: ../lib/interface.c:619
 msgid "     - no statistics available -"
-msgstr ""
+msgstr "     - no hi ha estadístiques disponibles -"
 
 #: ../lib/interface.c:623
 #, c-format
 msgid "[NO FLAGS]"
-msgstr ""
+msgstr "[SENSE BANDERES]"
 
 #: ../lib/interface.c:733
 msgid "UP,"
-msgstr ""
+msgstr "AMUNT."
 
 #: ../lib/interface.c:735
 msgid "BROADCAST,"
-msgstr ""
+msgstr "RETRANSMISSIÓ,"
 
 #: ../lib/interface.c:737
 msgid "DEBUG,"
-msgstr ""
+msgstr "DEPURA,"
 
 #: ../lib/interface.c:739
 msgid "LOOPBACK,"
-msgstr ""
+msgstr "RETROCEDEIX"
 
 #: ../lib/interface.c:741
 msgid "POINTOPOINT,"
-msgstr ""
+msgstr "PUNTOPOINT,"
 
 #: ../lib/interface.c:743
 msgid "NOTRAILERS,"
-msgstr ""
+msgstr "NOTRAILERS,"
 
 #: ../lib/interface.c:745
 msgid "RUNNING,"
-msgstr ""
+msgstr "S'EXECUTA,"
 
 #: ../lib/interface.c:747
 msgid "NOARP,"
-msgstr ""
+msgstr "NOARP,"
 
 #: ../lib/interface.c:749
 msgid "PROMISC,"
-msgstr ""
+msgstr "PROMISC,"
 
 #: ../lib/interface.c:751
 msgid "ALLMULTI,"
-msgstr ""
+msgstr "ALLMULTI,"
 
 #: ../lib/interface.c:753
 msgid "SLAVE,"
-msgstr ""
+msgstr "ESCLAU,"
 
 #: ../lib/interface.c:755
 msgid "MASTER,"
-msgstr ""
+msgstr "MESTRE,"
 
 #: ../lib/interface.c:757
 msgid "MULTICAST,"
-msgstr ""
+msgstr "MULTIDIFUSIÓ,"
 
 #: ../lib/interface.c:760
 msgid "DYNAMIC,"
-msgstr ""
+msgstr "DINÀMIC,"
 
 #: ../lib/interface.c:769
 #, c-format
 msgid "%s: %s  mtu %d"
-msgstr ""
+msgstr "%s: %s mtu %d"
 
 #: ../lib/interface.c:773
 #, c-format
 msgid "  outfill %d  keepalive %d"
-msgstr ""
+msgstr "  emplena %d mantén-se actiu %d"
 
 #: ../lib/interface.c:782 ../lib/interface.c:880
 #, c-format
 msgid "        %s %s"
-msgstr ""
+msgstr "        %s %s"
 
 #: ../lib/interface.c:784
 #, c-format
 msgid "  netmask %s"
-msgstr ""
+msgstr "  màscara de xarxa %s"
 
 #: ../lib/interface.c:786
 #, c-format
 msgid "  broadcast %s"
-msgstr ""
+msgstr "  retransmissió %s"
 
 #: ../lib/interface.c:789
 #, c-format
 msgid "  destination %s"
-msgstr ""
+msgstr "  destinació %s"
 
 #: ../lib/interface.c:808
 #, c-format
 msgid "        %s %s  prefixlen %d"
-msgstr ""
+msgstr "        %s %s prefixlen %d"
 
 #: ../lib/interface.c:812
 #, c-format
 msgid "  scopeid 0x%x"
-msgstr ""
+msgstr "  scopeid 0x%x"
 
 #: ../lib/interface.c:816
 msgid "compat,"
-msgstr ""
+msgstr "compat,"
 
 #: ../lib/interface.c:820
 msgid "global,"
-msgstr ""
+msgstr "global,"
 
 #: ../lib/interface.c:822
 msgid "link,"
-msgstr ""
+msgstr "enllaç,"
 
 #: ../lib/interface.c:824
 msgid "site,"
-msgstr ""
+msgstr "lloc,"
 
 #: ../lib/interface.c:826
 msgid "host,"
-msgstr ""
+msgstr "host,"
 
 #: ../lib/interface.c:844
 #, c-format
 msgid "        %s Ethernet-II   %s\n"
-msgstr ""
+msgstr "        %s Ethernet-II %s\n"
 
 #: ../lib/interface.c:847
 #, c-format
 msgid "        %s Ethernet-SNAP %s\n"
-msgstr ""
+msgstr "        %s Ethernet-SNAP %s\n"
 
 #: ../lib/interface.c:850
 #, c-format
 msgid "        %s Ethernet802.2 %s\n"
-msgstr ""
+msgstr "        %s Ethernet802.2 %s\n"
 
 #: ../lib/interface.c:853
 #, c-format
 msgid "        %s Ethernet802.3 %s\n"
-msgstr ""
+msgstr "        %s Ethernet802.3 %s\n"
 
 #: ../lib/interface.c:863 ../lib/interface.c:872
 #, c-format
 msgid "        %s %s\n"
-msgstr ""
+msgstr "        %s %s\n"
 
 #: ../lib/interface.c:882
 #, c-format
 msgid "        %s"
-msgstr ""
+msgstr "        %s"
 
 #: ../lib/interface.c:884
 #, c-format
 msgid "  txqueuelen %d"
-msgstr ""
+msgstr "  txqueuelen %d"
 
 #: ../lib/interface.c:889
 #, c-format
 msgid "        media %s"
-msgstr ""
+msgstr "        suport %s"
 
 #: ../lib/interface.c:891
 #, c-format
 msgid "autoselect"
-msgstr ""
+msgstr "selecció automàtica"
 
 #: ../lib/interface.c:911
 #, c-format
 msgid "RX packets %llu  bytes %llu (%lu.%lu %s)\n"
-msgstr ""
+msgstr "Paquets RX %llu bytes %llu (%lu.%lu %s)\n"
 
 #: ../lib/interface.c:917
 #, c-format
 msgid "RX compressed %lu\n"
-msgstr ""
+msgstr "%lu comprimit RX\n"
 
 #: ../lib/interface.c:920
 #, c-format
 msgid "RX errors %lu  dropped %lu  overruns %lu  frame %lu\n"
-msgstr ""
+msgstr "Errors de RX %lu ha deixat %lu envaeix %lu frame %lu\n"
 
 #: ../lib/interface.c:926
 #, c-format
 msgid "TX packets %llu  bytes %llu (%lu.%lu %s)\n"
-msgstr ""
+msgstr "paquets TX %llu bytes %llu (%lu.%lu %s)\n"
 
 #: ../lib/interface.c:932
 #, c-format
 msgid "TX compressed %lu\n"
-msgstr ""
+msgstr "TX comprimit %lu\n"
 
 #: ../lib/interface.c:935
 #, c-format
 msgid "TX errors %lu  dropped %lu  overruns %lu  carrier %lu  collisions %lu\n"
 msgstr ""
+"Errors TX %lu ha deixat %lu ha superat %lu portador %lu col·lisions %lu\n"
 
 #: ../lib/interface.c:945
 #, c-format
 msgid "interrupt %d  "
-msgstr ""
+msgstr "interromp %d  "
 
 #. Only print devices using it for
 #. I/O maps
 #: ../lib/interface.c:948
 #, c-format
 msgid "base 0x%x  "
-msgstr ""
+msgstr "base 0x%x  "
 
 #: ../lib/interface.c:950
 #, c-format
 msgid "memory 0x%lx-%lx  "
-msgstr ""
+msgstr "memòria 0x%lx-%lx  "
 
 #: ../lib/interface.c:953
 #, c-format
 msgid "  dma 0x%x"
-msgstr ""
+msgstr "  dma 0x%x"
 
 #: ../lib/sockets.c:69
 #, c-format
 msgid "No usable address families found.\n"
-msgstr ""
+msgstr "No s'ha trobat cap família d'adreces utilitzable.\n"
 
 #: ../lib/util-ank.c:227
 #, c-format
 msgid "ip: %s is invalid inet address\n"
-msgstr ""
+msgstr "ip: %s és una adreça inet no vàlida\n"
 
 #: ../lib/util-ank.c:236
 #, c-format
 msgid "ip: %s is invalid inet prefix\n"
-msgstr ""
+msgstr "ip: %s no és un prefix inet\n"
 
 #: ../lib/util-ank.c:246
 #, c-format
 msgid "ip: %s is invalid IPv4 address\n"
-msgstr ""
+msgstr "ip: %s no és una adreça IPv4 vàlida\n"
 
 #: ../lib/util-ank.c:254
 #, c-format
 msgid "ip: argument is wrong: %s\n"
-msgstr ""
+msgstr "ip: l'argument no és correcte: %s\n"
 
 #: ../ipmaddr.c:56
 #, c-format
 msgid "Usage: ipmaddr [ add | del ] MULTIADDR dev STRING\n"
-msgstr ""
+msgstr "Ús: ipmaddr [ add : del ] MULTIADDR dev STRING\n"
 
 #: ../ipmaddr.c:57
 #, c-format
 msgid "       ipmaddr show [ dev STRING ] [ ipv4 | ipv6 | link | all ]\n"
-msgstr ""
+msgstr "       ipmaddr show [ dev STRING ] [ ipv4   ipv6   link   all ]\n"
 
 #: ../ipmaddr.c:58
 #, c-format
 msgid "       ipmaddr -V | -version\n"
-msgstr ""
+msgstr "       ipmaddr -V   -version\n"
 
 #: ../ipmaddr.c:255
 #, c-format
 msgid "family %d "
-msgstr ""
+msgstr "família %d "
 
 #: ../ipmaddr.c:264
 #, c-format
 msgid " users %d"
-msgstr ""
+msgstr " usuaris %d"
 
 #: ../ipmaddr.c:353
 msgid "Cannot create socket"
-msgstr ""
+msgstr "No s'ha pogut crear el sòcol"
 
 #: ../slattach.c:214
 #, c-format
 msgid "slattach: /dev/%s already locked!\n"
-msgstr ""
+msgstr "slattach: /dev/%s ja està bloquejat!\n"
 
 #: ../slattach.c:220
 #, c-format
 msgid "slattach: tty_lock: (%s): %s\n"
-msgstr ""
+msgstr "slattach: ttylock: (%s): %s\n"
 
 #: ../slattach.c:226
 #, c-format
 msgid "slattach: cannot write PID file\n"
-msgstr ""
+msgstr "slattach: no es pot escriure el fitxer PID\n"
 
 #: ../slattach.c:234
 #, c-format
 msgid "slattach: tty_lock: UUCP user %s unknown!\n"
-msgstr ""
+msgstr "slattach: ttylock: l'usuari d'UUCP %s és desconegut!\n"
 
 #: ../slattach.c:469
 #, c-format
 msgid "slattach: tty_hangup(DROP): %s\n"
-msgstr ""
+msgstr "slattach: ttyhangup(DROP): %s\n"
 
 #: ../slattach.c:476
 #, c-format
 msgid "slattach: tty_hangup(RAISE): %s\n"
-msgstr ""
+msgstr "slattach: ttyhangup(RAISE): %s\n"
 
 #: ../slattach.c:507
 #, c-format
 msgid "slattach: tty name too long\n"
-msgstr ""
+msgstr "slattach: el nom tty és massa llarg\n"
 
 #: ../slattach.c:558
 #, c-format
 msgid "slattach: tty_open: cannot get current state!\n"
-msgstr ""
+msgstr "slattach: ttyopen: no es pot obtenir l'estat actual!\n"
 
 #: ../slattach.c:565
 #, c-format
 msgid "slattach: tty_open: cannot get current line disc!\n"
-msgstr ""
+msgstr "slattach: ttyopen: no es pot obtenir el disc de línia actual!\n"
 
 #: ../slattach.c:573
 #, c-format
 msgid "slattach: tty_open: cannot set RAW mode!\n"
-msgstr ""
+msgstr "slattach: ttyopen: no es pot establir el mode RAW!\n"
 
 #: ../slattach.c:580
 #, c-format
 msgid "slattach: tty_open: cannot set %s bps!\n"
-msgstr ""
+msgstr "slattach: ttyopen: no es pot establir %s bps!\n"
 
 #: ../slattach.c:590
 #, c-format
 msgid "slattach: tty_open: cannot set 8N1 mode!\n"
-msgstr ""
+msgstr "slattach: ttyopen: no es pot establir el mode 8N1!\n"
 
 #: ../slattach.c:732
 #, c-format
 msgid "slattach: setvbuf(stdout,0,_IOLBF,0) : %s\n"
-msgstr ""
+msgstr "slattach: setvbuf(stdout,0,IOLBF,0) : %s\n"
 
 #: ../slattach.c:764
 #, c-format
 msgid "%s started"
-msgstr ""
+msgstr "%s ha començat"
 
 #: ../slattach.c:765
 #, c-format
 msgid " on %s"
-msgstr ""
+msgstr " a %s"
 
 #: ../slattach.c:766
 #, c-format
 msgid " ptsname %s"
-msgstr ""
+msgstr " ptsname %s"
 
 #: ../slattach.c:767
 #, c-format
 msgid " interface %s\n"
-msgstr ""
+msgstr " interfície %s\n"
