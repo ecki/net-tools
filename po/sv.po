@@ -1,0 +1,3670 @@
+# Swedish translation for net-tools
+# Copyright (c) 2006 Rosetta Contributors and Canonical Ltd 2006
+# This file is distributed under the same license as the net-tools package.
+# Daniel Nylander <po@danielnylander.se>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: net-tools\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-09-08 18:30+0200\n"
+"PO-Revision-Date: 2025-10-19 17:07+0200\n"
+"Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
+"Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
+"Language: sv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2025-10-17 12:12+0000\n"
+"X-Generator: Poedit 3.8\n"
+
+#: ../arp.c:112 ../arp.c:278
+#, c-format
+msgid "arp: need host name\n"
+msgstr "arp: behöver värdnamn\n"
+
+#: ../arp.c:214 ../arp.c:229
+#, c-format
+msgid "No ARP entry for %s\n"
+msgstr "Ingen ARP-post för %s\n"
+
+#: ../arp.c:247
+#, c-format
+msgid "arp: cant get HW-Address for `%s': %s.\n"
+msgstr "arp: kan inte få tag på hårdvaruadressen för \"%s\":%s.\n"
+
+#: ../arp.c:251
+#, c-format
+msgid "arp: protocol type mismatch.\n"
+msgstr "arp: protokolltypen stämmer inte.\n"
+
+#: ../arp.c:260
+#, c-format
+msgid "arp: device `%s' has HW address %s `%s'.\n"
+msgstr "arp: enheten \"%s\" har hårdvaruadressen %s \"%s\".\n"
+
+#: ../arp.c:291
+#, c-format
+msgid "arp: need hardware address\n"
+msgstr "arp: behöver hårdvaruadress\n"
+
+#: ../arp.c:299
+#, c-format
+msgid "arp: invalid hardware address\n"
+msgstr "arp: ogiltig hårdvaruadress\n"
+
+#: ../arp.c:397
+#, c-format
+msgid "arp: cannot open etherfile %s !\n"
+msgstr "arp: kan inte öppna etherfile %s !\n"
+
+#: ../arp.c:413
+#, c-format
+msgid "arp: format error on line %u of etherfile %s !\n"
+msgstr "arp: formatfel på rad %u i etherfil %s !\n"
+
+#: ../arp.c:426
+#, c-format
+msgid "arp: cannot set entry on line %u of etherfile %s !\n"
+msgstr "arp: kan inte ange post på rad %u i etherfile %s !\n"
+
+#: ../arp.c:447
+#, c-format
+msgid ""
+"Address                  HWtype  HWaddress           Flags Mask            "
+"Iface\n"
+msgstr ""
+"Adress                   HWtyp   HWadress            Flaggor Mask          "
+"Gsnitt\n"
+
+#: ../arp.c:475
+msgid "<from_interface>"
+msgstr "<från_gränssnitt>"
+
+#: ../arp.c:477
+msgid "(incomplete)"
+msgstr "(inte komplett)"
+
+#: ../arp.c:494
+#, c-format
+msgid "%s (%s) at "
+msgstr "%s (%s) vid "
+
+#: ../arp.c:500
+#, c-format
+msgid "<incomplete> "
+msgstr "<inte komplett> "
+
+#: ../arp.c:506
+#, c-format
+msgid "netmask %s "
+msgstr "nätmask %s "
+
+#: ../arp.c:523
+#, c-format
+msgid "on %s\n"
+msgstr "på %s\n"
+
+#: ../arp.c:611
+#, c-format
+msgid "Entries: %d\tSkipped: %d\tFound: %d\n"
+msgstr "Poster: %d\tHoppade över: %d\tHittade: %d\n"
+
+#: ../arp.c:615
+#, c-format
+msgid "%s (%s) -- no entry\n"
+msgstr "%s (%s) -- ingen post\n"
+
+#: ../arp.c:617
+#, c-format
+msgid "arp: in %d entries no match found.\n"
+msgstr "arp: i %d poster hittades ingen matchning.\n"
+
+#: ../arp.c:633
+#, c-format
+msgid ""
+"Usage:\n"
+"  arp [-vn]  [<HW>] [-i <if>] [-a] [<hostname>]             <-Display ARP "
+"cache\n"
+msgstr ""
+"Användning:\n"
+"  arp [-vn]  [<HW>] [-i <if>] [-a] [<värdnamn>]             <-Visa ARP-"
+"cache\n"
+
+#: ../arp.c:634
+#, c-format
+msgid ""
+"  arp [-v]          [-i <if>] -d  <host> [pub]               <-Delete ARP "
+"entry\n"
+msgstr ""
+"  arp [-v]          [-i <if>] -d  <värd> [pub]               <-Ta bort ARP-"
+"post\n"
+
+#: ../arp.c:635
+#, c-format
+msgid ""
+"  arp [-vnD] [<HW>] [-i <if>] -f  [<filename>]            <-Add entry from "
+"file\n"
+msgstr ""
+"  arp [-vnD] [<HW>] [-i <if>] -f  [<filnamn>]             <-Lägg till post "
+"från fil\n"
+
+#: ../arp.c:636
+#, c-format
+msgid ""
+"  arp [-v]   [<HW>] [-i <if>] -s  <host> <hwaddr> [temp]            <-Add "
+"entry\n"
+msgstr ""
+"  arp [-v]   [<HW>] [-i <if>] -s  <värd> <hårdvaruadr> [temp]       <-Lägg "
+"till post\n"
+
+#: ../arp.c:637
+#, c-format
+msgid ""
+"  arp [-v]   [<HW>] [-i <if>] -Ds <host> <if> [netmask <nm>] pub          "
+"<-''-\n"
+"\n"
+msgstr ""
+"  arp [-v]   [<HW>] [-i <if>] -Ds <värd> <if> [netmask <nm>] pub          "
+"<-''-\n"
+"\n"
+
+#: ../arp.c:639
+#, c-format
+msgid ""
+"        -a                       display (all) hosts in alternative (BSD) "
+"style\n"
+msgstr ""
+"        -a                       visa (alla) värdar i alternativ (BSD) stil\n"
+
+#: ../arp.c:640
+#, c-format
+msgid ""
+"        -e                       display (all) hosts in default (Linux) "
+"style\n"
+msgstr ""
+"        -e                       visa (alla) värdar i standardstil (Linux)\n"
+
+#: ../arp.c:641
+#, c-format
+msgid "        -s, --set                set a new ARP entry\n"
+msgstr "        -s, --set                ställ in en ny ARP-post\n"
+
+#: ../arp.c:642
+#, c-format
+msgid "        -d, --delete             delete a specified entry\n"
+msgstr "        -d, --delete             ta bort en angiven post\n"
+
+#: ../arp.c:643 ../netstat.c:1993 ../route.c:88
+#, c-format
+msgid "        -v, --verbose            be verbose\n"
+msgstr "        -v, --verbose            var informativ\n"
+
+#: ../arp.c:644 ../netstat.c:1995 ../route.c:89
+#, c-format
+msgid "        -n, --numeric            don't resolve names\n"
+msgstr "        -n, --numeric            slå inte upp namn\n"
+
+#: ../arp.c:645
+#, c-format
+msgid ""
+"        -i, --device             specify network interface (e.g. eth0)\n"
+msgstr ""
+"        -i, --device             ange nätverksgränssnitt (t.ex. eth0)\n"
+
+#: ../arp.c:646
+#, c-format
+msgid "        -D, --use-device         read <hwaddr> from given device\n"
+msgstr ""
+"        -D, --use-device         läs <hårdvaruadr> från angiven enhet\n"
+
+#: ../arp.c:647
+#, c-format
+msgid "        -A, -p, --protocol       specify protocol family\n"
+msgstr "        -A, -p, --protocol       ange protokollfamilj\n"
+
+#: ../arp.c:648
+#, c-format
+msgid ""
+"        -f, --file               read new entries from file or from /etc/"
+"ethers\n"
+"\n"
+msgstr ""
+"        -f, --file               läs nya poster från filen eller från /etc/"
+"ethers\n"
+"\n"
+
+#: ../arp.c:650 ../rarp.c:185
+#, c-format
+msgid "  <HW>=Use '-H <hw>' to specify hardware address type. Default: %s\n"
+msgstr ""
+"  <HW>=Använd '-H <hw>' för att ange typ av maskinvaruadress. Standard: %s\n"
+
+#: ../arp.c:651 ../rarp.c:186
+#, c-format
+msgid "  List of possible hardware types (which support ARP):\n"
+msgstr "  Lista över möjliga hårdvarutyper (som har stöd för ARP):\n"
+
+#: ../arp.c:685 ../arp.c:771
+#, c-format
+msgid "%s: hardware type not supported!\n"
+msgstr "%s: hårdvarutypen stöds inte!\n"
+
+#: ../arp.c:689
+#, c-format
+msgid "%s: address family not supported!\n"
+msgstr "%s: adressfamiljen stöds inte!\n"
+
+#: ../arp.c:724
+#, c-format
+msgid "arp: -N not yet supported.\n"
+msgstr "arp: -N stöds ännu inte.\n"
+
+#: ../arp.c:734
+#, c-format
+msgid "arp: %s: unknown address family.\n"
+msgstr "arp: %s: okänd adressfamilj.\n"
+
+#: ../arp.c:743
+#, c-format
+msgid "arp: %s: unknown hardware type.\n"
+msgstr "arp: %s: okänd hårdvarutyp.\n"
+
+#: ../arp.c:763
+#, c-format
+msgid "arp: %s: kernel only supports 'inet'.\n"
+msgstr "arp: %s: kärnan har endast stöd för \"inet\".\n"
+
+#: ../arp.c:776
+#, c-format
+msgid "arp: %s: hardware type without ARP support.\n"
+msgstr "arp: %s: hårdvarutyp utan ARP-stöd.\n"
+
+#: ../hostname.c:71
+#, c-format
+msgid "Setting nodename to `%s'\n"
+msgstr "Ställer in nodnamn till \"%s\"\n"
+
+#: ../hostname.c:76
+#, c-format
+msgid "%s: you don't have permission to set the node name\n"
+msgstr "%s: du har inte behörighet att ställa in nodnamnet\n"
+
+#: ../hostname.c:79 ../hostname.c:101 ../hostname.c:122 ../hostname.c:176
+#: ../hostname.c:206
+#, c-format
+msgid "%s: name too long\n"
+msgstr "%s: namnet är för långt\n"
+
+#: ../hostname.c:93
+#, c-format
+msgid "Setting hostname to `%s'\n"
+msgstr "Ställer in värdnamnet till \"%s\"\n"
+
+#: ../hostname.c:98
+#, c-format
+msgid "%s: you don't have permission to set the host name\n"
+msgstr "%s: du har inte behörighet att ställa in värdnamnet\n"
+
+#: ../hostname.c:114
+#, c-format
+msgid "Setting domainname to `%s'\n"
+msgstr "Ställer in domännamnet till \"%s\"\n"
+
+#: ../hostname.c:119
+#, c-format
+msgid "%s: you don't have permission to set the domain name\n"
+msgstr "%s: du har inte behörighet att ställa in domännamnet\n"
+
+#: ../hostname.c:150
+#, c-format
+msgid "Resolving `%s' ...\n"
+msgstr "Slår upp \"%s\" ...\n"
+
+#: ../hostname.c:161
+#, c-format
+msgid "Result: h_name=`%s'\n"
+msgstr "Resultat: h_name=\"%s\"\n"
+
+#: ../hostname.c:166
+#, c-format
+msgid "Result: h_aliases=`%s'\n"
+msgstr "Resultat: h_aliases=\"%s\"\n"
+
+#: ../hostname.c:171
+#, c-format
+msgid "Result: h_addr_list=`%s'\n"
+msgstr "Resultat: h_addr_list=\"%s\"\n"
+
+#: ../hostname.c:173 ../hostname.c:203
+#, c-format
+msgid "%s: protocol family not supported\n"
+msgstr "%s: protokollfamiljen stöds inte\n"
+
+#: ../hostname.c:249
+#, c-format
+msgid "%s: can't open `%s'\n"
+msgstr "%s: kan inte öppna \"%s\"\n"
+
+#: ../hostname.c:264
+#, c-format
+msgid "Usage: hostname [-v] {hostname|-F file}      set hostname (from file)\n"
+msgstr ""
+"Användning: hostname [-v] {värdnamn|-F fil}      ställ in värdnamn (från "
+"fil)\n"
+
+#: ../hostname.c:265
+#, c-format
+msgid ""
+"       domainname [-v] {nisdomain|-F file}   set NIS domainname (from file)\n"
+msgstr ""
+"       domainname [-v] {nisdomän|-F fil}   ställ in NIS-domännamn (från "
+"fil)\n"
+
+#: ../hostname.c:267
+#, c-format
+msgid ""
+"       nodename [-v] {nodename|-F file}      set DECnet node name (from "
+"file)\n"
+msgstr ""
+"       nodename [-v] {nodename|-F fil}      ställ in DECnet-nodens namn "
+"(från fil)\n"
+
+#: ../hostname.c:269
+#, c-format
+msgid "       hostname [-v] [-d|-f|-s|-a|-i|-y|-n]  display formatted name\n"
+msgstr "       hostname [-v] [-d|-f|-s|-a|-i|-y|-n]  visa formaterat namn\n"
+
+#: ../hostname.c:270
+#, c-format
+msgid ""
+"       hostname [-v]                         display hostname\n"
+"\n"
+msgstr ""
+"       hostname [-v]                         visa värdnamn\n"
+"\n"
+
+#: ../hostname.c:271
+#, c-format
+msgid ""
+"       hostname -V|--version|-h|--help       print info and exit\n"
+"\n"
+msgstr ""
+"       hostname -V|--version|-h|--help       skriv ut information och "
+"avsluta\n"
+"\n"
+
+#: ../hostname.c:272
+#, c-format
+msgid ""
+"    dnsdomainname=hostname -d, {yp,nis,}domainname=hostname -y\n"
+"\n"
+msgstr ""
+"    dnsdomainname=hostname -d, {yp,nis,}domainname=hostname -y\n"
+"\n"
+
+#: ../hostname.c:273
+#, c-format
+msgid "    -s, --short           short host name\n"
+msgstr "    -s, --short           kort värdnamn\n"
+
+#: ../hostname.c:274
+#, c-format
+msgid "    -a, --alias           alias names\n"
+msgstr "    -a, --alias           aliasnamn\n"
+
+#: ../hostname.c:275
+#, c-format
+msgid "    -i, --ip-address      addresses for the hostname\n"
+msgstr "    -i, --ip-address      adresser för värdnamnet\n"
+
+#: ../hostname.c:276
+#, c-format
+msgid "    -f, --fqdn, --long    long host name (FQDN)\n"
+msgstr "    -f, --fqdn, --long    långt värdnamn (FQDN)\n"
+
+#: ../hostname.c:277
+#, c-format
+msgid "    -d, --domain          DNS domain name\n"
+msgstr "    -d, --domain          DNS-domännamn\n"
+
+#: ../hostname.c:278
+#, c-format
+msgid "    -y, --yp, --nis       NIS/YP domainname\n"
+msgstr "    -y, --yp, --nis       NIS/YP-domännamn\n"
+
+#: ../hostname.c:280
+#, c-format
+msgid "    -n, --node            DECnet node name\n"
+msgstr "    -n, --node            DECnets nodnamn\n"
+
+#: ../hostname.c:282
+#, c-format
+msgid ""
+"    -F, --file            read hostname or NIS domainname from given file\n"
+"\n"
+msgstr ""
+"    -F, --file            läs värdnamn eller NIS-domännamn från angiven fil\n"
+"\n"
+
+#: ../hostname.c:284
+#, c-format
+msgid ""
+"   This command can read or set the hostname or the NIS domainname. You can\n"
+"   also read the DNS domain or the FQDN (fully qualified domain name).\n"
+"   Unless you are using bind or NIS for host lookups you can change the\n"
+"   FQDN (Fully Qualified Domain Name) and the DNS domain name (which is\n"
+"   part of the FQDN) in the /etc/hosts file.\n"
+msgstr ""
+"   Detta kommando kan läsa eller skriva värdnämnet eller domännamnet för "
+"NIS. Du kan\n"
+"   också läsa DNS-domänen eller  FQDN (fully qualified domain name).\n"
+"   Såvida du inte använder bind eller NIS för sökning av värdnamn kan du "
+"ändra\n"
+"   FQDN (Fully Qualified Domain Name) och DNS-domännamnet (vilket är\n"
+"   del av FQDN) i filen /etc/hosts.\n"
+
+#: ../hostname.c:383
+#, c-format
+msgid "%s: You can't change the DNS domain name with this command\n"
+msgstr "%s: Du kan inte ändra DNS-domännamnet med detta kommando\n"
+
+#: ../hostname.c:384
+#, c-format
+msgid ""
+"\n"
+"Unless you are using bind or NIS for host lookups you can change the DNS\n"
+msgstr ""
+"\n"
+"Om du inte använder bind eller NIS för värduppslagningar kan du ändra DNSen\n"
+
+#: ../hostname.c:385
+#, c-format
+msgid "domain name (which is part of the FQDN) in the /etc/hosts file.\n"
+msgstr "domännamn (som är del av FQDN) i filen /etc/hosts.\n"
+
+#: ../hostname.c:402
+#, c-format
+msgid "gethostname()=`%s'\n"
+msgstr "gethostname()=\"%s\"\n"
+
+#: ../hostname.c:427
+#, c-format
+msgid "getdomainname()=`%s'\n"
+msgstr "getdomainname()=\"%s\"\n"
+
+#: ../hostname.c:442
+#, c-format
+msgid "getnodename()=`%s'\n"
+msgstr "getnodename()=\"%s\"\n"
+
+#: ../ifconfig.c:105 ../netstat.c:1953
+#, c-format
+#| msgid ""
+#| "Iface   MTU Met   RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-"
+#| "OVR Flg\n"
+msgid ""
+"Iface             MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP "
+"TX-OVR Flg\n"
+msgstr ""
+"Iface             MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP "
+"TX-OVR Flg\n"
+
+#: ../ifconfig.c:130 ../ifconfig.c:162
+#, c-format
+msgid "%s: ERROR while getting interface flags: %s\n"
+msgstr "%s: FEL vid läsning av gränssnittsflaggor: %s\n"
+
+#: ../ifconfig.c:154 ../ifconfig.c:186 ../ifconfig.c:799 ../ifconfig.c:891
+#: ../ifconfig.c:1006
+#, c-format
+msgid "No support for INET on this system.\n"
+msgstr "Inget stöd för INET på detta system.\n"
+
+#: ../ifconfig.c:194
+#, c-format
+msgid "%s: ERROR while testing interface flags: %s\n"
+msgstr "%s: FEL vid testning av gränssnittsflaggor: %s\n"
+
+#: ../ifconfig.c:204
+#, c-format
+msgid ""
+"Usage:\n"
+"  ifconfig [-a] [-v] [-s] <interface> [[<AF>] <address>]\n"
+msgstr ""
+"Användning:\n"
+"  ifconfig [-a] [-v] [-s] <gränssnitt> [[<AF>] <adress>]\n"
+
+#: ../ifconfig.c:206
+#, c-format
+msgid "  [add <address>[/<prefixlen>]]\n"
+msgstr "  [add <adress>[/<prefixlängd>]]\n"
+
+#: ../ifconfig.c:207
+#, c-format
+msgid "  [del <address>[/<prefixlen>]]\n"
+msgstr "  [del <adress>[/<prefixlängd>]]\n"
+
+#: ../ifconfig.c:208
+#, c-format
+msgid "  [[-]broadcast [<address>]]  [[-]pointopoint [<address>]]\n"
+msgstr "  [[-]broadcast [<adress>]]  [[-]pointopoint [<adress>]]\n"
+
+#: ../ifconfig.c:209
+#, c-format
+msgid "  [netmask <address>]  [dstaddr <address>]  [tunnel <address>]\n"
+msgstr "  [netmask <adress>]  [dstaddr <adress>]  [tunnel <adress>]\n"
+
+#: ../ifconfig.c:212
+#, c-format
+msgid "  [outfill <NN>] [keepalive <NN>]\n"
+msgstr "  [outfill <NN>] [keepalive <NN>]\n"
+
+#: ../ifconfig.c:214
+#, c-format
+#| msgid "  [hw <HW> <address>]  [metric <NN>]  [mtu <NN>]\n"
+msgid "  [hw <HW> <address>]  [mtu <NN>]\n"
+msgstr "  [hw <HW> <adress>]  [mtu <NN>]\n"
+
+#: ../ifconfig.c:215
+#, c-format
+msgid "  [[-]trailers]  [[-]arp]  [[-]allmulti]\n"
+msgstr "  [[-]trailers]  [[-]arp]  [[-]allmulti]\n"
+
+#: ../ifconfig.c:216
+#, c-format
+msgid "  [multicast]  [[-]promisc]\n"
+msgstr "  [multicast]  [[-]promisc]\n"
+
+#: ../ifconfig.c:217
+#, c-format
+msgid "  [mem_start <NN>]  [io_addr <NN>]  [irq <NN>]  [media <type>]\n"
+msgstr "  [mem_start <NN>] [io_addr <NN>] [irq <NN>] [media <type>]\n"
+
+#: ../ifconfig.c:219
+#, c-format
+msgid "  [txqueuelen <NN>]\n"
+msgstr "  [txqueuelen <NN>]\n"
+
+#: ../ifconfig.c:222
+#, c-format
+msgid "  [name <newname>]\n"
+msgstr "  [name <nyttnamn>]\n"
+
+#: ../ifconfig.c:225
+#, c-format
+msgid "  [[-]dynamic]\n"
+msgstr "  [[-]dynamic]\n"
+
+#: ../ifconfig.c:227
+#, c-format
+msgid ""
+"  [up|down] ...\n"
+"\n"
+msgstr ""
+"  [up|down] ...\n"
+"\n"
+
+#: ../ifconfig.c:229
+#, c-format
+msgid "  <HW>=Hardware Type.\n"
+msgstr "  <HW>=Hårdvarutyp.\n"
+
+#: ../ifconfig.c:230
+#, c-format
+msgid "  List of possible hardware types:\n"
+msgstr "  Lista över möjliga hårdvarutyper:\n"
+
+#. 1 = ARPable
+#: ../ifconfig.c:232
+#, c-format
+msgid "  <AF>=Address family. Default: %s\n"
+msgstr "  <AF>=Adressfamilj. Standard: %s\n"
+
+#: ../ifconfig.c:233
+#, c-format
+msgid "  List of possible address families:\n"
+msgstr "  Lista över möjliga adressfamiljer:\n"
+
+#: ../ifconfig.c:309
+#, c-format
+msgid "ifconfig: option `%s' not recognised.\n"
+msgstr "ifconfig: flaggan \"%s\" är okänd.\n"
+
+#: ../ifconfig.c:311 ../ifconfig.c:995
+#, c-format
+msgid "ifconfig: `--help' gives usage information.\n"
+msgstr "ifconfig: \"--help\" ger information om användning.\n"
+
+#: ../ifconfig.c:335
+#, c-format
+msgid "Warning: truncating interface name %s length %lu to %u\n"
+msgstr "Varning: avkortning av gränssnittsnamn %s längd %lu till %u\n"
+
+#: ../ifconfig.c:349
+#, c-format
+msgid "ifconfig: Default address family %s is unknown. How can that be?\n"
+msgstr "ifconfig: Standardadressfamiljen %s är okänd. Hur kan det vara så?\n"
+
+#: ../ifconfig.c:392
+#, c-format
+msgid "Unknown media type.\n"
+msgstr "Okänd mediatyp.\n"
+
+#: ../ifconfig.c:429
+#, c-format
+msgid ""
+"Warning: Interface %s still in promisc mode... maybe other application is "
+"running?\n"
+msgstr ""
+"Varning: Gränssnittet %s är fortfarande i promisc-läge ... kanske en annan "
+"applikation körs?\n"
+
+#: ../ifconfig.c:441
+#, c-format
+msgid "Warning: Interface %s still in MULTICAST mode.\n"
+msgstr "Varning: Gränssnittet %s är fortfarande i MULTICAST-läge.\n"
+
+#: ../ifconfig.c:453
+#, c-format
+msgid "Warning: Interface %s still in ALLMULTI mode.\n"
+msgstr "Varning: Gränssnittet %s är fortfarande i ALLMULTI-läge.\n"
+
+#: ../ifconfig.c:477
+#, c-format
+msgid "Warning: Interface %s still in DYNAMIC mode.\n"
+msgstr "Varning: Gränssnittet %s är fortfarande i DYNAMIC-läge.\n"
+
+#: ../ifconfig.c:524
+#, c-format
+msgid "Warning: Interface %s still in BROADCAST mode.\n"
+msgstr "Varning: Gränssnittet %s är fortfarande i BROADCAST-läge.\n"
+
+#: ../ifconfig.c:535
+#, c-format
+msgid "ifconfig: Error resolving '%s' for broadcast\n"
+msgstr "ifconfig: Fel vid uppslag av '%s' för broadcast\n"
+
+#: ../ifconfig.c:559
+#, c-format
+msgid "ifconfig: Error resolving '%s' for dstaddr\n"
+msgstr "ifconfig: Fel vid uppslag av '%s' för dstaddr\n"
+
+#: ../ifconfig.c:581
+#, c-format
+msgid "ifconfig: Error resolving '%s' for netmask\n"
+msgstr "ifconfig: Fel vid uppslag av '%s' för netmask\n"
+
+#: ../ifconfig.c:674
+#, c-format
+msgid "Warning: Interface %s still in POINTOPOINT mode.\n"
+msgstr "Varning: Gränssnittet %s är fortfarande i POINTOPOINT-läge.\n"
+
+#: ../ifconfig.c:685
+#, c-format
+msgid "ifconfig: Error resolving '%s' for pointopoint\n"
+msgstr "ifconfig: Fel vid uppslag av '%s' för pointopoint\n"
+
+#: ../ifconfig.c:708
+#, c-format
+msgid "hw address type `%s' has no handler to set address. failed.\n"
+msgstr ""
+"hw adresstyp `%s' har ingen hanterare för att ange adress. misslyckades.\n"
+
+#: ../ifconfig.c:717
+#, c-format
+msgid "%s: invalid %s address.\n"
+msgstr "%s: ogiltig %s-adress.\n"
+
+#: ../ifconfig.c:755
+#, c-format
+msgid "ifconfig: Error resolving '%s' for add\n"
+msgstr "ifconfig: Fel vid uppslag av '%s' för add\n"
+
+#: ../ifconfig.c:765 ../ifconfig.c:854 ../ifconfig.c:943
+#, c-format
+msgid "No support for INET6 on this system.\n"
+msgstr "Inget stöd för INET6 på det här systemet.\n"
+
+#: ../ifconfig.c:808 ../ifconfig.c:902
+#, c-format
+msgid "Interface %s not initialized\n"
+msgstr "Gränssnittet %s inte initialiserat\n"
+
+#: ../ifconfig.c:820 ../ifconfig.c:913
+#, c-format
+msgid "Bad address.\n"
+msgstr "Felaktig adress.\n"
+
+#: ../ifconfig.c:916
+#, c-format
+msgid "Address deletion not supported on this system.\n"
+msgstr "Radering av adresser stöds inte på detta system.\n"
+
+#: ../ifconfig.c:987
+#, c-format
+msgid "ifconfig: Cannot set address for this protocol family.\n"
+msgstr "ifconfig: Det går inte att ange adress för denna protokollfamilj.\n"
+
+#: ../ifconfig.c:994
+#, c-format
+msgid "ifconfig: error resolving '%s' to set address for af=%s\n"
+msgstr "ifconfig: fel vid uppslag av '%s' för att ange adress för af=%s\n"
+
+#: ../ifconfig.c:1016
+#, c-format
+msgid "No support for ECONET on this system.\n"
+msgstr "Inget stöd för ECONET på detta system.\n"
+
+#: ../ifconfig.c:1024
+#, c-format
+msgid "Don't know how to set addresses for family %d.\n"
+msgstr "Vet inte hur man ställer in adresser för familjen %d.\n"
+
+#: ../ifconfig.c:1069
+#, c-format
+msgid "WARNING: at least one error occured. (%d)\n"
+msgstr "VARNING: minst ett fel inträffade. (%d)\n"
+
+#: ../netstat.c:497
+#, c-format
+msgid ""
+"(No info could be read for \"-p\": geteuid()=%d but you should be root.)\n"
+msgstr ""
+"(Ingen information kunde läsas för \"-p\": geteuid()=%d men du borde vara "
+"root.)\n"
+
+#: ../netstat.c:501
+#, c-format
+msgid ""
+"(Not all processes could be identified, non-owned process info\n"
+" will not be shown, you would have to be root to see it all.)\n"
+msgstr ""
+"(Alla processer kan inte identifieras, icke-ägd processinformation\n"
+" visas inte, du måste vara root för att se allt)\n"
+
+#: ../netstat.c:508 ../netstat.c:562 ../netstat.c:1537 ../netstat.c:1618
+msgid "LISTENING"
+msgstr "LYSSNAR"
+
+#: ../netstat.c:509 ../netstat.c:563
+msgid "CONN SENT"
+msgstr "CONN SENT"
+
+#: ../netstat.c:510 ../netstat.c:564 ../netstat.c:1620
+msgid "DISC SENT"
+msgstr "DISC SKICKAD"
+
+#: ../netstat.c:511 ../netstat.c:565 ../netstat.c:628 ../netstat.c:1305
+#: ../netstat.c:1621
+msgid "ESTABLISHED"
+msgstr "ETABLERAD"
+
+#: ../netstat.c:533
+#, c-format
+msgid "Active NET/ROM sockets\n"
+msgstr "Aktiva NET/ROM-uttag\n"
+
+#: ../netstat.c:534
+#, c-format
+msgid ""
+"User       Dest       Source     Device  State        Vr/Vs    Send-Q  Recv-"
+"Q\n"
+msgstr ""
+"Anvä       Dest       Källa      Enhet   Tillstånd    Vr/Vs    Send-Q  Recv-"
+"Q\n"
+
+#: ../netstat.c:545 ../netstat.c:597 ../netstat.c:1660
+#, c-format
+msgid "Problem reading data from %s\n"
+msgstr "Problem med att läsa data från %s\n"
+
+#: ../netstat.c:588
+#, c-format
+msgid "Active ROSE sockets\n"
+msgstr "Aktiva ROSE-uttag\n"
+
+#: ../netstat.c:589
+#, c-format
+msgid "dest_addr   dest_call  src_addr    src_call  dev   lci neigh   state\n"
+msgstr ""
+"destadr     dest_call  källadr     src_call  dev   lci neigh   tillstånd\n"
+
+#: ../netstat.c:629
+msgid "SYN_SENT"
+msgstr "SYN_SENT"
+
+#: ../netstat.c:630
+msgid "SYN_RECV"
+msgstr "SYN_RECV"
+
+#: ../netstat.c:631
+msgid "FIN_WAIT1"
+msgstr "FIN_WAIT1"
+
+#: ../netstat.c:632
+msgid "FIN_WAIT2"
+msgstr "FIN_WAIT2"
+
+#: ../netstat.c:633
+msgid "TIME_WAIT"
+msgstr "TIME_WAIT"
+
+#: ../netstat.c:634
+msgid "CLOSE"
+msgstr "STÄNG"
+
+#: ../netstat.c:635
+msgid "CLOSE_WAIT"
+msgstr "STÄNG_VÄNTA"
+
+#: ../netstat.c:636
+msgid "LAST_ACK"
+msgstr "LAST_ACK"
+
+#: ../netstat.c:637 ../netstat.c:1838
+msgid "LISTEN"
+msgstr "LYSSNAR"
+
+#: ../netstat.c:638
+msgid "CLOSING"
+msgstr "STÄNGER"
+
+#: ../netstat.c:712
+#, c-format
+msgid "warning, got bogus igmp6 line %d.\n"
+msgstr "varning, fick skum igmp6-rad %d.\n"
+
+#: ../netstat.c:717 ../netstat.c:758 ../netstat.c:1173 ../netstat.c:1299
+#: ../netstat.c:1410
+#, c-format
+msgid "netstat: unsupported address family %d !\n"
+msgstr "netstat: adressfamiljen %d stöds inte !\n"
+
+#: ../netstat.c:730 ../netstat.c:735 ../netstat.c:747 ../netstat.c:753
+#, c-format
+msgid "warning, got bogus igmp line %d.\n"
+msgstr "varning, fick skum igmp-rad %d.\n"
+
+#: ../netstat.c:796
+#, c-format
+msgid "Active X.25 sockets\n"
+msgstr "Aktiva X.25-uttag\n"
+
+#. IMHO, Vr/Vs is not very usefull --SF
+#: ../netstat.c:798
+#, c-format
+msgid ""
+"Dest         Source          Device  LCI  State        Vr/Vs  Send-Q  Recv-"
+"Q\n"
+msgstr ""
+"Dest         Källa           Enhet   LCI  Tillstånd    Vr/Vs  Send-Q  Recv-"
+"Q\n"
+
+#: ../netstat.c:899
+#, c-format
+msgid "warning, got bogus sctp eps line.\n"
+msgstr "varning, fick falsk sctp eps-rad.\n"
+
+#: ../netstat.c:920 ../netstat.c:1018 ../netstat.c:1030
+#, c-format
+msgid "unsupported address family %d"
+msgstr "adressfamiljen %d stöds inte"
+
+#: ../netstat.c:976
+#, c-format
+msgid "warning, got bogus sctp assoc line.\n"
+msgstr "varning, fick falsk sctp assoc rad.\n"
+
+#: ../netstat.c:1142
+#, c-format
+msgid "warning, got bogus tcp line.\n"
+msgstr "varning, fick skum tcp-rad.\n"
+
+#: ../netstat.c:1185 ../netstat.c:1326 ../netstat.c:1423
+#, c-format
+msgid "off (0.00/%ld/%d)"
+msgstr "av (0.00/%ld/%d)"
+
+#: ../netstat.c:1189
+#, c-format
+msgid "on (%2.2f/%ld/%d)"
+msgstr "på (%2.2f/%ld/%d)"
+
+#: ../netstat.c:1194
+#, c-format
+msgid "keepalive (%2.2f/%ld/%d)"
+msgstr "keepalive (%2.2f/%ld/%d)"
+
+#: ../netstat.c:1199
+#, c-format
+msgid "timewait (%2.2f/%ld/%d)"
+msgstr "timewait (%2.2f/%ld/%d)"
+
+#: ../netstat.c:1204
+#, c-format
+#| msgid "on (%2.2f/%ld/%d)"
+msgid "probe (%2.2f/%ld/%d)"
+msgstr "probe (%2.2f/%ld/%d)"
+
+#: ../netstat.c:1209 ../netstat.c:1335 ../netstat.c:1433
+#, c-format
+msgid "unkn-%d (%2.2f/%ld/%d)"
+msgstr "unkn-%d (%2.2f/%ld/%d)"
+
+#: ../netstat.c:1270
+#, c-format
+msgid "warning, got bogus udp line.\n"
+msgstr "varning, fick skum udp-rad.\n"
+
+#: ../netstat.c:1313 ../netstat.c:1523 ../netstat.c:1556 ../netstat.c:1850
+#: ../netstat.c:1894
+msgid "UNKNOWN"
+msgstr "OKÄND"
+
+#: ../netstat.c:1331 ../netstat.c:1428
+#, c-format
+msgid "on%d (%2.2f/%ld/%d)"
+msgstr "på%d (%2.2f/%ld/%d)"
+
+#: ../netstat.c:1383
+#, c-format
+msgid "warning, got bogus raw line.\n"
+msgstr "varning, fick skum rå rad.\n"
+
+#: ../netstat.c:1476
+#, c-format
+msgid "warning, got bogus unix line.\n"
+msgstr "varning, fick skum unix-rad.\n"
+
+#: ../netstat.c:1503
+msgid "STREAM"
+msgstr "STREAM"
+
+#: ../netstat.c:1507
+msgid "DGRAM"
+msgstr "DGRAM"
+
+#: ../netstat.c:1511
+msgid "RAW"
+msgstr "RÅ"
+
+#: ../netstat.c:1515
+msgid "RDM"
+msgstr "RDM"
+
+#: ../netstat.c:1519
+msgid "SEQPACKET"
+msgstr "SEQPACKET"
+
+#: ../netstat.c:1528
+msgid "FREE"
+msgstr "LEDIG"
+
+#: ../netstat.c:1544
+msgid "CONNECTING"
+msgstr "ANSLUTER"
+
+#: ../netstat.c:1548 ../netstat.c:1832
+msgid "CONNECTED"
+msgstr "ANSLUTEN"
+
+#: ../netstat.c:1552
+msgid "DISCONNECTING"
+msgstr "KOPPLAR FRÅN"
+
+#: ../netstat.c:1586
+#, c-format
+msgid "Active UNIX domain sockets "
+msgstr "Aktiva UNIX-domänuttag "
+
+#: ../netstat.c:1588 ../netstat.c:2312 ../netstat.c:2458
+#, c-format
+msgid "(servers and established)"
+msgstr "(servrar och etablerade)"
+
+#: ../netstat.c:1591 ../netstat.c:2315 ../netstat.c:2461
+#, c-format
+msgid "(only servers)"
+msgstr "(endast servrar)"
+
+#: ../netstat.c:1593 ../netstat.c:2317 ../netstat.c:2463
+#, c-format
+msgid "(w/o servers)"
+msgstr "(utan servrar)"
+
+#: ../netstat.c:1596
+#, c-format
+#| msgid ""
+#| "\n"
+#| "Proto RefCnt Flags       Type       State         I-Node"
+msgid ""
+"\n"
+"Proto RefCnt Flags       Type       State         I-Node  "
+msgstr ""
+"\n"
+"Proto RefCnt Flagg       Typ        Tillstånd     I-Node  "
+
+#: ../netstat.c:1599
+#, c-format
+msgid " Path\n"
+msgstr " Sökväg\n"
+
+#: ../netstat.c:1619
+msgid "SABM SENT"
+msgstr "SABM SENT"
+
+#: ../netstat.c:1622
+msgid "RECOVERY"
+msgstr "ÅTERHÄMTNING"
+
+#: ../netstat.c:1636
+#, c-format
+msgid "Active AX.25 sockets\n"
+msgstr "Aktiva AX.25-uttag\n"
+
+#: ../netstat.c:1637
+#, c-format
+msgid "Dest       Source     Device  State        Vr/Vs    Send-Q  Recv-Q\n"
+msgstr "Dest       Källa      Enhet   Tillstånd    Vr/Vs    Send-Q  Recv-Q\n"
+
+#: ../netstat.c:1680
+#, c-format
+msgid "problem reading data from %s\n"
+msgstr "problem med att läsa data från %s\n"
+
+#: ../netstat.c:1750
+#, c-format
+msgid ""
+"Active IPX sockets\n"
+"Proto Recv-Q Send-Q Local Address              Foreign Address            "
+"State"
+msgstr ""
+"Aktiva IPX-uttag\n"
+"Proto Recv-Q Send-Q Lokal adress               Motpartsadress             "
+"Tillstånd"
+
+#: ../netstat.c:1752
+#, c-format
+msgid " User"
+msgstr " Användare"
+
+#: ../netstat.c:1788
+msgid "ESTAB"
+msgstr "ETABL"
+
+#: ../netstat.c:1796
+msgid "UNK."
+msgstr "OKÄN."
+
+#: ../netstat.c:1834
+msgid "OPEN"
+msgstr "ÖPPEN"
+
+#: ../netstat.c:1836
+msgid "BOUND"
+msgstr "BUNDEN"
+
+#: ../netstat.c:1840
+#| msgid "CONNECTED"
+msgid "CONNECT"
+msgstr "CONNECT"
+
+#: ../netstat.c:1842
+#| msgid "CONNECTED"
+msgid "CONNECT2"
+msgstr "CONNECT2"
+
+#: ../netstat.c:1844
+msgid "CONFIG"
+msgstr "CONFIG"
+
+#: ../netstat.c:1846
+#| msgid "DISCONNECTING"
+msgid "DISCONN"
+msgstr "DISCONN"
+
+#: ../netstat.c:1848
+msgid "CLOSED"
+msgstr "STÄNGD"
+
+#: ../netstat.c:1869
+#, c-format
+msgid "warning, got bogus l2cap line.\n"
+msgstr "varning, fick falsk l2cap-rad.\n"
+
+#: ../netstat.c:1882
+msgid "SDP"
+msgstr "SDP"
+
+#: ../netstat.c:1885
+msgid "LOW"
+msgstr "LÅG"
+
+#: ../netstat.c:1888
+msgid "MEDIUM"
+msgstr "MEDEL"
+
+#: ../netstat.c:1891
+msgid "HIGH"
+msgstr "HÖG"
+
+#: ../netstat.c:1919
+#, c-format
+msgid "warning, got bogus rfcomm line.\n"
+msgstr "varning, fick falsk rfcomm-rad.\n"
+
+#: ../netstat.c:1949
+#, c-format
+msgid "Kernel Interface table\n"
+msgstr "Kärnans gränssnittstabell\n"
+
+#: ../netstat.c:1957
+msgid "missing interface information"
+msgstr "saknar information om gränssnittet"
+
+#: ../netstat.c:1981
+#, c-format
+#| msgid ""
+#| "usage: netstat [-veenNcCF] [<Af>] -r         netstat {-V|--version|-h|--"
+#| "help}\n"
+msgid ""
+"usage: netstat [-vWeenNcCF] [<Af>] -r         netstat {-V|--version|-h|--"
+"help}\n"
+msgstr ""
+"användning: netstat [-vWeenNcCF] [<Af>] -r         netstat {-V|--version|-"
+"h|--help}\n"
+
+#: ../netstat.c:1982
+#, c-format
+#| msgid "       netstat [-vnNcaeol] [<Socket> ...]\n"
+msgid "       netstat [-vWnNcaeol] [<Socket> ...]\n"
+msgstr "       netstat [-vWnNcaeol] [<Uttag> ...]\n"
+
+#: ../netstat.c:1983
+#, c-format
+#| msgid ""
+#| "       netstat { [-veenNac] -i | [-cnNe] -M | -s }\n"
+#| "\n"
+msgid ""
+"       netstat { [-vWeenNac] -i | [-cnNe] -M | -s [-6tuw] }\n"
+"\n"
+msgstr ""
+"       netstat { [-vWeenNac] -i | [-cnNe] -M | -s [-6tuw] }\n"
+"\n"
+
+#: ../netstat.c:1985
+#, c-format
+msgid "        -r, --route              display routing table\n"
+msgstr "        -r, --route              visa routingtabell\n"
+
+#: ../netstat.c:1986
+#, c-format
+msgid "        -i, --interfaces         display interface table\n"
+msgstr "        -i, --interfaces         visa gränssnittstabell\n"
+
+#: ../netstat.c:1987
+#, c-format
+msgid "        -g, --groups             display multicast group memberships\n"
+msgstr "        -g, --groups             visa medlemskap i multicast-grupper\n"
+
+#: ../netstat.c:1988
+#, c-format
+msgid ""
+"        -s, --statistics         display networking statistics (like SNMP)\n"
+msgstr "        -s, --statistics         visa nätverksstatistik (som SNMP)\n"
+
+#: ../netstat.c:1990
+#, c-format
+msgid ""
+"        -M, --masquerade         display masqueraded connections\n"
+"\n"
+msgstr ""
+"        -M, --masquerade         visa maskade anslutningar\n"
+"\n"
+
+#: ../netstat.c:1994
+#, c-format
+msgid "        -W, --wide               don't truncate IP addresses\n"
+msgstr "        -W, --wide               trunkera inte IP-adresser\n"
+
+#: ../netstat.c:1996
+#, c-format
+msgid "        --numeric-hosts          don't resolve host names\n"
+msgstr "        --numeric-hosts          slå inte upp värdnamn\n"
+
+#: ../netstat.c:1997
+#, c-format
+msgid "        --numeric-ports          don't resolve port names\n"
+msgstr "        --numeric-ports          slå inte upp portnamn\n"
+
+#: ../netstat.c:1998
+#, c-format
+msgid "        --numeric-users          don't resolve user names\n"
+msgstr "        --numeric-users          slå inte upp användarnamn\n"
+
+#: ../netstat.c:1999
+#, c-format
+msgid "        -N, --symbolic           resolve hardware names\n"
+msgstr "        -N, --symbolic           slå upp hårdvarunamn\n"
+
+#: ../netstat.c:2000 ../route.c:90
+#, c-format
+msgid "        -e, --extend             display other/more information\n"
+msgstr "        -e, --extend             visa ytterligare information\n"
+
+#: ../netstat.c:2001
+#, c-format
+msgid "        -p, --programs           display PID/Program name for sockets\n"
+msgstr "        -p, --programs           visa PID/programnamn för uttag\n"
+
+#: ../netstat.c:2002
+#, c-format
+msgid "        -o, --timers             display timers\n"
+msgstr "        -o, --timers             visa timers\n"
+
+#: ../netstat.c:2003
+#, c-format
+msgid ""
+"        -c, --continuous         continuous listing\n"
+"\n"
+msgstr ""
+"        -c, --continuous         kontinuerlig listning\n"
+"\n"
+
+#: ../netstat.c:2004
+#, c-format
+msgid "        -l, --listening          display listening server sockets\n"
+msgstr "        -l, --listening          visa lyssnande serveruttag\n"
+
+#: ../netstat.c:2005
+#, c-format
+msgid ""
+"        -a, --all                display all sockets (default: connected)\n"
+msgstr ""
+"        -a, --all                visa alla uttag (standard: anslutna)\n"
+
+#: ../netstat.c:2006 ../route.c:91
+#, c-format
+msgid ""
+"        -F, --fib                display Forwarding Information Base "
+"(default)\n"
+msgstr ""
+"        -F, --fib                visa Forwarding Information Base "
+"(standard)\n"
+
+#: ../netstat.c:2007
+#, c-format
+msgid "        -C, --cache              display routing cache instead of FIB\n"
+msgstr ""
+"        -C, --cache              visa routningcache i stället för FIB\n"
+
+#: ../netstat.c:2009
+#, c-format
+msgid ""
+"        -Z, --context            display SELinux security context for "
+"sockets\n"
+msgstr ""
+"        -Z, --context            visa SELinux-säkerhetskontext för uttag\n"
+
+#: ../netstat.c:2012
+#, c-format
+msgid ""
+"\n"
+"  <Socket>={-t|--tcp} {-u|--udp} {-U|--udplite} {-S|--sctp} {-w|--raw}\n"
+msgstr ""
+"\n"
+" <Socket>={-t|--tcp} {-u|--udp} {-U|--udplite} {-S|--sctp} {-w|--raw}\n"
+
+#: ../netstat.c:2013
+#, c-format
+#| msgid ""
+#| "  <Socket>={-t|--tcp} {-u|--udp} {-w|--raw} {-x|--unix} --ax25 --ipx --"
+#| "netrom\n"
+msgid "           {-x|--unix} --ax25 --ipx --netrom\n"
+msgstr "           {-x|--unix} --ax25 --ipx --netrom\n"
+
+#: ../netstat.c:2014
+#, c-format
+msgid "  <AF>=Use '-6|-4' or '-A <af>' or '--<af>'; default: %s\n"
+msgstr ""
+"  <AF>=Använd \"-6|-4\" eller \"-A <af>\" eller \"--<af>\"; standard: %s\n"
+
+#: ../netstat.c:2015 ../route.c:95
+#, c-format
+msgid "  List of possible address families (which support routing):\n"
+msgstr "  Lista över möjliga adressfamiljer (som stöder routing):\n"
+
+#: ../netstat.c:2191
+#, c-format
+msgid "SELinux is not enabled on this machine.\n"
+msgstr "SELinux är inte aktiverat på den här maskinen.\n"
+
+#: ../netstat.c:2197
+#, c-format
+msgid "SELinux is not enabled for this application.\n"
+msgstr "SELinux är inte aktiverat för den här applikationen.\n"
+
+#: ../netstat.c:2267
+#, c-format
+msgid "netstat: No statistics support for specified address family: %s\n"
+msgstr "netstat: Inget stöd för statistik för angiven adressfamilj: %s\n"
+
+#: ../netstat.c:2309
+#, c-format
+msgid "Active Internet connections "
+msgstr "Aktiva internetanslutningar "
+
+#: ../netstat.c:2319
+#, c-format
+msgid ""
+"\n"
+"Proto Recv-Q Send-Q Local Address           Foreign Address         "
+"State      "
+msgstr ""
+"\n"
+"Proto Recv-Q Send-Q Lokal adress            Motpartsadress          "
+"Tillstånd   "
+
+#: ../netstat.c:2321
+#, c-format
+msgid " User       Inode     "
+msgstr " Användare  Inode     "
+
+#: ../netstat.c:2325
+#, c-format
+msgid " Timer"
+msgstr " Timer"
+
+#: ../netstat.c:2369
+#, c-format
+msgid "IPv4 Group Memberships\n"
+msgstr "Medlemskap i IPv4-grupper\n"
+
+#: ../netstat.c:2370
+#, c-format
+msgid "Interface       RefCnt Group\n"
+msgstr "Gränssnitt      RefCnt Grupp\n"
+
+#: ../netstat.c:2455
+#, c-format
+msgid "Active Bluetooth connections "
+msgstr "Aktiva Bluetooth-anslutningar "
+
+#: ../rarp.c:45
+msgid "This kernel does not support RARP.\n"
+msgstr "Denna kärna saknar stöd för RARP.\n"
+
+#: ../rarp.c:84
+#, c-format
+msgid "no RARP entry for %s.\n"
+msgstr "ingen RARP-post för %s.\n"
+
+#: ../rarp.c:98
+#, c-format
+msgid "%s: bad hardware address\n"
+msgstr "%s: felaktig hårdvaruadress\n"
+
+#: ../rarp.c:130
+#, c-format
+msgid "rarp: cannot open file %s:%s.\n"
+msgstr "rarp: kan inte öppna filen %s:%s.\n"
+
+#: ../rarp.c:142
+#, c-format
+msgid "rarp: format error at %s:%u\n"
+msgstr "rarp: formatfel vid %s:%u\n"
+
+#: ../rarp.c:146 ../rarp.c:292
+#, c-format
+msgid "rarp: %s: unknown host\n"
+msgstr "rarp: %s: okänd värd\n"
+
+#: ../rarp.c:149
+#, c-format
+msgid "rarp: cannot set entry from %s:%u\n"
+msgstr "rarp: kan inte ange post från %s:%u\n"
+
+#: ../rarp.c:179
+#, c-format
+msgid "Usage: rarp -a                               list entries in cache.\n"
+msgstr "Användning: rarp -a                          lista poster i cache.\n"
+
+#: ../rarp.c:180
+#, c-format
+msgid "       rarp -d <hostname>                    delete entry from cache.\n"
+msgstr ""
+"       rarp -d <värdnamn>                    ta bort post från cache.\n"
+
+#: ../rarp.c:181
+#, c-format
+msgid "       rarp [<HW>] -s <hostname> <hwaddr>    add entry to cache.\n"
+msgstr "       rarp [<HW>] -s <värdnamn> <hvadr>     lägg till post i cache.\n"
+
+#: ../rarp.c:182
+#, c-format
+msgid ""
+"       rarp -f                               add entries from /etc/ethers.\n"
+msgstr ""
+"       rarp -f                               lägg till poster från /etc/"
+"ethers.\n"
+
+#: ../rarp.c:183
+#, c-format
+msgid ""
+"       rarp -V                               display program version.\n"
+"\n"
+msgstr ""
+"       rarp -V                               visa programversion.\n"
+"\n"
+
+#: ../rarp.c:241
+#, c-format
+msgid "%s: illegal option mix.\n"
+msgstr "%s: olämplig flaggblandning.\n"
+
+#: ../rarp.c:272
+#, c-format
+msgid "rarp: %s: unknown hardware type.\n"
+msgstr "rarp: %s: okänd maskinvarutyp.\n"
+
+#: ../route.c:82
+#, c-format
+msgid ""
+"Usage: route [-nNvee] [-FC] [<AF>]           List kernel routing tables\n"
+msgstr ""
+"Användning: route [-nNvee] [-FC] [<AF>]           Lista kärnans "
+"routingtabeller\n"
+
+#: ../route.c:83
+#, c-format
+msgid ""
+"       route [-v] [-FC] {add|del|flush} ...  Modify routing table for AF.\n"
+"\n"
+msgstr ""
+"       route [-v] [-FC] {add|del|flush} ...  Ändra routningstabellen för "
+"AF.\n"
+"\n"
+
+#: ../route.c:85
+#, c-format
+msgid ""
+"       route {-h|--help} [<AF>]              Detailed usage syntax for "
+"specified AF.\n"
+msgstr ""
+"       route {-h|--help} [<AF>]              Detaljerad användningssyntax "
+"för angiven AF.\n"
+
+#: ../route.c:86
+#, c-format
+msgid ""
+"       route {-V|--version}                  Display version/author and "
+"exit.\n"
+"\n"
+msgstr ""
+"       route {-V|--version}                  Visa version/upphovsperson och "
+"avsluta.\n"
+"\n"
+
+#: ../route.c:92
+#, c-format
+msgid ""
+"        -C, --cache              display routing cache instead of FIB\n"
+"\n"
+msgstr ""
+"        -C, --cache              visa routningcache i stället för FIB\n"
+"\n"
+
+#: ../route.c:94
+#, c-format
+msgid "  <AF>=Use -4, -6, '-A <af>' or '--<af>'; default: %s\n"
+msgstr "  <AF>=Använd -4, -6, '-A <af>' eller '--<af>'; standard: %s\n"
+
+#: ../plipconfig.c:63
+#, c-format
+msgid "Usage: plipconfig interface [nibble NN] [trigger NN]\n"
+msgstr "Användning: plipconfig gränssnitt [nibble NN] [trigger NN]\n"
+
+#: ../plipconfig.c:64
+#, c-format
+msgid "       plipconfig -V | --version\n"
+msgstr "       plipconfig -V | --version\n"
+
+#: ../plipconfig.c:65
+#, c-format
+#| msgid "       plipconfig -V | --version\n"
+msgid "       plipconfig -h | --help\n"
+msgstr "       plipconfig -h | --help\n"
+
+#: ../plipconfig.c:71
+#, c-format
+msgid "%s\tnibble %lu  trigger %lu\n"
+msgstr "%s nibble %lu trigger %lu\n"
+
+#: ../iptunnel.c:82
+#, c-format
+msgid "Usage: iptunnel { add | change | del | show } [ NAME ]\n"
+msgstr "Användning: iptunnel { add | change | del | show } [ NAMN ]\n"
+
+#: ../iptunnel.c:83
+#, c-format
+msgid ""
+"          [ mode { ipip | gre | sit } ] [ remote ADDR ] [ local ADDR ]\n"
+msgstr ""
+"          [ mode { ipip | gre | sit } ] [ remote ADDR ] [ local ADDR ]\n"
+
+#: ../iptunnel.c:84
+#, c-format
+msgid "          [ [i|o]seq ] [ [i|o]key KEY ] [ [i|o]csum ]\n"
+msgstr "          [ [i|o]seq ] [ [i|o]key NYCKEL ] [ [i|o]csum ]\n"
+
+#: ../iptunnel.c:85
+#, c-format
+msgid "          [ ttl TTL ] [ tos TOS ] [ nopmtudisc ] [ dev PHYS_DEV ]\n"
+msgstr "          [ ttl TTL ] [ tos TOS ] [ nopmtudisc ] [ dev FYS_ENH ]\n"
+
+#: ../iptunnel.c:86
+#, c-format
+msgid ""
+"       iptunnel -V | --version\n"
+"\n"
+msgstr ""
+"       iptunnel -V | --version\n"
+"\n"
+
+#: ../iptunnel.c:87
+#, c-format
+msgid "Where: NAME := STRING\n"
+msgstr "Där: NAMN := STRÄNG\n"
+
+#: ../iptunnel.c:88
+#, c-format
+msgid "       ADDR := { IP_ADDRESS | any }\n"
+msgstr "       ADDR := { IP_ADRESS | valfri }\n"
+
+#: ../iptunnel.c:89
+#, c-format
+msgid "       TOS  := { NUMBER | inherit }\n"
+msgstr "       TOS  := { NUMMER | inherit }\n"
+
+#: ../iptunnel.c:90
+#, c-format
+msgid "       TTL  := { 1..255 | inherit }\n"
+msgstr "       TTL := { 1..255 | inherit }\n"
+
+#: ../iptunnel.c:91
+#, c-format
+msgid "       KEY  := { DOTTED_QUAD | NUMBER }\n"
+msgstr "       KEY  := { DOTTED_QUAD | NUMBER }\n"
+
+#: ../iptunnel.c:332
+#, c-format
+msgid "Keys are not allowed with ipip and sit.\n"
+msgstr "Nycklar är inte tillåtna med ipip och sit.\n"
+
+#: ../iptunnel.c:352
+#, c-format
+msgid "Broadcast tunnel requires a source address.\n"
+msgstr "Broadcast-tunneln kräver en källadress.\n"
+
+#: ../iptunnel.c:367
+#, c-format
+msgid "ttl != 0 and noptmudisc are incompatible\n"
+msgstr "ttl != 0 och noptmudisc är inte kompatibla\n"
+
+#: ../iptunnel.c:379
+#, c-format
+msgid "cannot determine tunnel mode (ipip, gre or sit)\n"
+msgstr "kan inte avgöra tunnelläge (ipip, gre eller sit)\n"
+
+#: ../iptunnel.c:417
+#, c-format
+msgid "%s: %s/ip  remote %s  local %s "
+msgstr "%s: %s/ip  fjärr %s   lokal %s "
+
+#: ../iptunnel.c:421
+msgid "unknown"
+msgstr "okänd"
+
+#: ../iptunnel.c:453
+#, c-format
+msgid "  Drop packets out of sequence.\n"
+msgstr "  Kasta paket i fel ordning.\n"
+
+#: ../iptunnel.c:455
+#, c-format
+msgid "  Checksum in received packet is required.\n"
+msgstr "  Kontrollsumman i det mottagna paketet krävs.\n"
+
+#: ../iptunnel.c:457
+#, c-format
+msgid "  Sequence packets on output.\n"
+msgstr "  Sekvensera paketen vid utmatning.\n"
+
+#: ../iptunnel.c:459
+#, c-format
+msgid "  Checksum output packets.\n"
+msgstr "  Kontrollsumma för utdatapaket.\n"
+
+#: ../iptunnel.c:489
+#, c-format
+msgid "Wrong format of /proc/net/dev. Sorry.\n"
+msgstr "Fel format på /proc/net/dev. Beklagar.\n"
+
+#: ../iptunnel.c:503
+#, c-format
+msgid "Failed to get type of [%s]\n"
+msgstr "Misslyckades med att få typ av [%s]\n"
+
+#: ../iptunnel.c:519
+#, c-format
+msgid "RX: Packets    Bytes        Errors CsumErrs OutOfSeq Mcasts\n"
+msgstr "RX: Paket      Byte         Fel    CsumErrs OutOfSeq Mcasts\n"
+
+#: ../iptunnel.c:522
+#, c-format
+msgid "TX: Packets    Bytes        Errors DeadLoop NoRoute  NoBufs\n"
+msgstr "TX: Paket      Byte         Fel DeadLoop NoRoute  NoBufs\n"
+
+#: ../statistics.c:40
+msgid "ICMP input histogram:"
+msgstr "Histogram för ICMP-indata:"
+
+#: ../statistics.c:41
+msgid "ICMP output histogram:"
+msgstr "Histogram för ICMP-utdata:"
+
+#. Keep the entries sorted!
+#: ../statistics.c:58
+#, c-format
+msgid "Default TTL is %llu"
+msgstr "Standard-TTL är %llu"
+
+#: ../statistics.c:59 ../statistics.c:95
+#, c-format
+msgid "%llu forwarded"
+msgstr "%llu vidarebefordrade"
+
+#: ../statistics.c:60
+#, c-format
+msgid "Forwarding is %s"
+msgstr "Vidarebefordring är %s"
+
+#. Keep the entries sorted!
+#: ../statistics.c:61 ../statistics.c:81
+#, c-format
+msgid "%llu fragments created"
+msgstr "%llu fragment skapade"
+
+#: ../statistics.c:62 ../statistics.c:82
+#, c-format
+msgid "%llu outgoing packets failed fragmentation"
+msgstr "%llu utgående paket misslyckades med fragmentering"
+
+#: ../statistics.c:63 ../statistics.c:83
+#, c-format
+msgid "%llu outgoing packets fragmented ok"
+msgstr "%llu utgående paket fragmenterade ok"
+
+#: ../statistics.c:64 ../statistics.c:84
+#, c-format
+msgid "%llu with invalid addresses"
+msgstr "%llu med ogiltiga adresser"
+
+#: ../statistics.c:65 ../statistics.c:85
+#, c-format
+msgid "%llu incoming packets delivered"
+msgstr "%llu inkommande paket levererade"
+
+#: ../statistics.c:66 ../statistics.c:86
+#, c-format
+msgid "%llu incoming packets discarded"
+msgstr "%llu inkommande paket förkastade"
+
+#: ../statistics.c:67 ../statistics.c:87
+#, c-format
+msgid "%llu with invalid headers"
+msgstr "%llu med ogiltiga rubriker"
+
+#: ../statistics.c:68 ../statistics.c:90
+#, c-format
+msgid "%llu total packets received"
+msgstr "%llu totalt antal mottagna paket"
+
+#: ../statistics.c:69 ../statistics.c:93
+#, c-format
+msgid "%llu with unknown protocol"
+msgstr "%llu med okänt protokoll"
+
+#: ../statistics.c:70 ../statistics.c:94
+#, c-format
+msgid "%llu outgoing packets dropped"
+msgstr "%llu utgående paket kastade"
+
+#: ../statistics.c:71 ../statistics.c:97
+#, c-format
+msgid "%llu dropped because of missing route"
+msgstr "%llu kastade på grund av saknad route"
+
+#: ../statistics.c:72 ../statistics.c:98
+#, c-format
+msgid "%llu requests sent out"
+msgstr "%llu förfrågningar skickades ut"
+
+#. ?
+#: ../statistics.c:73 ../statistics.c:99
+#, c-format
+msgid "%llu packet reassemblies failed"
+msgstr "%llu paketåtermonteringar misslyckade"
+
+#: ../statistics.c:74 ../statistics.c:100
+#, c-format
+msgid "%llu packets reassembled ok"
+msgstr "%llu paket återmonterade ok"
+
+#: ../statistics.c:75 ../statistics.c:101
+#, c-format
+msgid "%llu reassemblies required"
+msgstr "%llu återmonteringar krävs"
+
+#. ?
+#: ../statistics.c:76 ../statistics.c:102
+#, c-format
+msgid "%llu fragments dropped after timeout"
+msgstr "%llu fragment kastade efter tidsgräns"
+
+#: ../statistics.c:88
+#, c-format
+msgid "%llu incoming multicast packets"
+msgstr "%llu inkommande multicast-paket"
+
+#: ../statistics.c:89
+#, c-format
+msgid "%llu incoming packets with no route"
+msgstr "%llu inkommande paket utan någon route"
+
+#: ../statistics.c:91
+#, c-format
+msgid "%llu with packets too big"
+msgstr "%llu med för stora paket"
+
+#: ../statistics.c:92
+#, c-format
+msgid "%llu with truncated packets"
+msgstr "%llu med avkortade paket"
+
+#: ../statistics.c:96
+#, c-format
+msgid "%llu outgoing multicast packets"
+msgstr "%llu utgående multicast-paket"
+
+#. Keep the entries sorted!
+#: ../statistics.c:107 ../statistics.c:120
+#, c-format
+msgid "address mask replies: %llu"
+msgstr "adressmasksvar: %llu"
+
+#. ?
+#: ../statistics.c:108
+#, c-format
+msgid "address mask request: %llu"
+msgstr "adressmaskbegäran: %llu"
+
+#. ?
+#. Keep the entries sorted!
+#: ../statistics.c:109 ../statistics.c:122 ../statistics.c:137
+#: ../statistics.c:153
+#, c-format
+msgid "destination unreachable: %llu"
+msgstr "destinationen inte nåbar: %llu"
+
+#: ../statistics.c:110 ../statistics.c:123 ../statistics.c:138
+#: ../statistics.c:154
+#, c-format
+msgid "echo replies: %llu"
+msgstr "echo-svar: %llu"
+
+#: ../statistics.c:111 ../statistics.c:124 ../statistics.c:139
+#: ../statistics.c:155
+#, c-format
+msgid "echo requests: %llu"
+msgstr "echo-förfrågningar: %llu"
+
+#: ../statistics.c:112 ../statistics.c:140
+#, c-format
+msgid "%llu input ICMP message failed"
+msgstr "%llu inmatning av ICMP-meddelande misslyckades"
+
+#: ../statistics.c:113 ../statistics.c:144
+#, c-format
+msgid "%llu ICMP messages received"
+msgstr "%llu ICMP-meddelanden mottagna"
+
+#: ../statistics.c:114 ../statistics.c:127
+#, c-format
+msgid "wrong parameters: %llu"
+msgstr "fel parametrar: %llu"
+
+#. ?
+#: ../statistics.c:115 ../statistics.c:149 ../statistics.c:164
+#, c-format
+msgid "redirects: %llu"
+msgstr "omdirigeringar: %llu"
+
+#: ../statistics.c:116
+#, c-format
+msgid "source quenches: %llu"
+msgstr "källsläckningar: %llu"
+
+#: ../statistics.c:117
+#, c-format
+msgid "timeout in transit: %llu"
+msgstr "tidsgräns överstigen vid överföring: %llu"
+
+#: ../statistics.c:118
+#, c-format
+msgid "timestamp reply: %llu"
+msgstr "tidsstämpelsvar: %llu"
+
+#: ../statistics.c:119
+#, c-format
+msgid "timestamp request: %llu"
+msgstr "begäran om tidsstämpel: %llu"
+
+#: ../statistics.c:121
+#, c-format
+msgid "address mask requests: %llu"
+msgstr "adressmaskförfrågningar: %llu"
+
+#: ../statistics.c:125
+#, c-format
+msgid "%llu ICMP messages failed"
+msgstr "%llu ICMP-meddelanden misslyckade"
+
+#: ../statistics.c:126 ../statistics.c:159
+#, c-format
+msgid "%llu ICMP messages sent"
+msgstr "%llu ICMP-meddelanden skickade"
+
+#. ?
+#: ../statistics.c:128
+#, c-format
+msgid "redirect: %llu"
+msgstr "omdirigering: %llu"
+
+#: ../statistics.c:129
+#, c-format
+msgid "source quench: %llu"
+msgstr "källsläckning: %llu"
+
+#: ../statistics.c:130
+#, c-format
+msgid "time exceeded: %llu"
+msgstr "tid överskreds: %llu"
+
+#: ../statistics.c:131
+#, c-format
+msgid "timestamp replies: %llu"
+msgstr "tidsstämpelsvar: %llu"
+
+#: ../statistics.c:132
+#, c-format
+msgid "timestamp requests: %llu"
+msgstr "tidsstämpelförfrågningar: %llu"
+
+#: ../statistics.c:141 ../statistics.c:156
+#, c-format
+msgid "group member queries: %llu"
+msgstr "förfrågningar om gruppmedlemmar: %llu"
+
+#: ../statistics.c:142 ../statistics.c:157
+#, c-format
+msgid "group member reductions: %llu"
+msgstr "gruppmedlemsreduktioner: %llu"
+
+#: ../statistics.c:143 ../statistics.c:158
+#, c-format
+msgid "group member responses: %llu"
+msgstr "gruppmedlemssvar: %llu"
+
+#: ../statistics.c:145
+#, c-format
+msgid "neighbour advertisement: %llu"
+msgstr "grannannonsering: %llu"
+
+#: ../statistics.c:146
+#, c-format
+msgid "neighbour solicits: %llu"
+msgstr "grannförfrågningar: %llu"
+
+#: ../statistics.c:147 ../statistics.c:162
+#, c-format
+msgid "parameter problem: %llu"
+msgstr "parameterproblem: %llu"
+
+#: ../statistics.c:148 ../statistics.c:163
+#, c-format
+msgid "packets too big: %llu"
+msgstr "paket för stora: %llu"
+
+#: ../statistics.c:150 ../statistics.c:165
+#, c-format
+msgid "router advertisement: %llu"
+msgstr "routerannonsering: %llu"
+
+#: ../statistics.c:151 ../statistics.c:166
+#, c-format
+msgid "router solicits: %llu"
+msgstr "routerbegäran: %llu"
+
+#: ../statistics.c:152
+#, c-format
+msgid "received ICMPv6 time exceeded: %llu"
+msgstr "tog emot ICMPv6-tid överstigen: %llu"
+
+#: ../statistics.c:160
+#, c-format
+msgid "neighbor advertisements: %llu"
+msgstr "grannannonseringar: %llu"
+
+#: ../statistics.c:161
+#, c-format
+msgid "neighbor solicits: %llu"
+msgstr "grannbegäran: %llu"
+
+#: ../statistics.c:167
+#, c-format
+msgid "sent ICMPv6 time exceeded: %llu"
+msgstr "skickad ICMPv6-tid överstigen: %llu"
+
+#. Keep the entries sorted!
+#: ../statistics.c:172
+#, c-format
+msgid "%llu active connection openings"
+msgstr "%llu aktiva anslutningsöppningar"
+
+#: ../statistics.c:173
+#, c-format
+msgid "%llu failed connection attempts"
+msgstr "%llu misslyckade anslutningsförsök"
+
+#: ../statistics.c:174
+#, c-format
+msgid "%llu connections established"
+msgstr "%llu anslutningar etablerade"
+
+#: ../statistics.c:175
+#, c-format
+msgid "%llu connection resets received"
+msgstr "%llu återställningar av anslutning mottagna"
+
+#: ../statistics.c:176
+#, c-format
+msgid "%llu bad segments received"
+msgstr "%llu felaktiga segment mottagna"
+
+#: ../statistics.c:177
+#, c-format
+msgid "%llu segments received"
+msgstr "%llu segment mottagna"
+
+#: ../statistics.c:179
+#, c-format
+msgid "%llu resets sent"
+msgstr "%llu återställningar skickade"
+
+#: ../statistics.c:180
+#, c-format
+msgid "%llu segments sent out"
+msgstr "%llu segment skickades ut"
+
+#: ../statistics.c:181
+#, c-format
+msgid "%llu passive connection openings"
+msgstr "%llu passiva anslutningsöppningar"
+
+#: ../statistics.c:182
+#, c-format
+msgid "%llu segments retransmitted"
+msgstr "%llu segment återsändes"
+
+#: ../statistics.c:183
+#, c-format
+msgid "RTO algorithm is %s"
+msgstr "RTO-algoritmen är %s"
+
+#. Keep the entries sorted!
+#: ../statistics.c:190 ../statistics.c:201
+#, c-format
+msgid "%llu packets with invalid checksum"
+msgstr "%llu paket med ogiltig kontrollsumma"
+
+#: ../statistics.c:191 ../statistics.c:202
+#, c-format
+msgid "%llu packets received"
+msgstr "%llu mottagna paket"
+
+#: ../statistics.c:192 ../statistics.c:203
+#, c-format
+msgid "%llu packet receive errors"
+msgstr "%llu paket med mottagningsfel"
+
+#: ../statistics.c:193 ../statistics.c:204
+#, c-format
+msgid "%llu packets to unknown port received"
+msgstr "%llu paket till okänd port mottagna"
+
+#: ../statistics.c:194 ../statistics.c:205
+#, c-format
+msgid "%llu packets sent"
+msgstr "%llu paket skickade"
+
+#: ../statistics.c:195 ../statistics.c:206
+#, c-format
+msgid "%llu receive buffer errors"
+msgstr "%llu fel i mottagningsbuffert"
+
+#: ../statistics.c:196 ../statistics.c:207
+#, c-format
+msgid "%llu send buffer errors"
+msgstr "%llu fel i sändningsbuffert"
+
+#. Keep the entries sorted!
+#: ../statistics.c:212
+#, c-format
+msgid "%llu delayed acks further delayed because of locked socket"
+msgstr "%llu fördröjda acks ytterligare fördröjda på grund av låst uttag"
+
+#: ../statistics.c:213
+#, c-format
+msgid "Quick ack mode was activated %llu times"
+msgstr "Snabbt ack-läge aktiverades %llu gånger"
+
+#: ../statistics.c:214
+#, c-format
+msgid "%llu delayed acks sent"
+msgstr "%llu fördröjda acks skickade"
+
+#: ../statistics.c:215
+#, c-format
+msgid "%llu resets received for embryonic SYN_RECV sockets"
+msgstr "%llu mottagna återställningar för embryonala SYN_RECV-uttag"
+
+#: ../statistics.c:216
+#, c-format
+msgid "%llu SYNs to LISTEN sockets dropped"
+msgstr "%llu SYNs till LISTEN-uttag kastade"
+
+#: ../statistics.c:217
+#, c-format
+msgid "%llu times the listen queue of a socket overflowed"
+msgstr "%llu gånger lyssningskön för ett uttag överflödades"
+
+#: ../statistics.c:218
+#, c-format
+msgid "%llu ICMP packets dropped because socket was locked"
+msgstr "%llu ICMP-paket kastade eftersom uttaget var låst"
+
+#: ../statistics.c:219
+#, c-format
+msgid ""
+"%llu packets dropped from out-of-order queue because of socket buffer overrun"
+msgstr ""
+"%llu paket kastade från kö som inte är i ordning på grund av överskridande "
+"av uttagsbufferten"
+
+#: ../statistics.c:220
+#, c-format
+msgid "%llu ICMP packets dropped because they were out-of-window"
+msgstr "%llu ICMP-paket kastade eftersom de var utanför fönstret"
+
+#: ../statistics.c:221
+#, c-format
+msgid "%llu active connections rejected because of time stamp"
+msgstr "%llu aktiva anslutningar avvisades på grund av tidsstämpel"
+
+#: ../statistics.c:222
+#, c-format
+msgid "%llu packets rejected in established connections because of timestamp"
+msgstr "%llu paket nekade i etablerade anslutningar på grund av tidsstämpel"
+
+#: ../statistics.c:223
+#, c-format
+msgid "%llu passive connections rejected because of time stamp"
+msgstr "%llu passiva anslutningar nekade på grund av tidsstämpel"
+
+#: ../statistics.c:224
+#, c-format
+msgid "%llu packets pruned from receive queue because of socket buffer overrun"
+msgstr ""
+"%llu paket borttagna från mottagningskön på grund av överskridande av "
+"uttagsbufferten"
+
+#: ../statistics.c:225
+#, c-format
+msgid "%llu packets pruned from receive queue"
+msgstr "%llu paket borttagna från mottagningskön"
+
+#: ../statistics.c:226
+#, c-format
+msgid "Ran %llu times out of system memory during packet sending"
+msgstr "Fick slut på systemminne %llu gånger under sändning av paket"
+
+#: ../statistics.c:227
+#, c-format
+msgid "%llu invalid SYN cookies received"
+msgstr "%llu ogiltiga SYN-cookies mottagna"
+
+#: ../statistics.c:228
+#, c-format
+msgid "%llu SYN cookies received"
+msgstr "%llu SYN-cookies mottagna"
+
+#: ../statistics.c:229
+#, c-format
+msgid "%llu SYN cookies sent"
+msgstr "%llu SYN-cookies skickade"
+
+#: ../statistics.c:230
+#, c-format
+msgid "%llu times unable to send RST due to no memory"
+msgstr "%llu gånger oförmögen att skicka RST på grund av slut på minne"
+
+#: ../statistics.c:231
+#, c-format
+msgid "%llu connections reset due to early user close"
+msgstr "%llu anslutningar återställda på grund av tidig användarstängning"
+
+#: ../statistics.c:232
+#, c-format
+msgid "%llu connections reset due to unexpected data"
+msgstr "%llu anslutningar återställda på grund av oväntade data"
+
+#: ../statistics.c:233
+#, c-format
+msgid "%llu connections aborted after user close in linger timeout"
+msgstr "%llu anslutningar avbrutna efter användarstängning i linger timeout"
+
+#: ../statistics.c:234
+#, c-format
+msgid "%llu connections aborted due to memory pressure"
+msgstr "%llu anslutningar avbrutna på grund av minnestryck"
+
+#: ../statistics.c:235
+#, c-format
+msgid "%llu connections reset due to unexpected SYN"
+msgstr "%llu anslutningar återställda på grund av oväntad SYN"
+
+#: ../statistics.c:236
+#, c-format
+msgid "%llu connections aborted due to timeout"
+msgstr "%llu anslutningar avbrutna på grund av tidsgräns"
+
+#: ../statistics.c:237
+#, c-format
+msgid "%llu bytes directly in process context from backlog"
+msgstr "%llu byte direkt i processammanhang från backlog"
+
+#: ../statistics.c:238
+#, c-format
+msgid "%llu bytes directly received in process context from prequeue"
+msgstr "%llu byte direkt mottagna i processammanhang från prequeue"
+
+#: ../statistics.c:239
+#, c-format
+msgid "%llu DSACKs for out of order packets received"
+msgstr "%llu DSACKs mottagna för paket som inte är i ordning"
+
+#: ../statistics.c:240
+#, c-format
+msgid "%llu DSACKs sent for out of order packets"
+msgstr "%llu DSACKs skickade för paket som inte är i ordning"
+
+#: ../statistics.c:241
+#, c-format
+msgid "%llu DSACKs sent for old packets"
+msgstr "%llu DSACKs skickade för gamla paket"
+
+#: ../statistics.c:242
+#, c-format
+msgid "%llu DSACKs received"
+msgstr "%llu DSACKs mottagna"
+
+#: ../statistics.c:243
+#, c-format
+msgid "%llu congestion window recovered without slow start using DSACK"
+msgstr ""
+"%llu överbelastningsfönstret återställdes utan långsam start med hjälp av "
+"DSACK"
+
+#: ../statistics.c:244
+#, c-format
+msgid "%llu congestion windows recovered without slow start by DSACK"
+msgstr "%llu överbelastningsfönster återställda utan långsam start genom DSACK"
+
+#: ../statistics.c:245
+#, c-format
+msgid "Detected reordering %llu times using FACK"
+msgstr "Detekterade omordningar %llu gånger med hjälp av FACK"
+
+#: ../statistics.c:246
+#, c-format
+msgid "%llu fast retransmits"
+msgstr "%llu snabba omsändningar"
+
+#: ../statistics.c:247
+#, c-format
+msgid "%llu forward retransmits"
+msgstr "%llu vidarebefordrade omsändningar"
+
+#: ../statistics.c:248
+#, c-format
+msgid "%llu congestion windows fully recovered without slow start"
+msgstr "%llu överbelastningsfönster helt återställda utan långsam start"
+
+#: ../statistics.c:249
+#, c-format
+msgid "%llu predicted acknowledgments"
+msgstr "%llu förutspådda bekräftelser"
+
+#: ../statistics.c:250
+#, c-format
+msgid "%llu packet headers predicted"
+msgstr "%llu paketrubriker förutspådda"
+
+#: ../statistics.c:251
+#, c-format
+msgid "%llu packet headers predicted and directly queued to user"
+msgstr "%llu pakethuvuden förutsedda och direkt köade till användare"
+
+#: ../statistics.c:252
+#, c-format
+msgid "%llu timeouts in loss state"
+msgstr "%llu tidsgränser överstigna i förlusttillstånd"
+
+#: ../statistics.c:253
+#, c-format
+msgid "%llu TCP data loss events"
+msgstr "%llu händelser med TCP-dataförlust"
+
+#: ../statistics.c:254
+#, c-format
+msgid "%llu congestion windows recovered without slow start after partial ack"
+msgstr ""
+"%llu överbelastningsfönster återställda utan långsam start efter partiell ack"
+
+#: ../statistics.c:255
+#, c-format
+msgid "%llu retransmits lost"
+msgstr "%llu omsändningar förlorade"
+
+#: ../statistics.c:256
+#, c-format
+msgid "TCP ran low on memory %llu times"
+msgstr "TCP fick slut på minne %llu gånger"
+
+#: ../statistics.c:257
+#, c-format
+msgid "%llu congestion windows partially recovered using Hoe heuristic"
+msgstr ""
+"%llu överbelastningsfönster delvis återställda med hjälp av Hoe-heuristik"
+
+#: ../statistics.c:258
+#, c-format
+msgid "%llu packets directly queued to recvmsg prequeue"
+msgstr "%llu paket direkt köade till recvmsg prequeue"
+
+#: ../statistics.c:259
+#, c-format
+msgid "%llu packets dropped from prequeue"
+msgstr "%llu paket kastade från prequeue"
+
+#: ../statistics.c:260
+#, c-format
+msgid "%llu acknowledgments not containing data payload received"
+msgstr "%llu bekräftelser som inte innehåller datanyttolast mottagna"
+
+#: ../statistics.c:261
+#, c-format
+msgid "%llu packets collapsed in receive queue due to low socket buffer"
+msgstr "%llu paket kollapsade i mottagningskön på grund av låg uttagsbuffert"
+
+#: ../statistics.c:262
+#, c-format
+msgid "%llu timeouts after reno fast retransmit"
+msgstr "%llu tidsgränser överstigna efter reno snabb återsändning"
+
+#: ../statistics.c:263
+#, c-format
+msgid "%llu reno fast retransmits failed"
+msgstr "%llu reno snabba återsändningar misslyckades"
+
+#: ../statistics.c:264
+#, c-format
+msgid "%llu classic Reno fast retransmits failed"
+msgstr "%llu klassiska Reno snabba omsändningar misslyckades"
+
+#: ../statistics.c:265
+#, c-format
+msgid "%llu times recovered from packet loss due to fast retransmit"
+msgstr ""
+"%llu gånger återhämtade från paketförlust på grund av snabb återsändning"
+
+#: ../statistics.c:266
+#, c-format
+msgid "Detected reordering %llu times using reno fast retransmit"
+msgstr "Detekterade omordningar %llu gånger med hjälp av reno fast retransmit"
+
+#: ../statistics.c:267
+#, c-format
+msgid "%llu timeouts after SACK recovery"
+msgstr "%llu tidsgränser överstigna efter SACK-återhämtning"
+
+#: ../statistics.c:268
+#, c-format
+msgid "%llu SACK retransmits failed"
+msgstr "%llu SACK-omsändningar misslyckades"
+
+#: ../statistics.c:269
+#, c-format
+msgid "%llu times recovered from packet loss by selective acknowledgements"
+msgstr "%llu gånger återhämtade från paketförlust genom selektiva bekräftelser"
+
+#: ../statistics.c:270
+#, c-format
+msgid "%llu bad SACK blocks received"
+msgstr "%llu felaktiga SACK-block mottagna"
+
+#: ../statistics.c:271
+#, c-format
+msgid "Detected reordering %llu times using SACK"
+msgstr "Detekterade omordningar %llu gånger med hjälp av SACK"
+
+#: ../statistics.c:272
+#, c-format
+msgid "%llu times receiver scheduled too late for direct processing"
+msgstr "%llu gånger mottagare schemalade för sent för direktbearbetning"
+
+#: ../statistics.c:273
+#, c-format
+msgid "%llu retransmits in slow start"
+msgstr "%llu omsändningar i långsam start"
+
+#: ../statistics.c:274
+#, c-format
+msgid "%llu other TCP timeouts"
+msgstr "%llu andra överstigna TCP-tidsgränser"
+
+#: ../statistics.c:275
+#, c-format
+msgid "Detected reordering %llu times using time stamp"
+msgstr "Detekterade omordningar av %llu gånger med hjälp av tidsstämpel"
+
+#: ../statistics.c:276
+#, c-format
+msgid "%llu TCP sockets finished time wait in slow timer"
+msgstr "%llu TCP-uttag avslutade väntetiden i långsam timer"
+
+#: ../statistics.c:277
+#, c-format
+msgid "%llu TCP sockets finished time wait in fast timer"
+msgstr "%llu TCP-uttag avslutade väntetiden i snabbtimern"
+
+#: ../statistics.c:278
+#, c-format
+msgid "%llu time wait sockets recycled by time stamp"
+msgstr "%llu tidvänteuttag återvunna av tidsstämpel"
+
+#. Keep the entries sorted!
+#: ../statistics.c:283
+#, c-format
+msgid "%llu Number of Aborteds "
+msgstr "%llu Antal avbrutna "
+
+#: ../statistics.c:284
+#, c-format
+msgid "%llu Active Associations"
+msgstr "%llu Aktiva associationer"
+
+#: ../statistics.c:285
+#, c-format
+msgid "%llu Number of Packets with invalid Checksum"
+msgstr "%llu Antal paket med ogiltig kontrollsumma"
+
+#: ../statistics.c:286
+#, c-format
+msgid "%llu Current Associations"
+msgstr "%llu Aktuella associationer"
+
+#: ../statistics.c:287
+#, c-format
+msgid "%llu Number of messages fragmented"
+msgstr "%llu Antal meddelanden som fragmenterats"
+
+#: ../statistics.c:288
+#, c-format
+msgid "%llu Number of control chunks received"
+msgstr "%llu Antal kontrollchunks mottagna"
+
+#: ../statistics.c:289
+#, c-format
+msgid "%llu Number of ordered chunks received"
+msgstr "%llu Antal ordnade chunks mottagna"
+
+#: ../statistics.c:290
+#, c-format
+msgid "%llu Number of SCTP packets received"
+msgstr "%llu Antal SCTP-paket mottagna"
+
+#: ../statistics.c:291
+#, c-format
+msgid "%llu Number of Unordered chunks received"
+msgstr "%llu Antal oordnade chunks mottagna"
+
+#: ../statistics.c:292
+#, c-format
+msgid "%llu Number of control chunks sent"
+msgstr "%llu Antal kontrollchunks skickade"
+
+#: ../statistics.c:293
+#, c-format
+msgid "%llu Number of Out of Blue packets"
+msgstr "%llu Antal Out of Blue-paket"
+
+#: ../statistics.c:294
+#, c-format
+msgid "%llu Number of ordered chunks sent"
+msgstr "%llu Antal ordnade chunks skickade"
+
+#: ../statistics.c:295
+#, c-format
+msgid "%llu Number of SCTP packets sent"
+msgstr "%llu Antal SCTP-paket skickade"
+
+#: ../statistics.c:296
+#, c-format
+msgid "%llu Number of Unordered chunks sent"
+msgstr "%llu Antal oordnade chunkar skickade"
+
+#: ../statistics.c:297
+#, c-format
+msgid "%llu Passive Associations"
+msgstr "%llu Passiva associationer"
+
+#: ../statistics.c:298
+#, c-format
+msgid "%llu Number of messages reassembled "
+msgstr "%llu Antal meddelanden som återmonterats "
+
+#: ../statistics.c:299
+#, c-format
+msgid "%llu Number of Graceful Terminations"
+msgstr "%llu Antal Graceful-termineringar"
+
+#: ../statistics.c:376
+msgid "enabled"
+msgstr "aktiverad"
+
+#: ../statistics.c:376
+msgid "disabled"
+msgstr "inaktiverad"
+
+#: ../statistics.c:521
+#, c-format
+msgid "error parsing %s\n"
+msgstr "fel vid tolkning av %s\n"
+
+#: ../statistics.c:542 ../statistics.c:594
+msgid "cannot open /proc/net/snmp"
+msgstr "kan inte öppna /proc/net/snmp"
+
+#: ../statistics.c:547
+#, c-format
+msgid "Problem while parsing /proc/net/snmp\n"
+msgstr "Problem vid tolkning av /proc/net/snmp\n"
+
+#: ../statistics.c:558
+#, c-format
+msgid "Problem while parsing /proc/net/netstat\n"
+msgstr "Problem vid tolkning av /proc/net/netstat\n"
+
+#: ../statistics.c:584
+msgid "cannot open /proc/net/snmp6"
+msgstr "kan inte öppna /proc/net/snmp6"
+
+#: ../lib/activate.c:63
+#, c-format
+msgid "Hardware type `%s' not supported.\n"
+msgstr "Maskinvarutypen \"%s\" stöds inte.\n"
+
+#: ../lib/activate.c:67
+#, c-format
+msgid "Cannot change line discipline to `%s'.\n"
+msgstr "Det går inte att ändra raddisciplin till `%s'.\n"
+
+#: ../lib/af.c:159 ../lib/hw.c:164
+msgid "UNSPEC"
+msgstr "OSPEC"
+
+#: ../lib/af.c:161
+msgid "UNIX Domain"
+msgstr "UNIX-domän"
+
+#: ../lib/af.c:164
+msgid "DARPA Internet"
+msgstr "DARPA Internet"
+
+#: ../lib/af.c:167
+msgid "IPv6"
+msgstr "IPv6"
+
+#: ../lib/af.c:170 ../lib/hw.c:188
+msgid "AMPR AX.25"
+msgstr "AMPR AX.25"
+
+#: ../lib/af.c:173 ../lib/hw.c:194
+msgid "AMPR NET/ROM"
+msgstr "AMPR NET/ROM"
+
+#: ../lib/af.c:176
+msgid "Novell IPX"
+msgstr "Novell IPX"
+
+#: ../lib/af.c:179
+msgid "Appletalk DDP"
+msgstr "Appletalk DDP"
+
+#: ../lib/af.c:182 ../lib/hw.c:229
+msgid "Econet"
+msgstr "Econet"
+
+#: ../lib/af.c:185
+msgid "CCITT X.25"
+msgstr "CCITT X.25"
+
+#: ../lib/af.c:188 ../lib/hw.c:191
+msgid "AMPR ROSE"
+msgstr "AMPR ROSE"
+
+#: ../lib/af.c:191 ../lib/hw.c:179
+msgid "Ash"
+msgstr "Ash"
+
+#: ../lib/af.c:248
+#, c-format
+msgid "Please don't supply more than one address family.\n"
+msgstr "Ange inte fler än en adressfamilj.\n"
+
+#: ../lib/af.c:298
+#, c-format
+msgid "Too much address family arguments.\n"
+msgstr "För många adressfamiljeargument.\n"
+
+#: ../lib/af.c:309
+#, c-format
+msgid "Unknown address family `%s'.\n"
+msgstr "Okänd adressfamilj \"%s\".\n"
+
+#: ../lib/arcnet.c:74 ../lib/arcnet.c:88
+#, c-format
+msgid "in_arcnet(%s): invalid arcnet address!\n"
+msgstr "in_arcnet(%s): ogiltig arcnet-adress!\n"
+
+#: ../lib/arcnet.c:98
+#, c-format
+msgid "in_arcnet(%s): trailing : ignored!\n"
+msgstr "in_arcnet(%s): efterföljande : ignoreras!\n"
+
+#: ../lib/arcnet.c:106
+#, c-format
+msgid "in_arcnet(%s): trailing junk!\n"
+msgstr "in_arcnet(%s): efterföljande skräp!\n"
+
+#: ../lib/ash.c:86
+#, c-format
+msgid "Malformed Ash address"
+msgstr "Felformaterad Ash-adress"
+
+#: ../lib/ax25.c:75 ../lib/ddp.c:49 ../lib/econet.c:47 ../lib/inet.c:256
+#: ../lib/inet.c:270 ../lib/inet6.c:142 ../lib/ipx.c:83 ../lib/netrom.c:79
+#: ../lib/rose.c:73 ../lib/unix.c:55 ../lib/unix.c:76
+msgid "[NONE SET]"
+msgstr "[INGA INSTÄLLDA]"
+
+#: ../lib/ax25.c:103 ../lib/netrom.c:108
+msgid "Invalid callsign"
+msgstr "Ogiltig anropssignal"
+
+#: ../lib/ax25.c:115 ../lib/netrom.c:120
+msgid "Callsign too long"
+msgstr "Callsign för lång"
+
+#: ../lib/ax25_gr.c:45
+#, c-format
+msgid "AX.25 not configured in this system.\n"
+msgstr "AX.25 är inte konfigurerad i detta system.\n"
+
+#: ../lib/ax25_gr.c:48
+#, c-format
+msgid "Kernel AX.25 routing table\n"
+msgstr "Kärnans AX.25-routningtabell\n"
+
+#. xxx
+#: ../lib/ax25_gr.c:49
+#, c-format
+msgid "Destination  Iface    Use\n"
+msgstr "Destination  Gsnit    Använd\n"
+
+#: ../lib/ether.c:78 ../lib/ether.c:94
+#, c-format
+msgid "in_ether(%s): invalid ether address!\n"
+msgstr "in_ether(%s): ogiltig ether-adress!\n"
+
+#: ../lib/ether.c:106
+#, c-format
+msgid "in_ether(%s): trailing : ignored!\n"
+msgstr "in_ether(%s): efterföljande : ignoreras!\n"
+
+#: ../lib/ether.c:114
+#, c-format
+msgid "in_ether(%s): trailing junk!\n"
+msgstr "in_ether(%s): efterföljande skräp!\n"
+
+#: ../lib/fddi.c:88 ../lib/fddi.c:102
+#, c-format
+msgid "in_fddi(%s): invalid fddi address!\n"
+msgstr "in_fddi(%s): ogiltig fddi-adress!\n"
+
+#: ../lib/fddi.c:112
+#, c-format
+msgid "in_fddi(%s): trailing : ignored!\n"
+msgstr "in_fddi(%s): efterföljande : ignoreras!\n"
+
+#: ../lib/fddi.c:120
+#, c-format
+msgid "in_fddi(%s): trailing junk!\n"
+msgstr "in_fddi(%s): efterföljande skräp!\n"
+
+#: ../lib/getroute.c:98 ../lib/setroute.c:73
+#, c-format
+msgid "Address family `%s' not supported.\n"
+msgstr "Adressfamiljen \"%s\" stöds inte.\n"
+
+#: ../lib/getroute.c:104 ../lib/setroute.c:77
+#, c-format
+msgid "No routing for address family `%s'.\n"
+msgstr "Ingen routing för adressfamiljen `%s'.\n"
+
+#: ../lib/hippi.c:88 ../lib/hippi.c:102
+#, c-format
+msgid "in_hippi(%s): invalid hippi address!\n"
+msgstr "in_hippi(%s): ogiltig hippi-adress!\n"
+
+#: ../lib/hippi.c:112
+#, c-format
+msgid "in_hippi(%s): trailing : ignored!\n"
+msgstr "in_hippi(%s): efterföljande : ignoreras!\n"
+
+#: ../lib/hippi.c:119
+#, c-format
+msgid "in_hippi(%s): trailing junk!\n"
+msgstr "in_hippi(%s): efterföljande skräp!\n"
+
+#: ../lib/hw.c:163
+msgid "Local Loopback"
+msgstr "Lokal loopback"
+
+#: ../lib/hw.c:166
+msgid "Serial Line IP"
+msgstr "IP för seriell anslutning"
+
+#: ../lib/hw.c:167
+msgid "VJ Serial Line IP"
+msgstr "VJ Seriell anslutnings-IP"
+
+#: ../lib/hw.c:168
+msgid "6-bit Serial Line IP"
+msgstr "6-bitars seriell anslutnings-IP"
+
+#: ../lib/hw.c:169
+msgid "VJ 6-bit Serial Line IP"
+msgstr "VJ 6-bitars seriell anslutnings-IP"
+
+#: ../lib/hw.c:170
+msgid "Adaptive Serial Line IP"
+msgstr "Adaptiv IP för seriell anslutning"
+
+#: ../lib/hw.c:173
+msgid "Metricom Starmode IP"
+msgstr "Metricom Starmode IP"
+
+#: ../lib/hw.c:176
+msgid "Ethernet"
+msgstr "Ethernet"
+
+#: ../lib/hw.c:182
+msgid "Fiber Distributed Data Interface"
+msgstr "Fiber Distributed Data Interface"
+
+#: ../lib/hw.c:185
+msgid "HIPPI"
+msgstr "HIPPI"
+
+#: ../lib/hw.c:197
+msgid "generic X.25"
+msgstr "generisk X.25"
+
+#: ../lib/hw.c:200
+msgid "IPIP Tunnel"
+msgstr "IPIP-tunnel"
+
+#: ../lib/hw.c:203
+msgid "Point-to-Point Protocol"
+msgstr "Punkt-till-punkt-protokoll"
+
+#: ../lib/hw.c:206
+msgid "(Cisco)-HDLC"
+msgstr "(Cisco)-HDLC"
+
+#: ../lib/hw.c:207
+msgid "LAPB"
+msgstr "LAPB"
+
+#: ../lib/hw.c:210
+msgid "ARCnet"
+msgstr "ARCnet"
+
+#: ../lib/hw.c:213
+msgid "Frame Relay DLCI"
+msgstr "Frame Relay DLCI"
+
+#: ../lib/hw.c:214
+msgid "Frame Relay Access Device"
+msgstr "Åtkomstenhet till Frame Relay"
+
+#: ../lib/hw.c:217
+msgid "IPv6-in-IPv4"
+msgstr "IPv6-in-IPv4"
+
+#: ../lib/hw.c:220
+msgid "IrLAP"
+msgstr "IrLAP"
+
+#: ../lib/hw.c:223
+msgid "16/4 Mbps Token Ring"
+msgstr "16/4 Mbps Token Ring"
+
+#: ../lib/hw.c:225
+msgid "16/4 Mbps Token Ring (New)"
+msgstr "16/4 Mbps Token Ring (Nytt)"
+
+#: ../lib/hw.c:232
+msgid "InfiniBand"
+msgstr "InfiniBand"
+
+#: ../lib/hw.c:235
+msgid "Generic EUI-64"
+msgstr "Generisk EUI-64"
+
+#: ../lib/inet.c:152 ../lib/inet6.c:91
+#, c-format
+msgid "rresolve: unsupport address family %d !\n"
+msgstr "rresolve: adressfamiljen %d stöds inte !\n"
+
+#: ../lib/inet6.c:144
+msgid "[UNKNOWN]"
+msgstr "[OKÄND]"
+
+#: ../lib/inet6_gr.c:75
+#, c-format
+msgid "INET6 (IPv6) not configured in this system.\n"
+msgstr "INET6 (IPv6) är inte konfigurerat i det här systemet.\n"
+
+#: ../lib/inet6_gr.c:80
+#, c-format
+msgid "Kernel IPv6 routing cache\n"
+msgstr "Kärnans IPv6-cache för routning\n"
+
+#: ../lib/inet6_gr.c:82
+#, c-format
+msgid "Kernel IPv6 routing table\n"
+msgstr "Kärnans IPv6-routningtabell\n"
+
+#: ../lib/inet6_gr.c:84
+#, c-format
+#| msgid ""
+#| "Destination                                 Next "
+#| "Hop                                Flags Metric Ref    Use Iface\n"
+msgid ""
+"Destination                    Next Hop                   Flag Met Ref  Use "
+"If\n"
+msgstr ""
+"Destination                    Nästa hop                  Flag Met Ref  "
+"Använd If\n"
+
+#: ../lib/inet6_gr.c:177
+#, c-format
+msgid "Kernel IPv6 Neighbour Cache\n"
+msgstr "Kärnans IPv6-grannskapscache\n"
+
+#: ../lib/inet6_gr.c:180
+#, c-format
+msgid ""
+"Neighbour                                   HW Address        Iface    Flags "
+"Ref State\n"
+msgstr "Granne HW-adress Iface Flagg Ref Status\n"
+
+#: ../lib/inet6_gr.c:184
+#, c-format
+msgid ""
+"Neighbour                                   HW Address        Iface    Flags "
+"Ref State            Stale(sec) Delete(sec)\n"
+msgstr "Granne HW Adress Iface Flagg Ref Status Stale(sek) Delete(sek)\n"
+
+#: ../lib/inet6_sr.c:50
+#, c-format
+msgid "Usage: inet6_route [-vF] del Target\n"
+msgstr "Användning: inet6_route [-vF] del Mål\n"
+
+#: ../lib/inet6_sr.c:51
+#, c-format
+msgid "       inet6_route [-vF] add Target [gw Gw] [metric M] [[dev] If]\n"
+msgstr "       inet6_route [-vF] add Target [gw Gw] [metric M] [[dev] If]\n"
+
+#: ../lib/inet6_sr.c:52
+#, c-format
+msgid "       inet6_route [-FC] flush      NOT supported\n"
+msgstr "       inet6_route [-FC] flush      stöds INTE\n"
+
+#: ../lib/inet6_sr.c:192
+#, c-format
+msgid "Flushing `inet6' routing table not supported\n"
+msgstr "Tömning av `inet6'-routningtabell stöds inte\n"
+
+#: ../lib/inet_gr.c:58 ../lib/inet_gr.c:229
+#, c-format
+msgid "INET (IPv4) not configured in this system.\n"
+msgstr "INET (IPv4) är inte konfigurerat i det här systemet.\n"
+
+#: ../lib/inet_gr.c:61
+#, c-format
+msgid "Kernel IP routing table\n"
+msgstr "Kärnans IP-routingtabell\n"
+
+#: ../lib/inet_gr.c:64
+#, c-format
+msgid ""
+"Destination     Gateway         Genmask         Flags Metric Ref    Use "
+"Iface\n"
+msgstr ""
+"Destination     Gateway         Genmask         Flagg Metric Ref    Använd "
+"Gsnitt\n"
+
+#: ../lib/inet_gr.c:67
+#, c-format
+msgid ""
+"Destination     Gateway         Genmask         Flags   MSS Window  irtt "
+"Iface\n"
+msgstr ""
+"Destination     Gateway         Genmask         Flagg   MSS Window  irtt "
+"Iface\n"
+
+#: ../lib/inet_gr.c:70
+#, c-format
+msgid ""
+"Destination     Gateway         Genmask         Flags Metric Ref    Use "
+"Iface    MSS   Window irtt\n"
+msgstr ""
+"Destination     Gateway         Genmask         Flagg Metric Ref    Anv "
+"Gsnit    MSS   Window irtt\n"
+
+#: ../lib/inet_gr.c:246
+#, c-format
+msgid "Kernel IP routing cache\n"
+msgstr "Kärnans IP-routingcache\n"
+
+#: ../lib/inet_gr.c:267
+#, c-format
+msgid ""
+"Source          Destination     Gateway         Flags Metric Ref    Use "
+"Iface\n"
+msgstr ""
+"Källa           Destination     Gateway         Flaggor Metric Ref    Use "
+"Iface\n"
+
+#: ../lib/inet_gr.c:270
+#, c-format
+msgid ""
+"Source          Destination     Gateway         Flags   MSS Window  irtt "
+"Iface\n"
+msgstr ""
+"Källa           Destination     Gateway         Flaggor   MSS Window  irtt "
+"Iface\n"
+
+#: ../lib/inet_gr.c:275
+#, c-format
+msgid ""
+"Source          Destination     Gateway         Flags Metric Ref    Use "
+"Iface    MSS   Window irtt  HH  Arp\n"
+msgstr ""
+"Källa           Destination     Gateway         Flaggor Metric Ref    Use "
+"Iface    MSS   Window irtt  HH  Arp\n"
+
+#: ../lib/inet_gr.c:299
+#, c-format
+msgid ""
+"Source          Destination     Gateway         Flags Metric Ref    Use "
+"Iface    MSS   Window irtt  TOS HHRef HHUptod     SpecDst\n"
+msgstr ""
+"Källa           Destination     Gateway         Flaggor Metric Ref    Use "
+"Iface    MSS   Window irtt  TOS HHRef HHUptod     SpecDst\n"
+
+#: ../lib/inet_sr.c:55
+#, c-format
+msgid ""
+"Usage: inet_route [-vF] del {-host|-net} Target[/prefix] [gw Gw] [metric M] "
+"[[dev] If]\n"
+msgstr ""
+"Användning: inet_route [-vF] del {-host|-net} Mål[/prefix] [gw Gw] [metric "
+"M] [[dev] If]\n"
+
+#: ../lib/inet_sr.c:56
+#, c-format
+msgid ""
+"       inet_route [-vF] add {-host|-net} Target[/prefix] [gw Gw] [metric M]\n"
+msgstr ""
+"       inet_route [-vF] add {-host|-net} Target[/prefix] [gw Gw] [metric M]\n"
+
+#: ../lib/inet_sr.c:57
+#, c-format
+msgid ""
+"                              [netmask N] [mss Mss] [window W] [irtt I]\n"
+msgstr ""
+"                              [nätmask N] [mss Mss] [window W] [irtt I]\n"
+
+#: ../lib/inet_sr.c:58
+#, c-format
+msgid "                              [mod] [dyn] [reinstate] [[dev] If]\n"
+msgstr "                              [mod] [dyn] [reinstate] [[dev] If]\n"
+
+#: ../lib/inet_sr.c:59
+#, c-format
+msgid ""
+"       inet_route [-vF] add {-host|-net} Target[/prefix] [metric M] reject\n"
+msgstr ""
+"       inet_route [-vF] add {-host|-net} Target[/prefix] [metric M] reject\n"
+
+#: ../lib/inet_sr.c:60
+#, c-format
+msgid "       inet_route [-FC] flush      NOT supported\n"
+msgstr "       inet_route [-FC] flush      stöds INTE\n"
+
+#: ../lib/inet_sr.c:169
+#, c-format
+msgid "route: %s: cannot use a NETWORK as gateway!\n"
+msgstr "route: %s: kan inte använda ett NÄTVERK som gateway!\n"
+
+#: ../lib/inet_sr.c:185
+#, c-format
+msgid "route: Invalid MSS/MTU.\n"
+msgstr "route: Ogiltig MSS/MTU.\n"
+
+#: ../lib/inet_sr.c:198
+#, c-format
+msgid "route: Invalid window.\n"
+msgstr "route: Ogiltigt window.\n"
+
+#: ../lib/inet_sr.c:214
+#, c-format
+msgid "route: Invalid initial rtt.\n"
+msgstr "route: Ogiltig initial rtt.\n"
+
+#: ../lib/inet_sr.c:272
+#, c-format
+msgid "route: netmask %.8x doesn't make sense with host route\n"
+msgstr "route: nätmask %.8x stämmer inte överens med host route\n"
+
+#: ../lib/inet_sr.c:276
+#, c-format
+msgid "route: bogus netmask %s\n"
+msgstr "route: skum nätmask %s\n"
+
+#: ../lib/inet_sr.c:281
+#, c-format
+msgid "route: netmask doesn't match route address\n"
+msgstr "route: nätmasken matchar inte ruttens adress\n"
+
+#: ../lib/inet_sr.c:317
+#, c-format
+msgid "Flushing `inet' routing table not supported\n"
+msgstr "Tömning av `inet'-routningtabell stöds inte\n"
+
+#: ../lib/inet_sr.c:321
+#, c-format
+msgid "Modifying `inet' routing cache not supported\n"
+msgstr "Modifiering av `inet' routing cache stöds inte\n"
+
+#: ../lib/ipx_gr.c:60
+#, c-format
+msgid "IPX routing not in file %s or %s found.\n"
+msgstr "IPX-routing finns inte i filen %s eller %s hittades.\n"
+
+#: ../lib/ipx_gr.c:69
+#, c-format
+msgid "Kernel IPX routing table\n"
+msgstr "Kärnans IPX-routningtabell\n"
+
+#. xxx
+#: ../lib/ipx_gr.c:70
+#, c-format
+msgid "Destination               Router Net                Router Node\n"
+msgstr "Destination               Routernät                 Routernod\n"
+
+#: ../lib/ipx_sr.c:45
+#, c-format
+msgid "IPX: this needs to be written\n"
+msgstr "IPX: detta måste skrivas\n"
+
+#: ../lib/masq_info.c:211
+#, c-format
+msgid "IP masquerading entries\n"
+msgstr "IP-maskningsposter\n"
+
+#: ../lib/masq_info.c:214
+#, c-format
+msgid "prot   expire source               destination          ports\n"
+msgstr "prot   expire källa                destination          portar\n"
+
+#: ../lib/masq_info.c:217
+#, c-format
+msgid ""
+"prot   expire    initseq delta prevd source               "
+"destination          ports\n"
+msgstr ""
+"prot   expire    initseq delta prevd källa                "
+"destination          portar\n"
+
+#: ../lib/netrom_gr.c:43
+#, c-format
+msgid "NET/ROM not configured in this system.\n"
+msgstr "NET/ROM är inte konfigurerad i detta system.\n"
+
+#: ../lib/netrom_gr.c:46
+#, c-format
+msgid "Kernel NET/ROM routing table\n"
+msgstr "Kärnans NET/ROM-routningtabell\n"
+
+#: ../lib/netrom_gr.c:47
+#, c-format
+msgid "Destination  Mnemonic  Quality  Neighbour  Iface\n"
+msgstr "Destination  Mnemonic  Kvalite  Granne  Gsnitt\n"
+
+#: ../lib/netrom_sr.c:44
+#, c-format
+msgid "netrom usage\n"
+msgstr "netrom-användning\n"
+
+#: ../lib/netrom_sr.c:54
+#, c-format
+msgid "NET/ROM: this needs to be written\n"
+msgstr "NET/ROM: detta måste skrivas\n"
+
+#: ../lib/ppp.c:42
+#, c-format
+msgid "You cannot start PPP with this program.\n"
+msgstr "Du kan inte starta PPP med detta program.\n"
+
+#: ../lib/ppp_ac.c:35
+#, c-format
+msgid "Sorry, use pppd!\n"
+msgstr "Tyvärr, använd pppd!\n"
+
+#: ../lib/rose.c:89
+msgid "Node address must be ten digits"
+msgstr "Nodens adress måste vara tio siffror"
+
+#: ../lib/rose_gr.c:52
+#, c-format
+msgid "ROSE not configured in this system.\n"
+msgstr "ROSE är inte konfigurerad i detta system.\n"
+
+#: ../lib/rose_gr.c:55
+#, c-format
+msgid "Kernel ROSE routing table\n"
+msgstr "Kärnans ROSE-routingtabell\n"
+
+#: ../lib/rose_gr.c:56
+#, c-format
+msgid ""
+"Destination  neigh1 callsign  device  neigh2 callsign  device  neigh3 "
+"callsign  device\n"
+msgstr ""
+"Destination  neigh1 callsign  enhet   neigh2 callsign  enhet   neigh3 "
+"callsign  enhet\n"
+
+#: ../lib/tr.c:88 ../lib/tr.c:102
+#, c-format
+msgid "in_tr(%s): invalid token ring address!\n"
+msgstr "in_tr(%s): ogiltig token ring-adress!\n"
+
+#: ../lib/tr.c:112
+#, c-format
+msgid "in_tr(%s): trailing : ignored!\n"
+msgstr "in_tr(%s): efterföljande : ignoreras!\n"
+
+#: ../lib/tr.c:120
+#, c-format
+msgid "in_tr(%s): trailing junk!\n"
+msgstr "in_tr(%s): efterföljande skräp!\n"
+
+#: ../lib/interface.c:341
+#, c-format
+msgid "Warning: cannot open %s (%s). Limited output.\n"
+msgstr "Varning: kan inte öppna %s (%s). Begränsad utmatning.\n"
+
+#. Give better error message for this case.
+#: ../lib/interface.c:582
+msgid "Device not found"
+msgstr "Enheten hittades inte"
+
+#: ../lib/interface.c:586
+#, c-format
+msgid "%s: error fetching interface information: %s\n"
+msgstr "%s: fel vid hämtning av gränssnittsinformation: %s\n"
+
+#: ../lib/interface.c:619
+msgid "     - no statistics available -"
+msgstr "     - ingen statistik tillgänglig -"
+
+#: ../lib/interface.c:623
+#, c-format
+msgid "[NO FLAGS]"
+msgstr "[INGA FLAGGOR]"
+
+#: ../lib/interface.c:733
+msgid "UP,"
+msgstr "UPPE,"
+
+#: ../lib/interface.c:735
+msgid "BROADCAST,"
+msgstr "BROADCAST,"
+
+#: ../lib/interface.c:737
+#| msgid "DEBUG "
+msgid "DEBUG,"
+msgstr "DEBUG,"
+
+#: ../lib/interface.c:739
+#| msgid "LOOPBACK "
+msgid "LOOPBACK,"
+msgstr "LOOPBACK,"
+
+#: ../lib/interface.c:741
+#| msgid "POINTOPOINT "
+msgid "POINTOPOINT,"
+msgstr "POINTOPOINT,"
+
+#: ../lib/interface.c:743
+#| msgid "NOTRAILERS "
+msgid "NOTRAILERS,"
+msgstr "NOTRAILERS,"
+
+#: ../lib/interface.c:745
+msgid "RUNNING,"
+msgstr "KÖR,"
+
+#: ../lib/interface.c:747
+#| msgid "NOARP "
+msgid "NOARP,"
+msgstr "NOARP,"
+
+#: ../lib/interface.c:749
+#| msgid "PROMISC "
+msgid "PROMISC,"
+msgstr "PROMISC,"
+
+#: ../lib/interface.c:751
+#| msgid "ALLMULTI "
+msgid "ALLMULTI,"
+msgstr "ALLMULTI,"
+
+#: ../lib/interface.c:753
+msgid "SLAVE,"
+msgstr "SLAV,"
+
+#: ../lib/interface.c:755
+#| msgid "MASTER "
+msgid "MASTER,"
+msgstr "MASTER,"
+
+#: ../lib/interface.c:757
+#| msgid "MULTICAST "
+msgid "MULTICAST,"
+msgstr "MULTICAST,"
+
+#: ../lib/interface.c:760
+msgid "DYNAMIC,"
+msgstr "DYNAMISK,"
+
+#: ../lib/interface.c:769
+#, c-format
+msgid "%s: %s  mtu %d"
+msgstr "%s: %s  mtu %d"
+
+#: ../lib/interface.c:773
+#, c-format
+#| msgid "  Outfill:%d  Keepalive:%d"
+msgid "  outfill %d  keepalive %d"
+msgstr "  outfill %d  keepalive %d"
+
+#: ../lib/interface.c:782 ../lib/interface.c:880
+#, c-format
+#| msgid "          %s addr:%s "
+msgid "        %s %s"
+msgstr "        %s %s"
+
+#: ../lib/interface.c:784
+#, c-format
+#| msgid "netmask %s "
+msgid "  netmask %s"
+msgstr "  netmask %s"
+
+#: ../lib/interface.c:786
+#, c-format
+msgid "  broadcast %s"
+msgstr "  broadcast %s"
+
+#: ../lib/interface.c:789
+#, c-format
+#| msgid "destination unreachable: %u"
+msgid "  destination %s"
+msgstr "  destination %s"
+
+#: ../lib/interface.c:808
+#, c-format
+msgid "        %s %s  prefixlen %d"
+msgstr "        %s %s  prefixlen %d"
+
+#: ../lib/interface.c:812
+#, c-format
+msgid "  scopeid 0x%x"
+msgstr "  scopeid 0x%x"
+
+#: ../lib/interface.c:816
+msgid "compat,"
+msgstr "kompat,"
+
+#: ../lib/interface.c:820
+#| msgid "Global"
+msgid "global,"
+msgstr "global,"
+
+#: ../lib/interface.c:822
+msgid "link,"
+msgstr "link,"
+
+#: ../lib/interface.c:824
+msgid "site,"
+msgstr "site,"
+
+#: ../lib/interface.c:826
+msgid "host,"
+msgstr "host,"
+
+#: ../lib/interface.c:844
+#, c-format
+#| msgid "          IPX/Ethernet II addr:%s\n"
+msgid "        %s Ethernet-II   %s\n"
+msgstr "        %s Ethernet-II   %s\n"
+
+#: ../lib/interface.c:847
+#, c-format
+#| msgid "          IPX/Ethernet SNAP addr:%s\n"
+msgid "        %s Ethernet-SNAP %s\n"
+msgstr "        %s Ethernet-SNAP %s\n"
+
+#: ../lib/interface.c:850
+#, c-format
+#| msgid "          IPX/Ethernet 802.2 addr:%s\n"
+msgid "        %s Ethernet802.2 %s\n"
+msgstr "        %s Ethernet802.2 %s\n"
+
+#: ../lib/interface.c:853
+#, c-format
+#| msgid "          IPX/Ethernet 802.3 addr:%s\n"
+msgid "        %s Ethernet802.3 %s\n"
+msgstr "        %s Ethernet802.3 %s\n"
+
+#: ../lib/interface.c:863 ../lib/interface.c:872
+#, c-format
+#| msgid "          %s addr:%s "
+msgid "        %s %s\n"
+msgstr "        %s %s\n"
+
+#: ../lib/interface.c:882
+#, c-format
+#| msgid "          %s addr:%s "
+msgid "        %s"
+msgstr "        %s"
+
+#: ../lib/interface.c:884
+#, c-format
+#| msgid "txqueuelen:%d "
+msgid "  txqueuelen %d"
+msgstr "  txqueuelen %d"
+
+#: ../lib/interface.c:889
+#, c-format
+#| msgid "          inet6 addr: %s/%d"
+msgid "        media %s"
+msgstr "        media %s"
+
+#: ../lib/interface.c:891
+#, c-format
+msgid "autoselect"
+msgstr "autoval"
+
+#: ../lib/interface.c:911
+#, c-format
+msgid "RX packets %llu  bytes %llu (%lu.%lu %s)\n"
+msgstr "RX-paket %llu  byte %llu (%lu.%lu %s)\n"
+
+#: ../lib/interface.c:917
+#, c-format
+msgid "RX compressed %lu\n"
+msgstr "RX komprimerad %lu\n"
+
+#: ../lib/interface.c:920
+#, c-format
+msgid "RX errors %lu  dropped %lu  overruns %lu  frame %lu\n"
+msgstr "RX-fel %lu  tappade %lu  överskridanden %lu  ram %lu\n"
+
+#: ../lib/interface.c:926
+#, c-format
+msgid "TX packets %llu  bytes %llu (%lu.%lu %s)\n"
+msgstr "TX-paket %llu  byte %llu (%lu.%lu %s)\n"
+
+#: ../lib/interface.c:932
+#, c-format
+msgid "TX compressed %lu\n"
+msgstr "TX komprimerad %lu\n"
+
+#: ../lib/interface.c:935
+#, c-format
+msgid "TX errors %lu  dropped %lu  overruns %lu  carrier %lu  collisions %lu\n"
+msgstr ""
+"TX-fel %lu  tappade %lu  överskridanden %lu  bärare %lu  kollisioner %lu\n"
+
+#: ../lib/interface.c:945
+#, c-format
+msgid "interrupt %d  "
+msgstr "avbrott %d  "
+
+#. Only print devices using it for
+#. I/O maps
+#: ../lib/interface.c:948
+#, c-format
+#| msgid "Base address:0x%x "
+msgid "base 0x%x  "
+msgstr "base 0x%x  "
+
+#: ../lib/interface.c:950
+#, c-format
+msgid "memory 0x%lx-%lx  "
+msgstr "minne 0x%lx-%lx  "
+
+#: ../lib/interface.c:953
+#, c-format
+msgid "  dma 0x%x"
+msgstr "  dma 0x%x"
+
+#: ../lib/sockets.c:69
+#, c-format
+msgid "No usable address families found.\n"
+msgstr "Inga användbara adressfamiljer hittades.\n"
+
+#: ../lib/util-ank.c:227
+#, c-format
+msgid "ip: %s is invalid inet address\n"
+msgstr "ip: %s är ogiltig inet-adress\n"
+
+#: ../lib/util-ank.c:236
+#, c-format
+msgid "ip: %s is invalid inet prefix\n"
+msgstr "ip: %s är ogiltigt inet-prefix\n"
+
+#: ../lib/util-ank.c:246
+#, c-format
+msgid "ip: %s is invalid IPv4 address\n"
+msgstr "ip: %s är en ogiltig IPv4-adress\n"
+
+#: ../lib/util-ank.c:254
+#, c-format
+msgid "ip: argument is wrong: %s\n"
+msgstr "ip: argumentet är fel: %s\n"
+
+#: ../ipmaddr.c:56
+#, c-format
+msgid "Usage: ipmaddr [ add | del ] MULTIADDR dev STRING\n"
+msgstr "Användning: ipmaddr [ add | del ] MULTIADDR dev STRÄNG\n"
+
+#: ../ipmaddr.c:57
+#, c-format
+msgid "       ipmaddr show [ dev STRING ] [ ipv4 | ipv6 | link | all ]\n"
+msgstr "       ipmaddr show [ dev STRÄNG ] [ ipv4 | ipv6 | link | all ]\n"
+
+#: ../ipmaddr.c:58
+#, c-format
+msgid "       ipmaddr -V | -version\n"
+msgstr "       ipmaddr -V | -version\n"
+
+#: ../ipmaddr.c:255
+#, c-format
+msgid "family %d "
+msgstr "familj %d "
+
+#: ../ipmaddr.c:264
+#, c-format
+msgid " users %d"
+msgstr " användare %d"
+
+#: ../ipmaddr.c:353
+msgid "Cannot create socket"
+msgstr "Kan inte skapa uttag"
+
+#: ../slattach.c:214
+#, c-format
+msgid "slattach: /dev/%s already locked!\n"
+msgstr "slattach: /dev/%s är redan låst!\n"
+
+#: ../slattach.c:220
+#, c-format
+msgid "slattach: tty_lock: (%s): %s\n"
+msgstr "slattach: tty_lock: (%s): %s\n"
+
+#: ../slattach.c:226
+#, c-format
+msgid "slattach: cannot write PID file\n"
+msgstr "slattach: kan inte skriva PID-fil\n"
+
+#: ../slattach.c:234
+#, c-format
+msgid "slattach: tty_lock: UUCP user %s unknown!\n"
+msgstr "slattach: tty_lock: UUCP-användare %s är okänd!\n"
+
+#: ../slattach.c:469
+#, c-format
+msgid "slattach: tty_hangup(DROP): %s\n"
+msgstr "slattach: tty_hangup(DROP): %s\n"
+
+#: ../slattach.c:476
+#, c-format
+msgid "slattach: tty_hangup(RAISE): %s\n"
+msgstr "slattach: tty_hangup(RAISE): %s\n"
+
+#: ../slattach.c:507
+#, c-format
+msgid "slattach: tty name too long\n"
+msgstr "slattach: tty-namn för långt\n"
+
+#: ../slattach.c:558
+#, c-format
+msgid "slattach: tty_open: cannot get current state!\n"
+msgstr "slattach: tty_open: kan inte få aktuellt tillstånd!\n"
+
+#: ../slattach.c:565
+#, c-format
+msgid "slattach: tty_open: cannot get current line disc!\n"
+msgstr "slattach: tty_open: kan inte hämta aktuell raddisk!\n"
+
+#: ../slattach.c:573
+#, c-format
+msgid "slattach: tty_open: cannot set RAW mode!\n"
+msgstr "slattach: tty_open: kan inte ställa in RAW-läge!\n"
+
+#: ../slattach.c:580
+#, c-format
+msgid "slattach: tty_open: cannot set %s bps!\n"
+msgstr "slattach: tty_open: kan inte ställa in %s bps!\n"
+
+#: ../slattach.c:590
+#, c-format
+msgid "slattach: tty_open: cannot set 8N1 mode!\n"
+msgstr "slattach: tty_open: kan inte ställa in 8N1-läge!\n"
+
+#: ../slattach.c:732
+#, c-format
+msgid "slattach: setvbuf(stdout,0,_IOLBF,0) : %s\n"
+msgstr "slattach: setvbuf(stdout,0,_IOLBF,0) : %s\n"
+
+#: ../slattach.c:764
+#, c-format
+msgid "%s started"
+msgstr "%s startad"
+
+#: ../slattach.c:765
+#, c-format
+msgid " on %s"
+msgstr " på %s"
+
+#: ../slattach.c:766
+#, c-format
+msgid " ptsname %s"
+msgstr " ptsname %s"
+
+#: ../slattach.c:767
+#, c-format
+msgid " interface %s\n"
+msgstr " gränssnitt %s\n"
+
+#, c-format
+#~ msgid ""
+#~ "Iface   MTU Met   RX-OK RX-ERR RX-DRP RX-OVR   TX-OK TX-ERR TX-DRP TX-OVR "
+#~ "Flg\n"
+#~ msgstr ""
+#~ "Iface   MTU Met   RX-OK RX-ERR RX-DRP RX-OVR   TX-OK TX-ERR TX-DRP TX-OVR "
+#~ "Flg\n"
+
+#, c-format
+#~ msgid "                  [nibble NN] [trigger NN]\n"
+#~ msgstr "                  [nibble NN] [trigger NN]\n"
+
+#, c-format
+#~ msgid "%u fragments received ok"
+#~ msgstr "%u fragment mottagna ok"
+
+#, c-format
+#~ msgid "%u fragments failed"
+#~ msgstr "%u fragment misslyckades"
+
+#, c-format
+#~ msgid "echo request: %u"
+#~ msgstr "echo-begäran: %u"
+
+#, c-format
+#~ msgid "%u times recovered from packet loss due to SACK data"
+#~ msgstr "%u gånger återhämtade från paketförlust på grund av SACK-data"
+
+#, c-format
+#~ msgid "IPX not configured in this system.\n"
+#~ msgstr "IPX är inte konfigurerat i det här systemet.\n"
+
+#, c-format
+#~ msgid "warning: no inet socket available: %s\n"
+#~ msgstr "varning: inget inet-uttag tillgängligt: %s\n"
+
+#, c-format
+#~ msgid "%-9.9s Link encap:%s  "
+#~ msgstr "%-9.9s Länkenkaps:%s  "
+
+#, c-format
+#~ msgid "HWaddr %s  "
+#~ msgstr "HWaddr %s  "
+
+#, c-format
+#~ msgid "Media:%s"
+#~ msgstr "Media:%s"
+
+#, c-format
+#~ msgid "(auto)"
+#~ msgstr "(auto)"
+
+#, c-format
+#~ msgid " P-t-P:%s "
+#~ msgstr " P-t-P:%s "
+
+#, c-format
+#~ msgid " Bcast:%s "
+#~ msgstr " Bcast:%s "
+
+#, c-format
+#~ msgid " Mask:%s\n"
+#~ msgstr " Mask:%s\n"
+
+#, c-format
+#~ msgid " Scope:"
+#~ msgstr " Omfång:"
+
+#, c-format
+#~ msgid "Link"
+#~ msgstr "Länk"
+
+#, c-format
+#~ msgid "Site"
+#~ msgstr "Site"
+
+#, c-format
+#~ msgid "Host"
+#~ msgstr "Värd"
+
+#, c-format
+#~ msgid "Unknown"
+#~ msgstr "Okänd"
+
+#, c-format
+#~ msgid "          EtherTalk Phase 2 addr:%s\n"
+#~ msgstr "          EtherTalk Phase 2-adr:%s\n"
+
+#, c-format
+#~ msgid "          econet addr:%s\n"
+#~ msgstr "          econet-adr:%s\n"
+
+#, c-format
+#~ msgid "[NO FLAGS] "
+#~ msgstr "[INGA FLAGGOR] "
+
+#, c-format
+#~ msgid " MTU:%d  Metric:%d"
+#~ msgstr " MTU:%d Metric:%d"
+
+#, c-format
+#~ msgid "             compressed:%lu\n"
+#~ msgstr "             komprimerad:%lu\n"
+
+#, c-format
+#~ msgid "          collisions:%lu "
+#~ msgstr "          kollisioner:%lu "
+
+#, c-format
+#~ msgid "DMA chan:%x "
+#~ msgstr "DMA-kanal:%x "
