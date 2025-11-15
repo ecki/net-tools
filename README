@@ -50,10 +50,13 @@ They have largely been tested against recent glibc versions, but should work
 on any POSIX compliant C library.  If you notice portability issues, please
 flie a bug for us (or even send a patch!).
 
-The NLS support by Arnaldo Carvalho de Melo <acme@conectiva.com.br> uses GNU
-gettext.  Translations to Brazilian Portuguese (pt_BR), German (de), Estonian
-(ee), Czech (cz), French (fr) and Japanese (ja) are available.  Others are
-welcome!
+The NLS support by Arnaldo Carvalho de Melo <acme@conectiva.com.br> uses
+GNU gettext.  Translations to Brazilian Portuguese (pt_BR), Catalan (ca),
+Czech (cz), Estonian (ee), French (fr), Georgian (ka), German (de),
+Japanese (ja) and Swedish (sv) are available.  Others are welcome!
+
+You can translate net-tools online using Weblate at
+https://l10n.opensuse.org/projects/net-tools/
 
 The translated man pages are planned to be moved to the manpages-i10n
 project in the next release. Thanks to Helge Kreutzmann.
