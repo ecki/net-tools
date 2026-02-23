@@ -545,6 +545,22 @@ which gives access to kernel status information via the following files.
 .I /proc/net/snmp
 -- statistics
 
+.SH EXAMPLES
+List all open TCP and UDP ports, with the corresponding process's PID. This lets you answer "which process is listening on port 8080?":
+.RS
+.nf
+\fBnetstat -tulpn\fR
+.fi
+.RE
+
+.P
+Show the route table (it's often best to pass -n to display IP addresses rather than hostnames):
+.RS
+.nf
+\fBnetstat -rn\fR
+.fi
+.RE
+
 .SH BUGS
 Occasionally strange information may appear if a socket changes
 as it is viewed. This is unlikely to occur.
