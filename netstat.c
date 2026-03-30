@@ -96,6 +96,7 @@
 #include "interface.h"
 #include "util.h"
 #include "proc.h"
+#include "escape.h"
 
 #if HAVE_SELINUX
 #include <selinux/selinux.h>
@@ -397,7 +398,7 @@ static void prg_cache_load(void)
 {
     char line[LINE_MAX], eacces=0;
     int procfdlen, fd, cmdllen, lnamelen;
-    char lname[30], cmdlbuf[512], finbuf[PROGNAME_WIDTH];
+    char lname[30], cmdlbuf[512], ecmdlbuf[512], finbuf[PROGNAME_WIDTH];
     unsigned long inode;
     const char *cs, *cmdlp;
     DIR *dirproc = NULL, *dirfd = NULL;
@@ -467,10 +468,11 @@ static void prg_cache_load(void)
 		    cmdlp++;
 		else
 		    cmdlp = cmdlbuf;
+		escape_str (ecmdlbuf, cmdlp, 512);
 	    }
 	    // pid can be up to 10, use rest from commandline start.
 	    // #pragma GCC diagnostic ignored "-Wformat-truncation"?
-	    snprintf(finbuf, sizeof(finbuf), "%s/%s", direproc->d_name, cmdlp);
+	    snprintf(finbuf, sizeof(finbuf), "%s/%s", direproc->d_name, ecmdlbuf);
 #if HAVE_SELINUX
 	    if (getpidcon(atoi(direproc->d_name), &scon) == -1) {
 		    scon=xstrdup("-");

@@ -21,7 +21,7 @@ AFOBJS	 = unix.o inet.o inet6.o ax25.o ipx.o ddp.o ipx.o netrom.o af.o rose.o ec
 AFGROBJS = inet_gr.o inet6_gr.o ipx_gr.o ddp_gr.o netrom_gr.o ax25_gr.o rose_gr.o getroute.o x25_gr.o
 AFSROBJS = inet_sr.o inet6_sr.o netrom_sr.o ipx_sr.o setroute.o x25_sr.o
 ACTOBJS  = slip_ac.o ppp_ac.o activate.o
-VARIA	 = getargs.o masq_info.o proc.o util.o nstrcmp.o interface.o sockets.o
+VARIA	 = getargs.o masq_info.o proc.o util.o nstrcmp.o interface.o sockets.o escape.o
 
 # Default Name
 NET_LIB_NAME = net-tools
