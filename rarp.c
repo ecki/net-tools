@@ -141,7 +141,8 @@ static int rarp_file(int fd, const char *name)
 	    continue;
 	}
 	if ((hp = gethostbyname(host)) == NULL) {
-	    fprintf(stderr, _("rarp: %s: unknown host\n"), host);
+		fprintf(stderr, _("rarp: %s: unknown host line %u\n"), host, linenr);
+		continue;
 	}
 	if (rarp_set(fd, hp, addr) != 0) {
 	    fprintf(stderr, _("rarp: cannot set entry from %s:%u\n"), name, linenr);
