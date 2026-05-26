@@ -57,7 +57,7 @@ endif
 
 # Compiler and Linker Options
 CFLAGS ?= -O2 -g
-CFLAGS += -Wall -Wtype-limits -Wunused-parameter
+CFLAGS += -Wall -Wtype-limits -Wunused-parameter -Werror -Wextra
 CFLAGS += -fno-strict-aliasing # code needs a lot of work before strict aliasing is safe
 CPPFLAGS += -D_GNU_SOURCE
 # Turn on transparent support for LFS
