@@ -184,6 +184,7 @@ int main(int argc, char **argv)
 	    break;
 	case 'V':
 	    version();
+	    break;
 	case 'h':
 	case '?':
 	    opt_h++;
@@ -193,7 +194,7 @@ int main(int argc, char **argv)
 	}
 
     argv += optind;
-    argc -= optind;
+    //argc -= optind;
 
     if (opt_h) {
 	if (!afname[0])
