@@ -388,7 +388,8 @@ static int arp_file(char *name)
 {
     char buff[1024];
     char *sp, *args[32];
-    int linenr, argc;
+    unsigned int linenr;
+    int argc;
     FILE *fp;
 
     if ((fp = fopen(name, "r")) == NULL) {
@@ -532,7 +533,7 @@ static int arp_show(char *name)
     char mask[100];
     char line[200];
     char dev[100];
-    int type, flags;
+    unsigned int type, flags;
     FILE *fp;
     const char *hostname;
     int num, entries = 0, showed = 0;
@@ -559,7 +560,7 @@ static int arp_show(char *name)
 	safe_strncpy(dev, "-", sizeof(dev));
 	/* Read the ARP cache entries. */
 	for (; fgets(line, sizeof(line), fp);) {
-	    num = sscanf(line, "%s 0x%x 0x%x %99s %99s %99s\n",
+	    num = sscanf(line, "%99s 0x%x 0x%x %99s %99s %99s\n",
 			 ip, &type, &flags, hwa, mask, dev);
 	    if (num < 4)
 		break;
@@ -568,14 +569,14 @@ static int arp_show(char *name)
 		 * This happens for incomplete ARP entries for which there is
 		 * no hardware address in the line.
 		 */
-		num = sscanf(line, "%s 0x%x 0x%x %99s %99s\n",
+		num = sscanf(line, "%99s 0x%x 0x%x %99s %99s\n",
 			     ip, &type, &flags, mask, dev);
 		hwa[0] = 0;
 	    }
 
 	    entries++;
 	    /* if the user specified hw-type differs, skip it */
-	    if (hw_set && (type != hw->type))
+	    if (hw_set && (type != (unsigned)hw->type))
 		continue;
 
 	    /* if the user specified address differs, skip it */
@@ -750,8 +751,10 @@ int main(int argc, char **argv)
 
 	case 'V':
 	    version();
+	    break;
 	case 'h':
 	    usage(E_USAGE);
+	    break;
 	case '?':
 	default:
 	    usage(E_OPTERR);
