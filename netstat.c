@@ -12,7 +12,7 @@
  *              Johannes Stille, <johannes@titan.os.open.de>
  *              Bernd Eckenfels, <net-tools@lina.inka.de>
  *              Phil Blundell <philb@gnu.org>
- *              Tuan Hoang <tqhoang@bigfoot.com>
+ *              Tuan Hoang <tqhoang@yahoo.com>
  *
  * Tuned for NET3 by:
  *              Alan Cox, <A.Cox@swansea.ac.uk>
