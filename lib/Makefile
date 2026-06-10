@@ -22,6 +22,7 @@ AFGROBJS = inet_gr.o inet6_gr.o ipx_gr.o ddp_gr.o netrom_gr.o ax25_gr.o rose_gr.
 AFSROBJS = inet_sr.o inet6_sr.o netrom_sr.o ipx_sr.o setroute.o x25_sr.o
 ACTOBJS  = slip_ac.o ppp_ac.o activate.o
 VARIA	 = getargs.o masq_info.o proc.o util.o nstrcmp.o interface.o sockets.o
+EXTRA	 = escape.o
 
 # Default Name
 NET_LIB_NAME = net-tools
@@ -41,7 +42,7 @@ SONAME=libnet-tools.so.0
 
 .SUFFIXES: .a .so
 
-all:	lib$(NET_LIB_NAME).a # lib$(NET_LIB_NAME).so
+all:	lib$(NET_LIB_NAME).a escape.o # lib$(NET_LIB_NAME).so
 
 lib$(NET_LIB_NAME).a:	Makefile $(TOPDIR)/config.h $(OBJS)
 			@echo Building $@
