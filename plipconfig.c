@@ -66,7 +66,7 @@ static void usage(int rc)
     exit(rc);
 }
 
-void print_plip(void)
+static void print_plip(void)
 {
     printf(_("%s\tnibble %lu  trigger %lu\n"), ifr.ifr_name, plip->nibble, plip->trigger);
 }

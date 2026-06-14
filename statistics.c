@@ -334,7 +334,8 @@ static int cmpentries(const void *a, const void *b)
 
 static void printval(const struct tabtab *tab, const char *title, unsigned long long val)
 {
-    struct entry *ent = NULL, key;
+    const struct entry *ent = NULL;
+    struct entry key = {};
     int type;
     char buf[512];
 
@@ -358,7 +359,7 @@ static void printval(const struct tabtab *tab, const char *title, unsigned long 
 
     if (type & I_TITLE) {
 	type &= ~I_TITLE;
-	if (state != type)
+	if ((int)state != type)
 	    printf("%*s%s\n", states[state].indent, "", _(states[type].title));
     }
     buf[0] = '\0';
@@ -366,7 +367,7 @@ static void printval(const struct tabtab *tab, const char *title, unsigned long 
     case opt_number:
 	if (val == 0)
 	    break;
-	/*FALL THOUGH*/
+	/* fall through */
     case number:
 	snprintf(buf, sizeof(buf), _(ent->out), val);
 	break;
@@ -489,7 +490,7 @@ static void process6_fd(FILE *f)
    int cpflg = 0;
 
    while (fgets(buf1, sizeof buf1, f)) {
-          sscanf(buf1, "%s %llu", buf2, &val);
+          sscanf(buf1, "%49s %llu", buf2, &val);
           if(!cpflg) {
              cpytitle(buf2, buf3);
              tab = newtable(snmp6tabs, buf3);
@@ -506,7 +507,7 @@ static void process6_fd(FILE *f)
 }
 
 /* Process a file with name-value lines (like /proc/net/sctp/snmp) */
-static void process_fd2(FILE *f, const char *filename)
+static void process_fd2(FILE *f)
 {
     char buf1[1024];
     char *sp;
@@ -516,10 +517,6 @@ static void process_fd2(FILE *f, const char *filename)
 
     while (fgets(buf1, sizeof buf1, f)) {
 	sp = buf1 + strcspn(buf1, " \t\n");
-	if (!sp) {
-	    fprintf(stderr, _("error parsing %s\n"), filename);
-	    return;
-	}
 	*sp = '\0';
 	sp++;
 
@@ -564,7 +561,7 @@ void parsesnmp(int flag_raw, int flag_tcp, int flag_udp, int flag_sctp)
 
     f = proc_fopen("/proc/net/sctp/snmp");
     if (f) {
-	process_fd2(f,"/proc/net/sctp/snmp");
+	process_fd2(f);
 	if (ferror(f)) {
 	    perror("/proc/net/sctp/snmp");
 	    fclose(f);

@@ -222,7 +222,7 @@ tty_lock(char *path, int mode)
 		return(-1);
 	}
 	sprintf(apid, "%10d\n", getpid());
-	if (write(fd, apid, strlen(apid)) != strlen(apid)) {
+	if (write(fd, apid, strlen(apid)) != (long)strlen(apid)) {
 		fprintf(stderr, _("slattach: cannot write PID file\n"));
 		close(fd);
 		unlink(saved_path);
@@ -236,8 +236,9 @@ tty_lock(char *path, int mode)
 		(void) close(fd);
 		return(0);	/* keep the lock anyway */
 	}
-	if (fchown(fd, pw->pw_uid, pw->pw_gid))
+	if (fchown(fd, pw->pw_uid, pw->pw_gid)) {
 		/* keep the lock anyway */;
+    }
 
 	(void) close(fd);
 
@@ -362,32 +363,6 @@ tty_set_speed(struct termios *tty, const char *speed)
   tty->c_cflag |= code;
   return(0);
 }
-
-
-/* Put a terminal line in a transparent state. */
-static int
-tty_set_raw(struct termios *tty)
-{
-  int i;
-  int speed;
-
-  for(i = 0; i < NCCS; i++)
-		tty->c_cc[i] = '\0';		/* no spec chr		*/
-  tty->c_cc[VMIN] = 1;
-  tty->c_cc[VTIME] = 0;
-  tty->c_iflag = (IGNBRK | IGNPAR);		/* input flags		*/
-  tty->c_oflag = (0);				/* output flags		*/
-  tty->c_lflag = (0);				/* local flags		*/
-  speed = (tty->c_cflag & CBAUD);		/* save current speed	*/
-  tty->c_cflag = (HUPCL | CREAD);		/* UART flags		*/
-  if (opt_L)
-	tty->c_cflag |= CLOCAL;
-  else
-	tty->c_cflag |= CRTSCTS;
-  tty->c_cflag |= speed;			/* restore speed	*/
-  return(0);
-}
-
 
 /* Fetch the state of a terminal. */
 static int
@@ -569,11 +544,6 @@ tty_open(char *name, const char *speed)
 
   /* Put this terminal line in a 8-bit transparent mode. */
   if (opt_m == 0) {
-	if (tty_set_raw(&tty_current) < 0) {
-		if (opt_q == 0) fprintf(stderr, _("slattach: tty_open: cannot set RAW mode!\n"));
-		return(-errno);
-	}
-
 	/* Set the default speed if we need to. */
 	if (speed != NULL) {
 		if (tty_set_speed(&tty_current, speed) != 0) {
@@ -722,11 +692,11 @@ main(int argc, char *argv[])
 
         case 'V':
 		version();
-		/*NOTREACHED*/
+		break;
 
 	default:
 		usage(E_OPTERR);
-		/*NOTREACHED*/
+		break;
   }
 
   if (setvbuf(stdout,0,_IOLBF,0)) {

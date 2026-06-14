@@ -70,8 +70,9 @@ int DDP_rprint(int options)
     }
 
     // eat header line, the if makes code scanner happy
-    if (fscanf(fp, "%ms %ms %ms %ms\n", &dest, &gw, &flags, &dev) == 4)
+    if (fscanf(fp, "%ms %ms %ms %ms\n", &dest, &gw, &flags, &dev) == 4) {
 		/* eat line */;
+    }
     free(dest); free(gw); free(flags); free(dev);
 
     printf("%s\n", hdr);
