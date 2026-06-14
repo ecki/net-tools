@@ -191,8 +191,8 @@ slattach:	$(NET_LIB) slattach.o
 plipconfig:	$(NET_LIB) plipconfig.o
 		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ plipconfig.o $(NLIB) $(LDLIBS)
 
-netstat:	$(NET_LIB) netstat.o statistics.o
-		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ netstat.o statistics.o $(NLIB) $(SELIB) $(LDLIBS)
+netstat:	$(NET_LIB) netstat.o statistics.o lib/escape.o
+		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ netstat.o statistics.o lib/escape.o $(NLIB) $(SELIB) $(LDLIBS)
 
 iptunnel:	$(NET_LIB) iptunnel.o
 		$(CC) $(CFLAGS) $(LDFLAGS) -o $@ iptunnel.o $(NLIB) $(LDLIBS)

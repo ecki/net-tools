@@ -96,6 +96,7 @@
 #include "interface.h"
 #include "util.h"
 #include "proc.h"
+#include "escape.h"
 
 #if HAVE_SELINUX
 #include <selinux/selinux.h>
@@ -468,13 +469,7 @@ static void prg_cache_load(void)
                     // cmdlbuf[sizeof(cmdlbuf) - 1) is already \0
                     cmdllen = sizeof(cmdlbuf) - 1;
                 // remove all embedded controls
-                for(int i=0; i < cmdllen; i++) {
-                  char c = cmdlbuf[i];
-                  if (c == 0) // we dont process arguments
-                      break;
-                  if (c < ' ' || c > '~') // safe 7bit ASCII
-                      cmdlbuf[i] = '.';
-                }
+		escape_str_inplace (cmdlbuf, strlen(cmdlbuf));
 		if (cmdlbuf[0] == '/' && (cmdlp = strrchr(cmdlbuf, '/')))
 		    cmdlp++;
 		else
