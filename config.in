@@ -8,7 +8,7 @@
 #		NET-3 Networking Distribution for the LINUX operating
 #		system.
 #
-# Version:	config.in 2025-09-10
+# Version:	config.in 2026-06-22
 #
 # Author:	Fred N. van Kempen, <waltje@uwalt.nl.mugnet.org>
 #		Copyright 1988-1993 MicroWalt Corporation
@@ -30,7 +30,7 @@
 =  *		NET-3 Networking Distribution for the LINUX operating
 =  *		system.
 =  *
-=  * Based on:  config.in 2025-09-10
+=  * Based on:  config.in 2026-06-22
 =  *
 =  *		DO  NOT  EDIT  DIRECTLY
 =  */
@@ -54,7 +54,7 @@ bool 'Novell IPX/SPX protocol family' HAVE_AFIPX y
 bool 'Appletalk DDP protocol family' HAVE_AFATALK y
 bool 'AX25 (packet radio) protocol family' HAVE_AFAX25 y
 bool 'NET/ROM (packet radio) protocol family' HAVE_AFNETROM y
-bool 'Rose (packet radio) protocol family' HAVE_AFROSE y
+bool 'Rose (packet radio) protocol family' HAVE_AFROSE n
 bool 'X.25 (CCITT) protocol family' HAVE_AFX25 y
 bool 'Econet protocol family' HAVE_AFECONET n
 bool 'DECnet protocol family' HAVE_AFDECnet n
@@ -72,7 +72,7 @@ bool 'IPIP Tunnel support' HAVE_HWTUNNEL y
 bool 'STRIP (Metricom radio) support' HAVE_HWSTRIP n
 bool 'Token ring (generic) support' HAVE_HWTR y
 bool 'AX25 (packet radio) support' HAVE_HWAX25 y
-bool 'Rose (packet radio) support' HAVE_HWROSE y
+bool 'Rose (packet radio) support' HAVE_HWROSE n
 bool 'NET/ROM (packet radio) support' HAVE_HWNETROM y
 bool 'X.25 (generic) support' HAVE_HWX25 y
 bool 'DLCI/FRAD (frame relay) support' HAVE_HWFR y
