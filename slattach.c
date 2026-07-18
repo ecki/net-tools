@@ -222,7 +222,7 @@ tty_lock(char *path, int mode)
 		return(-1);
 	}
 	sprintf(apid, "%10d\n", getpid());
-	if (write(fd, apid, strlen(apid)) != strlen(apid)) {
+	if (write(fd, apid, strlen(apid)) != (long)strlen(apid)) {
 		fprintf(stderr, _("slattach: cannot write PID file\n"));
 		close(fd);
 		unlink(saved_path);
@@ -236,8 +236,9 @@ tty_lock(char *path, int mode)
 		(void) close(fd);
 		return(0);	/* keep the lock anyway */
 	}
-	if (fchown(fd, pw->pw_uid, pw->pw_gid))
+	if (fchown(fd, pw->pw_uid, pw->pw_gid)) {
 		/* keep the lock anyway */;
+    }
 
 	(void) close(fd);
 
@@ -365,7 +366,7 @@ tty_set_speed(struct termios *tty, const char *speed)
 
 
 /* Put a terminal line in a transparent state. */
-static int
+static void
 tty_set_raw(struct termios *tty)
 {
   int i;
@@ -385,7 +386,6 @@ tty_set_raw(struct termios *tty)
   else
 	tty->c_cflag |= CRTSCTS;
   tty->c_cflag |= speed;			/* restore speed	*/
-  return(0);
 }
 
 
@@ -569,10 +569,7 @@ tty_open(char *name, const char *speed)
 
   /* Put this terminal line in a 8-bit transparent mode. */
   if (opt_m == 0) {
-	if (tty_set_raw(&tty_current) < 0) {
-		if (opt_q == 0) fprintf(stderr, _("slattach: tty_open: cannot set RAW mode!\n"));
-		return(-errno);
-	}
+	tty_set_raw(&tty_current);
 
 	/* Set the default speed if we need to. */
 	if (speed != NULL) {
@@ -722,11 +719,13 @@ main(int argc, char *argv[])
 
         case 'V':
 		version();
-		/*NOTREACHED*/
+		/* not reached */
+		break;
 
 	default:
 		usage(E_OPTERR);
-		/*NOTREACHED*/
+		/* not reached */
+		break;
   }
 
   if (setvbuf(stdout,0,_IOLBF,0)) {

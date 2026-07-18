@@ -125,7 +125,7 @@ static int in_ether(char *bufp, struct sockaddr_storage *sasp)
 struct hwtype ether_hwtype =
 {
     "ether", NULL, /*"10Mbps Ethernet", */ ARPHRD_ETHER, ETH_ALEN,
-    pr_ether, in_ether, NULL
+    pr_ether, in_ether, NULL, 0
 };
 
 

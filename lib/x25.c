@@ -155,7 +155,7 @@ X25_hinput(char *bufp, struct sockaddr_storage *sasp)
 
 struct hwtype x25_hwtype = {
   "x25",	NULL, /*"CCITT X.25",*/		ARPHRD_X25,	X25_ADDR_LEN,
-  X25_print,	X25_hinput,	NULL
+  X25_print,	X25_hinput,	NULL, 0
 };
 
 struct aftype x25_aftype =

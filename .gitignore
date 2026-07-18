@@ -4,6 +4,9 @@
 *.patch
 *.rej
 *.orig
+.vimrc
+tags
+cscope.out
 
 .gdb_history
 .gdbinit

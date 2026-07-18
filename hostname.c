@@ -386,16 +386,17 @@ int main(int argc, char **argv)
 	    exit(1);
 	}
 	type = 'd';
-	/* NOBREAK */
+	/* fall through */
     case 0:
 	if (file) {
 	    setfilename(file, SETHOST);
 	    break;
 	}
-	if (optind < argc) {
+	if (optind < (int)argc) {
 	    sethname(argv[optind]);
 	    break;
 	}
+    /* fall through */
     case 1:
 	gethostname(myname, sizeof(myname));
 	if (opt_v)

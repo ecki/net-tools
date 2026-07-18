@@ -95,19 +95,17 @@ in_strip(char *bufp, struct sockaddr_storage *sasp)
   return 0;
 }
 
-
-
 /* Start the STRIP encapsulation on the file descriptor. */
 static int do_strip(int fd)
-	{
-	int disc = N_STRIP;
-	if (ioctl(fd, TIOCSETD, &disc) < 0)
-		{
-		fprintf(stderr, "STRIP_set_disc(%d): %s\n", disc, strerror(errno));
-		return(-errno);
-		}
-	return(0);
-	}
+{
+    int disc = N_STRIP;
+    if (ioctl(fd, TIOCSETD, &disc) < 0)
+    {
+        fprintf(stderr, "STRIP_set_disc(%d): %s\n", disc, strerror(errno));
+        return(-errno);
+    }
+    return(0);
+}
 
 struct hwtype strip_hwtype = {
   "strip", "Metricom Starmode IP", ARPHRD_METRICOM, sizeof(MetricomAddress),

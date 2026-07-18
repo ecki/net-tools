@@ -211,8 +211,12 @@ int main(int ac, char **av)
 		switch (c) {
 		default:
 			usage(E_OPTERR);
+			/* not reached */
+			break;
 		case 'h':
 			usage(E_USAGE);
+			/* not reached */
+			break;
 		case 'c':
 			fname = optarg;
 			break;

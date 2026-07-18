@@ -131,7 +131,7 @@ static int in_fddi(char *bufp, struct sockaddr_storage *sasp)
 struct hwtype fddi_hwtype =
 {
     "fddi", NULL, /*"Fiber Distributed Data Interface (FDDI)", */ ARPHRD_FDDI, FDDI_K_ALEN,
-    pr_fddi, in_fddi, NULL
+    pr_fddi, in_fddi, NULL, 0
 };
 
 

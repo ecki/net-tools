@@ -369,7 +369,7 @@ static int extract_type_1_socket_inode(const char lname[], unsigned long * inode
         strncpy(inode_str, lname+PRG_SOCKET_PFXl, inode_str_len);
         inode_str[inode_str_len] = '\0';
         *inode_p = strtoul(inode_str, &serr, 0);
-        if (!serr || *serr || *inode_p == ~0)
+        if (!serr || *serr || errno)
             return(-1);
     }
     return(0);
@@ -388,7 +388,7 @@ static int extract_type_2_socket_inode(const char lname[], unsigned long * inode
         char *serr;
 
         *inode_p = strtoul(lname + PRG_SOCKET_PFX2l, &serr, 0);
-        if (!serr || *serr || *inode_p == ~0)
+        if (!serr || *serr || errno)
             return(-1);
     }
     return(0);
@@ -399,13 +399,13 @@ static void prg_cache_load(void)
 {
     char line[LINE_MAX], eacces=0;
     int procfdlen, fd, cmdllen, lnamelen;
-    char lname[30], cmdlbuf[512], finbuf[PROGNAME_WIDTH];
+    char lname[30], cmdlbuf[512], finbuf[1024];
     unsigned long inode;
     const char *cs, *cmdlp;
     DIR *dirproc = NULL, *dirfd = NULL;
     struct dirent *direproc, *direfd;
 #if HAVE_SELINUX
-    security_context_t scon = NULL;
+    char *scon = NULL;
 #endif
 
     if (prg_cache_loaded || !flag_prg) return;
@@ -419,7 +419,7 @@ static void prg_cache_load(void)
 	if (*cs)
 	    continue;
 	procfdlen = snprintf(line,sizeof(line),PATH_PROC_X_FD,direproc->d_name);
-	if (procfdlen <= 0 || procfdlen >= sizeof(line) - 5)
+	if (procfdlen <= 0 || procfdlen >= (int)sizeof(line) - 5)
 	    continue;
 	errno = 0;
 	dirfd = opendir(line);
@@ -463,7 +463,7 @@ static void prg_cache_load(void)
 		    continue;
 		if (cmdllen == -1)
 		    continue;
-		if (cmdllen < sizeof(cmdlbuf) - 1)
+		if (cmdllen < (int)sizeof(cmdlbuf) - 1)
 		    cmdlbuf[cmdllen]='\0';
                 else
                     // cmdlbuf[sizeof(cmdlbuf) - 1) is already \0
@@ -538,14 +538,15 @@ static int netrom_info(void)
     }
     printf(_("Active NET/ROM sockets\n"));
     printf(_("User       Dest       Source     Device  State        Vr/Vs    Send-Q  Recv-Q\n"));
-    if (fgets(buffer, 256, f))
+    if (fgets(buffer, 256, f)) {
 	/* eat line */;
+    }
 
     while (fgets(buffer, 256, f)) {
 	buffer[9] = 0;
 	buffer[19] = 0;
 	buffer[29] = 0;
-	ret = sscanf(buffer + 30, "%s %*x/%*x %*x/%*x %d %d %d %*d %*d/%*d %*d/%*d %*d/%*d %*d/%*d %*d/%*d %*d %d %d %*d",
+	ret = sscanf(buffer + 30, "%15s %*x/%*x %*x/%*x %d %d %d %*d %*d/%*d %*d/%*d %*d/%*d %*d/%*d %*d/%*d %*d %d %d %*d",
 	       dev, &st, &vs, &vr, &sendq, &recvq);
 	if (ret != 6) {
 	    printf(_("Problem reading data from %s\n"), _PATH_PROCNET_NR);
@@ -733,12 +734,12 @@ static void igmp_do_one(int lnr, const char *line,const char *prot)
 #if HAVE_AFINET
 	if (line[0] != '\t') {
 	    if (idx_flag) {
-		if ((num = sscanf(line, "%d\t%15c", &idx, device)) < 2) {
+		if (sscanf(line, "%d\t%15c", &idx, device) < 2) {
 		    fprintf(stderr, _("warning, got bogus igmp line %d.\n"), lnr);
 		    return;
 		}
 	    } else {
-		if ((num = sscanf(line, "%15c", device)) < 1 ) {
+		if (sscanf(line, "%15c", device) < 1) {
 		    fprintf(stderr, _("warning, got bogus igmp line %d.\n"), lnr);
 		    return;
 		}
@@ -749,16 +750,13 @@ static void igmp_do_one(int lnr, const char *line,const char *prot)
 		*offset = 0;
 
 	    return;
-	} else if ( line[0] == '\t' ) {
-	    if ( (num = sscanf(line, "\t%8[0-9A-Fa-f] %d", mcast_addr, &refcnt)) < 2 ) {
+	} else {
+        if (sscanf(line, "\t%8[0-9A-Fa-f] %d", mcast_addr, &refcnt) < 2) {
 		fprintf(stderr, _("warning, got bogus igmp line %d.\n"), lnr);
 		return;
 	    }
 	    sscanf(mcast_addr, "%X", &sin->sin_addr.s_addr);
 	    sas.ss_family = AF_INET;
-	} else {
-	    fprintf(stderr, _("warning, got bogus igmp line %d.\n"), lnr);
-	    return;
 	}
 
 	if ((ap = get_afntype(sas.ss_family)) == NULL) {
@@ -779,7 +777,7 @@ static int x25_info(void)
        FILE *f=proc_fopen(_PATH_PROCNET_X25);
        char buffer[256],dev[16];
        int st,vs,vr,sendq,recvq,lci;
-       static char *x25_state[5]=
+       static const char *x25_state[5]=
        {
                "LISTENING",
                "SABM_SENT",
@@ -803,13 +801,14 @@ static int x25_info(void)
        printf( _("Active X.25 sockets\n"));
        /* IMHO, Vr/Vs is not very usefull --SF */
        printf( _("Dest         Source          Device  LCI  State        Vr/Vs  Send-Q  Recv-Q\n"));
-       if (fgets(buffer,256,f))
+       if (fgets(buffer,256,f)) {
                /* eat line */;
+       }
        while(fgets(buffer,256,f))
        {
                buffer[10]=0;
                buffer[20]=0;
-               sscanf(buffer+22,"%s %d %d %d %d %*d %*d %*d %*d %*d %*d %d %d %*d",
+               sscanf(buffer+22,"%15s %d %d %d %d %*d %*d %*d %*d %*d %*d %d %d %*d",
                        dev,&lci,&st,&vs,&vr,&sendq,&recvq);
                if (!(flag_all || lci))
                        continue;
@@ -833,7 +832,7 @@ static int igmp_info(void)
 
 static const char *sctp_socket_state_str(int state)
 {
-    if (state >= 0 && state < ARRAY_SIZE(tcp_state))
+    if (state >= 0 && state < (int)ARRAY_SIZE(tcp_state))
 	return tcp_state[state];
     else {
 	static char state_str_buf[64];
@@ -1124,7 +1123,8 @@ static void addr_do_one(char *buf, size_t buf_len, size_t short_len, const struc
 static void tcp_do_one(int lnr, const char *line, const char *prot)
 {
     unsigned long rxq, txq, time_len, retr, inode;
-    int num, local_port, rem_port, d, state, uid, timer_run, timeout;
+    int num, d, uid, timeout;
+    unsigned int local_port, rem_port, state, timer_run;
     char rem_addr[128], local_addr[128], timers[64];
     const struct aftype *ap;
     struct sockaddr_storage localsas, remsas;
@@ -1218,7 +1218,7 @@ static void tcp_do_one(int lnr, const char *line, const char *prot)
 		break;
 	    }
 
-	printf("%-4s  %6ld %6ld %-*s %-*s %-11s",
+	printf("%-4s  %6lu %6lu %-*s %-*s %-11s",
 	       prot, rxq, txq, (int)netmax(23,strlen(local_addr)), local_addr, (int)netmax(23,strlen(rem_addr)), rem_addr, _(tcp_state[state]));
 
 	finish_this_one(uid,inode,timers);
@@ -1252,7 +1252,8 @@ static void udp_do_one(int lnr, const char *line,const char *prot)
 {
     char local_addr[128], rem_addr[128];
     char *udp_state, timers[64];
-    int num, local_port, rem_port, d, state, timer_run, uid, timeout;
+    int num, d, uid, timeout;
+    unsigned int local_port, rem_port, timer_run, state;
     struct sockaddr_storage localsas, remsas;
     struct sockaddr_in *localaddr = (struct sockaddr_in *)&localsas;
     struct sockaddr_in *remaddr = (struct sockaddr_in *)&remsas;
@@ -1343,7 +1344,7 @@ static void udp_do_one(int lnr, const char *line,const char *prot)
 			 retr, timeout);
 		break;
 	    }
-	printf("%-5s %6ld %6ld %-23s %-23s %-11s",
+	printf("%-5s %6lu %6lu %-23s %-23s %-11s",
 	       prot, rxq, txq, local_addr, rem_addr, udp_state);
 
 	finish_this_one(uid,inode,timers);
@@ -1366,7 +1367,8 @@ static void raw_do_one(int lnr, const char *line,const char *prot)
 {
     char local_addr[128], rem_addr[128];
     char timers[64];
-    int num, local_port, rem_port, d, state, timer_run, uid, timeout;
+    int num, d, uid, timeout;
+    unsigned int local_port, rem_port, state, timer_run;
     struct sockaddr_storage localsas, remsas;
     struct sockaddr_in *localaddr = (struct sockaddr_in *)&localsas;
     struct sockaddr_in *remaddr = (struct sockaddr_in *)&remsas;
@@ -1442,7 +1444,7 @@ static void raw_do_one(int lnr, const char *line,const char *prot)
 			 retr, timeout);
 		break;
 	    }
-	printf("%-4s  %6ld %6ld %-23s %-23s %-11d",
+	printf("%-4s  %6lu %6lu %-23s %-23s %-11u",
 	       prot, rxq, txq, local_addr, rem_addr, state);
 
 	finish_this_one(uid,inode,timers);
@@ -1467,7 +1469,8 @@ static void unix_do_one(int nr, const char *line, const char *prot)
     static int has = 0;
     char path[MAXPATHLEN], ss_flags[32];
     char *ss_proto, *ss_state, *ss_type;
-    int num, state, type;
+    int num;
+    unsigned int state, type;
     void *d;
     unsigned long refcnt, proto, flags, inode;
 
@@ -1478,7 +1481,7 @@ static void unix_do_one(int nr, const char *line, const char *prot)
 	return;
     }
     path[0] = '\0';
-    num = sscanf(line, "%p: %lX %lX %lX %X %X %lu %s",
+    num = sscanf(line, "%p: %lX %lX %lX %X %X %lu %1023s",
 		 &d, &refcnt, &proto, &flags, &type, &state, &inode, path);
     if (num < 6) {
 	fprintf(stderr, _("warning, got bogus unix line.\n"));
@@ -1574,7 +1577,7 @@ static void unix_do_one(int nr, const char *line, const char *prot)
 
     strcat(ss_flags, "]");
 
-    printf("%-5s %-6ld %-11s %-10s %-13s ",
+    printf("%-5s %-6lu %-11s %-10s %-13s ",
 	   ss_proto, refcnt, ss_flags, ss_type, ss_state);
     if (has & HAS_INODE)
 	printf("%-8lu",inode);
@@ -1662,7 +1665,7 @@ static int ax25_info(void)
 	    src = buffer + 10;
 	    dst[9] = 0;
 	    src[9] = 0;
-	    ret = sscanf(buffer + 20, "%s %d %d %d %*d %*d/%*d %*d/%*d %*d/%*d %*d/%*d %*d/%*d %*d %*d %*d %d %d %*d",
+	    ret = sscanf(buffer + 20, "%15s %d %d %d %*d %*d/%*d %*d/%*d %*d/%*d %*d/%*d %*d/%*d %*d %*d %*d %d %d %*d",
 		   buf, &st, &vs, &vr, &sendq, &recvq);
 	    if (ret != 4 && ret != 6) {
 		printf(_("Problem reading data from %s\n"), _PATH_PROCNET_AX25);
@@ -1764,11 +1767,12 @@ static int ipx_info(void)
 	fclose(f);
 	return (-1);
     }
-    if (fgets(buf, 255, f))
+    if (fgets(buf, 255, f)) {
 	/* eat line */;
+    }
 
     while (fgets(buf, 255, f) != NULL) {
-	sscanf(buf, "%s %s %lX %lX %u %u",
+	sscanf(buf, "%49s %49s %lX %lX %u %u",
 	       sad, dad, &txq, &rxq, &state, &uid);
 	if ((st = rindex(sad, ':'))) {
 	    *st++ = '\0';
@@ -1818,12 +1822,12 @@ static int ipx_info(void)
 	} else
         safe_strncpy(dad, "-", sizeof(dad));
 
-	printf("IPX   %6ld %6ld %-26s %-26s %-5s", txq, rxq, sad, dad, st);
+	printf("IPX   %6lu %6lu %-26s %-26s %-5s", txq, rxq, sad, dad, st);
 	if (flag_exp > 1) {
 	    if (!(flag_not & FLAG_NUM_USER) && ((pw = getpwuid(uid)) != NULL))
 		printf(" %-10s", pw->pw_name);
 	    else
-		printf(" %-10d", uid);
+		printf(" %-10u", uid);
 	}
 	printf("\n");
     }
@@ -1833,7 +1837,7 @@ static int ipx_info(void)
 #endif
 
 #if HAVE_AFBLUETOOTH
-const char *bluetooth_state(int state)
+static const char *bluetooth_state(int state)
 {
     switch (state) {
 	case BT_CONNECTED:
@@ -1867,11 +1871,11 @@ static void l2cap_do_one(int nr, const char *line, const char *prot)
     const char *bt_state, *bt_sec_level;
 
     (void)nr; (void)prot; /* unused */
-    num = sscanf(line, "%17s (%u) %17s (%u) %d %d 0x%04x 0x%04x %d %d %d",
+    num = sscanf(line, "%17s (%u) %17s (%u) %u %u 0x%04x 0x%04x %u %u %u",
 	daddr, &dtype, saddr, &stype, &state, &psm, &dcid, &scid, &imtu, &omtu, &sec_level);
 
     if (num != 11) {
-	num = sscanf(line, "%17s %17s %d %d 0x%04x 0x%04x %d %d %d",
+	num = sscanf(line, "%17s %17s %u %u 0x%04x 0x%04x %u %u %u",
 	    daddr, saddr, &state, &psm, &dcid, &scid, &imtu, &omtu, &sec_level);
 
 	if (num != 9) {
@@ -1903,7 +1907,7 @@ static void l2cap_do_one(int nr, const char *line, const char *prot)
 	    bt_sec_level = _("UNKNOWN");
     }
 
-    printf("l2cap  %-17s %-17s %-9s %7d 0x%04x 0x%04x %7d %7d %-7s\n",
+    printf("l2cap  %-17s %-17s %-9s %7u 0x%04x 0x%04x %7u %7u %-7s\n",
 	(strcmp (daddr, "00:00:00:00:00:00") == 0 ? "*" : daddr),
 	(strcmp (saddr, "00:00:00:00:00:00") == 0 ? "*" : saddr),
 	bt_state, psm, dcid, scid, imtu, omtu, bt_sec_level);
@@ -1924,7 +1928,7 @@ static void rfcomm_do_one(int nr, const char *line, const char *prot)
     const char *bt_state;
 
     (void)nr; (void)prot; /* unused */
-    num = sscanf(line, "%17s %17s %d %d", daddr, saddr, &state, &channel);
+    num = sscanf(line, "%17s %17s %u %u", daddr, saddr, &state, &channel);
     if (num < 4) {
 	fprintf(stderr, _("warning, got bogus rfcomm line.\n"));
 	return;
@@ -1936,7 +1940,7 @@ static void rfcomm_do_one(int nr, const char *line, const char *prot)
 	return;
 
     bt_state = bluetooth_state(state);
-    printf("rfcomm %-17s %-17s %-9s %7d\n",
+    printf("rfcomm %-17s %-17s %-9s %7u\n",
 	(strcmp (daddr, "00:00:00:00:00:00") == 0 ? "*" : daddr),
 	(strcmp (saddr, "00:00:00:00:00:00") == 0 ? "*" : saddr),
 	bt_state, channel);
@@ -1954,7 +1958,7 @@ static int iface_info(void)
     if (skfd < 0) {
 	if ((skfd = sockets_open(0)) < 0) {
 	    perror("socket");
-	    exit(1);
+	    return 1;
 	}
 	printf(_("Kernel Interface table\n"));
     }
@@ -1965,7 +1969,7 @@ static int iface_info(void)
 
     if (for_all_interfaces(do_if_print, &flag_all) < 0) {
 	perror(_("missing interface information"));
-	exit(1);
+	return 1;
     }
     if (flag_cnt)
 	if_cache_free();
@@ -2163,7 +2167,8 @@ int main
 	    break;
 	case 'V':
 	    version();
-	    /*NOTREACHED */
+	    /* not reached */
+	    break;
 	case 'v':
 	    flag_ver |= FLAG_VERBOSE;
 	    break;
@@ -2211,8 +2216,12 @@ int main
 	    break;
 	case '?':
 	    usage(E_OPTERR);
+	    /* not reached */
+	    break;
 	case 'h':
 	    usage(E_USAGE);
+	    /* not reached */
+	    break;
 	case 's':
 	    flag_sta++;
 	}

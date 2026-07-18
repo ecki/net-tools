@@ -89,7 +89,7 @@ static int rarp_set(int fd, struct hostent *hp, char *hw_addr)
 {
     struct arpreq req;
     struct sockaddr_in *si;
-    struct sockaddr_storage sas;
+    struct sockaddr_storage sas = {};
     struct sockaddr *sap = (struct sockaddr *)&sas;
 
     if (hardware->input(hw_addr, &sas)) {
@@ -205,7 +205,7 @@ static struct option longopts[] =
 
 int main(int argc, char **argv)
 {
-    int result = 0, mode = 0, c, nargs = 0, verbose = 0;
+    int result = 0, mode = 0, c, nargs = 0;
     char *args[3];
     struct hostent *hp;
     int fd;
@@ -226,12 +226,14 @@ int main(int argc, char **argv)
 	    break;
 	case 'h':
 	    usage(E_USAGE);
+	    /* not reached */
+	    break;
 	case 'V':
 	    printf("%s\n", Release);
 	    exit(E_VERSION);
 	    break;
 	case 'v':
-	    verbose++;
+	    /* ignored */
 	    break;
 	case 'a':
 	case 's':
@@ -274,6 +276,8 @@ int main(int argc, char **argv)
     switch (mode) {
     case 0:
 	usage(E_OPTERR);
+	/* not reached */
+	break;
 
     case MODE_DISPLAY:
 	if (nargs != (mode - 1)) {

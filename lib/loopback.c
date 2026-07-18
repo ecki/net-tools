@@ -47,11 +47,11 @@ static const char *pr_unspec(const char *ptr)
 struct hwtype unspec_hwtype =
 {
     "unspec", NULL/*"UNSPEC"*/, -1, 0,
-    pr_unspec, NULL, NULL
+    pr_unspec, NULL, NULL, 0
 };
 
 struct hwtype loop_hwtype =
 {
     "loop", NULL/*"Local Loopback"*/, ARPHRD_LOOPBACK, 0,
-    NULL, NULL, NULL
+    NULL, NULL, NULL, 0
 };

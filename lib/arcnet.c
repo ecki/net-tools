@@ -117,7 +117,7 @@ static int in_arcnet(char *bufp, struct sockaddr_storage *sasp)
 struct hwtype arcnet_hwtype =
 {
     "arcnet", NULL, /*"2.5Mbps ARCnet", */ ARPHRD_ARCNET, 1,
-    pr_arcnet, in_arcnet, NULL
+    pr_arcnet, in_arcnet, NULL, 0
 };
 
 
