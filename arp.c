@@ -679,10 +679,6 @@ int main(int argc, char **argv)
 #endif
 
     /* Initialize variables... */
-    if ((hw = get_hwtype(DFLT_HW)) == NULL) {
-	fprintf(stderr, _("%s: hardware type not supported!\n"), DFLT_HW);
-	return (-1);
-    }
     if ((ap = get_aftype(DFLT_AF)) == NULL) {
 	fprintf(stderr, _("%s: address family not supported!\n"), DFLT_AF);
 	return (-1);
