@@ -157,7 +157,7 @@ static int INET_rresolve(char *name, size_t len, const struct sockaddr_storage *
     }
     ad = sin->sin_addr.s_addr;
 #ifdef DEBUG
-    fprintf (stderr, "rresolve: %08lx, mask %08x, num %08x, len %d\n", ad, netmask, numeric, len);
+    fprintf (stderr, "rresolve: %08x, mask %08x, num %08x, len %zu\n", ad, netmask, numeric, len);
 #endif
 
     // if no symbolic names are requested we shortcut with ntoa
@@ -193,7 +193,7 @@ static int INET_rresolve(char *name, size_t len, const struct sockaddr_storage *
 	if (pn->addr.sin_addr.s_addr == ad && pn->host == host) {
 	    safe_strncpy(name, pn->name, len);
 #ifdef DEBUG
-	    fprintf (stderr, "rresolve: found %s %08lx in cache (name=%s, len=%d)\n", (host? "host": "net"), ad, name, len);
+	    fprintf (stderr, "rresolve: found %s %08x in cache (name=%s, len=%zu)\n", (host? "host": "net"), ad, name, len);
 #endif
 	    return (0);
 	}
@@ -205,14 +205,14 @@ static int INET_rresolve(char *name, size_t len, const struct sockaddr_storage *
     ent = NULL;
     if (host) {
 #ifdef DEBUG
-	fprintf (stderr, "gethostbyaddr (%08lx)\n", ad);
+	fprintf (stderr, "gethostbyaddr (%08x)\n", ad);
 #endif
 	ent = gethostbyaddr((char *) &ad, 4, AF_INET);
 	if (ent != NULL)
 	    safe_strncpy(name, ent->h_name, len);
     } else {
 #ifdef DEBUG
-	fprintf (stderr, "getnetbyaddr (%08lx)\n", host_ad);
+	fprintf (stderr, "getnetbyaddr (%08x)\n", host_ad);
 #endif
 	np = getnetbyaddr(host_ad, AF_INET);
 	if (np != NULL)

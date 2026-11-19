@@ -188,7 +188,7 @@ static int if_readconf(void)
 	    perror("SIOCGIFCONF");
 	    goto out;
 	}
-	if (ifc.ifc_len == sizeof(struct ifreq) * numreqs) {
+	if (ifc.ifc_len == (int)sizeof(struct ifreq) * numreqs) {
 	    /* assume it overflowed and try again */
 	    numreqs *= 2;
 	    continue;
@@ -338,10 +338,12 @@ static int if_readlist_proc(const char *target)
 			_PATH_PROCNET_DEV, strerror(errno));
 		return -2;
 	}
-    if (fgets(buf, sizeof buf, fh))
+    if (fgets(buf, sizeof buf, fh)) {
 		/* eat line */;
-    if (fgets(buf, sizeof buf, fh))
+    }
+    if (fgets(buf, sizeof buf, fh)) {
 		/* eat line */;
+    }
 
 #if 0				/* pretty, but can't cope with missing fields */
     fmt = proc_gen_fmt(_PATH_PROCNET_DEV, 1, fh,

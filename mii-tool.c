@@ -163,7 +163,8 @@ const struct {
 /* Parse an argument list of media types */
 static int parse_media(char *arg, unsigned *bmcr2)
 {
-    int mask, i;
+    int mask;
+    unsigned i;
     char *s;
     mask = strtoul(arg, &s, 16);
     if ((*arg != '\0') && (*s == '\0')) {
@@ -234,10 +235,11 @@ static unsigned char bitreverse_byte(unsigned char byte)
     return byte;
 }
 
-int show_basic_mii(int sock, int phy_id)
+static int show_basic_mii(int sock, int phy_id)
 {
     char buf[200];
-    int i, mii_val[32];
+    int mii_val[32];
+    unsigned int i;
     unsigned bmcr, bmsr, advert, lkpar, bmcr2, lpa2;
 
     /* Some bits in the BMSR are latched, but we can't rely on being

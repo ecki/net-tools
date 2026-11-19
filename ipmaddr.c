@@ -75,7 +75,7 @@ static int parse_lla(char *str, char *addr)
 	int len=0;
 
 	while (*str) {
-		int tmp;
+		unsigned int tmp;
 		if (str[0] == ':' || str[0] == '.') {
 			str++;
 			continue;
@@ -93,10 +93,10 @@ static int parse_lla(char *str, char *addr)
 
 static int parse_hex(char *str, unsigned char *dst, size_t dstlen)
 {
-	int len=0;
+	size_t len = 0;
 
 	while (len < dstlen && *str) {
-		int tmp;
+		unsigned int tmp;
 		if (str[1] == 0)
 			return -1;
 		if (sscanf(str, "%02x", &tmp) != 1)
@@ -118,7 +118,7 @@ struct ma_info
 	inet_prefix	addr;
 };
 
-void maddr_ins(struct ma_info **lst, struct ma_info *m)
+static void maddr_ins(struct ma_info **lst, struct ma_info *m)
 {
 	struct ma_info *mp;
 
@@ -130,7 +130,7 @@ void maddr_ins(struct ma_info **lst, struct ma_info *m)
 	*lst = m;
 }
 
-void read_dev_mcast(struct ma_info **result_p)
+static void read_dev_mcast(struct ma_info **result_p)
 {
 	char buf[256];
 	FILE *fp = fopen(_PATH_PROCNET_DEV_MCAST, "r");
@@ -145,7 +145,7 @@ void read_dev_mcast(struct ma_info **result_p)
 		int st;
 
 		memset(&m, 0, sizeof(m));
-		sscanf(buf, "%d%s%d%d%s", &m.index, m.name, &m.users, &st,
+		sscanf(buf, "%d%15s%d%d%255s", &m.index, m.name, &m.users, &st,
 		       hexa);
 		if (filter_dev[0] && strcmp(filter_dev, m.name))
 			continue;
@@ -166,7 +166,7 @@ void read_dev_mcast(struct ma_info **result_p)
 	fclose(fp);
 }
 
-void read_igmp(struct ma_info **result_p)
+static void read_igmp(struct ma_info **result_p)
 {
 	struct ma_info m, *ma = NULL;
 	char buf[256];
@@ -175,8 +175,9 @@ void read_igmp(struct ma_info **result_p)
 	if (!fp)
 		return;
 	memset(&m, 0, sizeof(m));
-	if (fgets(buf, sizeof(buf), fp))
+	if (fgets(buf, sizeof(buf), fp)) {
 		/* eat line */;
+    }
 
 	m.addr.family = AF_INET;
 	m.addr.bitlen = 32;
@@ -184,7 +185,7 @@ void read_igmp(struct ma_info **result_p)
 
 	while (fgets(buf, sizeof(buf), fp)) {
 		if (buf[0] != '\t') {
-			sscanf(buf, "%d%s", &m.index, m.name);
+			sscanf(buf, "%d%15s", &m.index, m.name);
 			continue;
 		}
 
@@ -200,8 +201,7 @@ void read_igmp(struct ma_info **result_p)
 	fclose(fp);
 }
 
-
-void read_igmp6(struct ma_info **result_p)
+static void read_igmp6(struct ma_info **result_p)
 {
 	char buf[256];
 	FILE *fp = fopen(_PATH_PROCNET_IGMP6, "r");
@@ -215,7 +215,7 @@ void read_igmp6(struct ma_info **result_p)
 		int len;
 
 		memset(&m, 0, sizeof(m));
-		sscanf(buf, "%d%s%s%d", &m.index, m.name, hexa, &m.users);
+		sscanf(buf, "%d%15s%255s%d", &m.index, m.name, hexa, &m.users);
 
 		if (filter_dev[0] && strcmp(filter_dev, m.name))
 			continue;
@@ -289,7 +289,7 @@ static int multiaddr_list(int argc, char **argv)
 		if (strcmp(*argv, "dev") == 0) {
 			NEXT_ARG();
 			l = strlen(*argv);
-			if (l <= 0 || l >= sizeof(filter_dev))
+			if (l == 0 || l >= sizeof(filter_dev))
 				usage(E_OPTERR);
 			strncpy(filter_dev, *argv, sizeof (filter_dev));
 		} else if (strcmp(*argv, "all") == 0) {
@@ -302,7 +302,7 @@ static int multiaddr_list(int argc, char **argv)
 			filter_family = AF_PACKET;
 		} else {
 			l = strlen(*argv);
-			if (l <= 0 || l >= sizeof(filter_dev))
+			if (l == 0 || l >= sizeof(filter_dev))
 				usage(E_OPTERR);
 			strncpy(filter_dev, *argv, sizeof (filter_dev));
 		}
@@ -319,7 +319,7 @@ static int multiaddr_list(int argc, char **argv)
 	return 0;
 }
 
-int multiaddr_modify(int cmd, int argc, char **argv)
+static int multiaddr_modify(int cmd, int argc, char **argv)
 {
 	struct ifreq ifr;
 	int fd;
@@ -362,8 +362,7 @@ int multiaddr_modify(int cmd, int argc, char **argv)
 	exit(0);
 }
 
-
-int do_multiaddr(int argc, char **argv)
+static int do_multiaddr(int argc, char **argv)
 {
 	if (argc < 1)
 		return multiaddr_list(0, NULL);
@@ -383,19 +382,11 @@ int resolve_hosts = 0;
 
 int main(int argc, char **argv)
 {
-	char *basename;
-
 #if I18N
 	setlocale (LC_ALL, "");
 	bindtextdomain("net-tools", "/usr/share/locale");
 	textdomain("net-tools");
 #endif
-
-	basename = strrchr(argv[0], '/');
-	if (basename == NULL)
-		basename = argv[0];
-	else
-		basename++;
 
 	while (argc > 1) {
 		if (argv[1][0] != '-')

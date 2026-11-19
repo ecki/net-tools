@@ -140,7 +140,7 @@ int main(int argc, char **argv)
     }
 
     /* Fetch the command-line arguments. */
-    while ((i = getopt_long(argc, argv, "A:eCFhnN64Vv?", longopts, &lop)) != EOF)
+    while ((i = getopt_long(argc, argv, "A:eCFhnN64Vv?", longopts, &lop)) != EOF) {
 	switch (i) {
 	case -1:
 	    break;
@@ -184,6 +184,8 @@ int main(int argc, char **argv)
 	    break;
 	case 'V':
 	    version();
+	    /* not reached */
+	    break;
 	case 'h':
 	case '?':
 	    opt_h++;
@@ -191,6 +193,7 @@ int main(int argc, char **argv)
 	default:
 	    usage(E_OPTERR);
 	}
+    }
 
     argv += optind;
     argc -= optind;
@@ -206,7 +209,7 @@ int main(int argc, char **argv)
 	    aftrans_def("route", progname, DFLT_AF);
 
 	/* Do we have to show the contents of the routing table? */
-	if (*argv == NULL) {
+	if (argc == 0) {
 	    what = RTACTION_SHOW;
 	} else {
 	    if (!strcmp(*argv, "add"))

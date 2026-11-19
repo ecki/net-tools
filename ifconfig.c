@@ -787,7 +787,7 @@ int main(int argc, char **argv)
 #endif
 #if HAVE_AFINET
 	    { /* ipv4 address a.b.c.d */
-		in_addr_t ip, nm, bc;
+		in_addr_t ip, nm = 0, bc = 0;
 		safe_strncpy(host, *spp, (sizeof host));
 		if (inet_aftype.input(0, host, &_sa) < 0) {
 		    ap->herror(host);
@@ -880,7 +880,7 @@ int main(int argc, char **argv)
 #if HAVE_AFINET
 	    {
 		/* ipv4 address a.b.c.d */
-		in_addr_t ip, nm, bc;
+		in_addr_t ip, nm = 0, bc = 0;
 		safe_strncpy(host, *spp, (sizeof host));
 		if (inet_aftype.input(0, host, &_sa) < 0) {
 		    ap->herror(host);
@@ -1064,7 +1064,6 @@ int main(int argc, char **argv)
 
     if (neednetmask) {
 	goterr |= set_netmask(skfd, &ifr, samask);
-	didnetmask++;
     }
 
     if (opt_v && goterr)

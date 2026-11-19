@@ -137,7 +137,7 @@ static int ROSE_hinput(char *bufp, struct sockaddr_storage *sasp)
 struct hwtype rose_hwtype =
 {
     "rose", NULL, /*"AMPR ROSE", */ ARPHRD_ROSE, 10,
-    ROSE_print, ROSE_hinput, NULL
+    ROSE_print, ROSE_hinput, NULL, 0
 };
 
 struct aftype rose_aftype =

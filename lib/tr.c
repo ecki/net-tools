@@ -133,13 +133,13 @@ static int in_tr(char *bufp, struct sockaddr_storage *sasp)
 struct hwtype tr_hwtype =
 {
     "tr", NULL /* "16/4 Mbps Token Ring" */, ARPHRD_IEEE802, TR_ALEN,
-    pr_tr, in_tr, NULL
+    pr_tr, in_tr, NULL, 0
 };
 #ifdef ARPHRD_IEEE802_TR
 struct hwtype tr_hwtype1 =
 {
     "tr", NULL /* "16/4 Mbps Token Ring" */, ARPHRD_IEEE802_TR, TR_ALEN,
-    pr_tr, in_tr, NULL
+    pr_tr, in_tr, NULL, 0
 };
 #endif
 

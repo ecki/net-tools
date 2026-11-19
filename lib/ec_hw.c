@@ -21,7 +21,7 @@
 struct hwtype ec_hwtype =
 {
     "ec", NULL /* "Econet" */, ARPHRD_ECONET, 0,
-    NULL, NULL, NULL
+    NULL, NULL, NULL, 0
 };
 
 #endif

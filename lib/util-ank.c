@@ -192,7 +192,7 @@ int get_addr_1(inet_prefix *addr, char *name, int family)
 int get_prefix_1(inet_prefix *dst, char *arg, int family)
 {
 	int err;
-	unsigned plen;
+	unsigned int plen;
 	char *slash;
 
 	memset(dst, 0, sizeof(*dst));
@@ -211,7 +211,7 @@ int get_prefix_1(inet_prefix *dst, char *arg, int family)
 	if (err == 0) {
 		dst->bitlen = (dst->family == AF_INET6 ? 128 : 32);
 		if (slash) {
-			if (scan_number(slash+1, &plen) || plen > dst->bitlen) {
+			if (scan_number(slash+1, &plen) || plen > (unsigned)dst->bitlen) {
 				err = -1;
 				goto done;
 			}
@@ -260,7 +260,7 @@ void invarg(char *msg)
 
 int matches(char *cmd, char *pattern)
 {
-	int len = strlen(cmd);
+	size_t len = strlen(cmd);
 	if (len > strlen(pattern))
 		return -1;
 	return memcmp(pattern, cmd, len);

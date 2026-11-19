@@ -95,5 +95,5 @@ struct aftype unspec_aftype =
 {
     "unspec", NULL/*"UNSPEC"*/, AF_UNSPEC, 0,
     UNSPEC_print, UNSPEC_sprint, NULL, NULL,
-    NULL,
+    NULL, NULL, NULL, 0, NULL
 };

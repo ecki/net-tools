@@ -135,12 +135,10 @@ static int in_ib(char *bufp, struct sockaddr_storage *sasp)
     return (0);
 }
 
-
 struct hwtype ib_hwtype =
 {
     "infiniband", NULL, ARPHRD_INFINIBAND, INFINIBAND_ALEN,
-    pr_ib, in_ib, NULL
+    pr_ib, in_ib, NULL, 0
 };
-
 
 #endif				/* HAVE_HWIB */

@@ -48,8 +48,9 @@ int AX25_rprint(int options)
     }
     printf(_("Kernel AX.25 routing table\n"));	/* xxx */
     printf(_("Destination  Iface    Use\n"));	/* xxx */
-    if (fgets(buffer, 256, f))
+    if (fgets(buffer, 256, f)) {
 	/* eat line */;
+    }
     while (fgets(buffer, 256, f)) {
 	buffer[9] = 0;
 	buffer[14] = 0;

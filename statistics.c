@@ -334,7 +334,8 @@ static int cmpentries(const void *a, const void *b)
 
 static void printval(const struct tabtab *tab, const char *title, unsigned long long val)
 {
-    struct entry *ent = NULL, key;
+    const struct entry *ent = NULL;
+    struct entry key = {};
     int type;
     char buf[512];
 
@@ -358,7 +359,7 @@ static void printval(const struct tabtab *tab, const char *title, unsigned long 
 
     if (type & I_TITLE) {
 	type &= ~I_TITLE;
-	if (state != type)
+	if ((int)state != type)
 	    printf("%*s%s\n", states[state].indent, "", _(states[type].title));
     }
     buf[0] = '\0';
@@ -366,7 +367,7 @@ static void printval(const struct tabtab *tab, const char *title, unsigned long 
     case opt_number:
 	if (val == 0)
 	    break;
-	/*FALL THOUGH*/
+	/* fall through */
     case number:
 	snprintf(buf, sizeof(buf), _(ent->out), val);
 	break;
@@ -489,7 +490,7 @@ static void process6_fd(FILE *f)
    int cpflg = 0;
 
    while (fgets(buf1, sizeof buf1, f)) {
-          sscanf(buf1, "%s %llu", buf2, &val);
+          sscanf(buf1, "%49s %llu", buf2, &val);
           if(!cpflg) {
              cpytitle(buf2, buf3);
              tab = newtable(snmp6tabs, buf3);
@@ -506,7 +507,7 @@ static void process6_fd(FILE *f)
 }
 
 /* Process a file with name-value lines (like /proc/net/sctp/snmp) */
-static void process_fd2(FILE *f, const char *filename)
+static int process_fd2(FILE *f)
 {
     char buf1[1024];
     char *sp;
@@ -516,9 +517,8 @@ static void process_fd2(FILE *f, const char *filename)
 
     while (fgets(buf1, sizeof buf1, f)) {
 	sp = buf1 + strcspn(buf1, " \t\n");
-	if (!sp) {
-	    fprintf(stderr, _("error parsing %s\n"), filename);
-	    return;
+	if (*sp == '\0') {
+		return -1;
 	}
 	*sp = '\0';
 	sp++;
@@ -528,47 +528,59 @@ static void process_fd2(FILE *f, const char *filename)
 	if (*sp != '\0' && *(tab->flag))
 	    printval(tab, buf1, strtoul(sp, 0, 10));
     }
+    return 0;
 }
 
 void parsesnmp(int flag_raw, int flag_tcp, int flag_udp, int flag_sctp)
 {
     FILE *f;
+    const char *filename;
 
     f_raw = flag_raw; f_tcp = flag_tcp; f_udp = flag_udp; f_sctp = flag_sctp;
 
-    f = proc_fopen("/proc/net/snmp");
+    filename = "/proc/net/snmp";
+    f = proc_fopen(filename);
     if (!f) {
-	perror(_("cannot open /proc/net/snmp"));
-	return;
+	    perror(_("cannot open /proc/net/snmp"));
+	    return;
     }
 
-    if (process_fd(f, 1, NULL) < 0)
-      fprintf(stderr, _("Problem while parsing /proc/net/snmp\n"));
+    if (process_fd(f, 1, NULL) < 0) {
+	    fprintf(stderr, _("Problem while parsing %s\n"), filename);
+    }
 
-    if (ferror(f))
-	perror("/proc/net/snmp");
+    if (ferror(f)) {
+	    perror(filename);
+    }
 
     fclose(f);
 
-    f = proc_fopen("/proc/net/netstat");
-
+    filename = "/proc/net/netstat";
+    f = proc_fopen(filename);
     if (f) {
-    	if (process_fd(f, 1, NULL) <0)
-          fprintf(stderr, _("Problem while parsing /proc/net/netstat\n"));
+	    if (process_fd(f, 1, NULL) < 0) {
+		    fprintf(stderr, _("Problem while parsing %s\n"), filename);
+	    }
 
-        if (ferror(f))
-	    perror("/proc/net/netstat");
+	    if (ferror(f)) {
+		    perror(filename);
+	    }
 
-        fclose(f);
+	    fclose(f);
     }
 
-    f = proc_fopen("/proc/net/sctp/snmp");
+    filename = "/proc/net/sctp/snmp";
+    f = proc_fopen(filename);
     if (f) {
-	process_fd2(f,"/proc/net/sctp/snmp");
-	if (ferror(f)) {
-	    perror("/proc/net/sctp/snmp");
+	    if (process_fd2(f) < 0) {
+		    fprintf(stderr, _("%s - parse error\n"), filename);
+	    }
+
+	    if (ferror(f)) {
+		    perror(filename);
+	    }
+
 	    fclose(f);
-	}
     }
 }
 

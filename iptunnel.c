@@ -382,7 +382,7 @@ static int do_add(int cmd, int argc, char **argv)
 	return -1;
 }
 
-int do_del(int argc, char **argv)
+static int do_del(int argc, char **argv)
 {
 	struct ip_tunnel_parm p;
 
@@ -402,7 +402,7 @@ int do_del(int argc, char **argv)
 	return -1;
 }
 
-void print_tunnel(struct ip_tunnel_parm *p)
+static void print_tunnel(struct ip_tunnel_parm *p)
 {
 	char s1[256];
 	char s2[256];
@@ -476,16 +476,18 @@ static int do_tunnels_list(struct ip_tunnel_parm *p)
 		return -1;
 	}
 
-	if (fgets(buf, sizeof(buf), fp))
+	if (fgets(buf, sizeof(buf), fp)) {
 		/* eat line */;
-	if (fgets(buf, sizeof(buf), fp))
+    }
+	if (fgets(buf, sizeof(buf), fp)) {
 		/* eat line */;
+    }
 
 	while (fgets(buf, sizeof(buf), fp) != NULL) {
 		char *ptr;
 		buf[sizeof(buf) - 1] = 0;
 		if ((ptr = strchr(buf, ':')) == NULL ||
-		    (*ptr++ = 0, sscanf(buf, "%s", name) != 1)) {
+		    (*ptr++ = 0, sscanf(buf, "%511s", name) != 1)) {
 			fprintf(stderr, _("Wrong format of /proc/net/dev. Sorry.\n"));
 			fclose(fp);
 			return -1;
@@ -517,10 +519,10 @@ static int do_tunnels_list(struct ip_tunnel_parm *p)
 		print_tunnel(&p1);
 		if (show_stats) {
 			printf(_("RX: Packets    Bytes        Errors CsumErrs OutOfSeq Mcasts\n"));
-			printf("    %-10ld %-12ld %-6ld %-8ld %-8ld %-8ld\n",
+			printf("    %-10lu %-12lu %-6lu %-8lu %-8lu %-8lu\n",
 			       rx_packets, rx_bytes, rx_errs, rx_frame, rx_fifo, rx_multi);
 			printf(_("TX: Packets    Bytes        Errors DeadLoop NoRoute  NoBufs\n"));
-			printf("    %-10ld %-12ld %-6ld %-8ld %-8ld %-6ld\n\n",
+			printf("    %-10lu %-12lu %-6lu %-8lu %-8lu %-6lu\n\n",
 			       tx_packets, tx_bytes, tx_errs, tx_colls, tx_carrier, tx_drops);
 		}
 	}
@@ -557,7 +559,7 @@ static int do_show(int argc, char **argv)
 	return 0;
 }
 
-int do_iptunnel(int argc, char **argv)
+static int do_iptunnel(int argc, char **argv)
 {
 	if (argc > 0) {
 		if (matches(*argv, "add") == 0)
@@ -583,19 +585,11 @@ int resolve_hosts = 0;
 
 int main(int argc, char **argv)
 {
-	char *basename;
-
 #if I18N
 	setlocale (LC_ALL, "");
 	bindtextdomain("net-tools", "/usr/share/locale");
 	textdomain("net-tools");
 #endif
-
-	basename = strrchr(argv[0], '/');
-	if (basename == NULL)
-		basename = argv[0];
-	else
-		basename++;
 
 	while (argc > 1) {
 		if (argv[1][0] != '-')

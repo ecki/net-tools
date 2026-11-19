@@ -35,26 +35,26 @@
 struct hwtype slip_hwtype =
 {
     "slip", NULL, /*"Serial Line IP", */ ARPHRD_SLIP, 0,
-    NULL, NULL, NULL
+    NULL, NULL, NULL, 0
 };
 struct hwtype cslip_hwtype =
 {
     "cslip", NULL, /*"VJ Serial Line IP", */ ARPHRD_CSLIP, 0,
-    NULL, NULL, NULL
+    NULL, NULL, NULL, 0
 };
 struct hwtype slip6_hwtype =
 {
     "slip6", NULL, /*"6-bit Serial Line IP", */ ARPHRD_SLIP6, 0,
-    NULL, NULL, NULL
+    NULL, NULL, NULL, 0
 };
 struct hwtype cslip6_hwtype =
 {
     "cslip6", NULL, /*"VJ 6-bit Serial Line IP", */ ARPHRD_CSLIP6, 0,
-    NULL, NULL, NULL
+    NULL, NULL, NULL, 0
 };
 struct hwtype adaptive_hwtype =
 {
     "adaptive", NULL, /*"Adaptive Serial Line IP", */ ARPHRD_ADAPT, 0,
-    NULL, NULL, NULL
+    NULL, NULL, NULL, 0
 };
 #endif				/* HAVE_HWSLIP */

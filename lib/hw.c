@@ -295,7 +295,7 @@ void print_hwlist(int type) {
 /* return 1 if address is all zeros */
 int hw_null_address(const struct hwtype *hw, void *ap)
 {
-    unsigned int i;
+    int i;
     unsigned char *address = (unsigned char *)ap;
     for (i = 0; i < hw->alen; i++)
 	if (address[i])

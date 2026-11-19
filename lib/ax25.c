@@ -88,7 +88,7 @@ static int AX25_input(int type, char *bufp, struct sockaddr_storage *sasp)
     struct sockaddr *sap = (struct sockaddr *)sasp;
     char *ptr;
     char *orig, c;
-    int i;
+    size_t i;
 
     (void)type; /* unused */
     sap->sa_family = ax25_aftype.af;
@@ -190,7 +190,7 @@ static int KISS_init(int fd)
 struct hwtype ax25_hwtype =
 {
     "ax25", NULL, /*"AMPR AX.25", */ ARPHRD_AX25, 7,
-    AX25_print, AX25_hinput, NULL
+    AX25_print, AX25_hinput, NULL, 0
 };
 
 struct aftype ax25_aftype =
