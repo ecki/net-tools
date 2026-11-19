@@ -4,7 +4,7 @@
 .\" Modified: Andi Kleen ak@muc.de
 .\" Modified: Tuan Hoang tqhoang@yahoo.com
 .\" Modified: Brian Micek bmicek@gmail.com
-.TH NETSTAT 8 "2026-05-10" "net\-tools" "Linux System Administrator's Manual"
+.TH NETSTAT 8 "2026-11-19" "net\-tools" "Linux System Administrator's Manual"
 
 .SH NAME
 netstat \- print network connections, routing tables, interface statistics, masquerade connections, and multicast memberships
@@ -50,6 +50,8 @@ netstat \- print network connections, routing tables, interface statistics, masq
 .P
 .SY netstat
 .RB { \-\-groups | \-g }
+.RB [ \-\-inet | \-4 ]
+.RB [ \-\-inet6 | \-6 ]
 .RB [ \-\-numeric | \-n ]
 .RB [ \-\-numeric\-hosts "] [" \-\-numeric\-ports "] [" \-\-numeric\-users ]
 .RB [ \-\-continuous | \-c ]
@@ -127,7 +129,12 @@ and
 produce the same output.
 .TP
 .BR \-\-groups ", " \-g
-Display multicast group membership information for IPv4 and IPv6.
+Display multicast group membership information. By default, memberships for
+both IPv4 and IPv6 are shown. Use
+.BR \-\-inet " (\-4)"
+or
+.BR \-\-inet6 " (\-6)"
+to restrict the output to a single address family.
 .TP
 .BR \-\-interfaces ", " \-i
 Display a table of all network interfaces and their respective

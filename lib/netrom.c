@@ -79,7 +79,7 @@ static const char *NETROM_sprint(const struct sockaddr_storage *sasp, int numeri
 {
     const struct sockaddr_ax25 *ax25_sap = (const struct sockaddr_ax25 *)sasp;
     const struct sockaddr *sap = (const struct sockaddr *)sasp;
-    char buf[64];
+    static char buf[64];
 
     (void)numeric; /* unused */
     if (sap->sa_family == 0xFFFF || sap->sa_family == 0)

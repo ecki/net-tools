@@ -2220,7 +2220,7 @@ int main
     if (flag_int + flag_rou + flag_mas + flag_sta > 1)
 	usage(E_OPTERR);
 
-    if ((flag_inet || flag_inet6 || flag_sta) &&
+    if ((flag_inet || flag_inet6 || flag_sta) && !flag_igmp &&
         !(flag_tcp || flag_sctp || flag_udp || flag_udplite || flag_raw))
 	   flag_noprot = flag_tcp = flag_sctp = flag_udp = flag_udplite = flag_raw = 1;
 
@@ -2374,9 +2374,13 @@ int main
 
 	if (flag_igmp) {
 #if HAVE_AFINET6
-	    printf( "IPv6/");
+	    if (flag_inet && flag_inet6)
+		printf( "IPv6/");
 #endif
-	    printf( _("IPv4 Group Memberships\n") );
+	    if (flag_inet)
+		printf( _("IPv4 Group Memberships\n") );
+	    else
+		printf( "IPv6 Group Memberships\n" );
 	    printf( _("Interface       RefCnt Group\n") );
 	    printf( "--------------- ------ ---------------------\n" );
 	    i = igmp_info();

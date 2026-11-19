@@ -34,7 +34,19 @@
 #include "intl.h"
 #include "util.h"
 
-#ifndef _NETROSE_ROSE_H
+/* Prefer the C library's ROSE header: unlike <linux/rose.h>, which was
+   removed from the kernel uapi headers in Linux 7.1, it does not depend
+   on the kernel version. Fall back to the kernel headers otherwise (musl). */
+#if defined(__has_include)
+#if __has_include(<netrose/rose.h>)
+#define HAVE_NETROSE_ROSE_H 1
+#endif
+#endif
+
+#if defined(HAVE_NETROSE_ROSE_H)
+#include <netax25/ax25.h>
+#include <netrose/rose.h>
+#elif !defined(_NETROSE_ROSE_H)
 #include <linux/ax25.h>
 #include <linux/rose.h>
 /* this will check for the broken #define PF_ROSE AF_ROSE define in some older kernel headers */
